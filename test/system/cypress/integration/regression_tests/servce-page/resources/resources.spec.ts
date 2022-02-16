@@ -24,7 +24,7 @@ describe("Resources", () => {
 
     cy.location("href")
       .should("contain", "/services/");
-    cy.get('[data-e2e="access-resource-btn"]')
+    cy.get('[data-e2e="access-service-btn"]')
       .click();
     cy.location("href")
       .should("contain", `/services/${openAccessResource.toLocaleLowerCase()}/information`);
@@ -58,7 +58,7 @@ describe("Resources", () => {
     cy.get('[data-e2e="service-name"]')
       .contains(openAccessResource)
       .click();
-    cy.get('[data-e2e="access-resource-btn"]')
+    cy.get('[data-e2e="access-service-btn"]')
       .click();
     cy.contains("a", "Pin to a project")
       .click();
@@ -81,7 +81,7 @@ describe("Resources", () => {
 
     cy.location("href")
       .should("contain", "/services/")
-    cy.get('[data-e2e="access-resource-btn"]')
+    cy.get('[data-e2e="access-service-btn"]')
       .click();
     cy.contains("a", "Final details")
       .click();
@@ -114,7 +114,7 @@ describe("Resources", () => {
     cy.get('[data-e2e="service-name"]')
       .contains(orderRequiredResourceInternal)
       .click();
-    cy.get('[data-e2e="access-resource-btn"]')
+    cy.get('[data-e2e="access-service-btn"]')
       .click();
     cy.contains("a", "Final details")
       .click();
@@ -127,7 +127,7 @@ describe("Resources", () => {
       .should("be.visible");
   });
 
-  it("should add resource with few offers", () => {
+  it.only("should add resource with few offers", () => {
     cy.get("[data-e2e='searchbar-input']")
       .type(resourceWithFewOffer)
       .type('{enter}');
@@ -137,12 +137,18 @@ describe("Resources", () => {
 
     cy.location("href")
       .should("contain", "/services/");
-    cy.get('[data-e2e="access-resource-btn"]')
+    cy.get('[data-e2e="access-service-btn"]')
       .click();
     cy.location("href")
       .should("contain", `/services/${resourceWithFewOffer.toLocaleLowerCase()}/offers`);
-    cy.contains(".unchecked","Select an offer")
+    cy.get("div.unchecked")
+      .eq(0)
+      .should("contain", "Select an offer")
       .click();
+    cy.get("div.checked")
+      .eq(0)
+      .should("contain", "Selected offer")
+      .should("be.visible");
     cy.contains("a", "Access instructions")
       .click();
     cy.location("href")

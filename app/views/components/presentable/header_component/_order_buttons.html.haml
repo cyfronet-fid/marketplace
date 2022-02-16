@@ -2,7 +2,7 @@
   = link_to _("Access the resource"),
                   service_offers_path(service),
                   class: "btn btn-primary d-block mb-3",
-                  "data-e2e": "access-resource-btn",
+                  "data-e2e": "access-service-btn",
                   "data-probe": "",
                   "data-target": local_assigns[:preview] ? "preview.link" : ""
   - if user_signed_in? && show_manage_button?(service)

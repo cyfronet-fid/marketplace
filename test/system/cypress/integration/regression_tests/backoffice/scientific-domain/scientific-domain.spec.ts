@@ -1,5 +1,6 @@
 import { ScientificDomainFactory } from "cypress/factories/scientific-domain.factory";
 import { UserFactory } from "../../../../factories/user.factory";
+import { ScientificDomainMessages } from "../../../../fixtures/messages";
 
 describe("Scientific Domain", () => {
   const user = UserFactory.create({ roles: ["service_portfolio_manager"] });
@@ -10,6 +11,7 @@ describe("Scientific Domain", () => {
     scientificDomain4,
     scientificDomain5,
   ] = [...Array(5)].map(() => ScientificDomainFactory.create());
+  const message = ScientificDomainMessages;
 
   const correctLogo = "logo.jpg";
   const wrongLogo = "logo.svg";
@@ -34,6 +36,8 @@ describe("Scientific Domain", () => {
     cy.fillFormCreateScientificDomain(scientificDomain, correctLogo);
     cy.get("[data-e2e='create-scientific-domain-btn']")
       .click();
+    cy.contains(".alert-success", message.successCreationMessage)
+      .should("be.visible");
     cy.location("href").should("contain", `/backoffice/scientific_domains/`);
     cy.get("h1")
       .invoke("text")
@@ -99,11 +103,9 @@ describe("Scientific Domain", () => {
     cy.fillFormCreateScientificDomain({ ...scientificDomain4, name: "" }, wrongLogo);
     cy.get("[data-e2e='create-scientific-domain-btn']")
       .click();
-    cy.contains(
-      "div.invalid-feedback",
-      "Logo is not a valid file format and Logo format you're trying to attach is not supported")
+    cy.contains("div.invalid-feedback", message.alertLogoValidation)
       .should("be.visible");
-    cy.contains("div.invalid-feedback", "Name can't be blank")
+    cy.contains("div.invalid-feedback", message.alertNameValidation)
       .should("be.visible");
   });
 
@@ -113,10 +115,7 @@ describe("Scientific Domain", () => {
       .eq(0)
       .find("a.delete-icon")
       .click();
-    cy.get(".alert-danger")
-      .contains("This scientific domain has successors connected to it, " +
-      "therefore is not possible to remove it. " +
-      "If you want to remove it, edit them so they are not associated with this scientific domain anymore")
+    cy.contains(".alert-danger", message.alertDeletionMessageSuccessors)
       .should("be.visible");
   });
 
@@ -127,8 +126,7 @@ describe("Scientific Domain", () => {
       .parent()
       .find("a.delete-icon")
       .click();
-    cy.get(".alert-danger")
-      .contains("This scientific domain has resources connected to it, remove associations to delete it.")
+    cy.contains(".alert-danger", message.alertDeletionMessageResource)
       .should("be.visible");
   });
 
@@ -142,8 +140,7 @@ describe("Scientific Domain", () => {
       .then((value) => {
         cy.visit("/backoffice/scientific_domains");
         cy.contains(value).parent().find("a.delete-icon").click();
-        cy.get(".alert-success")
-          .contains("Scientific Domain removed successfully")
+        cy.contains(".alert-success", message.successDeletionMessage)
           .should("be.visible");
       });
   });
@@ -158,8 +155,7 @@ describe("Scientific Domain", () => {
     cy.fillFormCreateScientificDomain({ ...scientificDomain, name: "Edited category" }, false);
     cy.get("[data-e2e='create-scientific-domain-btn']")
       .click();
-    cy.get(".alert-success")
-      .contains("Scientific domain updated successfully")
+    cy.contains(".alert-success", message.successUpdationMessage)
       .should("be.visible");
   });
 });

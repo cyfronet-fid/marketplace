@@ -55,7 +55,7 @@ describe("Comparison", () => {
     cy.get("[data-e2e='service-name']")
       .eq(0)
       .click();
-    cy.get("[data-e2e='access-resource-btn']")
+    cy.get("[data-e2e='access-service-btn']")
       .should("be.visible");
 
     cy.get("[data-e2e='comparison-checkbox']")
@@ -68,7 +68,7 @@ describe("Comparison", () => {
     cy.get("[data-e2e='service-name']")
       .eq(2)
       .click();
-    cy.get("[data-e2e='access-resource-btn']")
+    cy.get("[data-e2e='access-service-btn']")
       .should("be.visible");
     cy.get("[data-e2e='comparison-checkbox']")
       .click();

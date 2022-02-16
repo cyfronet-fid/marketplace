@@ -9,7 +9,7 @@ describe("Providers", () => {
       .click();
     cy.location("href")
       .should("include", "/providers");
-    cy.get("a[data-e2e='btn-browse-resource']")
+    cy.get("a[data-e2e='btn-browse-service']")
       .click();
     cy.get("[data-e2e='filter-tag']")
       .should("be.visible");
