@@ -50,7 +50,7 @@ export class IProvidersExtended extends IProviders {
   publicContactsLastName:string;
   publicContactsPhone:string;
   publicContactsPosition:string;
-  maturityProviderLifeCycleStatus:string[];
+  maturityProviderLifeCycleStatus:string;
   maturityCertifications:string;
   otherHostingLegalEntity:string;
   otherParticipatingCountries:string[];
@@ -58,7 +58,7 @@ export class IProvidersExtended extends IProviders {
   otherNetworks:string[];
   otherStructureTypes:string[];
   otherESFRIDomains:string[];
-  otherESFRIType:string[];
+  otherESFRIType:string;
   otherMerilScientificDomains:string[];
   otherAreasOfActivity:string[];
   otherSocietalGrandChallenges:string[];
@@ -89,7 +89,7 @@ export const ProvidersFactoryExtended = {
       publicContactsEmail:Utilities.getRandomEmail(),
       publicContactsPhone: Utilities.getRandomString(),
       publicContactsPosition: Utilities.getRandomString(),
-      maturityProviderLifeCycleStatus: ["Operational"],
+      maturityProviderLifeCycleStatus: "Operational",
       maturityCertifications:Utilities.getRandomString(),
       otherHostingLegalEntity:Utilities.getRandomString(),
       otherParticipatingCountries: ["Poland"],
@@ -97,7 +97,7 @@ export const ProvidersFactoryExtended = {
       otherNetworks:["AErosol Robotic NETwork (AERONET)"],
       otherStructureTypes:["Distributed"],
       otherESFRIDomains: ["Energy"],
-      otherESFRIType: ["Landmark"],
+      otherESFRIType: "Landmark",
       otherMerilScientificDomains:["Biological & Medical Sciences ⇒ Animal Facilities"],
       otherAreasOfActivity: ["Basic Research"],
       otherSocietalGrandChallenges:["Transport"],

@@ -69,6 +69,9 @@ categories:
   Security & Operations:
     name: &securityAndOperationsParent "Security & Operations"
     description: Services to integrate identity management, authorisation and other security services to comply with policies and regulations or access services to support the operations of your infrastructures and services
+  Software Development Kits:
+    name: &softwareDevelopmentKits "Software Development Kits"
+    parent: *sharingAndDicoveryParent
 
 providers:
   EGI Federation:
@@ -1220,7 +1223,7 @@ services:
     offers: *cloudComputeOffers
   B2DROP:
     name: &b2drop B2DROP
-    parents: [*storageParent, *sharingAndDicoveryParent]
+    parents: [*storageParent, *sharingAndDicoveryParent, *softwareDevelopmentKits]
     resource_organisation: *eudat
     logo: b2drop.png
     open_access: false
