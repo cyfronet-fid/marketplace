@@ -4,6 +4,8 @@ module Offerable
   extend ActiveSupport::Concern
 
   included do
+    scope :orderable, -> { where(order_type: :order_required, internal: true) }
+
     enum order_type: {
            open_access: "open_access",
            fully_open_access: "fully_open_access",
