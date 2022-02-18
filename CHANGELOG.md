@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+
 ## [3.33.0-milestone]
 
 ### Added
@@ -22,7 +23,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Security
 
-## [3.32.0-milestone]
+## [3.32.0] 2022-02-18
 
 ### Added
 - Strip leading and trailing whitespaces from Resource and Provider name (@kmarszalek)
@@ -31,15 +32,9 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Show 'Manage the provider/resource' button only when upstream set to 'eosc_registry' (@kmarszalek)
 - Make a recommendation panel visible even 1 or 2 recommended services by recommender do not exist in MP database. (@Michal-Kolomanski)
 
-### Deprecated
-
-### Removed
-
 ### Fixed
 - Fix projects notifications (@danielkryska)
 - Date parsing on /events endpoint in OMS API (@kmarszalek)
-
-### Security
 
 ## [3.31.0] 2022-02-07
 
