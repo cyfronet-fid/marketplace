@@ -81,6 +81,8 @@ GEM
     atlassian-jwt (0.2.1)
       jwt (~> 2.1)
     attr_required (1.0.1)
+    auto_strip_attributes (2.6.0)
+      activerecord (>= 4.0)
     aws-eventstream (1.2.0)
     aws-partitions (1.520.1)
     aws-sdk-core (3.121.3)
@@ -611,6 +613,7 @@ DEPENDENCIES
   activestorage-validator
   acts-as-taggable-on
   ancestry
+  auto_strip_attributes
   aws-sdk-s3
   bootsnap (>= 1.4.2)
   byebug
