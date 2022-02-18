@@ -123,6 +123,7 @@ end
 gem "faraday"
 gem "faraday_middleware"
 gem "reverse_markdown"
+gem "auto_strip_attributes"
 
 # Fix for puma memory leak
 gem "puma_worker_killer"

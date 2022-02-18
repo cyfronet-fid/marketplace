@@ -40,6 +40,8 @@ class Service < ApplicationRecord
 
   enum status: STATUSES
 
+  auto_strip_attributes :language_availability, nullify_array: false
+
   has_many :offers, dependent: :restrict_with_error
   has_many :project_items, through: :offers
   has_many :categorizations, dependent: :destroy
