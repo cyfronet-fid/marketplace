@@ -146,8 +146,8 @@
                 disabled: cant_edit([geographical_availabilities: []]),
                 input_html: { data: { choice: true },  "multiple" => "true" }
             = f.input :language_availability, input_html: { multiple: true, data: { choice: true } },
-            collection: I18nData.languages.map { |k, v| [v, k] },
-            disabled: cant_edit([language_availability: []])
+                collection: I18nData.languages.map { |k, v| [v, k] },
+                disabled: cant_edit([language_availability: []])
 
         .card.shadow-sm.rounded
           %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
