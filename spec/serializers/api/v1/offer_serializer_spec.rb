@@ -17,8 +17,6 @@ RSpec.describe Api::V1::OfferSerializer do
 
     serialized = JSON.parse(described_class.new(offer).to_json)
 
-    puts serialized
-
     expected = {
       id: offer.iid,
       name: offer.name,
@@ -75,8 +73,6 @@ RSpec.describe Api::V1::OfferSerializer do
 
     serialized = JSON.parse(described_class.new(offer).to_json)
 
-    puts serialized
-
     expected = {
       id: offer.iid,
       name: offer.name,
@@ -84,6 +80,29 @@ RSpec.describe Api::V1::OfferSerializer do
       order_type: offer.order_type,
       parameters: [],
       order_url: offer.order_url
+    }
+
+    expect(serialized).to eq(expected.deep_stringify_keys)
+  end
+
+  it "properly serializes a bundle offer" do
+    offer1 = build(:offer)
+    offer2 = build(:offer)
+    bundle_offer = create(:offer, bundled_offers: [offer1, offer2])
+    default_oms = create(:default_oms)
+
+    serialized = JSON.parse(described_class.new(bundle_offer).to_json)
+
+    expected = {
+      id: bundle_offer.iid,
+      name: bundle_offer.name,
+      description: bundle_offer.description,
+      parameters: [],
+      order_type: bundle_offer.order_type,
+      order_url: bundle_offer.order_url,
+      internal: true,
+      primary_oms_id: default_oms.id,
+      bundled_offers: %W[#{offer1.service.slug}/#{offer1.iid} #{offer2.service.slug}/#{offer2.iid}]
     }
 
     expect(serialized).to eq(expected.deep_stringify_keys)

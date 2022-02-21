@@ -79,18 +79,11 @@ RSpec.describe ProjectItem::Create do
   end
 
   context "#bundle" do
-    let(:offer) { create(:offer, service: service) }
-    let(:service1) { create(:service) }
-    let(:child1) { create(:offer, service: service1) }
-    let(:service2) { create(:service) }
-    let(:child2) { create(:offer, service: service2) }
+    let(:offer) { create(:offer, service: service, bundled_offers: [child1, child2]) }
+    let(:child1) { build(:offer) }
+    let(:child2) { build(:offer) }
 
     let(:project_item_template) { build(:project_item, project: project, offer: offer) }
-
-    before do
-      OfferLink.create!(source: offer, target: child1)
-      OfferLink.create!(source: offer, target: child2)
-    end
 
     it "creates bundled project_items" do
       expect { described_class.new(project_item_template, "test-msg", bundle_params: {}).call }.to change {
@@ -103,7 +96,7 @@ RSpec.describe ProjectItem::Create do
     end
 
     context "with error" do
-      let(:child2) { create(:offer_with_parameters, service: service) }
+      let(:child2) { build(:offer_with_parameters) }
 
       it "creates nothing" do
         expect { described_class.new(project_item_template, "test-msg", bundle_params: {}).call }.to change {

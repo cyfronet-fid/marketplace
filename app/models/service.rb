@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Service < ApplicationRecord
+  PUBLIC_STATUSES = %w[published unverified errored].freeze
+
   include Service::Search
   include LogoAttachable
 
@@ -226,6 +228,10 @@ class Service < ApplicationRecord
 
   def available_omses
     (OMS.where(default: true).to_a + omses.to_a + OMS.where(type: :global).to_a + resource_organisation&.omses).uniq
+  end
+
+  def public?
+    PUBLIC_STATUSES.include?(status)
   end
 
   private
