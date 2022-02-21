@@ -62,7 +62,7 @@ RSpec.describe Api::V1::OMSes::ProjectsController, swagger_doc: "v1/ordering_swa
       response 200, "projects found but were empty", document: false do
         schema "$ref" => "project/project_index.json"
         let(:oms_admin) { create(:user) }
-        let(:oms) { create(:oms, default: true, administrators: [oms_admin]) }
+        let(:oms) { create(:default_oms, administrators: [oms_admin]) }
 
         let(:oms_id) { oms.id }
         let(:"X-User-Token") { oms_admin.authentication_token }
@@ -88,7 +88,7 @@ RSpec.describe Api::V1::OMSes::ProjectsController, swagger_doc: "v1/ordering_swa
         schema "$ref" => "error.json"
         let(:oms_admin) { create(:user) }
         let(:user) { create(:user) }
-        let(:oms) { create(:oms, default: true, administrators: [oms_admin]) }
+        let(:oms) { create(:default_oms, administrators: [oms_admin]) }
 
         let(:oms_id) { oms.id }
         let(:"X-User-Token") { user.authentication_token }
@@ -177,7 +177,7 @@ RSpec.describe Api::V1::OMSes::ProjectsController, swagger_doc: "v1/ordering_swa
         schema "$ref" => "error.json"
         let(:oms_admin) { create(:user) }
         let(:user) { create(:user) }
-        let(:oms) { create(:oms, default: true, administrators: [oms_admin]) }
+        let(:oms) { create(:default_oms, administrators: [oms_admin]) }
 
         let(:oms_id) { oms.id }
         let(:p_id) { 1 }

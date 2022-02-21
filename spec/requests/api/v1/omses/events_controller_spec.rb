@@ -72,7 +72,7 @@ RSpec.describe Api::V1::OMSes::EventsController, swagger_doc: "v1/ordering_swagg
       response 200, "events found but were empty", document: false do
         schema "$ref" => "event/event_index.json"
         let(:oms_admin) { create(:user) }
-        let(:oms) { create(:oms, default: true, administrators: [oms_admin]) }
+        let(:oms) { create(:default_oms, administrators: [oms_admin]) }
 
         let(:oms_id) { oms.id }
         let(:"X-User-Token") { oms_admin.authentication_token }
@@ -117,7 +117,7 @@ RSpec.describe Api::V1::OMSes::EventsController, swagger_doc: "v1/ordering_swagg
         schema "$ref" => "error.json"
         let(:oms_admin) { create(:user) }
         let(:user) { create(:user) }
-        let(:oms) { create(:oms, default: true, administrators: [oms_admin]) }
+        let(:oms) { create(:default_oms, administrators: [oms_admin]) }
 
         let(:oms_id) { oms.id }
         let(:"X-User-Token") { user.authentication_token }

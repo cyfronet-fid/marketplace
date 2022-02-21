@@ -96,7 +96,7 @@ RSpec.describe Api::V1::OMSesController, swagger_doc: "v1/ordering_swagger.json"
         schema "$ref" => "error.json"
         let(:oms_admin) { create(:user) }
         let(:user) { create(:user) }
-        let(:oms) { create(:oms, default: true, administrators: [oms_admin]) }
+        let(:oms) { create(:default_oms, administrators: [oms_admin]) }
 
         let(:oms_id) { oms.id }
         let(:"X-User-Token") { user.authentication_token }

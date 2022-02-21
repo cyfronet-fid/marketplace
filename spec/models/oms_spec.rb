@@ -16,8 +16,8 @@ RSpec.describe OMS, type: :model do
   end
 
   it "should validate single_default_oms?" do
-    create(:oms, default: true)
-    expect(build(:oms, default: true)).to_not be_valid
+    create(:default_oms)
+    expect(build(:default_oms)).to_not be_valid
   end
 
   it "should validate custom_params" do
@@ -82,8 +82,7 @@ RSpec.describe OMS, type: :model do
 
     let(:oms) do
       create(
-        :oms,
-        default: true,
+        :default_oms,
         offers: [
           create(:offer, project_items: [create(:project_item, project: project1)]),
           create(:offer, project_items: [create(:project_item, project: project1)])
@@ -105,7 +104,7 @@ RSpec.describe OMS, type: :model do
   context "#project_items_for" do
     let(:oms1) { create(:oms) }
     let(:oms2) { create(:oms) }
-    let(:default_oms) { create(:oms, default: true) }
+    let(:default_oms) { create(:default_oms) }
     let(:project_items1) do
       [
         build(:project_item, offer: build(:offer, primary_oms: oms1)),
@@ -143,7 +142,7 @@ RSpec.describe OMS, type: :model do
   end
 
   context "#events" do
-    let(:default_oms) { create(:oms, default: true) }
+    let(:default_oms) { create(:default_oms) }
     let(:oms) { create(:oms) }
 
     let!(:project1) { create(:project) }
@@ -183,7 +182,7 @@ RSpec.describe OMS, type: :model do
   context "#messages" do
     let(:oms1) { create(:oms) }
     let(:oms2) { create(:oms) }
-    let(:default_oms) { create(:oms, default: true) }
+    let(:default_oms) { create(:default_oms) }
 
     let(:project_item1) { create(:project_item, offer: create(:offer, primary_oms: oms1)) }
     let(:project_item2) { create(:project_item, offer: create(:offer, primary_oms: oms2)) }

@@ -19,5 +19,9 @@ FactoryBot.define do
     factory :oms_with_trigger do
       sequence(:trigger) { build(:trigger) }
     end
+
+    factory :default_oms do
+      default { true }
+    end
   end
 end

@@ -66,7 +66,7 @@ RSpec.describe Event, type: :model do
     end
 
     context "with default OMS" do
-      let!(:default_oms) { create(:oms, default: true) }
+      let!(:default_oms) { create(:default_oms) }
 
       it "handles empty" do
         allow(subject.eventable).to receive(:eventable_omses).and_return([])
