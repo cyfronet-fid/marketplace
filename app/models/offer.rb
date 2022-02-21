@@ -52,6 +52,7 @@ class Offer < ApplicationRecord
   validates :iid, presence: true, numericality: true
   validates :status, presence: true
   validates :order_url, mp_url: true, if: :order_url?
+  validate :bundled_offers_correct, if: -> { bundled_offers.present? }
 
   validate :primary_oms_exists?, if: -> { primary_oms_id.present? }
   validate :proper_oms?, if: -> { primary_oms.present? }
@@ -79,17 +80,49 @@ class Offer < ApplicationRecord
   end
 
   def bundle?
-    bundled_offers_count.positive?
+    bundled_offers.size.positive?
   end
 
   def bundle_parameters?
     bundle? && (parameters.present? || bundled_offers.map(&:parameters).any?(&:present?))
   end
 
+  def slug_iid
+    "#{service.slug}/#{iid}"
+  end
+
+  def self.find_by_slug_iid!(slug_iid)
+    raise ArgumentError, "must be a string" unless slug_iid.is_a?(String)
+    split = slug_iid.split("/")
+    raise ArgumentError, "must have the two components separated with a forward slash '/'" if split.length != 2
+    Offer.find_by!(service: Service.find_by!(slug: split[0]), iid: split[1].to_i)
+  end
+
   private
 
   def set_iid
     self.iid = offers_count + 1 if iid.blank?
+  end
+
+  def bundled_offers_correct
+    if !internal?
+      errors.add(:bundled_offers, "only internal offer can have bundled offers")
+    elsif bundled?
+      errors.add(:bundled_offers, "only non-bundled offer can have bundled offers")
+    else
+      errors.add(:bundled_offers, "cannot bundle self") if bundled_offers.include?(self)
+      errors.add(:bundled_offers, "cannot bundle duplicates") if duplicates?(bundled_offers)
+      errors.add(:bundled_offers, "cannot bundle bundle offers") if bundled_offers.any?(&:bundle?)
+      errors.add(:bundled_offers, "all bundled offers must be published") unless bundled_offers.all?(&:published?)
+      errors.add(:bundled_offers, "all bundled offers must be internal") unless bundled_offers.all?(&:internal?)
+      unless bundled_offers.map(&:service).all?(&:public?)
+        errors.add(:bundled_offers, "all bundled offers' services must be public")
+      end
+    end
+  end
+
+  def duplicates?(list)
+    list.uniq.size != list.size
   end
 
   def offers_count

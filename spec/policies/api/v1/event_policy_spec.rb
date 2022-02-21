@@ -9,7 +9,7 @@ RSpec.describe Api::V1::EventPolicy, type: :policy do
     let(:default_oms_admin) { create(:user) }
     let(:other_oms_admin) { create(:user) }
 
-    let(:default_oms) { create(:oms, default: true, administrators: [default_oms_admin]) }
+    let(:default_oms) { create(:default_oms, administrators: [default_oms_admin]) }
     let(:other_oms) { create(:oms, administrators: [other_oms_admin]) }
 
     let(:project_item1) { build(:project_item, offer: build(:offer, primary_oms: default_oms), iid: 1) }

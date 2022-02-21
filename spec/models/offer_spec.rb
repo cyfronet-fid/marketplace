@@ -27,7 +27,7 @@ RSpec.describe Offer do
       expect(build(:offer, oms_params: { b: 1, c: 1 }, primary_oms: build(:oms, custom_params: nil))).to_not be_valid
 
       expect(build(:offer, oms_params: { c: 1 }, primary_oms: nil)).to_not be_valid
-      create(:oms, default: true, custom_params: { c: { mandatory: true, default: "c" } })
+      create(:default_oms, custom_params: { c: { mandatory: true, default: "c" } })
       expect(build(:offer, oms_params: { c: 1 }, primary_oms: nil)).to be_valid
 
       laid_back_oms = create(:oms, custom_params: { d: { mandatory: false } })
@@ -39,7 +39,7 @@ RSpec.describe Offer do
       expect(build(:offer, primary_oms: oms).current_oms).to eql(oms)
       expect(build(:offer, primary_oms: nil).current_oms).to be_nil
 
-      default_oms = create(:oms, default: true)
+      default_oms = create(:default_oms)
       expect(build(:offer, primary_oms: oms).current_oms).to eql(oms)
       expect(build(:offer, primary_oms: nil).current_oms).to eql(default_oms)
     end
@@ -120,7 +120,7 @@ RSpec.describe Offer do
       provider = create(:provider)
       service = create(:service, resource_organisation: provider)
 
-      default_oms = create(:oms, default: true)
+      default_oms = create(:default_oms)
       provider_group_oms = create(:oms, type: :provider_group, providers: [provider])
       resource_dedicated_oms = create(:oms, type: :resource_dedicated, service: service)
       global_oms = create(:oms, type: :global)
@@ -140,10 +140,8 @@ RSpec.describe Offer do
   end
 
   context "bundle offer" do
-    let(:source) { create(:offer) }
-    let(:target) { create(:offer) }
-
-    before { OfferLink.create!(source: source, target: target) }
+    let!(:source) { create(:offer, bundled_offers: [target]) }
+    let(:target) { build(:offer) }
 
     it "returns linked offer targets" do
       expect(source.bundled_offers).to contain_exactly(target)
@@ -160,6 +158,164 @@ RSpec.describe Offer do
     it "is when there are linked offers" do
       expect(source).to be_bundle
       expect(target).to_not be_bundle
+    end
+  end
+
+  context "#bundled_offers" do
+    context "#bundled_offers_correct" do
+      let(:offer) { build(:offer) }
+
+      it "allows empty" do
+        expect(offer.valid?).to be_truthy
+      end
+
+      it "allows published internal offers" do
+        bundled_offer = build(:offer)
+        offer.bundled_offers = [bundled_offer]
+
+        expect(offer.valid?).to be_truthy
+      end
+
+      Service::PUBLIC_STATUSES.each do |accepted_status|
+        it "allows offer from #{accepted_status} service" do
+          bundled_offer = build(:offer, service: build(:service, status: accepted_status))
+          offer.bundled_offers = [bundled_offer]
+
+          expect(offer.valid?).to be_truthy
+        end
+      end
+
+      context "non-internal bundle offer" do
+        let(:offer) { build(:offer, internal: false) }
+
+        it "allows empty" do
+          expect(offer.valid?).to be_truthy
+        end
+
+        it "rejects any bundled offer" do
+          bundled_offer = build(:offer)
+          offer.bundled_offers = [bundled_offer]
+
+          expect_error_messages "only internal offer can have bundled offers"
+        end
+      end
+
+      context "bundled bundle offer" do
+        let(:offer) { build(:offer, bundle_offers: [build(:offer)]) }
+
+        it "allows empty" do
+          expect(offer.valid?).to be_truthy
+        end
+
+        it "rejects any bundled offer" do
+          next_level_bundled_offer = build(:offer)
+          offer.bundled_offers = [next_level_bundled_offer]
+
+          expect_error_messages "only non-bundled offer can have bundled offers"
+        end
+      end
+
+      it "rejects self" do
+        offer.bundled_offers = [offer]
+
+        expect_error_messages "cannot bundle self", "cannot bundle bundle offers", "is invalid"
+      end
+
+      it "rejects duplicates" do
+        bundled_offer = build(:offer)
+        offer.bundled_offers = [bundled_offer, bundled_offer]
+
+        expect_error_messages "cannot bundle duplicates"
+      end
+
+      it "rejects bundle offers" do
+        bundled_offer = build(:offer)
+        bundle_offer = build(:offer, bundled_offers: [bundled_offer])
+        offer.bundled_offers = [bundle_offer]
+
+        expect_error_messages "cannot bundle bundle offers"
+      end
+
+      it "rejects non-internal offers" do
+        bundled_offer = build(:offer, internal: false)
+        offer.bundled_offers = [bundled_offer]
+
+        expect_error_messages "all bundled offers must be internal"
+      end
+
+      Service::STATUSES
+        .values
+        .reject { |k| Service::PUBLIC_STATUSES.include?(k) }
+        .each do |rejected_status|
+          it "rejects offer from a #{rejected_status} service" do
+            bundled_offer = build(:offer, service: build(:service, status: rejected_status))
+            offer.bundled_offers = [bundled_offer]
+
+            expect_error_messages "all bundled offers' services must be public"
+          end
+        end
+
+      Offer::STATUSES
+        .values
+        .reject { |k| k == "published" }
+        .each do |status|
+          it "rejects #{status} offers" do
+            bundled_offer = build(:offer, status: status)
+            offer.bundled_offers = [bundled_offer]
+
+            expect_error_messages "all bundled offers must be published"
+          end
+        end
+
+      private
+
+      def expect_error_messages(*msg)
+        expect(offer.valid?).to be_falsey
+        expect(offer.errors.messages_for(:bundled_offers)).to eq(msg)
+      end
+    end
+  end
+
+  context "#find_by_slug_iid!" do
+    context "errors on non-string" do
+      [123, nil, []].each do |val|
+        it "#{val.nil? ? "nil" : val}" do
+          expect { Offer.find_by_slug_iid!(val) }.to raise_error(ArgumentError, "must be a string")
+        end
+      end
+    end
+
+    context "errors on wrong number of components" do
+      ["", "123", "1/2/3", "//"].each do |val|
+        it val do
+          expect { Offer.find_by_slug_iid!(val) }.to raise_error(
+            ArgumentError,
+            "must have the two components separated with a forward slash '/'"
+          )
+        end
+      end
+    end
+
+    it "returns the offer" do
+      offer = create(:offer, iid: 3, service: build(:service, slug: "test-slug"))
+      expect(Offer.find_by_slug_iid!("test-slug/3")).to eq(offer)
+    end
+
+    it "defaults to 0 for non-numeric iids" do
+      offer = create(:offer, iid: 0, service: build(:service, slug: "test-slug"))
+      expect(Offer.find_by_slug_iid!("test-slug/abc")).to eq(offer)
+    end
+
+    it "errors on record not found" do
+      create(:offer, iid: 3, service: build(:service, slug: "test-slug"))
+      expect { Offer.find_by_slug_iid!("no-slug/1") }.to raise_error(
+        ActiveRecord::RecordNotFound,
+        "Couldn't find Service"
+      )
+      expect { Offer.find_by_slug_iid!("test-slug/2") }.to raise_error(
+        ActiveRecord::RecordNotFound,
+        "Couldn't find Offer"
+      )
     end
   end
 end

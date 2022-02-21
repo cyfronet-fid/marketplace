@@ -141,7 +141,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
         schema "$ref" => "error.json"
         let(:oms_admin) { create(:user) }
         let(:user) { create(:user) }
-        let(:oms) { create(:oms, default: true, administrators: [oms_admin]) }
+        let(:oms) { create(:default_oms, administrators: [oms_admin]) }
 
         let(:oms_id) { oms.id }
         let(:project_id) { 9999 }
@@ -170,7 +170,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
       response 404, "project not found" do
         schema "$ref" => "error.json"
         let(:oms_admin) { create(:user) }
-        let(:oms) { create(:oms, default: true, administrators: [oms_admin]) }
+        let(:oms) { create(:default_oms, administrators: [oms_admin]) }
 
         let(:oms_id) { oms.id }
         let(:project_id) { 9999 }
@@ -185,7 +185,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
       response 404, "project item not found" do
         schema "$ref" => "error.json"
         let(:oms_admin) { create(:user) }
-        let(:oms) { create(:oms, default: true, administrators: [oms_admin]) }
+        let(:oms) { create(:default_oms, administrators: [oms_admin]) }
         let(:project) { create(:project) }
 
         let(:oms_id) { oms.id }
@@ -327,7 +327,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
         schema "$ref" => "error.json"
         let(:oms_admin) { create(:user) }
         let(:user) { create(:user) }
-        let(:oms) { create(:oms, default: true, administrators: [oms_admin]) }
+        let(:oms) { create(:default_oms, administrators: [oms_admin]) }
 
         let(:oms_id) { oms.id }
         let(:project_id) { 9999 }
@@ -375,7 +375,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
       response 403, "project_item message not authorized", document: false do
         schema "$ref" => "error.json"
         let(:default_oms_admin) { create(:user) }
-        let(:oms) { create(:oms, default: true, administrators: [default_oms_admin]) }
+        let(:oms) { create(:default_oms, administrators: [default_oms_admin]) }
         let(:other_oms) { create(:oms) }
         let(:project_item) { create(:project_item, offer: create(:offer, primary_oms: other_oms), iid: 1) }
         let(:project) { create(:project, project_items: [project_item]) }
@@ -423,7 +423,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
       response 404, "project not found" do
         schema "$ref" => "error.json"
         let(:oms_admin) { create(:user) }
-        let(:oms) { create(:oms, default: true, administrators: [oms_admin]) }
+        let(:oms) { create(:default_oms, administrators: [oms_admin]) }
 
         let(:oms_id) { oms.id }
         let(:"X-User-Token") { oms_admin.authentication_token }
@@ -448,7 +448,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
       response 404, "project item not found" do
         schema "$ref" => "error.json"
         let(:oms_admin) { create(:user) }
-        let(:oms) { create(:oms, default: true, administrators: [oms_admin]) }
+        let(:oms) { create(:default_oms, administrators: [oms_admin]) }
         let(:project) { create(:project, project_items: []) }
 
         let(:oms_id) { oms.id }
@@ -518,7 +518,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
         schema "$ref" => "error.json"
         let(:oms_admin) { create(:user) }
         let(:user) { create(:user) }
-        let(:oms) { create(:oms, default: true, administrators: [oms_admin]) }
+        let(:oms) { create(:default_oms, administrators: [oms_admin]) }
 
         let(:oms_id) { oms.id }
         let(:m_id) { 1 }
@@ -533,7 +533,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
       response 403, "user not authorized" do
         schema "$ref" => "error.json"
         let(:user) { create(:user) }
-        let(:oms) { create(:oms, default: true) }
+        let(:oms) { create(:default_oms) }
         let(:message) { create(:message, messageable: create(:project)) }
 
         let(:oms_id) { oms.id }
@@ -651,7 +651,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
       response 400, "bad request" do
         schema "$ref" => "error.json"
         let(:oms_admin) { create(:user) }
-        let(:oms) { create(:oms, default: true, administrators: [oms_admin]) }
+        let(:oms) { create(:default_oms, administrators: [oms_admin]) }
         let(:project) { create(:project) }
         let(:message) do
           create(:message, author_role: "mediator", scope: "public", message: "Before update", messageable: project)
@@ -694,7 +694,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
         schema "$ref" => "error.json"
         let(:oms_admin) { create(:user) }
         let(:user) { create(:user) }
-        let(:oms) { create(:oms, default: true, administrators: [oms_admin]) }
+        let(:oms) { create(:default_oms, administrators: [oms_admin]) }
 
         let(:oms_id) { oms.id }
         let(:m_id) { 1 }
@@ -710,7 +710,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, swagger_doc: "v1/ordering_swa
       response 403, "user not authorized" do
         schema "$ref" => "error.json"
         let(:oms_admin) { create(:user) }
-        let(:oms) { create(:oms, default: true, administrators: [oms_admin]) }
+        let(:oms) { create(:default_oms, administrators: [oms_admin]) }
         let(:other_oms) { create(:oms) }
         let(:message) do
           create(

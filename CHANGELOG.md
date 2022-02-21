@@ -12,6 +12,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 - Missing notification about new message in bundled offers (@goreck888)
 - Parameter engine_version in the body of /recommendations request (@Michal-Kolomanski)
+- Management of offer bundles in Offering API (@jswk)
 
 ### Changed
 

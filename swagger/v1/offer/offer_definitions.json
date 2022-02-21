@@ -334,6 +334,14 @@
       "internal": {
         "type": "boolean"
       },
+      "bundled_offers": {
+        "type": "array",
+        "uniqueItems": true,
+        "items": {
+          "type": "string",
+          "pattern": "^[a-z0-9\\-_]+/\\d+$"
+        }
+      },
       "parameters": {
         "type": "array",
         "uniqueItems": true,

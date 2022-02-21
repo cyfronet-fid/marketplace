@@ -88,7 +88,7 @@ RSpec.describe Service do
     context "when there are registered OMSes" do
       before do
         @global_oms = create(:oms)
-        @default_oms = create(:oms, default: true)
+        @default_oms = create(:default_oms)
         @provider_oms = create(:provider_group_oms)
         @resource_oms = create(:resource_dedicated_oms)
       end

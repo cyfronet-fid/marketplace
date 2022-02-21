@@ -124,9 +124,8 @@ RSpec.describe Api::V1::ResourcesController, swagger_doc: "v1/offering_swagger.j
 
         let!(:default_oms) do
           create(
-            :oms,
+            :default_oms,
             type: :global,
-            default: true,
             custom_params: {
               param: {
                 mandatory: true,

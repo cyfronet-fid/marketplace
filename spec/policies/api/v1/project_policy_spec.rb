@@ -8,7 +8,7 @@ RSpec.describe Api::V1::ProjectPolicy, type: :policy do
   let(:default_oms_admin) { create(:user) }
   let(:oms_admin) { create(:user) }
 
-  let(:default_oms) { create(:oms, default: true, administrators: [default_oms_admin]) }
+  let(:default_oms) { create(:default_oms, administrators: [default_oms_admin]) }
   let(:oms) { create(:oms, administrators: [oms_admin]) }
 
   let!(:project1) do
