@@ -27,6 +27,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Fix researching resources from nth page of resources (@danielkryska)
 - Don't depend on offer when determining whether a Project Item is a bundle (@jswk)
 - Fix displaying statistics of the resource for executive role (@goreck888)
+- Missing partial in the EGI Notebooks resource page (@goreck888)
 
 ### Security
 
