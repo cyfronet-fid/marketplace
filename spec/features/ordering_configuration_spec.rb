@@ -29,6 +29,26 @@ RSpec.feature "Services in ordering_configuration panel" do
       expect(page).to have_link("Set parameters and offers")
     end
 
+    scenario "I can see OpenAIRE explore integration for EGI Notebooks" do
+      notebook_service = create(:service, pid: "egi-fed.notebook", resource_organisation: provider)
+      other_service_with_pid = create(:service, pid: "other.pid", resource_organisation: provider)
+
+      notebook_source = create(:eosc_registry_service_source, service: notebook_service)
+      other_source = create(:eosc_registry_service_source, service: other_service_with_pid)
+
+      notebook_service.update!(upstream: notebook_source)
+      other_service_with_pid.update!(upstream: other_source)
+
+      visit service_ordering_configuration_path(notebook_service)
+      expect(page).to have_text("See Jupyter notebooks compatible with the EGI Notebook service")
+
+      visit service_ordering_configuration_path(other_service_with_pid)
+      expect(page).not_to have_text("See Jupyter notebooks compatible with the EGI Notebook service")
+
+      visit service_ordering_configuration_path(service)
+      expect(page).not_to have_text("See Jupyter notebooks compatible with the EGI Notebook service")
+    end
+
     scenario "I can edit offer parameters", js: true do
       visit service_ordering_configuration_path(service)
 

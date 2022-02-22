@@ -4,7 +4,7 @@
 
       = markdown(@object.description)
       - if @object.pid == (ENV["OPENAIRE_NOTEBOOKS__ACTIVATION_PID"] || "egi-fed.notebook")
-        = render "notebook_openaire_explore"
+        = render "services/notebook_openaire_explore"
 
       = description_panels
     %sidebar.col-12.col-xl-3{ "data-shepherd-tour-target": "service-classification" }
