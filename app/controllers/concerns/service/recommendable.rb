@@ -77,6 +77,7 @@ module Service::Recommendable
       visit_id: cookies[:targetId],
       page_id: "/service",
       panel_id: "v1",
+      engine_version: Mp::Application.config.recommendation_engine,
       search_data: get_filters_by(@params)
     }
 
