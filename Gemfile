@@ -5,14 +5,14 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.0.3"
 
-gem "rails", "< 6.1.5.0"
+gem "rails", "< 7.1.0.0"
 gem "pg", ">= 0.18", "< 2.0"
 gem "puma"
 gem "nori"
 
 gem "uglifier", ">= 1.3.0"
 gem "webpacker", "~> 5.0"
-gem "view_component", require: "view_component/engine"
+gem "view_component"
 gem "haml-rails"
 gem "turbolinks", "~> 5", require: false
 
@@ -44,7 +44,7 @@ gem "valid_email2"
 gem "json-schema"
 gem "public_suffix"
 
-gem "searchkick"
+gem "searchkick", ">=4.6.1", "< 5.0.0"
 gem "devise"
 gem "omniauth"
 gem "omniauth_openid_connect"

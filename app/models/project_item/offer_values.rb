@@ -10,7 +10,7 @@ class ProjectItem::OfferValues
   end
 
   def attributes_map
-    @parts.map { |p| [p.offer, p.attributes] }.to_h
+    @parts.to_h { |p| [p.offer, p.attributes] }
   end
 
   def update(values)
@@ -30,7 +30,7 @@ class ProjectItem::OfferValues
   end
 
   def to_json(*_args)
-    @parts.map { |part| [part.offer, part.attributes] }.to_h
+    @parts.to_h { |part| [part.offer, part.attributes] }
   end
 
   private
