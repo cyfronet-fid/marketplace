@@ -65,6 +65,7 @@ module Mp
       end
 
     config.recommender_host = ENV["RECOMMENDER_HOST"]
+    config.recommendation_engine = ENV["RECOMMENDATION_ENGINE"] || "RL"
     config.auth_mock = ENV["AUTH_MOCK"]
     config.eosc_commons_base_url =
       if ENV["EOSC_COMMONS_BASE_URL"].present?

@@ -195,6 +195,8 @@ We are currently using the following ENV variables:
     `http://localhost:#{ENV["PORT"] || 3000}` (when foreman is used to start
     application 5000 ENV variable is set)
   * `ELASTICSEARCH_URL` - elasticsearch url
+  * `RECOMMENDER_HOST` - address of the recommender system. For example: `http://127.0.0.1:5001`
+  * `RECOMMENDATION_ENGINE` - the name of the engine that is requested to serve recommendations when a request from MP is sent to the RS `/recommendations` endpoint. We currently support RL and NCF.
   * `STORAGE_DIR` - active storage local dir (default set to
     `RAILS_ROOT/storage`)
   * `S3_STORAGE` - set true to change ActiveStorage to S3

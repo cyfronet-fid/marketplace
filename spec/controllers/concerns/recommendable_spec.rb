@@ -101,6 +101,7 @@ RSpec.describe ApplicationController, type: :controller do
       expect(body["visit_id"].to_i).not_to be_nil
       expect(body["page_id"]).to eq "/service"
       expect(body["panel_id"]).to eq "v1"
+      expect(body["engine_version"]).to eq "RL"
       expect(body["search_phrase"]).to be nil
       expect(body["logged_user"]).to be false
       expect(body["filters"]).to be nil
