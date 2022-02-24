@@ -17,7 +17,7 @@ class Services::OrderingConfiguration::OffersController < Services::OrderingConf
     template = offer_template
     authorize template
 
-    @offer = Offer::Create.new(template).call
+    @offer = Offer::Create.call(template)
 
     if @offer.persisted?
       redirect_to service_ordering_configuration_path(@service, from: params[:offer][:from]),
@@ -29,7 +29,7 @@ class Services::OrderingConfiguration::OffersController < Services::OrderingConf
 
   def update
     template = permitted_attributes(Offer.new)
-    if Offer::Update.new(@offer, transform_attributes(template)).call
+    if Offer::Update.call(@offer, transform_attributes(template))
       redirect_to service_ordering_configuration_path(@service, from: params[:offer][:from]),
                   notice: "Offer updated successfully"
     else
@@ -39,7 +39,7 @@ class Services::OrderingConfiguration::OffersController < Services::OrderingConf
 
   def destroy
     @offer = @service.offers.find_by(iid: params[:id])
-    if Offer::Destroy.new(@offer).call
+    if Offer::Destroy.call(@offer)
       redirect_to service_ordering_configuration_path(@service, from: params[:from]),
                   notice: "Offer removed successfully"
     end

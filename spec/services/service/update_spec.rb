@@ -6,7 +6,7 @@ RSpec.describe Service::Update do
   it "updates attributes" do
     service = create(:service)
 
-    described_class.new(service, name: "new name").call
+    described_class.call(service, name: "new name")
 
     expect(service.name).to eq("new name")
   end
@@ -15,8 +15,7 @@ RSpec.describe Service::Update do
     service = create(:service, offers: [create(:offer)])
     offer = service.offers.first
 
-    described_class.new(service, name: "new name", order_url: "http://order.valid", order_type: "fully_open_access")
-      .call
+    described_class.call(service, name: "new name", order_url: "http://order.valid", order_type: "fully_open_access")
 
     expect(service.offers.size).to eq(1)
 
@@ -30,8 +29,7 @@ RSpec.describe Service::Update do
 
     expect(service.offers.size).to eq(0)
 
-    described_class.new(service, name: "new name", order_url: "http://order.valid", order_type: "fully_open_access")
-      .call
+    described_class.call(service, name: "new name", order_url: "http://order.valid", order_type: "fully_open_access")
 
     service.reload
 
@@ -42,5 +40,29 @@ RSpec.describe Service::Update do
     expect(offer.order_type).to eq("fully_open_access")
     expect(offer.order_url).to eq("http://order.valid")
     expect(offer.status).to eq("published")
+  end
+
+  context "#bundled_offers" do
+    it "sends notification if service made public" do
+      service = build(:service, status: "draft")
+      bundled_offer = build(:offer)
+      create(:offer, service: service, bundled_offers: [bundled_offer])
+
+      expect { described_class.call(service, { status: "published" }) }.to change {
+        ActionMailer::Base.deliveries.count
+      }.by(1)
+    end
+
+    it "sends notification and unbundles if service made non-public" do
+      service = build(:service)
+      bundled_offer = build(:offer, service: service)
+      bundle_offer = create(:offer, bundled_offers: [bundled_offer])
+
+      expect { described_class.call(service, { status: "draft" }) }.to change { ActionMailer::Base.deliveries.count }
+        .by(1)
+
+      bundle_offer.reload
+      expect(bundle_offer).not_to be_bundle
+    end
   end
 end
