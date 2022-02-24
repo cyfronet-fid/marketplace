@@ -83,7 +83,7 @@ module Import
                 updated += 1
                 log "Updating [EXISTING] service #{service[:name]}, id: #{service_source.id}, eid: #{service[:pid]}"
                 unless @dry_run
-                  Service::Update.new(existing_service, service).call
+                  Service::Update.call(existing_service, service)
 
                   Importers::Logo.new(existing_service, image_url).call
                   existing_service.save!

@@ -168,7 +168,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   def perform_update
     attributes = attributes_from_session || permitted_attributes(@service)
 
-    if Service::Update.new(@service, attributes).call
+    if Service::Update.call(@service, attributes)
       update_logo_from_session!
       session.delete(preview_session_key)
       redirect_to backoffice_service_path(@service), notice: "Resource updated successfully"

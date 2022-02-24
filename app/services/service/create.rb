@@ -7,7 +7,7 @@ class Service::Create
 
   def call
     @service.save
-    Offer::Create.new(
+    Offer::Create.call(
       Offer.new(
         name: "Offer",
         description: "#{@service.name} Offer",
@@ -17,7 +17,7 @@ class Service::Create
         status: "published",
         service: @service
       )
-    ).call
+    )
     @service
   end
 end

@@ -161,6 +161,23 @@ RSpec.describe Offer do
     end
   end
 
+  context "#bundled_offers_count" do
+    it "works" do
+      bundle_offer = create(:offer)
+
+      expect(bundle_offer.bundled_offers_count).to eq(0)
+
+      bundled_offer = create(:offer)
+      bundle_offer.update!({ bundled_offers: [bundled_offer] })
+
+      expect(bundle_offer.bundled_offers_count).to eq(1)
+
+      bundle_offer.update!({ bundled_offers: [] })
+
+      expect(bundle_offer.bundled_offers_count).to eq(0)
+    end
+  end
+
   context "#bundled_offers" do
     context "#bundled_offers_correct" do
       let(:offer) { build(:offer) }

@@ -4,7 +4,7 @@ class Backoffice::Services::PublishesController < Backoffice::ApplicationControl
   before_action :find_and_authorize
 
   def create
-    Service::Publish.new(@service, verified: verified?).call
+    Service::Publish.call(@service, verified: verified?)
     redirect_to [:backoffice, @service]
   end
 
