@@ -49,8 +49,8 @@ class Service::PcCreateOrUpdate
       service
     elsif is_newer_update
       if mapped_service && !@is_active
-        Service::Update.new(mapped_service, service_hash).call
-        Service::Draft.new(mapped_service).call
+        Service::Update.call(mapped_service, service_hash)
+        Service::Draft.call(mapped_service)
 
         Importers::Logo.new(mapped_service, @eosc_registry_service["logo"]).call
         mapped_service.save!
@@ -60,7 +60,7 @@ class Service::PcCreateOrUpdate
         if checked_service.invalid?
           raise NotUpdatedError, "Service is not updated, because parsed service data is invalid"
         end
-        Service::Update.new(mapped_service, service_hash).call
+        Service::Update.call(mapped_service, service_hash)
         mapped_service.update(upstream_id: source_id.id)
         mapped_service.sources.first.update(errored: nil)
 

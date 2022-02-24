@@ -1,0 +1,4 @@
+%p Dear #{@bundled_offer.service.name} administrator,
+%p Your offer #{offer_full_name(@bundled_offer)} was bundled in #{offer_full_name(@bundle_offer)}.
+%p You can view the bundle offer under #{link_to @bundle_offer.service.name, service_url(@bundle_offer.service)}.
+%em Please note that you can’t reply to this message.

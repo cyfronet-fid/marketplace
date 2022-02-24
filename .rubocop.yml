@@ -153,3 +153,8 @@ Metrics/ParameterLists:
 Naming/PredicateName:
   Enabled: true
   AllowedMethods: has_attribute?
+
+# Disable this in spec as per https://github.com/rubocop/rubocop/issues/4222#issuecomment-290655562
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - "spec/**/*"

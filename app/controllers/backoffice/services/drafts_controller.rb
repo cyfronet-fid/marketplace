@@ -4,7 +4,7 @@ class Backoffice::Services::DraftsController < Backoffice::ApplicationController
   before_action :find_and_authorize
 
   def create
-    Service::Draft.new(@service).call
+    Service::Draft.call(@service)
     redirect_to [:backoffice, @service]
   end
 

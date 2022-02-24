@@ -14,7 +14,7 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
     template = offer_template
     authorize(template)
 
-    @offer = Offer::Create.new(template).call
+    @offer = Offer::Create.call(template)
 
     if @offer.persisted?
       redirect_to backoffice_service_path(@service), notice: "New offer created successfully"
@@ -27,7 +27,7 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
 
   def update
     template = permitted_attributes(Offer.new)
-    if Offer::Update.new(@offer, transform_attributes(template)).call
+    if Offer::Update.call(@offer, transform_attributes(template))
       redirect_to backoffice_service_path(@service), notice: "Offer updated successfully"
     else
       render :edit, status: :bad_request
@@ -36,7 +36,7 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
 
   def destroy
     @offer = @service.offers.find_by(iid: params[:id])
-    Offer::Destroy.new(@offer).call
+    Offer::Destroy.call(@offer)
     redirect_to backoffice_service_path(@service), notice: "Offer removed successfully"
   end
 

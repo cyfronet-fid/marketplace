@@ -22,7 +22,7 @@ class Api::V1::Resources::OffersController < Api::V1::ApplicationController
     offer_temp = offer_template
     authorize offer_temp
 
-    @offer = Offer::Create.new(offer_temp).call
+    @offer = Offer::Create.call(offer_temp)
 
     if @offer.persisted?
       render json: Api::V1::OfferSerializer.new(@offer).as_json, status: 201
@@ -33,7 +33,7 @@ class Api::V1::Resources::OffersController < Api::V1::ApplicationController
 
   def update
     template = transform(permitted_attributes(@offer))
-    if Offer::Update.new(@offer, template).call
+    if Offer::Update.call(@offer, template)
       render json: Api::V1::OfferSerializer.new(@offer).as_json, status: 200
     else
       render json: { error: @offer.errors.to_hash }, status: 400
@@ -41,7 +41,7 @@ class Api::V1::Resources::OffersController < Api::V1::ApplicationController
   end
 
   def destroy
-    Offer::Destroy.new(@offer).call
+    Offer::Destroy.call(@offer)
     head :ok
   end
 

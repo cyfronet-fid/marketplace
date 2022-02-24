@@ -45,7 +45,12 @@ class Offer < ApplicationRecord
            inverse_of: "target",
            dependent: :destroy
 
-  has_many :bundled_offers, through: :target_offer_links, source: :target
+  has_many :bundled_offers,
+           through: :target_offer_links,
+           source: :target,
+           dependent: :destroy,
+           after_add: :bundled_offer_added
+  has_many :bundle_offers, through: :source_offer_links, source: :source, dependent: :destroy
 
   validate :set_iid, on: :create
   validates :service, presence: true
@@ -83,6 +88,10 @@ class Offer < ApplicationRecord
     bundled_offers.size.positive?
   end
 
+  def bundled?
+    bundle_offers.size.positive?
+  end
+
   def bundle_parameters?
     bundle? && (parameters.present? || bundled_offers.map(&:parameters).any?(&:present?))
   end
@@ -98,7 +107,18 @@ class Offer < ApplicationRecord
     Offer.find_by!(service: Service.find_by!(slug: split[0]), iid: split[1].to_i)
   end
 
+  attr_reader :added_bundled_offers
+
+  def reset_added_bundled_offers!
+    @added_bundled_offers = []
+  end
+
   private
+
+  def bundled_offer_added(new_bundled_offer)
+    @added_bundled_offers ||= []
+    @added_bundled_offers.push(new_bundled_offer)
+  end
 
   def set_iid
     self.iid = offers_count + 1 if iid.blank?
