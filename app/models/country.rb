@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Country
-  SCHENGEN = %w[AT BE CH CZ DE DK EE GR ES FI FR HU IS IT LI LT LU LV MT NL NO PL PT SE SI SK].freeze
+  SCHENGEN = %w[AT BE CH CZ DE DK EE EL ES FI FR HU IS IT LI LT LU LV MT NL NO PL PT SE SI SK].freeze
 
   REGIONS = %w[WW EO EU EZ AH].freeze
 
