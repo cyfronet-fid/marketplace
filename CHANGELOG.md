@@ -20,6 +20,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Replace GR with EL in Schengen countries list (@danielkryska)
 - Remove redundant comma in service details languages (@danielkryska)
 - Fix resource subpages add to favourite button (@danielkryska)
 - Fix researching resources from nth page of resources (@danielkryska)
