@@ -9,7 +9,7 @@
     = f.input :project do
       .input-group.col
         = f.input_field :project_id, collection: projects,
-          class: "form-control custom-select #{"is-invalid" unless project_item.errors[:project].empty?}",
+          class: "form-control custom-select #{"is-invalid" unless step.errors[:project].empty?}",
           "data-action" => "change->details-loader#changed",
           "data-target" => "details-loader.idSource"
         .input-group-append.ml-4

@@ -1,5 +1,5 @@
 %li.projects-list
-  - if project_item.offer.bundle?
+  - if project_item.bundle?
     %a.bundle-more.collapsed.dropdown{ href: "#collapse-example_#{project_item.id}",
                     "data-toggle" => "collapse",
                     "role" => "button",
@@ -11,7 +11,7 @@
       %span.new-message
         = image_pack_tag "ico_message.svg", class: "new-message-icon"
         = _("You have a new message")
-    - if project_item.offer.bundle?
+    - if project_item.bundle?
       %span.bundle-status
         = _("BUNDLE")
     - if project_item.closed?
@@ -33,9 +33,6 @@
           %span.new-message
             = image_pack_tag "ico_message.svg", class: "new-message-icon"
             = _("You have a new message")
-        - if child.offer.bundle?
-          %span.bundle-status
-            = _("BUNDLE")
         - if child.closed?
           -# TODO: refactor dynamic translation
           .status-box.status-bg-closed
