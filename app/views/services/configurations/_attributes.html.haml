@@ -1,10 +1,10 @@
-- unless project_item.property_values.blank?
+- unless step.property_values.blank?
   .card.offer-description.mb-4
     .card-body.p-4
       %h4.card-title.mb-4
         = _("Parameters")
       .col-12.col-lg-12.pl-0.additional-information.technical
-        - project_item.property_values.each do |attr|
+        - step.property_values.each do |attr|
           = form.simple_fields_for :property_values, attr do |field|
             = render "services/configurations/attributes/#{attr.type}", attr: attr, field: field
           - rescue StandardError => e

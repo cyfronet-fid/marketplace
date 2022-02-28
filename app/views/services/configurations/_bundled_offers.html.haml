@@ -1,7 +1,7 @@
-- if project_item.offer.bundle?
+- if step.offer.bundle?
   %h2.mt-5 Bundle configuration
   %p Your resource will be configured to work with following resources:
-  - project_item.bundled_property_values.each do |offer, property_values|
+  - step.bundled_property_values.each do |offer, property_values|
 
     .row.bundle-info
       .col-12.col-md-2
