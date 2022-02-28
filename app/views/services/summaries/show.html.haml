@@ -9,7 +9,7 @@
     = _("Once added to the project, your resource will be accessible via URL at your Project space.")
 
 = render "services/summaries/technical_configuration",
-         service: @service, project_item: @step
+         service: @service, step: @step
 - if @offer.bundle?
   = render partial: "services/summaries/bundle_technical", collection: @offer.bundled_offers, as: :offer,
   locals: { bundle_params: @bundle_params }
@@ -30,7 +30,7 @@
                 = _("Voucher ID")
               %dd= @step.voucher_id
 
-        = render "services/summaries/project_browser", project_item: @step, projects: @projects, f: f
+        = render "services/summaries/project_browser", step: @step, projects: @projects, f: f
     .card.offer-description.mb-4
       .card-body.pb-2.pt-4.pl-4.pr-4
         %h4

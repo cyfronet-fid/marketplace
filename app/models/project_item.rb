@@ -64,6 +64,10 @@ class ProjectItem < ApplicationRecord
     !(ready? || rejected?)
   end
 
+  def bundle?
+    children.present?
+  end
+
   def new_status(status:, status_type:)
     update(status: status, status_type: status_type)
   end

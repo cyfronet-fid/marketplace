@@ -24,6 +24,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Remove redundant comma in service details languages (@danielkryska)
 - Fix resource subpages add to favourite button (@danielkryska)
 - Fix researching resources from nth page of resources (@danielkryska)
+- Don't depend on offer when determining whether a Project Item is a bundle (@jswk)
 
 ### Security
 

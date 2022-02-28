@@ -729,11 +729,9 @@ RSpec.feature "Service ordering" do
 
     context "#bundles" do
       scenario "I can order a service bundle" do
-        parent = create(:offer, service: service)
-        child1 = create(:offer_with_parameters, service: service)
-        child2 = create(:offer_with_parameters, service: service)
-        OfferLink.create!(source: parent, target: child1)
-        OfferLink.create!(source: parent, target: child2)
+        child1 = create(:offer_with_parameters)
+        child2 = create(:offer_with_parameters)
+        parent = create(:offer, service: service, bundled_offers: [child1, child2])
 
         visit service_path(service)
 
@@ -777,7 +775,20 @@ RSpec.feature "Service ordering" do
 
         # Project item page
         expect(page).to have_current_path(project_service_path(pi1.project, pi1))
+        expect(page).to have_content("BUNDLE")
         expect(page).to have_content(service.name)
+        expect(page).to have_content(child1.service.name)
+        expect(page).to have_content(child2.service.name)
+
+        # The bundle reference should stay after unbundling offers
+        parent.update(bundled_offers: [])
+
+        visit project_services_path(pi1.project)
+
+        expect(page).to have_content("BUNDLE")
+        expect(page).to have_content(service.name)
+        expect(page).to have_content(child1.service.name)
+        expect(page).to have_content(child2.service.name)
       end
     end
   end

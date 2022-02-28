@@ -12,7 +12,7 @@
           = @step.offer.name
         %span.text-muted
           = _("Provided by #{ @step.offer.service.name}")
-  = render "services/configurations/voucher", project_item: @step, f: f
-  = render "services/configurations/attributes", project_item: @step, service: @service, form: f
+  = render "services/configurations/voucher", step: @step, f: f
+  = render "services/configurations/attributes", step: @step, service: @service, form: f
   - if @step.offer.bundle?
-    = render "services/configurations/bundled_offers", project_item: @step, service: @service, f: f
+    = render "services/configurations/bundled_offers", step: @step, service: @service, f: f
