@@ -4,6 +4,7 @@ require "image_processing/mini_magick"
 
 class Backoffice::Services::LogoPreviewsController < Backoffice::ApplicationController
   include ImageHelper
+  include Backoffice::ServicesSessionHelper
 
   def show
     if params[:service_id] == "new"
@@ -37,7 +38,7 @@ class Backoffice::Services::LogoPreviewsController < Backoffice::ApplicationCont
   end
 
   def session_logo
-    preview_session = session["service-#{@service&.id}-preview"]
+    preview_session = session[session_key]
     if preview_session.present? && preview_session["logo"].present? && preview_session["logo"]["base64"].present?
       preview_session["logo"]
     end

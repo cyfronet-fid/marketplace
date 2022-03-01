@@ -6,6 +6,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.36.0-milestone]
+
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+- Validation in the backoffice resource form (@danielkryska, @goreck888)
+
+### Security
+
 ## [3.35.0-milestone]
 
 ### Added

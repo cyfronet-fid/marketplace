@@ -20,8 +20,7 @@ class TourFeedbacksController < ApplicationController
     @errors =
       @feedback["questions"]
         .reject { |question| @form[question["name"]].present? }
-        .collect { |question| [question["name"], "This field is required"] }
-        .to_h
+        .to_h { |question| [question["name"], "This field is required"] }
 
     check_and_set_email(tour_params)
 

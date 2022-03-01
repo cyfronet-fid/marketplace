@@ -9,78 +9,73 @@ class Service::PcCreateOrUpdate
   class NotUpdatedError < StandardError
   end
 
-  def initialize(eosc_registry_service, eosc_registry_base_url, is_active, modified_at, token, faraday: Faraday)
-    @faraday = faraday
-    @eosc_registry_base_url = eosc_registry_base_url
-    @eid = eosc_registry_service["id"]
-    @eosc_registry_service = eosc_registry_service
+  def initialize(eosc_registry_service, eosc_registry_base_url, is_active, modified_at, token)
+    @error_message = "Service haven't been updated. Message #{eosc_registry_service}"
+    @logo = eosc_registry_service["logo"]
     @is_active = is_active
-    @token = token
-    @modified_at = modified_at
+    @source_type = "eosc_registry"
+    @mp_service =
+      Service
+        .joins(:sources)
+        .find_by("service_sources.source_type": @source_type, "service_sources.eid": eosc_registry_service["id"])
+    @service_hash = Importers::Service.new(eosc_registry_service, modified_at, eosc_registry_base_url, token).call
+    @new_update_available = Service::PcCreateOrUpdate.new_update_available(@mp_service, modified_at)
   end
 
   def call
-    service_hash = Importers::Service.new(@eosc_registry_service, @modified_at, @eosc_registry_base_url, @token).call
-    mapped_service =
-      Service.joins(:sources).find_by("service_sources.source_type": "eosc_registry", "service_sources.eid": @eid)
-    source_id = mapped_service.nil? ? nil : mapped_service.sources.find_by(source_type: "eosc_registry")
+    create_new = @mp_service.nil? && @is_active
+    return Service::PcCreateOrUpdate.create_service(@service_hash, @logo) if create_new
+    return @mp_service unless @new_update_available
 
-    is_newer_update = mapped_service&.synchronized_at.present? ? (@modified_at >= mapped_service.synchronized_at) : true
-
-    if mapped_service.nil? && @is_active
-      service = Service.new(service_hash)
-      if service.valid?
-        Service::Create.new(service).call
-      else
-        service.status = "errored"
-        service.save(validate: false)
-      end
-      source =
-        ServiceSource.create!(
-          service_id: service.id,
-          source_type: "eosc_registry",
-          eid: @eid,
-          errored: service.errors.to_hash
-        )
-      service.update(upstream_id: source.id)
-
-      Importers::Logo.new(service, @eosc_registry_service["logo"]).call
-      service.save!(validate: false)
-      service
-    elsif is_newer_update
-      if mapped_service && !@is_active
-        Service::Update.call(mapped_service, service_hash)
-        Service::Draft.call(mapped_service)
-
-        Importers::Logo.new(mapped_service, @eosc_registry_service["logo"]).call
-        mapped_service.save!
-        mapped_service
-      elsif !source_id.nil?
-        checked_service = Service.new(service_hash)
-        if checked_service.invalid?
-          raise NotUpdatedError, "Service is not updated, because parsed service data is invalid"
-        end
-        Service::Update.call(mapped_service, service_hash)
-        mapped_service.update(upstream_id: source_id.id)
-        mapped_service.sources.first.update(errored: nil)
-
-        Importers::Logo.new(mapped_service, @eosc_registry_service["logo"]).call
-        mapped_service.save!
-        mapped_service
-      else
-        raise NotUpdatedError, "Service source_id is unrecognized."
-      end
-    else
-      raise NotUpdatedError, "Service is not updated because there is a newer version imported."
+    source_id = @mp_service&.sources&.find_by(source_type: @source_type)
+    can_update = @mp_service.present? && (@is_active || source_id.present?)
+    unless can_update
+      Service::PcCreateOrUpdate.handle_invalid_data(@mp_service, @service_hash, @error_message)
+      return @mp_service
     end
-  rescue NotUpdatedError => e
-    Rails.logger.warn "#{e} Message arrived, but service is not updated. Message #{@eosc_registry_service}"
-    if mapped_service.present? && mapped_service&.sources&.first.present?
-      source = mapped_service&.sources&.first
-      source.update(errored: checked_service&.errors&.to_hash)
+
+    update_valid = Service::Update.call(@mp_service, @service_hash)
+    unless update_valid
+      Service::PcCreateOrUpdate.handle_invalid_data(@mp_service, @service_hash, @error_message)
+      return @mp_service
     end
-    mapped_service
+
+    Service::Draft.call(@mp_service) unless @is_active
+    if source_id.present?
+      @mp_service.update(upstream_id: source_id.id)
+      @mp_service.sources.first.update(errored: nil)
+    end
+
+    Importers::Logo.new(@mp_service, @logo).call
+    @mp_service.save!
+    @mp_service
   rescue Errno::ECONNREFUSED
     raise ConnectionError, "[WARN] Connection refused."
+  end
+
+  def self.new_update_available(service, modified_at)
+    return true unless service&.synchronized_at.present?
+    modified_at >= service.synchronized_at
+  end
+
+  def self.handle_invalid_data(mp_service, service_hash, error_message)
+    Rails.logger.warn error_message
+    service_errors = Service.new(service_hash)&.errors&.to_hash
+    mp_service&.sources&.first&.update(errored: service_errors)
+  end
+
+  def self.create_service(service_hash, logo)
+    service = Service.new(service_hash)
+    if service.valid?
+      Service::Create.new(service).call
+    else
+      service.status = "errored"
+      service.save(validate: false)
+    end
+    ServiceSource::Create.new(service).call
+
+    Importers::Logo.new(service, logo).call
+    service.save!(validate: false)
+    service
   end
 end

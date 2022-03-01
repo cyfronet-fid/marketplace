@@ -3,11 +3,12 @@
 require "mini_magick"
 require "timeout"
 
-class Importers::Logo
+class Importers::Logo < ApplicationService
   class LogoNotAvailableError < StandardError
   end
 
   def initialize(object, image_url)
+    super()
     @object = object
     @image_url = image_url
   end

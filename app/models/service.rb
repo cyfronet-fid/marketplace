@@ -11,9 +11,6 @@ class Service < ApplicationRecord
 
   acts_as_taggable
 
-  before_save :strip_whitespace
-  before_save :remove_empty_array_fields
-
   has_one_attached :logo
 
   enum order_type: {
@@ -41,8 +38,6 @@ class Service < ApplicationRecord
   }.freeze
 
   enum status: STATUSES
-
-  auto_strip_attributes :language_availability, nullify_array: false
 
   has_many :offers, dependent: :restrict_with_error
   has_many :project_items, through: :offers
@@ -75,13 +70,8 @@ class Service < ApplicationRecord
   has_one :main_contact, as: :contactable, dependent: :destroy, autosave: true
   has_many :public_contacts, as: :contactable, dependent: :destroy, autosave: true
 
-  accepts_nested_attributes_for :main_contact,
-                                reject_if: lambda { |attributes| attributes["email"].blank? },
-                                allow_destroy: true
-
-  accepts_nested_attributes_for :public_contacts,
-                                reject_if: lambda { |attributes| attributes["email"].blank? },
-                                allow_destroy: true
+  accepts_nested_attributes_for :main_contact, allow_destroy: true
+  accepts_nested_attributes_for :public_contacts, reject_if: :all_blank, allow_destroy: true
 
   has_many :user_services, dependent: :destroy
   has_many :favourite_users, through: :user_services, source: :user, class_name: "User"
@@ -132,6 +122,38 @@ class Service < ApplicationRecord
   serialize :geographical_availabilities, Country::Array
   serialize :resource_geographic_locations, Country::Array
 
+  auto_strip_attributes :name, nullify: false
+  auto_strip_attributes :description, nullify: false
+  auto_strip_attributes :tagline, nullify: false
+  auto_strip_attributes :terms_of_use_url, nullify: false
+  auto_strip_attributes :access_policies_url, nullify: false
+  auto_strip_attributes :sla_url, nullify: false
+  auto_strip_attributes :webpage_url, nullify: false
+  auto_strip_attributes :manual_url, nullify: false
+  auto_strip_attributes :helpdesk_url, nullify: false
+  auto_strip_attributes :training_information_url, nullify: false
+  auto_strip_attributes :restrictions, nullify: false
+  auto_strip_attributes :activate_message, nullify: false
+  auto_strip_attributes :slug, nullify: false
+  auto_strip_attributes :order_type, nullify: false
+  auto_strip_attributes :helpdesk_email, nullify: false
+  auto_strip_attributes :status_monitoring_url, nullify: false
+  auto_strip_attributes :maintenance_url, nullify: false
+  auto_strip_attributes :order_url, nullify: false
+  auto_strip_attributes :payment_model_url, nullify: false
+  auto_strip_attributes :pricing_url, nullify: false
+  auto_strip_attributes :security_contact_email, nullify: false
+  auto_strip_attributes :privacy_policy_url, nullify: false
+  auto_strip_attributes :language_availability, nullify_array: false
+  auto_strip_attributes :multimedia, nullify_array: false
+  auto_strip_attributes :use_cases_url, nullify_array: false
+  auto_strip_attributes :certifications, nullify_array: false
+  auto_strip_attributes :standards, nullify_array: false
+  auto_strip_attributes :open_source_technologies, nullify_array: false
+  auto_strip_attributes :changelog, nullify_array: false
+  auto_strip_attributes :related_platforms, nullify_array: false
+  auto_strip_attributes :grant_project_names, nullify_array: false
+
   validates :name, presence: true
   validates :description, presence: true
   validates :tagline, presence: true
@@ -157,12 +179,23 @@ class Service < ApplicationRecord
   validates :language_availability, array: true
   validates :logo, blob: { content_type: :image }
   validate :logo_variable, on: %i[create update]
-  validates :scientific_domains, presence: true
+  validates :scientific_domains,
+            presence: true,
+            length: {
+              minimum: 1,
+              message: "are required. Please add at least one"
+            }
   validates :status, presence: true
   validates :trl, length: { maximum: 1 }
   validates :life_cycle_status, length: { maximum: 1 }
-  validates :geographical_availabilities, presence: true
+  validates :geographical_availabilities,
+            presence: true,
+            length: {
+              minimum: 1,
+              message: "are required. Please add at least one"
+            }
   validates :resource_organisation, presence: true
+  validates :public_contacts, presence: true, length: { minimum: 1, message: "are required. Please add at least one" }
 
   after_save :set_first_category_as_main!, if: :main_category_missing?
 
@@ -240,27 +273,13 @@ class Service < ApplicationRecord
     PUBLIC_STATUSES.include?(status)
   end
 
+  def update_logo!(logo)
+    blob, ext = ImageHelper.base_64_to_blob_stream(logo["base64"])
+    path = ImageHelper.to_temp_file(blob, ext)
+    self.logo.attach(io: File.open(path), filename: logo["filename"])
+  end
+
   private
-
-  def strip_whitespace
-    self.name = name&.strip
-  end
-
-  def remove_empty_array_fields
-    array_fields = %i[
-      multimedia
-      use_cases_url
-      certifications
-      standards
-      open_source_technologies
-      changelog
-      related_platforms
-      grant_project_names
-    ]
-    array_fields.each do |field|
-      send(field).present? ? send(:"#{field}=", send(field).reject(&:blank?)) : send(:"#{field}=", [])
-    end
-  end
 
   def main_category_missing?
     categorizations.where(main: true).count.zero?
