@@ -47,6 +47,7 @@ Metrics/PerceivedComplexity:
     - 'app/services/service/pc_create_or_update.rb'
     - 'lib/import/vocabularies.rb'
     - 'lib/jira/console_checker.rb'
+    - 'lib/import/resources.rb'
 
 Metrics/CyclomaticComplexity:
   Enabled: true

@@ -40,6 +40,8 @@ FactoryBot.define do
     sequence(:version) { nil }
     sequence(:trl) { [create(:trl)] }
     sequence(:synchronized_at) { Time.now - 2.days }
+    sequence(:main_contact) { build(:main_contact) }
+    sequence(:public_contacts) { [build(:public_contact)] }
 
     upstream { nil }
 

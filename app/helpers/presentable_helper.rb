@@ -27,7 +27,7 @@ module PresentableHelper
 
   def field_tree(record, field)
     parents = record.send(field).map { |f| f.parent.blank? ? f : f.parent }
-    parents.map { |parent| [parent.name, (parent.children & record.send(field)).map(&:name)] }.to_h
+    parents.to_h { |parent| [parent.name, (parent.children & record.send(field)).map(&:name)] }
   end
 
   def presentable_logo(object, classes = "align-self-center mr-4 float-left img-responsive", resize = "100x67")

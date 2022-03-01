@@ -176,12 +176,9 @@ class Jira::Checker
     fields = client.Field.all
 
     statuses =
-      client
-        .custom_fields
-        .map do |field_name, field_id|
-          [field_name, fields.any? { |f| f.id == field_id && f.name.to_sym == field_name }]
-        end
-        .to_h
+      client.custom_fields.to_h do |field_name, field_id|
+        [field_name, fields.any? { |f| f.id == field_id && f.name.to_sym == field_name }]
+      end
 
     raise CheckerCompositeError.new("CUSTOM FIELD mapping have some problems", statuses) if statuses.any? { |_k, v| !v }
   end

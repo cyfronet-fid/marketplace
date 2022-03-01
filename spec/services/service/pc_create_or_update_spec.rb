@@ -40,7 +40,6 @@ RSpec.describe Service::PcCreateOrUpdate do
     end
   end
 
-  let(:faraday) { double(Faraday) }
   let(:provider_eid) { "ten" }
 
   before(:each) do
@@ -57,7 +56,7 @@ RSpec.describe Service::PcCreateOrUpdate do
       create(:provider_source, source_type: "eosc_registry", eid: "tp", provider: provider_tp)
 
       service = create(:jms_service, prov_eid: "new.prov", name: "New supper service")
-      expect { stub_described_class(service, faraday: faraday) }.to change { Offer.count }.by(1)
+      expect { stub_described_class(service) }.to change { Offer.count }.by(1)
       offer = Offer.last
       service = Service.last
 
@@ -85,7 +84,7 @@ RSpec.describe Service::PcCreateOrUpdate do
 
       # first create a service
       jms_service = build(:jms_service, prov_eid: "tp")
-      stub_described_class(jms_service, faraday: faraday)
+      stub_described_class(jms_service)
 
       service = Service.last
       expect(service.name).to eq("Title")
@@ -93,7 +92,7 @@ RSpec.describe Service::PcCreateOrUpdate do
 
       # only then attach an invalid provider
       jms_service = build(:jms_service, prov_eid: "new.prov", name: "New supper service")
-      stub_described_class(jms_service, faraday: faraday)
+      stub_described_class(jms_service)
 
       service.reload
 
@@ -104,9 +103,8 @@ RSpec.describe Service::PcCreateOrUpdate do
 
   private
 
-  def stub_described_class(jms_service, is_active: true, modified_at: Time.now, faraday: Faraday)
-    described_service =
-      Service::PcCreateOrUpdate.new(jms_service, test_url, is_active, modified_at, nil, faraday: faraday)
+  def stub_described_class(jms_service, is_active: true, modified_at: Time.now)
+    described_service = Service::PcCreateOrUpdate.new(jms_service, test_url, is_active, modified_at, nil)
 
     stub_http_file(
       described_service,

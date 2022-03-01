@@ -123,6 +123,8 @@ namespace :dev do
     end
   end
 
+  # rubocop:disable Metrics/AbcSize
+
   def create_services(services_hash)
     puts "Generating services:"
     services_hash.each do |_, hash|
@@ -138,6 +140,8 @@ namespace :dev do
       trl = Vocabulary::Trl.where(eid: hash["trl"])
       life_cycle_status = Vocabulary::LifeCycleStatus.where(eid: hash["life_cycle_status"])
       target_users = TargetUser.where(name: hash["target_users"])
+      public_contacts = [PublicContact.new(email: "mail@example.org")]
+      main_contact = MainContact.new(first_name: "John", last_name: "Doe", email: "john@example.org")
 
       service.assign_attributes(
         pid: hash["pid"] || nil,
@@ -166,6 +170,8 @@ namespace :dev do
         categories: categories,
         tag_list: hash["tags"],
         platforms: platforms,
+        main_contact: main_contact,
+        public_contacts: public_contacts,
         status: hash["status"] || :published
       )
       service.save(validate: false)
@@ -177,6 +183,8 @@ namespace :dev do
       create_offers(service, hash["offers"])
     end
   end
+
+  # rubocop:enable Metrics/AbcSize
 
   def order_type_from(hash)
     if hash["external"]
