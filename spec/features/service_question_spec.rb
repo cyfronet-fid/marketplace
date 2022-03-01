@@ -14,6 +14,8 @@ RSpec.feature "Question about service" do
   end
 
   scenario "cannot be send when contact emails are empty" do
+    service.public_contacts = []
+    service.save(validate: false)
     visit service_path(service)
 
     expect(page).to_not have_content "Ask a question about this resource?"
@@ -38,7 +40,7 @@ RSpec.feature "Question about service" do
       expect do
         click_on "SEND"
         expect(page).to have_content("Your message was successfully sent")
-      end.to change { ActionMailer::Base.deliveries.count }.by(2)
+      end.to change { ActionMailer::Base.deliveries.count }.by(3)
 
       expect(Jms::PublishJob).to have_been_enqueued
     end
@@ -83,7 +85,7 @@ RSpec.feature "Question about service" do
       expect do
         click_on "SEND"
         expect(page).to have_content("Your message was successfully sent")
-      end.to change { ActionMailer::Base.deliveries.count }.by(2)
+      end.to change { ActionMailer::Base.deliveries.count }.by(3)
 
       expect(Jms::PublishJob).to have_been_enqueued
     end

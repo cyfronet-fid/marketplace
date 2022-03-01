@@ -233,7 +233,7 @@ class Jira::Client < JIRA::Client
   private
 
   def encode_properties(properties)
-    properties.map { |p| [p["label"], p["value"]] }.to_h
+    properties.to_h { |p| [p["label"], p["value"]] }
   end
 
   def encode_order_properties(project_item)

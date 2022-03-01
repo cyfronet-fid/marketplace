@@ -9,7 +9,6 @@ class Provider < ApplicationRecord
 
   acts_as_taggable
 
-  before_save :strip_whitespace
   searchkick word_middle: [:provider_name]
 
   STATUSES = { published: "published", deleted: "deleted", draft: "draft" }.freeze
@@ -78,7 +77,23 @@ class Provider < ApplicationRecord
 
   accepts_nested_attributes_for :data_administrators, allow_destroy: true
 
-  before_validation :strip_input_fields
+  auto_strip_attributes :name, nullify: false
+  auto_strip_attributes :pid, nullify: false
+  auto_strip_attributes :abbreviation, nullify: false
+  auto_strip_attributes :website, nullify: false
+  auto_strip_attributes :description, nullify: false
+  auto_strip_attributes :street_name_and_number, nullify: false
+  auto_strip_attributes :postal_code, nullify: false
+  auto_strip_attributes :city, nullify: false
+  auto_strip_attributes :region, nullify: false
+  auto_strip_attributes :hosting_legal_entity, nullify: false
+  auto_strip_attributes :status, nullify: false
+  auto_strip_attributes :multimedia, nullify_array: false
+  auto_strip_attributes :certifications, nullify_array: false
+  auto_strip_attributes :affiliations, nullify_array: false
+  auto_strip_attributes :national_roadmaps, nullify_array: false
+  auto_strip_attributes :tag_list, nullify_array: false
+
   before_validation do
     remove_empty_array_fields
     self.legal_status = nil unless legal_entity
@@ -95,8 +110,13 @@ class Provider < ApplicationRecord
   validates :country, presence: true
   validates :logo, presence: true, blob: { content_type: :image }
   validates :provider_life_cycle_statuses, length: { maximum: 1 }
-  validates :public_contacts, length: { minimum: 1, message: "are required. Please add at least one" }
-  validates :data_administrators, length: { minimum: 1, message: "are required. Please add at least one" }
+  validates :public_contacts, presence: true, length: { minimum: 1, message: "are required. Please add at least one" }
+  validates :data_administrators,
+            presence: true,
+            length: {
+              minimum: 1,
+              message: "are required. Please add at least one"
+            }
   validates :status, presence: true
   validate :logo_variable, on: %i[create update]
   validate :validate_array_values_uniqueness
@@ -170,16 +190,7 @@ class Provider < ApplicationRecord
 
   private
 
-  def strip_whitespace
-    self.name = name&.strip
-  end
-
   def remove_empty_array_fields
-    array_fields = %i[multimedia certifications affiliations national_roadmaps tag_list]
-    array_fields.each do |field|
-      send(field).present? ? send(:"#{field}=", send(field).reject(&:blank?)) : send(:"#{field}=", [])
-    end
-
     send(
       :data_administrators=,
       data_administrators.reject do |administrator|
@@ -206,10 +217,6 @@ class Provider < ApplicationRecord
     if national_roadmaps.uniq.length != national_roadmaps.length
       errors.add(:national_roadmaps, "has duplicates, please remove them to continue")
     end
-  end
-
-  def strip_input_fields
-    attributes.each { |key, value| self[key] = value.strip if value.respond_to?("strip") }
   end
 
   def logo_changed?

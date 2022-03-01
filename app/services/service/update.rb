@@ -1,38 +1,46 @@
 # frozen_string_literal: true
 
 class Service::Update < ApplicationService
-  def initialize(service, params)
+  def initialize(service, params, logo = nil)
     super()
     @service = service
     @params = params
+    @logo = logo
   end
 
   def call
     public_before = @service.public?
-    if @service.errored? && @service.valid?
-      result = @service.update(@params.merge(status: :unverified))
-    else
-      result = @service.update(@params)
+    ActiveRecord::Base.transaction do
+      if @service.public_contacts.present? && @service.public_contacts.all?(&:marked_for_destruction?)
+        @service.public_contacts[0].reload
+      end
+      @params.merge(status: :unverified) if @service.errored? && @service.valid?
+
+      @service.update_logo!(@logo) if @logo
+      @service.update!(@params)
     end
-    handle_bundles!(public_before) if result
-    order_type = @params[:order_type].presence || @service.order_type.presence
+
+    handle_bundles!(public_before)
+
     if @service.offers.published.size == 1
-      Offer::Update.call(
-        @service.offers.first,
-        { order_type: order_type, order_url: @params[:order_url] || @service.order_url, status: "published" }
-      )
+      offer_partial = { order_type: @service.order_type.presence, order_url: @service.order_url, status: "published" }
+      Offer::Update.call(@service.offers.first, offer_partial)
     elsif @service.offers.published.empty?
-      Offer::Create.call(
+      new_offer =
         Offer.new(
           name: "Offer",
-          description: "#{@params[:name] || @service.name} Offer",
-          order_type: order_type,
-          order_url: @params[:order_url] || @service.order_url,
-          status: "published",
-          service: @service
+          description: "#{@service.name} Offer",
+          service: @service,
+          order_type: @service.order_type.presence,
+          order_url: @service.order_url,
+          status: "published"
         )
-      )
+      Offer::Create.call(new_offer)
     end
+
+    true
+  rescue ActiveRecord::RecordInvalid
+    false
   end
 
   private

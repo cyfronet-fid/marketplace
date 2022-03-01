@@ -174,7 +174,7 @@
         .card.shadow-sm.rounded
           %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
               [:"main_contact.first_name", :"main_contact.last_name",
-              :"main_contact.email", :"public_contacts.email"])),
+              :"main_contact.email", :"public_contacts.email", :public_contacts])),
                 data: { toggle: "collapse", target: "#contact" },
                 aria: { expanded: true, controls: "contact" } }
             .card-header.text-left{ id: "contact-header" }
@@ -188,7 +188,7 @@
         .collapse{ id: "contact", "aria-labelledby": "contact-header",
             "data-parent": "#accordion-form",
             class: ("show" unless collapsed?(service, [:"main_contact.first_name",
-            :"main_contact.last_name", :"main_contact.email", :"public_contacts.email"])) }
+            :"main_contact.last_name", :"main_contact.email", :"public_contacts.email", :public_contacts])) }
           .card-body
             .row.service-contact-emails
               .col-12
@@ -196,25 +196,19 @@
                   = _("Main Contact")
                 .contact
                   = f.fields_for :main_contact do |main_contact_form|
-                    = main_contact_form.hidden_field :id,
-                      disabled: service.upstream_id.present?
-                    = main_contact_form.input :first_name,
-                      disabled: service.upstream_id.present?
-                    = main_contact_form.input :last_name,
-                      disabled: service.upstream_id.present?
-                    = main_contact_form.input :email,
-                      disabled: service.upstream_id.present?
-                    = main_contact_form.input :phone,
-                      disabled: service.upstream_id.present?
-                    = main_contact_form.input :organisation,
-                      disabled: service.upstream_id.present?
-                    = main_contact_form.input :position,
-                      disabled: service.upstream_id.present?
+                    = main_contact_form.hidden_field :id, disabled: service.upstream_id.present?
+                    = main_contact_form.input :first_name, disabled: service.upstream_id.present?
+                    = main_contact_form.input :last_name, disabled: service.upstream_id.present?
+                    = main_contact_form.input :email, disabled: service.upstream_id.present?
+                    = main_contact_form.input :phone, disabled: service.upstream_id.present?
+                    = main_contact_form.input :organisation, disabled: service.upstream_id.present?
+                    = main_contact_form.input :position, disabled: service.upstream_id.present?
             .row.service-contact-emails{ "data-target": "service.publicContacts" }
               .col-12
                 %h3
                   = _("Public contacts")
-                = f.fields_for :public_contacts, multiple: true, as: :array,
+                = f.error :public_contacts, class: "invalid-feedback d-block"
+                = f.fields_for :public_contacts, disabled: service.upstream_id.present?, multiple: true, as: :array,
                     wrapper_html: { "data-target" => "form.publicContact" } do |public_contact_form|
                   = render "backoffice/common_parts/form/public_contact_fields",
                   public_contact_form: public_contact_form, service: service, provider_form: false

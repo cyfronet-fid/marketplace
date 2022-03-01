@@ -1,13 +1,17 @@
 # frozen_string_literal: true
 
-class Service::Create
-  def initialize(service)
+class Service::Create < ApplicationService
+  def initialize(service, logo = nil)
+    super()
     @service = service
+    @logo = logo
   end
 
   def call
+    @service.update_logo!(@logo) if @logo && @service.logo.blank?
     @service.save
-    Offer::Create.call(
+
+    new_offer =
       Offer.new(
         name: "Offer",
         description: "#{@service.name} Offer",
@@ -17,7 +21,7 @@ class Service::Create
         status: "published",
         service: @service
       )
-    )
+    Offer::Create.call(new_offer)
     @service
   end
 end

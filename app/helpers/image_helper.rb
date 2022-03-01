@@ -88,4 +88,12 @@ module ImageHelper
 
     extension
   end
+
+  def self.to_json(logo)
+    unless logo.present? && logo.original_filename.present? && logo.path.present? && logo.content_type.present?
+      return nil
+    end
+
+    { "filename" => logo.original_filename, "base64" => ImageHelper.to_base64(logo.path), "type" => logo.content_type }
+  end
 end

@@ -42,6 +42,15 @@ RSpec.describe Service::Update do
     expect(offer.status).to eq("published")
   end
 
+  it "doesn't create a new offer if service update fails" do
+    service = create(:service)
+
+    described_class.call(service, order_url: "invalid.url")
+    service.reload
+
+    expect(service.offers.size).to eq(0)
+  end
+
   context "#bundled_offers" do
     it "sends notification if service made public" do
       service = build(:service, status: "draft")

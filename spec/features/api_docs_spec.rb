@@ -34,8 +34,6 @@ RSpec.feature "Api docs page" do
 
       expect(user.authentication_token).to_not eq(prev_token)
 
-      save_page
-
       find("#toggler").click
 
       expect(page).to have_text(user.authentication_token)

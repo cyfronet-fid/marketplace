@@ -25,7 +25,7 @@ namespace :recommender do
     rescue StandardError
       path = Rails.root.join("data.json")
       puts "Couldn't connect to recommender host, dumping db into #{path} instead..."
-      File.open(path, "w") { |f| f.write(serialized_db) }
+      File.write(path, serialized_db)
       puts "Database dump saved to file successfully!"
     end
   end
@@ -50,7 +50,7 @@ namespace :recommender do
     rescue StandardError
       path = Rails.root.join("data.json")
       puts "Couldn't connect to recommender host, dumping db into #{path} instead..."
-      File.open(path, "w") { |f| f.write(serialized_db) }
+      File.write(path, serialized_db)
       puts "Database dump saved to file successfully!"
     end
   end
@@ -63,7 +63,7 @@ namespace :recommender do
     path = Rails.root.join("data.json")
 
     puts "Saving database dump (to #{path})..."
-    File.open(path, "w") { |f| f.write(serialized_db) }
+    File.write(path, serialized_db)
     puts "Database dump saved successfully!"
   end
 end
