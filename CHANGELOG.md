@@ -6,19 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [3.33.0-milestone]
+## [3.33.0] 2022-03-07
 
 ### Added
 - Missing notification about new message in bundled offers (@goreck888)
 - Parameter engine_version in the body of /recommendations request (@Michal-Kolomanski)
 - Management of offer bundles in Offering API (@jswk)
 - Email notifications on certain offer bundle related actions (@jswk)
-
-### Changed
-
-### Deprecated
-
-### Removed
 
 ### Fixed
 - Replace GR with EL in Schengen countries list (@danielkryska)
@@ -28,8 +22,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Don't depend on offer when determining whether a Project Item is a bundle (@jswk)
 - Fix displaying statistics of the resource for executive role (@goreck888)
 - Missing partial in the EGI Notebooks resource page (@goreck888)
-
-### Security
 
 ## [3.32.0] 2022-02-18
 
