@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [1.0.2] 2022-03-08
+
+### Changed
+- Update MP version to 3.33.0 (@kmarszalek)
+
 ## [1.0.1] 2022-02-02
 
 ### Added
