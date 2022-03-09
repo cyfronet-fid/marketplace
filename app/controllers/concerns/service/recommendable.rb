@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "net/http"
+require_relative "searchable"
 
 module Service::Recommendable
   extend ActiveSupport::Concern
@@ -78,6 +79,7 @@ module Service::Recommendable
       page_id: "/service",
       panel_id: "v1",
       engine_version: Mp::Application.config.recommendation_engine,
+      elastic_services: all_matching_services_ids(scope, all_filters),
       search_data: get_filters_by(@params)
     }
 
@@ -103,4 +105,19 @@ module Service::Recommendable
     end
     filters
   end
+end
+
+def all_matching_services_ids(scope, filters)
+  services_ids =
+    Service.search(
+      query,
+      select: ["id"],
+      load: false,
+      **common_params.merge(where: filter_constr(filters, scope_constr(scope, category_constr)))
+    )
+  services_ids.map { |obj| obj["id"].to_i }
+end
+
+def scope
+  policy_scope(Service).with_attached_logo
 end
