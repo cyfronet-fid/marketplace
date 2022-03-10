@@ -455,3 +455,30 @@ Basically the user is redirected `if eosc_logged_in && !internal_session`.
 After the logout, both of the cookies are set to `false`.
 
 For more info, click [here](https://docs.cyfronet.pl/pages/viewpage.action?spaceKey=FID&title=.eosc-portal.eu+domain+level+auto-login+%28SSO%29+research)
+
+
+## ESS update, local integration
+
+Start a local Solr instance by executing:
+```shell
+cd solr; docker-compose up
+```
+
+It will set up a local instance with a single core `marketplace`.
+The web interface should be accessible under http://localhost:8983/solr/ with the core available under "Core selector".
+The core should be empty at this point.
+
+Run a local instance of MP with `ESS_UPDATE_ENABLED=true` and seed it with data.
+During the seeding the core should be populated, to verify it's the case go to the "Query" section and execute
+a query, or just run it directly with `GET http://localhost:8983/solr/marketplace/select?q=*%3A*`.
+
+In case you didn't seed the DB and still want to propagate data then run `rails ess:reindex:all` to reindex the service
+collection.
+The effect should be analogous.
+
+To verify updating the ESS entries, run the following in the rails console and observe `q=id:16` Solr queries:
+```
+Service.find(16).update!(status: :draft) # the entry should be removed
+Service.find(16).update!(status: :published) # the entry should reappear
+Service.find(16).update!(tagline: "foo bar") # the entry's tagline should update
+```

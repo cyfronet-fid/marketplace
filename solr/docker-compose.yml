@@ -1,0 +1,22 @@
+version: '3.9'
+
+services:
+  solr:
+    image: solr:8.11
+    ports:
+      - "127.0.0.1:8983:8983"
+    environment:
+      VERBOSE: "yes"
+    volumes:
+      - solr-data:/var/solr
+      - ./config/configsets:/configsets
+      - ./config/solr.xml:/opt/solr/server/solr/solr.xml
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    networks:
+      - solr-local
+
+volumes:
+  solr-data:
+
+networks:
+  solr-local:
