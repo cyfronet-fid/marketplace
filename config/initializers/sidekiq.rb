@@ -12,3 +12,5 @@ end
 Sidekiq.configure_client do |config|
   config.redis = sidekiq_connection
 end
+
+Sidekiq.strict_args!

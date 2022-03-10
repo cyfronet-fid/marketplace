@@ -1,0 +1,13 @@
+default: &default
+  enabled: <%= ENV["ESS_UPDATE_ENABLED"] || "false" %>
+  url: <%= ENV["ESS_UPDATE_URL"] || "http://localhost:8983/solr/marketplace/update" %>
+  timeout: <%= ENV["ESS_UPDATE_TIMEOUT"] || "1" %>
+
+test:
+  <<: *default
+
+development:
+  <<: *default
+
+production:
+  <<: *default

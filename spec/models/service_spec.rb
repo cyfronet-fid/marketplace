@@ -107,4 +107,68 @@ RSpec.describe Service do
       end
     end
   end
+
+  context "#propagate_to_ess" do
+    context "adds" do
+      Service::PUBLIC_STATUSES.each do |public_status|
+        it "a new #{public_status} service" do
+          expect { create(:service, status: public_status) }.to have_enqueued_job(Ess::UpdateJob).with { |payload|
+            expect(payload).to be_an_add_operation
+          }
+        end
+
+        it "a service updated to #{public_status}" do
+          service = create(:service)
+
+          expect { service.update!(status: public_status) }.to have_enqueued_job(Ess::UpdateJob).with { |payload|
+            expect(payload).to be_an_add_operation
+          }
+        end
+      end
+
+      it "an updated service" do
+        service = create(:service)
+
+        expect { service.update!(tagline: "new value") }.to have_enqueued_job(Ess::UpdateJob).with { |payload|
+          expect(payload).to be_an_add_operation
+        }
+      end
+
+      matcher :be_an_add_operation do
+        match { |payload| expect(payload["add"]).to be_present }
+      end
+    end
+
+    context "deletes" do
+      Service::STATUSES
+        .values
+        .reject { |k| Service::PUBLIC_STATUSES.include?(k) }
+        .each do |non_public_status|
+          it "a new #{non_public_status} service" do
+            expect { create(:service, status: non_public_status) }.to have_enqueued_job(Ess::UpdateJob)
+              .with { |payload| expect(payload).to be_a_delete_operation }
+          end
+
+          it "a service updated to #{non_public_status}" do
+            service = create(:service)
+
+            expect { service.update!(status: non_public_status) }.to have_enqueued_job(Ess::UpdateJob).with { |payload|
+              expect(payload).to be_a_delete_operation
+            }
+          end
+        end
+
+      it "an updated service" do
+        service = create(:service, status: "deleted")
+
+        expect { service.update!(tagline: "new value") }.to have_enqueued_job(Ess::UpdateJob).with { |payload|
+          expect(payload).to be_a_delete_operation
+        }
+      end
+
+      matcher :be_a_delete_operation do
+        match { |payload| expect(payload["delete"]).to be_present }
+      end
+    end
+  end
 end
