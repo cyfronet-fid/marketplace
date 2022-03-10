@@ -1,5 +1,5 @@
 web: bundle exec rails s
 # watcher: ./bin/webpack-watcher
 webpacker: ./bin/webpack-dev-server
-jobs: bundle exec sidekiq -q active_storage_analysis -q active_storage_purge -q pc_subscriber -q orders -q mailers -q reports -q probes -q default -q pc_publisher
+jobs: bundle exec sidekiq -q active_storage_analysis -q active_storage_purge -q pc_subscriber -q orders -q mailers -q reports -q probes -q default -q pc_publisher -q ess_update
 

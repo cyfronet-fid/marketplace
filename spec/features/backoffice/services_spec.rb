@@ -95,7 +95,7 @@ RSpec.feature "Services in backoffice" do
 
       expect { click_on "Create Resource" }.to change { user.owned_services.count }.by(1).and change { Offer.count }.by(
                                                        1
-                                                     )
+                                                     ).and have_enqueued_job(Ess::UpdateJob)
 
       expect(page).to have_content("service name")
       expect(page).to have_content("service description")
@@ -230,9 +230,10 @@ RSpec.feature "Services in backoffice" do
       click_on "Preview"
 
       expect(page).to have_content("service name")
+      expect(Ess::UpdateJob).not_to have_been_enqueued
 
       click_on "Go back to edit"
-      expect { click_on "Create Resource" }.to change { Service.count }.by(1)
+      expect { click_on "Create Resource" }.to change { Service.count }.by(1).and have_enqueued_job(Ess::UpdateJob)
       expect(page).to have_content("service name")
     end
 
@@ -285,7 +286,7 @@ RSpec.feature "Services in backoffice" do
       service = create(:service, status: :draft)
 
       visit backoffice_service_path(service)
-      click_on "Publish"
+      expect { click_on "Publish" }.to have_enqueued_job(Ess::UpdateJob)
 
       expect(page).to have_content("Status: published")
     end
@@ -294,7 +295,7 @@ RSpec.feature "Services in backoffice" do
       service = create(:service, status: :draft)
 
       visit backoffice_service_path(service)
-      click_on "Publish as unverified resource"
+      expect { click_on "Publish as unverified resource" }.to have_enqueued_job(Ess::UpdateJob)
 
       expect(page).to have_content("Status: unverified")
     end
@@ -303,7 +304,7 @@ RSpec.feature "Services in backoffice" do
       service = create(:service, status: :published)
 
       visit backoffice_service_path(service)
-      click_on "Stop showing in the MP"
+      expect { click_on "Stop showing in the MP" }.to have_enqueued_job(Ess::UpdateJob)
 
       expect(page).to have_content("Status: draft")
     end
@@ -315,7 +316,7 @@ RSpec.feature "Services in backoffice" do
       click_on "Edit"
 
       fill_in "Name", with: "updated name"
-      click_on "Update Resource"
+      expect { click_on "Update Resource" }.to have_enqueued_job(Ess::UpdateJob)
 
       expect(page).to have_content("updated name")
     end
