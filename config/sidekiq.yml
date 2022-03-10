@@ -19,3 +19,4 @@ staging:
   - probes
   - default
   - pc_publisher
+  - ess_update
