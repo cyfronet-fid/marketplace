@@ -9,13 +9,13 @@ export default class extends Controller {
   }
 
   toggle(event) {
-    const target = event.currentTarget;
-    const collapsed = !target.classList.contains("collapsed");
-
-    document.cookie = `${target.id}=${collapsed};expires=${this.expireAtString()}`;
+    event.preventDefault();
+    this.toggleParent(event);
+    this.toggleChildren(event);
+    this.reload();
   }
 
-  reload(event) {
+  reload() {
     let form = this.formTarget;
     for (const element of form) {
       if (
@@ -25,8 +25,44 @@ export default class extends Controller {
         element.disabled = true;
       }
     }
-    form.submit();
     document.getElementsByClassName("spinner-background")[0].style.display = "flex";
+    form.submit();
+  }
+
+  toggleChildren(event) {
+    const parent = event.target;
+    const state = parent.checked;
+    const childSelector = `[type='checkbox'][name='${parent.name}'][data-parent='${parent.value}']:enabled`;
+    Array.from(document.querySelectorAll(childSelector)).forEach((child) => (child.checked = state));
+  }
+
+  toggleParent(event) {
+    const element = event.target;
+    const childSelector = `[type='checkbox'][name='${element.name}'][data-parent='${element.dataset.parent}']:enabled`;
+    const otherChildren =
+      Array.from(document.querySelectorAll(childSelector)).filter((value) => value !== element) || [];
+
+    const state = element.checked;
+
+    const anyChildHasDifferentState =
+      otherChildren.length === 0 ? false : otherChildren.some((e) => e.checked !== state);
+    const parent = document.querySelector(
+      `[type='checkbox'][name='${element.name}'][value='${element.dataset.parent}']`
+    );
+
+    if (!parent) {
+      return;
+    }
+    if (anyChildHasDifferentState) {
+      console.log("INDETERMINATE PARENT");
+      parent.checked = false;
+      parent.indeterminate = true;
+      parent.classList.add("indeterminate");
+      return;
+    }
+    console.log("PARENT CHECK/UNCHECK");
+    parent.classList.remove("indeterminate");
+    parent.checked = state;
   }
 
   checkActiveMulticheckboxFilters() {
@@ -35,10 +71,10 @@ export default class extends Controller {
 
     for (const element of checkboxes) {
       const params = urlSearchParams.getAll(element.name);
-      if (!(params === element.value || params.includes(element.value)) && element.type == "checkbox") {
-        element.checked = false;
-      } else if (element.type == "checkbox") {
+      if (params === element.value || (params.includes(element.value) && element.type == "checkbox")) {
         element.checked = true;
+      } else if (element.type == "checkbox") {
+        element.checked = false;
       }
     }
   }
