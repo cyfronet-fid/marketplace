@@ -18,4 +18,12 @@ module FormsHelper
   def snake_cased(model_name)
     model_name.parameterize(separator: "_")
   end
+
+  def checkbox_class(option, values)
+    enabled = values.include?(option[:id].to_s)
+    state = enabled ? "checked" : "unchecked"
+    if values && option[:children]
+      (option[:children]&.map { |c| c[:id].to_s } & values).size.positive? ? "indeterminate" : state
+    end
+  end
 end
