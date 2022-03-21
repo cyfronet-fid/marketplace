@@ -9,6 +9,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [3.35.0-milestone]
 
 ### Added
+- Retrieve JWT access token from refresh token to import Providers and/or Services (@danielkryska)
 
 ### Changed
 

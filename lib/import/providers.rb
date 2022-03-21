@@ -119,9 +119,10 @@ class Import::Providers
 
   def external_providers_data
     begin
-      rp = Importers::Request.new(@eosc_registry_base_url, "provider", faraday: @faraday, token: @token).call
-    rescue Errno::ECONNREFUSED
-      abort("import exited with errors - could not connect to #{@eosc_registry_base_url}")
+      token = Importers::Token.new(faraday: @faraday).receive_token
+      rp = Importers::Request.new(@eosc_registry_base_url, "provider", faraday: @faraday, token: token).call
+    rescue Errno::ECONNREFUSED, Importers::Token::RequestError => e
+      abort("import exited with errors - could not connect to #{@eosc_registry_base_url} \n #{e.message}")
     end
     rp.body["results"].index_by { |provider| provider["id"] }
   end
