@@ -79,11 +79,11 @@ describe Jms::ManageMessage do
     $stdout = original_stdout
   end
 
-  it "should do nothing for update rejected provider message" do
+  it "should receive update to update rejected provider message" do
     original_stdout = $stdout
     $stdout = StringIO.new
     resource = parser.parse(rejected_provider_resource["resource"])
-    expect(Provider::PcCreateOrUpdateJob).to_not receive(:perform_later).with(
+    expect(Provider::PcCreateOrUpdateJob).to receive(:perform_later).with(
       resource["providerBundle"]["provider"],
       resource["providerBundle"]["active"],
       Time.at(resource["providerBundle"]["metadata"]["modifiedAt"].to_i&./ 1000)
