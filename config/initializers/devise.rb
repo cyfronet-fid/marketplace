@@ -261,7 +261,7 @@ Devise.setup do |config|
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
   checkin_host = ENV["CHECKIN_HOST"] || "aai.eosc-portal.eu"
   root_url = ENV["ROOT_URL"] || "http://localhost:#{ENV["PORT"] || 3000}"
-  scope = ENV["CHECKIN_SCOPE"].nil? ? %w[openid profile email refeds_edu] : ENV["CHECKIN_SCOPE"].split(",")
+  scope = ENV["CHECKIN_SCOPE"].nil? ? %w[openid profile email refeds_edu offline_access] : ENV["CHECKIN_SCOPE"].split(",")
   config.omniauth :openid_connect,
                   name: :checkin,
                   scope: scope,
