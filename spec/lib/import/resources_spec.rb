@@ -2,6 +2,7 @@
 
 require "rails_helper"
 require "jira/setup"
+require "ostruct"
 
 describe Import::Resources do
   let(:test_url) { "https://localhost/api" }
@@ -63,6 +64,24 @@ describe Import::Resources do
     end
   end
 
+  def mock_access_token
+    allow_any_instance_of(Faraday::Connection).to(
+      receive(:post)
+        .with(
+          "https://#{ENV["CHECKIN_HOST"] || "aai.eosc-portal.eu"}/oidc/token",
+          {
+            grant_type: "refresh_token",
+            refresh_token: nil,
+            scope: %w[openid profile email],
+            client_id:
+              ENV["IMPORTER_AAI_CLIENT_ID"] || ENV["CHECKIN_IDENTIFIER"] ||
+                Rails.application.credentials.checkin[:identifier]
+          }
+        )
+        .and_return(OpenStruct.new({ body: "{\"access_token\": \"test_token\"}", status: 200 }))
+    )
+  end
+
   describe "#error responses" do
     it "should abort if /api/services errored" do
       response = double(status: 500, body: {})
@@ -76,6 +95,7 @@ describe Import::Resources do
       response = double(status: 200, body: create(:eosc_registry_services_response))
       expect_responses(test_url, response)
       allow_any_instance_of(Importers::Service).to receive(:map_provider).and_return(provider)
+      mock_access_token
     end
 
     it "should create an offer for a new services" do
