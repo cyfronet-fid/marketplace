@@ -3,15 +3,16 @@
 require "rails_helper"
 
 RSpec.describe Provider::PcCreateOrUpdate do
-  let(:provider_response) { create(:jms_provider_response) }
+  let(:published_provider_response) { create(:jms_published_provider_response) }
+  let(:draft_provider_response) { create(:jms_draft_provider_response) }
   let(:logger) { Logger.new($stdout) }
 
   before(:each) { allow_any_instance_of(Importers::Logo).to receive(:call) }
 
-  it "should create provider with source and upstream" do
+  it "should create provider with source and upstream is true" do
     original_stdout = $stdout
     $stdout = StringIO.new
-    expect { described_class.new(provider_response, true, Time.now).call }.to change { Provider.count }.by(1)
+    expect { described_class.new(published_provider_response, true, Time.now).call }.to change { Provider.count }.by(1)
 
     provider = Provider.last
 
@@ -35,7 +36,7 @@ RSpec.describe Provider::PcCreateOrUpdate do
 
     expect do
       described_class.new(
-        create(:jms_provider_response, eid: "new.provider", name: "Supper new name for updated  provider"),
+        create(:jms_published_provider_response, eid: "new.provider", name: "Supper new name for updated  provider"),
         true,
         Time.now.to_i
       ).call
@@ -63,7 +64,7 @@ RSpec.describe Provider::PcCreateOrUpdate do
 
     expect do
       described_class.new(
-        create(:jms_provider_response, eid: "new.provider", name: "Supper new name for updated  provider"),
+        create(:jms_draft_provider_response, eid: "new.provider", name: "Supper new name for updated  provider"),
         false,
         Time.now.to_i
       ).call
@@ -79,10 +80,18 @@ RSpec.describe Provider::PcCreateOrUpdate do
     $stdout = original_stdout
   end
 
-  it "should raise error if provider not found and active false" do
+  it "should create provider with source and upstream and is_active is false" do
     original_stdout = $stdout
     $stdout = StringIO.new
-    expect { described_class.new(provider_response, false, Time.now).call }.to raise_error
+    expect { described_class.new(draft_provider_response, false, Time.now).call }.to change { Provider.count }.by(1)
+
+    provider = Provider.last
+
+    expect(provider.name).to eq("Test Provider tp")
+    expect(provider.sources.length).to eq(1)
+    expect(provider.sources[0].eid).to eq("tp")
+    expect(provider.upstream_id).to eq(provider.sources[0].id)
+    expect(provider.draft?).to be_truthy
     $stdout = original_stdout
   end
 end
