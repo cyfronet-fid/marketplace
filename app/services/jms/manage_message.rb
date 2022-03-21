@@ -20,7 +20,7 @@ class Jms::ManageMessage
   def call
     body = JSON.parse(@message.body)
     action = @message.headers["destination"].split(".").last
-    log body
+    log @message
     resource = @parser.parse(body["resource"])
 
     raise ResourceParseError, "Cannot parse resource" if resource.empty?
@@ -41,9 +41,10 @@ class Jms::ManageMessage
       end
     when "provider"
       modified_at = modified_at(resource, "providerBundle")
-      if action == "delete"
+      case action
+      when "delete"
         Provider::DeleteJob.perform_later(resource["providerBundle"]["provider"]["id"])
-      elsif action == "update" && process_provider_update?(resource)
+      when "update", "create"
         Provider::PcCreateOrUpdateJob.perform_later(
           resource["providerBundle"]["provider"],
           resource["providerBundle"]["active"],
@@ -71,15 +72,5 @@ class Jms::ManageMessage
 
   def warn(msg)
     @logger.warn(msg)
-  end
-
-  def process_provider_update?(resource)
-    if resource["providerBundle"]["active"]
-      true
-    elsif resource["providerBundle"]["latestOnboardingInfo"].nil?
-      false
-    else
-      resource["providerBundle"]["latestOnboardingInfo"]["actionType"] == "approved"
-    end
   end
 end

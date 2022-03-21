@@ -130,7 +130,7 @@ FactoryBot.define do
       }
     end
   end
-  factory :jms_provider_response, class: Hash do
+  factory :jms_published_provider_response, class: Hash do
     skip_create
     transient do
       eid { "tp" }
@@ -147,6 +147,48 @@ FactoryBot.define do
         "additionalInfo" => "no",
         "contactInformation" => "test phone number",
         "active" => true,
+        "status" => "approved",
+        "abbreviation" => "test",
+        "description" => "test",
+        "location" => {
+          "streetNameAndNumber" => "street",
+          "postalCode" => "00-000",
+          "city" => "test",
+          "region" => "WW",
+          "country" => "N/E"
+        },
+        "publicContacts" => {
+          "publicContact" => {
+            "email" => "test@mail.pl"
+          }
+        },
+        "users" => {
+          "user" => {
+            "email" => "test@mail.pl",
+            "name" => "test",
+            "surname" => "test"
+          }
+        }
+      }
+    end
+  end
+  factory :jms_draft_provider_response, class: Hash do
+    skip_create
+    transient do
+      eid { "tp" }
+      name { "Test Provider #{eid}" }
+    end
+    initialize_with do
+      {
+        "id" => eid,
+        "name" => name,
+        "website" => "http://beta.providers.eosc-portal.eu",
+        "catalogueOfResources" => "http://no.i.dont",
+        "publicDescOfResources" => "http://no.i.dont",
+        "logo" => "https://cdn.shopify.com/s/files/1/0553/3925/products/logo_developers_grande.png?v=1432756867",
+        "additionalInfo" => "no",
+        "contactInformation" => "test phone number",
+        "active" => false,
         "status" => "approved",
         "abbreviation" => "test",
         "description" => "test",

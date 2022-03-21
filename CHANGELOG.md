@@ -6,6 +6,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.35.0-milestone]
+
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+- JMS handling of Provider messages (@kmarszalek)
+
+### Security
+
 ## [3.34.0] 2022-03-22
 
 ## [3.33.0] 2022-03-07
