@@ -51,7 +51,7 @@
               input_html: { multiple: true, data: { choice: true } },
               collection: msd_non_root_names,
               label_method: :first, value_method: :second
-        = f.association :areas_of_activity, disabled: cant_edit([areas_of_activity_ids: []]),
+        = f.association :areas_of_activity, disabled: cant_edit([area_of_activity_ids: []]),
               input_html: { multiple: true, data: { choice: true } }
         = f.association :societal_grand_challenges, disabled: cant_edit([societal_grand_challenge_ids: []]),
               input_html: { multiple: true, data: { choice: true } }
