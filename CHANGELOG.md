@@ -17,6 +17,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Removed
 
 ### Fixed
+- Fix saving areas of activity of provider (@danielkryska)
 - JMS handling of Provider messages (@kmarszalek)
 
 ### Security
