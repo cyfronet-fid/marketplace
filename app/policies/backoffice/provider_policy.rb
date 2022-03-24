@@ -69,7 +69,7 @@ class Backoffice::ProviderPolicy < ApplicationPolicy
       [esfri_domain_ids: []],
       [meril_scientific_domain_ids: []],
       :upstream_id,
-      [areas_of_activity_ids: []],
+      [area_of_activity_ids: []],
       [societal_grand_challenge_ids: []],
       [national_roadmaps: []],
       [sources_attributes: %i[id source_type eid _destroy]],
