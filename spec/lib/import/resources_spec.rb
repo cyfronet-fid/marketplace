@@ -59,7 +59,7 @@ describe Import::Resources do
   def expect_responses(test_url, services_response = nil)
     unless services_response.nil?
       allow_any_instance_of(Faraday::Connection).to receive(:get)
-        .with("#{test_url}/resource/rich/all?quantity=10000&from=0")
+        .with("#{test_url}/infraService/all?quantity=10000&from=0")
         .and_return(services_response)
     end
   end

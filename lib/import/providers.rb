@@ -29,9 +29,13 @@ class Import::Providers
 
   def call
     log "Importing providers from EOSC Registry..."
-    @request_providers = external_providers_data.select { |id, _| @ids.empty? || @ids.include?(id) }
-    @request_providers.each do |eid, external_provider_data|
+    @request_providers = external_providers_data.select { |pro| @ids.empty? || @ids.include?(pro["provider"]["id"]) }
+
+    @request_providers.each do |external_data|
+      external_provider_data = external_data["provider"]
+      eid = external_provider_data["id"]
       parsed_provider_data = Importers::Provider.new(external_provider_data, Time.now.to_i, "rest").call
+      parsed_provider_data["status"] = external_data["active"] ? :published : :draft
       eosc_registry_provider =
         Provider.joins(:sources).find_by("provider_sources.source_type": "eosc_registry", "provider_sources.eid": eid)
       current_provider = eosc_registry_provider || Provider.find_by(name: parsed_provider_data[:name])
@@ -51,8 +55,11 @@ class Import::Providers
         update_provider(current_provider, parsed_provider_data, external_provider_data["logo"])
       end
     rescue ActiveRecord::RecordInvalid
-      log "[WARN] Provider #{parsed_provider_data[:name]},
-                eid: #{parsed_provider_data[:pid]} cannot be updated. #{current_provider.errors.full_messages}"
+      log "[WARN] Provider #{name(external_data)},
+                eid: #{eid(external_data)} cannot be updated. #{current_provider.errors.full_messages}"
+    rescue StandardError => e
+      log "[WARN] Unexpected #{e}! Provider #{name(external_data)},
+                eid: #{eid(external_data)} cannot be updated"
     ensure
       log_status(current_provider, parsed_provider_data, provider_source)
     end
@@ -71,6 +78,14 @@ class Import::Providers
   end
 
   private
+
+  def name(external_data)
+    external_data.dig("provider", "name")
+  end
+
+  def eid(external_data)
+    external_data.dig("provider", "id")
+  end
 
   def log(msg)
     @logger.call(msg)
@@ -120,10 +135,10 @@ class Import::Providers
   def external_providers_data
     begin
       token = Importers::Token.new(faraday: @faraday).receive_token
-      rp = Importers::Request.new(@eosc_registry_base_url, "provider", faraday: @faraday, token: token).call
+      rp = Importers::Request.new(@eosc_registry_base_url, "provider/bundle", faraday: @faraday, token: token).call
     rescue Errno::ECONNREFUSED, Importers::Token::RequestError => e
       abort("import exited with errors - could not connect to #{@eosc_registry_base_url} \n #{e.message}")
     end
-    rp.body["results"].index_by { |provider| provider["id"] }
+    rp.body["results"]
   end
 end
