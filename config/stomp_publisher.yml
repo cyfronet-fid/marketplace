@@ -5,6 +5,7 @@ default: &default
   host: <%= ENV["MP_STOMP_HOST"] || Rails.application.credentials.stomp.dig(:host) || "''" %>
   ssl-enabled: <%= ENV["MP_STOMP_SSL"] || false %>
   topic: <%= ENV["MP_STOMP_PUBLISHER_TOPIC"] || Rails.application.credentials.stomp.dig(:publisher, :topic) || "''" %>
+  databus-topic: <%= ENV["MP_STOMP_PUBLISHER_DATABUS_TOPIC"] || "databus" %>
 
 test:
   <<: *default

@@ -3,9 +3,10 @@
 require "nori"
 
 class Jms::Publish
-  def initialize(message)
+  def initialize(message, destination = nil)
     @message = message
     @logger = Logger.new(logger_path)
+    @destination = destination
   end
 
   def call
@@ -38,7 +39,7 @@ class Jms::Publish
     stomp_config = Mp::Application.config_for(:stomp_publisher)
 
     Jms::Publisher.new(
-      stomp_config["topic"],
+      @destination == :databus ? stomp_config["databus-topic"] : stomp_config["topic"],
       stomp_config["login"],
       stomp_config["password"],
       stomp_config["host"],
