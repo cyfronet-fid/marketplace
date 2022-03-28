@@ -12,7 +12,7 @@ class Jms::PublishJob < ApplicationJob
     Sentry.capture_exception(e)
   end
 
-  def perform(message)
-    Jms::Publish.new(message).call
+  def perform(message, destination = nil)
+    Jms::Publish.new(message, destination).call
   end
 end
