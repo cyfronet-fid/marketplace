@@ -230,6 +230,9 @@ We are currently using the following ENV variables:
   * `MP_STOMP_PUBLISHER_ENABLED` (Optional) - turn on publishing with JMS if set to `true` (default `false`)
   * `MP_STOMP_PUBLISHER_LOGGER_PATH` (Optional) - path to the JMS log file (default `"RAILS_ROOT/log/jms.publisher.log"`)
   * `MP_STOMP_PUBLISHER_TOPIC` (Optional) - topic of a new message to be published (default `credentials.stomp.publisher.topic`)
+  * `MP_STOMP_PUBLISHER_DATABUS_TOPIC` (Optional) - topic of a databus queue (default `databus`)
+  * `USER_ACTIONS_TARGET` (Optional) - target to which user_actions should be published (options: `all, recommender, databus`) (default `all`)
+    * For the `databus` target to work you must also enable JMS publishing, i.e. set `MP_STOMP_PUBLISHER_ENABLED=true`.  
   * `ESS_UPDATE_ENABLED` (Optional) - turn on updating ESS if set to `true` (default `false`)
   * `ESS_UPDATE_URL` (Optional) - URL to which service updates will be sent (default `http://localhost:8983/solr/marketplace/update`)
   * `ESS_UPDATE_TIMEOUT` (Optional) - ESS update HTTP client timeout in seconds (default `1`)

@@ -23,6 +23,16 @@ class UserActionController < ApplicationController
     is_recommendation_panel = params[:source]["root"]["type"] != "other"
     request_body[:source]["root"]["panel_id"] = "v1" if is_recommendation_panel
 
-    Probes::ProbesJob.perform_later(request_body.to_json)
+    # We're publish user actions to both JMS under the "recommender" topic
+    # as well as to Recommender server directly for now
+    # Recommender cannot receive JMS messages yet
+
+    if %w[all recommender].include? Mp::Application.config.user_actions_target
+      Probes::ProbesJob.perform_later(request_body.to_json)
+    end
+
+    if %w[all databus].include? Mp::Application.config.user_actions_target
+      Jms::PublishJob.perform_later(request_body.to_json, :databus)
+    end
   end
 end
