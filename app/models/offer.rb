@@ -131,7 +131,6 @@ class Offer < ApplicationRecord
       errors.add(:bundled_offers, "only non-bundled offer can have bundled offers")
     else
       errors.add(:bundled_offers, "cannot bundle self") if bundled_offers.include?(self)
-      errors.add(:bundled_offers, "cannot bundle duplicates") if duplicates?(bundled_offers)
       errors.add(:bundled_offers, "cannot bundle bundle offers") if bundled_offers.any?(&:bundle?)
       errors.add(:bundled_offers, "all bundled offers must be published") unless bundled_offers.all?(&:published?)
       errors.add(:bundled_offers, "all bundled offers must be internal") unless bundled_offers.all?(&:internal?)

@@ -238,11 +238,12 @@ RSpec.describe Offer do
         expect_error_messages "cannot bundle self", "cannot bundle bundle offers", "is invalid"
       end
 
-      it "rejects duplicates" do
+      it "removes duplicates" do
         bundled_offer = build(:offer)
         offer.bundled_offers = [bundled_offer, bundled_offer]
 
-        expect_error_messages "cannot bundle duplicates"
+        expect(offer.valid?).to be_truthy
+        expect(offer.bundled_offers.size).to eq(1)
       end
 
       it "rejects bundle offers" do
