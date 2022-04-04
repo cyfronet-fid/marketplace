@@ -45,9 +45,12 @@ gem "json-schema"
 gem "public_suffix"
 
 gem "searchkick"
+gem "elasticsearch", "7.6.0"
+
 gem "devise"
 gem "omniauth"
 gem "omniauth_openid_connect"
+gem "omniauth-rails_csrf_protection"
 gem "pundit", "~> 2.0"
 gem "role_model"
 gem "recaptcha", require: "recaptcha/rails"

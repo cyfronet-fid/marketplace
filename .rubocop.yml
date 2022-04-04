@@ -159,3 +159,8 @@ Naming/PredicateName:
 Lint/AmbiguousBlockAssociation:
   Exclude:
     - "spec/**/*"
+
+Style/OpenStructUse:
+  Exclude:
+    - "spec/lib/import/providers_spec.rb"
+    - "spec/lib/import/resources_spec.rb"

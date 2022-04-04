@@ -5,24 +5,24 @@ class Country
 
   REGIONS = %w[WW EO EU EZ AH].freeze
 
-  ISO3166::Data.register(alpha2: "WW", name: "World", translations: { "en" => "Worldwide" })
+  ISO3166::Data.register(alpha2: "WW", iso_short_name: "World", translations: { "en" => "Worldwide" })
 
-  ISO3166::Data.register(alpha2: "EO", name: "Europe", translations: { "en" => "Europe" })
+  ISO3166::Data.register(alpha2: "EO", iso_short_name: "Europe", translations: { "en" => "Europe" })
 
-  ISO3166::Data.register(alpha2: "EU", name: "European Union", translations: { "en" => "European Union" })
+  ISO3166::Data.register(alpha2: "EU", iso_short_name: "European Union", translations: { "en" => "European Union" })
 
-  ISO3166::Data.register(alpha2: "EZ", name: "Euro Zone", translations: { "en" => "Euro Zone" })
+  ISO3166::Data.register(alpha2: "EZ", iso_short_name: "Euro Zone", translations: { "en" => "Euro Zone" })
 
-  ISO3166::Data.register(alpha2: "AH", name: "Schengen Area", translations: { "en" => "Schengen Area" })
+  ISO3166::Data.register(alpha2: "AH", iso_short_name: "Schengen Area", translations: { "en" => "Schengen Area" })
 
-  ISO3166::Data.register(alpha2: "N/E", name: "non-European", translations: { "en" => "non-European" })
+  ISO3166::Data.register(alpha2: "N/E", iso_short_name: "non-European", translations: { "en" => "non-European" })
 
   ISO3166::Data.unregister("GB")
   ISO3166::Data.unregister("GR")
 
   ISO3166::Data.register(
     alpha2: "UK",
-    name: "United Kingdom of Great Britain and Northern Ireland",
+    iso_short_name: "United Kingdom of Great Britain and Northern Ireland",
     region: "Europe",
     eu_member: false,
     eea_member: false,
@@ -33,7 +33,7 @@ class Country
 
   ISO3166::Data.register(
     alpha2: "EL",
-    name: "Greece",
+    iso_short_name: "Greece",
     region: "Europe",
     eu_member: true,
     eea_member: true,
@@ -97,7 +97,7 @@ class Country
     end
 
     def find_by_name(name)
-      ISO3166::Country.find_country_by_name(name)
+      ISO3166::Country.find_country_by_iso_short_name(name)
     end
 
     def schengen_area

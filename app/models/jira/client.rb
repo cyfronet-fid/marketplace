@@ -274,9 +274,13 @@ class Jira::Client < JIRA::Client
         }
       end
     when "CP-CustomerCountry"
-      project.country_of_origin&.name || "N/A"
+      project.country_of_origin&.iso_short_name || "N/A"
     when "CP-CollaborationCountry"
-      project.countries_of_partnership&.present? ? project.countries_of_partnership&.map(&:name)&.join(", ") : "N/A"
+      if project.countries_of_partnership&.present?
+        project.countries_of_partnership&.map(&:iso_short_name)&.join(", ")
+      else
+        "N/A"
+      end
       # when "CP-ReasonForAccess"
       #   project.reason_for_access
       # when "CP-ProjectInformation"
