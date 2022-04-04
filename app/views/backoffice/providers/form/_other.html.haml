@@ -26,7 +26,7 @@
     .row
       .col-12
         = f.input :participating_countries, disabled: cant_edit([participating_countries: []]), as: :select,
-                  collection: Country.options.map { |c| [ c.name, "value" => c.alpha2 ] },
+                  collection: Country.options.map { |c| [ c.iso_short_name, "value" => c.alpha2 ] },
                   input_html: { data: { choice: true },  multiple: true }
     .row
       .col-12

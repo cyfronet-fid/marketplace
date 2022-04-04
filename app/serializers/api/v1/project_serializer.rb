@@ -28,8 +28,8 @@ class Api::V1::ProjectSerializer < ActiveModel::Serializer
       department: object.department,
       department_webpage: object.webpage,
       scientific_domains: object.scientific_domains&.pluck(:name) || [],
-      country: object.country_of_origin&.name,
-      collaboration_countries: object.countries_of_partnership&.map(&:name) || [],
+      country: object.country_of_origin&.iso_short_name,
+      collaboration_countries: object.countries_of_partnership&.map(&:iso_short_name) || [],
       user_group_name: object.user_group_name
     }
   end

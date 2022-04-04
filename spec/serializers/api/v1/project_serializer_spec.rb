@@ -24,8 +24,8 @@ RSpec.describe Api::V1::ProjectSerializer do
         department: project.department,
         department_webpage: project.webpage,
         scientific_domains: project.scientific_domains.pluck(:name),
-        country: project.country_of_origin.name,
-        collaboration_countries: project.countries_of_partnership&.map(&:name),
+        country: project.country_of_origin.iso_short_name,
+        collaboration_countries: project.countries_of_partnership&.map(&:iso_short_name),
         user_group_name: project.user_group_name
       }
     }

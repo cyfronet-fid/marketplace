@@ -5,7 +5,7 @@ module PresentableHelper
     countries = []
     geographical_availabilities.each do |place|
       co = []
-      co = Country.countries_for_region(place&.name) if place
+      co = Country.countries_for_region(place&.iso_short_name) if place
       co = [place] if co.empty?
       countries |= co if co.any?
     end

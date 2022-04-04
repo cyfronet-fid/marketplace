@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   include Pagy::Backend
   include Turbolinks::Redirection
   include Sentryable
-  include Pundit
+  include Pundit::Authorization
   include Devise::StoreLocation
   include FastGettext::Translation
   include Recommendation::Followable
