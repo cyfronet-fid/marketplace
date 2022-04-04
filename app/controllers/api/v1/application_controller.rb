@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Api::V1::ApplicationController < ActionController::API
-  include Pundit
+  include Pundit::Authorization
   acts_as_token_authentication_handler_for User, fallback: :exception
 
   rescue_from Pundit::NotAuthorizedError do

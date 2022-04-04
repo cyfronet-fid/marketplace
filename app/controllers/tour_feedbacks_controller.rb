@@ -20,8 +20,7 @@ class TourFeedbacksController < ApplicationController
     @errors =
       @feedback["questions"]
         .reject { |question| @form[question["name"]].present? }
-        .collect { |question| [question["name"], "This field is required"] }
-        .to_h
+        .to_h { |question| [question["name"], "This field is required"] }
 
     check_and_set_email(tour_params)
 
@@ -29,23 +28,25 @@ class TourFeedbacksController < ApplicationController
       @form["share"] = tour_params["share"]
       @form["email"] = tour_params["email"]
       return(
-        respond_to do |format|
-          format.js do
-            render "layouts/show_tour_feedback",
-                   status: :bad_request,
-                   locals: {
-                     feedback_form: "layouts/tours/modal_content",
-                     feedback_locals: {
-                       feedback: @feedback,
-                       errors: @errors,
-                       form: @form,
-                       tour_controller_name: @tour_controller_name,
-                       tour_controller_action: @tour_controller_action,
-                       tour_name: @tour_name
+        [
+          respond_to do |format|
+            format.js do
+              render "layouts/show_tour_feedback",
+                     status: :bad_request,
+                     locals: {
+                       feedback_form: "layouts/tours/modal_content",
+                       feedback_locals: {
+                         feedback: @feedback,
+                         errors: @errors,
+                         form: @form,
+                         tour_controller_name: @tour_controller_name,
+                         tour_controller_action: @tour_controller_action,
+                         tour_name: @tour_name
+                       }
                      }
-                   }
+            end
           end
-        end
+        ]
       )
     end
 

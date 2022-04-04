@@ -28,10 +28,9 @@ module Tourable
 
   def available_tours
     # Do we have tours for this controller/action in the user's locale?
-    %W[
-      #{controller_name}.#{action_name}.#{I18n.locale}
-      #{controller_name}.#{action_name}.#{I18n.default_locale}
-    ].map { |key| Rails.configuration.tours.list[key] }.find { |tours| !tours.nil? } || {}
+    %W[#{controller_name}.#{action_name}.#{I18n.locale} #{controller_name}.#{action_name}.#{I18n.default_locale}]
+      .map { |key| Rails.configuration.tours.list[key] }
+      .find { |tours| !tours.nil? } || {}
   end
 
   def finished_tours(controller = controller_name, action = action_name)
