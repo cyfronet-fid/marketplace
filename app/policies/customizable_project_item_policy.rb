@@ -46,7 +46,7 @@ class CustomizableProjectItemPolicy < ApplicationPolicy
   end
 
   def permitted_bundled_offers_attributes
-    record.offer.bundled_offers.map { |o| ["o#{o.id}", to_permitted_attributes(o.attributes)] }.to_h
+    record.offer.bundled_offers.to_h { |o| ["o#{o.id}", to_permitted_attributes(o.attributes)] }
   end
 
   def to_permitted_attributes(attributes)
