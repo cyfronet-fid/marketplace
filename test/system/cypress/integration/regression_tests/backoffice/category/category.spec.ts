@@ -47,7 +47,7 @@ describe("Category", () => {
   });
 
   it("should create new category with parent", () => {
-    cy.visit("/backoffice/categories/new")
+    cy.visit("/backoffice/categories/new");
     cy.fillFormCreateCategory({...category1, parent: "Sharing & Discovery"}, correctLogo);
     cy.get("[data-e2e='create-category-btn']")
       .click();
