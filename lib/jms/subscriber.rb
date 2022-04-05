@@ -43,7 +43,7 @@ module Jms
         { ack: "client-individual", "activemq.subscriptionName": "mpSubscription" }
       ) do |msg|
         log "Arrived message"
-        Jms::ManageMessage.new(msg, @eosc_registry_base_url, @logger, @token).call
+        Jms::ManageMessage.call(msg, @eosc_registry_base_url, @logger, @token)
         @client.ack(msg)
       rescue StandardError => e
         @client.unreceive(msg)

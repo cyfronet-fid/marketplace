@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
-class Importers::Service
+class Importers::Service < ApplicationService
   include Importable
 
   def initialize(data, synchronized_at, eosc_registry_base_url, token = nil, source = "jms")
+    super()
     @data = data
     @synchronized_at = synchronized_at
     @source = source
