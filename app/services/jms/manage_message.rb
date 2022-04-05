@@ -2,7 +2,7 @@
 
 require "nori"
 
-class Jms::ManageMessage
+class Jms::ManageMessage < ApplicationService
   class ResourceParseError < StandardError
   end
 
@@ -10,6 +10,7 @@ class Jms::ManageMessage
   end
 
   def initialize(message, eosc_registry_base_url, logger, token = nil)
+    super()
     @parser = Nori.new(strip_namespaces: true)
     @message = message
     @logger = logger

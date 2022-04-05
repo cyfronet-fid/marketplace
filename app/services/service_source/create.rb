@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-class ServiceSource::Create
+class ServiceSource::Create < ApplicationService
   def initialize(service, source_type = "eosc_registry")
+    super()
     @service = service
     @source_type = source_type
   end

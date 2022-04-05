@@ -60,21 +60,22 @@ class Service::PcCreateOrUpdate
 
   def self.handle_invalid_data(mp_service, service_hash, error_message)
     Rails.logger.warn error_message
-    service_errors = Service.new(service_hash)&.errors&.to_hash
+    validatable_service = Service.new(service_hash)
+    service_errors = validatable_service&.errors&.to_hash if validatable_service.invalid?
     mp_service&.sources&.first&.update(errored: service_errors)
   end
 
   def self.create_service(service_hash, logo)
     service = Service.new(service_hash)
     if service.valid?
-      Service::Create.new(service).call
+      Service::Create.call(service)
     else
       service.status = "errored"
       service.save(validate: false)
     end
-    ServiceSource::Create.new(service).call
+    ServiceSource::Create.call(service)
 
-    Importers::Logo.new(service, logo).call
+    Importers::Logo.call(service, logo)
     service.save!(validate: false)
     service
   end
