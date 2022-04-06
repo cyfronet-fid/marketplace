@@ -19,6 +19,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Fixed
 - Validation in the backoffice resource form (@danielkryska, @goreck888)
 - Nested category breadcrumbs in BO (@kmarszalek)
+- Country list order on edit provider view in BO (@kmarszalek)
 
 ### Security
 
