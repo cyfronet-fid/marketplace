@@ -15,7 +15,7 @@ class Country
 
   ISO3166::Data.register(alpha2: "AH", iso_short_name: "Schengen Area", translations: { "en" => "Schengen Area" })
 
-  ISO3166::Data.register(alpha2: "N/E", iso_short_name: "non-European", translations: { "en" => "non-European" })
+  ISO3166::Data.register(alpha2: "N/E", iso_short_name: "Non-European", translations: { "en" => "Non-European" })
 
   ISO3166::Data.unregister("GB")
   ISO3166::Data.unregister("GR")
@@ -64,11 +64,13 @@ class Country
     end
 
     def all
-      @all ||= (ISO3166::Country.find_all_countries_by_region("Europe") + [ISO3166::Country.new("N/E")]).sort
+      @all ||= (ISO3166::Country.find_all_countries_by_region("Europe") + [non_european]).sort
     end
 
     def options
-      ISO3166::Country.all
+      reg = (regions + [non_european]).sort_by(&:iso_short_name)
+      countries = world.sort_by { |country| ActiveSupport::Inflector.transliterate country.iso_short_name }
+      reg + (countries - regions - [non_european])
     end
 
     def countries_for_region(region)
@@ -90,6 +92,10 @@ class Country
 
     def european_union
       ISO3166::Country.all.select(&:in_eu?)
+    end
+
+    def non_european
+      ISO3166::Country.new("N/E")
     end
 
     def world
