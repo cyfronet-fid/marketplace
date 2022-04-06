@@ -7,7 +7,11 @@ end
 crumb :backoffice_services do |category|
   if category
     link category.name, backoffice_category_services_path(category_id: category)
-    parent :backoffice_services
+    if category.parent
+      parent :backoffice_services, category.parent
+    else
+      parent :backoffice_services
+    end
   else
     link "Owned Resources", backoffice_services_path
     parent :backoffice_root
