@@ -6,23 +6,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [3.35.0-milestone]
+## [3.35.0] 2022-04-07
 
 ### Added
 - Retrieve JWT access token from refresh token to import Providers and/or Services (@danielkryska)
-
-### Changed
-
-### Deprecated
-
-### Removed
 
 ### Fixed
 - Fix saving areas of activity of provider (@danielkryska)
 - JMS handling of Provider messages (@kmarszalek)
 - REST import for Resources and Providers (@kmarszalek)
-
-### Security
 
 ## [3.34.1] 2022-03-31
 
