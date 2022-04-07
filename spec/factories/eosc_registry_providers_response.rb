@@ -11,88 +11,132 @@ FactoryBot.define do
         "to" => 2,
         "results" => [
           {
-            "id" => "bluebridge",
-            "name" => "BlueBRIDGE",
-            "website" => "https://www.bluebridge-vres.eu/",
-            "catalogueOfResources" => nil,
-            "publicDescOfResources" => nil,
-            "logo" => "https://about.west-life.eu/network/west-life/about/templates/westlife/images/west-life.png",
-            "additionalInfo" => "-",
-            "contactInformation" => nil,
+            "metadata" => {
+              "registeredBy" => "John Doe",
+              "registeredAt" => "1549033448415",
+              "modifiedBy" => "John Doe",
+              "modifiedAt" => "1549624107536",
+              "source" => "EOSC",
+              "originalId" => nil
+            },
             "active" => true,
-            "status" => "approved",
-            "abbreviation" => "BlueBRIDGE",
-            "description" => "test",
-            "location" => {
-              "streetNameAndNumber" => "street",
-              "postalCode" => "00-000",
-              "city" => "test",
-              "region" => "WW",
-              "country" => "N/E"
+            "provider" => {
+              "id" => "bluebridge",
+              "name" => "BlueBRIDGE",
+              "website" => "https://www.bluebridge-vres.eu/",
+              "catalogueOfResources" => nil,
+              "publicDescOfResources" => nil,
+              "logo" => "https://about.west-life.eu/network/west-life/about/templates/westlife/images/west-life.png",
+              "additionalInfo" => "-",
+              "contactInformation" => nil,
+              "active" => true,
+              "status" => "approved",
+              "abbreviation" => "BlueBRIDGE",
+              "description" => "test",
+              "location" => {
+                "streetNameAndNumber" => "street",
+                "postalCode" => "00-000",
+                "city" => "test",
+                "region" => "WW",
+                "country" => "N/E"
+              }
             }
           },
           {
-            "id" => "phenomenal",
-            "name" => "Phenomenal",
-            "website" => "http://phenomenal-h2020.eu/home/",
-            "catalogueOfResources" => nil,
-            "publicDescOfResources" => nil,
-            "logo" => "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png",
-            "additionalInfo" => "-",
-            "contactInformation" => "",
+            "metadata" => {
+              "registeredBy" => "John Doe",
+              "registeredAt" => "1549033448415",
+              "modifiedBy" => "John Doe",
+              "modifiedAt" => "1549624107536",
+              "source" => "EOSC",
+              "originalId" => nil
+            },
             "active" => true,
-            "status" => "approved",
-            "abbreviation" => "Phenomenal",
-            "description" => "test",
-            "location" => {
-              "streetNameAndNumber" => "street",
-              "postalCode" => "00-000",
-              "city" => "test",
-              "region" => "WW",
-              "country" => "N/E"
+            "provider" => {
+              "id" => "phenomenal",
+              "name" => "Phenomenal",
+              "website" => "http://phenomenal-h2020.eu/home/",
+              "catalogueOfResources" => nil,
+              "publicDescOfResources" => nil,
+              "logo" => "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png",
+              "additionalInfo" => "-",
+              "contactInformation" => "",
+              "active" => true,
+              "status" => "approved",
+              "abbreviation" => "Phenomenal",
+              "description" => "test",
+              "location" => {
+                "streetNameAndNumber" => "street",
+                "postalCode" => "00-000",
+                "city" => "test",
+                "region" => "WW",
+                "country" => "N/E"
+              }
             }
           },
           {
-            "id" => "West-Life",
-            "name" => "World-wide E-infrastructure for structural biology",
-            "website" => "https://west-life.eu",
-            "catalogueOfResources" => "https://bio.tools/",
-            "publicDescOfResources" => "https://about.west-life.eu/network/west-life/services",
-            "logo" => "https://about.west-life.eu/network/west-life/about/templates/westlife/images/west-life.png",
-            "additionalInfo" =>
-              "https://about.west-life.eu/network/west-life/about/project. For more information contact chris.morris@stfc.ac.uk",
-            "contactInformation" => "+44 1925 603689",
+            "metadata" => {
+              "registeredBy" => "John Doe",
+              "registeredAt" => "1549033448415",
+              "modifiedBy" => "John Doe",
+              "modifiedAt" => "1549624107536",
+              "source" => "EOSC",
+              "originalId" => nil
+            },
             "active" => true,
-            "status" => "approved",
-            "abbreviation" => "West-Life",
-            "description" => "test",
-            "location" => {
-              "streetNameAndNumber" => "street",
-              "postalCode" => "00-000",
-              "city" => "test",
-              "region" => "WW",
-              "country" => "N/E"
+            "provider" => {
+              "id" => "West-Life",
+              "name" => "World-wide E-infrastructure for structural biology",
+              "website" => "https://west-life.eu",
+              "catalogueOfResources" => "https://bio.tools/",
+              "publicDescOfResources" => "https://about.west-life.eu/network/west-life/services",
+              "logo" => "https://about.west-life.eu/network/west-life/about/templates/westlife/images/west-life.png",
+              "additionalInfo" =>
+                "https://about.west-life.eu/network/west-life/about/project. For more information contact chris.morris@stfc.ac.uk",
+              "contactInformation" => "+44 1925 603689",
+              "active" => true,
+              "status" => "approved",
+              "abbreviation" => "West-Life",
+              "description" => "test",
+              "location" => {
+                "streetNameAndNumber" => "street",
+                "postalCode" => "00-000",
+                "city" => "test",
+                "region" => "WW",
+                "country" => "N/E"
+              }
             }
           },
           {
-            "id" => "awesome",
-            "name" => "Awesome provider",
-            "website" => "https://www.osom-prov.eu/",
-            "catalogueOfResources" => nil,
-            "publicDescOfResources" => nil,
-            "logo" => "https://about.west-life.eu/network/west-life/about/templates/westlife/images/west-life.png",
-            "additionalInfo" => "Nothing, cause I'm avesome",
-            "contactInformation" => nil,
+            "metadata" => {
+              "registeredBy" => "John Doe",
+              "registeredAt" => "1549033448415",
+              "modifiedBy" => "John Doe",
+              "modifiedAt" => "1549624107536",
+              "source" => "EOSC",
+              "originalId" => nil
+            },
             "active" => true,
-            "status" => "approved",
-            "abbreviation" => "Awesome provider",
-            "description" => "test",
-            "location" => {
-              "streetNameAndNumber" => "street",
-              "postalCode" => "00-000",
-              "city" => "test",
-              "region" => "WW",
-              "country" => "N/E"
+            "provider" => {
+              "id" => "awesome",
+              "name" => "Awesome provider",
+              "website" => "https://www.osom-prov.eu/",
+              "catalogueOfResources" => nil,
+              "publicDescOfResources" => nil,
+              "logo" => "https://about.west-life.eu/network/west-life/about/templates/westlife/images/west-life.png",
+              "additionalInfo" => "Nothing, cause I'm avesome",
+              "contactInformation" => nil,
+              "active" => true,
+              "status" => "approved",
+              "abbreviation" => "Awesome provider",
+              "description" => "test",
+              "location" => {
+                "streetNameAndNumber" => "street",
+                "postalCode" => "00-000",
+                "city" => "test",
+                "region" => "WW",
+                "country" => "N/E"
+              }
             }
           }
         ],
@@ -114,24 +158,35 @@ FactoryBot.define do
     end
     initialize_with do
       {
-        "id" => eid,
-        "name" => name,
-        "website" => "http://beta.providers.eosc-portal.eu",
-        "catalogueOfResources" => "http://no.i.dont",
-        "publicDescOfResources" => "http://no.i.dont",
-        "logo" => "https://cdn.shopify.com/s/files/1/0553/3925/products/logo_developers_grande.png?v=1432756867",
-        "additionalInfo" => "no",
-        "contactInformation" => "test phone number",
+        "metadata" => {
+          "registeredBy" => "John Doe",
+          "registeredAt" => "1549033448415",
+          "modifiedBy" => "John Doe",
+          "modifiedAt" => "1549624107536",
+          "source" => "EOSC",
+          "originalId" => nil
+        },
         "active" => true,
-        "status" => "approved",
-        "abbreviation" => "test",
-        "description" => "test",
-        "location" => {
-          "streetNameAndNumber" => "street",
-          "postalCode" => "00-000",
-          "city" => "test",
-          "region" => "WW",
-          "country" => "N/E"
+        "provider" => {
+          "id" => eid,
+          "name" => name,
+          "website" => "http://beta.providers.eosc-portal.eu",
+          "catalogueOfResources" => "http://no.i.dont",
+          "publicDescOfResources" => "http://no.i.dont",
+          "logo" => "https://cdn.shopify.com/s/files/1/0553/3925/products/logo_developers_grande.png?v=1432756867",
+          "additionalInfo" => "no",
+          "contactInformation" => "test phone number",
+          "active" => true,
+          "status" => "approved",
+          "abbreviation" => "test",
+          "description" => "test",
+          "location" => {
+            "streetNameAndNumber" => "street",
+            "postalCode" => "00-000",
+            "city" => "test",
+            "region" => "WW",
+            "country" => "N/E"
+          }
         }
       }
     end

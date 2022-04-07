@@ -35,6 +35,8 @@ Metrics/BlockNesting:
   Enabled: true
   Exclude:
     - 'app/controllers/users/omniauth_callbacks_controller.rb'
+    - 'lib/import/resources.rb'
+    - 'lib/import/providers.rb'
 
 Metrics/PerceivedComplexity:
   Enabled: true
@@ -46,6 +48,8 @@ Metrics/PerceivedComplexity:
     - 'app/services/project_item/create.rb'
     - 'app/services/service/pc_create_or_update.rb'
     - 'lib/import/vocabularies.rb'
+    - 'lib/import/resources.rb'
+    - 'lib/import/providers.rb'
     - 'lib/jira/console_checker.rb'
     - 'lib/import/resources.rb'
 
@@ -57,6 +61,7 @@ Metrics/CyclomaticComplexity:
     - 'app/services/importers/provider.rb'
     - 'app/services/importers/service.rb'
     - 'app/services/service/pc_create_or_update.rb'
+    - 'lib/import/resources.rb'
     - 'lib/jira/console_checker.rb'
     - 'app/services/project_item/create.rb'
 
