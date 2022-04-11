@@ -11,6 +11,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 
 ### Changed
+- The request for recommendations is performed if the search context returns at least 3 services (@Michal-Kolomanski)
 
 ### Deprecated
 
