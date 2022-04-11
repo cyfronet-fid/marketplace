@@ -54,7 +54,10 @@ module Service::Recommendable
       return Rails.env.production? ? [] : Recommender::SimpleRecommender.new.call(size)
     end
 
-    get_recommended_services_by(service_search_state, size)
+    available_services = all_matching_services_ids(scope, all_filters)
+
+    # Check if there are enough services available to make a request for recommendations
+    get_recommended_services_by(service_search_state(available_services), size) if available_services.length >= size
   end
 
   private
@@ -71,7 +74,7 @@ module Service::Recommendable
     []
   end
 
-  def service_search_state
+  def service_search_state(available_services)
     state = {
       timestamp: Time.now.strftime("%Y-%m-%dT%H:%M:%S.%L%z"),
       unique_id: cookies[:client_uid],
@@ -79,7 +82,7 @@ module Service::Recommendable
       page_id: "/service",
       panel_id: "v1",
       engine_version: Mp::Application.config.recommendation_engine,
-      elastic_services: all_matching_services_ids(scope, all_filters),
+      elastic_services: available_services,
       search_data: get_filters_by(@params)
     }
 
