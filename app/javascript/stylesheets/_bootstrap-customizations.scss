@@ -1442,6 +1442,19 @@ h5 {
     top: 2px;
     left: 6px;
   }
+
+  input.indeterminate[type=checkbox]:checked + span::after {
+    content: '';
+    display: block;
+    width: 8px;
+    height: 10px;
+    border: 2solid $palette-black;
+    border-width: 2px 0 0 0;
+    position: absolute;
+    transform: none;
+    top: 7px;
+    left: 4px;
+  }
   // scss-lint:enable all
   label {
     width: 85%;
