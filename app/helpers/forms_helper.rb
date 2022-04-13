@@ -23,7 +23,11 @@ module FormsHelper
     enabled = values.include?(option[:id].to_s)
     state = enabled ? "checked" : "unchecked"
     if values && option[:children]
-      (option[:children]&.map { |c| c[:id].to_s } & values).size.positive? ? "indeterminate" : state
+      if (option[:children]&.map { |c| c[:id].to_s } & values).size.between?(1, option[:children].size - 1)
+        "indeterminate"
+      else
+        state
+      end
     end
   end
 end
