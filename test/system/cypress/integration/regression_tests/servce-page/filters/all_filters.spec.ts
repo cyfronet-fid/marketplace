@@ -43,7 +43,7 @@ describe("All filters", () => {
     cy.location("href")
       .should("match", /(?=.*related_platforms)(?=.*target_user)(?=.*providers)(?=.*q=EGI)(?=.*sort=_score)(?=.*scientific_domains)/);
     cy.get("[data-e2e='filter-tag']")
-      .should("be.visible").and("have.length", 4);
+      .should("be.visible").and("have.length", 5);
     cy.get("[data-e2e='filter-tag'] a")
       .eq(0)
       .click();

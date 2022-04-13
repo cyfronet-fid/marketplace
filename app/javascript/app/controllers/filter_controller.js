@@ -10,12 +10,16 @@ export default class extends Controller {
 
   toggle(event) {
     event.preventDefault();
-    this.toggleParent(event);
-    this.toggleChildren(event);
-    this.reload();
+    const target = event.currentTarget;
+    const collapsed = !target.classList.contains("collapsed");
+
+    document.cookie = `${target.id}=${collapsed};expires=${this.expireAtString()}`;
   }
 
-  reload() {
+  reload(event) {
+    event.preventDefault();
+    this.toggleParent(event);
+    this.toggleChildren(event);
     let form = this.formTarget;
     for (const element of form) {
       if (
@@ -54,13 +58,11 @@ export default class extends Controller {
       return;
     }
     if (anyChildHasDifferentState) {
-      console.log("INDETERMINATE PARENT");
       parent.checked = false;
       parent.indeterminate = true;
       parent.classList.add("indeterminate");
       return;
     }
-    console.log("PARENT CHECK/UNCHECK");
     parent.classList.remove("indeterminate");
     parent.checked = state;
   }

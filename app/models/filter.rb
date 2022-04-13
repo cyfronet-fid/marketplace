@@ -60,10 +60,16 @@ class Filter
     options.find { |option| val == option[:id].to_s }&.[](:name)
   end
 
+  def children(val)
+    options.find { |option| val == option[:id].to_s }&.[](:children)
+  end
+
   def remove_filter_params(val)
     params = @params.permit!.to_h
+    children_ids = children(val)&.map { |child| child[:id].to_s }
     if value.is_a?(Array)
       params[field_name].delete(val.to_s)
+      params[field_name] -= children_ids if children_ids
       params
     else
       params.except(field_name)
