@@ -2355,7 +2355,14 @@ label[data-multicheckbox].small {
 .backoffice-list {
 
   .list-group-item {
+
+    &.subcategory {
+      padding-left: var(--pl-level);
+      background: url('../images/tree-indent.png') no-repeat var(--bg-level) 0;
+    }
+
     a {
+
       &:first-child {
         float: left;
         max-width: 80%;
