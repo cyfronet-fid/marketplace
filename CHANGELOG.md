@@ -6,24 +6,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [3.36.0-milestone]
-
-### Added
+## [3.36.0] 2022-04-19
 
 ### Changed
 - The request for recommendations is performed if the search context returns at least 3 services (@Michal-Kolomanski)
 - Endpoint for REST import of Resources  (@kmarszalek)
 
-### Deprecated
-
-### Removed
-
 ### Fixed
 - Validation in the backoffice resource form (@danielkryska, @goreck888)
 - Nested category breadcrumbs in BO (@kmarszalek)
 - Country list order on edit provider view in BO (@kmarszalek)
-
-### Security
 
 ## [3.35.0] 2022-04-07
 
