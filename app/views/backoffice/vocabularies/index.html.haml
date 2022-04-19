@@ -13,10 +13,12 @@
                         send("new_backoffice_#{snake_cased(@type)}_path"),
                         class: "btn btn-primary"
         .clearfix
+      -# haml-lint:disable InlineStyles
       %ul.list-group.backoffice-list.mt-3.mb-3
         - ancestry_tree(@vocabularies).each do |record|
           - vocabulary = record[1]
-          %li.list-group-item
+          %li.list-group-item{ class: "#{"subcategory" if vocabulary.ancestry_depth.positive?}",
+                               style: style_indentation_variables(vocabulary) }
             = link_to send("backoffice_#{snake_cased(@type)}_path", record.last) do
               = record.first
             - if policy([:backoffice, Vocabulary]).destroy?
@@ -28,3 +30,4 @@
             - if policy([:backoffice, Vocabulary]).edit?
               = link_to _("Edit"), send("edit_backoffice_#{snake_cased(@type)}_path", vocabulary),
               class: "btn-sm btn-warning float-right mr-4"
+      -# haml-lint:enable InlineStyles
