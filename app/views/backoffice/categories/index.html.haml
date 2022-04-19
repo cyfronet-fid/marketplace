@@ -10,10 +10,12 @@
                   class: "btn btn-primary",
                   "data-e2e": "add-new-category"
       .clearfix
+  -# haml-lint:disable InlineStyles
   %ul.list-group.backoffice-list.mt-3.mb-{ "data-e2e": "backoffice-categories-list" }
     - ancestry_tree(@categories).each do |record|
       - category = record[1]
-      %li.list-group-item
+      %li.list-group-item{ class: "#{"subcategory" if category.ancestry_depth.positive?}",
+      style: style_indentation_variables(category) }
         = link_to backoffice_category_path(record.last) do
           - if category.logo.attached? && category.logo.variable?
             = image_tag category.logo.variant(resize: "32x32")
@@ -28,4 +30,5 @@
           = link_to _("Edit"),
               edit_backoffice_category_path(category),
               class: "btn-sm btn-warning float-right mr-4"
+  -# haml-lint:enable InlineStyles
 

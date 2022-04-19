@@ -10,10 +10,12 @@
                   class: "btn btn-primary",
                   "data-e2e": "add-new-scientific-domain"
       .clearfix
+  -# haml-lint:disable InlineStyles
   %ul.list-group.backoffice-list.mt-3.mb-3{ "data-e2e": "backoffice-scientific-domains-list" }
     - ancestry_tree(@scientific_domains).each do |record|
       - scientific_domain = record[1]
-      %li.list-group-item
+      %li.list-group-item{ class: "#{"subcategory" if scientific_domain.ancestry_depth.positive?}",
+      style: style_indentation_variables(scientific_domain) }
         = link_to backoffice_scientific_domain_path(record.last) do
           - if scientific_domain.logo.attached? && scientific_domain.logo.variable?
             = image_tag scientific_domain.logo.variant(resize: "32x32")
@@ -28,3 +30,4 @@
           = link_to _("Edit"),
                     edit_backoffice_scientific_domain_path(scientific_domain),
                     class: "btn-sm btn-warning float-right mr-4"
+  -# haml-lint:enable InlineStyles
