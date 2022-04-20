@@ -38,7 +38,7 @@ class Import::Providers
       parsed_provider_data["status"] = external_data["active"] ? :published : :draft
       eosc_registry_provider =
         Provider.joins(:sources).find_by("provider_sources.source_type": "eosc_registry", "provider_sources.eid": eid)
-      current_provider = eosc_registry_provider || Provider.find_by(name: parsed_provider_data[:name])
+      current_provider = eosc_registry_provider || Provider.find_by(pid: parsed_provider_data[:pid])
 
       provider_source = ProviderSource.find_by(source_type: "eosc_registry", eid: eid)
 
