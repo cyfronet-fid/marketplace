@@ -23,6 +23,7 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
       )
     @provider.build_main_contact
     @provider.public_contacts.build
+    @provider.link_multimedia_urls.build
     authorize(@provider)
   end
 
@@ -84,6 +85,7 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
     @provider.data_administrators.build if @provider.data_administrators.blank?
     @provider.build_main_contact if @provider.main_contact.blank?
     @provider.public_contacts.build if @provider.public_contacts.blank?
+    @provider.link_multimedia_urls.build if @provider.link_multimedia_urls.blank?
   end
 
   def valid_model_and_urls?
@@ -95,12 +97,13 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
       @provider.errors.add(:website, "isn't valid or website doesn't exist, please check URL")
     end
 
-    invalid_multimedia = @provider.multimedia.reject { |media| UrlHelper.url_valid?(media) }
-    if @provider.multimedia_changed? && invalid_multimedia.present?
+    invalid_multimedia =
+      @provider.link_multimedia_urls.reject { |media| media.url.blank? ? true : UrlHelper.url_valid?(media.url) }
+    if @provider.link_multimedia_urls&.any?(&:changed?) && invalid_multimedia.present?
       valid = false
       @provider.errors.add(
-        :multimedia,
-        "aren't valid or media don't exist, please check URLs: #{invalid_multimedia.join(", ")}"
+        :link_multimedia_urls,
+        "aren't valid or media don't exist, please check URLs: #{invalid_multimedia.map(&:url).join(", ")}"
       )
     end
 

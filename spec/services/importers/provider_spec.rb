@@ -54,7 +54,7 @@ RSpec.describe Importers::Provider do
       legal_statuses: [legal_status],
       # Marketing
       description: "Test provider for jms queue",
-      multimedia: [],
+      link_multimedia_urls: [],
       # Classification
       scientific_domains: [scientific_domain],
       tag_list: %w[tag test cyfro],
@@ -96,7 +96,7 @@ RSpec.describe Importers::Provider do
     expect(imported_hash[:legal_statuses].map).to match_array(correct_hash[:legal_statuses])
 
     expect(imported_hash[:description]).to eq(correct_hash[:description])
-    expect(imported_hash[:multimedia]&.map).to match_array(correct_hash[:multimedia])
+    expect(imported_hash[:link_multimedia_urls]&.map).to match_array(correct_hash[:link_multimedia_urls]&.map)
     expect(imported_hash[:scientific_domains]&.map).to match_array(correct_hash[:scientific_domains])
     expect(imported_hash[:tag_list]).to match_array(correct_hash[:tag_list])
 

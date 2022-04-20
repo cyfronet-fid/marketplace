@@ -12,7 +12,12 @@ class Importers::Provider
   def call
     case @source
     when "jms"
-      multimedia = Array(@data.dig("multimedia", "multimedia")) || []
+      multimedia =
+        if @data.dig("multimedia", "multimedia").is_a?(Array)
+          Array(@data.dig("multimedia", "multimedia")) || []
+        else
+          [@data.dig("multimedia", "multimedia")]
+        end
       scientific_domains =
         if @data.dig("scientificDomains", "scientificDomain").is_a?(Array)
           @data.dig("scientificDomains", "scientificDomain").map { |sd| sd["scientificSubdomain"] }
@@ -69,7 +74,7 @@ class Importers::Provider
       legal_statuses: map_legal_statuses(Array(@data["legalStatus"])),
       # Marketing
       description: @data["description"],
-      multimedia: multimedia,
+      link_multimedia_urls: multimedia.map { |item| map_link(item) }.compact,
       # Classification
       scientific_domains: map_scientific_domains(scientific_domains),
       tag_list: tag_list,

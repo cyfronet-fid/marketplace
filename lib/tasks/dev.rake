@@ -42,6 +42,8 @@ namespace :dev do
     end
   end
 
+  # rubocop:disable Metrics/AbcSize
+
   def create_providers(providers_hash)
     puts "Generating providers:"
     providers_hash.each do |_, hash|
@@ -50,7 +52,7 @@ namespace :dev do
       provider.website = hash["website"]
       provider.legal_entity = hash["legal_entity"]
       provider.description = hash["description"]
-      provider.multimedia = hash["multimedia"]
+      provider.link_multimedia_urls = hash["multimedia"].map { |h| Link::MultimediaUrl.new(url: h) }
       provider.tag_list = hash["tags"]
       provider.street_name_and_number = hash["street_name_and_number"]
       provider.postal_code = hash["postal_code"]
@@ -122,8 +124,6 @@ namespace :dev do
       puts "  - #{hash["name"]} target group generated"
     end
   end
-
-  # rubocop:disable Metrics/AbcSize
 
   def create_services(services_hash)
     puts "Generating services:"

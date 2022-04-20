@@ -45,11 +45,11 @@ RSpec.feature "Services in backoffice" do
       visit backoffice_services_path
       click_on "Create new Resource"
 
-      fill_in "Name", with: "service name"
+      fill_in "service_name", with: "service name"
       fill_in "Description", with: "service description"
       fill_in "Terms of use", with: "service terms of use"
       fill_in "Tagline", with: "service tagline"
-      fill_in "service_multimedia_0", with: "https://sample.url"
+      fill_in "service_link_multimedia_urls_attributes_0_url", with: "https://sample.url"
       select "English", from: "Language availability"
       select "Poland", from: "Geographical availabilities"
       select "Poland", from: "Resource geographic locations"
@@ -70,7 +70,7 @@ RSpec.feature "Services in backoffice" do
       fill_in "Access policies url", with: "https://sample.url"
       fill_in "Privacy policy url", with: "https://sample.url"
       fill_in "Sla url", with: "https://sample.url"
-      fill_in "service_use_cases_url_0", with: "https://sample.url"
+      fill_in "service_link_use_cases_urls_attributes_0_url", with: "https://sample.url"
       fill_in "Webpage url", with: "https://sample.url"
       fill_in "Manual url", with: "https://sample.url"
       fill_in "Helpdesk url", with: "https://sample.url"
@@ -131,7 +131,7 @@ RSpec.feature "Services in backoffice" do
 
       expect(page).to have_content("Please review the problems below:")
 
-      fill_in "Name", with: "service name"
+      fill_in "service_name", with: "service name"
       select resource_organisation.name, from: "Resource organisation"
       fill_in "Description", with: "service description"
       fill_in "Tagline", with: "service tagline"
@@ -226,7 +226,7 @@ RSpec.feature "Services in backoffice" do
       visit backoffice_services_path
       click_on "Create new Resource"
 
-      fill_in "Name", with: "service name"
+      fill_in "service_name", with: "service name"
       fill_in "Tagline", with: "tagline"
       fill_in "Description", with: "description"
       select scientific_domain.name, from: "Scientific domains"
@@ -287,7 +287,7 @@ RSpec.feature "Services in backoffice" do
       click_on "Create new Resource"
 
       attach_file("service_logo", "spec/lib/images/invalid-logo.svg")
-      fill_in "Name", with: "service name"
+      fill_in "service_name", with: "service name"
       fill_in "Description", with: "service description"
       fill_in "Tagline", with: "service tagline"
       select scientific_domain.name, from: "Scientific domains"
@@ -331,7 +331,7 @@ RSpec.feature "Services in backoffice" do
       visit backoffice_service_path(service)
       click_on "Edit"
 
-      fill_in "Name", with: "updated name"
+      fill_in "service_name", with: "updated name"
       expect { click_on "Update Resource" }.to have_enqueued_job(Ess::UpdateJob)
 
       expect(page).to have_content("updated name")
@@ -352,7 +352,7 @@ RSpec.feature "Services in backoffice" do
       visit backoffice_service_path(service)
       click_on "Edit resource"
 
-      fill_in "Name", with: "updated name"
+      fill_in "service_name", with: "updated name"
       fill_in "Order url", with: "http://order.com"
       select "fully_open_access", from: "Order type"
 
@@ -415,7 +415,7 @@ RSpec.feature "Services in backoffice" do
       visit backoffice_service_path(service)
       click_on "Edit"
 
-      fill_in "Name", with: "updated name"
+      fill_in "service_name", with: "updated name"
       click_on "Preview"
 
       expect(page).to have_content("updated name")
@@ -710,8 +710,8 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_field "Tag list", disabled: true
       expect(page).to have_field "Description", disabled: true
       expect(page).to have_field "Tagline", disabled: true
-      expect(page).to have_field "service_multimedia_0", disabled: true
-      expect(page).to have_field "service_use_cases_url_0", disabled: true
+      expect(page).to have_field "service_link_multimedia_urls_attributes_0_url", disabled: true
+      expect(page).to have_field "service_link_use_cases_urls_attributes_0_url", disabled: true
       expect(page).to have_field "Order type", disabled: true
       expect(page).to have_field "Order url", disabled: true
       expect(page).to have_field "Categories", disabled: true
@@ -880,7 +880,7 @@ RSpec.feature "Services in backoffice" do
 
       expect(page).to have_content("Name")
 
-      fill_in "Name", with: "Owner can edit service draft"
+      fill_in "service_name", with: "Owner can edit service draft"
       click_on "Update Resource"
       expect(page).to have_content("Owner can edit service draft")
     end
