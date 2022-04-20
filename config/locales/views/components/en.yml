@@ -17,9 +17,8 @@ en:
           categorisation: Categorisation
           target_users: Target users
           resource_availability_and_languages: Resource availability and languages
-          links:
-            multimedia: Multimedia %{idx}
         fields:
+          link_multimedia_urls: Multimedia %{idx}
           webpage_url: Webpage
           helpdesk_url: Helpdesk
           helpdesk_email: Helpdesk e-mail
@@ -67,8 +66,8 @@ en:
             management: Management
             changelog: Changelog
         links:
-          use_cases_url: Use case %{idx}
-          multimedia: Multimedia %{idx}
+          link_multimedia_urls: Multimedia %{idx}
+          link_use_cases_urls: Use case %{idx}
         object:
           public_contacts: Public contact %{idx}
         array:

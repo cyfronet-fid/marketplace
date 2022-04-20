@@ -73,7 +73,7 @@ module Presentable::DetailsHelper
   end
 
   def marketing
-    { name: "marketing", template: "links", fields: %w[multimedia use_cases_url], type: "array" }
+    { name: "marketing", template: "links", fields: %w[link_multimedia_urls link_use_cases_urls], type: "array" }
   end
 
   def dependencies

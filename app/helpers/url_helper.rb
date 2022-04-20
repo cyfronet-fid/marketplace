@@ -24,4 +24,8 @@ module UrlHelper
   rescue URI::InvalidURIError, NoMethodError, Faraday::Error
     false
   end
+
+  def self.url?(url)
+    url.blank? ? false : URI.parse(url).is_a?(URI::HTTP)
+  end
 end

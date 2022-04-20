@@ -8,7 +8,9 @@ export default class extends Controller {
     "publicContacts",
     "publicContact",
     "destroy",
-    "addContact",
+    "multimedia",
+    "useCase",
+    "addField",
     "multimedia",
     "changelog",
     "grantProjectNames",
@@ -77,7 +79,7 @@ export default class extends Controller {
 
     removeLink.id = "remove_" + lastArrayField.id;
     removeLink.dataset.target = event.target;
-    removeLink.dataset.action = "click->form#removeField";
+    removeLink.dataset.action = "click->form#removeArrayField";
     removeLink.dataset.value = lastArrayField.id;
     removeLink.appendChild(linkText);
     removeLink.classList.add("btn-sm", "btn-danger", "remove", "float-right");
@@ -86,21 +88,22 @@ export default class extends Controller {
     parent.appendChild(removeLink);
   }
 
-  removeField(event) {
+  removeArrayField(event) {
     event.preventDefault();
     document.getElementById(event.target.dataset.value).remove();
     event.target.remove();
   }
 
-  addContact(event) {
+  addField(event) {
     event.preventDefault();
-    event.target.insertAdjacentHTML(
-      "beforebegin",
-      event.target.dataset.fields.replace(/new_field/g, this.publicContactTargets.length)
-    );
+    this.useCases = this.useCaseTargets;
+    this.multimedia = this.multimediaTargets;
+    this.publicContacts = this.publicContactTargets;
+    const quantity = this[event.target.dataset.value].length;
+    event.target.insertAdjacentHTML("beforebegin", event.target.dataset.fields.replace(/new_field/g, quantity));
   }
 
-  removeContact(event) {
+  removeField(event) {
     event.preventDefault();
     event.target.parentElement.previousElementSibling.value = "true";
     event.target.closest(".contact").classList.add("d-none");

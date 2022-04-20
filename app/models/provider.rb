@@ -28,6 +28,7 @@ class Provider < ApplicationRecord
 
   has_many :service_providers, dependent: :destroy
   has_many :services, through: :service_providers
+  has_many :link_multimedia_urls, as: :linkable, dependent: :destroy, autosave: true, class_name: "Link::MultimediaUrl"
   has_many :categorizations, through: :services
   has_many :categories, through: :categorizations
   has_many :provider_data_administrators
@@ -69,6 +70,8 @@ class Provider < ApplicationRecord
 
   belongs_to :upstream, foreign_key: "upstream_id", class_name: "ProviderSource", optional: true
 
+  accepts_nested_attributes_for :link_multimedia_urls, reject_if: :all_blank, allow_destroy: true
+
   accepts_nested_attributes_for :main_contact, allow_destroy: true
 
   accepts_nested_attributes_for :public_contacts, allow_destroy: true
@@ -88,7 +91,6 @@ class Provider < ApplicationRecord
   auto_strip_attributes :region, nullify: false
   auto_strip_attributes :hosting_legal_entity, nullify: false
   auto_strip_attributes :status, nullify: false
-  auto_strip_attributes :multimedia, nullify_array: false
   auto_strip_attributes :certifications, nullify_array: false
   auto_strip_attributes :affiliations, nullify_array: false
   auto_strip_attributes :national_roadmaps, nullify_array: false
@@ -208,9 +210,6 @@ class Provider < ApplicationRecord
 
   def validate_array_values_uniqueness
     errors.add(:tag_list, "has duplicates, please remove them to continue") if tag_list.uniq.length != tag_list.length
-    if multimedia.uniq.length != multimedia.length
-      errors.add(:multimedia, "has duplicates, please remove them to continue")
-    end
     if certifications.uniq.length != certifications.length
       errors.add(:certifications, "has duplicates, please remove them to continue")
     end

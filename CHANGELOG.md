@@ -14,6 +14,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Changed
 - Move Structure Types from `Other` to `Classification` section in the Resource Profile 4.0 (@goreck888)
+- `Multimedia` and `UseCases` urls specified in the Resource Profile 4.0 with backward compatibility (@goreck888)
 
 ### Deprecated
 

@@ -163,6 +163,18 @@ ActiveRecord::Schema.define(version: 2022_05_17_202141) do
     t.index ["lead_section_id"], name: "index_leads_on_lead_section_id"
   end
 
+  create_table "links", force: :cascade do |t|
+    t.string "name"
+    t.string "url"
+    t.string "type", null: false
+    t.string "linkable_type"
+    t.bigint "linkable_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["id", "linkable_id", "linkable_type"], name: "index_links_on_id_and_linkable_id_and_linkable_type", unique: true
+    t.index ["linkable_id"], name: "index_links_on_linkable_id"
+  end
+
   create_table "messages", force: :cascade do |t|
     t.bigint "author_id"
     t.text "message"
@@ -392,7 +404,6 @@ ActiveRecord::Schema.define(version: 2022_05_17_202141) do
     t.string "website"
     t.boolean "legal_entity"
     t.text "description"
-    t.string "multimedia", default: [], array: true
     t.text "tagline"
     t.string "street_name_and_number"
     t.string "postal_code"
@@ -552,9 +563,7 @@ ActiveRecord::Schema.define(version: 2022_05_17_202141) do
     t.string "open_source_technologies", default: [], array: true
     t.text "changelog", default: [], array: true
     t.string "grant_project_names", default: [], array: true
-    t.string "multimedia", default: [], array: true
     t.string "privacy_policy_url"
-    t.string "use_cases_url", default: [], array: true
     t.datetime "last_update"
     t.string "related_platforms", default: [], array: true
     t.datetime "synchronized_at"

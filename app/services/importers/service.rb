@@ -16,8 +16,18 @@ class Importers::Service < ApplicationService
     case @source
     when "jms"
       providers = Array(@data.dig("resourceProviders", "resourceProvider"))
-      multimedia = Array(@data.dig("multimedia", "multimedia")) || []
-      use_cases_url = Array(@data.dig("useCases", "useCase")) || []
+      multimedia =
+        if @data.dig("multimedia", "multimedia").is_a?(Array)
+          Array(@data.dig("multimedia", "multimedia")) || []
+        else
+          [@data.dig("multimedia", "multimedia")] || []
+        end
+      use_cases_url =
+        if @data.dig("useCases", "useCase").is_a?(Array)
+          Array(@data.dig("useCases", "useCase")) || []
+        else
+          [@data.dig("useCases", "useCase")] || []
+        end
       scientific_domains =
         if @data.dig("scientificDomains", "scientificDomain").is_a?(Array)
           @data.dig("scientificDomains", "scientificDomain").map { |sd| sd["scientificSubdomain"] }
@@ -54,7 +64,7 @@ class Importers::Service < ApplicationService
     when "rest"
       providers = Array(@data["resourceProviders"]) || []
       multimedia = Array(@data["multimedia"]) || []
-      use_cases_url = Array(@data["useCases"])
+      use_cases_url = Array(@data["useCases"]) || []
       scientific_domains = @data["scientificDomains"]&.map { |sd| sd["scientificSubdomain"] } || []
       categories = @data["categories"]&.map { |c| c["subcategory"] } || []
       target_users = @data["targetUsers"]
@@ -92,8 +102,8 @@ class Importers::Service < ApplicationService
       # Marketing
       description: @data["description"],
       tagline: @data["tagline"].blank? ? "-" : @data["tagline"],
-      multimedia: multimedia,
-      use_cases_url: use_cases_url,
+      link_multimedia_urls: multimedia.map { |item| map_link(item) }.compact,
+      link_use_cases_urls: use_cases_url.map { |item| map_link(item, "use_cases") }.compact,
       # Classification
       scientific_domains: map_scientific_domains(scientific_domains),
       categories: map_categories(categories) || [],
