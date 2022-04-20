@@ -50,6 +50,8 @@ class Service < ApplicationRecord
   has_many :providers, through: :service_providers, validate: false
   has_many :service_related_platforms, dependent: :destroy
   has_many :platforms, through: :service_related_platforms
+  has_many :link_use_cases_urls, as: :linkable, dependent: :destroy, autosave: true, class_name: "Link::UseCasesUrl"
+  has_many :link_multimedia_urls, as: :linkable, dependent: :destroy, autosave: true, class_name: "Link::MultimediaUrl"
   has_many :service_vocabularies, dependent: :destroy
   has_many :funding_bodies, through: :service_vocabularies, source: :vocabulary, source_type: "Vocabulary::FundingBody"
   has_many :funding_programs,
@@ -72,6 +74,8 @@ class Service < ApplicationRecord
 
   accepts_nested_attributes_for :main_contact, allow_destroy: true
   accepts_nested_attributes_for :public_contacts, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :link_multimedia_urls, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :link_use_cases_urls, reject_if: :all_blank, allow_destroy: true
 
   has_many :user_services, dependent: :destroy
   has_many :favourite_users, through: :user_services, source: :user, class_name: "User"
@@ -145,8 +149,6 @@ class Service < ApplicationRecord
   auto_strip_attributes :security_contact_email, nullify: false
   auto_strip_attributes :privacy_policy_url, nullify: false
   auto_strip_attributes :language_availability, nullify_array: false
-  auto_strip_attributes :multimedia, nullify_array: false
-  auto_strip_attributes :use_cases_url, nullify_array: false
   auto_strip_attributes :certifications, nullify_array: false
   auto_strip_attributes :standards, nullify_array: false
   auto_strip_attributes :open_source_technologies, nullify_array: false
@@ -158,7 +160,6 @@ class Service < ApplicationRecord
   validates :description, presence: true
   validates :tagline, presence: true
   validates :rating, presence: true
-  validates :multimedia, array: { mp_url: true }
   validates :terms_of_use_url, mp_url: true, if: :terms_of_use_url?
   validates :access_policies_url, mp_url: true, if: :access_policies_url?
   validates :sla_url, mp_url: true, if: :sla_url?
@@ -173,7 +174,6 @@ class Service < ApplicationRecord
   validates :helpdesk_url, mp_url: true, if: :helpdesk_url?
   validates :helpdesk_email, allow_blank: true, email: true
   validates :security_contact_email, allow_blank: true, email: true
-  validates :use_cases_url, array: { mp_url: true }
   validates :privacy_policy_url, mp_url: true, if: :privacy_policy_url?
   validates :training_information_url, mp_url: true, if: :training_information_url?
   validates :language_availability, array: true

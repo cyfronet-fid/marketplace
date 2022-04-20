@@ -66,7 +66,7 @@ module Presentable::SidebarHelper
   end
 
   def multimedia
-    { name: "multimedia", template: "links", fields: %w[multimedia], type: "array" }
+    { name: "multimedia", template: "links", fields: %w[link_multimedia_urls], type: "array" }
   end
 
   def address

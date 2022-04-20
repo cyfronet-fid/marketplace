@@ -22,7 +22,6 @@ RSpec.describe Backoffice::ServicePolicy do
           :description,
           :tagline,
           :order_type,
-          [multimedia: []],
           [provider_ids: []],
           [geographical_availabilities: []],
           [language_availability: []],
@@ -35,7 +34,6 @@ RSpec.describe Backoffice::ServicePolicy do
           :manual_url,
           :helpdesk_url,
           :privacy_policy_url,
-          [use_cases_url: []],
           [funding_body_ids: []],
           [funding_program_ids: []],
           [access_type_ids: []],
@@ -75,7 +73,9 @@ RSpec.describe Backoffice::ServicePolicy do
           :resource_organisation_id,
           [main_contact_attributes: %i[id first_name last_name email phone organisation position]],
           [sources_attributes: %i[id source_type eid _destroy]],
-          [public_contacts_attributes: %i[id first_name last_name email phone organisation position _destroy]]
+          [public_contacts_attributes: %i[id first_name last_name email phone organisation position _destroy]],
+          [link_multimedia_urls_attributes: %i[id name url _destroy]],
+          [link_use_cases_urls_attributes: %i[id name url _destroy]]
         ]
       )
     end

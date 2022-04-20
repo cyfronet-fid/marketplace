@@ -13,6 +13,16 @@ module Importable
     domains.present? ? ScientificDomain.where(eid: domains) : []
   end
 
+  def map_link(link, type = "multimedia")
+    return if link&.[]("multimediaURL").blank? && link&.[]("useCaseURL").blank? && !UrlHelper.url?(link)
+    case type
+    when "multimedia"
+      Link::MultimediaUrl.new(name: link["multimediaName"].presence, url: link["multimediaURL"] || link)
+    when "use_cases"
+      Link::UseCasesUrl.new(name: link["useCaseName"].presence, url: link["useCaseURL"] || link)
+    end
+  end
+
   def map_contact(contact)
     contact&.transform_keys { |k| k.to_s.underscore } || nil
   end

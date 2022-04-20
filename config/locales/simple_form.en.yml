@@ -68,10 +68,10 @@ en:
     #       email: 'E-mail.'
     hints:
       provider:
-        website: |
+        website: &url_hint |
           Url should start with http:// or https:// prefix [e.g. https://example.com]
-        multimedia: |
-          Url should start with http:// or https:// prefix [e.g. https://example.com]
+        link_multimedia_urls:
+          url: *url_hint
       lead_section:
         slug: |
           You can add sections with slugs: "learn-more" or "use-cases". You will see
@@ -90,21 +90,19 @@ en:
           and up to 60 characters for use cases section
         body: Preferred length of description is up to 140 characters
       service:
-        training_information_url: |
-          Url should start with http:// or https:// prefix [e.g. https://example.com]
-        helpdesk_url: |
-          Url should start with http:// or https:// prefix [e.g. https://example.com]
-        manual_url: |
-          Url should start with http:// or https:// prefix [e.g. https://example.com]
+        link_multimedia_urls:
+          url: *url_hint
+        link_use_cases_urls:
+          url: *url_hint
+        training_information_url: *url_hint
+        helpdesk_url: *url_hint
+        manual_url: *url_hint
         webpage_url: |
           Url should start with http:// or https:// prefix [e.g. https://example.com]<br/>
           This url will be available under "Webpage" in Support section in the resource view
-        sla_url: |
-          Url should start with http:// or https:// prefix [e.g. https://example.com]
-        access_policies_url: |
-          Url should start with http:// or https:// prefix [e.g. https://example.com]
-        terms_of_use_url: |
-          Url should start with http:// or https:// prefix [e.g. https://example.com]
+        sla_url: *url_hint
+        access_policies_url: *url_hint
+        terms_of_use_url: *url_hint
         tag_list: |
           Use "," to separate tags
         logo: |
@@ -115,12 +113,9 @@ en:
       project:
         email: |
           Email address in your institute's domain [e.g. email@example.com]
-        project_website_url: |
-          Url should start with http:// or https:// prefix [e.g. https://example.com]
-        webpage: |
-          Url should start with http:// or https:// prefix [e.g. https://example.com]
-        company_website_url: |
-          Url should start with http:// or https:// prefix [e.g. https://example.com]
+        project_website_url: *url_hint
+        webpage: *url_hint
+        company_website_url: *url_hint
       offer:
         order_url: |
           Url should start with http:// or https:// prefix [e.g. https://example.com].<br/>

@@ -21,7 +21,7 @@ class ArrayInput < SimpleForm::Inputs::TextInput
               id: "remove_#{object_name}_#{attribute_name}_#{index}",
               class: "btn-sm btn-danger remove float-right disablable",
               "data-target": attribute_name.to_s,
-              "data-action": "click->form#removeField",
+              "data-action": "click->form#removeArrayField",
               "data-value": "#{object_name}_#{attribute_name}_#{index}"
             )
         end
@@ -40,7 +40,7 @@ class ArrayInput < SimpleForm::Inputs::TextInput
                             id: "remove-#{object_name}_#{attribute_name}_#{number}",
                             class: "btn-sm btn-danger remove float-right disablable",
                             "data-target": attribute_name.to_s,
-                            "data-action": "click->form#removeField",
+                            "data-action": "click->form#removeArrayField",
                             "data-value": "#{object_name}_#{attribute_name}_#{number}"
                           )
     existing_value.join.html_safe

@@ -112,6 +112,8 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     service.sources.build source_type: "eosc_registry" if service.sources.empty?
     service.build_main_contact if service.main_contact.blank?
     service.public_contacts.build if service.public_contacts.empty?
+    service.link_multimedia_urls.build if service.link_multimedia_urls.blank?
+    service.link_use_cases_urls.build if service.link_use_cases_urls.blank?
   end
 
   def perform_preview(error_view)
