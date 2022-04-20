@@ -54,7 +54,7 @@ describe Import::Providers do
 
   let!(:compute) { create(:category, name: "Compute") }
   let!(:networking) { create(:category, name: "Networking") }
-  let!(:provider) { create(:provider, name: "BlueBRIDGE") }
+  let!(:provider) { create(:provider, name: "BlueBRIDGE", pid: "bluebridge") }
 
   def expect_responses(test_url, providers_response = nil)
     unless providers_response.nil?
