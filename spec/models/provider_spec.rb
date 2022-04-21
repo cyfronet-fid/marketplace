@@ -14,7 +14,6 @@ RSpec.describe Provider, type: :model do
     it { should have_many(:provider_vocabularies).dependent(:destroy) }
 
     subject { create(:provider) }
-    it { should validate_uniqueness_of(:name) }
   end
 
   context "OMS validations" do
