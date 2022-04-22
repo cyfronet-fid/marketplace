@@ -3,7 +3,7 @@
 require "rails_helper"
 require "recommender/serialize_db"
 
-describe Recommender::SerializeDb do
+describe RecommenderLib::SerializeDb do
   it "properly serializes the database" do
     create_list(:service, 2)
     create_list(:user, 2)

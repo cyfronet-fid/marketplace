@@ -5,10 +5,14 @@ default: &default
   host: <%= ENV["MP_STOMP_HOST"] || Rails.application.credentials.stomp.dig(:host) || "''" %>
   ssl-enabled: <%= ENV["MP_STOMP_SSL"] || false %>
   topic: <%= ENV["MP_STOMP_PUBLISHER_TOPIC"] || Rails.application.credentials.stomp.dig(:publisher, :topic) || "''" %>
-  databus-topic: <%= ENV["MP_STOMP_PUBLISHER_DATABUS_TOPIC"] || "databus" %>
+  mp-db-events-topic: <%= ENV["MP_STOMP_PUBLISHER_MP_DB_EVENTS_TOPIC"] || "mp_db_events" %>
+  user-actions-topic: <%= ENV["MP_STOMP_PUBLISHER_USER_ACTIONS_TOPIC"] || "user_actions" %>
 
 test:
   <<: *default
+  login: <%= ENV["TEST_STOMP_LOGIN"] || "admin" %>
+  password: <%= ENV["TEST_STOMP_PASS"] ||  "admin" %>
+  host: <%= ENV["TEST_STOMP_HOST"] || "localhost" %>
 
 development:
   <<: *default

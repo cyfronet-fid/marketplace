@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
 require "rails_helper"
+require_relative "publishable"
 
 RSpec.describe Category do
+  include_examples "publishable"
+
   describe "validations" do
     it { should validate_presence_of(:name) }
 
