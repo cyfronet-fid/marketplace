@@ -5,6 +5,7 @@ class User < ApplicationRecord
 
   devise :database_authenticatable, :rememberable, :trackable, :omniauthable, omniauth_providers: %i[checkin]
 
+  include Publishable
   include RoleModel
   roles :admin, :service_portfolio_manager, :executive
 

@@ -7,7 +7,7 @@ namespace :recommender do
   desc "serialize database for recommender system"
   task serialize_db: :environment do
     puts "Generating database dump..."
-    serialized_db = Recommender::SerializeDb.new.call.to_json
+    serialized_db = RecommenderLib::SerializeDb.new.call.to_json
     puts "Database dump generated successfully!"
 
     begin
@@ -32,7 +32,7 @@ namespace :recommender do
 
   task update: :environment do
     puts "Generating database dump..."
-    serialized_db = Recommender::SerializeDb.new.call.to_json
+    serialized_db = RecommenderLib::SerializeDb.new.call.to_json
     puts "Database dump generated successfully!"
 
     begin
@@ -57,7 +57,7 @@ namespace :recommender do
 
   task serialize_db_to_file: :environment do
     puts "Generating database dump..."
-    serialized_db = Recommender::SerializeDb.new.call.to_json
+    serialized_db = RecommenderLib::SerializeDb.new.call.to_json
     puts "Database dump generated successfully!"
 
     path = Rails.root.join("data.json")

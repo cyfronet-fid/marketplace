@@ -78,5 +78,12 @@ module Mp
     config.user_actions_target = ENV["USER_ACTIONS_TARGET"].present? ? ENV["USER_ACTIONS_TARGET"] : "all"
 
     config.profile_4_enabled = ENV["PROFILE_4_ENABLED"].present? ? ENV["PROFILE_4_ENABLED"] : false
+
+    config.mp_stomp_publisher_enabled =
+      if ENV["MP_STOMP_PUBLISHER_ENABLED"].present?
+        ENV["MP_STOMP_PUBLISHER_ENABLED"]
+      else
+        Rails.env.test?
+      end
   end
 end

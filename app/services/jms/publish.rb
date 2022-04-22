@@ -32,14 +32,25 @@ class Jms::Publish
   end
 
   def publisher_disabled?
-    ENV["MP_STOMP_PUBLISHER_ENABLED"] != "true"
+    !Mp::Application.config.mp_stomp_publisher_enabled
+  end
+
+  def destination(stomp_config)
+    case @destination
+    when :mp_db_events
+      stomp_config["mp-db-events-topic"]
+    when :user_actions
+      stomp_config["user-actions-topic"]
+    else
+      stomp_config["topic"]
+    end
   end
 
   def publisher
     stomp_config = Mp::Application.config_for(:stomp_publisher)
 
     Jms::Publisher.new(
-      @destination == :databus ? stomp_config["databus-topic"] : stomp_config["topic"],
+      destination(stomp_config),
       stomp_config["login"],
       stomp_config["password"],
       stomp_config["host"],

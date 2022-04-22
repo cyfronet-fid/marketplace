@@ -3,6 +3,7 @@
 class ScientificDomain < ApplicationRecord
   include Parentable
   include LogoAttachable
+  include Publishable
 
   has_one_attached :logo
 
