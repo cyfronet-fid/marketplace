@@ -30,7 +30,7 @@ RSpec.feature "Question about provider" do
         expect(page).to have_content("Your message was successfully sent")
       end.to change { ActionMailer::Base.deliveries.count }.by(1)
 
-      expect(Jms::PublishJob).to have_been_enqueued
+      expect(Jms::PublishJob).to have_been_enqueued.with(hash_including(message_type: "provider_question"))
     end
 
     scenario "I cannot send message about service with empty message", js: true do
@@ -45,7 +45,7 @@ RSpec.feature "Question about provider" do
 
       expect(page).to have_content("Text Question cannot be blank")
 
-      expect(Jms::PublishJob).not_to have_been_enqueued
+      expect(Jms::PublishJob).not_to have_been_enqueued.with(hash_including(:message_type))
     end
   end
 
@@ -68,7 +68,7 @@ RSpec.feature "Question about provider" do
         expect(page).to have_content("Your message was successfully sent")
       end.to change { ActionMailer::Base.deliveries.count }.by(1)
 
-      expect(Jms::PublishJob).to have_been_enqueued
+      expect(Jms::PublishJob).to have_been_enqueued.with(hash_including(message_type: "provider_question"))
     end
 
     scenario "I cannot send message about provider with empty fields", js: true do
@@ -85,7 +85,7 @@ RSpec.feature "Question about provider" do
       expect(page).to have_content("Email can't be blank and Email is not a valid email address")
       expect(page).to have_content("Text Question cannot be blank")
 
-      expect(Jms::PublishJob).not_to have_been_enqueued
+      expect(Jms::PublishJob).not_to have_been_enqueued.with(hash_including(:message_type))
     end
   end
 end

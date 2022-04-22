@@ -2,6 +2,7 @@
 
 class TargetUser < ApplicationRecord
   include Parentable
+  include Publishable
 
   has_many :service_target_users, dependent: :destroy
   has_many :services, through: :service_target_users

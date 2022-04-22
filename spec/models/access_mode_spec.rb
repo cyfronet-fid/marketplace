@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "rails_helper"
+require_relative "publishable"
 
 RSpec.describe Vocabulary::AccessMode do
   subject { Vocabulary::AccessMode.new(name: "Access Mode", description: "description", eid: "access_mode-am") }

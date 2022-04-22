@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Recommender
+module RecommenderLib
   class SerializeDb
     def initialize; end
 
@@ -8,16 +8,18 @@ module Recommender
       {
         services: Service.all.map { |s| Recommender::ServiceSerializer.new(s).as_json },
         users: User.all.map { |s| Recommender::UserSerializer.new(s).as_json },
-        categories: Category.all.as_json(only: %i[id name]),
-        providers: Provider.all.as_json(only: %i[id name]),
-        scientific_domains: ScientificDomain.all.as_json(only: %i[id name]),
-        platforms: Platform.all.as_json(only: %i[id name]),
-        target_users: TargetUser.all.as_json(only: %i[id name description]),
-        access_modes: Vocabulary.where(type: "Vocabulary::AccessMode").as_json(only: %i[id name description]),
-        access_types: Vocabulary.where(type: "Vocabulary::AccessType").as_json(only: %i[id name description]),
-        trls: Vocabulary.where(type: "Vocabulary::Trl").as_json(only: %i[id name description]),
+        categories: Category.all.map { |s| Recommender::CategorySerializer.new(s).as_json },
+        providers: Provider.all.map { |s| Recommender::ProviderSerializer.new(s).as_json },
+        scientific_domains: ScientificDomain.all.map { |s| Recommender::ScientificDomainSerializer.new(s).as_json },
+        platforms: Platform.all.map { |s| Recommender::PlatformSerializer.new(s).as_json },
+        target_users: TargetUser.all.map { |s| Recommender::TargetUserSerializer.new(s).as_json },
+        access_modes:
+          Vocabulary::AccessMode.all.map { |s| Recommender::Vocabulary::AccessModeSerializer.new(s).as_json },
+        access_types:
+          Vocabulary::AccessType.all.map { |s| Recommender::Vocabulary::AccessTypeSerializer.new(s).as_json },
+        trls: Vocabulary::Trl.all.map { |s| Recommender::Vocabulary::TrlSerializer.new(s).as_json },
         life_cycle_statuses:
-          Vocabulary.where(type: "Vocabulary::LifeCycleStatus").as_json(only: %i[id name description])
+          Vocabulary::LifeCycleStatus.all.map { |s| Recommender::Vocabulary::LifeCycleStatusSerializer.new(s).as_json }
       }.as_json
     end
   end

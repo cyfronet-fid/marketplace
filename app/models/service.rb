@@ -5,6 +5,7 @@ class Service < ApplicationRecord
 
   include Service::Search
   include LogoAttachable
+  include Publishable
 
   extend FriendlyId
   friendly_id :name, use: :slugged

@@ -46,14 +46,15 @@ RSpec.describe ProjectItem::Create do
     it "enqueues publish jobs" do
       described_class.new(project_item_template).call
 
-      expect(Jms::PublishJob).to have_been_enqueued.twice
+      expect(Jms::PublishJob).to have_been_enqueued.with(hash_including(message_type: "project.resource_addition"))
+      expect(Jms::PublishJob).to have_been_enqueued.with(hash_including(message_type: "project.resource_coexistence"))
     end
   end
 
   it "doesn't enqueue publish jobs" do
     described_class.new(project_item_template).call
 
-    expect(Jms::PublishJob).not_to have_been_enqueued
+    expect(Jms::PublishJob).not_to have_been_enqueued.with(hash_including(:message_type))
   end
 
   context "when open_access service has been added to Project" do

@@ -6,6 +6,7 @@ class Category < ApplicationRecord
 
   include Parentable
   include LogoAttachable
+  include Publishable
 
   # This callback need to be defined byfore dependent: :destroy
   # relation, because in this case project_item matter. This callback need to be

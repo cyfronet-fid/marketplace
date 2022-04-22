@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Platform < ApplicationRecord
+  include Publishable
+
   include Parentable
 
   has_many :service_related_platforms, dependent: :destroy

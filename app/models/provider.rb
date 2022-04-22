@@ -3,6 +3,7 @@
 class Provider < ApplicationRecord
   include LogoAttachable
   include ImageHelper
+  include Publishable
 
   extend FriendlyId
   friendly_id :pid
