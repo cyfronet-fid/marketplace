@@ -10,9 +10,9 @@
           %li
             .title= _("Information")
           %li
-            %a{ href: "#{root_url}" }= _("Contact us")
+            %a{ href: "https://www.egi.eu/contact/" }= _("Contact us")
           %li
-            %a{ href: "#{root_url}terms_and_conditions" }= _("Terms and conditions")
+            %a{ href: "#{root_url}terms_of_use" }= _("Terms of Use")
           %li
             %a{ href: "#{root_url}about" }= _("About us")
           %li
@@ -39,7 +39,14 @@
             .title= _("Store information")
           %li
             %i.fas.fa-map-marker
-            = _("EGI Foundation, Science Park 140 1098 XG Amsterdam The Netherlands")
+            %span
+              = _("The EGI Foundation")
+              %br/
+              = _("Science Park 140")
+              %br/
+              = _("1098 XG Amsterdam")
+              %br/
+              = _("The Netherlands")
           %li
             %i.fas.fa-phone-alt
             = _("Phone number: +31 (0)20 89 32 007")
