@@ -6,6 +6,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [1.0.4] 2022-04-22
+
+### Changed
+- Update MP version to 3.36.0 (@kmarszalek)
+- CSS Styles of 'Testimonials' on 'About Us' page (@jarekzet)
+- 
+### Fixed
+- Various typos (@kmarszalek)
+
+## [1.0.3] 2022-03-31
+
 ## [1.0.2] 2022-03-08
 
 ### Changed
