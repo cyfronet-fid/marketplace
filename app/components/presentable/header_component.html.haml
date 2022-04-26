@@ -44,6 +44,7 @@
                         id: "favourite-#{@object.id}",
                             class: "form-check-input",
                             "data-target": "favourite.checkbox",
+                            "data-e2e": "favourite-checkbox",
                             "data-action": "click->favourite#updateFromRes"
                       %span.smaller
                         = _("Add to favourites")
