@@ -1,4 +1,4 @@
-.row{ id: "box-#{service.id}", "data-target": "favourite.result" }
+.row{ id: "box-#{service.id}", "data-target": "favourite.result", "data-e2e": "favourite-result" }
   = render "service_details", service: service do
     = link_to service.name, service_path(service)
     .row
@@ -20,6 +20,7 @@
               id: "favourite-#{service.id}",
                   class: "form-check-input",
                   "data-target": "favourite.checkbox",
+                  "data-e2e": "favourite-checkbox",
                   "data-action": "click->favourite#updateFromFav",
                   "data-value": "box-#{service.id}"
             %span
