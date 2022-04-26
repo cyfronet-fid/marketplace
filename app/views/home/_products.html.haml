@@ -12,7 +12,7 @@
       .row
         = render "home/products/cards",
           cards: scientific_domains,
-          url: -> (sd) { services_path(scientific_domains: sd.to_param) },
+          url: -> (sd) { services_path(scientific_domains: [sd.to_param] + sd.children&.map(&:to_param)) },
           default_logo: "ico_ra_default.png"
 
   #tab-2.tab-content-home{ "data-target" => "home-page.tab" }

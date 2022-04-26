@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe Filter::ScientificDomain do
   context "#options" do
-    it "returns tree structure with acumulated count" do
+    it "returns tree structure with accumulated count" do
       root = create(:scientific_domain)
       child1, child2 = create_list(:scientific_domain, 2, parent: root)
 
@@ -25,8 +25,8 @@ RSpec.describe Filter::ScientificDomain do
       expect(first_option[:count]).to eq(1)
 
       expect(first_option[:children]).to contain_exactly(
-        { name: child1.name, id: child1.id, count: 1, children: [] },
-        { name: child2.name, id: child2.id, count: 2, children: [] }
+        { name: child1.name, id: child1.id, count: 1, children: [], parent_id: root.id.to_s },
+        { name: child2.name, id: child2.id, count: 2, children: [], parent_id: root.id.to_s }
       )
     end
   end
@@ -43,8 +43,8 @@ RSpec.describe Filter::ScientificDomain do
       filter.counters = { child2.id => 1 }
 
       expect(filter.active_filters).to include(
-        ["Scientific Domains", parent.name, "scientific_domains" => [child1.id.to_s]],
-        ["Scientific Domains", child1.name, "scientific_domains" => [parent.id.to_s]]
+        ["Scientific Domains", child1.name, "scientific_domains" => []],
+        ["Scientific Domains", parent.name, "scientific_domains" => []]
       )
     end
   end
