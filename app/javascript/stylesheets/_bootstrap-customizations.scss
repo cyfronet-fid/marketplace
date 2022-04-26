@@ -1443,12 +1443,12 @@ h5 {
     left: 6px;
   }
 
-  input.indeterminate[type=checkbox]:checked + span::after {
+  input.indeterminate[type=checkbox] + span::after {
     content: '';
     display: block;
     width: 8px;
     height: 10px;
-    border: 2solid $palette-black;
+    border: 2px solid $palette-black;
     border-width: 2px 0 0 0;
     position: absolute;
     transform: none;

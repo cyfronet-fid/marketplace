@@ -33,7 +33,13 @@ class Filter::AncestryMultiselect < Filter
   def create_ancestry_tree(arranged)
     arranged
       .map do |record, children|
-        { name: record.name, id: record.id, count: @counters[record.id].to_i, children: create_ancestry_tree(children) }
+        {
+          name: record.name,
+          id: record.id,
+          count: @counters[record.id].to_i,
+          parent_id: record.ancestry,
+          children: create_ancestry_tree(children)
+        }
       end
       .sort_by! { |e| [-e[:count], e[:name]] }
   end

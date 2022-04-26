@@ -6,6 +6,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.37.0-milestone]
+
+### Added
+
+### Changed
+- Improve multi checkbox filters with `indeterminate` parent state (@goreck888)
+
+### Fixed
+
+### Deprecated
+
+### Removed
+
+### Security
+
 ## [3.36.0] 2022-04-19
 
 ### Changed

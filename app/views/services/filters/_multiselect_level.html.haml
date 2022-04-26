@@ -5,7 +5,7 @@
     %li{ data: { target: target } }
       %label{ class: ("text-muted" if muted) }
         %input.form-check-input{ type: "checkbox", name: "#{name}[]",
-          multiple: true, checked: !muted && (values.include?(option[:id].to_s) || values.include?(parent.to_s)),
+          multiple: true, checked: (values.include?(option[:id].to_s) || values.include?(parent.to_s)),
           value: option[:id],
           "data-action" => "change->filter#reload", "data-probe" => "", "data-e2e": "filter-checkbox",
           "data-parent": parent, class: checkbox_class(option, values) }
