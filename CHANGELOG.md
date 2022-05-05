@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [3.36.1] 
+## [3.36.1] 2022-05-05 
 
 ### Fixed
 - Providers import (@kmarszalek)
