@@ -18,6 +18,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Deprecated
 
 ### Removed
+- Tours designed for old features in the profile and resource view (@goreck888)
 
 ### Security
 

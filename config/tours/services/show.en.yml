@@ -1,4 +1,5 @@
 service_about_intro:
+  activation_strategy: query_param
   next:
     tour_name: "service_details_intro"
     controller_name: "details"
