@@ -128,8 +128,6 @@ RSpec.feature "Favourites" do
 
         visit service_path(service)
 
-        # close shepherd's tour
-        click_on "I'll do it later"
         expect(page).to have_content "Add to favourites"
       end
 
@@ -141,9 +139,6 @@ RSpec.feature "Favourites" do
         checkin_sign_in_as(user)
 
         visit service_path(fav2)
-
-        # close shepherd's tour
-        click_on "I'll do it later"
 
         expect(page).to have_content "Add to favourites"
 
@@ -166,9 +161,6 @@ RSpec.feature "Favourites" do
         checkin_sign_in_as(user)
 
         visit service_path(fav2)
-
-        # close shepherd's tour
-        click_on "I'll do it later"
 
         expect(page).to have_content "Remove from favourites"
 

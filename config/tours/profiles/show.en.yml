@@ -1,4 +1,5 @@
 intro:
+  activation_strategy: query_param
   next:
     tour_name: "intro2"
     controller_name: "profile"
