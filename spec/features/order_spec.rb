@@ -498,9 +498,6 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      # close shepherd's tour
-      click_on "I'll do it later"
-
       click_on "Access the resource"
       click_on "Next", match: :first
 
@@ -530,9 +527,6 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      # close shepherd's tour
-      click_on "I'll do it later"
-
       click_on "Access the resource"
       click_on "Next", match: :first
       click_on "Add new project"
@@ -559,9 +553,6 @@ RSpec.feature "Service ordering" do
       create(:offer, service: service)
 
       visit service_path(service)
-
-      # close shepherd's tour
-      click_on "I'll do it later"
 
       click_on "Access the resource"
       click_on "Next", match: :first
@@ -620,9 +611,6 @@ RSpec.feature "Service ordering" do
 
       visit service_path(service)
 
-      # close shepherd's tour
-      click_on "I'll do it later"
-
       click_on "Access the resource"
       click_on "Next", match: :first
 
@@ -642,9 +630,6 @@ RSpec.feature "Service ordering" do
       _offer = create(:offer, service: service, voucherable: true)
 
       visit service_path(service)
-
-      # close shepherd's tour
-      click_on "I'll do it later"
 
       click_on "Access the resource"
       click_on "Next", match: :first
