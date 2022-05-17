@@ -17,11 +17,13 @@ class Presentable::HeaderComponent < ApplicationComponent
     preview:,
     question:,
     favourite_services: [],
+    abbreviation: nil,
     show_checkboxes: true
   )
     super()
     @object = object
     @title = title
+    @abbreviation = abbreviation
     @subtitle = subtitle
     @comparison_enabled = comparison_enabled
     @preview = preview

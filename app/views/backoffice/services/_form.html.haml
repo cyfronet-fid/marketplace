@@ -38,7 +38,7 @@
       #accordion-form.accordion
         .card.shadow-sm.rounded
           %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
-              [:name, :resource_organisation, :providers, :webpage_url])),
+              [:name, :abbreviation, :resource_organisation, :providers, :webpage_url])),
               data: { toggle: "collapse", target: "#basic" },
               aria: { expanded: true, controls: "basic" } }
             .card-header.text-left{ id: "basic-header" }
@@ -51,9 +51,11 @@
                     %i.fas.fa-chevron-up
         .collapse{ id: "basic", "aria-labelledby": "basic-header",
             "data-parent": "#accordion-form",
-            class: ("show" unless collapsed?(service, [:name, :resource_organisation, :providers, :webpage_url])) }
+            class: ("show" unless collapsed?(service, [:name, :abbreviation, :resource_organisation,
+                                                       :providers, :webpage_url])) }
           .card-body
             = f.input :name, disabled: cant_edit(:name)
+            = f.input :abbreviation, disabled: cant_edit(:abbreviation)
             = f.association :resource_organisation, disabled: cant_edit(:resource_organisation_id),
                               collection: Provider.active
             = f.association :providers, multiple: true, input_html: { data: { choice: true } },

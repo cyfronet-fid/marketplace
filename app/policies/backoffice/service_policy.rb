@@ -66,6 +66,7 @@ class Backoffice::ServicePolicy < ApplicationPolicy
   def permitted_attributes
     attrs = [
       :name,
+      :abbreviation,
       :description,
       :tagline,
       :order_type,

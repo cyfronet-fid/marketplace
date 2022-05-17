@@ -19,6 +19,7 @@ RSpec.describe Backoffice::ServicePolicy do
       expect(policy.permitted_attributes).to match_array(
         [
           :name,
+          :abbreviation,
           :description,
           :tagline,
           :order_type,

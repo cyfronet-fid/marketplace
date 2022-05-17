@@ -2642,6 +2642,20 @@ label[data-multicheckbox].small {
     margin-bottom: 0.35rem;
   }
 
+  .abbreviation {
+    font-size: 14px;
+    border-bottom: 1px solid $palette-gray-10;
+    margin-bottom: 8px;
+    color: $palette-gray-50;
+    padding-bottom: 6px;
+
+    &.list {
+      margin: 8px 0 0;
+      border: none;
+      padding: 0;
+    }
+  }
+
   dl {
     width: 100%;
     float: left;
