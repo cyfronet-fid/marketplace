@@ -6,6 +6,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.38.0-milestone]
+
+### Added
+- Dependencies for Provider Provile v4.0 (@kmarszalek)
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
 ## [3.37.0] 2022-05-17
 
 ### Added

@@ -64,6 +64,7 @@ class Backoffice::ProviderPolicy < ApplicationPolicy
       [participating_countries: []],
       [affiliations: []],
       [network_ids: []],
+      :catalogue,
       [structure_type_ids: []],
       [esfri_type_ids: []],
       [esfri_domain_ids: []],
