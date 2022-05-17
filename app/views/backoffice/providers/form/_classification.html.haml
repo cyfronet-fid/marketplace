@@ -1,5 +1,6 @@
 .card.shadow-sm.rounded
-  %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(provider, [:scientific_domains, :tag_list])),
+  %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(provider, [:scientific_domains,
+                                                                                     :tag_list, :structure_types])),
               data: { toggle: "collapse", target: "#classification" },
               aria: { expanded: true, controls: "classification" } }
     .card-header.text-left{ id: "classification-header" }
@@ -13,7 +14,7 @@
 - sds = ScientificDomain.child_names.filter_map { |name, sd| [name, sd.id] if sd.parent.present? }
 .collapse{ id: "classification", "aria-labelledby": "classification-header",
           "data-parent": "#accordion-form",
-          class: ("show" unless collapsed?(provider, [:scientific_domains, :tag_list])) }
+          class: ("show" unless collapsed?(provider, [:scientific_domains, :tag_list, :structure_types])) }
   .card-body
     = f.association :scientific_domains, disabled: cant_edit([scientific_domain_ids: []]),
               input_html: { data: { choice: true } },
@@ -23,3 +24,5 @@
               wrapper_html: { "data-target" => "form.tag_list" },
               as: :array, disabled: cant_edit([tag_list: []])
     = link_to_add_array_field("provider", "tag_list")
+    = f.association :structure_types, disabled: cant_edit([structure_type_ids: []]),
+            input_html: { multiple: true, data: { choice: true } }

@@ -1,7 +1,6 @@
 .card.shadow-sm.rounded
   %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(provider,
-              [:hosting_legal_entity, :structure_types,
-              :esfri_types, :esfri_domains, :meril_scientific_domains, :areas_of_activity,
+              [:hosting_legal_entity, :esfri_types, :esfri_domains, :meril_scientific_domains, :areas_of_activity,
               :societal_grand_challenges, :national_roadmaps])),
                 data: { toggle: "collapse", target: "#other" },
                 aria: { expanded: true, controls: "other" } }
@@ -16,8 +15,7 @@
 .collapse{ id: "other", "aria-labelledby": "other-header",
           "data-parent": "#accordion-form",
           class: ("show" unless collapsed?(provider,
-              [:hosting_legal_entity, :structure_types,
-              :esfri_types, :esfri_domains, :meril_scientific_domains, :areas_of_activity,
+              [:hosting_legal_entity, :esfri_types, :esfri_domains, :meril_scientific_domains, :areas_of_activity,
               :societal_grand_challenges, :national_roadmaps])) }
   .card-body
     .row
@@ -26,8 +24,6 @@
     .row
       .col-12
         .mt-4
-        = f.association :structure_types, disabled: cant_edit([structure_type_ids: []]),
-              input_html: { multiple: true, data: { choice: true } }
         = f.association :esfri_domains, disabled: cant_edit([esfri_domain_ids: []]),
               input_html: { multiple: true, data: { choice: true } }
         = f.input :esfri_type, disabled: cant_edit([esfri_type_ids: []]),

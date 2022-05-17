@@ -12,6 +12,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Dependencies for Provider Provile v4.0 (@kmarszalek)
 
 ### Changed
+- Move Structure Types from `Other` to `Classification` section in the Resource Profile 4.0 (@goreck888)
 
 ### Deprecated
 
