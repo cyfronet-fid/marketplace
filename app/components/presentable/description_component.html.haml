@@ -3,8 +3,8 @@
     %main.col-12.col-xl-9.pr-5.mb-4{ "data-shepherd-tour-target": "service-about" }
 
       = markdown(@object.description)
-      - if @object.pid == (ENV["OPENAIRE_NOTEBOOKS__ACTIVATION_PID"] || "egi-fed.notebook")
-        = render "services/notebook_openaire_explore"
+      - if show_banner?(@object.tag_list)
+        = render "services/notebook_eosc_explore", name: @object.name, tags: @object.tag_list
 
       = description_panels
     %sidebar.col-12.col-xl-3{ "data-shepherd-tour-target": "service-classification" }

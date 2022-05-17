@@ -899,19 +899,25 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_content("New offer created successfully")
     end
 
-    scenario "I can see OpenAIRE explore integration for EGI Notebooks" do
-      notebook_service = create(:service, pid: "egi-fed.notebook", owners: [user])
-      other_service_with_pid = create(:service, pid: "other.pid", owners: [user])
-      other_service_without_pid = create(:service, pid: nil, owners: [user])
+    ["EOSC::Jupyter Notebook", "EOSC::Galaxy Workflow", "EOSC::Twitter Data"].each do |tag|
+      scenario "I can see EOSC explore integration for EGI Notebooks" do
+        notebook_service = create(:service, tag_list: [tag], pid: "egi-fed.notebook", owners: [user])
+        other_service_with_pid = create(:service, pid: "other.pid", owners: [user])
+        other_service_without_pid = create(:service, pid: nil, owners: [user])
 
-      visit backoffice_service_path(notebook_service)
-      expect(page).to have_text("See Jupyter notebooks compatible with the EGI Notebook service")
+        visit backoffice_service_path(notebook_service)
+        expect(page).to have_text("See #{tag.remove("EOSC::")} compatible with the #{notebook_service.name} service")
 
-      visit backoffice_service_path(other_service_with_pid)
-      expect(page).not_to have_text("See Jupyter notebooks compatible with the EGI Notebook service")
+        visit backoffice_service_path(other_service_with_pid)
+        expect(page).not_to have_text(
+          "See #{tag.remove("EOSC::")} compatible with the #{other_service_with_pid.name} service"
+        )
 
-      visit backoffice_service_path(other_service_without_pid)
-      expect(page).not_to have_text("See Jupyter notebooks compatible with the EGI Notebook service")
+        visit backoffice_service_path(other_service_without_pid)
+        expect(page).not_to have_text(
+          "See #{tag.remove("EOSC::")} compatible with the #{other_service_without_pid.name} service"
+        )
+      end
     end
   end
 end

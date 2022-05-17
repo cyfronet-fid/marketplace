@@ -1,0 +1,10 @@
+.row.p-2.notebooks-explore-info
+  .col-12.col-sm-5.col-md-4.vertical-middle
+    %a{ href: eosc_explore_url(tags), target: "_blank" }
+      = image_pack_tag "eosc-explore-logo.png", class: "full-width pb-sm-1"
+  .col-12.col-sm-7.col-md-8.vertical-middle
+    %p.mb-0
+      = _("See #{first_matching_tag(tags).gsub(/eosc::/i, "")} compatible with the #{name} service at")
+      %a{ href: eosc_explore_url(tags), target: "_blank" }
+        EOSC Explore
+      = _("(opens in a new window)")
