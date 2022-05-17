@@ -569,6 +569,7 @@ ActiveRecord::Schema.define(version: 2022_05_17_202141) do
     t.datetime "synchronized_at"
     t.string "pid"
     t.string "catalogue"
+    t.string "abbreviation"
     t.index ["name"], name: "index_services_on_name"
     t.index ["provider_id"], name: "index_services_on_provider_id"
     t.index ["resource_organisation_id"], name: "index_services_on_resource_organisation_id"
