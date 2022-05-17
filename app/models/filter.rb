@@ -57,7 +57,7 @@ class Filter
   private
 
   def name(val)
-    options.find { |option| val == option[:id].to_s }&.[](:name)
+    options.find { |option| val.downcase == option[:id].to_s.downcase }&.[](:name)
   end
 
   def children(val)
