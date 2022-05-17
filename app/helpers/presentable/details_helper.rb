@@ -80,7 +80,7 @@ module Presentable::DetailsHelper
     {
       name: "dependencies",
       template: "array",
-      fields: %w[required_services related_services related_platforms],
+      fields: %w[required_services related_services related_platforms catalogue],
       with_desc: true,
       nested: {
         required_services: "service",

@@ -124,6 +124,7 @@ class Importers::Service < ApplicationService
       required_services: required_services,
       related_services: related_services,
       related_platforms: related_platforms,
+      catalogue: @data["catalogueId"],
       # Attribution
       funding_bodies: funding_bodies,
       funding_programs: funding_programs,

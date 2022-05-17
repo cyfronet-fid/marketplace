@@ -275,7 +275,7 @@
 
         .card.shadow-sm.rounded
           %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
-              [:required_services, :related_services, :related_platforms, :platforms])),
+              [:required_services, :related_services, :related_platforms, :platforms, :catalogue])),
                 data: { toggle: "collapse", target: "#dependencies" },
                 aria: { expanded: true, controls: "dependencies" } }
             .card-header.text-left{ id: "dependencies-header" }
@@ -289,7 +289,7 @@
         .collapse{ id: "dependencies", "aria-labelledby": "dependencies-header",
             "data-parent": "#accordion-form",
             class: ("show" unless collapsed?(service, [:required_services, :related_services,
-                                                      :related_platforms, :platforms])) }
+                                                      :related_platforms, :platforms, :catalogue])) }
           .card-body
             = f.association :required_services, multiple: true, input_html: { data: { choice: true } },
             disabled: cant_edit([required_service_ids: []])
@@ -305,6 +305,8 @@
                 wrapper_html: { "data-target" => "service.relatedPlatforms" },
                 disabled: cant_edit([related_platforms: []]), as: :array
             = link_to_add_array_field("service", "related_platforms")
+            .mt-4
+              = f.input :catalogue, disabled: cant_edit(:catalogue)
 
         .card.shadow-sm.rounded
           %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
