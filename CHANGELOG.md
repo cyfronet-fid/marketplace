@@ -23,6 +23,14 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Security
 
+## [3.36.1] 2022-05-05 
+
+### Fixed
+- Providers import (@kmarszalek)
+
+### Removed
+- Unique constraints from name and abbreviation for Provider (@kmarszalek)
+
 ## [3.36.0] 2022-04-19
 
 ### Changed
