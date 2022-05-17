@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [3.37.0-milestone]
+## [3.37.0] 2022-05-17
 
 ### Added
 - CSS mods for better visibility of vocabularies hierarchy in the backoffice (@jarekzet, @goreck888)
@@ -14,14 +14,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Changed
 - Improve multi checkbox filters with `indeterminate` parent state (@goreck888)
 
-### Fixed
-
-### Deprecated
-
 ### Removed
 - Tours designed for old features in the profile and resource view (@goreck888)
-
-### Security
 
 ## [3.36.1] 2022-05-05 
 
