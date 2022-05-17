@@ -85,11 +85,13 @@ class Importers::Provider
       # Maturity
       provider_life_cycle_statuses: map_provider_life_cycle_status(@data["lifeCycleStatus"]),
       certifications: certifications,
-      # Other
-      hosting_legal_entity: @data["hostingLegalEntity"],
+      # Dependencies
       participating_countries: participating_countries,
       affiliations: affiliations,
       networks: map_networks(networks),
+      catalogue: @data["catalogue"],
+      # Other
+      hosting_legal_entity: @data["hostingLegalEntity"],
       structure_types: map_structure_types(structure_types),
       esfri_domains: map_esfri_domains(esfri_domains),
       esfri_types: map_esfri_types(@data["esfriType"]),

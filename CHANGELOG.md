@@ -10,6 +10,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - CSS mods for better visibility of vocabularies hierarchy in the backoffice (@jarekzet, @goreck888)
+- Dependencies for Provider Provile v4.0 (@kmarszalek)
 
 ### Changed
 - Improve multi checkbox filters with `indeterminate` parent state (@goreck888)
