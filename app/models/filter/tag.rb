@@ -12,10 +12,10 @@ class Filter::Tag < Filter
   private
 
   def fetch_options
-    ActsAsTaggableOn::Tag.all.map { |t| { name: t.name, id: t.name } }.sort { |x, y| x[:name] <=> y[:name] }
+    ActsAsTaggableOn::Tag.all.map { |t| { name: t.name, id: t.name.downcase } }.sort { |x, y| x[:name] <=> y[:name] }
   end
 
   def where_constraint
-    { @index.to_sym => values }
+    { @index.to_sym => values&.map(&:downcase) }
   end
 end

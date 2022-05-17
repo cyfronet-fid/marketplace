@@ -278,19 +278,25 @@ RSpec.feature "Service browsing" do
       all(@services_selector).each { |element| expect(element).to_not have_text("Service b") }
     end
 
-    scenario "OpenAIRE explore integration for EGI Notebooks" do
-      notebook_service = create(:service, pid: "egi-fed.notebook")
-      other_service_with_pid = create(:service, pid: "other.pid")
-      other_service_without_pid = create(:service, pid: nil)
+    ["EOSC::Jupyter Notebook", "EOSC::Galaxy Workflow", "EOSC::Twitter Data"].each do |tag|
+      scenario "EOSC explore integration for EGI Notebooks" do
+        notebook_service = create(:service, tag_list: [tag], pid: "egi-fed.notebook")
+        other_service_with_pid = create(:service, pid: "other.pid")
+        other_service_without_pid = create(:service, pid: nil)
 
-      visit service_path(notebook_service)
-      expect(page).to have_text("See Jupyter notebooks compatible with the EGI Notebook service")
+        visit service_path(notebook_service)
+        expect(page).to have_text("See #{tag.remove("EOSC::")} compatible with the #{notebook_service.name} service")
 
-      visit service_path(other_service_with_pid)
-      expect(page).not_to have_text("See Jupyter notebooks compatible with the EGI Notebook service")
+        visit service_path(other_service_with_pid)
+        expect(page).not_to have_text(
+          "See #{tag.remove("EOSC::")} compatible with the #{other_service_with_pid.name} service"
+        )
 
-      visit service_path(other_service_without_pid)
-      expect(page).not_to have_text("See Jupyter notebooks compatible with the EGI Notebook service")
+        visit service_path(other_service_without_pid)
+        expect(page).not_to have_text(
+          "See #{tag.remove("EOSC::")} compatible with the #{other_service_without_pid.name} service"
+        )
+      end
     end
   end
 end

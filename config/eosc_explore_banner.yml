@@ -1,0 +1,13 @@
+default: &default
+  tags: <%= ENV["EOSC_EXPLORE_TAGS"]&.split(",") || ["EOSC::Jupyter Notebook", "EOSC::Galaxy Workflow", "EOSC::Twitter Data"] %>
+  base_url: <%= ENV["EOSC_EXPLORE_BASE_URL"] || "https://explore.eosc-portal.eu/" %>
+  search_url: <%= ENV["EOSC_EXPLORE_SEARCH_URL"] || "search/advanced/research-outcomes?f0=resultsubject&fv0=" %>
+
+test:
+  <<: *default
+
+development:
+  <<: *default
+
+production:
+  <<: *default

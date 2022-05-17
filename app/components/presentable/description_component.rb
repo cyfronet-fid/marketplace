@@ -2,6 +2,7 @@
 
 class Presentable::DescriptionComponent < ApplicationComponent
   include MarkdownHelper
+  include EoscExploreBannerHelper
 
   renders_one :main_options
   renders_one :sidebar_options

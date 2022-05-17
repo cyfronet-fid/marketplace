@@ -30,7 +30,7 @@ module Service::Search
       geographical_availabilities: geographical_availabilities.map(&:alpha2),
       target_users: target_users.map(&:id),
       order_type: [order_type] << offers.published.map(&:order_type),
-      tags: tag_list,
+      tags: tag_list.map(&:downcase),
       source: upstream&.source_type,
       offers: offers.ids,
       offer_names: offers.map(&:name),
