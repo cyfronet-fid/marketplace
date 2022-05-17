@@ -12,7 +12,7 @@ module Presentable::DetailsHelper
   def provider_details_columns
     [
       [provider_classification, esfri_types, esfri_domains, meril_scientific_domains],
-      [networks, areas_of_activity, affiliations, certifications],
+      [networks, areas_of_activity, affiliations, certifications, catalogue],
       [hosting_legal_entity, structure_types, societal_grand_challenges, national_roadmaps]
     ]
   end
@@ -234,6 +234,10 @@ module Presentable::DetailsHelper
 
   def networks
     { name: "networks", template: "list", fields: %w[networks], nested: { networks: "name" } }
+  end
+
+  def catalogue
+    { name: "catalogue", template: "list", fields: %w[catalogue] }
   end
 
   def national_roadmaps
