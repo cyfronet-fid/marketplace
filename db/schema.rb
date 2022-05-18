@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_17_202141) do
+ActiveRecord::Schema.define(version: 2022_05_24_154008) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -411,7 +411,7 @@ ActiveRecord::Schema.define(version: 2022_05_17_202141) do
     t.string "region"
     t.string "country"
     t.string "certifications", default: [], array: true
-    t.string "hosting_legal_entity"
+    t.string "hosting_legal_entity_string"
     t.string "participating_countries", default: [], array: true
     t.string "affiliations", default: [], array: true
     t.string "national_roadmaps", default: [], array: true

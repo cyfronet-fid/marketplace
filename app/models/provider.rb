@@ -36,6 +36,10 @@ class Provider < ApplicationRecord
   has_many :scientific_domains, through: :provider_scientific_domains
   has_many :data_administrators, through: :provider_data_administrators, dependent: :destroy, autosave: true
   has_many :provider_vocabularies, dependent: :destroy
+  has_many :hosting_legal_entities,
+           through: :provider_vocabularies,
+           source: :vocabulary,
+           source_type: "Vocabulary::HostingLegalEntity"
   has_many :legal_statuses, through: :provider_vocabularies, source: :vocabulary, source_type: "Vocabulary::LegalStatus"
   has_many :provider_life_cycle_statuses,
            through: :provider_vocabularies,
@@ -89,7 +93,7 @@ class Provider < ApplicationRecord
   auto_strip_attributes :postal_code, nullify: false
   auto_strip_attributes :city, nullify: false
   auto_strip_attributes :region, nullify: false
-  auto_strip_attributes :hosting_legal_entity, nullify: false
+  auto_strip_attributes :hosting_legal_entity_string, nullify: false
   auto_strip_attributes :status, nullify: false
   auto_strip_attributes :certifications, nullify_array: false
   auto_strip_attributes :affiliations, nullify_array: false
@@ -131,6 +135,16 @@ class Provider < ApplicationRecord
     return nil if legal_statuses.blank?
 
     legal_statuses[0].id
+  end
+
+  def hosting_legal_entity=(entity_id)
+    self.hosting_legal_entities = entity_id.blank? ? [] : [Vocabulary.find(entity_id)]
+  end
+
+  def hosting_legal_entity
+    return nil if hosting_legal_entities.blank?
+
+    hosting_legal_entities[0].id
   end
 
   def esfri_type=(type_id)

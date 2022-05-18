@@ -52,6 +52,7 @@ RSpec.describe Importers::Provider do
       website: "http://www.cyfronet.pl",
       legal_entity: true,
       legal_statuses: [legal_status],
+      hosting_legal_entity_string: "cyfronet",
       # Marketing
       description: "Test provider for jms queue",
       link_multimedia_urls: [],
@@ -71,7 +72,6 @@ RSpec.describe Importers::Provider do
       provider_life_cycle_statuses: [provider_life_cycle_status],
       certifications: %w[ISO-345 ASE/EBU-2008],
       # Other
-      hosting_legal_entity: "cyfronet",
       participating_countries: %w[BB AT],
       affiliations: %w[asdf test],
       networks: [network],
@@ -112,7 +112,7 @@ RSpec.describe Importers::Provider do
 
     expect(imported_hash[:provider_life_cycle_statuses]).to match_array(correct_hash[:provider_life_cycle_statuses])
     expect(imported_hash[:certifications]).to match_array(correct_hash[:certifications])
-    expect(imported_hash[:hosting_legal_entity]).to eq(correct_hash[:hosting_legal_entity])
+    expect(imported_hash[:hosting_legal_entity_string]).to eq(correct_hash[:hosting_legal_entity_string])
     expect(imported_hash[:participating_countries]).to match_array(correct_hash[:participating_countries])
     expect(imported_hash[:networks]).to match_array(correct_hash[:networks])
     expect(imported_hash[:structure_types]).to match_array(correct_hash[:structure_types])

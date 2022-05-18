@@ -60,7 +60,7 @@ namespace :dev do
       provider.region = hash["region"]
       provider.country = Country.for(hash["country_alpha2"])
       provider.certifications = %w[ISO AES VESA].sample(rand(1..3))
-      provider.hosting_legal_entity = ["Lorem ipsum", "Test", "Some Entity"].sample(rand(1..3))
+      provider.hosting_legal_entity_string = ["Lorem ipsum", "Test", "Some Entity"].sample(rand(1..3))
       provider.affiliations = ["Affiliation A", "Affiliation test", "Affiliation 1"].sample(rand(1..3))
       provider.national_roadmaps = ["Roadmap 1", "Roadmap 2", "Roadmap 3"].sample(rand(1..3))
       provider.pid = provider.abbreviation

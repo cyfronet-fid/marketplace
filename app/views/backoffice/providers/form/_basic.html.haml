@@ -1,6 +1,6 @@
 .card.shadow-sm.rounded
   %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(provider, [:name, :abbreviation, :website,
-          :legal_entity, :legal_status])),
+          :legal_entity, :legal_status, :hosting_legal_entity_string, :hosting_legal_entities])),
               data: { toggle: "collapse", target: "#basic" },
               aria: { expanded: true, controls: "basic" } }
     .card-header.text-left{ id: "basic-header" }
@@ -15,7 +15,7 @@
 .collapse{ id: "basic", "aria-labelledby": "basic-header",
           "data-parent": "#accordion-form",
           class: ("show" unless collapsed?(provider, [:name, :abbreviation, :website,
-          :legal_entity, :legal_status])) }
+          :legal_entity, :legal_status, :hosting_legal_entity_string, :hosting_legal_entities])) }
   .card-body
     = f.input :name, disabled: cant_edit(:name)
     = f.input :abbreviation, disabled: cant_edit(:abbreviation)
@@ -28,3 +28,6 @@
       collection: Vocabulary.where(type: "Vocabulary::LegalStatus"),
       label_method: :name, value_method: :id,
       input_html: { multiple: false, data: { choice: true } }
+    .row
+      .col-12
+        = hosting_legal_entity_input(f)
