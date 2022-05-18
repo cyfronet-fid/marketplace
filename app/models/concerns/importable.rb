@@ -59,6 +59,10 @@ module Importable
     Vocabulary::LegalStatus.where(eid: statuses)
   end
 
+  def map_hosting_legal_entity(entities)
+    Vocabulary::HostingLegalEntity.where(eid: entities)
+  end
+
   def map_trl(trl)
     Vocabulary::Trl.where(eid: trl)
   end

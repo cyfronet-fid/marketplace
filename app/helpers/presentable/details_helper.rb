@@ -13,7 +13,12 @@ module Presentable::DetailsHelper
     [
       [provider_classification, esfri_types, esfri_domains, meril_scientific_domains],
       [networks, areas_of_activity, affiliations, certifications, catalogue],
-      [hosting_legal_entity, structure_types, societal_grand_challenges, national_roadmaps]
+      [
+        Rails.configuration.profile_4_enabled ? hosting_legal_entity : hosting_legal_entity_string,
+        structure_types,
+        societal_grand_challenges,
+        national_roadmaps
+      ]
     ]
   end
 
@@ -229,7 +234,18 @@ module Presentable::DetailsHelper
   end
 
   def hosting_legal_entity
-    { name: "hosting_legal_entity", template: "array", fields: %w[hosting_legal_entity] }
+    {
+      name: "hosting_legal_entity",
+      template: "list",
+      fields: %w[hosting_legal_entities],
+      nested: {
+        hosting_legal_entities: "name"
+      }
+    }
+  end
+
+  def hosting_legal_entity_string
+    { name: "hosting_legal_entity", template: "array", fields: %w[hosting_legal_entity_string] }
   end
 
   def networks

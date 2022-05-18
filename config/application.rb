@@ -76,5 +76,7 @@ module Mp
     config.eosc_commons_env = ENV["EOSC_COMMONS_ENV"].present? ? ENV["EOSC_COMMONS_ENV"] : "production"
 
     config.user_actions_target = ENV["USER_ACTIONS_TARGET"].present? ? ENV["USER_ACTIONS_TARGET"] : "all"
+
+    config.profile_4_enabled = ENV["PROFILE_4_ENABLED"].present? ? ENV["PROFILE_4_ENABLED"] : false
   end
 end

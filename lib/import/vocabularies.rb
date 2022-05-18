@@ -25,7 +25,8 @@ class Import::Vocabularies
     PROVIDER_SOCIETAL_GRAND_CHALLENGE: Vocabulary::SocietalGrandChallenge,
     PROVIDER_STRUCTURE_TYPE: Vocabulary::StructureType,
     PROVIDER_MERIL_SCIENTIFIC_DOMAIN: Vocabulary::MerilScientificDomain,
-    PROVIDER_MERIL_SCIENTIFIC_SUBDOMAIN: Vocabulary::MerilScientificDomain
+    PROVIDER_MERIL_SCIENTIFIC_SUBDOMAIN: Vocabulary::MerilScientificDomain,
+    PROVIDER_HOSTING_LEGAL_ENTITY: Vocabulary::HostingLegalEntity
   }.freeze
 
   def initialize(

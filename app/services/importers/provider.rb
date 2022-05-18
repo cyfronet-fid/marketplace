@@ -72,6 +72,8 @@ class Importers::Provider
       website: @data["website"],
       legal_entity: @data["legalEntity"],
       legal_statuses: map_legal_statuses(Array(@data["legalStatus"])),
+      hosting_legal_entity_string: @data["hostingLegalEntity"],
+      hosting_legal_entities: map_hosting_legal_entity(@data["hostingLegalEntity"]),
       # Marketing
       description: @data["description"],
       link_multimedia_urls: multimedia.map { |item| map_link(item) }.compact,
@@ -96,7 +98,6 @@ class Importers::Provider
       networks: map_networks(networks),
       catalogue: @data["catalogueId"],
       # Other
-      hosting_legal_entity: @data["hostingLegalEntity"],
       structure_types: map_structure_types(structure_types),
       esfri_domains: map_esfri_domains(esfri_domains),
       esfri_types: map_esfri_types(@data["esfriType"]),
