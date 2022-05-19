@@ -53,6 +53,14 @@ ActiveRecord::Schema.define(version: 2022_05_24_154008) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "catalogues", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "pid"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "synchronized_at"
+  end
+
   create_table "categories", force: :cascade do |t|
     t.string "name", null: false
     t.text "description"
@@ -354,6 +362,16 @@ ActiveRecord::Schema.define(version: 2022_05_24_154008) do
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
+  create_table "provider_catalogues", force: :cascade do |t|
+    t.bigint "provider_id"
+    t.bigint "catalogue_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["catalogue_id"], name: "index_provider_catalogues_on_catalogue_id"
+    t.index ["provider_id", "catalogue_id"], name: "index_provider_catalogues_on_provider_id_and_catalogue_id", unique: true
+    t.index ["provider_id"], name: "index_provider_catalogues_on_provider_id"
+  end
+
   create_table "provider_data_administrators", force: :cascade do |t|
     t.bigint "data_administrator_id"
     t.bigint "provider_id"
@@ -418,7 +436,6 @@ ActiveRecord::Schema.define(version: 2022_05_24_154008) do
     t.integer "upstream_id"
     t.datetime "synchronized_at"
     t.string "status"
-    t.string "catalogue"
   end
 
   create_table "scientific_domains", force: :cascade do |t|
@@ -428,6 +445,16 @@ ActiveRecord::Schema.define(version: 2022_05_24_154008) do
     t.string "eid"
     t.text "description"
     t.index ["name", "ancestry"], name: "index_scientific_domains_on_name_and_ancestry", unique: true
+  end
+
+  create_table "service_catalogues", force: :cascade do |t|
+    t.bigint "service_id"
+    t.bigint "catalogue_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["catalogue_id"], name: "index_service_catalogues_on_catalogue_id"
+    t.index ["service_id", "catalogue_id"], name: "index_service_catalogues_on_service_id_and_catalogue_id", unique: true
+    t.index ["service_id"], name: "index_service_catalogues_on_service_id"
   end
 
   create_table "service_opinions", force: :cascade do |t|
@@ -568,7 +595,6 @@ ActiveRecord::Schema.define(version: 2022_05_24_154008) do
     t.string "related_platforms", default: [], array: true
     t.datetime "synchronized_at"
     t.string "pid"
-    t.string "catalogue"
     t.string "abbreviation"
     t.index ["name"], name: "index_services_on_name"
     t.index ["provider_id"], name: "index_services_on_provider_id"
@@ -734,11 +760,15 @@ ActiveRecord::Schema.define(version: 2022_05_24_154008) do
   add_foreign_key "project_items", "projects"
   add_foreign_key "project_scientific_domains", "projects"
   add_foreign_key "project_scientific_domains", "scientific_domains"
+  add_foreign_key "provider_catalogues", "catalogues"
+  add_foreign_key "provider_catalogues", "providers"
   add_foreign_key "provider_scientific_domains", "providers"
   add_foreign_key "provider_scientific_domains", "scientific_domains"
   add_foreign_key "provider_vocabularies", "providers"
   add_foreign_key "provider_vocabularies", "vocabularies"
   add_foreign_key "providers", "provider_sources", column: "upstream_id", on_delete: :nullify
+  add_foreign_key "service_catalogues", "catalogues"
+  add_foreign_key "service_catalogues", "services"
   add_foreign_key "service_providers", "providers"
   add_foreign_key "service_providers", "services"
   add_foreign_key "service_related_platforms", "platforms"

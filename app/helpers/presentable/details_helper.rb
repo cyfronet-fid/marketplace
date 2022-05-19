@@ -22,23 +22,6 @@ module Presentable::DetailsHelper
     ]
   end
 
-  def details_column_width_lg(columns)
-    [4, 12 / columns.length].min
-  end
-
-  def details_column_width_md(columns)
-    [6, 12 / columns.length].min
-  end
-
-  def details_column_width_sm(_columns)
-    12
-  end
-
-  def display_detail?(detail, service)
-    (detail[:clazz].blank? && any_present?(service, *detail[:fields])) ||
-      (detail[:clazz] && service.send(detail[:clazz]).present?)
-  end
-
   def public_contacts
     {
       name: "public_contacts",
@@ -89,7 +72,8 @@ module Presentable::DetailsHelper
       with_desc: true,
       nested: {
         required_services: "service",
-        related_services: "service"
+        related_services: "service",
+        catalogue: "name"
       }
     }
   end
@@ -253,7 +237,7 @@ module Presentable::DetailsHelper
   end
 
   def catalogue
-    { name: "catalogue", template: "list", fields: %w[catalogue] }
+    { name: "catalogue", template: "list", fields: %w[catalogue], nested: { catalogue: "name" } }
   end
 
   def national_roadmaps

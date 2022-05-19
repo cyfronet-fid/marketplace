@@ -65,6 +65,7 @@ en:
             maturity_information: Maturity Information
             management: Management
             changelog: Changelog
+            catalogue: Catalogue
         links:
           link_multimedia_urls: Multimedia %{idx}
           link_use_cases_urls: Use case %{idx}
@@ -96,4 +97,4 @@ en:
           required_services: Required Resources
           related_services: Related Resources
           related_platforms: Related Platforms
-          catalogue: Catalogue ID
+          catalogue: Catalogue

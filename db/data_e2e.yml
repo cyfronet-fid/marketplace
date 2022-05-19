@@ -73,11 +73,20 @@ categories:
     name: &softwareDevelopmentKits "Software Development Kits"
     parent: *sharingAndDicoveryParent
 
+catalogues:
+  EOSC:
+    name: &eosc "EOSC"
+    pid: "eosc-catalogue"
+  CatRIS:
+    name: &catris "CatRIS"
+    pid: "catris-catalogue"
+
 providers:
   EGI Federation:
     status: "published"
     name: &egi "EGI Federation"
     abbreviation: "egi-federation"
+    catalogue: *catris
     website: "http://egi-federation.com"
     legal_entity: true
     description: |
@@ -132,6 +141,7 @@ providers:
     status: "published"
     name: &eudat "EUDAT"
     abbreviation: "eudat"
+    catalogue: *catris
     website: "http://eudat.com"
     legal_entity: true
     description: |
@@ -153,6 +163,7 @@ providers:
     status: "published"
     name: &cerm "Magnetic Resonance Center of the University of Florence - CERM"
     abbreviation: "CERM"
+    catalogue: *catris
     website: "http://cerm.com"
     legal_entity: true
     description: |
@@ -174,6 +185,7 @@ providers:
     status: "published"
     name: &csc "CSC"
     abbreviation: "CSC – IT CENTER FOR SCIENCE"
+    catalogue: *catris
     website: "http://csc.com"
     legal_entity: true
     description: |
@@ -195,6 +207,7 @@ providers:
     status: "published"
     name: &clarin "CLARIN ERIC"
     abbreviation: "clarin-eric"
+    catalogue: *eosc
     website: "http://egi-federation.com"
     legal_entity: true
     description: |
@@ -216,6 +229,7 @@ providers:
     status: "published"
     name: &eodc "Earth Observation Data Centre for Water Resources Monitoring GmbH (EODC)"
     abbreviation: "eodc"
+    catalogue: *eosc
     website: "http://eodc.com"
     legal_entity: true
     description: |
@@ -237,6 +251,7 @@ providers:
     status: "published"
     name: &rbi "Ruder Boškovic Institute"
     abbreviation: "rbi"
+    catalogue: *eosc
     website: "http://rbi.com"
     legal_entity: true
     description: |
@@ -258,6 +273,7 @@ providers:
     status: "published"
     name: &infn "Italian National Institute of Nuclear Physics (INFN)"
     abbreviation: "infn"
+    catalogue: *eosc
     website: "http://infn.com"
     legal_entity: true
     description: |
@@ -279,6 +295,7 @@ providers:
     status: "published"
     name: &d4science "D4Science Infrastructure"
     abbreviation: "D4Science"
+    catalogue: *eosc
     website: "http://d4-science.com"
     legal_entity: true
     description: |
@@ -300,6 +317,7 @@ providers:
     status: "draft"
     name: &lifewatch "LifeWatch ERIC"
     abbreviation: "life-watch-eric"
+    catalogue: *eosc
     website: "http://life-watch-eric.com"
     legal_entity: true
     description: |
@@ -321,6 +339,7 @@ providers:
     status: "published"
     name: &terradue "Terradue Srl"
     abbreviation: "terradue-srl"
+    catalogue: *eosc
     website: "http://terradue-srl.com"
     legal_entity: true
     description: |
@@ -342,6 +361,7 @@ providers:
     status: "published"
     name: &cloudFerro "CloudFerro"
     abbreviation: "cloud-ferro"
+    catalogue: *eosc
     website: "http://cloud-ferro.com"
     legal_entity: true
     description: |
@@ -363,6 +383,7 @@ providers:
     status: "published"
     name: &uou "Bijvoet Center - Utrecht University"
     abbreviation: "bc-uu"
+    catalogue: *eosc
     website: "http://bc-uu.com"
     legal_entity: true
     description: |
@@ -384,6 +405,7 @@ providers:
     status: "published"
     name: &cirmmp "Interuniversity consortium CIRMMP"
     abbreviation: "cirmmp"
+    catalogue: *eosc
     website: "http://cirmmp.com"
     legal_entity: true
     description: |
@@ -405,6 +427,7 @@ providers:
     status: "published"
     name: &esa "European Space Agency (ESA)"
     abbreviation: "esa"
+    catalogue: *eosc
     website: "http://esa.com"
     legal_entity: true
     description: |
@@ -426,6 +449,7 @@ providers:
     status: "published"
     name: &desyProvider "Deutsches Elektronen-Synchrotron DESY"
     abbreviation: "desy"
+    catalogue: *eosc
     website: "http://desy.com"
     legal_entity: true
     description: |
@@ -447,6 +471,7 @@ providers:
     status: "published"
     name: &cnr "Institute of Atmospheric Pollution - National Research Council of Italy (CNR-IIA)"
     abbreviation: "cnr-iia"
+    catalogue: *eosc
     website: "http://cnr-iia.com"
     legal_entity: true
     description: |
@@ -468,6 +493,7 @@ providers:
     status: "published"
     name: &uioProider "University of Oslo (UiO)"
     abbreviation: "uio"
+    catalogue: *eosc
     website: "http://uio.com"
     legal_entity: true
     description: |
@@ -489,6 +515,7 @@ providers:
     status: "published"
     name: &not "not specified yet"
     abbreviation: "not-specified-yet"
+    catalogue: *eosc
     website: "http://not-specified-yet.com"
     legal_entity: true
     description: |
@@ -510,6 +537,7 @@ providers:
     status: "published"
     name: &WeNMR "A Worldwide e-Infrastructure for Structural Biology"
     abbreviation: "WeNMR"
+    catalogue: *eosc
     website: "http://example.com"
     legal_entity: true
     description: |
@@ -531,6 +559,7 @@ providers:
     status: "published"
     name: &GRyCAP "Institute of Instrumentation for Molecular Imaging - GRyCAP"
     abbreviation: "GRyCAP"
+    catalogue: *eosc
     website: "http://example.com"
     legal_entity: true
     description: |
@@ -552,6 +581,7 @@ providers:
     status: "published"
     name: &UKAEA "UK Atomic Energy Authority"
     abbreviation: "UKAEA"
+    catalogue: *eosc
     website: "http://example.com"
     legal_entity: true
     description: |
@@ -573,6 +603,7 @@ providers:
     status: "published"
     name: &rasdaman "RASDAMAN"
     abbreviation: "RASDAMAN"
+    catalogue: *eosc
     website: "http://example.com"
     legal_entity: true
     description: |
@@ -720,6 +751,7 @@ services:
     resource_organisation: *egi
     logo: cloud-compute.png
     open_access: false
+    catalogue: *eosc
     webpage_url: https://www.egi.eu/services/cloud-compute/
     manual_url: https://wiki.egi.eu/wiki/Federated_Cloud_user_support
     helpdesk_url: https://www.egi.eu/more-information/
@@ -1025,6 +1057,7 @@ services:
     resource_organisation: *egi
     logo: high-throughput-compute.png
     open_access: false
+    catalogue: *eosc
     webpage_url: https://www.egi.eu/services/high-throughput-compute/
     manual_url: https://wiki.egi.eu/wiki/Federated_Cloud_user_support
     helpdesk_url: https://www.egi.eu/more-information/
@@ -1192,6 +1225,7 @@ services:
     resource_organisation: *egi
     logo: cloud-container-compute.png
     open_access: false
+    catalogue: *eosc
     webpage_url: https://www.egi.eu/services/cloud-compute/
     manual_url: https://wiki.egi.eu/wiki/Federated_Cloud_user_support
     helpdesk_url: https://www.egi.eu/more-information/
@@ -1227,6 +1261,7 @@ services:
     resource_organisation: *eudat
     logo: b2drop.png
     open_access: false
+    catalogue: *eosc
     webpage_url: https://b2drop.eudat.eu
     manual_url: https://eudat.eu/services/userdoc/b2drop
     helpdesk_url: https://www.eudat.eu/support-request?service=B2DROP
@@ -1355,6 +1390,7 @@ services:
     resource_organisation: *eudat
     logo: b2find.png
     open_access: false
+    catalogue: *eosc
     webpage_url: http://b2find.eudat.eu/
     manual_url: http://eudat.eu/services/userdoc/b2find
     helpdesk_url: http://www.egi.eu/more-information/
@@ -1485,6 +1521,7 @@ services:
     resource_organisation: *eudat
     logo: b2handle.png
     open_access: false
+    catalogue: *eosc
     webpage_url: https://www.eudat.eu/services/b2handle
     manual_url: https://eudat.eu/services/userdoc/b2handle
     helpdesk_url: https://www.egi.eu/more-information/
@@ -1607,6 +1644,7 @@ services:
     resource_organisation: *eudat
     logo: b2note.png
     open_access: false
+    catalogue: *eosc
     webpage_url: https://www.eudat.eu/catalogue/B2NOTE
     manual_url:
     helpdesk_url: https://www.eudat.eu/contact-support-request?service=B2NOTE
@@ -1695,6 +1733,7 @@ services:
     resource_organisation: *eudat
     logo: b2safe.png
     open_access: false
+    catalogue: *eosc
     webpage_url: https://www.eudat.eu/services/b2safe
     manual_url: https://eudat.eu/services/userdoc/configure-b2safe
     helpdesk_url: https://eudat.eu/contact-support-request
@@ -1750,6 +1789,7 @@ services:
     resource_organisation: *eudat
     logo: b2share.png
     open_access: false
+    catalogue: *eosc
     webpage_url: https://www.eudat.eu/services/b2share
     manual_url: https://eudat.eu/services/userdoc/b2share
     helpdesk_url: https://eudat.eu/contact-support-request
@@ -1880,6 +1920,7 @@ services:
     resource_organisation: *eudat
     logo: b2stage.png
     open_access: false
+    catalogue: *eosc
     webpage_url: https://www.eudat.eu/services/b2stage
     manual_url: https://eudat.eu/services/userdoc/b2stage
     helpdesk_url: https://eudat.eu/contact-support-request
@@ -1944,6 +1985,7 @@ services:
     resource_organisation: *eudat
     logo: b2access.png
     open_access: false
+    catalogue: *eosc
     webpage_url: https://b2access.eudat.eu
     manual_url: https://eudat.eu/services/userdoc/b2stage
     helpdesk_url: https://eudat.eu/contact-support-request
@@ -1987,6 +2029,7 @@ services:
     resource_organisation: *egi
     logo: archive-storage.png
     open_access: false
+    catalogue: *eosc
     webpage_url: https://www.egi.eu/services/archive-storage/
     manual_url: https://wiki.egi.eu/wiki/Online_Storage
     helpdesk_url: https://www.egi.eu/more-information/
@@ -2056,6 +2099,7 @@ services:
     resource_organisation: *egi
     logo: archive-storage.png
     open_access: false
+    catalogue: *eosc
     webpage_url: https://www.egi.eu/services/online-storage/
     manual_url: https://wiki.egi.eu/wiki/Online_Storage
     helpdesk_url: https://www.egi.eu/more-information/
@@ -2291,6 +2335,7 @@ services:
     resource_organisation: *cnr
     logo: geo-dab.jpg
     open_access: true
+    catalogue: *eosc
     webpage_url: http://www.geodab.net
     manual_url: http://api.geodab.eu/index.html
     helpdesk_url: http://api.geodab.eu/index.html
@@ -2334,6 +2379,7 @@ services:
     resource_organistation: *clarin
     logo: vlo-logo.png #component-metadata-infrastructure.png
     open_access: false
+    catalogue: *eosc
     webpage_url: https://vlo.clarin.eu
     manual_url: https://vlo.clarin.eu/help
     helpdesk_url: https://www.egi.eu/more-information/
@@ -2382,6 +2428,7 @@ services:
     resource_organisation: *clarin
     logo: lrs-logo.png #component-metadata-infrastructure.png
     open_access: true
+    catalogue: *eosc
     webpage_url: https://switchboard.clarin.eu/ #https://clarin.eu/
     manual_url: https://vlo.clarin.eu/help
     helpdesk_url: https://www.egi.eu/more-information/
@@ -2449,6 +2496,7 @@ services:
     resource_organisation: *clarin
     logo: vcr-logo.png #component-metadata-infrastructure.png
     open_access: false
+    catalogue: *eosc
     webpage_url: https://www.clarin.eu/content/virtual-collections
     manual_url: https://vlo.clarin.eu/help
     helpdesk_url: https://www.egi.eu/more-information/
@@ -2513,6 +2561,7 @@ services:
     resource_organisation: *csc
     logo: chipster.png
     open_access: false
+    catalogue: *eosc
     webpage_url: https://csgf.egi.eu/
     manual_url: https://csgf.egi.eu/documents/620030/0/csg_manual_for_ltos.pdf/be218ad7-8a0d-42b7-b932-4b7667524c09
     helpdesk_url:
@@ -2561,6 +2610,7 @@ services:
     parents: *processingAndAnalysisParent
     resource_organisation: *egi
     open_access: false
+    catalogue: *eosc
     webpage_url: https://www.egi.eu/services/notebooks/
     manual_url: https://wiki.egi.eu/wiki/EGI_Notebooks
     helpdesk_url:
@@ -2663,6 +2713,7 @@ services:
     resource_organisation: *rbi
     logo: dariah.png
     open_access: false
+    catalogue: *eosc
     webpage_url: https://dariah-gateway.lpds.sztaki.hu/
     manual_url: https://dariah-gateway.lpds.sztaki.hu/help2
     helpdesk_url: https://www.dariah.eu/contact
@@ -2724,6 +2775,7 @@ services:
     resource_organisation: *infn
     logo: dynamic-on-demand-analysis-service.png
     open_access: false
+    catalogue: *eosc
     webpage_url: https://dodas-iam.cloud.cnaf.infn.it/login
     manual_url: https://dodas-ts.github.io/dodas-doc/
     helpdesk_url:
@@ -2805,6 +2857,7 @@ services:
     resource_organisation: *d4science
     logo: vre.png
     open_access: true
+    catalogue: *eosc
     webpage_url: https://services.d4science.org/web/particleformation/
     manual_url: https://github.com/markusstocker/pynpf-d4science
     helpdesk_url: https://github.com/markusstocker/pynpf-d4science
@@ -2838,6 +2891,7 @@ services:
     resource_organisation: *esa
     logo: enes-climate-analytics-service.png
     open_access: false
+    catalogue: *eosc
     webpage_url: https://portal.enes.org/data/data-metadata-service/processing/ecas
     manual_url:
     helpdesk_url: https://portal.enes.org/contact
@@ -2912,6 +2966,7 @@ services:
     resource_organisation: *lifewatch
     logo: lifewatch-eric-plants-identification-app.png
     open_access: false
+    catalogue: *eosc
     webpage_url: https://www.lifewatch.eu/
     manual_url: https://github.com/IgnacioHeredia/plant_classification/blob/master/webpage/README.md#using-the-api%20
     helpdesk_url:
@@ -2978,6 +3033,7 @@ services:
     resource_organisation: *WeNMR
     logo: haddock.png
     open_access: true
+    catalogue: *eosc
     webpage_url: http://haddock.science.uu.nl/enmr/services/HADDOCK2.2
     manual_url: http://www.bonvinlab.org/software/haddock2.2/manual/
     helpdesk_url: http://ask.bioexcel.eu/c/haddock
@@ -3018,6 +3074,7 @@ services:
     resource_organisation: *WeNMR
     logo: powerfit.png
     open_access: true
+    catalogue: *eosc
     webpage_url: http://haddock.science.uu.nl/enmr/services/POWERFIT
     manual_url: http://haddock.science.uu.nl/cgi/enmr/services/POWERFIT/powerfit/help
     helpdesk_url: http://ask.bioexcel.eu/c/powerfit
@@ -3048,6 +3105,7 @@ services:
     resource_organisation: *WeNMR
     logo: disvis.png
     open_access: true
+    catalogue: *eosc
     webpage_url: http://haddock.science.uu.nl/enmr/services/DISVIS
     manual_url: http://haddock.science.uu.nl/cgi/enmr/services/DISVIS/disvis/help
     helpdesk_url: http://ask.bioexcel.eu/c/disvis
@@ -3079,6 +3137,7 @@ services:
     providers: [*uou]
     logo: cs-rosetta.png
     open_access: true
+    catalogue: *eosc
     webpage_url: https://haddock.science.uu.nl/enmr/services/CS-ROSETTA3/
     manual_url: https://www.wenmr.eu/tutorials/#cs-rosetta
     helpdesk_url:
@@ -3110,6 +3169,7 @@ services:
     resource_organisation: *WeNMR
     logo: amber.png
     open_access: true
+    catalogue: *eosc
     webpage_url: http://py-enmr.cerm.unifi.it/access/index
     manual_url: https://www.wenmr.eu/tutorials
     helpdesk_url: http://py-enmr.cerm.unifi.it/feedback/index?type=amps-nmr
@@ -3147,6 +3207,7 @@ services:
     resource_organisation: *WeNMR
     logo: fanten.png
     open_access: true
+    catalogue: *eosc
     webpage_url: http://abs.cerm.unifi.it:8080
     manual_url: http://abs.cerm.unifi.it:8080/manual/FANTEN_manual.pdf
     helpdesk_url:
@@ -3180,6 +3241,7 @@ services:
     resource_organistation: *WeNMR
     logo: SpotOn-logo.png
     open_access: true
+    catalogue: *eosc
     webpage_url: https://haddock.science.uu.nl/enmr/services/SPOTON
     manual_url: https://haddock.science.uu.nl/cgi/enmr/services/SPOTON/spoton/help
     helpdesk_url: http://ask.bioexcel.eu/c/spoton
@@ -3211,6 +3273,7 @@ services:
     resource_organisation: *eodc
     logo: eodc-jupyter.png
     open_access: false
+    catalogue: *eosc
     #contact: support@eodc.eu
     webpage_url: https://jupyterhub.eodc.eu
     manual_url: https://github.com/jupyterhub/jupyterhub
@@ -3269,6 +3332,7 @@ services:
     resource_organisation: *eodc
     logo: eodc-jupyter.png
     open_access: true
+    catalogue: *eosc
     webpage_url: https://www.eodc.eu/support-request/
     manual_url: https://csw.eodc.eu
     helpdesk_url: https://www.eodc.eu/support-request/
@@ -3310,6 +3374,7 @@ services:
     resource_organisation: *rasdaman
     logo: rasdaman-eo-datacube.png
     open_access: false
+    catalogue: *eosc
     webpage_url: http://eoschub.rasdaman.com:8080/rasdaman/ows
     manual_url: http://doc.rasdaman.org/05_geo-services-guide.html#ogc-web-services
     helpdesk_url:
@@ -3363,6 +3428,7 @@ services:
     resource_organisation: *cloudFerro
     logo: &cfLogo cloud-ferro.png
     open_access: true
+    catalogue: *eosc
     webpage_url: https://discovery.creodias.eu/dataset
     #contact: support@creodias.eu
     manual_url: https://creodias.eu/data-related-services
@@ -3407,6 +3473,7 @@ services:
     resource_organisation: *cloudFerro
     logo: *cfLogo
     open_access: true
+    catalogue: *eosc
     webpage_url: https://creodias.eu
     #contact: support@creodias.eu
     manual_url: https://creodias.eu/your-processing-environment
@@ -3447,6 +3514,7 @@ services:
     resource_organisation: *cloudFerro
     logo: *cfLogo
     open_access: true
+    catalogue: *eosc
     webpage_url: https://finder.creodias.eu/www
     #contact: support@creodias.eu
     manual_url: https://creodias.eu/eo-data-finder-api-manual
@@ -3479,6 +3547,7 @@ services:
     resource_organisation: *cloudFerro
     logo: cloud-ferro-eo-browser.png
     open_access: true
+    catalogue: *eosc
     webpage_url: https://browser.creodias.eu
     #contact: support@creodias.eu
     manual_url: https://creodias.eu/using-the-eo-browser
@@ -3521,6 +3590,7 @@ services:
     parents: *securityAndOperationsParent
     resource_organisation: *egi
     open_access: false
+    catalogue: *eosc
     webpage_url: https://www.egi.eu/services/check-in/
     manual_url:
     helpdesk_url:
@@ -3579,6 +3649,7 @@ services:
     resource_organisation: *egi
     logo: training-infrastructure.png
     open_access: false
+    catalogue: *eosc
     webpage_url: https://www.egi.eu/services/training-infrastructure/
     manual_url: https://wiki.egi.eu/wiki/Training_infrastructure
     helpdesk_url: https://www.egi.eu/more-information/
@@ -3694,6 +3765,7 @@ services:
     resource_organisation: *egi
     logo: fitsm.png
     open_access: false
+    catalogue: *eosc
     webpage_url: https://www.egi.eu/services/fitsm-training/
     manual_url: https://www.egi.eu/services/fitsm-training/
     helpdesk_url: https://www.egi.eu/more-information/
@@ -3790,6 +3862,7 @@ services:
     resource_organisation: *d4science
     logo: alien.png
     open_access: true
+    catalogue: *eosc
     webpage_url: https://services.d4science.org/web/alienandinvasivespecies
     manual_url: https://services.d4science.org/web/alienandinvasivespecies
     helpdesk_url: https://support.d4science.org/
@@ -3838,6 +3911,7 @@ services:
     resource_organisation: *UKAEA
     logo: prominence-logo.png
     open_access: false
+    catalogue: *eosc
     webpage_url: https://alahiff.github.io/prominence/
     manual_url:
     helpdesk_url:
@@ -3879,6 +3953,7 @@ services:
     resource_organisation: *desyProvider
     logo: panData.png
     open_access: false
+    catalogue: *eosc
     webpage_url: https://dcache-xdc.desy.de
     manual_url: https://eosc-pan-git.desy.de/support
     helpdesk_url: https://eosc-pan-git.desy.de/support
@@ -3917,6 +3992,7 @@ services:
     resource_organisation: *desyProvider
     logo: panFaas.png
     open_access: false
+    catalogue: *eosc
     webpage_url: https://eosc-pan-git.desy.de/pan/support/
     manual_url: https://eosc-pan-git.desy.de/support
     helpdesk_url: https://eosc-pan-git.desy.de/support
@@ -3952,6 +4028,7 @@ services:
     providers: [*desyProvider]
     logo: panFaas.png
     open_access: true
+    catalogue: *eosc
     webpage_url: https://eosc-pan-git.desy.de/pan/support/
     manual_url: https://eosc-pan-git.desy.de/support
     helpdesk_url: https://eosc-pan-git.desy.de/support
@@ -4006,6 +4083,7 @@ services:
     resource_organisation: *desyProvider
     logo: panFaas.png
     open_access: false
+    catalogue: *eosc
     webpage_url: https://eosc-pan-jhub.desy.de
     manual_url: https://eosc-pan-git.desy.de/support
     helpdesk_url: https://eosc-pan-git.desy.de/support
@@ -4041,6 +4119,7 @@ services:
     resource_organisation: *desyProvider
     logo: panFaas.png
     open_access: false
+    catalogue: *eosc
     webpage_url: https://eosc-pan-git.desy.de
     manual_url: https://eosc-pan-git.desy.de/support
     helpdesk_url: https://eosc-pan-git.desy.de/support
@@ -4079,6 +4158,7 @@ services:
     resource_organisation: *csc
     logo: ePouta-logo.jpg
     open_access: false
+    catalogue: *eosc
     webpage_url: https://research.csc.fi/epouta
     manual_url: https://research.csc.fi/pouta-user-guide
     helpdesk_url:
@@ -4112,6 +4192,7 @@ services:
     resource_organisation: *uioProider
     #logo: panFaas.png TODO: nologo
     open_access: false
+    catalogue: *eosc
     webpage_url: https://www.uio.no/english/services/it/research/sensitive-data/
     manual_url:
     helpdesk_url: https://www.uio.no/english/services/it/research/sensitive-data/
@@ -4147,6 +4228,7 @@ services:
     providers: [*terradue]
     logo: gep-alpine.png
     open_access: false
+    catalogue: *eosc
     webpage_url: https://geohazards-tep.eo.esa.int/#!communities/details/eoschub
     manual_url: https://terradue.github.io/doc-tep-geohazards/
     helpdesk_url: https://helpdesk.terradue.com
@@ -4182,6 +4264,7 @@ services:
     providers: [*terradue]
     logo: gep-eo.png
     open_access: false
+    catalogue: *eosc
     webpage_url: https://geohazards-tep.eo.esa.int/#!communities/details/eoschub
     manual_url: https://terradue.github.io/doc-tep-geohazards/
     helpdesk_url: https://helpdesk.terradue.com
@@ -4215,6 +4298,7 @@ services:
     resource_organisation: *GRyCAP
     logo: ec3.png
     open_access: false
+    catalogue: *eosc
     webpage_url: https://servproject.i3m.upv.es/ec3-ltos/index.php
     manual_url: https://ec3.readthedocs.io/en/devel/
     helpdesk_url: https://wiki.egi.eu/wiki/GGUS:EC3_FAQ

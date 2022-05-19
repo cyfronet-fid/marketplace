@@ -4,6 +4,7 @@ class Presentable::SidebarComponent < ApplicationComponent
   include PresentableHelper
   include Presentable::DetailsHelper
   include Presentable::SidebarHelper
+  include Presentable::DetailsStyleHelper
   include ServiceHelper
 
   def initialize(object)

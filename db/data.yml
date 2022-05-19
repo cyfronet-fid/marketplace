@@ -92,11 +92,20 @@ categories:
 #        name: &scienceGateway Science gateway
 #        parent: *processingAndAnalysisParent
 
+catalogues:
+  EOSC:
+    name: &eosc "EOSC"
+    pid: "eosc-catalogue"
+  CatRIS:
+    name: &catris "CatRIS"
+    pid: "catris-catalogue"
+
 providers:
   EGI Federation:
     status: "published"
     name: &egi "EGI Federation"
     abbreviation: "egi-federation"
+    catalogue: *catris
     website: "http://egi-federation.com"
     legal_entity: true
     description: |
@@ -151,6 +160,7 @@ providers:
     status: "published"
     name: &eudat "EUDAT"
     abbreviation: "eudat"
+    catalogue: *eosc
     website: "http://eudat.com"
     legal_entity: true
     description: |
@@ -172,6 +182,7 @@ providers:
     status: "published"
     name: &jsc "JSC"
     abbreviation: "jsc"
+    catalogue: *catris
     website: "http://jsc.com"
     legal_entity: true
     description: |
@@ -192,6 +203,7 @@ providers:
   Deutsches Klimarechenzentrum (DKRZ):
     name: &dkrz "Deutsches Klimarechenzentrum (DKRZ)"
     abbreviation: "dkrz"
+    catalogue: *catris
     website: "http://dkrz.com"
     legal_entity: true
     description: |
@@ -213,6 +225,7 @@ providers:
     status: "published"
     name: &grnet "GRNET"
     abbreviation: "grnet"
+    catalogue: *catris
     website: "http://grnet.com"
     legal_entity: true
     description: |
@@ -234,6 +247,7 @@ providers:
     status: "published"
     name: &surfsara "SURFsara"
     abbreviation: "surfsara"
+    catalogue: *catris
     website: "http://surfsara.com"
     legal_entity: true
     description: |
@@ -255,6 +269,7 @@ providers:
     status: "published"
     name: &cerm "Magnetic Resonance Center of the University of Florence - CERM"
     abbreviation: "CERM"
+    catalogue: *catris
     website: "http://cerm.com"
     legal_entity: true
     description: |
@@ -276,6 +291,7 @@ providers:
     status: "published"
     name: &bsc "BSC"
     abbreviation: "bsc"
+    catalogue: *catris
     website: "http://bsc.com"
     legal_entity: true
     description: |
@@ -297,6 +313,7 @@ providers:
     status: "published"
     name: &all "all generic CDI Level 1 providers"
     abbreviation: "cdi-1"
+    catalogue: *catris
     website: "http://cdi1.com"
     legal_entity: true
     description: |
@@ -318,6 +335,7 @@ providers:
     status: "published"
     name: &csc "CSC"
     abbreviation: "csc"
+    catalogue: *catris
     website: "http://csc.com"
     legal_entity: true
     description: |
@@ -339,6 +357,7 @@ providers:
     status: "published"
     name: &clarin "CLARIN ERIC"
     abbreviation: "clarin-eric"
+    catalogue: *catris
     website: "http://egi-federation.com"
     legal_entity: true
     description: |
@@ -360,6 +379,7 @@ providers:
     status: "published"
     name: &ccmc "Euro-Mediterranean Center on Climate Change (CMCC)"
     abbreviation: "cmcc"
+    catalogue: *catris
     website: "http://cmcc.com"
     legal_entity: true
     description: |
@@ -381,6 +401,7 @@ providers:
     status: "published"
     name: &rasdaman "RASDAMAN"
     abbreviation: "rasdaman"
+    catalogue: *catris
     website: "http://rasdaman.com"
     legal_entity: true
     description: |
@@ -402,6 +423,7 @@ providers:
     status: "published"
     name: &eodc "Earth Observation Data Centre for Water Resources Monitoring GmbH (EODC)"
     abbreviation: "eodc"
+    catalogue: *catris
     website: "http://eodc.com"
     legal_entity: true
     description: |
@@ -423,6 +445,7 @@ providers:
     status: "published"
     name: &sinergise "Sinergise"
     abbreviation: "sinergise"
+    catalogue: *catris
     website: "http://sinergise.com"
     legal_entity: true
     description: |
@@ -444,6 +467,7 @@ providers:
     status: "published"
     name: &astron "ASTRON, the Netherlands Institute for Radio Astronomy."
     abbreviation: "astron"
+    catalogue: *catris
     website: "http://astron.com"
     legal_entity: true
     description: |
@@ -465,6 +489,7 @@ providers:
     status: "published"
     name: &rug "RUG"
     abbreviation: "rug"
+    catalogue: *catris
     website: "http://rug.com"
     legal_entity: true
     description: |
@@ -486,6 +511,7 @@ providers:
     status: "published"
     name: &fzj "FZJ"
     abbreviation: "fzj"
+    catalogue: *catris
     website: "http://fzj.com"
     legal_entity: true
     description: |
@@ -507,6 +533,7 @@ providers:
     status: "published"
     name: &psnc "PSNC"
     abbreviation: "psnc"
+    catalogue: *catris
     website: "http://psnc.com"
     legal_entity: true
     description: |
@@ -528,6 +555,7 @@ providers:
     status: "published"
     name: &smartSmear "SmartSMEAR"
     abbreviation: "smart-smear"
+    catalogue: *catris
     website: "http://smart-smear.com"
     legal_entity: true
     description: |
@@ -549,6 +577,7 @@ providers:
     status: "published"
     name: &recas "RECAS-BARI"
     abbreviation: "recas-bari"
+    catalogue: *catris
     website: "http://recas-bari.com"
     legal_entity: true
     description: |
@@ -570,6 +599,7 @@ providers:
     status: "published"
     name: &cyfro "CYFRONET-LCG2"
     abbreviation: "cyfronet-lcg2"
+    catalogue: *catris
     website: "http://cyfronet-lcg2.com"
     legal_entity: true
     description: |
@@ -591,6 +621,7 @@ providers:
     status: "published"
     name: &begrid "BEgrid-ULV-VUB"
     abbreviation: "be-grid-ulv-vub"
+    catalogue: *catris
     website: "http://be-grid-ulv-vub.com"
     legal_entity: true
     description: |
@@ -612,6 +643,7 @@ providers:
     status: "published"
     name: &cesga "CESGA"
     abbreviation: "cesga"
+    catalogue: *catris
     website: "http://cesga.com"
     legal_entity: true
     description: |
@@ -633,6 +665,7 @@ providers:
     status: "published"
     name: &rbi "Ruder Boškovic Institute"
     abbreviation: "rbi"
+    catalogue: *catris
     website: "http://rbi.com"
     legal_entity: true
     description: |
@@ -654,6 +687,7 @@ providers:
     status: "published"
     name: &infn "Italian National Institute of Nuclear Physics (INFN)"
     abbreviation: "infn"
+    catalogue: *catris
     website: "http://infn.com"
     legal_entity: true
     description: |
@@ -675,6 +709,7 @@ providers:
     status: "published"
     name: &ics "INFN-CATANIA-STACK"
     abbreviation: "infn-catania-stack"
+    catalogue: *catris
     website: "http://infn-catania-stack.com"
     legal_entity: true
     description: |
@@ -696,6 +731,7 @@ providers:
     status: "published"
     name: &infnc "INFN-Catania"
     abbreviation: "infn-catania"
+    catalogue: *catris
     website: "http://infn-catania.com"
     legal_entity: true
     description: |
@@ -717,6 +753,7 @@ providers:
     status: "published"
     name: &infnb "INFN-Bari"
     abbreviation: "infn-bari"
+    catalogue: *catris
     website: "http://infn-bari.com"
     legal_entity: true
     description: |
@@ -738,6 +775,7 @@ providers:
     status: "published"
     name: &d4science "D4Science.org infrastructure"
     abbreviation: "d4-science"
+    catalogue: *catris
     website: "http://d4-science.com"
     legal_entity: true
     description: |
@@ -759,6 +797,7 @@ providers:
     status: "published"
     name: &lifewatch "LifeWatch ERIC"
     abbreviation: "life-watch-eric"
+    catalogue: *catris
     website: "http://life-watch-eric.com"
     legal_entity: true
     description: |
@@ -780,6 +819,7 @@ providers:
     status: "published"
     name: &terradue "Terradue Srl"
     abbreviation: "terradue-srl"
+    catalogue: *catris
     website: "http://terradue-srl.com"
     legal_entity: true
     description: |
@@ -801,6 +841,7 @@ providers:
     status: "published"
     name: &meeo "MEEO"
     abbreviation: "meeo"
+    catalogue: *catris
     website: "http://meeo.com"
     legal_entity: true
     description: |
@@ -822,6 +863,7 @@ providers:
     status: "published"
     name: &cloudFerro "CloudFerro"
     abbreviation: "cloud-ferro"
+    catalogue: *catris
     website: "http://cloud-ferro.com"
     legal_entity: true
     description: |
@@ -843,6 +885,7 @@ providers:
     status: "published"
     name: &pncel "Portuguese National Civil Engineering Laboratory"
     abbreviation: "pncel"
+    catalogue: *catris
     website: "http://pncel.com"
     legal_entity: true
     description: |
@@ -864,6 +907,7 @@ providers:
     status: "published"
     name: &uou "Bijvoet Center, Utrecht University"
     abbreviation: "bc-uu"
+    catalogue: *catris
     website: "http://bc-uu.com"
     legal_entity: true
     description: |
@@ -887,6 +931,7 @@ providers:
     status: "published"
     name: &cirmmp "Interuniversity consortium CIRMMP"
     abbreviation: "cirmmp"
+    catalogue: *catris
     website: "http://cirmmp.com"
     legal_entity: true
     description: |
@@ -908,6 +953,7 @@ providers:
     status: "published"
     name: &cesnet "CESNET"
     abbreviation: "cesnet"
+    catalogue: *catris
     website: "http://cesnet.com"
     legal_entity: true
     description: |
@@ -929,6 +975,7 @@ providers:
     status: "published"
     name: &eida "EIDA"
     abbreviation: "eida"
+    catalogue: *catris
     website: "http://eida.com"
     legal_entity: true
     description: |
@@ -950,6 +997,7 @@ providers:
     status: "published"
     name: &esa "European Space Agency (ESA)"
     abbreviation: "esa"
+    catalogue: *catris
     website: "http://esa.com"
     legal_entity: true
     description: |
@@ -971,6 +1019,7 @@ providers:
     status: "published"
     name: &desyProvider "Deutsches Elektronen-Synchrotron DESY"
     abbreviation: "desy"
+    catalogue: *catris
     website: "http://desy.com"
     legal_entity: true
     description: |
@@ -992,6 +1041,7 @@ providers:
     status: "published"
     name: &cnr "Institute of Atmospheric Pollution - National Research Council of Italy (CNR-IIA)"
     abbreviation: "cnr-iia"
+    catalogue: *catris
     website: "http://cnr-iia.com"
     legal_entity: true
     description: |
@@ -1013,6 +1063,7 @@ providers:
     status: "published"
     name: &grycap "GryCAP-I3M-UPV"
     abbreviation: "gry-cap-i3m-upv"
+    catalogue: *catris
     website: "http://gry-cap-i3m-upv.com"
     legal_entity: true
     description: |
@@ -1034,6 +1085,7 @@ providers:
     status: "published"
     name: &mtaSztaki "MTA SZTAKI Laboratory of Parallel and Distributed Systems"
     abbreviation: "mta-sztaki"
+    catalogue: *catris
     website: "http://mta-sztaki.com"
     legal_entity: true
     description: |
@@ -1055,6 +1107,7 @@ providers:
     status: "published"
     name: &uioProider "University of Oslo (UiO)"
     abbreviation: "uio"
+    catalogue: *catris
     website: "http://uio.com"
     legal_entity: true
     description: |
@@ -1076,6 +1129,7 @@ providers:
     status: "published"
     name: &not "not specified yet"
     abbreviation: "not-specified-yet"
+    catalogue: *catris
     website: "http://not-specified-yet.com"
     legal_entity: true
     description: |
@@ -1221,6 +1275,7 @@ services:
     name: &egiCloud EGI Cloud compute
     parents: *computeParent
     providers: [*egi]
+    catalogue: *catris
     logo: cloud-compute.png
     open_access: false
     webpage_url: https://www.egi.eu/services/cloud-compute/
@@ -1526,6 +1581,7 @@ services:
     name: &egiHTC EGI High-Throughput compute
     parents: *computeParent
     providers: [*egi]
+    catalogue: *catris
     logo: high-throughput-compute.png
     open_access: false
     webpage_url: https://www.egi.eu/services/high-throughput-compute/
@@ -1693,6 +1749,7 @@ services:
     name: EGI Cloud container compute BETA
     parents: *computeParent
     providers: [*egi]
+    catalogue: *catris
     logo: cloud-container-compute.png
     open_access: false
     webpage_url: https://www.egi.eu/services/cloud-compute/
@@ -1728,6 +1785,7 @@ services:
     name: &b2drop B2DROP
     parents: [*storageParent, *sharingAndDicoveryParent]
     providers: [*eudat, *jsc]
+    catalogue: *catris
     logo: b2drop.png
     open_access: false
     webpage_url: https://b2drop.eudat.eu
@@ -1861,6 +1919,7 @@ services:
     name: &b2find B2FIND
     parents: [*sharingAndDicoveryParent, *dataManagementParent]
     providers: [*eudat, *dkrz]
+    catalogue: *catris
     logo: b2find.png
     open_access: false
     webpage_url: http://b2find.eudat.eu/
@@ -1991,6 +2050,7 @@ services:
     name: &b2handle B2HANDLE
     parents: [*dataManagementParent, *sharingAndDicoveryParent]
     providers: [*eudat, *surfsara, *grnet]
+    catalogue: *catris
     logo: b2handle.png
     open_access: false
     webpage_url: https://www.eudat.eu/services/b2handle
@@ -2113,6 +2173,7 @@ services:
     name: &b2note B2NOTE
     parents: [*sharingAndDicoveryParent, *dataManagementParent]
     providers: [*eudat, *bsc]
+    catalogue: *catris
     logo: b2note.png
     open_access: false
     webpage_url: https://www.eudat.eu/catalogue/B2NOTE
@@ -2201,6 +2262,7 @@ services:
     name: &b2safe B2SAFE
     parents: [*dataManagementParent, *storageParent]
     providers: [*eudat, *all]
+    catalogue: *catris
     logo: b2safe.png
     open_access: false
     webpage_url: https://www.eudat.eu/services/b2safe
@@ -2256,6 +2318,7 @@ services:
     name: &b2share B2SHARE
     parents: [*sharingAndDicoveryParent, *dataManagementParent]
     providers: [*eudat, *csc]
+    catalogue: *catris
     logo: b2share.png
     open_access: false
     webpage_url: https://www.eudat.eu/services/b2share
@@ -2386,6 +2449,7 @@ services:
     name: &b2stage B2STAGE
     parents: *storageParent
     providers: [*eudat, *all]
+    catalogue: *catris
     logo: b2stage.png
     open_access: false
     webpage_url: https://www.eudat.eu/services/b2stage
@@ -2450,6 +2514,7 @@ services:
     name: &b2access B2ACCESS
     parents: *securityAndOperationsParent
     providers: [*eudat, *all]
+    catalogue: *catris
     logo: b2access.png
     open_access: false
     webpage_url: https://b2access.eudat.eu
@@ -2493,6 +2558,7 @@ services:
     name: EGI Archive storage
     parents: *storageParent
     providers: [*egi]
+    catalogue: *catris
     logo: archive-storage.png
     open_access: false
     webpage_url: https://www.egi.eu/services/archive-storage/
@@ -2562,6 +2628,7 @@ services:
     name: &egiOnlineStorage EGI Online Storage
     parents: *storageParent
     providers: [*egi]
+    catalogue: *catris
     logo: archive-storage.png
     open_access: false
     webpage_url: https://www.egi.eu/services/online-storage/
@@ -2762,6 +2829,7 @@ services:
     name: &geossPortal GEOSS Web Portal
     parents: *sharingAndDicoveryParent
     providers: [*esa]
+    catalogue: *catris
     logo: geoss-portal.png
     external: true
     webpage_url: http://geosspublish.uat.esaportal.eu/knowledge-producer
@@ -2795,6 +2863,7 @@ services:
     name: &geossDab GEO DAB
     parents: *sharingAndDicoveryParent
     providers: [*cnr]
+    catalogue: *catris
     logo: geo-dab.jpg
     open_access: true
     webpage_url: http://www.geodab.net
@@ -2837,6 +2906,7 @@ services:
     name: &vloService Virtual Language Observatory
     parents: *sharingAndDicoveryParent
     providers: [*clarin]
+    catalogue: *catris
     logo: vlo-logo.png #component-metadata-infrastructure.png
     open_access: false
     webpage_url: https://vlo.clarin.eu
@@ -2884,6 +2954,7 @@ services:
     name: &lrsService Language Resource Switchboard
     parents: *sharingAndDicoveryParent
     providers: [*clarin]
+    catalogue: *catris
     logo: lrs-logo.png #component-metadata-infrastructure.png
     open_access: true
     webpage_url: https://switchboard.clarin.eu/ #https://clarin.eu/
@@ -2950,6 +3021,7 @@ services:
     name: &vcrService Virtual Collection Registry
     parents: *sharingAndDicoveryParent
     providers: [*clarin]
+    catalogue: *catris
     logo: vcr-logo.png #component-metadata-infrastructure.png
     open_access: false
     webpage_url: https://www.clarin.eu/content/virtual-collections
@@ -3508,6 +3580,7 @@ services:
     name: &chipster Chipster
     parents: *processingAndAnalysisParent
     providers: [*infn, *csc]
+    catalogue: *catris
     logo: chipster.png
     open_access: false
     webpage_url: https://csgf.egi.eu/
@@ -3617,6 +3690,7 @@ services:
     name: &notebook EGI Notebooks
     parents: *processingAndAnalysisParent
     providers: [*egi]
+    catalogue: *catris
     open_access: false
     webpage_url: https://www.egi.eu/services/notebooks/
     manual_url: https://wiki.egi.eu/wiki/EGI_Notebooks
@@ -3758,6 +3832,7 @@ services:
     name: &dariah DARIAH Science Gateway
     parents: *processingAndAnalysisParent
     providers: [*rbi]
+    catalogue: *catris
     logo: dariah.png
     open_access: false
     webpage_url: https://dariah-gateway.lpds.sztaki.hu/
@@ -3819,6 +3894,7 @@ services:
     name: Dynamic On Demand Analysis Service (DODAS Portal)
     parents: *processingAndAnalysisParent
     providers: [*infn]
+    catalogue: *catris
     logo: dynamic-on-demand-analysis-service.png
     open_access: false
     webpage_url: https://dodas-iam.cloud.cnaf.infn.it/login
@@ -3899,6 +3975,7 @@ services:
     name: &d4scienceService New Particle Formation Event Analysis
     parents: *processingAndAnalysisParent
     providers: [*d4science, *egi, *smartSmear]
+    catalogue: *catris
     logo: vre.png
     open_access: true
     webpage_url: https://services.d4science.org/web/particleformation/
@@ -3933,6 +4010,7 @@ services:
     parents: *processingAndAnalysisParent
     logo: enes-climate-analytics-service.png
     providers: [*ccmc, *dkrz]
+    catalogue: *catris
     open_access: false
     webpage_url: https://portal.enes.org/data/data-metadata-service/processing/ecas
     manual_url:
@@ -4005,6 +4083,7 @@ services:
     name: &lifewatchERICPlants LifeWatch ERIC Plants Identification App
     parents: *processingAndAnalysisParent
     providers: [*lifewatch]
+    catalogue: *catris
     logo: lifewatch-eric-plants-identification-app.png
     open_access: false
     webpage_url: https://www.lifewatch.eu/
@@ -4135,6 +4214,7 @@ services:
     name: &openCoastS OPENCoastS Portal
     parents: *processingAndAnalysisParent
     providers: [*pncel]
+    catalogue: *catris
     logo: opencoasts.png
     open_access: false
     webpage_url: https://opencoasts.ncg.ingrid.pt/
@@ -4276,6 +4356,7 @@ services:
     name: &haddock HADDOCK
     parents: *processingAndAnalysisParent
     providers: [*uou]
+    catalogue: *catris
     logo: haddock.png
     open_access: true
     webpage_url: http://haddock.science.uu.nl/enmr/services/HADDOCK2.2
@@ -4315,6 +4396,7 @@ services:
     name: &powerFit PowerFit
     parents: *processingAndAnalysisParent
     providers: [*uou]
+    catalogue: *catris
     logo: powerfit.png
     open_access: true
     webpage_url: http://haddock.science.uu.nl/enmr/services/POWERFIT
@@ -4344,6 +4426,7 @@ services:
     name: &disVis DisVis
     parents: *processingAndAnalysisParent
     providers: [*uou]
+    catalogue: *catris
     logo: disvis.png
     open_access: true
     webpage_url: http://haddock.science.uu.nl/enmr/services/DISVIS
@@ -4375,6 +4458,7 @@ services:
     name: &csRoseta CS-ROSETTA
     parents: *processingAndAnalysisParent
     providers: [*uou]
+    catalogue: *catris
     logo: cs-rosetta.png
     open_access: true
     webpage_url: https://haddock.science.uu.nl/enmr/services/CS-ROSETTA3/
@@ -4405,6 +4489,7 @@ services:
     name: &amber AMBER
     parents: *processingAndAnalysisParent
     providers: [*cerm, *cirmmp]
+    catalogue: *catris
     logo: amber.png
     open_access: true
     webpage_url: http://py-enmr.cerm.unifi.it/access/index
@@ -4441,6 +4526,7 @@ services:
     name: &fanten FANTEN
     parents: *processingAndAnalysisParent
     providers: [*cerm, *cirmmp]
+    catalogue: *catris
     logo: fanten.png
     open_access: true
     webpage_url: http://abs.cerm.unifi.it:8080
@@ -4473,6 +4559,7 @@ services:
     name: &spotOn SpotOn
     parents: *processingAndAnalysisParent
     providers: [*uou]
+    catalogue: *catris
     logo: SpotOn-logo.png
     open_access: true
     webpage_url: https://haddock.science.uu.nl/enmr/services/SPOTON
@@ -4503,6 +4590,7 @@ services:
     name: &gepHRCM GEP - High-Resolution Change Monitoring for the Alpine Region
     parents: *processingAndAnalysisParent
     providers: [*terradue]
+    catalogue: *catris
     logo: gep-alpine.png
     open_access: false
     webpage_url: https://geohazards-tep.eo.esa.int/#!communities/details/eoschub
@@ -4537,6 +4625,7 @@ services:
     name: &gepEO GEP - EO Services for Earthquake Response and Landslides Analysis
     parents: *sharingAndDicoveryParent
     providers: [*terradue]
+    catalogue: *catris
     logo: gep-eo.png
     open_access: false
     webpage_url: https://geohazards-tep.eo.esa.int/#!communities/details/eoschub
@@ -4570,6 +4659,7 @@ services:
     name: &eodcJH EODC JupyterHub for global Copernicus data
     parents: *processingAndAnalysisParent
     providers: [*eodc]
+    catalogue: *catris
     logo: eodc-jupyter.png
     open_access: false
     #contact: support@eodc.eu
@@ -4628,6 +4718,7 @@ services:
     name: &eodcDCS EODC Data Catalogue Service
     parents: *dataManagementParent
     providers: [*eodc]
+    catalogue: *catris
     logo: eodc-jupyter.png
     open_access: true
     webpage_url: https://www.eodc.eu/support-request/
@@ -4668,6 +4759,7 @@ services:
     name: &sentinelHub Sentinel Hub
     parents: *sharingAndDicoveryParent
     providers: [*sinergise]
+    catalogue: *catris
     open_access: false
     webpage_url: http://sentinel-hub.com/
     manual_url: https://www.sentinel-hub.com/develop/documentation
@@ -4696,6 +4788,7 @@ services:
     name: &meaPlatform MEA Platform (Data access and exploitation service)
     parents: *sharingAndDicoveryParent
     providers: [*meeo]
+    catalogue: *catris
     open_access: false
     webpage_url: https://eodataservice.org
     manual_url: https://www.youtube.com/channel/UCqy-bd6CpXMOlRqfHmBqlZw
@@ -4723,6 +4816,7 @@ services:
     name: &rasdamanDatacube Rasdaman EO Datacube
     parents: *processingAndAnalysisParent
     providers: [*terradue]
+    catalogue: *catris
     logo: rasdaman-eo-datacube.png
     open_access: false
     webpage_url: http://eoschub.rasdaman.com:8080/rasdaman/ows
@@ -4776,6 +4870,7 @@ services:
     name: &cfdcc CloudFerro Data Collections Catalog
     parents: *dataManagementParent
     providers: [*cloudFerro]
+    catalogue: *catris
     logo: &cfLogo cloud-ferro.png
     open_access: true
     webpage_url: https://discovery.creodias.eu/dataset
@@ -4820,6 +4915,7 @@ services:
     name: &cfi CloudFerro Infrastructure
     parents: [*computeParent, *storageParent, *processingAndAnalysisParent]
     providers: [*cloudFerro]
+    catalogue: *catris
     logo: *cfLogo
     open_access: true
     webpage_url: https://creodias.eu
@@ -4860,6 +4956,7 @@ services:
     name: &cfdrsEOF Cloudferro Data related Services - EO Finder
     parents: [*dataManagementParent]
     providers: [*cloudFerro]
+    catalogue: *catris
     logo: *cfLogo
     open_access: true
     webpage_url: https://finder.creodias.eu/www
@@ -4892,6 +4989,7 @@ services:
     name: &cfdrsEOB Cloudferro Data related Services - EO browser
     parents: *dataManagementParent
     providers: [*cloudFerro]
+    catalogue: *catris
     logo: cloud-ferro-eo-browser.png
     open_access: true
     webpage_url: https://browser.creodias.eu
@@ -4935,6 +5033,7 @@ services:
     name: &checkIn EGI Check-in
     parents: *securityAndOperationsParent
     providers: [*egi]
+    catalogue: *catris
     open_access: false
     webpage_url: https://www.egi.eu/services/check-in/
     manual_url:
@@ -5022,6 +5121,7 @@ services:
     name: Training infrastructure
     parents: *trainingAndSupportParent
     providers: [*egi]
+    catalogue: *catris
     logo: training-infrastructure.png
     open_access: false
     webpage_url: https://www.egi.eu/services/training-infrastructure/
@@ -5137,6 +5237,7 @@ services:
     name: FitSM
     parents: *trainingAndSupportParent
     providers: [*egi]
+    catalogue: *catris
     logo: fitsm.png
     open_access: false
     webpage_url: https://www.egi.eu/services/fitsm-training/
@@ -5231,6 +5332,7 @@ services:
     name: &alien Alien and Invasive Species Virtual Research Environment
     parents: *processingAndAnalysisParent
     providers: [*d4science]
+    catalogue: *catris
     logo: alien.png
     open_access: true
     webpage_url: https://services.d4science.org/web/alienandinvasivespecies
@@ -5306,6 +5408,7 @@ services:
     name: &prominence PROMINENCE
     parents: *computeParent
     providers: [*egi] #TODO: change to United Kingdom Atomic Energy Authority (or UKAEA)
+    catalogue: *catris
     logo: prominence-logo.png
     open_access: false
     webpage_url: https://alahiff.github.io/prominence/
@@ -5347,6 +5450,7 @@ services:
     name: &panData PaN data
     parents: *storageParent
     providers: [*desyProvider]
+    catalogue: *catris
     logo: panData.png
     open_access: false
     webpage_url: https://dcache-xdc.desy.de
@@ -5385,6 +5489,7 @@ services:
     name: &panFaas PaN faas
     parents: *computeParent
     providers: [*desyProvider]
+    catalogue: *catris
     logo: panFaas.png
     open_access: false
     webpage_url: https://eosc-pan-git.desy.de/pan/support/
@@ -5420,6 +5525,7 @@ services:
     name: &daRaDoiRegistrationServiceForSocialScienceAndEconomicData "da|ra - DOI Registration Service for social science and economic data"
     parents: *sharingAndDicoveryParent
     providers: [*desyProvider]
+    catalogue: *catris
     logo: panFaas.png
     open_access: true
     webpage_url: https://eosc-pan-git.desy.de/pan/support/
@@ -5474,6 +5580,7 @@ services:
     name: &panNotebook PaN notebook
     parents: *computeParent
     providers: [*desyProvider]
+    catalogue: *catris
     logo: panFaas.png
     open_access: false
     webpage_url: https://eosc-pan-jhub.desy.de
@@ -5509,6 +5616,7 @@ services:
     name: &panGitlab PAN gitlab
     parents: *computeParent
     providers: [*desyProvider]
+    catalogue: *catris
     logo: panFaas.png
     open_access: false
     webpage_url: https://eosc-pan-git.desy.de
@@ -5545,6 +5653,7 @@ services:
     name: &wsPgrade WS-PGRADE
     parents: *processingAndAnalysisParent
     providers: [*mtaSztaki]
+    catalogue: *catris
     logo: wspgrade.png
     open_access: false
     webpage_url: https://ltos-gateway.lpds.sztaki.hu/web/wizard
@@ -5591,6 +5700,7 @@ services:
     name: &cscEpouta CSC ePouta
     parents: [*processingAndAnalysisParent, *computeParent]
     providers: [*csc]
+    catalogue: *catris
     logo: ePouta-logo.jpg
     open_access: false
     webpage_url: https://research.csc.fi/epouta
@@ -5624,6 +5734,7 @@ services:
     name: &tds TDS
     parents: [*processingAndAnalysisParent, *storageParent]
     providers: [*uioProider]
+    catalogue: *catris
     #logo: panFaas.png TODO: nologo
     open_access: false
     webpage_url: https://www.uio.no/english/services/it/research/sensitive-data/
@@ -5658,6 +5769,7 @@ services:
     name: &ec3Service Elastic Cloud Compute Cluster (EC3)
     parents: *processingAndAnalysisParent
     providers: [*grycap]
+    catalogue: *catris
     logo: ec3.png
     open_access: false
     webpage_url: https://servproject.i3m.upv.es/ec3-ltos/index.php
