@@ -2,6 +2,7 @@
 
 class Presentable::DetailsComponent < ApplicationComponent
   include Presentable::DetailsHelper
+  include Presentable::DetailsStyleHelper
   include PresentableHelper
 
   def initialize(object, preview: false)

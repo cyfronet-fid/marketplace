@@ -19,6 +19,7 @@ class Jms::ManageMessage < ApplicationService
   end
 
   def call
+    log @message
     body = JSON.parse(@message.body)
     action = @message.headers["destination"].split(".").last
     log @message
@@ -49,6 +50,16 @@ class Jms::ManageMessage < ApplicationService
         Provider::PcCreateOrUpdateJob.perform_later(
           resource["providerBundle"]["provider"],
           resource["providerBundle"]["active"],
+          modified_at
+        )
+      end
+    when "catalogue"
+      modified_at = modified_at(resource, "catalogueBundle")
+      case action
+      when "update", "create"
+        Catalogue::PcCreateOrUpdateJob.perform_later(
+          resource["catalogueBundle"]["catalogue"],
+          resource["catalogueBundle"]["active"],
           modified_at
         )
       end

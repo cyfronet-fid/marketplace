@@ -123,6 +123,9 @@ class Service < ApplicationRecord
   belongs_to :upstream, foreign_key: "upstream_id", class_name: "ServiceSource", optional: true
   belongs_to :resource_organisation, class_name: "Provider", optional: false
 
+  has_one :service_catalogue, dependent: :destroy
+  has_one :catalogue, through: :service_catalogue
+
   serialize :geographical_availabilities, Country::Array
   serialize :resource_geographic_locations, Country::Array
 

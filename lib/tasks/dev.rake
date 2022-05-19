@@ -25,6 +25,7 @@ namespace :dev do
     create_scientific_domains(yaml_hash["domain"])
     create_platforms(yaml_hash["platforms"])
     create_target_users(yaml_hash["target_users"])
+    create_catalogues(yaml_hash["catalogues"])
     create_providers(yaml_hash["providers"])
     create_services(yaml_hash["services"])
     create_relations(yaml_hash["relations"])
@@ -49,6 +50,7 @@ namespace :dev do
     providers_hash.each do |_, hash|
       provider = Provider.find_or_initialize_by(name: hash["name"])
       provider.abbreviation = hash["abbreviation"]
+      provider.catalogue = Catalogue.find_by(name: hash["catalogue"])
       provider.website = hash["website"]
       provider.legal_entity = hash["legal_entity"]
       provider.description = hash["description"]
@@ -78,6 +80,8 @@ namespace :dev do
       puts "  - #{hash["name"]} provider generated"
     end
   end
+
+  # rubocop:enable Metrics/AbcSize
 
   def samples_of(vocabulary, max_size = 3)
     vocabulary.all.sample(rand(1..max_size))
@@ -125,6 +129,7 @@ namespace :dev do
     end
   end
 
+  # rubocop:disable Metrics/AbcSize
   def create_services(services_hash)
     puts "Generating services:"
     services_hash.each do |_, hash|
@@ -132,6 +137,7 @@ namespace :dev do
       categories = Category.where(name: hash["parents"])
       resource_organisation = Provider.find_by(name: hash["resource_organisation"] || prov.shift)
       providers = Provider.where(name: prov)
+      catalogue = Catalogue.find_by(name: hash["catalogue"] || [])
       domain = ScientificDomain.where(name: hash["domain"])
       platforms = Platform.where(name: hash["platforms"])
       funding_bodies = Vocabulary::FundingBody.where(eid: hash["funding_bodies"])
@@ -149,6 +155,7 @@ namespace :dev do
         description: hash["description"],
         scientific_domains: domain,
         providers: providers,
+        catalogue: catalogue,
         order_type: order_type_from(hash),
         order_url: hash["order_url"] || "",
         resource_organisation: resource_organisation,
@@ -228,5 +235,16 @@ namespace :dev do
 
   def create_vocabularies
     Rake::Task["rdt:add_vocabularies"].invoke
+  end
+
+  def create_catalogues(catalogue_hash)
+    puts "Generating catalogue:"
+    catalogue_hash.each do |_, hash|
+      catalogue = Catalogue.find_or_initialize_by(name: hash["name"])
+      catalogue.pid = hash["pid"]
+
+      catalogue.save(validate: false)
+      puts "  - #{hash["name"]} catalogue generated"
+    end
   end
 end
