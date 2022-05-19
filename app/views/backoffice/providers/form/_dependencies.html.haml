@@ -1,6 +1,6 @@
 .card.shadow-sm.rounded
   %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(provider,
-              [:participating_countries, :affiliations, :networks, :catalogue])),
+              [:participating_countries, :affiliations, :networks])),
                 data: { toggle: "collapse", target: "#dependencies" },
                 aria: { expanded: true, controls: "dependencies" } }
     .card-header.text-left{ id: "dependencies-header" }
@@ -14,7 +14,7 @@
 .collapse{ id: "dependencies", "aria-labelledby": "dependencies-header",
           "data-parent": "#accordion-form",
           class: ("show" unless collapsed?(provider,
-              [:participating_countries, :affiliations, :networks, :catalogue])) }
+              [:participating_countries, :affiliations, :networks])) }
   .card-body
     .row
       .col-12
@@ -30,4 +30,3 @@
         .mt-4
         = f.association :networks, disabled: cant_edit([network_ids: []]),
               input_html: { multiple: true, data: { choice: true } }
-        = f.input :catalogue, disabled: cant_edit(:catalogue)

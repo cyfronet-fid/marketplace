@@ -44,6 +44,7 @@ class Importers::Provider
       national_roadmaps = Array(@data.dig("nationalRoadmaps", "nationalRoadmap"))
       data_administrators =
         Array.wrap(@data.dig("users", "user")).map { |da| DataAdministrator.new(map_data_administrator(da)) } || []
+      catalogue = map_catalogue(@data["catalogueId"])
     when "rest"
       multimedia = Array(@data["multimedia"]) || []
       scientific_domains = @data["scientificDomains"]&.map { |sd| sd["scientificSubdomain"] } || []
@@ -96,7 +97,7 @@ class Importers::Provider
       participating_countries: participating_countries,
       affiliations: affiliations,
       networks: map_networks(networks),
-      catalogue: @data["catalogueId"],
+      catalogue: catalogue,
       # Other
       structure_types: map_structure_types(structure_types),
       esfri_domains: map_esfri_domains(esfri_domains),

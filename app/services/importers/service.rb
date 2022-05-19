@@ -61,6 +61,7 @@ class Importers::Service < ApplicationService
       funding_bodies = map_funding_bodies(@data.dig("fundingBody", "fundingBody"))
       funding_programs = map_funding_programs(@data.dig("fundingPrograms", "fundingProgram"))
       grant_project_names = Array(@data.dig("grantProjectNames", "grantProjectName"))
+      catalogue = map_catalogue(@data["catalogueId"])
     when "rest"
       providers = Array(@data["resourceProviders"]) || []
       multimedia = Array(@data["multimedia"]) || []
@@ -135,7 +136,7 @@ class Importers::Service < ApplicationService
       required_services: required_services,
       related_services: related_services,
       related_platforms: related_platforms,
-      catalogue: @data["catalogueId"],
+      catalogue: catalogue,
       # Attribution
       funding_bodies: funding_bodies,
       funding_programs: funding_programs,

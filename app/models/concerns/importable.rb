@@ -103,6 +103,10 @@ module Importable
     Vocabulary::SocietalGrandChallenge.where(eid: challenges)
   end
 
+  def map_catalogue(catalogue)
+    Catalogue.find_by(pid: catalogue)
+  end
+
   def map_provider(prov_eid, eosc_registry_base_url, token: nil, retry_attempts: 3, actual_try: 0)
     if prov_eid.present?
       mapped_provider =

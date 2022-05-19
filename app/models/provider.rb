@@ -76,6 +76,9 @@ class Provider < ApplicationRecord
 
   accepts_nested_attributes_for :link_multimedia_urls, reject_if: :all_blank, allow_destroy: true
 
+  has_one :provider_catalogue, dependent: :destroy
+  has_one :catalogue, through: :provider_catalogue
+
   accepts_nested_attributes_for :main_contact, allow_destroy: true
 
   accepts_nested_attributes_for :public_contacts, allow_destroy: true
