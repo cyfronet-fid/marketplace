@@ -21,8 +21,10 @@ class Service::Ess::Add < ApplicationService
     {
       id: @service.id,
       pid_s: @service.pid,
+      slug_s: @service.slug,
       # card
       name_t: @service.name,
+      description_t: @service.description,
       rating_f: @service.rating,
       tagline_t: @service.tagline,
       resource_organisation_s: @service.resource_organisation.name,
