@@ -41,6 +41,11 @@ class Service::Ess::Add < ApplicationService
   end
 
   def hierarchical_to_s(hierarchical)
-    hierarchical.ancestors.to_a.append(hierarchical).map(&:name).join(">")
+    result = []
+    result.push(hierarchical.ancestors.to_a.append(hierarchical).map(&:name).join(">"))
+    hierarchical.ancestors.to_a.map do |ancestor|
+      result.push(ancestor.ancestors.to_a.append(ancestor).map(&:name).join(">"))
+    end
+    result
   end
 end
