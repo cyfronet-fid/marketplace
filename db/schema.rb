@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_24_154008) do
+ActiveRecord::Schema.define(version: 2022_05_27_114805) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -293,6 +293,10 @@ ActiveRecord::Schema.define(version: 2022_05_24_154008) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "eid"
+    t.string "description"
+    t.string "ancestry"
+    t.integer "ancestry_depth", default: 0
+    t.jsonb "extras"
     t.index ["name"], name: "index_platforms_on_name", unique: true
   end
 

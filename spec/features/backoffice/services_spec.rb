@@ -33,7 +33,8 @@ RSpec.feature "Services in backoffice" do
       provider = create(:provider)
       scientific_domain = create(:scientific_domain)
       resource_organisation = create(:provider)
-      platform = create(:platform)
+
+      # platform = create(:platform)
       funding_body = create(:funding_body)
       funding_program = create(:funding_program)
       trl = create(:trl)
@@ -86,7 +87,9 @@ RSpec.feature "Services in backoffice" do
       select provider.name, from: "Providers"
       select "open_access", from: "Order type"
       select resource_organisation.name, from: "Resource organisation"
-      select platform.name, from: "Platforms"
+
+      # TODO: uncomment when Resource Profile 4.0 will be released
+      # select platform.name, from: "Platforms"
       select category.name, from: "Categories"
       select user.to_s, from: "Owners"
       fill_in "Version", with: "2.2.2"
@@ -675,7 +678,9 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_field "Order type", disabled: false
       expect(page).to have_field "Categories", disabled: false
       expect(page).to have_field "Providers", disabled: false
-      expect(page).to have_field "Platforms", disabled: false
+
+      # TODO: uncomment when Resource Profile 4.0 will be released
+      # expect(page).to have_field "Platforms", disabled: false
       expect(page).to have_field "Scientific domains", disabled: false
       expect(page).to have_field "Dedicated For", disabled: false
       expect(page).to have_field "Owners", disabled: false
@@ -718,7 +723,9 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_field "Access types", disabled: true
       expect(page).to have_field "Access modes", disabled: true
       expect(page).to have_field "Providers", disabled: true
-      expect(page).to have_field "Platforms", disabled: false
+
+      # TODO: uncomment when Resource Profile 4.0 will be released
+      # expect(page).to have_field "Platforms", disabled: false
       expect(page).to have_field "service_main_contact_attributes_first_name", disabled: true
       expect(page).to have_field "service_main_contact_attributes_last_name", disabled: true
       expect(page).to have_field "service_main_contact_attributes_email", disabled: true

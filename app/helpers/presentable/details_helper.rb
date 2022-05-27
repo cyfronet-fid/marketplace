@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module Presentable::DetailsHelper
+  include Backoffice::ServicesHelper
+
   def service_details_columns
     [
       [classification, availability, marketing, dependencies, attribution, order],
@@ -14,7 +16,7 @@ module Presentable::DetailsHelper
       [provider_classification, esfri_types, esfri_domains, meril_scientific_domains],
       [networks, areas_of_activity, affiliations, certifications, catalogue],
       [
-        Rails.configuration.profile_4_enabled ? hosting_legal_entity : hosting_legal_entity_string,
+        resource_profile_4? ? hosting_legal_entity : hosting_legal_entity_string,
         structure_types,
         societal_grand_challenges,
         national_roadmaps
@@ -68,14 +70,20 @@ module Presentable::DetailsHelper
     {
       name: "dependencies",
       template: "array",
-      fields: %w[required_services related_services related_platforms catalogue],
+      fields: dependencies_fields,
       with_desc: true,
       nested: {
         required_services: "service",
         related_services: "service",
-        catalogue: "name"
+        catalogue: "name",
+        platforms: "name"
       }
     }
+  end
+
+  def dependencies_fields
+    platforms = resource_profile_4? ? "platforms" : "related_platforms"
+    ["required_services", "related_services", platforms, "catalogue"]
   end
 
   def attribution

@@ -35,6 +35,10 @@ module Importable
     Service.joins(:sources).where("service_sources.source_type": "eosc_registry", "service_sources.eid": services)
   end
 
+  def map_platforms(platforms)
+    Platform.where(eid: platforms)
+  end
+
   def map_funding_bodies(funding_bodies)
     Vocabulary::FundingBody.where(eid: funding_bodies)
   end

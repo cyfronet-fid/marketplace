@@ -319,15 +319,16 @@
 
             = f.association :related_services, multiple: true, input_html: { data: { choice: true } },
             disabled: cant_edit([related_service_ids: []])
-
-            = f.association :platforms, label: _("Platforms (internal)"),
-                               multiple: true, input_html: { data: { choice: true } },
-                               disabled: cant_edit([platform_ids: []])
-            = f.input :related_platforms, label: _("Related platforms (PC data)"), multiple: true,
-                input_html: { class: "form-control" },
-                wrapper_html: { "data-target" => "service.relatedPlatforms" },
-                disabled: cant_edit([related_platforms: []]), as: :array
-            = link_to_add_array_field("service", "related_platforms")
+            - if resource_profile_4?
+              = f.association :platforms, label: _("Related platforms"),
+                                 multiple: true, input_html: { data: { choice: true } },
+                                 disabled: cant_edit([platform_ids: []])
+            - else
+              = f.input :related_platforms, label: _("Related platforms"), multiple: true,
+                  input_html: { class: "form-control" },
+                  wrapper_html: { "data-target" => "service.relatedPlatforms" },
+                  disabled: cant_edit([related_platforms: []]), as: :array
+              = link_to_add_array_field("service", "related_platforms")
 
         .card.shadow-sm.rounded
           %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
