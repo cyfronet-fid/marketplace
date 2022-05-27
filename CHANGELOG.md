@@ -13,6 +13,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Catalogue for Resource Profile 4.0 (@goreck888)
 - Abbreviation for the Resource Profile 4.0 (@goreck888)
 - Hosting Legal Entity for the Provider Profile 4.0 with backward compatibility (@goreck888)
+- Related Platforms for the Resource Profile 4.0 with backward compatibility (@goreck888)
 
 ### Changed
 - Move Structure Types from `Other` to `Classification` section in the Resource Profile 4.0 (@goreck888)

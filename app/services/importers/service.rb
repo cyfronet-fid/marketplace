@@ -58,6 +58,7 @@ class Importers::Service < ApplicationService
       required_services = map_related_services(Array(@data.dig("requiredResources", "requiredResource")))
       related_services = map_related_services(Array(@data.dig("relatedResources", "relatedResource")))
       related_platforms = Array(@data.dig("relatedPlatforms", "relatedPlatform")) || []
+      platforms = map_platforms(Array(@data.dig("relatedPlatforms", "relatedPlatform")))
       funding_bodies = map_funding_bodies(@data.dig("fundingBody", "fundingBody"))
       funding_programs = map_funding_programs(@data.dig("fundingPrograms", "fundingProgram"))
       grant_project_names = Array(@data.dig("grantProjectNames", "grantProjectName"))
@@ -84,6 +85,7 @@ class Importers::Service < ApplicationService
       required_services = map_related_services(Array(@data["requiredResources"]))
       related_services = map_related_services(Array(@data["relatedResources"]))
       related_platforms = Array(@data["relatedPlatforms"]) || []
+      platforms = map_platforms(Array(@data["relatedPlatforms"]))
       funding_bodies = map_funding_bodies(Array(@data["fundingBody"]))
       funding_programs = map_funding_programs(Array(@data["fundingPrograms"]))
       grant_project_names = Array(@data["grantProjectNames"])
@@ -136,6 +138,7 @@ class Importers::Service < ApplicationService
       required_services: required_services,
       related_services: related_services,
       related_platforms: related_platforms,
+      platforms: platforms,
       catalogue: catalogue,
       # Attribution
       funding_bodies: funding_bodies,
