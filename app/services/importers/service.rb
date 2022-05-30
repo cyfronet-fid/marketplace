@@ -100,8 +100,8 @@ class Importers::Service < ApplicationService
       # Basic
       name: @data["name"],
       abbreviation: @data["abbreviation"],
-      resource_organisation: map_provider(@data["resourceOrganisation"], @eosc_registry_base_url, token: @token),
-      providers: providers.uniq.map { |p| map_provider(p, @eosc_registry_base_url, token: @token) },
+      resource_organisation: map_provider(@data["resourceOrganisation"]),
+      providers: providers.uniq.map { |p| map_provider(p) }.compact,
       webpage_url: @data["webpage"] || "",
       # Marketing
       description: @data["description"],
