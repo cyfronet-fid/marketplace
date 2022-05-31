@@ -104,6 +104,7 @@ Rails.application.routes.draw do
       resources :life_cycle_statuses, controller: "vocabularies", type: "life_cycle_status"
       resources :provider_life_cycle_statuses, controller: "vocabularies", type: "provider_life_cycle_status"
       resources :areas_of_activity, controller: "vocabularies", type: "area_of_activity"
+      resources :hosting_legal_entities, controller: "vocabularies", type: "hosting_legal_entity"
       resources :esfri_types, controller: "vocabularies", type: "esfri_type"
       resources :esfri_domains, controller: "vocabularies", type: "esfri_domain"
       resources :legal_statuses, controller: "vocabularies", type: "legal_status"
