@@ -41,6 +41,10 @@ class Backoffice::VocabulariesController < Backoffice::ApplicationController
       name: "Area of Activity",
       klass: Vocabulary::AreaOfActivity
     },
+    hosting_legal_entity: {
+      name: "Hosting Legal Entity",
+      klass: Vocabulary::HostingLegalEntity
+    },
     esfri_domain: {
       name: "ESFRI Domain",
       klass: Vocabulary::EsfriDomain
