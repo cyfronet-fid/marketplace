@@ -3,10 +3,9 @@
 class Importers::Vocabulary
   include Importable
 
-  def initialize(data, type, token = nil)
+  def initialize(data, type)
     @data = data
-    @token = token
-    @type = type
+    @type = clazz(type)
   end
 
   def call

@@ -1,6 +1,35 @@
 # frozen_string_literal: true
 
 module Importable
+  ACCEPTED_VOCABULARIES = {
+    SUPERCATEGORY: Category,
+    CATEGORY: Category,
+    SUBCATEGORY: Category,
+    TRL: Vocabulary::Trl,
+    SCIENTIFIC_DOMAIN: ScientificDomain,
+    SCIENTIFIC_SUBDOMAIN: ScientificDomain,
+    TARGET_USER: TargetUser,
+    ACCESS_TYPE: Vocabulary::AccessType,
+    ACCESS_MODE: Vocabulary::AccessMode,
+    # TODO: Add order_type as vocabulary
+    # ORDER_TYPE: Vocabulary::OrderType,
+    FUNDING_BODY: Vocabulary::FundingBody,
+    FUNDING_PROGRAM: Vocabulary::FundingProgram,
+    LIFE_CYCLE_STATUS: Vocabulary::LifeCycleStatus,
+    PROVIDER_AREA_OF_ACTIVITY: Vocabulary::AreaOfActivity,
+    PROVIDER_ESFRI_TYPE: Vocabulary::EsfriType,
+    PROVIDER_ESFRI_DOMAIN: Vocabulary::EsfriDomain,
+    PROVIDER_LEGAL_STATUS: Vocabulary::LegalStatus,
+    PROVIDER_LIFE_CYCLE_STATUS: Vocabulary::ProviderLifeCycleStatus,
+    PROVIDER_NETWORK: Vocabulary::Network,
+    PROVIDER_SOCIETAL_GRAND_CHALLENGE: Vocabulary::SocietalGrandChallenge,
+    PROVIDER_STRUCTURE_TYPE: Vocabulary::StructureType,
+    PROVIDER_MERIL_SCIENTIFIC_DOMAIN: Vocabulary::MerilScientificDomain,
+    PROVIDER_MERIL_SCIENTIFIC_SUBDOMAIN: Vocabulary::MerilScientificDomain,
+    PROVIDER_HOSTING_LEGAL_ENTITY: Vocabulary::HostingLegalEntity,
+    RELATED_PLATFORM: Platform
+  }.freeze
+
   def map_target_users(target_users)
     TargetUser.where(eid: target_users)
   end
@@ -109,6 +138,10 @@ module Importable
 
   def map_catalogue(catalogue)
     Catalogue.find_by(pid: catalogue)
+  end
+
+  def clazz(type)
+    ACCEPTED_VOCABULARIES[type.to_sym]
   end
 
   def map_provider(prov_eid)

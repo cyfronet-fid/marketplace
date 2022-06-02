@@ -1,34 +1,7 @@
 # frozen_string_literal: true
 
 class Import::Vocabularies
-  ACCEPTED_VOCABULARIES = {
-    SUPERCATEGORY: Category,
-    CATEGORY: Category,
-    SUBCATEGORY: Category,
-    TRL: Vocabulary::Trl,
-    SCIENTIFIC_DOMAIN: ScientificDomain,
-    SCIENTIFIC_SUBDOMAIN: ScientificDomain,
-    TARGET_USER: TargetUser,
-    ACCESS_TYPE: Vocabulary::AccessType,
-    ACCESS_MODE: Vocabulary::AccessMode,
-    # TODO: Add order_type as vocabulary
-    # ORDER_TYPE: Vocabulary::OrderType,
-    FUNDING_BODY: Vocabulary::FundingBody,
-    FUNDING_PROGRAM: Vocabulary::FundingProgram,
-    LIFE_CYCLE_STATUS: Vocabulary::LifeCycleStatus,
-    PROVIDER_AREA_OF_ACTIVITY: Vocabulary::AreaOfActivity,
-    PROVIDER_ESFRI_TYPE: Vocabulary::EsfriType,
-    PROVIDER_ESFRI_DOMAIN: Vocabulary::EsfriDomain,
-    PROVIDER_LEGAL_STATUS: Vocabulary::LegalStatus,
-    PROVIDER_LIFE_CYCLE_STATUS: Vocabulary::ProviderLifeCycleStatus,
-    PROVIDER_NETWORK: Vocabulary::Network,
-    PROVIDER_SOCIETAL_GRAND_CHALLENGE: Vocabulary::SocietalGrandChallenge,
-    PROVIDER_STRUCTURE_TYPE: Vocabulary::StructureType,
-    PROVIDER_MERIL_SCIENTIFIC_DOMAIN: Vocabulary::MerilScientificDomain,
-    PROVIDER_MERIL_SCIENTIFIC_SUBDOMAIN: Vocabulary::MerilScientificDomain,
-    PROVIDER_HOSTING_LEGAL_ENTITY: Vocabulary::HostingLegalEntity,
-    RELATED_PLATFORM: Platform
-  }.freeze
+  include Importable
 
   def initialize(
     eosc_registry_base_url,
@@ -74,7 +47,7 @@ class Import::Vocabularies
         vocabularies_array.each do |vocabulary_data|
           output.append(vocabulary_data)
 
-          updated_vocabulary_data = Importers::Vocabulary.new(vocabulary_data, clazz(type), @token).call
+          updated_vocabulary_data = Importers::Vocabulary.new(vocabulary_data, type).call
 
           mapped_vocabulary = clazz(type).find_by(eid: vocabulary_data["id"])
 
@@ -102,10 +75,6 @@ class Import::Vocabularies
   end
 
   private
-
-  def clazz(type)
-    ACCEPTED_VOCABULARIES[type.to_sym]
-  end
 
   def log(msg)
     @logger.call(msg)

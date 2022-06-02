@@ -63,6 +63,13 @@ class Jms::ManageMessage < ApplicationService
           modified_at
         )
       end
+    when "vocabulary"
+      case action
+      when "create", "update"
+        Vocabulary::PcCreateOrUpdateJob.perform_later(resource["vocabularyBundle"]["vocabulary"])
+      when "delete"
+        Vocabulary::DeleteJob.perform_later(resource["vocabularyBundle"]["vocabulary"])
+      end
     else
       raise WrongMessageError
     end
