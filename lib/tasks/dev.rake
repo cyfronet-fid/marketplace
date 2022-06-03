@@ -124,7 +124,8 @@ namespace :dev do
   def create_target_users(target_users_hash)
     puts "Generating target groups:"
     target_users_hash.each do |_, hash|
-      TargetUser.find_or_create_by(name: hash["name"])
+      parent = TargetUser.find_by(name: hash["parent"])
+      TargetUser.find_or_initialize_by(name: hash["name"]) { |sd| sd.update!(parent: parent) }
       puts "  - #{hash["name"]} target group generated"
     end
   end
