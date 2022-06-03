@@ -40,6 +40,7 @@ import './category';
 import './scientific-domain';
 import './providers';
 import './platforms'
+import './vocabulary'
 
 /**
  * Don't fail on uncaught exception

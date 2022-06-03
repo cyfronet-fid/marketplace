@@ -687,6 +687,11 @@ target_users:
     name: &business "Businesses"
     description: "An organization or economic system where goods and services are exchanged for one another or for money. Businesses can be privately owned, not-for-profit or state-owned."
     eid: "target_user-businesses"
+  Business other:
+    parent: *business
+    name: &business_other "Businesses other"
+    description: "An organization or economic system where goods and services are exchanged for one another or for money. Businesses can be privately owned, not-for-profit or state-owned."
+    eid: "target_user-business_other"
   Research group:
     name: &research_groups "Research groups"
     description: "A research group is a group of researchers working together on a particular issue or topic. Research groups may be composed of researchers all from the same subject/discipline or from different subjects/disciplines."

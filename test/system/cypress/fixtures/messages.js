@@ -49,3 +49,12 @@ export const ResourceMessages =
   alertEmailValidation: "Email is not a valid email address"
 };
 
+export const VocabularyMessages =
+{
+  successCreationMessage: "created successfully",
+  successUpdationMessage: "updated successfully",
+  alertDeletionMessageSuccessors: "has successors connected to it, therefore is not possible to remove it. If you want to remove it, edit them so they are not associated with this",
+  alertDeletionMessageResource: "has resources connected to it, remove associations to delete it.",
+  successDeletionMessage: "removed successfully",
+  alertNameValidation: "Name can't be blank"
+};

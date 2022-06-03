@@ -11,10 +11,11 @@
         .float-right
           = link_to _("Add new #{@type}"),
                         send("new_backoffice_#{snake_cased(@type)}_path"),
-                        class: "btn btn-primary"
+                        class: "btn btn-primary",
+                        "data-e2e": "add-new-vocabulary-btn"
         .clearfix
       -# haml-lint:disable InlineStyles
-      %ul.list-group.backoffice-list.mt-3.mb-3
+      %ul.list-group.backoffice-list.mt-3.mb-3{ "data-e2e": "backoffice-vocabulary-list" }
         - ancestry_tree(@vocabularies).each do |record|
           - vocabulary = record[1]
           %li.list-group-item{ class: "#{"subcategory" if vocabulary.ancestry_depth.positive?}",
