@@ -36,7 +36,8 @@
             = link_to "Generate token", api_docs_path, method: :post, class: "btn btn-primary float-right"
         - else
           %p
-            = link_to "Log in", user_checkin_omniauth_authorize_path, class: "btn btn-primary float-right"
+            = link_to "Log in", user_checkin_omniauth_authorize_path, class: "btn btn-primary float-right",
+            "data-e2e": "login-btn"
   %h2.mb-5 EOSC Marketplace API Documentation
   .container
     .row
