@@ -10,6 +10,7 @@ describe Jms::ManageMessage do
   let(:parser) { Nori.new(strip_namespaces: true) }
   let(:service_resource) { create(:jms_xml_service) }
   let(:provider_resource) { create(:jms_xml_provider) }
+  let(:catalogue_resource) { create(:jms_xml_catalogue) }
   let(:draft_provider_resource) { build(:jms_xml_draft_provider) }
   let(:rejected_provider_resource) { build(:jms_xml_rejected_provider) }
   let(:json_service) do
@@ -17,6 +18,12 @@ describe Jms::ManageMessage do
   end
   let(:json_provider) do
     double(body: provider_resource.to_json, headers: { "destination" => "/topic/registry.provider.update" })
+  end
+  let(:json_catalogue) do
+    double(body: catalogue_resource.to_json, headers: { "destination" => "/topic/registry.catalogue.update" })
+  end
+  let(:json_create_catalogue) do
+    double(body: catalogue_resource.to_json, headers: { "destination" => "/topic/registry.catalogue.create" })
   end
   let(:json_draft_provider) do
     double(body: draft_provider_resource.to_json, headers: { "destination" => "/topic/registry.provider.update" })
@@ -126,6 +133,34 @@ describe Jms::ManageMessage do
     error_service_message = double(body: service_hash.to_json, headers: { "destination" => "aaaa.update" })
 
     expect { described_class.new(error_service_message, eosc_registry_base, logger).call }.to raise_error(StandardError)
+    $stdout = original_stdout
+  end
+
+  it "should receive create catalogue message" do
+    original_stdout = $stdout
+    $stdout = StringIO.new
+    resource = parser.parse(catalogue_resource["resource"])
+    expect(Catalogue::PcCreateOrUpdateJob).to receive(:perform_later).with(
+      resource["catalogueBundle"]["catalogue"],
+      resource["catalogueBundle"]["active"],
+      Time.at(resource["catalogueBundle"]["metadata"]["modifiedAt"].to_i&./ 1000)
+    )
+
+    expect { described_class.new(json_create_catalogue, eosc_registry_base, logger, nil).call }.to_not raise_error
+    $stdout = original_stdout
+  end
+
+  it "should receive update catalogue message" do
+    original_stdout = $stdout
+    $stdout = StringIO.new
+    resource = parser.parse(catalogue_resource["resource"])
+    expect(Catalogue::PcCreateOrUpdateJob).to receive(:perform_later).with(
+      resource["catalogueBundle"]["catalogue"],
+      resource["catalogueBundle"]["active"],
+      Time.at(resource["catalogueBundle"]["metadata"]["modifiedAt"].to_i&./ 1000)
+    )
+
+    expect { described_class.new(json_catalogue, eosc_registry_base, logger, nil).call }.to_not raise_error
     $stdout = original_stdout
   end
 end
