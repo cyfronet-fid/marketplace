@@ -20,7 +20,7 @@ module UrlHelper
     return false unless uri.is_a?(URI::HTTP)
 
     response = Faraday.get(url)
-    response.status == 200
+    response.status == 200 || 301
   rescue URI::InvalidURIError, NoMethodError, Faraday::Error
     false
   end
