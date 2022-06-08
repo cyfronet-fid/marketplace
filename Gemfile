@@ -74,6 +74,7 @@ gem "google-apis-analyticsreporting_v4", "~> 0.5"
 
 gem "redis-rails"
 gem "sidekiq"
+gem "sidekiq-limit_fetch", "~>4.2.0"
 
 gem "stomp"
 
