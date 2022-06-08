@@ -19,6 +19,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Move Structure Types from `Other` to `Classification` section in the Resource Profile 4.0 (@goreck888)
 - `Multimedia` and `UseCases` urls specified in the Resource Profile 4.0 with backward compatibility (@goreck888)
 - Replace `OpenAIRE Explore` banner with the `EOSC Explore` one for `EOSC` tagged resources (@goreck888)
+- Limit `pc_subscriber` queue to only one thread (@goreck888)
 
 ### Deprecated
 - `OPENAIRE_NOTEBOOKS__HARDCODED_LINK` environmental variable (@goreck888) 

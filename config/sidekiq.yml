@@ -20,3 +20,9 @@ staging:
   - default
   - pc_publisher
   - ess_update
+
+:limits:
+  pc_subscriber: 1
+
+:process_limits:
+  pc_subscriber: 1

@@ -526,6 +526,9 @@ GEM
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.2.0)
+    sidekiq-limit_fetch (4.2.0)
+      redis (>= 4.6.0)
+      sidekiq (>= 4)
     signet (0.16.1)
       addressable (~> 2.8)
       faraday (>= 0.17.5, < 3.0)
@@ -696,6 +699,7 @@ DEPENDENCIES
   sentry-sidekiq
   shoulda-matchers
   sidekiq
+  sidekiq-limit_fetch (~> 4.2.0)
   simple_form
   simple_token_authentication
   spring
