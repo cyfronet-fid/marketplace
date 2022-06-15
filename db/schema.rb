@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_27_114805) do
+ActiveRecord::Schema.define(version: 2022_06_15_201039) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -736,7 +736,7 @@ ActiveRecord::Schema.define(version: 2022_05_27_114805) do
   end
 
   create_table "vocabularies", force: :cascade do |t|
-    t.string "eid", null: false
+    t.string "eid"
     t.string "name", null: false
     t.text "description"
     t.string "type", null: false

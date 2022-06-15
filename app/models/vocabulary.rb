@@ -10,5 +10,4 @@ class Vocabulary < ApplicationRecord
 
   validates :name, presence: true
   validates :type, presence: true
-  validates :eid, presence: true
 end
