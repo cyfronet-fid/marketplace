@@ -29,5 +29,8 @@
         - if policy([:backoffice, Platform]).index?
           = nav_link controller: :platforms, html_options: { class: "nav-item" } do
             = link_to _("Platforms"), backoffice_platforms_path, class: "nav-link px-2 py-1"
+        - if policy([:backoffice, Vocabulary]).index?
+          = nav_link controller: :vocabularies, html_options: { class: "nav-item" } do
+            = link_to _("Vocabularies"), backoffice_vocabularies_path, class: "nav-link px-2 py-1"
         = nav_link controller: :backoffices, html_options: { class: "nav-item" } do
           = link_to _("Logout"), destroy_user_session_path, method: :delete, class: "nav-link px-2 py-1"
