@@ -7,5 +7,5 @@ RSpec.describe Vocabulary::AccessType do
 
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:type) }
-  it { should validate_presence_of(:eid) }
+  it { should_not validate_presence_of(:eid) }
 end
