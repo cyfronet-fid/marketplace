@@ -7,7 +7,7 @@
       value: "#{attr.value}",
       class: "form-control #{"is-invalid" if has_errors} #{"is-valid" if valid}",
       name: "#{field.object_name}[#{attr.id}]",
-      input_html: { "data-date-format": to_js_date_format(attr.date_format) },
+      "data-date-format": to_js_date_format(attr.date_format),
       as: :date_time_picker
     %span.input-group-addon
       %i.far.fa-calendar-alt

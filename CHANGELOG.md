@@ -11,6 +11,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 
 ### Changed
+- Date format in parameters from `mm-d-yyyy` to `d-mm-yyyy` (@goreck888)
 
 ### Deprecated
 
