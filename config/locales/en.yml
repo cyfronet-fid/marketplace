@@ -30,6 +30,9 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
+  date:
+    formats:
+      default: "%e-%m-%Y"
   time:
     formats:
       default: "%e.%m.%Y %k:%M"
