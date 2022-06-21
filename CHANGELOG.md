@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [3.38.0-milestone]
+## [3.38.0] 2022-06-20
 
 ### Added
 - Dependencies for Provider Profile v4.0 (@kmarszalek)
@@ -23,12 +23,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Deprecated
 - `OPENAIRE_NOTEBOOKS__HARDCODED_LINK` environmental variable (@goreck888) 
 
-### Removed
-
 ### Fixed
 - JMS Resource update on missing providers (@goreck888)
-
-### Security
 
 ## [3.37.0] 2022-05-17
 
