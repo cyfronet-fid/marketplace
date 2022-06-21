@@ -19,6 +19,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Communities and infrastructure section on the home page (@kmarszalek)
+- Alphabetical sorting of providers in the backoffice resource form (@goreck888)
 
 ### Security
 
