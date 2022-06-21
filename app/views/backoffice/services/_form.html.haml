@@ -57,9 +57,10 @@
             = f.input :name, disabled: cant_edit(:name)
             = f.input :abbreviation, disabled: cant_edit(:abbreviation)
             = f.association :resource_organisation, disabled: cant_edit(:resource_organisation_id),
-                              collection: Provider.active
+                              collection: Provider.active.sort_by { |e| e.name.strip.downcase }
             = f.association :providers, multiple: true, input_html: { data: { choice: true } },
-                              disabled: cant_edit([provider_ids: []]), collection: Provider.active
+                              disabled: cant_edit([provider_ids: []]),
+                              collection: Provider.active.sort_by { |e| e.name.strip.downcase }
             = f.input :webpage_url, disabled: cant_edit(:webpage_url)
         .card.shadow-sm.rounded
           %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
