@@ -8,6 +8,10 @@ export class Utilities {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, replace);
   }
 
+  public static getRandomNumber() {
+    return Math.floor(Math.random() * 9000000000) + 1000000000
+  }
+  
   public static getRandomString(length: number = 32): string {
     const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
     const CHARS_SIZE = CHARS.length > length ? length : CHARS.length;
@@ -20,9 +24,8 @@ export class Utilities {
   }
 
   public static getRandomEmail() {
-    return Utilities.getRandomString(8).toLowerCase()
-      + "@" + Utilities.getRandomString(8).toLowerCase()
-      + "." + Utilities.getRandomString(3).toLowerCase();
+    return Utilities.getRandomString(6).toLowerCase()
+      + "@domain.com"
   }
 
   public static getRandomUrl(protocol: string = 'http://') {
