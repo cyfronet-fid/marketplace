@@ -6,6 +6,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.39.0-milestone]
+
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+- Communities and infrastructure section on the home page (@kmarszalek)
+
+### Security
+
 ## [3.38.0] 2022-06-20
 
 ### Added
