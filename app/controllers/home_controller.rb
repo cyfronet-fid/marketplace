@@ -26,7 +26,7 @@ class HomeController < ApplicationController
   end
 
   def load_platforms
-    @home_platforms = Platform.joins(:services).uniq.sample(10).map
+    @home_platforms = Platform.all.uniq.sample(10).map
     @home_platforms_counter = Platform.all.count - @home_platforms.count
   end
 
