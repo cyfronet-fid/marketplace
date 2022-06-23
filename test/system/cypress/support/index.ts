@@ -41,6 +41,7 @@ import './scientific-domain';
 import './providers';
 import './platforms'
 import './vocabulary'
+import './provider_portal'
 
 /**
  * Don't fail on uncaught exception
