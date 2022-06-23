@@ -4,7 +4,7 @@
   "description": "Integration tests",
   "main": "",
   "scripts": {
-    "cy:run": "TZ=Europe/Warsaw cypress run --browser chrome --headless --quiet --env grepTags='-@extended-test'",
+    "cy:run": "TZ=Europe/Warsaw cypress run --browser chrome --headless --quiet --env grepUntagged=true",
     "cy:run-debug": "DEBUG=cypress:* TZ=Europe/Warsaw cypress run --browser chrome --headless --quiet",
     "cy:run-browser": "TZ=Europe/Warsaw cypress run --browser chrome --quiet",
     "cy:run-all-regression-tests": "TZ=Europe/Warsaw cypress run --browser chrome --headless --quiet"
