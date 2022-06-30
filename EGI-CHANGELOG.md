@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [1.0.6] 2022-07-15
+
+### Changed
+- Update MP version to 3.40.0 (@goreck888)
+- Custom footer
+
+### Security
+- Enable PKCE for EGI-AAI connection (@goreck888)
+
 ## [1.0.5] 2022-05-17
 
 ### Changed
