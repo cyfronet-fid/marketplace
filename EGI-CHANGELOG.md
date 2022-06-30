@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [1.0.6-milestone]
+
+### Changed
+- Update MP version to 3.39.0 (@goreck888)
+- Custom footer
+
 ## [1.0.5] 2022-05-17
 
 ### Changed

@@ -7,7 +7,11 @@
       %ul
         - if user_signed_in?
           %li
-            %a.simple-item{ href: "/projects" }= _("My projects")
+            %a.simple-item{ href: "/projects" }
+              = _("My projects")
+          %li
+            %a.simple-item{ href: "/favourites" }
+              = _("Favourite resources")
           %li
             %a.simple-item{ href: "/favourites" }= _("Favourite Resources")
           %li
@@ -69,6 +73,7 @@
         %a#dropdown-menu-button.dropdown-toggle{ "aria-expanded" => "false",
                                                       "aria-haspopup" => "true",
                                                       "data-toggle" => "dropdown",
+                                                      "data-e2e" => "my-eosc-button",
                                                       type: "button" }
           .menu__label= _("My EGI Marketplace")
         .dropdown-menu.w-auto
@@ -76,7 +81,7 @@
             %li
               %a.dropdown-item{ href: "/projects" }= _("My projects")
             %li
-              %a.dropdown-item{ href: "/favourites" }= _("Favourite Resources")
+              %a.dropdown-item{ href: "/favourites", "data-e2e": "favourites" }= _("Favourite Resources")
             %li
               %a.dropdown-item{ href: "/profile" }= _("Profile")
             %li
