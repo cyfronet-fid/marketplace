@@ -575,7 +575,7 @@ li {
 
 .footer {
   width: 100%;
-  background-color: $palette-dark-grey;
+  background-color: $palette-gray-100;
   font-weight: 300;
   padding: 1rem 0;
 
@@ -632,6 +632,7 @@ li {
         font-weight: 300;
         line-height: 1.1;
 
+
         &:hover {
           text-decoration: none;
           color: $palette-dark-blue;
@@ -678,7 +679,7 @@ li {
     font-size: 1rem;
 
     &:hover {
-      color: $palette-dark-blue;
+      text-decoration: underline;
     }
   }
 
@@ -931,7 +932,7 @@ li {
 .top {
   padding: 5px 0;
   margin-bottom: 20px;
-  background: $palette-dark-grey;
+  background: $palette-gray-100;
 
   .left-links {
     float: left;
