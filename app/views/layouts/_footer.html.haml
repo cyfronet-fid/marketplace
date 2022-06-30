@@ -2,72 +2,51 @@
   - portal_base = Mp::Application.config.portal_base_url
   .container
     .row
-      .col-md-4
-        .egi-logo-mono.d-block{ href: portal_base }
-          = image_pack_tag "egi-footer-logo.png"
       .col-md-2
         %ul
           %li
-            .title= _("Information")
+            .title= _("Support")
           %li
-            %a{ href: "https://www.egi.eu/contact/" }= _("Contact us")
-          %li
-            %a{ href: "#{root_url}terms_of_use" }= _("Terms of Use")
-          %li
-            %a{ href: "#{root_url}about" }= _("About us")
-          %li
-            %a{ href: "#{root_url}sla" }= _("SLA")
-          %li
-            %a{ href: "#{root_url}" }= _("Sitemap")
-
-
+            %a{ href: "#" }= _("Contact support")
       .col-md-2
         %ul
           %li
-            .title= _("My account")
+            .title= _("About")
           %li
-            %a{ href: "#{root_url}" }= _("My orders")
+            %a{ href: "#" }= _("EGI Marketplace")
           %li
-            %a{ href: "#{root_url}" }= _("My credit slips")
+            %a{ href: "#" }= _("EGI Foundation")
+      .col-md-3.border-right
+      .col-md-3
+        %ul
           %li
-            %a{ href: "#{root_url}" }= _("My addresses")
-          %li
-            %a{ href: "#{root_url}" }= _("My personal info")
-      .col-md-4
-        %ul.contact-list
-          %li
-            .title= _("Store information")
-          %li
-            %i.fas.fa-map-marker
-            %span
-              = _("The EGI Foundation")
-              %br/
-              = _("Science Park 140")
-              %br/
-              = _("1098 XG Amsterdam")
-              %br/
-              = _("The Netherlands")
-          %li
-            %i.fas.fa-phone-alt
-            = _("Phone number: +31 (0)20 89 32 007")
-          %li
-            %i.fas.fa-envelope
-            = _("E-mail: marketplace-support@mailman.egi.eu")
+            .row
+              .col-3.mr-0
+                = image_pack_tag "eu-logo.png", size: "70x40", class: "border"
+              .col-9.ml-0
+                %h3.text-left= _("Co-funded by the European Union")
+          %li.funder-links
+            Marketplace is an EGI service provided by
+            %a{ href: "https://www.cyfronet.pl/" } Cyfronet
+            co-funded by
+            %a{ href: "https://www.egi.eu/" } EGI.eu
+            and
+            %a{ href: "https://www.egi.eu/project/egi-ace/" } EGI-ACE
+            under Grant Agreement No. 101017567
+      .col-md-2
+        .egi-logo-mono.text-center.d-block.mb-4{ href: portal_base }
+          = image_pack_tag "egi-footer-logo.png", size: "90x75"
+        .my-auto.text-center
+          %a.social-logo.d-inline-block.mr-2{ href: "https://twitter.com/egi_einfra" }
+            %i.fab.fa-twitter
+          %a.social-logo.d-inline-block{ href: "https://www.linkedin.com/company/egi-foundation" }
+            %i.fab.fa-linkedin
+          %a.social-logo.d-inline-block{ href: "https://www.youtube.com/c/EGIFederation/" }
+            %i.fab.fa-youtube
 
-
-    %hr.mb-4
+    .mb-4
     .row.h-100
-      .col-md-3.my-auto.socials-box
-        %a.social-logo.twitter-logo.d-inline-block.mr-2{ href: "https://twitter.com/egi_einfra" }
-        %a.social-logo.linkedin-logo.d-inline-block{ href: "https://www.linkedin.com/company/egi-foundation" }
-      .col-md-9.my-auto.copyright
-        %span.copy-text
-          = _("Copyright 2022 - All rights reserved")
-        %a.ml-4{ href: "https://www.egi.eu/privacy-policy/" }
-          = _("Privacy policy")
-
-
-.eu-information.p-4
-  .container
-    %p.mb-1
-      = image_pack_tag "egi-ue-info.png"
+      .col-md-4.my-auto.socials-box
+        %a.pr-3.border-right{ href: "#" }= _("terms of use")
+        %a.pl-2.pr-3.border-right{ href: "#" }= _("data protection")
+        %a.pl-2{ href: "#" }= _("certifications")

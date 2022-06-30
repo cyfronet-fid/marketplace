@@ -7,14 +7,34 @@
       %ul
         - if user_signed_in?
           %li
-            %a.simple-item{ href: "/projects" }= _("My projects")
+            %a.simple-item{ href: "/projects" }
+              = _("My projects")
           %li
-            %a.simple-item{ href: "/favourites" }= _("Favourite Resources")
+            %a.simple-item{ href: "/favourites" }
+              = _("Favourite resources")
           %li
-            %a.simple-item{ href: "/profile" }= _("Profile")
+            %a.simple-item{ href: "/profile" }
+              = _("Profile")
+          - if policy([:backoffice, :backoffice]).show?
+            %li
+              %a.simple-item{ href: backoffice_path }
+                = _("Backoffice")
+            - if policy([:admin, :admin]).show?
+              %li
+                %a.simple-item{ href: admin_path }
+                  = _("Admin")
+            - if policy([:executive, :executive]).show?
+              %li
+                %a.simple-item{ href: executive_path }
+                  = _("Executive")
           %li
+            :ruby
+              autologin_cookie = "document.cookie = '_eosc_common_autologin=_eosc_common_autologin; path=/;"
+              expired_autologin_cookie = autologin_cookie + " expires=Thu, 01 Jan 1970 00:00:01 GMT; domain="
+              domains = %w[.eosc-portal.eu eosc-portal.eu localhost .docker-fid.grid.cyf-kr.edu.pl]
             = link_to _("Logout"), destroy_user_session_path, method: :delete,
-            class: "btn btn-primary font-weight-bold mt-5"
+            class: "btn btn-primary font-weight-bold mt-5",
+                        onclick: domains.map { |domain| expired_autologin_cookie + domain + "';" }.join
         - else
           %li
           = link_to user_checkin_omniauth_authorize_path, class: "btn btn-primary" do
@@ -31,6 +51,19 @@
             = link_to _("Catalogue & Marketplace"), root_path,
               class: "#{"active" if local_assigns[:section].nil? }"
           %li.list-inline-item.ml-2
+            %a{ href: Mp::Application.config.providers_dashboard_url }= _("Providers Dashboard")
+          - if policy([:backoffice, :backoffice]).show?
+            %li.list-inline-item.ml-2
+              = link_to _("Backoffice"), backoffice_path, "data-e2e": "backoffice",
+                class: "#{"active" if local_assigns[:section] == :backoffice}"
+          - if policy([:admin, :admin]).show?
+            %li.list-inline-item.ml-2
+              = link_to _("Admin"), admin_path, section: "admin",
+                class: "#{"active" if local_assigns[:section] == :admin}"
+          - if policy([:executive, :executive]).show?
+            %li.list-inline-item.ml-2
+              = link_to _("Executive"), executive_path,
+                class: "#{"active" if local_assigns[:section] == :executive}"
             %a{ href: Mp::Application.config.providers_dashboard_url }= _("Providers Dashboard")
           - if policy([:backoffice, :backoffice]).show?
             %li.list-inline-item.ml-2
@@ -69,9 +102,9 @@
             %li
               %a.dropdown-item{ href: "/projects" }= _("My projects")
             %li
-              %a.dropdown-item{ href: "/favourites" }= _("Favourite Resources")
+              %a.dropdown-item{ href: "/favourites", "data-e2e": "favourites" }= _("Favourite Resources")
             %li
-              %a.dropdown-item{ href: "/profile" }= _("Profile")
+              %a.dropdown-item{ href: "/profile", "data-e2e": "profile" }= _("Profile")
       - else
         = link_to user_checkin_omniauth_authorize_path, class: "menu__label menu__label--unauth" do
           = _("My EGI Marketplace")
