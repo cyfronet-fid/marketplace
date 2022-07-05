@@ -15,6 +15,9 @@
           %li
             %a.simple-item{ href: "/profile" }
               = _("Profile")
+          %li
+            %a.dropdown-item.dropdown-profile{ href: "/api_docs", "data-e2e": "marketplace-api" }
+              = _("Marketplace API")
           - if policy([:backoffice, :backoffice]).show?
             %li
               %a.simple-item{ href: backoffice_path }
@@ -87,6 +90,9 @@
             %li
               %a.dropdown-item.dropdown-profile{ href: "/profile", "data-e2e": "profile" }
                 = _("Profile")
+            %li
+              %a.dropdown-item.dropdown-profile{ href: "/api_docs", "data-e2e": "marketplace-api" }
+                = _("Marketplace API")
             - if show_administrative_sections?
               .border-top
             - if policy([:backoffice, :backoffice]).show?
