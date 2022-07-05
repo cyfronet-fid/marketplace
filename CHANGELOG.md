@@ -9,6 +9,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [3.39.0-milestone]
 
 ### Added
+- Marketplace API link under the "My EOSC Marketplace" menu (@goreck888)
 
 ### Changed
 - Date format in parameters from `mm-d-yyyy` to `d-mm-yyyy` (@goreck888)
