@@ -8,6 +8,7 @@ module RecommenderLib
       {
         services: Service.all.map { |s| Recommender::ServiceSerializer.new(s).as_json },
         users: User.all.map { |s| Recommender::UserSerializer.new(s).as_json },
+        projects: Project.all.map { |s| Recommender::ProjectSerializer.new(s).as_json },
         categories: Category.all.map { |s| Recommender::CategorySerializer.new(s).as_json },
         providers: Provider.all.map { |s| Recommender::ProviderSerializer.new(s).as_json },
         scientific_domains: ScientificDomain.all.map { |s| Recommender::ScientificDomainSerializer.new(s).as_json },
