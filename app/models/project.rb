@@ -3,6 +3,7 @@
 class Project < ApplicationRecord
   include Eventable
   include Messageable
+  include Publishable
 
   CUSTOMER_TYPOLOGIES = {
     single_user: "single_user",

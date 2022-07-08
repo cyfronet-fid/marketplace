@@ -16,6 +16,7 @@ describe RecommenderLib::SerializeDb do
     create_list(:access_mode, 2)
     create_list(:trl, 2)
     create_list(:life_cycle_status, 2)
+    create_list(:project, 2)
 
     serialized = described_class.new.call
 
@@ -25,6 +26,8 @@ describe RecommenderLib::SerializeDb do
     expect(serialized["services"].map { |x| x["description"] }).to match_array(expected_services.pluck(:description))
 
     expect(serialized["users"].map { |x| x["id"] }).to match_array(User.all.pluck(:id))
+
+    expect(serialized["projects"].map { |x| x["id"] }).to match_array(Project.all.pluck(:id))
 
     expect(serialized["categories"].map { |x| x["id"] }).to match_array(Category.all.pluck(:id))
     expect(serialized["categories"].map { |x| x["name"] }).to match_array(Category.all.pluck(:name))
