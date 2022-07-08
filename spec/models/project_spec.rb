@@ -2,6 +2,7 @@
 
 require "rails_helper"
 require_relative "messageable"
+require_relative "publishable"
 
 RSpec.describe Project do
   subject { create(:project, name: "New Project") }
@@ -20,6 +21,7 @@ RSpec.describe Project do
   it { should_not allow_value("blah").for(:email) }
 
   include_examples "messageable"
+  include_examples "publishable"
 
   describe "#department" do
     before { subject.department = "a" * 256 }
