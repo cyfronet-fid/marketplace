@@ -6,22 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [3.39.0-milestone]
-
-### Added
+## [3.39.0] 2022-07-12
 
 ### Changed
 - Date format in parameters from `mm-d-yyyy` to `d-mm-yyyy` (@goreck888)
 
-### Deprecated
-
-### Removed
-
 ### Fixed
 - Communities and infrastructure section on the home page (@kmarszalek)
 - Alphabetical sorting of providers in the backoffice resource form (@goreck888)
-
-### Security
 
 ## [3.38.0] 2022-06-20
 
