@@ -267,6 +267,8 @@ GEM
       socksify
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
+    i18n_data (0.16.0)
+      simple_po_parser (~> 1.1)
     image_processing (1.12.2)
       mini_magick (>= 4.9.5, < 5)
       ruby-vips (>= 2.0.17, < 3)
@@ -544,6 +546,7 @@ GEM
     simple_form (5.1.0)
       actionpack (>= 5.2)
       activemodel (>= 5.2)
+    simple_po_parser (1.1.6)
     simple_token_authentication (1.17.0)
       actionmailer (>= 3.2.6, < 7)
       actionpack (>= 3.2.6, < 7)
@@ -675,6 +678,7 @@ DEPENDENCIES
   gretel
   haml-rails
   haml_lint
+  i18n_data
   image_processing
   jira-ruby
   json-schema
