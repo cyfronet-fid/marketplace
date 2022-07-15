@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 Please view this file on the master branch, on stable branches it's out of date.
 
 
-## [3.40.0-milestone]
+## [3.40.0] 2022-07-15
 
 ### Added
 - Marketplace API link under the "My EOSC Marketplace" menu (@goreck888)
