@@ -266,7 +266,7 @@ Devise.setup do |config|
                   name: :checkin,
                   scope: scope,
                   response_type: :code,
-                  issuer: "https://#{checkin_host}/oidc/",
+                  issuer: ENV["CHECKIN_ISSUER_URI"] || "https://#{checkin_host}/oidc/",
                   discovery: true,
                   client_options: {
                     port: nil,
@@ -276,10 +276,10 @@ Devise.setup do |config|
                     secret: ENV["CHECKIN_SECRET"] || Rails.application.credentials.checkin[:secret],
                     redirect_uri: ENV["REDIRECT_URI"] ||
                                   "#{root_url}/users/auth/checkin/callback",
-                    authorization_endpoint: "/oidc/authorize",
-                    token_endpoint: "/oidc/token",
-                    userinfo_endpoint: "/oidc/userinfo",
-                    jwks_uri: "/oidc/jwk"
+                    authorization_endpoint: ENV["CHECKIN_AUTHORIZATION_ENDPOINT"] || "/oidc/authorize",
+                    token_endpoint: ENV["CHECKIN_TOKEN_ENDPOINT"] || "/oidc/token",
+                    userinfo_endpoint: ENV["CHECKIN_USERINFO_ENDPOINT"] || "/oidc/userinfo",
+                    jwks_uri: ENV["CHECKIN_JWKS_ENDPOINT"] || "/oidc/jwk"
                   }
 
 
