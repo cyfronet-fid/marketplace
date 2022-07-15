@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "i18n_data"
+
 class Service < ApplicationRecord
   PUBLIC_STATUSES = %w[published unverified errored].freeze
 

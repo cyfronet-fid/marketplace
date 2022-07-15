@@ -33,6 +33,7 @@ gem "image_processing"
 # translations
 gem "fast_gettext"
 gem "gettext_i18n_rails"
+gem "i18n_data"
 gem "gettext", ">=3.0.2", require: false, group: :development
 gem "ruby_parser", require: false, group: :development
 
