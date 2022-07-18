@@ -11,7 +11,7 @@ npm i
 ### Configuration
 **IMPORTANT!!!  Contact with developer to get variables listed in this section!!!**
 
-Variables needed to run JIRA integration:
+Variables needed to run JIRA integration test:
 
 | Name | Additional info |
 |---|---|
@@ -22,6 +22,17 @@ Variables needed to run JIRA integration:
 
 Env variables can be set as described in [enviroment variables](https://docs.cypress.io/guides/guides/environment-variables#Option-1-configuration-file).
 
+Variables needed to run PROVIDER PORTAL integration test:
+
+| Name | Additional info |
+|---|---|
+| PROVIDER_PORTAL_URL        
+| MARKETPLACE_URL   
+| PROVIDER_PORTAL_REFRESH_TOKEN         
+| PROVIDER_PORTAL_CLIENT_ID  
+
+Env variables can be set as described in [enviroment variables](https://docs.cypress.io/guides/guides/environment-variables#Option-1-configuration-file).
+
 Examples:
 - Create `cypress.env.json`
 ```json
@@ -29,7 +40,13 @@ Examples:
   "JIRA_TEST_USER": "...",
   "JIRA_TEST_USER_PWD": "...",
   "MP_JIRA_URL": "http://...",
-  "MP_JIRA_PROJECT": "EOSCO<project_type>"
+  "MP_JIRA_PROJECT": "EOSCO<project_type>",
+  "PROVIDER_PORTAL_URL": "https://sandbox.providers.eosc-portal.eu",
+  "MARKETPLACE_URL": "https://beta.marketplace.eosc-portal.eu/", 
+  "PROVIDER_PORTAL_CLIENT_ID": "...",
+  "PROVIDER_PORTAL_REFRESH_TOKEN": "...",
+  "AAI_TOKEN_URL": "..."
+
 }
 ```
 - Write in terminal variables with prefix `CYPRESS_` or `cypress_`
@@ -38,6 +55,11 @@ export CYPRESS_JIRA_TEST_USER="...";
 export CYPRESS_JIRA_TEST_USER_PWD="...";
 export CYPRESS_MP_JIRA_URL="...";
 export CYPRESS_MP_JIRA_PROJECT="...";
+export PROVIDER_PORTAL_URL="...";
+export MARKETPLACE_URL="...";
+export PROVIDER_PORTAL_CLIENT_ID="...";
+export PROVIDER_PORTAL_REFRESH_TOKEN="...";
+export AAI_TOKEN_URL="..."
 ```
 
 ### How to run the test suite?
@@ -53,6 +75,14 @@ npx cypress open
 - Run in headless mode
 ```bash
 npm run cy:run
+```
+- Run only integration with JIRA test
+```bash
+npm run cy:run-jira-integration
+```
+- Run only integration with PROVIDER PORTAL test
+```bash
+npm run cy:run-provider-portal-integration
 ```
 - Run to seed the database
 ```bash

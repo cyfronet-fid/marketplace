@@ -42,6 +42,7 @@ import './providers';
 import './platforms'
 import './vocabulary'
 import './provider_portal'
+import './provider_portal_access_token'
 
 /**
  * Don't fail on uncaught exception

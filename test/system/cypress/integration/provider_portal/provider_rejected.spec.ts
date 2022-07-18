@@ -1,15 +1,19 @@
+import {confEnv} from "../../support/provider_portal_env"
 import { providerJson } from "../../fixtures/provider_playload"
+
+before(() => {
+  cy.getAccessToken()
+})
 
 describe("Provider Portal - rejecte provider", () => {
 
-  const token = Cypress.env("PROVIDER_PORTAL_ACCESS_TOKEN");
-  const providerPortalURL = Cypress.env("PROVIDER_PORTAL_URL");
-  const marketplaceURL = Cypress.env("MARKETPLACE_URL");
-  const authorization = `Bearer ${token}`;
-  const provider = providerJson
+  it("create provider, reject, approve and delete it", { tags: '@integration-PC-tests'} , () => {
 
-  it("create provider,  reject, approve and delete it", { tags: '@integration-PC-tests' }, () => {
-    cy.visit(`${marketplaceURL}`);
+    const token = confEnv.PROVIDER_PORTAL_ACCESS_TOKEN();
+    const providerPortalURL = confEnv.PROVIDER_PORTAL_URL()
+    const marketplaceURL = confEnv.MARKETPLACE_URL()
+    const authorization = `Bearer ${token}`;
+    const provider = providerJson
 
     cy.request({
       method: 'POST',
@@ -26,10 +30,9 @@ describe("Provider Portal - rejecte provider", () => {
     cy.visit(`${marketplaceURL}`);
     cy.checkInvisibilityOfProviderInMarketplace(provider.name)
 
-
     cy.request({
       method: 'PATCH',
-      url: `${providerPortalURL}/api/provider/verifyProvider/${provider.name}?active=true&status=rejected provider`,
+      url: `${providerPortalURL}/api/provider/verifyProvider/${provider.name}?active=false&status=rejected provider`,
       form: false,
 
       headers: {
