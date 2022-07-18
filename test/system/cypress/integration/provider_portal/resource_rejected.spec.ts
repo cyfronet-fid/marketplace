@@ -1,19 +1,21 @@
 import { confEnv } from "../../support/provider_portal_env"
 import { providerJson } from "../../fixtures/provider_playload"
+import { resourceJson } from "../../fixtures/resource_playload"
 
 before(() => {
   cy.getAccessToken()
 })
 
-describe("Provider Portal - approve provider", () => {
+describe("Provider Portal - reject resource", () => {
 
-  it("create provider, approve, deactive, active and delete it", { tags: '@integration-PC-tests' }, () => {
+  it("create provider, approve it, add first resource and reject it", { tags: '@integration-PC-tests' }, () => {
 
     const token = confEnv.PROVIDER_PORTAL_ACCESS_TOKEN();
     const providerPortalURL = confEnv.PROVIDER_PORTAL_URL()
     const marketplaceURL = confEnv.MARKETPLACE_URL()
     const authorization = `Bearer ${token}`;
     const provider = providerJson
+    const resource = ({ ...resourceJson, resourceOrganisation: provider.name })
 
     cy.request({
       method: 'POST',
@@ -27,8 +29,6 @@ describe("Provider Portal - approve provider", () => {
       body: (JSON.stringify(provider))
     });
 
-    cy.visit(`${marketplaceURL}`);
-    cy.checkInvisibilityOfProviderInMarketplace(provider.name)
 
     cy.request({
       method: 'PATCH',
@@ -41,18 +41,24 @@ describe("Provider Portal - approve provider", () => {
       }
     });
 
+    cy.request({
+      method: 'POST',
+      url: `${providerPortalURL}/api/resource`,
+      form: false,
+
+      headers: {
+        Authorization: authorization,
+        "Content-Type": "application/json"
+      },
+      body: (JSON.stringify(resource))
+    });
+
     cy.visit(`${marketplaceURL}`);
-    cy.checkVisibilityOfProviderInMarketplace(provider.name)
-    cy.get("[data-e2e='provider-details-btn']")
-      .click();
-    cy.checkVisibilityOfProviderDetails();
-    cy.get("[data-e2e='provider-about-btn']")
-      .click();
-    cy.checkVisibilityOfProviderAbout();
+    cy.checkInvisibilityOfResourceInMarketplace(resource.name)
 
     cy.request({
       method: 'PATCH',
-      url: `${providerPortalURL}/api/provider/verifyProvider/${provider.name}?active=false&status=approved provider`,
+      url: `${providerPortalURL}/api/resource/verifyResource/${provider.name}.${resource.name}?active=true&status=approved resource`,
       form: false,
 
       headers: {
@@ -62,12 +68,15 @@ describe("Provider Portal - approve provider", () => {
     });
 
     cy.visit(`${marketplaceURL}`);
-    cy.checkInvisibilityOfProviderInMarketplace(provider.name)
-
+    cy.checkVisibilityOfResourceInMarketplace(resource.name)
+    cy.checkVisibilityOfResourceAbout();
+    cy.get("[data-e2e='service-details-btn']")
+      .click();
+    cy.checkVisibilityOfResourceDetails();
 
     cy.request({
       method: 'PATCH',
-      url: `${providerPortalURL}/api/provider/verifyProvider/${provider.name}?active=true&status=approved provider`,
+      url: `${providerPortalURL}/api/resource/verifyResource/${provider.name}.${resource.name}?active=false&status=approved resource`,
       form: false,
 
       headers: {
@@ -77,8 +86,21 @@ describe("Provider Portal - approve provider", () => {
     });
 
     cy.visit(`${marketplaceURL}`);
-    cy.checkVisibilityOfProviderInMarketplace(provider.name)
+    cy.checkInvisibilityOfResourceInMarketplace(resource.name)
 
+    cy.request({
+      method: 'PATCH',
+      url: `${providerPortalURL}/api/resource/verifyResource/${provider.name}.${resource.name}?active=true&status=approved resource`,
+      form: false,
+
+      headers: {
+        Authorization: authorization,
+        "Content-Type": "application/json"
+      }
+    });
+
+    cy.visit(`${marketplaceURL}`);
+    cy.checkInvisibilityOfResourceInMarketplace(resource.name)
 
     cy.request({
       method: 'DELETE',
@@ -93,6 +115,8 @@ describe("Provider Portal - approve provider", () => {
 
     cy.visit(`${marketplaceURL}`);
     cy.checkInvisibilityOfProviderInMarketplace(provider.name)
+
+    cy.visit(`${marketplaceURL}`);
+    cy.checkInvisibilityOfResourceInMarketplace(resource.name)
   });
 });
-
