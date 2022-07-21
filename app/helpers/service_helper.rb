@@ -47,6 +47,10 @@ module ServiceHelper
     )
   end
 
+  def catalogue_pid(object)
+    object.catalogue&.pid || "eosc"
+  end
+
   def resource_organisation_pid(service)
     service.resource_organisation.pid
   end
