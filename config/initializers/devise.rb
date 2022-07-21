@@ -268,6 +268,7 @@ Devise.setup do |config|
                   response_type: :code,
                   issuer: ENV["CHECKIN_ISSUER_URI"] || "https://#{checkin_host}/oidc/",
                   discovery: true,
+                  pkce: ENV["CHECKIN_PKCE"] || false ,
                   client_options: {
                     port: nil,
                     scheme: "https",
