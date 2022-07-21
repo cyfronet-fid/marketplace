@@ -33,6 +33,7 @@ gem "image_processing"
 # translations
 gem "fast_gettext"
 gem "gettext_i18n_rails"
+gem "i18n_data"
 gem "gettext", ">=3.0.2", require: false, group: :development
 gem "ruby_parser", require: false, group: :development
 
@@ -49,7 +50,7 @@ gem "elasticsearch", "7.6.0"
 
 gem "devise"
 gem "omniauth"
-gem "omniauth_openid_connect"
+gem "omniauth_openid_connect", github: "Boardeaser/omniauth_openid_connect"
 gem "omniauth-rails_csrf_protection"
 gem "pundit", "~> 2.0"
 gem "role_model"

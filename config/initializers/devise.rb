@@ -266,8 +266,10 @@ Devise.setup do |config|
                   name: :checkin,
                   scope: scope,
                   response_type: :code,
+                  code_challenge_method: ENV["CHECKIN_CODE_CHALLENGE"] || "S256",
                   issuer: ENV["CHECKIN_ISSUER_URI"] || "https://#{checkin_host}/oidc/",
                   discovery: true,
+                  pkce: ENV["CHECKIN_PKCE"] || false ,
                   client_options: {
                     port: nil,
                     scheme: "https",
