@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "i18n_data"
+
 class Service < ApplicationRecord
   include Rails.application.routes.url_helpers
   include LogoAttachable
