@@ -20,15 +20,16 @@
           - vocabulary = record[1]
           %li.list-group-item{ class: "#{"subcategory" if vocabulary.ancestry_depth.positive?}",
                                style: style_indentation_variables(vocabulary) }
-            = link_to send("backoffice_#{snake_cased(@type)}_path", record.last) do
+            = link_to send("backoffice_#{snake_cased(@type)}_path", record.last), class:"xxx" do
               = record.first
-            - if policy([:backoffice, Vocabulary]).destroy?
-              = link_to send("backoffice_#{snake_cased(@type)}_path", vocabulary),
-                    method: :delete,
-                    data: { confirm: _("Are you sure you want to remove this #{@type}?") },
-                    class: "delete-icon float-right" do
-                %i.far.fa-trash-alt
-            - if policy([:backoffice, Vocabulary]).edit?
-              = link_to _("Edit"), send("edit_backoffice_#{snake_cased(@type)}_path", vocabulary),
-              class: "btn-sm btn-warning float-right mr-4"
+            .buttons-box
+              - if policy([:backoffice, Vocabulary]).destroy?
+                = link_to send("backoffice_#{snake_cased(@type)}_path", vocabulary),
+                      method: :delete,
+                      data: { confirm: _("Are you sure you want to remove this #{@type}?") },
+                      class: "delete-icon float-right" do
+                  %i.far.fa-trash-alt
+              - if policy([:backoffice, Vocabulary]).edit?
+                = link_to _("Edit"), send("edit_backoffice_#{snake_cased(@type)}_path", vocabulary),
+                class: "btn-sm btn-warning float-right mr-4"
       -# haml-lint:enable InlineStyles

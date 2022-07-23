@@ -16,7 +16,7 @@
             %a.simple-item{ href: "/profile" }
               = _("Profile")
           %li
-            %a.dropdown-item.dropdown-profile{ href: "/api_docs", "data-e2e": "marketplace-api" }
+            %a.simple-item{ href: "/api_docs", "data-e2e": "marketplace-api" }
               = _("Marketplace API")
           - if policy([:backoffice, :backoffice]).show?
             %li
