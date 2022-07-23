@@ -11,7 +11,7 @@
                   "data-e2e": "add-new-category"
       .clearfix
   -# haml-lint:disable InlineStyles
-  %ul.list-group.backoffice-list.mt-3.mb-{ "data-e2e": "backoffice-categories-list" }
+  %ul.list-group.backoffice-list.indent-list.mt-3.mb-{ "data-e2e": "backoffice-categories-list" }
     - ancestry_tree(@categories).each do |record|
       - category = record[1]
       %li.list-group-item{ class: "#{"subcategory" if category.ancestry_depth.positive?}",
@@ -20,15 +20,16 @@
           - if category.logo.attached? && category.logo.variable?
             = image_tag category.logo.variant(resize: "32x32")
           = record.first
-        - if policy([:backoffice, category]).destroy?
-          = link_to backoffice_category_path(category),
-              method: :delete,
-              data: { confirm: _("Are you sure you want to remove this category") },
-              class: "delete-icon float-right" do
-            %i.far.fa-trash-alt
-        - if policy([:backoffice, category]).edit?
-          = link_to _("Edit"),
-              edit_backoffice_category_path(category),
-              class: "btn-sm btn-warning float-right mr-4"
+        .buttons-box
+          - if policy([:backoffice, category]).destroy?
+            = link_to backoffice_category_path(category),
+                method: :delete,
+                data: { confirm: _("Are you sure you want to remove this category") },
+                class: "delete-icon float-right" do
+              %i.far.fa-trash-alt
+          - if policy([:backoffice, category]).edit?
+            = link_to _("Edit"),
+                edit_backoffice_category_path(category),
+                class: "btn-sm btn-warning float-right mr-4"
   -# haml-lint:enable InlineStyles
 

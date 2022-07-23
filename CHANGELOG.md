@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.41.0-milestone]
+
+### Fixed
+- Styles in menus and forms (@jarekzet)
 
 ## [3.40.0] 2022-07-15
 

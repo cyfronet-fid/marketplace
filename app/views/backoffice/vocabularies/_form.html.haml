@@ -9,6 +9,8 @@
   %hr.bottom-hr.mt-5.mb-4
   .row.mt-5
     .col-12
-      = f.button :submit, button_name, class: "btn btn-primary pl-5 pr-5 mr-5", "data-e2e": "create-vocabulary-btn"
-      %a.text-left.flex-grow-1.text-uppercase{ href: "/backoffice/vocabularies/#{snake_cased(type).pluralize}" }
+      = f.button :submit, button_name, class: "btn btn-primary pl-5 pr-5 mr-5 mobile-bottom-margin",
+      "data-e2e": "create-vocabulary-btn"
+      %a{ href: "/backoffice/vocabularies/#{snake_cased(type).pluralize}",
+      class:"text-left flex-grow-1 text-uppercase mobile-bottom-margin" }
         = _("Cancel and back to previous page")
