@@ -14,17 +14,18 @@
     - @platforms.each do |platform|
       %li.list-group-item
         = link_to platform.name, backoffice_platform_path(platform)
-        - if policy([:backoffice, platform]).destroy?
-          = link_to backoffice_platform_path(platform),
-              method: :delete,
-              data: { confirm: _("Are you sure you want to remove this platform") },
-              class: "delete-icon float-right" do
-            %i.far.fa-trash-alt
+        .buttons-box
+          - if policy([:backoffice, platform]).destroy?
+            = link_to backoffice_platform_path(platform),
+                method: :delete,
+                data: { confirm: _("Are you sure you want to remove this platform") },
+                class: "delete-icon float-right" do
+              %i.far.fa-trash-alt
 
-        - if policy([:backoffice, platform]).edit?
-          = link_to _("Edit"),
-              edit_backoffice_platform_path(platform),
-              class: "btn-sm btn-warning float-right mr-4"
+          - if policy([:backoffice, platform]).edit?
+            = link_to _("Edit"),
+                edit_backoffice_platform_path(platform),
+                class: "btn-sm btn-warning float-right mr-4"
 
   = (pagy_bootstrap_nav @pagy).html_safe
 

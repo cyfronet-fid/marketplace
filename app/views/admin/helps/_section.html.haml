@@ -1,9 +1,12 @@
-%h3.subsection
-  %a{ id: section.slug }
-  = section.title
-  = link_to _("Add new help item"),
-            new_admin_help_item_path(section: section.slug),
-            class: "btn btn-sm btn-success float-right"
+.row.mt-5
+  .col-12.col-md-8
+    %h3.subsection.mt-0
+      %a{ id: section.slug }
+      = section.title
+  .col-12.col-md-4
+    = link_to _("Add new help item"),
+              new_admin_help_item_path(section: section.slug),
+              class: "btn btn-sm btn-success float-right"
 .accordion.faq-list{ id: "s-#{section.slug}" }
   = render partial: "item",
     collection: section.help_items, locals: { parent: "s-#{section.slug}" }

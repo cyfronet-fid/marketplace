@@ -1,11 +1,10 @@
 .container
-  %h1
+  %h1.mb-3
     = _("Frequently Asked Questions Builder")
-    = link_to _("Add new help section"),
+  = link_to _("Add new help section"),
               new_admin_help_section_path,
-              class: "btn btn-sm btn-success float-right"
-
-  %ul.list-group
+              class: "btn btn-sm btn-success mb-3 float-right"
+  %ul.list-group.w-100
     = render partial: "toc", collection: @sections, as: :section
 
   = render partial: "section", collection: @sections
