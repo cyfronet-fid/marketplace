@@ -29,6 +29,7 @@ RSpec.describe Recommender::UserSerializer do
     serialized = described_class.new(user).as_json
 
     expect(serialized[:id]).to eq(user.id)
+    expect(serialized[:aai_uid]).to eq(user.uid)
     expect(serialized[:categories]).to match_array(user.category_ids)
     expect(serialized[:scientific_domains]).to match_array(user.scientific_domain_ids)
     expect(serialized[:accessed_services]).to eq([service1.id, service3.id, service2.id])

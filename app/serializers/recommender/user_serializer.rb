@@ -2,6 +2,7 @@
 
 class Recommender::UserSerializer < ActiveModel::Serializer
   attribute :id
+  attribute :uid, key: :aai_uid
   attribute :scientific_domain_ids, key: :scientific_domains
   attribute :category_ids, key: :categories
   attribute :accessed_services
