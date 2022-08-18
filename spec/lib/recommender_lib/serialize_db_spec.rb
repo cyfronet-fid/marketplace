@@ -26,6 +26,7 @@ describe RecommenderLib::SerializeDb do
     expect(serialized["services"].map { |x| x["description"] }).to match_array(expected_services.pluck(:description))
 
     expect(serialized["users"].map { |x| x["id"] }).to match_array(User.all.pluck(:id))
+    expect(serialized["users"].map { |x| x["aai_uid"] }).to match_array(User.all.pluck(:uid))
 
     expect(serialized["projects"].map { |x| x["id"] }).to match_array(Project.all.pluck(:id))
 
