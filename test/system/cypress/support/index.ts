@@ -29,6 +29,7 @@ import "cypress-fail-fast";
 /**
  * Custom commands
  */
+import './all'
 import './auth';
 import './coverage';
 import './utilities';
@@ -52,6 +53,4 @@ Cypress.on('uncaught:exception', (err, runnable) => false);
 beforeEach(() => {
   // hide cookie policy box
   cy.setCookie('cookieconsent_status', 'dismiss')
-  cy.setCookie('tours-marketplace-services-show-service_about_intro', "later")
-  cy.setCookie('tours-marketplace-profiles-show-intro', "later")
 });
