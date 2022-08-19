@@ -5,7 +5,7 @@ import { resourceJson } from "../fixtures/resource_playload"
 /**
  * Define new commands types for typescript (for autocompletion)
  */
- import { IProviders, IProvidersExtended } from "../factories/provider.factory";
+import { IProviders, IProvidersExtended } from "../factories/provider.factory";
 
 declare global {
   namespace Cypress {
@@ -15,17 +15,17 @@ declare global {
 
       checkInvisibilityOfProviderInMarketplace(name: string): Cypress.Chainable<void>;
 
-      checkVisibilityOfProviderDetails():Cypress.Chainable<void>;
+      checkVisibilityOfProviderDetails(): Cypress.Chainable<void>;
 
-      checkVisibilityOfProviderAbout():Cypress.Chainable<void>;
+      checkVisibilityOfProviderAbout(): Cypress.Chainable<void>;
 
       checkVisibilityOfResourceInMarketplace(name: string): Cypress.Chainable<void>;
 
       checkInvisibilityOfResourceInMarketplace(name: string): Cypress.Chainable<void>;
 
-      checkVisibilityOfResourceDetails():Cypress.Chainable<void>;
+      checkVisibilityOfResourceDetails(): Cypress.Chainable<void>;
 
-      checkVisibilityOfResourceAbout():Cypress.Chainable<void>;
+      checkVisibilityOfResourceAbout(): Cypress.Chainable<void>;
     }
   }
 }
@@ -57,59 +57,59 @@ Cypress.Commands.add("checkInvisibilityOfProviderInMarketplace", (provider: stri
 
 Cypress.Commands.add("checkVisibilityOfProviderDetails", () => {
   const providerDetails = [
-   "Classification",
-   "Tags",
-   providerJson.tags[0],
-   "ESFRI Type",
-   "Landmark",
-   "ESFRI Domain",
-   "Physical Sciences & Engineering",
-   "MERIL Scientific Categorisation",
-   "Other: Other",
-   "Networks",
-   "World Data System (WDS)",
-   "Areas of Activity",
-   "Applied Research",
-   "Affiliations",
-   providerJson.affiliations[0],
-   "Certifications",
-   providerJson.certifications[0],
-   //"Hosting Legal Entity",
-   //"EUDAT",
-   "Structure Types",
-   "Virtual",
-   "Societal Grand Challenges",
-   "Environment",
-   "National Roadmaps",
-   providerJson.nationalRoadmaps[0]
+    "Classification",
+    "Tags",
+    providerJson.tags[0],
+    "ESFRI Type",
+    "Landmark",
+    "ESFRI Domain",
+    "Physical Sciences & Engineering",
+    "MERIL Scientific Categorisation",
+    "Other: Other",
+    "Networks",
+    "World Data System (WDS)",
+    "Areas of Activity",
+    "Applied Research",
+    "Affiliations",
+    providerJson.affiliations[0],
+    "Certifications",
+    providerJson.certifications[0],
+    //"Hosting Legal Entity",
+    //"EUDAT",
+    "Structure Types",
+    "Virtual",
+    "Societal Grand Challenges",
+    "Environment",
+    "National Roadmaps",
+    providerJson.nationalRoadmaps[0]
   ]
 
   for (const value of providerDetails) {
-   cy.contains(value).should("be.visible")
- }
+    cy.contains(value).should("be.visible")
+  }
 });
 
 Cypress.Commands.add("checkVisibilityOfProviderAbout", () => {
   const providerAbout = [
     providerJson.description,
-   "Provider coverage",
-   "Classification",
-   "Humanities",
-   "Other Humanities",
-   "Multimedia",
-   providerJson.multimedia[0].multimediaName,
-   "Address",
-   "Contact",
-   providerJson.tags[0],
-   providerJson.location.streetNameAndNumber,
-   providerJson.location.postalCode,
-   providerJson.location.city,
-   providerJson.location.region,
-   "Germany",
-   providerJson.publicContacts[0].firstName,
-   providerJson.publicContacts[0].lastName,
-   providerJson.publicContacts[0].email,
-   providerJson.publicContacts[0].phone,
+    "Provider coverage",
+    "Classification",
+    "Humanities",
+    "Other Humanities",
+    "Multimedia",
+    providerJson.multimedia[0].multimediaName,
+    "Address",
+    "Contact",
+    providerJson.tags[0],
+    providerJson.location.streetNameAndNumber,
+    providerJson.location.postalCode,
+    providerJson.location.city,
+    providerJson.location.region,
+    "Germany",
+    providerJson.publicContacts[0].firstName,
+    providerJson.publicContacts[0].lastName,
+    providerJson.publicContacts[0].email,
+    providerJson.publicContacts[0].phone,
   ]
 
   for (const value of providerAbout) {
@@ -118,8 +118,8 @@ Cypress.Commands.add("checkVisibilityOfProviderAbout", () => {
 })
 
 Cypress.Commands.add("checkVisibilityOfResourceInMarketplace", (resource: string) => {
-  cy.get("[data-e2e='searchbar-input']").
-    type(resource, { force: true });
+  cy.get("[data-e2e='searchbar-input']")
+    .type(resource, { force: true });
   cy.contains("[data-e2e='autocomplete-results'] li", "Resources")
     .should("be.visible");
   cy.get("[data-e2e='query-submit-btn']")
@@ -140,18 +140,18 @@ Cypress.Commands.add("checkInvisibilityOfResourceInMarketplace", (resource: stri
 
 Cypress.Commands.add("checkVisibilityOfResourceAbout", () => {
   const resourceDetails = [
-   "Humanities",
-   "Arts",
-   "Compute",
-   "Orchestration",
-   "Businesses",
-   "Abkhazian"
+    "Humanities",
+    "Arts",
+    "Compute",
+    "Orchestration",
+    "Businesses",
+    "Abkhazian"
   ]
 
   cy.contains(resourceJson.description).should("be.visible")
   for (const value of resourceDetails) {
-   cy.contains("li", value).should("be.visible")
- }
+    cy.contains("li", value).should("be.visible")
+  }
 });
 
 Cypress.Commands.add("checkVisibilityOfResourceDetails", () => {
