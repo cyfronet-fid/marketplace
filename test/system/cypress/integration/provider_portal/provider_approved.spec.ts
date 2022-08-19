@@ -5,9 +5,13 @@ before(() => {
   cy.getAccessToken()
 })
 
-describe("Provider Portal - approve provider", () => {
+describe("Provider Portal - approved provider", () => {
 
-  it("create provider, approve, deactive, active and delete it", { tags: '@integration-PC-tests' }, () => {
+  it("create provider, approve, deactive, active and delete it", {
+    retries: {
+      runMode: 0,
+    }, tags: '@integration-PC-tests'
+  }, () => {
 
     const token = confEnv.PROVIDER_PORTAL_ACCESS_TOKEN();
     const providerPortalURL = confEnv.PROVIDER_PORTAL_URL()
@@ -27,7 +31,7 @@ describe("Provider Portal - approve provider", () => {
       body: (JSON.stringify(provider))
     });
 
-    cy.visit(`${marketplaceURL}`);
+    cy.visitPage(marketplaceURL);
     cy.checkInvisibilityOfProviderInMarketplace(provider.name)
 
     cy.request({
@@ -41,7 +45,7 @@ describe("Provider Portal - approve provider", () => {
       }
     });
 
-    cy.visit(`${marketplaceURL}`);
+    cy.visitPage(marketplaceURL);
     cy.checkVisibilityOfProviderInMarketplace(provider.name)
     cy.get("[data-e2e='provider-details-btn']")
       .click();
@@ -61,7 +65,7 @@ describe("Provider Portal - approve provider", () => {
       }
     });
 
-    cy.visit(`${marketplaceURL}`);
+    cy.visitPage(marketplaceURL);
     cy.checkInvisibilityOfProviderInMarketplace(provider.name)
 
 
@@ -76,7 +80,7 @@ describe("Provider Portal - approve provider", () => {
       }
     });
 
-    cy.visit(`${marketplaceURL}`);
+    cy.visitPage(marketplaceURL);
     cy.checkVisibilityOfProviderInMarketplace(provider.name)
 
 
@@ -91,7 +95,7 @@ describe("Provider Portal - approve provider", () => {
       }
     });
 
-    cy.visit(`${marketplaceURL}`);
+    cy.visitPage(marketplaceURL);
     cy.checkInvisibilityOfProviderInMarketplace(provider.name)
   });
 });

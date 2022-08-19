@@ -27,11 +27,11 @@ jobs:
           quiet: true
           install: false
         env:
-          PROVIDER_PORTAL_REFRESH_TOKEN: ${{secrets.PROVIDER_PORTAL_REFRESH_TOKEN}}
-          PROVIDER_PORTAL_URL: ${{secrets.PROVIDER_PORTAL_URL}}
-          MARKETPLACE_URL: ${{secrets.MARKETPLACE_URL}}
-          PROVIDER_PORTAL_CLIENT_ID: ${{secrets.PROVIDER_PORTAL_CLIENT_ID}}
-          AAI_TOKEN_URL: ${{secrets.AAI_TOKEN_URL}}
+          CYPRESS_PROVIDER_PORTAL_REFRESH_TOKEN: ${{ secrets.PROVIDER_PORTAL_REFRESH_TOKEN }}
+          CYPRESS_PROVIDER_PORTAL_URL: ${{ secrets.PROVIDER_PORTAL_URL }}
+          CYPRESS_MARKETPLACE_URL: ${{ secrets.MARKETPLACE_URL }}
+          CYPRESS_PROVIDER_PORTAL_CLIENT_ID: ${{ secrets.PROVIDER_PORTAL_CLIENT_ID }}
+          CYPRESS_AAI_TOKEN_URL: ${{ secrets.AAI_TOKEN_URL }}
       - uses: actions/upload-artifact@v1
         if: failure()
         with:

@@ -1,13 +1,17 @@
-import {confEnv} from "../../support/provider_portal_env"
+import { confEnv } from "../../support/provider_portal_env"
 import { providerJson } from "../../fixtures/provider_playload"
 
 before(() => {
   cy.getAccessToken()
 })
 
-describe("Provider Portal - rejecte provider", () => {
+describe("Provider Portal - rejected provider", () => {
 
-  it("create provider, reject, approve and delete it", { tags: '@integration-PC-tests'} , () => {
+  it("create provider, reject, approve and delete it", {
+    retries: {
+      runMode: 0,
+    }, tags: '@integration-PC-tests'
+  }, () => {
 
     const token = confEnv.PROVIDER_PORTAL_ACCESS_TOKEN();
     const providerPortalURL = confEnv.PROVIDER_PORTAL_URL()
@@ -27,7 +31,7 @@ describe("Provider Portal - rejecte provider", () => {
       body: (JSON.stringify(provider))
     });
 
-    cy.visit(`${marketplaceURL}`);
+    cy.visitPage(marketplaceURL);
     cy.checkInvisibilityOfProviderInMarketplace(provider.name)
 
     cy.request({
@@ -41,7 +45,7 @@ describe("Provider Portal - rejecte provider", () => {
       }
     });
 
-    cy.visit(`${marketplaceURL}`);
+    cy.visitPage(marketplaceURL);
     cy.checkInvisibilityOfProviderInMarketplace(provider.name)
 
 
@@ -57,7 +61,7 @@ describe("Provider Portal - rejecte provider", () => {
       }
     });
 
-    cy.visit(`${marketplaceURL}`);
+    cy.visitPage(marketplaceURL);
     cy.checkVisibilityOfProviderInMarketplace(provider.name)
 
     cy.request({
@@ -71,7 +75,7 @@ describe("Provider Portal - rejecte provider", () => {
       }
     });
 
-    cy.visit(`${marketplaceURL}`);
+    cy.visitPage(marketplaceURL);
     cy.checkInvisibilityOfProviderInMarketplace(provider.name)
 
   });
