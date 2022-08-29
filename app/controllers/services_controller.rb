@@ -44,19 +44,24 @@ class ServicesController < ApplicationController
   def show
     @service = Service.includes(:offers, :target_relationships).friendly.find(params[:id])
 
-    authorize(ServiceContext.new(@service, params.key?(:from) && params[:from] == "backoffice_service"))
-    @offers = policy_scope(@service.offers.published).order(:created_at).select { |o| o.bundle? == false }
-    @bundles = policy_scope(@service.offers.published).order(:created_at).select(&:bundle?)
-    @related_services = @service.target_relationships
-    @related_services_title = "Suggested compatible resources"
+    respond_to do |format|
+      format.html do
+        authorize(ServiceContext.new(@service, params.key?(:from) && params[:from] == "backoffice_service"))
+        @offers = policy_scope(@service.offers.published).order(:created_at).select { |o| o.bundle? == false }
+        @bundles = policy_scope(@service.offers.published).order(:created_at).select(&:bundle?)
+        @related_services = @service.target_relationships
+        @related_services_title = "Suggested compatible resources"
 
-    @service_opinions = ServiceOpinion.joins(project_item: :offer).where(offers: { service_id: @service })
-    @question = Service::Question.new(service: @service)
-    @favourite_services =
-      current_user&.favourite_services || Service.where(slug: Array(cookies[:favourites]&.split("&") || []))
-    if current_user&.executive?
-      @client = @client&.credentials&.expires_at.blank? ? Google::Analytics.new : @client
-      @analytics = Analytics::PageViewsAndRedirects.new(@client).call(request.path)
+        @service_opinions = ServiceOpinion.joins(project_item: :offer).where(offers: { service_id: @service })
+        @question = Service::Question.new(service: @service)
+        @favourite_services =
+          current_user&.favourite_services || Service.where(slug: Array(cookies[:favourites]&.split("&") || []))
+        if current_user&.executive?
+          @client = @client&.credentials&.expires_at.blank? ? Google::Analytics.new : @client
+          @analytics = Analytics::PageViewsAndRedirects.new(@client).call(request.path)
+        end
+      end
+      format.json { render json: @service.to_json }
     end
   end
 

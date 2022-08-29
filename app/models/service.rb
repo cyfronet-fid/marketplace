@@ -283,6 +283,77 @@ class Service < ApplicationRecord
     self.logo.attach(io: File.open(path), filename: logo["filename"])
   end
 
+  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity:
+  def to_json(*_args)
+    {
+      id: id,
+      pid: pid,
+      catalogue: catalogue&.name,
+      slug: slug,
+      abbreviation: abbreviation,
+      name: name,
+      tagline: tagline,
+      description: description,
+      order_type: order_type,
+      categories: categories&.map(&:name),
+      scientific_domains: scientific_domains&.map(&:name),
+      resource_organisation: resource_organisation.name,
+      providers: providers&.map(&:name),
+      multimedia_urls: link_multimedia_urls&.map { |m| { name: m.name, url: m.url } },
+      use_cases_urls: link_use_cases_urls&.map { |m| { name: m.name, url: m.url } },
+      access_types: access_types&.map(&:name),
+      access_modes: access_modes&.map(&:name),
+      platforms: platforms&.map(&:name),
+      related_platforms: related_platforms,
+      funding_bodies: funding_bodies&.map(&:name),
+      funding_programs: funding_programs&.map(&:name),
+      dedicated_for: dedicated_for,
+      resource_geographic_locations: resource_geographic_locations,
+      geographical_availabilities: geographical_availabilities,
+      language_availability: languages,
+      public_contacts: public_contacts&.map(&:as_json),
+      trl: trl.first&.name,
+      life_cycle_status: life_cycle_status.first&.name,
+      status: status,
+      phase: phase,
+      version: version,
+      terms_of_use_url: terms_of_use_url,
+      training_information_url: training_information_url,
+      access_policies_url: access_policies_url,
+      sla_url: sla_url,
+      maintenance_url: maintenance_url,
+      webpage_url: webpage_url,
+      manual_url: manual_url,
+      helpdesk_url: helpdesk_url,
+      helpdesk_email: helpdesk_email,
+      pricing_url: pricing_url,
+      privacy_policy_url: privacy_policy_url,
+      activate_message: activate_message,
+      restrictions: restrictions,
+      security_contact_email: security_contact_email,
+      certifications: certifications,
+      status_monitoring_url: status_monitoring_url,
+      standards: standards,
+      open_source_technologies: open_source_technologies,
+      grant_project_names: grant_project_names,
+      order_url: order_url,
+      payment_model_url: payment_model_url,
+      changelog: changelog,
+      tag_list: tag_list,
+      last_update: last_update,
+      upstream_id: upstream_id,
+      created_at: created_at,
+      updated_at: updated_at,
+      synchronized_at: synchronized_at,
+      rating: rating,
+      offers_count: offers_count,
+      project_items_count: project_items_count,
+      service_opinion_count: service_opinion_count
+    }
+  end
+
+  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity:
+
   private
 
   def main_category_missing?
