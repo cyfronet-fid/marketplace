@@ -19,6 +19,8 @@ describe("Provider Portal - rejected provider", () => {
     const authorization = `Bearer ${token}`;
     const provider = providerJson
 
+    cy.visitPage(marketplaceURL);
+
     cy.request({
       method: 'POST',
       url: `${providerPortalURL}/api/provider/`,

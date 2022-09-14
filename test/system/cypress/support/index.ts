@@ -52,5 +52,7 @@ Cypress.on('uncaught:exception', (err, runnable) => false);
 
 beforeEach(() => {
   // hide cookie policy box
-  cy.setCookie('cookieconsent_status', 'dismiss')
+  cy.setCookie('cookieconsent_status', 'dismiss', {
+    domain: window.location.hostname,
+  })
 });

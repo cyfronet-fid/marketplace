@@ -22,6 +22,8 @@ describe("Provider Portal - create provider, resource for other catalogue than e
     const resource = { ...resourceJson, resourceOrganisation: provider.name, catalogueId: "cyfronet_catalogue" }
     const catalogue = "cyfronet_catalogue"
 
+    cy.visitPage(marketplaceURL);
+
     cy.request({
       method: 'POST',
       url: `${providerPortalURL}/api/catalogue/${catalogue}/provider`,
@@ -54,6 +56,8 @@ describe("Provider Portal - create provider, resource for other catalogue than e
       },
       body: (JSON.stringify(resource))
     });
+
+    cy.request('GET',`${providerPortalURL}/dashboard/${catalogue}/${provider.name}/resource-dashboard/${provider.name}.${resource.name}/stats`)
 
     cy.visitPage(marketplaceURL);
     cy.checkVisibilityOfResourceInMarketplace(resource.name)

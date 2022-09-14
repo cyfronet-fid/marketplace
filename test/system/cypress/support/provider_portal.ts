@@ -33,7 +33,9 @@ declare global {
 Cypress.Commands.add("checkVisibilityOfProviderInMarketplace", (provider: string) => {
   cy.get("[data-e2e='searchbar-input']").
     type(provider, { force: true });
-  cy.contains("[data-e2e='autocomplete-results'] li", "Provider")
+  cy.contains("[data-e2e='autocomplete-results'] li", "Provider", {
+    timeout: 30000
+  })
     .should("be.visible");
   cy.get("a[data-e2e='more-link-providers']")
     .click();
@@ -47,6 +49,7 @@ Cypress.Commands.add("checkVisibilityOfProviderInMarketplace", (provider: string
 Cypress.Commands.add("checkInvisibilityOfProviderInMarketplace", (provider: string) => {
   cy.get("a[data-e2e='more-link-providers']")
     .click();
+  cy.contains("h1","Providers").should("be.visible")
   cy.contains("a", provider)
     .should("not.exist");
   cy.get("[data-e2e='searchbar-input']").
@@ -120,7 +123,9 @@ Cypress.Commands.add("checkVisibilityOfProviderAbout", () => {
 Cypress.Commands.add("checkVisibilityOfResourceInMarketplace", (resource: string) => {
   cy.get("[data-e2e='searchbar-input']")
     .type(resource, { force: true });
-  cy.contains("[data-e2e='autocomplete-results'] li", "Resources")
+  cy.contains("[data-e2e='autocomplete-results'] li", "Resources", {
+    timeout: 30000
+  })
     .should("be.visible");
   cy.get("[data-e2e='query-submit-btn']")
     .click();
@@ -135,7 +140,10 @@ Cypress.Commands.add("checkInvisibilityOfResourceInMarketplace", (resource: stri
     .type(resource, { force: true });
   cy.contains("[data-e2e='autocomplete-results'] li", "Resources")
     .should("not.exist");
-
+  cy.get("[data-e2e='query-submit-btn']")
+    .click();
+  cy.contains("[data-e2e='service-name']", resource)
+    .should("not.exist");
 });
 
 Cypress.Commands.add("checkVisibilityOfResourceAbout", () => {

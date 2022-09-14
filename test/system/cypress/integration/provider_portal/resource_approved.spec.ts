@@ -21,6 +21,8 @@ describe("Provider Portal - approved resource", () => {
     const provider = providerJson
     const resource = ({ ...resourceJson, resourceOrganisation: provider.name })
 
+    cy.visitPage(marketplaceURL);
+
     cy.request({
       method: 'POST',
       url: `${providerPortalURL}/api/provider/`,
@@ -71,6 +73,9 @@ describe("Provider Portal - approved resource", () => {
       }
     });
 
+    cy.request('GET',`${providerPortalURL}/dashboard/eosc/${provider.name}/resource-dashboard/${provider.name}.${resource.name}/stats`)
+    cy.request('GET',`${providerPortalURL}/provider/${provider.name}/resource/update/${provider.name}.${resource.name}`)
+
     cy.visitPage(marketplaceURL);
     cy.checkVisibilityOfResourceInMarketplace(resource.name)
     cy.checkVisibilityOfResourceAbout();
@@ -104,7 +109,7 @@ describe("Provider Portal - approved resource", () => {
     });
 
     cy.visitPage(marketplaceURL);
-    cy.checkInvisibilityOfResourceInMarketplace(resource.name)
+    cy.checkVisibilityOfResourceInMarketplace(resource.name)
 
     cy.request({
       method: 'DELETE',

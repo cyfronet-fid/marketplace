@@ -21,6 +21,8 @@ describe("Provider Portal - rejected resource", () => {
     const provider = providerJson
     const resource = ({ ...resourceJson, resourceOrganisation: provider.name })
 
+    cy.visitPage(marketplaceURL);
+
     cy.request({
       method: 'POST',
       url: `${providerPortalURL}/api/provider/`,

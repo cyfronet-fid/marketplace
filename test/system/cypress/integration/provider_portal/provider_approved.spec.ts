@@ -19,6 +19,8 @@ describe("Provider Portal - approved provider", () => {
     const authorization = `Bearer ${token}`;
     const provider = providerJson
 
+    cy.visitPage(marketplaceURL);
+
     cy.request({
       method: 'POST',
       url: `${providerPortalURL}/api/provider/`,
@@ -44,6 +46,9 @@ describe("Provider Portal - approved provider", () => {
         "Content-Type": "application/json"
       }
     });
+
+    cy.request('GET',`${providerPortalURL}/dashboard/eosc/${provider.name}/stats`)
+    cy.request('GET',`${providerPortalURL}/provider/update/${provider.name}`)
 
     cy.visitPage(marketplaceURL);
     cy.checkVisibilityOfProviderInMarketplace(provider.name)
