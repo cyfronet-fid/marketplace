@@ -63,6 +63,12 @@ class Importers::Service < ApplicationService
       funding_bodies = map_funding_bodies(@data.dig("fundingBody", "fundingBody"))
       funding_programs = map_funding_programs(@data.dig("fundingPrograms", "fundingProgram"))
       grant_project_names = Array(@data.dig("grantProjectNames", "grantProjectName"))
+      research_categories =
+        if @data.dig("researchCategories", "researchCategory").present?
+          Array(@data.dig("researchCategories", "researchCategory"))
+        else
+          []
+        end
     when "rest"
       providers = Array(@data["resourceProviders"]) || []
       multimedia = Array(@data["multimedia"]) || []
@@ -88,12 +94,13 @@ class Importers::Service < ApplicationService
       platforms = map_platforms(Array(@data["relatedPlatforms"]))
       funding_bodies = map_funding_bodies(Array(@data["fundingBody"]))
       funding_programs = map_funding_programs(Array(@data["fundingPrograms"]))
-      grant_project_names = Array(@data["grantProjectNames"])
+      grant_project_names = Array(@data["grantProjectNames"]) || []
+      research_categories = @data["researchCategories"]
     end
 
     status = ENV["RESOURCE_IMPORT_STATUS"] || "published"
 
-    main_contact = MainContact.new(map_contact(@data["mainContact"])) if @data["mainContact"]
+    main_contact = @data["mainContact"].present? ? MainContact.new(map_contact(@data["mainContact"])) : nil
 
     {
       pid: @data["id"],
@@ -111,6 +118,8 @@ class Importers::Service < ApplicationService
       # Classification
       scientific_domains: map_scientific_domains(scientific_domains),
       categories: map_categories(categories) || [],
+      horizontal: @data["horizontalService"] || false,
+      research_categories: map_research_categories(research_categories),
       target_users: map_target_users(target_users),
       access_types: map_access_types(access_types),
       access_modes: map_access_modes(access_modes),

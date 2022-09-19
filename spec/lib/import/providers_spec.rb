@@ -59,7 +59,7 @@ describe Import::Providers do
   def expect_responses(test_url, providers_response = nil)
     unless providers_response.nil?
       allow_any_instance_of(Faraday::Connection).to receive(:get)
-        .with("#{test_url}/provider/bundle/all?quantity=10000&from=0")
+        .with("#{test_url}/public/provider/bundle/all?quantity=10000&from=0")
         .and_return(providers_response)
     end
   end

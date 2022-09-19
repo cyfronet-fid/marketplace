@@ -106,7 +106,7 @@ en:
     info:
       no_items: "No %{item_name}"
       single_page: "Displaying <b>%{count}</b> %{item_name}"
-      multiple_pages: "<b>%{from}-%{to}</b> of <b>%{count}</b> results"
+      multiple_pages: "Part of <b>%{count}</b> results"
   activemodel:
     errors:
       models:

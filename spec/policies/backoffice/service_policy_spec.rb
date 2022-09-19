@@ -67,6 +67,8 @@ RSpec.describe Backoffice::ServicePolicy do
           :tag_list,
           [category_ids: []],
           [pc_category_ids: []],
+          :horizontal,
+          [research_category_ids: []],
           [owner_ids: []],
           :status,
           :upstream_id,
@@ -94,6 +96,8 @@ RSpec.describe Backoffice::ServicePolicy do
           [owner_ids: []],
           :status,
           :upstream_id,
+          :horizontal,
+          [research_category_ids: []],
           [sources_attributes: %i[id source_type eid _destroy]]
         ]
       )

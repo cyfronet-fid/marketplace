@@ -60,6 +60,7 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
       if @provider.data_administrators.present? && @provider.data_administrators.all?(&:marked_for_destruction?)
         @provider.data_administrators[0].reload
       end
+      add_missing_nested_models
       render :edit, status: :bad_request
     end
   end
