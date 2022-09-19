@@ -27,7 +27,8 @@ class Import::Vocabularies
     PROVIDER_MERIL_SCIENTIFIC_DOMAIN: Vocabulary::MerilScientificDomain,
     PROVIDER_MERIL_SCIENTIFIC_SUBDOMAIN: Vocabulary::MerilScientificDomain,
     PROVIDER_HOSTING_LEGAL_ENTITY: Vocabulary::HostingLegalEntity,
-    RELATED_PLATFORM: Platform
+    RELATED_PLATFORM: Platform,
+    RESEARCH_CATEGORY: Vocabulary::ResearchCategory
   }.freeze
 
   def initialize(
@@ -48,7 +49,7 @@ class Import::Vocabularies
   end
 
   def call
-    log "Importing vocabularies from EOSC Registry..."
+    log "Importing vocabularies from EOSC Registry #{@eosc_registry_base_url}..."
 
     begin
       r = Importers::Request.new(@eosc_registry_base_url, "vocabulary/byType", faraday: @faraday, token: @token).call

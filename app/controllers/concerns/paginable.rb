@@ -9,8 +9,9 @@ module Paginable
     records.paginate(page: params[:page], per_page: per_page)
   end
 
-  def per_page
-    per_page = params[:per_page].to_i
+  def per_page(additionals_size = 0)
+    per_page = (params[:per_page] || 10).to_i
+    per_page -= additionals_size
     per_page < 1 ? 10 : per_page
   end
 end

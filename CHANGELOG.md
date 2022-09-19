@@ -6,12 +6,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.43.0] 2022-10-25
+
+### Added
+- Horizontal services (@goreck888)
+- Research categories for services (@goreck888)
+- Datasources (@goreck888)
+
+### Deprecated
+- Importing Providers and Services with ids in an old format (without catalogue prefix) (@goreck888)
+
 ## [3.42.1] 2022-10-21
 
 ### Fixed
 
 - import `catalogue_id` for a service (@goreck888)
-
 
 ## [3.42.0] 2022-10-04
 

@@ -727,28 +727,6 @@ providers:
     city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
-  INFN-Catania:
-    status: "published"
-    name: &infnc "INFN-Catania"
-    abbreviation: "infn-catania"
-    catalogue: *catris
-    website: "http://infn-catania.com"
-    legal_entity: true
-    description: |
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
-      Sed luctus tristique est, nec sollicitudin magna blandit ac.
-      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
-      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
-      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
-      Sed maximus odio neque, sed ullamcorper purus tristique a.
-      Ut gravida venenatis nunc placerat cursus.
-      multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
-    country_alpha2: "PL"
-    image_base_64: *provider_default_logo
   INFN-Bari:
     status: "published"
     name: &infnb "INFN-Bari"

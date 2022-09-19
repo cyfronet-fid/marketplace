@@ -9,6 +9,9 @@ class Jms::ManageMessage < ApplicationService
   class WrongMessageError < StandardError
   end
 
+  class WrongIdError < StandardError
+  end
+
   def initialize(message, eosc_registry_base_url, logger, token = nil)
     super()
     @parser = Nori.new(strip_namespaces: true)
@@ -18,28 +21,33 @@ class Jms::ManageMessage < ApplicationService
     @token = token
   end
 
+  # rubocop:disable Metrics/AbcSize
+
   def call
     log @message
     body = JSON.parse(@message.body)
+    resource_type = @message.headers["destination"].split(".")[-2]
     action = @message.headers["destination"].split(".").last
-    log @message
     resource = @parser.parse(body["resource"])
 
     raise ResourceParseError, "Cannot parse resource" if resource.empty?
 
-    case body["resourceType"]
-    when "infra_service"
-      modified_at = modified_at(resource, "infraService")
-      if action != "delete" && resource["infraService"]["latest"]
+    case resource_type
+    when "service", "infra_service"
+      modified_at = modified_at(resource, "serviceBundle")
+      if action != "delete" && resource["serviceBundle"]["service"]
+        if resource["serviceBundle"]["service"]["id"].split(".").size != 3
+          raise WrongIdError, resource["serviceBundle"]["service"]["id"]
+        end
         Service::PcCreateOrUpdateJob.perform_later(
-          resource["infraService"]["service"],
+          resource["serviceBundle"]["service"].merge(resource["serviceBundle"]["resourceExtras"] || {}),
           @eosc_registry_base_url,
-          resource["infraService"]["active"],
+          resource["serviceBundle"]["active"],
           modified_at,
           @token
         )
       elsif action == "delete"
-        Service::DeleteJob.perform_later(resource["infraService"]["service"]["id"])
+        Service::DeleteJob.perform_later(resource["serviceBundle"]["service"]["id"])
       end
     when "provider"
       modified_at = modified_at(resource, "providerBundle")
@@ -47,6 +55,9 @@ class Jms::ManageMessage < ApplicationService
       when "delete"
         Provider::DeleteJob.perform_later(resource["providerBundle"]["provider"]["id"])
       when "update", "create"
+        if resource["providerBundle"]["provider"]["id"].split(".").size != 2
+          raise WrongIdError, resource["providerBundle"]["provider"]["id"]
+        end
         Provider::PcCreateOrUpdateJob.perform_later(
           resource["providerBundle"]["provider"],
           resource["providerBundle"]["active"],
@@ -69,7 +80,11 @@ class Jms::ManageMessage < ApplicationService
   rescue WrongMessageError => e
     warn "[WARN] Message arrived, but the type is unknown: #{body["resourceType"]}, #{e}"
     Sentry.capture_exception(e)
+  rescue WrongIdError => e
+    warn "[WARN] eid #{e} for #{resource_type} has a wrong format - update disabled"
   end
+
+  # rubocop:enable Metrics/AbcSize
 
   private
 

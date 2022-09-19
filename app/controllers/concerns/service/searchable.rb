@@ -14,14 +14,14 @@ module Service::Searchable
     end
   end
 
-  def search(scope, filters = all_filters)
+  def search(scope, filters = all_filters, additionals_size: 0)
     services =
       Service.search(
         query,
         **common_params.merge(
           where: filter_constr(filters, scope_constr(scope, category_constr)),
           page: params[:page],
-          per_page: per_page,
+          per_page: "#{per_page(additionals_size)}",
           order: ordering,
           highlight: {
             tag: "<mark>"

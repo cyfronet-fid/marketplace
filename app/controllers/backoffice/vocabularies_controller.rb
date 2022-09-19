@@ -72,12 +72,17 @@ class Backoffice::VocabulariesController < Backoffice::ApplicationController
     meril_scientific_domain: {
       name: "MERIL Scientific Domain",
       klass: Vocabulary::MerilScientificDomain
+    },
+    research_category: {
+      name: "Research Category",
+      klass: Vocabulary::ResearchCategory
     }
   }.freeze
 
   def index
     authorize(vocabulary_type)
     @vocabularies = vocabulary_type.all.order(:name)
+    @all_types = VOCABULARY_TYPES.map { |k, v| [v[:name], k.to_s.pluralize.to_sym] }
   end
 
   def show; end

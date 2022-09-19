@@ -131,7 +131,7 @@ RSpec.describe OMS, type: :model do
       )
       expect(oms2.project_items_for(project)).to contain_exactly(project_items1[2], project_items1[4])
 
-      expect(oms1.project_items_for(other_project)).to eq(project_items2)
+      expect(oms1.project_items_for(other_project)).to match_array(project_items2)
       expect(oms2.project_items_for(other_project)).to eq([])
     end
 

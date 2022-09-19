@@ -10,6 +10,7 @@ class ServicesController < ApplicationController
   before_action :sort_options
   before_action :load_query_params_from_session, only: :index
 
+  # rubocop:disable Metrics/AbcSize
   def index
     if params["object_id"].present?
       case params["type"]
@@ -27,9 +28,18 @@ class ServicesController < ApplicationController
                     )
       end
     end
-    @services, @offers = search(scope)
+    subgroup_quantity = 5
+    additionals_size =
+      if Service.horizontal.size.zero? || params[:q].present? || active_filters.size.positive? || @category
+        0
+      else
+        per_page / subgroup_quantity
+      end
+    @services, @offers = search(scope, additionals_size: additionals_size)
+    @horizontal_services = horizontal_services(@services, additionals_size)
+    @presentable = presentable
     begin
-      @pagy = Pagy.new_from_searchkick(@services, items: params[:per_page])
+      @pagy = Pagy.new_from_searchkick(@services, items: per_page(additionals_size))
     rescue Pagy::OverflowError
       params[:page] = 1
       @services, @offers = search(scope)
@@ -40,6 +50,8 @@ class ServicesController < ApplicationController
     @favourite_services =
       current_user&.favourite_services || Service.where(slug: Array(cookies[:favourites]&.split("&") || []))
   end
+
+  # rubocop:enable Metrics/AbcSize
 
   def show
     @service = Service.includes(:offers).friendly.find(params[:id])
@@ -80,5 +92,21 @@ class ServicesController < ApplicationController
 
   def provider_scope
     policy_scope(Provider).with_attached_logo
+  end
+
+  def presentable
+    if @horizontal_services.size.zero? || active_filters.size.positive? || params[:q] || @category
+      @services
+    else
+      @services
+        .each_slice(per_page(@horizontal_services.size) / @horizontal_services.size)
+        .zip(@horizontal_services)
+        .flatten
+    end
+  end
+
+  def horizontal_services(services, limit)
+    service_ids = services.map(&:id)
+    Service.published.horizontal.reject { |s| service_ids.include? s.id }.sample(limit)
   end
 end

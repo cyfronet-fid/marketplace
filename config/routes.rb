@@ -65,7 +65,7 @@ Rails.application.routes.draw do
 
   resource :profile, only: [:show, :edit, :update, :destroy]
 
-  resources :providers, only: [:index, :show] do
+  resources :providers, only: [:index, :show], constraints: { id: %r{[^/]+} } do
     scope module: :providers do
       resource :question, only: [:new, :create], constraints: lambda { |req| req.format == :js }
       resources :details, only: :index
@@ -91,7 +91,7 @@ Rails.application.routes.draw do
     get "services/c/:category_id" => "services#index", as: :category_services
     resources :scientific_domains
     resources :categories
-    resources :providers
+    resources :providers, constraints: { id: %r{[^/]+} }
     resources :platforms
     get "vocabularies", to: "vocabularies#index", type: "target_user", as: :vocabularies
     scope "/vocabularies" do
@@ -112,6 +112,7 @@ Rails.application.routes.draw do
       resources :societal_grand_challenges, controller: "vocabularies", type: "societal_grand_challenge"
       resources :structure_types, controller: "vocabularies", type: "structure_type"
       resources :meril_scientific_domains, controller: "vocabularies", type: "meril_scientific_domain"
+      resources :research_categories, controller: "vocabularies", type: "research_category"
     end
   end
 

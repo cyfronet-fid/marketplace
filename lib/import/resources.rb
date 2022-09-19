@@ -24,12 +24,13 @@ module Import
     end
 
     def call
-      log "Importing resources from EOSC Registry..."
+      log "Importing resources from EOSC Registry (#{@eosc_registry_base_url})..."
 
       begin
         token = Importers::Token.new(faraday: @faraday).receive_token
         response =
-          Importers::Request.new(@eosc_registry_base_url, "service/adminPage", faraday: @faraday, token: token).call
+          Importers::Request.new(@eosc_registry_base_url, "public/resource/adminPage", faraday: @faraday, token: token)
+            .call
       rescue Errno::ECONNREFUSED, Importers::Token::RequestError => e
         abort("import exited with errors - could not connect to #{@eosc_registry_base_url} \n #{e.message}")
       end
@@ -45,7 +46,7 @@ module Import
       response.body["results"]
         .select { |res| @ids.empty? || @ids.include?(res["service"]["id"]) }
         .each do |service_data|
-          service = service_data["service"]
+          service = service_data["service"].merge(service_data["resourceExtras"] || {})
           output.append(service_data)
 
           synchronized_at = service_data["metadata"]["modifiedAt"].to_i

@@ -1,4 +1,7 @@
+- horizontal = @object.instance_of?(Service) && @object&.horizontal
 .row
+  - if horizontal
+    %span.horizontal-badge Horizontal service
   .col-12.col-lg-9.row
     .col-12.col-sm-3.d-flex.img-service-detail
       - if @preview
@@ -52,7 +55,7 @@
                   #popup-modal.modal.show{ "data-target": "favourite.popup", tabindex: "-1",
                                     role: "dialog", aria: { hidden: "true" } }
 
-  .col-12.col-lg-3.text-center.vertical-center
+  .col-12.col-lg-3.text-center.vertical-center{ class: ("horizontal-space" if horizontal) }
     .vertical-center-inner.access-type
       = buttons
 .row.service-links

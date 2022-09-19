@@ -40,7 +40,8 @@ FactoryBot.define do
               "</tns:esfriDomains>" \
               "<tns:esfriType>provider_esfri_type-landmark</tns:esfriType>" \
               "<tns:hostingLegalEntity>cyfronet</tns:hostingLegalEntity>" \
-              "<tns:id>cyfronet</tns:id>" \
+              "<tns:id>eosc.cyfronet</tns:id>" \
+              "<tns:catalogueId>eosc</tns:catalogueId>" \
               "<tns:legalEntity>true</tns:legalEntity>" \
               "<tns:legalStatus>provider_legal_status-public_legal_entity</tns:legalStatus>" \
               "<tns:lifeCycleStatus>provider_life_cycle_status-operational</tns:lifeCycleStatus>" \
@@ -149,7 +150,8 @@ FactoryBot.define do
               "</tns:esfriDomains>" \
               "<tns:esfriType>provider_esfri_type-landmark</tns:esfriType>" \
               "<tns:hostingLegalEntity>cyfronet</tns:hostingLegalEntity>" \
-              "<tns:id>cyfronet</tns:id>" \
+              "<tns:id>eosc.cyfronet</tns:id>" \
+              "<tns:catalogueId>eosc</tns:catalogueId>" \
               "<tns:legalEntity>true</tns:legalEntity>" \
               "<tns:legalStatus>provider_legal_status-public_legal_entity</tns:legalStatus>" \
               "<tns:lifeCycleStatus>provider_life_cycle_status-operational</tns:lifeCycleStatus>" \
@@ -258,7 +260,8 @@ FactoryBot.define do
               "</tns:esfriDomains>" \
               "<tns:esfriType>provider_esfri_type-landmark</tns:esfriType>" \
               "<tns:hostingLegalEntity>cyfronet</tns:hostingLegalEntity>" \
-              "<tns:id>cyfronet</tns:id>" \
+              "<tns:id>eosc.cyfronet</tns:id>" \
+              "<tns:catalogueId>eosc</tns:catalogueId>" \
               "<tns:legalEntity>true</tns:legalEntity>" \
               "<tns:legalStatus>provider_legal_status-public_legal_entity</tns:legalStatus>" \
               "<tns:lifeCycleStatus>provider_life_cycle_status-operational</tns:lifeCycleStatus>" \

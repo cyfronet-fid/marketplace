@@ -1,36 +1,5 @@
 .fixme{ "data-target": "form.fixme", "data-action": "scroll@window->form#onScroll" }
   %ul.add-new-menu
-    %li
-      = link_to _("Target Users"), backoffice_target_users_path
-    %li
-      = link_to _("Access Types"), backoffice_access_types_path
-    %li
-      = link_to _("Access Modes"), backoffice_access_modes_path
-    %li
-      = link_to _("Funding Bodies"), backoffice_funding_bodies_path
-    %li
-      = link_to _("Funding Programs"), backoffice_funding_programs_path
-    %li
-      = link_to _("TRLs"), backoffice_trls_path
-    %li
-      = link_to _("Life Cycle Statuses"), backoffice_life_cycle_statuses_path
-    %li
-      = link_to _("Provider Life Cycle Statuses"), backoffice_provider_life_cycle_statuses_path
-    %li
-      = link_to _("Areas of Activity"), backoffice_areas_of_activity_path
-    %li
-      = link_to _("Hosting Legal Entities"), backoffice_hosting_legal_entities_path
-    %li
-      = link_to _("ESFRI Types"), backoffice_esfri_types_path
-    %li
-      = link_to _("ESFRI Domains"), backoffice_esfri_domains_path
-    %li
-      = link_to _("Legal Statuses"), backoffice_legal_statuses_path
-    %li
-      = link_to _("Networks"), backoffice_networks_path
-    %li
-      = link_to _("Societal Grand Challenges"), backoffice_societal_grand_challenges_path
-    %li
-      = link_to _("Structure Types"), backoffice_structure_types_path
-    %li
-      = link_to _("MERIL Scientific Domains"), backoffice_meril_scientific_domains_path
+    - types.each do |name, path|
+      %li
+        = link_to _(name), polymorphic_path([:backoffice, path])

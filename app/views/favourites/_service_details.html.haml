@@ -1,7 +1,9 @@
-.media.mb-3.service-box.shadow-sm
+.media.mb-3.service-box.shadow-sm{ class: ("horizontal" if service.horizontal) }
   .media-body.pt-4
     .pl-4.pr-4.mb-3
       %h2.mb-3{ "data-probe" => "", "data-service-id" => service.id }= yield
+      - if service.horizontal
+        %span.badge.badge-blue Horizontal service
       %p.mb-3= service.tagline
       = render "components/presentable/header_component/categorization", service: service, highlights: nil
       - if content_for(:comparison_checkbox)
