@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Service < ApplicationRecord
-  PUBLIC_STATUSES = %w[published unverified errored].freeze
-
   include Service::Search
   include LogoAttachable
   include Publishable
@@ -11,6 +9,10 @@ class Service < ApplicationRecord
   friendly_id :name, use: :slugged
 
   acts_as_taggable
+
+  PUBLIC_STATUSES = %w[published unverified errored].freeze
+
+  scope :horizontal, -> { where(horizontal: true) }
 
   has_one_attached :logo
 
@@ -54,6 +56,10 @@ class Service < ApplicationRecord
   has_many :link_use_cases_urls, as: :linkable, dependent: :destroy, autosave: true, class_name: "Link::UseCasesUrl"
   has_many :link_multimedia_urls, as: :linkable, dependent: :destroy, autosave: true, class_name: "Link::MultimediaUrl"
   has_many :service_vocabularies, dependent: :destroy
+  has_many :research_categories,
+           through: :service_vocabularies,
+           source: :vocabulary,
+           source_type: "Vocabulary::ResearchCategory"
   has_many :funding_bodies, through: :service_vocabularies, source: :vocabulary, source_type: "Vocabulary::FundingBody"
   has_many :funding_programs,
            through: :service_vocabularies,

@@ -1292,6 +1292,7 @@ Service detail
       &.badge-error {
         color: $white;
       }
+
     }
 
     .card-title {
@@ -2449,6 +2450,35 @@ label[data-multicheckbox].small {
   -moz-border-radius: 5px;
   border-radius: 5px;
   overflow: hidden;
+  position: relative;
+
+  &.horizontal {
+    background: $palette-lightblue2;
+
+    .media-body {
+      padding-top: 42px !important;
+    }
+  }
+
+  .horizontal-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: auto;
+    background: $badge-blue;
+    color: $navbar-light-active-color;
+    font-size: 0.8em;
+    text-transform: uppercase;
+    line-height: 12px;
+    padding: 9px 17px;
+    text-align: center;
+    border-bottom-left-radius: 5px;
+    font-weight: 400;
+  }
+
+  .horizontal-space {
+    margin-top: 25px;
+  }
 
   .project-badge {
     margin: 15px 20px 0 0;
@@ -2599,6 +2629,11 @@ label[data-multicheckbox].small {
       background: $palette-solid-50;
       color: $white;
     }
+
+    &.badge-blue {
+      background: $badge-blue;
+      color: $navbar-light-active-color;
+    }
   }
 
   .service-logo {
@@ -2609,6 +2644,12 @@ label[data-multicheckbox].small {
   .media-body {
     border-right: 1px solid $palette-gray-10;
     position: relative;
+
+    &.backoffice {
+      .badge-blue {
+        right: 85px;
+      }
+    }
 
     .compare {
       float: left;
@@ -2629,11 +2670,26 @@ label[data-multicheckbox].small {
         font-size: 0.5em;
         text-transform: uppercase;
         line-height: 12px;
-        padding: 8px 14px;
+        padding: 8px 14px 7px;
         text-align: center;
         border-bottom-left-radius: 5px;
         font-weight: 400;
       }
+    }
+
+    .badge {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: auto;
+      max-width: 155px;
+      font-size: 0.8em;
+      text-transform: uppercase;
+      line-height: 12px;
+      padding: 8px 14px 7px;
+      text-align: center;
+      border-bottom-left-radius: 5px;
+      font-weight: 400;
     }
   }
 

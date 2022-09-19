@@ -20,7 +20,11 @@ class Provider < ApplicationRecord
     { provider_id: id, provider_name: name, service_ids: service_ids }
   end
 
+  before_save { self.catalogue = Catalogue.find(catalogue_id) if catalogue_id.present? }
+
   scope :active, -> { where.not(status: %i[deleted draft]) }
+
+  attr_accessor :catalogue_id
 
   has_one_attached :logo
 

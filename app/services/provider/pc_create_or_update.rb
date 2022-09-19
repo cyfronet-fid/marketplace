@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-class Provider::PcCreateOrUpdate
+class Provider::PcCreateOrUpdate < ApplicationService
   def initialize(eosc_registry_provider, is_active, modified_at)
+    super()
     @eosc_registry_provider = eosc_registry_provider
     @eid = eosc_registry_provider["id"]
     @is_active = is_active

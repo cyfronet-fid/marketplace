@@ -1,5 +1,5 @@
 - content_for :title, _("Providers")
-- breadcrumb :backoffice_providers
+- breadcrumb :backoffice_providers, params[:page].presence
 .container
   %h1
     = _("Providers")
@@ -15,7 +15,8 @@
       %li.list-group-item.providers
         .row
           .col-12.col-md-7
-            = link_to provider.name, backoffice_provider_path(provider), class: "provider-name"
+            = link_to provider.name, backoffice_provider_path(provider,
+            params: { page: params[:page] } || {}), class: "provider-name"
           .col-12.col-md-5
             .actions
               - if policy([:backoffice, provider]).destroy?

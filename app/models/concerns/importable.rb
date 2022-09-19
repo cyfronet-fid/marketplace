@@ -9,6 +9,10 @@ module Importable
     Category.where(eid: categories)
   end
 
+  def map_research_categories(research_categories)
+    research_categories.present? ? Vocabulary::ResearchCategory.where(eid: research_categories) : []
+  end
+
   def map_scientific_domains(domains)
     domains.present? ? ScientificDomain.where(eid: domains) : []
   end

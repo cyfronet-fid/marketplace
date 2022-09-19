@@ -17,6 +17,7 @@ RSpec.describe Importers::Provider do
   let(:provider_life_cycle_status) do
     create(:provider_life_cycle_status, eid: "provider_life_cycle_status-operational")
   end
+  let(:catalogue_id) { create(:catalogue, pid: "eosc").id }
   let(:societal_grand_challenge) do
     create(:societal_grand_challenge, eid: "provider_societal_grand_challenge-secure_societies")
   end
@@ -45,7 +46,7 @@ RSpec.describe Importers::Provider do
     provider_mapper = described_class.new(resource["providerBundle"]["provider"], current_time)
 
     correct_hash = {
-      pid: "cyfronet",
+      pid: "eosc.cyfronet",
       # Basic
       name: "Test-Cyfronet #3",
       abbreviation: "CYFRONET",
@@ -71,6 +72,7 @@ RSpec.describe Importers::Provider do
       # Maturity
       provider_life_cycle_statuses: [provider_life_cycle_status],
       certifications: %w[ISO-345 ASE/EBU-2008],
+      catalogue_id: catalogue_id,
       # Other
       participating_countries: %w[BB AT],
       affiliations: %w[asdf test],

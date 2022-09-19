@@ -10,6 +10,7 @@
 .container
   - @category ? breadcrumb(:category, @category) : breadcrumb(:services)
   = render "services/index", services: @services,
+                             presentable: @presentable,
                              pagy: @pagy,
                              category: @category,
                              services_count: @services_total,

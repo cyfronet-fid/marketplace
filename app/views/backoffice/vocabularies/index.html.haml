@@ -5,7 +5,7 @@
     = _(@type.pluralize)
   .row
     .col-12.col-md-3
-      = render "backoffice/vocabularies/nav"
+      = render "backoffice/vocabularies/nav", types: @all_types
     .col-12.col-md-9
       - if policy([:backoffice, Vocabulary]).new?
         .float-right

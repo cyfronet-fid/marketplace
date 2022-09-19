@@ -111,7 +111,7 @@ crumb :backoffice_category_edit do |category|
 end
 
 crumb :backoffice_providers do
-  link "Providers", backoffice_providers_path
+  link "Providers", backoffice_providers_path(page: params[:page])
   parent :backoffice_root
 end
 
