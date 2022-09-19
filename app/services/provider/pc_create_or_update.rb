@@ -12,7 +12,7 @@ class Provider::PcCreateOrUpdate < ApplicationService
   def call
     provider_hash = Importers::Provider.new(@eosc_registry_provider, @modified_at).call
     mapped_provider =
-      Provider.joins(:sources).find_by("provider_sources.source_type": "eosc_registry", "provider_sources.eid": @eid)
+      Provider.joins(:sources).find_by("provider_sources.source_type": "eosc_registry", "provider_sources.eid": [@eid])
     if mapped_provider.nil?
       mapped_provider = Provider.new(provider_hash)
       mapped_provider.set_default_logo

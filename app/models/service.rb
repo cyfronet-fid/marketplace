@@ -10,6 +10,10 @@ class Service < ApplicationRecord
 
   acts_as_taggable
 
+  before_save { self.catalogue = Catalogue.find(catalogue_id) if catalogue_id.present? }
+
+  attr_accessor :catalogue_id
+
   PUBLIC_STATUSES = %w[published unverified errored].freeze
 
   scope :horizontal, -> { where(horizontal: true) }
