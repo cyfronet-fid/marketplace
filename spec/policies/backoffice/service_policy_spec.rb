@@ -57,6 +57,7 @@ RSpec.describe Backoffice::ServicePolicy do
           [required_service_ids: []],
           [manual_related_service_ids: []],
           :catalogue,
+          :catalogue_id,
           :activate_message,
           :logo,
           [trl_ids: []],

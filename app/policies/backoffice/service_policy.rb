@@ -117,6 +117,7 @@ class Backoffice::ServicePolicy < ApplicationPolicy
       [required_service_ids: []],
       [manual_related_service_ids: []],
       :catalogue,
+      :catalogue_id,
       [owner_ids: []],
       :status,
       :upstream_id,

@@ -95,7 +95,7 @@ class Importers::Service < ApplicationService
       funding_bodies = map_funding_bodies(Array(@data["fundingBody"]))
       funding_programs = map_funding_programs(Array(@data["fundingPrograms"]))
       grant_project_names = Array(@data["grantProjectNames"]) || []
-      research_categories = @data["researchCategories"]
+      research_categories = @data["researchCategories"] || []
     end
 
     status = ENV["RESOURCE_IMPORT_STATUS"] || "published"

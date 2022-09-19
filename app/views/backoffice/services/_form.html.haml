@@ -334,6 +334,9 @@
                   wrapper_html: { "data-target" => "service.relatedPlatforms" },
                   disabled: cant_edit([related_platforms: []]), as: :array
               = link_to_add_array_field("service", "related_platforms")
+            = f.input :catalogue_id, disabled: cant_edit(:catalogue_id),
+            input_html: { multiple: false, data: { choice: true } },
+            collection: Catalogue.all, selected: service.catalogue&.id || nil
 
         .card.shadow-sm.rounded
           %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,

@@ -14,10 +14,14 @@ class Service::PcCreateOrUpdate
     @logo = eosc_registry_service["logo"]
     @is_active = is_active
     @source_type = "eosc_registry"
+    @original_id = eosc_registry_service["originalId"]
     @mp_service =
       Service
         .joins(:sources)
-        .find_by("service_sources.source_type": @source_type, "service_sources.eid": eosc_registry_service["id"])
+        .find_by(
+          "service_sources.source_type": @source_type,
+          "service_sources.eid": [@original_id, eosc_registry_service["id"]]
+        )
     @service_hash = Importers::Service.new(eosc_registry_service, modified_at, eosc_registry_base_url, token).call
     @new_update_available = Service::PcCreateOrUpdate.new_update_available(@mp_service, modified_at)
   end
@@ -27,22 +31,23 @@ class Service::PcCreateOrUpdate
     return Service::PcCreateOrUpdate.create_service(@service_hash, @logo) if create_new
     return @mp_service unless @new_update_available
 
-    source_id = @mp_service&.sources&.find_by(source_type: @source_type)
-    can_update = @mp_service.present? && (@is_active || source_id.present?)
+    source = @mp_service&.sources&.find_by(source_type: @source_type)
+    can_update = @mp_service.present? && (@is_active || source.present?)
     unless can_update
       Service::PcCreateOrUpdate.handle_invalid_data(@mp_service, @service_hash, @error_message)
       return @mp_service
     end
 
     update_valid = Service::Update.call(@mp_service, @service_hash)
+    source.update(eid: @service_hash["pid"])
     unless update_valid
       Service::PcCreateOrUpdate.handle_invalid_data(@mp_service, @service_hash, @error_message)
       return @mp_service
     end
 
     Service::Draft.call(@mp_service) unless @is_active
-    if source_id.present?
-      @mp_service.update(upstream_id: source_id.id)
+    if source.present?
+      @mp_service.update(upstream_id: source.id)
       @mp_service.sources.first.update(errored: nil)
     end
 
@@ -62,7 +67,7 @@ class Service::PcCreateOrUpdate
     Rails.logger.warn error_message
     validatable_service = Service.new(service_hash)
     service_errors = validatable_service&.errors&.to_hash if validatable_service.invalid?
-    mp_service&.sources&.first&.update(errored: service_errors)
+    mp_service&.sources&.first&.update(eid: service_hash["pid"], errored: service_errors)
   end
 
   def self.create_service(service_hash, logo)
