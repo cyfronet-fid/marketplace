@@ -5,7 +5,17 @@ require "bcrypt"
 
 RSpec.describe UserActionController, type: :controller do
   let(:user_action_params) do
-    { timestamp: "now", target: "/xd", source: { root: { service_id: "/xd" } }, action: "click" }
+    {
+      timestamp: "now",
+      target: "/xd",
+      source: {
+        root: {
+          service_id: "/xd"
+        }
+      },
+      action: "click",
+      client_id: "marketplace"
+    }
   end
 
   before(:each) { allow(Mp::Application.config).to receive(:recommender_host).and_return("localhost") }
