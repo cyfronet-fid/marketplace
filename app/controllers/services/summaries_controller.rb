@@ -88,7 +88,8 @@ class Services::SummariesController < Services::ApplicationController
         text: ""
       },
       user_id: current_user.id,
-      unique_id: cookies[:client_uid]
+      unique_id: cookies[:client_uid],
+      client_id: "marketplace"
     }
 
     Probes::ProbesJob.perform_later(request_body.to_json)
