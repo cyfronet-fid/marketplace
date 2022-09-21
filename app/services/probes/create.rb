@@ -17,7 +17,8 @@ class Probes::Create
       timestamp: @params[:timestamp],
       source: JSON.parse(@params[:source].to_json),
       target: JSON.parse(@params[:target].to_json),
-      action: JSON.parse(@params[:user_action].to_json)
+      action: JSON.parse(@params[:user_action].to_json),
+      client_id: "marketplace"
     }
 
     request_body[:user_id] = @current_user.id unless @current_user.nil?

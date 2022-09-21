@@ -79,6 +79,7 @@ module Service::Recommendable
       timestamp: Time.now.strftime("%Y-%m-%dT%H:%M:%S.%L%z"),
       unique_id: cookies[:client_uid],
       visit_id: cookies[:targetId],
+      client_id: "marketplace",
       page_id: "/service",
       panel_id: "v1",
       engine_version: Mp::Application.config.recommendation_engine,
