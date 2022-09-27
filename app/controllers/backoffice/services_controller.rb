@@ -26,6 +26,8 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
                       Service.friendly.find(params["object_id"]),
                       anchor: ("offer-#{params["anchor"]}" if params["anchor"].present?)
                     )
+      when "datasource"
+        redirect_to backoffice_datasource_path(Datasource.friendly.find(params["object_id"]))
       end
     end
     @services, @offers = search(scope)
@@ -187,5 +189,9 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
   def provider_scope
     policy_scope(Provider).with_attached_logo
+  end
+
+  def datasource_scope
+    policy_scope(Datasource).with_attached_logo
   end
 end

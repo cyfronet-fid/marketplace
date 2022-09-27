@@ -3,13 +3,13 @@ describe("Main Search", () => {
     cy.visit("/services");
   });
 
-  it("should display Resource according to the phrase you entered into searchbar", () => {
+  it("should display Service according to the phrase you entered into searchbar", () => {
     cy.get("[data-e2e='searchbar-input']")
       .type("EGI");
     cy.get("[data-e2e='autocomplete-results'] li")
       .contains("EGI");
     cy.get("[data-e2e='autocomplete-results'] li")
-      .contains("Resources")
+      .contains("Services")
       .next()
       .click();
     cy.url().should("contain", "EGI");

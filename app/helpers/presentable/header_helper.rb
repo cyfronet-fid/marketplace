@@ -9,6 +9,10 @@ module Presentable::HeaderHelper
     [provider_links, status]
   end
 
+  def datasource_header_fields
+    [datasource_links]
+  end
+
   def service_opinions_link(service, preview)
     count = service.service_opinion_count
     link_to n_("%{n} review", "%{n} reviews", count) % { n: count },
@@ -36,6 +40,15 @@ module Presentable::HeaderHelper
     end
   end
 
+  def datasource_about_link(datasource, from)
+    case from
+    when "backoffice_datasource"
+      backoffice_datasource_path(datasource, { from: from })
+    else
+      datasource_path(datasource)
+    end
+  end
+
   def preview_link_parameters(is_preview)
     if is_preview
       { disabled: true, tabindex: -1, class: "disabled", "data-tooltip": "Element disabled in the preview mode" }
@@ -56,6 +69,14 @@ module Presentable::HeaderHelper
 
   def provider_links
     { name: "links", template: "links", fields: %w[website] }
+  end
+
+  def datasource_links
+    {
+      name: "links",
+      template: "links",
+      fields: %w[webpage_url helpdesk_url helpdesk_email user_manual_url training_information_url]
+    }
   end
 
   def status

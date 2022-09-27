@@ -70,7 +70,27 @@ crumb :backoffice_offer_edit do |offer|
   parent :backoffice_service, offer.service
 end
 
-crumb :backoffice_scientific_domains  do
+crumb :backoffice_datasources do
+  link "Owned Datasources", backoffice_datasources_path
+  parent :backoffice_root
+end
+
+crumb :backoffice_datasource do |datasource|
+  link datasource.name, backoffice_datasource_path(datasource)
+  parent :backoffice_datasources
+end
+
+crumb :backoffice_datasource_new do |datasource|
+  link datasource.name, new_backoffice_datasource_path(datasource)
+  parent :backoffice_datasources
+end
+
+crumb :backoffice_datasource_edit do |datasource|
+  link datasource.name, edit_backoffice_datasource_path(datasource)
+  parent :backoffice_datasource, datasource
+end
+
+crumb :backoffice_scientific_domains do
   link "Scientific Domains", backoffice_scientific_domains_path
   parent :backoffice_root
 end

@@ -112,6 +112,150 @@ ActiveRecord::Schema.define(version: 2022_10_12_155620) do
     t.index ["last_name"], name: "index_data_administrators_on_last_name"
   end
 
+  create_table "datasource_catalogues", force: :cascade do |t|
+    t.bigint "datasource_id"
+    t.bigint "catalogue_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["catalogue_id"], name: "index_datasource_catalogues_on_catalogue_id"
+    t.index ["datasource_id", "catalogue_id"], name: "index_datasource_catalogues_on_datasource_id_and_catalogue_id", unique: true
+    t.index ["datasource_id"], name: "index_datasource_catalogues_on_datasource_id"
+  end
+
+  create_table "datasource_categories", force: :cascade do |t|
+    t.bigint "datasource_id"
+    t.bigint "category_id"
+    t.boolean "main", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["category_id"], name: "index_datasource_categories_on_category_id"
+    t.index ["datasource_id", "category_id"], name: "index_datasource_categories_on_datasource_id_and_category_id", unique: true
+    t.index ["datasource_id"], name: "index_datasource_categories_on_datasource_id"
+  end
+
+  create_table "datasource_platforms", force: :cascade do |t|
+    t.bigint "datasource_id"
+    t.bigint "platform_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["datasource_id", "platform_id"], name: "index_datasource_platforms_on_datasource_id_and_platform_id", unique: true
+    t.index ["datasource_id"], name: "index_datasource_platforms_on_datasource_id"
+    t.index ["platform_id"], name: "index_datasource_platforms_on_platform_id"
+  end
+
+  create_table "datasource_providers", force: :cascade do |t|
+    t.bigint "datasource_id"
+    t.bigint "provider_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["datasource_id", "provider_id"], name: "index_datasource_providers_on_datasource_id_and_provider_id", unique: true
+    t.index ["datasource_id"], name: "index_datasource_providers_on_datasource_id"
+    t.index ["provider_id"], name: "index_datasource_providers_on_provider_id"
+  end
+
+  create_table "datasource_scientific_domains", force: :cascade do |t|
+    t.bigint "datasource_id"
+    t.bigint "scientific_domain_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["datasource_id", "scientific_domain_id"], name: "index_datasource_scientific_domains", unique: true
+    t.index ["datasource_id"], name: "index_datasource_scientific_domains_on_datasource_id"
+    t.index ["scientific_domain_id"], name: "index_datasource_scientific_domains_on_scientific_domain_id"
+  end
+
+  create_table "datasource_services", force: :cascade do |t|
+    t.bigint "datasource_id"
+    t.bigint "service_id"
+    t.string "type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["datasource_id", "service_id", "type"], name: "index_datasource_id_on_service_and_type", unique: true
+    t.index ["datasource_id"], name: "index_datasource_services_on_datasource_id"
+    t.index ["service_id"], name: "index_datasource_services_on_service_id"
+  end
+
+  create_table "datasource_sources", force: :cascade do |t|
+    t.string "eid", null: false
+    t.string "source_type", null: false
+    t.bigint "datasource_id", null: false
+    t.jsonb "errored"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["datasource_id"], name: "index_datasource_sources_on_datasource_id"
+    t.index ["eid", "source_type", "datasource_id"], name: "index_datasource_sources_on_eid_type_and_id", unique: true
+  end
+
+  create_table "datasource_target_users", force: :cascade do |t|
+    t.bigint "datasource_id"
+    t.bigint "target_user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["datasource_id", "target_user_id"], name: "index_datasource_target_users", unique: true
+    t.index ["datasource_id"], name: "index_datasource_target_users_on_datasource_id"
+    t.index ["target_user_id"], name: "index_datasource_target_users_on_target_user_id"
+  end
+
+  create_table "datasource_vocabularies", force: :cascade do |t|
+    t.bigint "datasource_id"
+    t.bigint "vocabulary_id"
+    t.string "vocabulary_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["datasource_id", "vocabulary_id", "vocabulary_type"], name: "index_datasources_vocabularies"
+    t.index ["datasource_id"], name: "index_datasource_vocabularies_on_datasource_id"
+    t.index ["vocabulary_id"], name: "index_datasource_vocabularies_on_vocabulary_id"
+  end
+
+  create_table "datasources", force: :cascade do |t|
+    t.string "pid", null: false
+    t.string "status", default: "published", null: false
+    t.string "order_type"
+    t.string "abbreviation"
+    t.string "name", null: false
+    t.string "tagline"
+    t.text "description", null: false
+    t.bigint "resource_organisation_id", null: false
+    t.string "webpage_url"
+    t.string "helpdesk_url"
+    t.string "helpdesk_email"
+    t.string "security_contact_email"
+    t.string "certifications", default: [], array: true
+    t.string "standards", default: [], array: true
+    t.string "open_source_technologies", default: [], array: true
+    t.string "changelog", default: [], array: true
+    t.string "grant_project_names", default: [], array: true
+    t.string "version"
+    t.string "geographical_availabilities", default: [], array: true
+    t.string "geographic_locations", default: [], array: true
+    t.string "language_availability", default: [], array: true
+    t.datetime "last_update"
+    t.string "submission_policy_url"
+    t.string "preservation_policy_url"
+    t.boolean "version_control"
+    t.string "jurisdiction_id"
+    t.string "datasource_classification_id"
+    t.boolean "thematic", default: false
+    t.boolean "horizontal", default: false
+    t.string "user_manual_url"
+    t.string "terms_of_use_url"
+    t.string "privacy_policy_url"
+    t.string "access_policy_url"
+    t.string "resource_level_url"
+    t.string "training_information_url"
+    t.string "status_monitoring_url"
+    t.string "maintenance_url"
+    t.string "order_url"
+    t.string "payment_model_url"
+    t.string "pricing_url"
+    t.bigint "upstream_id"
+    t.datetime "synchronized_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_datasources_on_name"
+    t.index ["pid"], name: "index_datasources_on_pid"
+    t.index ["resource_organisation_id"], name: "index_datasources_on_resource_organisation_id"
+  end
+
   create_table "events", force: :cascade do |t|
     t.string "action", null: false
     t.string "eventable_type"
@@ -286,6 +430,28 @@ ActiveRecord::Schema.define(version: 2022_10_12_155620) do
     t.index ["default"], name: "index_omses_on_default"
     t.index ["service_id"], name: "index_omses_on_service_id"
     t.index ["type"], name: "index_omses_on_type"
+  end
+
+  create_table "persistent_identity_system_vocabularies", force: :cascade do |t|
+    t.bigint "persistent_identity_system_id"
+    t.bigint "vocabulary_id"
+    t.string "vocabulary_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["persistent_identity_system_id", "vocabulary_id"], name: "index_persistent_id_system_vocabularies"
+    t.index ["persistent_identity_system_id"], name: "index_persistent_id_system"
+    t.index ["vocabulary_id"], name: "index_persistent_id_system_on_vocabulary"
+  end
+
+  create_table "persistent_identity_systems", force: :cascade do |t|
+    t.bigint "datasource_id", null: false
+    t.bigint "entity_type_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["datasource_id", "entity_type_id"], name: "index_persistent_id_systems"
+    t.index ["datasource_id"], name: "index_persistent_identity_systems_on_datasource_id"
+    t.index ["entity_type_id"], name: "index_persistent_identity_systems_on_entity_type_id"
+    t.index ["id", "entity_type_id"], name: "index_persistent_id_systems_on_self_and_entity_type"
   end
 
   create_table "platforms", force: :cascade do |t|
@@ -751,6 +917,22 @@ ActiveRecord::Schema.define(version: 2022_10_12_155620) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "datasource_catalogues", "catalogues"
+  add_foreign_key "datasource_catalogues", "datasources"
+  add_foreign_key "datasource_categories", "categories"
+  add_foreign_key "datasource_categories", "datasources"
+  add_foreign_key "datasource_platforms", "datasources"
+  add_foreign_key "datasource_platforms", "platforms"
+  add_foreign_key "datasource_providers", "datasources"
+  add_foreign_key "datasource_providers", "providers"
+  add_foreign_key "datasource_scientific_domains", "datasources"
+  add_foreign_key "datasource_scientific_domains", "scientific_domains"
+  add_foreign_key "datasource_services", "datasources"
+  add_foreign_key "datasource_services", "services"
+  add_foreign_key "datasource_target_users", "datasources"
+  add_foreign_key "datasource_target_users", "target_users"
+  add_foreign_key "datasource_vocabularies", "datasources"
+  add_foreign_key "datasource_vocabularies", "vocabularies"
   add_foreign_key "offer_links", "offers", column: "source_id"
   add_foreign_key "offer_links", "offers", column: "target_id"
   add_foreign_key "offers", "omses", column: "primary_oms_id"
@@ -761,6 +943,7 @@ ActiveRecord::Schema.define(version: 2022_10_12_155620) do
   add_foreign_key "oms_providers", "providers"
   add_foreign_key "oms_triggers", "omses"
   add_foreign_key "omses", "services"
+  add_foreign_key "persistent_identity_systems", "datasources"
   add_foreign_key "project_items", "offers"
   add_foreign_key "project_items", "projects"
   add_foreign_key "project_scientific_domains", "projects"

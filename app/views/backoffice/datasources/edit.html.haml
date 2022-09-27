@@ -1,0 +1,7 @@
+- content_for :title, _("Edit Datasource")
+- breadcrumb :backoffice_datasource_edit, @datasource
+
+.container
+  %h1#title.mb-5= _("Edit Datasource")
+  .edit-datasource
+    = render "form", datasource: @datasource

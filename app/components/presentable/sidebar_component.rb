@@ -13,6 +13,13 @@ class Presentable::SidebarComponent < ApplicationComponent
   end
 
   def sidebar_fields
-    @object.instance_of?(Service) ? service_sidebar_fields : provider_sidebar_fields
+    case @object
+    when Service
+      service_sidebar_fields
+    when Provider
+      provider_sidebar_fields
+    when Datasource
+      datasource_sidebar_fields
+    end
   end
 end

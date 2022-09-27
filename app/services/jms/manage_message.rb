@@ -21,7 +21,7 @@ class Jms::ManageMessage < ApplicationService
     @token = token
   end
 
-  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
 
   def call
     log @message
@@ -74,6 +74,18 @@ class Jms::ManageMessage < ApplicationService
           modified_at
         )
       end
+    when "datasource"
+      modified_at = modified_at(resource, "datasourceBundle")
+      case action
+      when "update", "create"
+        Datasource::PcCreateOrUpdateJob.perform_later(
+          resource["datasourceBundle"]["datasource"],
+          resource["datasourceBundle"]["active"],
+          @eosc_registry_base_url,
+          @token,
+          modified_at
+        )
+      end
     else
       raise WrongMessageError
     end
@@ -84,7 +96,7 @@ class Jms::ManageMessage < ApplicationService
     warn "[WARN] eid #{e} for #{resource_type} has a wrong format - update disabled"
   end
 
-  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity
 
   private
 

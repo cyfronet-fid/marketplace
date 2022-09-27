@@ -76,6 +76,26 @@ class Backoffice::VocabulariesController < Backoffice::ApplicationController
     research_category: {
       name: "Research Category",
       klass: Vocabulary::ResearchCategory
+    },
+    jurisdiction: {
+      name: "Jurisdiction",
+      klass: Vocabulary::Jurisdiction
+    },
+    datasource_classification: {
+      name: "Datasource Classification",
+      klass: Vocabulary::DatasourceClassification
+    },
+    research_entity_type: {
+      name: "Research Entity Type",
+      klass: Vocabulary::EntityType
+    },
+    entity_type_scheme: {
+      name: "Entity Type Scheme",
+      klass: Vocabulary::EntityTypeScheme
+    },
+    product_access_policy: {
+      name: "Product Access Policy",
+      klass: Vocabulary::ResearchProductAccessPolicy
     }
   }.freeze
 
@@ -143,6 +163,7 @@ class Backoffice::VocabulariesController < Backoffice::ApplicationController
   end
 
   def instantiate_type
+    puts "ELO #{params[:type]}"
     @type = VOCABULARY_TYPES[params[:type].to_sym][:name]
   end
 

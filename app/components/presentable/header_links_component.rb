@@ -10,6 +10,13 @@ class Presentable::HeaderLinksComponent < ApplicationComponent
   end
 
   def header_fields
-    @object.instance_of?(Service) ? service_header_fields : provider_header_fields
+    case @object
+    when Service
+      service_header_fields
+    when Provider
+      provider_header_fields
+    when Datasource
+      datasource_header_fields
+    end
   end
 end
