@@ -17,10 +17,13 @@ class Presentable::DescriptionComponent < ApplicationComponent
   end
 
   def details_link
-    if @object.instance_of?(Service)
+    case @object
+    when Service
       service_details_path(@object, @from.present? ? { from: @from } : nil)
-    else
+    when Provider
       provider_details_path(@object, @from.present? ? { from: @from } : nil)
+    when Datasource
+      datasource_details_path(@object, @from.present? ? { from: @from } : nil)
     end
   end
 end

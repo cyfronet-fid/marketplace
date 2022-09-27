@@ -2,4 +2,4 @@
 - if error_reason.present? && user_signed_in? && policy(service).errors_show?
   .container
     .alert.alert-danger.mb-0.text-center
-      = _("This resource is not up to date because of invalid import data. Reason: #{error_reason}")
+      = _("This datasource is not up to date because of invalid import data. Reason: #{error_reason}")

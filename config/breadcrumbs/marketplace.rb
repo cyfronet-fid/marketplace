@@ -9,6 +9,16 @@ crumb :profile do
   parent :marketplace_root
 end
 
+crumb :datasources do
+  link "Datasources", datasources_path
+  parent :marketplace_root
+end
+
+crumb :datasource do |datasource|
+  link datasource.name, datasource_path(datasource)
+  parent :datasources
+end
+
 crumb :services do
   link "Resources", services_path(params: (session[:query].blank? ? {} : session[:query]))
   parent :marketplace_root

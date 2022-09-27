@@ -18,12 +18,34 @@ module Importable
   end
 
   def map_link(link, type = "multimedia")
-    return if link&.[]("multimediaURL").blank? && link&.[]("useCaseURL").blank? && !UrlHelper.url?(link)
+    if link&.[]("multimediaURL").blank? && link&.[]("researchProductLicenseURL").blank? &&
+         link&.[]("researchProductMetadataLicenseURL").blank? && link&.[]("useCaseURL").blank? && !UrlHelper.url?(link)
+      return
+    end
     case type
     when "multimedia"
       Link::MultimediaUrl.new(name: link["multimediaName"].presence, url: link["multimediaURL"] || link)
     when "use_cases"
       Link::UseCasesUrl.new(name: link["useCaseName"].presence, url: link["useCaseURL"] || link)
+    when "research_product_metadata"
+      Link::ResearchProductLicenseUrl.new(
+        name: link["researchProductMetadataLicenseName"].presence,
+        url: link["researchProductMetadataLicenseURL"]
+      )
+    when "research_product"
+      Link::ResearchProductLicenseUrl.new(
+        name: link["researchProductLicenseName"].presence,
+        url: link["researchProductLicenseURL"]
+      )
+    end
+  end
+
+  def map_persistent_identity_system(system)
+    if system.present?
+      {
+        entity_type: Vocabulary::EntityType.find_by(eid: system["persistentIdentityEntityType"]),
+        entity_type_schemes: Vocabulary::EntityTypeScheme.where(eid: system["persistentIdentityEntityTypeSchemes"])
+      }
     end
   end
 
@@ -113,6 +135,22 @@ module Importable
 
   def map_catalogue(catalogue)
     Catalogue.find_by(pid: catalogue)
+  end
+
+  def map_jurisdiction(jurisdiction)
+    Vocabulary::Jurisdiction.find_by(eid: jurisdiction)
+  end
+
+  def map_datasource_classification(classification)
+    Vocabulary::DatasourceClassification.find_by(eid: classification)
+  end
+
+  def map_access_policies(policies)
+    Vocabulary::ResearchProductAccessPolicy.where(eid: policies)
+  end
+
+  def map_entity_types(types)
+    Vocabulary::EntityType.where(eid: types)
   end
 
   def map_provider(prov_eid)

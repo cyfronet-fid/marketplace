@@ -9,6 +9,10 @@ module Presentable::SidebarHelper
     [provider_scientific_categorisation, multimedia, address, provider_contacts]
   end
 
+  def datasource_sidebar_fields
+    [scientific_categorisation, categorisation, target_users, resource_availability_and_languages]
+  end
+
   private
 
   def scientific_categorisation

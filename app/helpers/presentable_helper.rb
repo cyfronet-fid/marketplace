@@ -89,4 +89,14 @@ module PresentableHelper
   def search_service_base_url
     SEARCH_SERVICE_BASE_URL
   end
+
+  def pc_dashboard_link(object)
+    Mp::Application.config.providers_dashboard_url + "/dashboard/#{catalogue_pid(object)}/" +
+      "#{object.resource_organisation.pid}/datasource-dashboard/#{object.pid}/stats"
+  end
+
+  def pc_edit_link(object)
+    Mp::Application.config.providers_dashboard_url +
+      "/provider/#{object.resource_organisation.pid}/datasource/update/#{object.pid}"
+  end
 end

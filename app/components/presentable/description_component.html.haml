@@ -20,6 +20,14 @@
           = _("More about")
           = @object.name
           %i.fas.fa-long-arrow-alt-right
+      - elsif @object.is_a?(Datasource)
+        %a.more-details{ href: "javascript:;",
+                         "data-action": "click->datasource#toggle",
+                         "data-value": "details",
+                         "data-probe" => "" }
+          = _("More about")
+          = @object.name
+          %i.fas.fa-long-arrow-alt-right
       - else
         %a.more-details{ href: details_link,
                          "data-shepherd-tour-target": "service-more-about",

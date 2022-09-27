@@ -465,7 +465,8 @@
 
   .backoffice-list {
     .list-group-item {
-      .provider-name {
+      .provider-name,
+      .datasource-name {
         width: 100%;
         max-width: 100% !important;
         margin-bottom: 7px;

@@ -5,5 +5,5 @@
     = link_form.input :name, disabled: object.present? ? object&.upstream_id.present? : nil
     = link_form.hidden_field :_destroy, "data-target": "form.destroy"
     .text-right
-      = link_to _("Delete #{link_name.humanize}"), "#", id: "multimedia-delete-#{link_form.index}",
+      = link_to _("Delete #{link_name.underscore.humanize}"), "#", id: "#{link_name}-delete-#{link_form.index}",
       class: "btn-sm disablable btn-danger", "data-action": "click->form#removeField"

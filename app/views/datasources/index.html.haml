@@ -1,0 +1,12 @@
+- content_for :title, _("Datasources")
+- breadcrumb(:datasources)
+%main.pages
+  .container
+    %h1{ "data-e2e": "provider-list" }
+      = _("Datasources")
+    .media.border-0
+      .media-body
+        %ul.special-list
+          - @datasources.each do |datasource|
+            %li.special-list-item
+              = link_to datasource.name, datasource_path(datasource)

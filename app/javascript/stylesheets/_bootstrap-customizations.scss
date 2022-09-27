@@ -2369,7 +2369,8 @@ label[data-multicheckbox].small {
         max-width: 80%;
       }
 
-      &.provider-name {
+      &.provider-name,
+      &.datasource-name {
         max-width: 100%;
       }
     }

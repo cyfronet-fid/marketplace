@@ -11,5 +11,9 @@
               = mail_to record.send(field), record.send(field)
           %br
         - else
-          %span= record.send(field)
+          %span
+            - if with_desc
+              = t(".#{field}") + ": "
+              %br
+            = record.send(field)
           %br
