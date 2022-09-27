@@ -22,6 +22,7 @@ RSpec.configure do |config|
   config.before(:suite) do
     # reindex models
     Service.reindex
+    Datasource.reindex
     Provider.reindex
     Offer.reindex
 

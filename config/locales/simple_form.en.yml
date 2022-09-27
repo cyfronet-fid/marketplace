@@ -16,6 +16,17 @@ en:
         affiliations: affiliation
         certifications: certification
         national_roadmaps: National roadmap
+      datasource:
+        multimedia: multimedia
+        tag_list: tag
+        use_cases_url: use case url
+        certifications: certification
+        standards: standard
+        open_source_technologies: open source technology
+        grant_project_names: grant/project name
+        changelog: changelog entry
+        related_platforms: related platform
+
     "yes": 'Yes'
     "no": 'No'
     required:

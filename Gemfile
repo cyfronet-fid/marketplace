@@ -86,7 +86,7 @@ group :development, :test do
   gem "rspec-rails", "~> 3.8.2"
   gem "rswag-specs"
   gem "pry"
-  gem "pry-byebug"
+  gem "pry-byebug", "~>3.10.0"
   gem "pry-rails"
   gem "pry-nav"
 

@@ -5,9 +5,9 @@
     = public_contact_form.input :last_name, disabled: object.present? ? object&.upstream_id.present? : nil
     = public_contact_form.input :email, disabled: object.present? ? object&.upstream_id.present? : nil
     = public_contact_form.input :phone, disabled: object.present? ? object&.upstream_id.present? : nil
+    = public_contact_form.input :position, disabled: object.present? ? object&.upstream_id.present? : nil
     - unless provider_form
       = public_contact_form.input :organisation, disabled: object.present? ? object&.upstream_id.present? : nil
-    = public_contact_form.input :position, disabled: object.present? ? object&.upstream_id.present? : nil
     = public_contact_form.hidden_field :_destroy, "data-target": "form.destroy"
     .text-right
       = link_to _("Delete contact"), "#", id: "public-contact-delete-#{public_contact_form.index}",

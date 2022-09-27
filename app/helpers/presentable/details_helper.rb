@@ -24,6 +24,24 @@ module Presentable::DetailsHelper
     ]
   end
 
+  def datasource_details_columns
+    [
+      [classification, availability, marketing, dependencies, attribution, order],
+      [public_contacts, maturity_information, datasource_management, financial_information],
+      [
+        version_control,
+        changelog,
+        datasource_policies,
+        persistent_identity_systems,
+        datasource_content,
+        research_product_licensing,
+        research_product_access_policies,
+        research_product_metadata,
+        research_product_metadata_access_policies
+      ]
+    ]
+  end
+
   def public_contacts
     {
       name: "public_contacts",
@@ -47,9 +65,10 @@ module Presentable::DetailsHelper
     {
       name: "classification",
       template: "array",
-      fields: %w[target_users access_types access_modes tag_list],
+      fields: %w[research_categories target_users access_types access_modes tag_list],
       with_desc: true,
       nested: {
+        research_categories: "name",
         target_users: "name",
         access_types: "name",
         access_modes: "name",
@@ -140,6 +159,94 @@ module Presentable::DetailsHelper
         maintenance_url
       ],
       with_desc: true
+    }
+  end
+
+  def datasource_management
+    {
+      name: "management",
+      template: "links",
+      fields: %w[
+        helpdesk_url
+        user_manual_url
+        terms_of_use_url
+        privacy_policy_url
+        access_policy_url
+        training_information_url
+        status_monitoring_url
+        maintenance_url
+      ],
+      with_desc: true
+    }
+  end
+
+  def datasource_policies
+    { name: "policies", template: "links", fields: %w[submission_policy_url preservation_policy_url], with_desc: true }
+  end
+
+  def version_control
+    { name: "version_control", template: "array", fields: %w[version_control] }
+  end
+
+  def persistent_identity_systems
+    {
+      name: "persistent_identity_systems",
+      template: "object",
+      fields: %w[entity_type entity_type_scheme_names],
+      type: "array",
+      with_desc: true,
+      clazz: "persistent_identity_systems",
+      nested: {
+        entity_type: "name"
+      }
+    }
+  end
+
+  def datasource_content
+    {
+      name: "datasource_content",
+      template: "array",
+      fields: %w[jurisdiction datasource_classification research_entity_types thematic],
+      with_desc: true
+    }
+  end
+
+  def research_product_licensing
+    {
+      name: "research_product_licensing",
+      template: "links",
+      fields: %w[link_research_product_license_urls],
+      type: "array"
+    }
+  end
+
+  def research_product_access_policies
+    {
+      name: "research_product_access_policies",
+      template: "list",
+      fields: %w[research_product_access_policies],
+      nested: {
+        research_product_access_policies: "name"
+      }
+    }
+  end
+
+  def research_product_metadata
+    {
+      name: "research_product_metadata",
+      template: "links",
+      fields: %w[link_research_product_metadata_license_urls],
+      type: "array"
+    }
+  end
+  def research_product_metadata_access_policies
+    {
+      name: "research_product_metadata_access_policies",
+      template: "list",
+      fields: %w[research_product_metadata_access_policies],
+      nested: {
+        research_product_metadata_access_policies: "name"
+      }
     }
   end
 

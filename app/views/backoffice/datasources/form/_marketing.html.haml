@@ -1,0 +1,52 @@
+- collapsed = collapsed?(datasource, [:description, :tagline, :logo, :link_multimedia_urls,
+  :"link_multimedia_urls.url", :link_use_cases_urls, :"link_use_cases_urls.url"])
+.card.shadow-sm.rounded
+  %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed),
+              data: { toggle: "collapse", target: "#marketing" },
+              aria: { expanded: true, controls: "marketing" } }
+    .card-header.text-left{ id: "marketing-header" }
+      .row
+        .col-10
+          = _("Marketing")
+        .col-2.text-right
+          .collapse-icon
+            %i.fas.fa-chevron-down
+            %i.fas.fa-chevron-up
+.collapse{ id: "marketing", "aria-labelledby": "marketing-header",
+          "data-parent": "#accordion-form",
+          class: ("show" unless collapsed) }
+  .card-body
+    .service-description
+      = f.input :description, disabled: cant_edit(:description)
+    = f.input :tagline, disabled: cant_edit(:tagline)
+    - has_logo = datasource.logo.present? && datasource.logo.attached? && datasource.logo.variable?
+    = f.input :logo, disabled: cant_edit(:logo), as: :file,
+      input_html: { value: has_logo ? url_for(datasource.logo) : nil }
+    %h3
+      = _("Multimedia urls")
+    = f.error :link_multimedia_urls, class: "invalid-feedback d-block"
+    = f.fields_for :link_multimedia_urls, disabled: datasource.upstream_id.present?, multiple: true, as: :array,
+                wrapper_html: { "data-target" => "form.link" } do |link_form|
+      = render "backoffice/common_parts/form/link_fields",
+              link_form: link_form, object: datasource, link_name: "multimedia"
+    = link_to _("Add new multimedia"), "#", class: "btn btn-primary disablable",
+              data: { target: "form.addField",
+              action: "click->form#addField",
+              value: "multimedia",
+              fields: f.fields_for(:link_multimedia_urls, Link::MultimediaUrl.new,
+              child_index: "new_field") { |lf| render "backoffice/common_parts/form/link_fields",
+              link_form: lf, object: datasource, link_name: "multimedia" } }
+
+    %h3.mt-3
+      = _("Use cases urls")
+    = f.fields_for :link_use_cases_urls, disabled: datasource&.upstream_id.present?, multiple: true, as: :array,
+              wrapper_html: { "data-target" => "form.link" } do |link_form|
+      = render "backoffice/common_parts/form/link_fields", multiple: true, as: :array,
+              link_form: link_form, object: datasource, link_name: "useCase"
+    = link_to _("Add new use case"), "#", class: "btn btn-primary disablable",
+              data: { target: "form.addField",
+              action: "click->form#addField",
+              value: "useCases",
+              fields: f.fields_for(:link_use_cases_urls, Link::UseCasesUrl.new,
+              child_index: "new_field") { |lf| render "backoffice/common_parts/form/link_fields",
+              link_form: lf, object: datasource, link_name: "useCase" } }

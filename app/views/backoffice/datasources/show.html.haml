@@ -1,0 +1,64 @@
+- content_for :title, @datasource.name
+- breadcrumb :backoffice_datasource, @datasource
+.container
+  .status-row
+    .row
+      .col-12.col-lg-4
+        %span
+          = _("Status") + ":"
+        %span.font-weight-bold= @datasource.status
+      .col-12.col-lg-8.service-buttons
+        .btn-group.float-right
+          - if policy([:backoffice, @datasource]).publish?
+            = link_to _("Publish"),
+                      backoffice_datasource_publish_path(@datasource),
+                      method: :post,
+                      data: { confirm: _("Are you sure you want to publish this resource?"), e2e: "publish-btn" },
+                      class: "btn btn-success btn-sm"
+          - if policy([:backoffice, @datasource]).publish_unverified?
+            = link_to _("Publish as unverified resource"),
+                      backoffice_datasource_publish_path(@datasource, unverified: true),
+                      method: :post,
+                      data: { confirm: _("Are you sure you want to publish this resource as unverified resource?") },
+                      class: "btn btn-warning btn-sm"
+          - if policy([:backoffice, @datasource]).draft?
+            = link_to _("Stop showing in the MP"),
+                      backoffice_datasource_draft_path(@datasource),
+                      method: :post,
+                      data: { confirm: _("Are you sure you want to stop showing this resource?"), e2e: "draft-btn" },
+                      class: "btn btn-error btn-sm"
+.container{ "data-controller": "datasource" }
+  .container
+    .pt-4.pl-3.pr-3.shadow-sm.rounded.service-box.service-detail.backoffice
+      = render Presentable::HeaderComponent.new(object: @datasource,
+                            title: @datasource.name,
+                            abbreviation: @datasource.abbreviation,
+                            subtitle: @datasource.tagline,
+                            comparison_enabled: @comparison_enabled,
+                            show_checkboxes: false,
+                            preview: local_assigns[:preview],
+                            question: @question,
+                            favourite_services: @favourite_services) do |c|
+        - c.buttons do
+          = render "components/presentable/header_component/backoffice_datasource_buttons", datasource: @datasource
+
+      = render "backoffice/datasources/tabs", datasource: @datasource, params: { from: "backoffice_datasource" }
+  .tab-content
+    #about{ "data-target": "datasource.content" }
+      = render Presentable::DescriptionComponent.new(object: @datasource, from: "backoffice_service") do |c|
+        - c.analytics do
+          %h5
+            = _("Updates")
+          %ul.list-group
+            - if @datasource.synchronized_at.present?
+              %li.list-group-item
+                %span
+                  = _("Synchronized at") + ":"
+                %strong.text-dark= l @datasource.synchronized_at, format: :short
+            %li.list-group-item
+              %span
+                = _("Updated at") + ":"
+              %strong.text-dark= l @datasource.updated_at, format: :short
+      = render "taggable/details_section", taggable: @datasource
+    #details.d-none{ "data-target": "datasource.content" }
+      = render Presentable::DetailsComponent.new(@datasource, preview: false)

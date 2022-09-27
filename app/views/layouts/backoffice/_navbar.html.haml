@@ -17,6 +17,8 @@
           = link_to _("Getting Started"), backoffice_path, class: "nav-link px-2 py-1"
         = nav_link controller: :services, html_options: { class: "nav-item" } do
           = link_to _("Owned Resources"), backoffice_services_path, class: "nav-link px-2 py-1"
+        = nav_link controller: :services, html_options: { class: "nav-item" } do
+          = link_to _("Datasources"), backoffice_datasources_path, class: "nav-link px-2 py-1"
         - if policy([:backoffice, Provider]).index?
           = nav_link controller: :providers, html_options: { class: "nav-item" } do
             = link_to _("Providers"), backoffice_providers_path, class: "nav-link px-2 py-1"

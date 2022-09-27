@@ -10,7 +10,7 @@ class ServicesController < ApplicationController
   before_action :sort_options
   before_action :load_query_params_from_session, only: :index
 
-  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
   def index
     if params["object_id"].present?
       case params["type"]
@@ -26,6 +26,8 @@ class ServicesController < ApplicationController
                       q: params["q"],
                       anchor: ("offer-#{params["anchor"]}" if params["anchor"].present?)
                     )
+      when "datasource"
+        redirect_to datasource_path(Datasource.friendly.find(params["object_id"]), q: params["q"])
       end
     end
     subgroup_quantity = 5
@@ -51,7 +53,7 @@ class ServicesController < ApplicationController
       current_user&.favourite_services || Service.where(slug: Array(cookies[:favourites]&.split("&") || []))
   end
 
-  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity
 
   def show
     @service = Service.includes(:offers).friendly.find(params[:id])
@@ -92,6 +94,10 @@ class ServicesController < ApplicationController
 
   def provider_scope
     policy_scope(Provider).with_attached_logo
+  end
+
+  def datasource_scope
+    policy_scope(Datasource).with_attached_logo
   end
 
   def presentable

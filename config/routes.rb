@@ -36,6 +36,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :datasources, only: [:index, :show], constraints: { id: %r{[^/]+} }
+
   resource :comparisons, only: [:show, :destroy] do
     scope module: :comparisons do
       resource :services, only: [:create, :destroy]
@@ -93,6 +95,12 @@ Rails.application.routes.draw do
     resources :categories
     resources :providers, constraints: { id: %r{[^/]+} }
     resources :platforms
+    resources :datasources, constraints: { id: %r{[^/]+} } do
+      scope module: :datasources do
+        resource :publish, only: :create
+        resource :draft, only: :create
+      end
+    end
     get "vocabularies", to: "vocabularies#index", type: "target_user", as: :vocabularies
     scope "/vocabularies" do
       resources :target_users, controller: "vocabularies", type: "target_user"
@@ -113,6 +121,11 @@ Rails.application.routes.draw do
       resources :structure_types, controller: "vocabularies", type: "structure_type"
       resources :meril_scientific_domains, controller: "vocabularies", type: "meril_scientific_domain"
       resources :research_categories, controller: "vocabularies", type: "research_category"
+      resources :jurisdictions, controller: "vocabularies", type: "jurisdiction"
+      resources :datasource_classifications, controller: "vocabularies", type: "datasource_classification"
+      resources :research_entity_types, controller: "vocabularies", type: "research_entity_type"
+      resources :entity_type_schemes, controller: "vocabularies", type: "entity_type_scheme"
+      resources :product_access_policies, controller: "vocabularies", type: "product_access_policy"
     end
   end
 

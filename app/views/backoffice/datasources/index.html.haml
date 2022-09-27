@@ -1,0 +1,34 @@
+- content_for :title, _("Datasources")
+- breadcrumb :backoffice_datasources
+.container
+  %h1
+    = _("Datasources")
+    - if policy([:backoffice, Datasource]).new?
+      .float-right
+        = link_to _("Add new Datasource"),
+                  new_backoffice_datasource_path,
+                  class: "btn btn-primary",
+                  "data-e2e": "add-new-datasource"
+      .clearfix
+  %ul.list-group.backoffice-list.mt-3.mb-3{ "data-e2e": "backoffice-datasources-list" }
+    - @datasources.each do |datasource|
+      %li.list-group-item.datasources
+        .row
+          .col-12.col-md-7
+            = link_to datasource.name, backoffice_datasource_path(datasource), class: "datasource-name"
+          .col-12.col-md-5
+            .actions
+              - if policy([:backoffice, datasource]).destroy?
+                = link_to backoffice_datasource_path(datasource),
+                    method: :delete,
+                    data: { confirm: _("Are you sure you want to remove this datasource") },
+                    class: "delete-icon float-right" do
+                  %i.far.fa-trash-alt
+
+              - if policy([:backoffice, datasource]).edit?
+                = link_to _("Edit"),
+                    edit_backoffice_datasource_path(datasource),
+                    class: "btn-sm btn-warning float-right mr-4"
+            %span.status{ class: datasource.status }
+              = datasource.status
+  = (pagy_bootstrap_nav @pagy).html_safe

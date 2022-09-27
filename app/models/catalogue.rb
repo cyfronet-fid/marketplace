@@ -9,4 +9,7 @@ class Catalogue < ApplicationRecord
 
   has_many :provider_catalogues, dependent: :destroy
   has_many :providers, through: :provider_catalogues
+
+  has_many :datasource_catalogues, dependent: :destroy
+  has_many :datasources, through: :datasource_catalogues
 end

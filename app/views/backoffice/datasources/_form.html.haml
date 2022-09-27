@@ -1,0 +1,35 @@
+= simple_form_for [:backoffice, datasource],
+  html: { "data-controller" => "form", "data-target": "form.form",
+  "data-disabled": datasource.upstream_id.present? } do |f|
+  = f.error_notification
+  .row
+    .col-12.col-md-3
+      = render "backoffice/datasources/form/menu_panel"
+    .col-12.col-md-9
+      #accordion-form.accordion
+        = render "backoffice/datasources/form/basic", f: f, datasource: datasource
+        = render "backoffice/datasources/form/marketing", f: f, datasource: datasource
+        = render "backoffice/datasources/form/classification", f: f, datasource: datasource
+        = render "backoffice/datasources/form/availability", f: f, datasource: datasource
+        = render "backoffice/datasources/form/location", f: f, datasource: datasource
+        = render "backoffice/datasources/form/contact", f: f, datasource: datasource
+        = render "backoffice/datasources/form/maturity", f: f, datasource: datasource
+        = render "backoffice/datasources/form/dependencies", f: f, datasource: datasource
+        = render "backoffice/datasources/form/attribution", f: f, datasource: datasource
+        = render "backoffice/datasources/form/management", f: f, datasource: datasource
+        = render "backoffice/datasources/form/order", f: f, datasource: datasource
+        = render "backoffice/datasources/form/financial", f: f, datasource: datasource
+        = render "backoffice/datasources/form/datasource_policies", f: f, datasource: datasource
+        = render "backoffice/datasources/form/datasource_content", f: f, datasource: datasource
+        = render "backoffice/datasources/form/research_product_policies", f: f, datasource: datasource
+        = render "backoffice/datasources/form/research_product_metadata", f: f, datasource: datasource
+        = render "backoffice/datasources/form/other", f: f, datasource: datasource
+      %hr.bottom-hr.mt-5.mb-4
+      .row.mt-5
+        .col-12
+          = f.button :submit, class: "btn btn-primary pl-5 pr-5 mr-5 mobile-bottom-margin",
+          "data-e2e": "create-datasource-btn"
+          %a.text-left.flex-grow-1.text-uppercase.mobile-bottom-margin{
+            href: "/backoffice/datasources/#{datasource.id}"
+            }
+            = _("Cancel and back to previous page")

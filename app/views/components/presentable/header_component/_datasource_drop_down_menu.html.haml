@@ -1,0 +1,16 @@
+%a#dropdown-menu-button.dropdown-toggle.btn.btn-outline-secondary.d-block.mb-3{ "aria-expanded" => "false",
+                                                    "aria-haspopup" => "true",
+                                                    "data-toggle" => "dropdown",
+                                                    type: "button" }
+  .menu__label Manage the datasource
+.dropdown-menu.shadow
+  %ul
+    %li
+      %a.dropdown-item.dropdown-details{ href: pc_dashboard_link(datasource),
+        target: :_blank, "data-probe": "" }
+        = _("Datasource dashboard")
+    - if catalogue_pid(datasource) == "eosc"
+      %li
+        %a.dropdown-item.dropdown-details{ href: pc_edit_link(datasource),
+          target: :_blank, "data-probe": "" }
+          = _("Edit datasource details")

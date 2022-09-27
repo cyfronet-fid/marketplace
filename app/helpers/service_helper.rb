@@ -100,9 +100,10 @@ module ServiceHelper
     service_or_offer.external? ? "external" : service_or_offer.order_type
   end
 
-  def order_type(service)
-    types = ([service&.order_type] + service&.offers&.published&.map(&:order_type)).compact.uniq
-    types.size > 1 ? "various" : service&.order_type || "other"
+  def order_type(orderable)
+    return orderable&.order_type if orderable.is_a?(Datasource)
+    types = ([orderable&.order_type] + orderable&.offers&.published&.map(&:order_type)).compact.uniq
+    types.size > 1 ? "various" : orderable&.order_type || "other"
   end
 
   def highlighted_for(field, model, highlights)

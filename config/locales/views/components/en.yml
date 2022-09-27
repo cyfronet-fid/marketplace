@@ -23,6 +23,7 @@ en:
           helpdesk_url: Helpdesk
           helpdesk_email: Helpdesk e-mail
           manual_url: Manual
+          user_manual_url: User Manual
           privacy_policy_url: Privacy policy
           status_monitoring_url: Status Monitoring
           maintenance_url: Maintenance
@@ -32,6 +33,7 @@ en:
           sla_url: Corporate SLA
           terms_of_use_url: Terms of use
           access_policies_url: Access policies
+          access_policy_url: Access policy
           phase:
             discovery: "Discovery (min. TRL 1)"
             planned: "Planned (min. TRL 3)"
@@ -71,6 +73,8 @@ en:
           link_use_cases_urls: Use case %{idx}
         object:
           public_contacts: Public contact %{idx}
+          entity_type: Entity Type
+          entity_type_scheme_names: Entity Type Schemes
         array:
           legal_statuses: Legal Status
           provider_life_cycle_statuses: Provider Life Cycle Status
