@@ -42,6 +42,26 @@ module Service::Recommendable
     end
   end
 
+  def fetch_similar(service_id, quantity = 6)
+    user_id = current_user.id
+
+    return if user_id.blank?
+
+    url = "#{Mp::Application.config.similar_services_host}/similar_services/recommendation"
+    body = { user_id: user_id, service_id: service_id, num: quantity }.to_json
+    headers = { "Content-Type": "application/json", Accept: "application/json" }
+    response = Faraday.post(url, body, headers)
+    body = JSON.parse(response.body)
+
+    return if response.status != 200
+
+    ids = body.is_a?(Array) ? body.each.map { |e| e["service_id"].to_i } : []
+    Service.where(id: ids, status: %i[published unverified])
+  rescue StandardError
+    Sentry.capture_message("Similar services recommendation, similar services endpoint response error")
+    Service.find(service_id).target_relationships.take(quantity)
+  end
+
   def fetch_recommended
     # Set unique client id per device per system
     client_uid = cookies[:client_uid]
