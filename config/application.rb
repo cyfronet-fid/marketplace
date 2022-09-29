@@ -64,6 +64,7 @@ module Mp
         " https://beta.providers.eosc-portal.eu"
       end
 
+    config.similar_services_host = ENV["SIMILAR_SERVICES_HOST"] || "http://docker-fid.grid.cyf-kr.edu.pl:4559"
     config.recommender_host = ENV["RECOMMENDER_HOST"]
     config.recommendation_engine = ENV["RECOMMENDATION_ENGINE"] || "RL"
     config.auth_mock = ENV["AUTH_MOCK"]

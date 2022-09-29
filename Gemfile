@@ -12,7 +12,7 @@ gem "nori"
 
 gem "uglifier", ">= 1.3.0"
 gem "webpacker", "~> 5.0"
-gem "view_component", require: "view_component/engine"
+gem "view_component"
 gem "haml-rails"
 gem "turbolinks", "~> 5", require: false
 

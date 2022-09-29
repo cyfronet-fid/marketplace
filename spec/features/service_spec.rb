@@ -77,7 +77,7 @@ RSpec.feature "Service browsing" do
 
       visit service_path(service)
 
-      expect(page.body).to have_content "Suggested compatible resources"
+      expect(page.body).to have_content "Similar services"
       expect(page.body).to have_content related.name
     end
 
