@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 class Backoffice::ServicesController < Backoffice::ApplicationController
-  include Service::Searchable
-  include Service::Categorable
   include Service::Autocomplete
+  include Service::Categorable
+  include Service::Recommendable
+  include Service::Searchable
   include Backoffice::ServicesSessionHelper
 
   before_action :find_and_authorize, only: %i[show edit update destroy]
@@ -46,6 +47,10 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
       @client = @client&.credentials&.expires_at.blank? ? Google::Analytics.new : @client
       @analytics = Analytics::PageViewsAndRedirects.new(@client).call(request.path)
     end
+    @similar_services = fetch_similar(@service.id, current_user&.id)
+    @similar_services_title = "Similar services"
+    @related_services = @service.target_relationships
+    @related_services_title = "Suggested compatible resources"
   end
 
   def new

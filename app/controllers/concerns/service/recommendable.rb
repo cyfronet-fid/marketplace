@@ -42,11 +42,7 @@ module Service::Recommendable
     end
   end
 
-  def fetch_similar(service_id, quantity = 6)
-    user_id = current_user.id
-
-    return if user_id.blank?
-
+  def fetch_similar(service_id, user_id, quantity = 6)
     url = "#{Mp::Application.config.similar_services_host}/similar_services/recommendation"
     body = { user_id: user_id, service_id: service_id, num: quantity }.to_json
     headers = { "Content-Type": "application/json", Accept: "application/json" }
