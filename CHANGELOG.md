@@ -6,12 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [3.42.0-milestone]
+## [3.42.0] 2022-10-04
 
 ### Added
 - Similar services recommendations in the service details page (@goreck888)
 
-## [3.41.0] 2020-08-29
+## [3.41.0] 2022-08-29
 
 ### Fixed
 - Styles in menus and forms (@jarekzet)
