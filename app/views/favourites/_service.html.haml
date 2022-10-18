@@ -9,6 +9,7 @@
                   class: "form-check-input",
                   disabled: !checked?(service.slug) && comparison_enabled,
                   "data-probe": "",
+                  "data-service-id": service.id,
                   "data-target": "comparison.checkbox",
                   "data-action": "click->comparison#update"
             %span

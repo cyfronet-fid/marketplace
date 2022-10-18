@@ -3,4 +3,4 @@
     %li
       %span= link_to highlighted_for(:offer_name, offer, h),
         service_path(service, anchor: "offer-#{ offer.id }"),
-        "data-probe": ""
+        "data-probe": "", "data-service-id": service.id

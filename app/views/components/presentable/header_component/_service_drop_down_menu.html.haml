@@ -10,14 +10,14 @@
         Mp::Application.config.providers_dashboard_url +
         "/dashboard/#{catalogue_pid(service)}/" +
         "#{resource_organisation_pid(service)}/resource-dashboard/#{service.pid}/stats",
-        target: :_blank, "data-probe": "" }
+        target: :_blank, "data-probe": "", "data-service-id": service.id }
         = _("Resource dashboard")
     - if catalogue_pid(service) == "eosc"
       %li
         %a.dropdown-item.dropdown-details{ href:
                   Mp::Application.config.providers_dashboard_url +
                   "/provider/#{resource_organisation_pid(service)}/resource/update/#{service.pid}",
-                  target: :_blank, "data-probe": "" }
+                  target: :_blank, "data-probe": "", "data-service-id": service.id }
           = _("Edit resource details")
     %li
       %a.dropdown-item.dropdown-offers{ href: service_ordering_configuration_path(service, anchor: "offers",

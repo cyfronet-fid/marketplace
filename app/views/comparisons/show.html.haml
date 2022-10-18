@@ -22,12 +22,12 @@
                 = image_tag service.logo.variant(resize: "100x100")
             = link_to comparisons_services_path(slug: service.slug, fromc: params[:fromc], params: @query_params),
             method: :delete,
-              "data-e2e": "delete-service-btn", "data-probe": "" do
+              "data-e2e": "delete-service-btn", "data-probe": "", "data-service-id": service.id do
               %i.far.fa-trash-alt
             .service-title
               = link_to service.name.truncate(30, separator: " "),
               service_path(service, fromc: params[:fromc], comp_link: true),
-              "data-probe": ""
+              "data-probe": "", "data-service-id": service.id
             .service-description
               = service.description.truncate(80, separator: " ")
         - i.times do
