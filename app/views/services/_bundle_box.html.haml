@@ -14,6 +14,6 @@
     .card-button.text-center
       %label
         = link_to service_offers_path(offer.service, customizable_project_item: { offer_id: offer.iid }),
-        "data-probe": "", method: :put do
+        "data-probe": "", "data-service-id": offer.service.id, method: :put do
           %span.btn.btn-primary.font-webtn-linkight-bold
             = _("Select a bundle")

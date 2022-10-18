@@ -6,32 +6,34 @@
       - if local_assigns[:preview]
         %li.nav-item
           %a.nav-link.active.text-uppercase{ "data-probe": "",
+                                             "data-service-id": service.id,
                                              "data-target": "preview.tab",
                                              "data-action": "click->preview#toggle",
                                              "data-value": "about" }
             = _("About")
         %li.nav-item
           %a.nav-link.text-uppercase{ "data-probe": "",
+                                      "data-service-id": service.id,
                                       "data-target": "preview.tab preview.details",
                                       "data-action": "click->preview#toggle",
                                       "data-value": "details" }
             = _("Details")
         %li.nav-item
-          %a.nav-link.disabled.text-uppercase{ "data-probe" => "" }
+          %a.nav-link.disabled.text-uppercase{ "data-probe" => "", "data-service-id" => service.id }
             = _("Reviews (%{ssoc})") % { ssoc: service.service_opinion_count }
       - else
         %li.nav-item
           = link_to _("About"),
             from.blank? ? service_path(service) : about_link(service, from),
             class: "nav-link text-uppercase #{"active" if about_active }", role: "tab",
-            "data-probe": "", "data-e2e": "service-about-btn"
+            "data-probe": "", "data-service-id": service.id, "data-e2e": "service-about-btn"
         %li.nav-item{ "data-shepherd-tour-target": "service-details-tab" }
           = link_to _("Details"), service_details_path(service, from.present? ? { from: from } : nil),
             class: "nav-link text-uppercase #{"active" if controller.controller_name == "details"}", role: "tab",
-            "data-probe": "", "data-e2e": "service-details-btn"
+            "data-probe": "", "data-service-id": service.id, "data-e2e": "service-details-btn"
         %li.nav-item
           = link_to _("Reviews (%{ssoc})") % { ssoc: service.service_opinion_count },
             service_opinions_path(service, from.present? ? { from: from } : nil),
             class: "nav-link text-uppercase #{"active" if controller.controller_name == "opinions"}", role: "tab",
-            "data-probe": "", "data-e2e": "service-reviews-btn"
+            "data-probe": "", "data-service-id": service.id, "data-e2e": "service-reviews-btn"
 

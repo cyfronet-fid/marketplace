@@ -2,6 +2,8 @@ import Rails from "@rails/ujs";
 import Cookies from "js-cookie";
 import { v1 as uuidv1 } from "uuid";
 
+const ROOT_KNOWN_LABELS = ["recommendation-panel"];
+
 const WINDOW_EVENTS_HANDLERS = {
   beforeunload: async () => {
     if (history.length !== 1) {
@@ -262,19 +264,22 @@ function get_source_by(element, pageIdOverride) {
 }
 
 function get_source_root_by(element) {
+  const resource_type_object = { resource_type: "service" };
   if (!element) {
-    return { type: "other" };
+    return { ...resource_type_object, type: "other" };
   }
 
-  const is_recommendation_panel = element.getAttribute("data-probe") === "recommendation-panel";
-  if (is_recommendation_panel) {
-    return {
-      type: "recommendation_panel",
-      service_id: parseInt(element.getAttribute("data-service-id")),
-    };
-  }
+  // We can add other labels if we need to determine more root types
+  const dataProbeLabel = element.getAttribute("data-probe");
+  const dataProbeType = ROOT_KNOWN_LABELS.includes(dataProbeLabel) ? dataProbeLabel : "other";
 
-  return { type: "other" };
+  const serviceId = parseInt(element.getAttribute("data-service-id"));
+
+  return {
+    type: dataProbeType,
+    ...(!Number.isNaN(serviceId) && { resource_id: serviceId }),
+    ...resource_type_object,
+  };
 }
 
 function get_target_url(element) {
