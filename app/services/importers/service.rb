@@ -45,7 +45,8 @@ class Importers::Service < ApplicationService
       access_modes = Array(@data.dig("accessModes", "accessMode"))
       tag_list = Array(@data.dig("tags", "tag")) || []
       geographical_availabilities = Array(@data.dig("geographicalAvailabilities", "geographicalAvailability") || "WW")
-      language_availability = Array(@data.dig("languageAvailabilities", "languageAvailability")).map(&:upcase) || ["EN"]
+      language_availability =
+        Array(@data.dig("languageAvailabilities", "languageAvailability"))&.map(&:upcase) || ["EN"]
       resource_geographic_locations =
         Array(@data.dig("resourceGeographicLocations", "resourceGeographicLocation")) || []
       public_contacts =
@@ -62,7 +63,6 @@ class Importers::Service < ApplicationService
       funding_bodies = map_funding_bodies(@data.dig("fundingBody", "fundingBody"))
       funding_programs = map_funding_programs(@data.dig("fundingPrograms", "fundingProgram"))
       grant_project_names = Array(@data.dig("grantProjectNames", "grantProjectName"))
-      catalogue = map_catalogue(@data["catalogueId"])
     when "rest"
       providers = Array(@data["resourceProviders"]) || []
       multimedia = Array(@data["multimedia"]) || []
@@ -74,7 +74,7 @@ class Importers::Service < ApplicationService
       access_modes = Array(@data["accessModes"])
       tag_list = Array(@data["tags"]) || []
       geographical_availabilities = Array(@data["geographicalAvailabilities"] || "WW")
-      language_availability = @data["languageAvailabilities"].map(&:upcase) || ["EN"]
+      language_availability = @data["languageAvailabilities"]&.map(&:upcase) || ["EN"]
       resource_geographic_locations = Array(@data["resourceGeographicLocations"]) || []
       public_contacts = Array(@data["publicContacts"])&.map { |c| PublicContact.new(map_contact(c)) } || []
       certifications = Array(@data["certifications"])
@@ -139,7 +139,7 @@ class Importers::Service < ApplicationService
       related_services: related_services,
       related_platforms: related_platforms,
       platforms: platforms,
-      catalogue: catalogue,
+      catalogue: map_catalogue(@data["catalogueId"]),
       # Attribution
       funding_bodies: funding_bodies,
       funding_programs: funding_programs,

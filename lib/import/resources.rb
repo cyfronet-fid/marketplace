@@ -9,7 +9,7 @@ module Import
       filepath: nil,
       faraday: Faraday,
       logger: ->(msg) { puts msg },
-      default_upstream: :mp,
+      default_upstream: :eosc_registry,
       token: nil
     )
       @eosc_registry_base_url = eosc_registry_base_url
