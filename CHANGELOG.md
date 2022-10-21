@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.42.1] 2022-10-21
+
+### Fixed
+
+- import `catalogue_id` for a service (@goreck888)
+
+
 ## [3.42.0] 2022-10-04
 
 ### Added

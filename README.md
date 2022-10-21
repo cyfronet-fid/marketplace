@@ -58,6 +58,7 @@ It is important to remember that if some record is a parent for another, it must
 If you need actual production data run:
 ```
 ./bin/rake import:vocabularies
+./bin/rake import:catalogues
 ./bin/rake import:providers
 ./bin/rake import:resources
 ```
