@@ -25,7 +25,12 @@ class Import::Catalogues
 
   def call
     log "Importing catalogues from EOSC Registry..."
+
     @request_catalogues = external_catalogues_data.select { |pro| @ids.empty? || @ids.include?(pro["id"]) }
+
+    total_catalogue_count = @request_catalogues.length
+
+    log "EOSC Registry - all catalogues #{total_catalogue_count}"
 
     @request_catalogues.each do |external_data|
       external_catalogue_data = external_data["catalogue"]
@@ -35,11 +40,16 @@ class Import::Catalogues
       next if @dry_run
 
       if current_catalogue.blank?
+        log "[INFO] Adding [NEW] catalogue: #{parsed_catalogue_data[:name]}, eid: #{parsed_catalogue_data[:pid]}"
         catalogue = Catalogue.new(parsed_catalogue_data)
         catalogue.save!
+        log "[INFO] Catalogue: #{parsed_catalogue_data[:name]}, eid: #{parsed_catalogue_data[:pid]} added successfully"
       else
+        log "[INFO] Updating [EXISTING] catalogue: #{parsed_catalogue_data[:name]}, eid: #{parsed_catalogue_data[:pid]}"
         current_catalogue.update(parsed_catalogue_data)
         current_catalogue.save!
+        log "[INFO] Catalogue: #{parsed_catalogue_data[:name]}, " +
+              "eid: #{parsed_catalogue_data[:pid]} updated successfully"
       end
     rescue ActiveRecord::RecordInvalid
       log "[WARN] Catalogue #{name(external_data)},

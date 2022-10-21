@@ -36,6 +36,7 @@ RSpec.feature "Question about service" do
 
       expect do
         click_on "SEND"
+        sleep(2)
         expect(page).to have_content("Your message was successfully sent")
       end.to change { ActionMailer::Base.deliveries.count }.by(3)
 
@@ -75,6 +76,7 @@ RSpec.feature "Question about service" do
 
       expect do
         click_on "SEND"
+        sleep(2)
         expect(page).to have_content("Your message was successfully sent")
       end.to change { ActionMailer::Base.deliveries.count }.by(3)
 

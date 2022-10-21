@@ -46,7 +46,11 @@ module Service::Recommendable
     url = "#{Mp::Application.config.similar_services_host}/similar_services/recommendation"
     body = { user_id: user_id, service_id: service_id, num: quantity }.to_json
     headers = { "Content-Type": "application/json", Accept: "application/json" }
-    response = Faraday.post(url, body, headers)
+    response =
+      Faraday.post(url, body, headers) do |req|
+        req.options[:timeout] = 5
+        req.options[:open_timeout] = 2
+      end
     body = JSON.parse(response.body)
 
     return if response.status != 200

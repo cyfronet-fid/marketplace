@@ -10,7 +10,7 @@ class Import::Providers
     faraday: Faraday,
     logger: ->(msg) { puts msg },
     ids: [],
-    default_upstream: :mp,
+    default_upstream: :eosc_registry,
     token: nil
   )
     @eosc_registry_base_url = eosc_registry_base_url
@@ -43,9 +43,6 @@ class Import::Providers
       provider_source = ProviderSource.find_by(source_type: "eosc_registry", eid: eid)
 
       # Bug fix for duplicated sources
-      if @default_upstream == :eosc_registry && provider_source.present?
-        current_provider.update(upstream_id: provider_source.id)
-      end
 
       next if @dry_run
 
@@ -53,6 +50,9 @@ class Import::Providers
         create_provider(parsed_provider_data, external_provider_data["logo"], eid)
       elsif provider_source.present? && provider_source.id == current_provider.upstream_id
         update_provider(current_provider, parsed_provider_data, external_provider_data["logo"])
+      end
+      if @default_upstream == :eosc_registry && provider_source.present?
+        current_provider.update(upstream_id: provider_source.id)
       end
     rescue ActiveRecord::RecordInvalid
       log "[WARN] Provider #{name(external_data)},
