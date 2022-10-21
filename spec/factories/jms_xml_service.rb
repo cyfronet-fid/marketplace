@@ -4,11 +4,12 @@ FactoryBot.define do
   factory :jms_xml_service, class: String do
     skip_create
     initialize_with do
-      next {
-        "resourceId" => "13b90013-2e17-4ad9-a260-3b59a598f189",
-        "resourceType" => "service",
-        "resource" =>
-          "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>
+      next(
+        {
+          "resourceId" => "13b90013-2e17-4ad9-a260-3b59a598f189",
+          "resourceType" => "service",
+          "resource" =>
+            "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>
           <tns:serviceBundle xmlns:tns=\"http://einfracentral.eu\">
             <tns:active>true</tns:active>
             <tns:latest>true</tns:latest>
@@ -79,8 +80,9 @@ FactoryBot.define do
               <tns:accessPolicy/>
             </tns:service>
           </tns:serviceBundle>",
-        "payloadFormat" => "xml"
-      }
+          "payloadFormat" => "xml"
+        }
+      )
     end
   end
 end

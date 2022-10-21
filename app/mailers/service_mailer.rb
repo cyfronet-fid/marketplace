@@ -18,8 +18,9 @@ class ServiceMailer < ApplicationMailer
       attachments.inline["logo.png"] = File.read(ActiveStorage::Blob.service.send(:path_for, @service.logo.key))
     end
     interests = []
-    interests << ("categories" if @common_categories.present?) <<
-      ("scientific domains" if @common_scientific_domains.present?)
+    interests << ("categories" if @common_categories.present?) << (
+      "scientific domains" if @common_scientific_domains.present?
+    )
     subject = "New resource in your #{interests.join(" and ")} of interests"
     mail(to: subscriber_email, subject: subject, template_name: "new_service")
   end

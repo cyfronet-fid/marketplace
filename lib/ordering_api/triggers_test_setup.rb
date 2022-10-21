@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-class OrderingApi::TriggersTestSetup
-  def initialize; end
-
+class OrderingApi::TriggersTestSetuprail
   def call
     oms_admin = User.find_by!(uid: "iamasomboadmin")
 

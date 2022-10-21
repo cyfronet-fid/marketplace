@@ -171,9 +171,10 @@ module Importable
 
   def map_provider(prov_eid)
     if prov_eid.present?
-      Provider
-        .joins(:sources)
-        .find_by("provider_sources.source_type": "eosc_registry", "provider_sources.eid": prov_eid)
+      Provider.joins(:sources).find_by(
+        "provider_sources.source_type": "eosc_registry",
+        "provider_sources.eid": prov_eid
+      )
     end
   end
 end

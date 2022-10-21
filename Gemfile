@@ -3,9 +3,9 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.0.3"
+ruby "3.1.2"
 
-gem "rails", "~> 6.1.5"
+gem "rails", "~> 7.0.4"
 gem "pg", ">= 0.18", "< 2.0"
 gem "puma"
 gem "nori"
@@ -17,14 +17,14 @@ gem "haml-rails"
 gem "turbolinks", "~> 5", require: false
 gem "render_async"
 
-gem "bootsnap", ">= 1.4.2", require: false
+gem "bootsnap", ">= 1.15.0", require: false
 gem "colorize", ">= 0.8.1", require: false
 
 gem "ancestry"
 gem "gretel"
 gem "pagy"
 gem "simple_form"
-gem "friendly_id", "~> 5.2.0"
+gem "friendly_id", "~> 5.5.0"
 gem "acts-as-taggable-on"
 gem "countries"
 
@@ -32,13 +32,14 @@ gem "activestorage-validator"
 gem "image_processing"
 
 # translations
+gem "i18n_data", "> 0.16.0"
 gem "fast_gettext"
 gem "gettext_i18n_rails"
 gem "gettext", ">=3.0.2", require: false, group: :development
 gem "ruby_parser", require: false, group: :development
 
 # turbo-charged counter caches
-gem "counter_culture", "~> 2.0"
+gem "counter_culture", "~> 3.3"
 
 # validation
 gem "valid_email2"
@@ -46,7 +47,7 @@ gem "json-schema"
 gem "public_suffix"
 
 gem "searchkick"
-gem "elasticsearch", "7.6.0"
+gem "elasticsearch", "8.5.2"
 
 gem "devise"
 gem "omniauth"
@@ -62,7 +63,7 @@ gem "redcarpet"
 # api
 gem "rswag-api"
 gem "rswag-ui"
-gem "simple_token_authentication"
+gem "simple_token_authentication", "~> 1.18", ">= 1.18.1"
 gem "active_model_serializers"
 
 # jira
@@ -74,8 +75,7 @@ gem "savon", "~> 2.12.0"
 gem "google-apis-analyticsreporting_v4", "~> 0.5"
 
 gem "redis-rails"
-gem "sidekiq"
-gem "sidekiq-limit_fetch", "~>4.2.0"
+gem "sidekiq", "<7"
 
 gem "stomp"
 
@@ -98,8 +98,8 @@ end
 group :development do
   gem "web-console", ">= 3.3.0"
   gem "listen"
-  gem "spring"
-  gem "spring-watcher-listen", "~> 2.0.0"
+  gem "spring", "~> 4.0.0"
+  gem "spring-watcher-listen", "~> 2.1.0"
   gem "spring-commands-rspec"
   gem "prettier", require: false
   gem "overcommit", require: false

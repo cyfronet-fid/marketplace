@@ -23,7 +23,8 @@ RSpec.configure do |config|
         # TODO: Change description
         description: "Documentation of the EOSC Marketplace REST API for integration of other software systems"
       },
-      paths: {},
+      paths: {
+      },
       components: {
         securitySchemes: {
           authentication_token: {
@@ -41,7 +42,8 @@ RSpec.configure do |config|
         version: "v1",
         description: "API for Order Management Systems to integrate with EOSC Marketplace ordering process"
       },
-      paths: {},
+      paths: {
+      },
       components: {
         securitySchemes: {
           authentication_token: {

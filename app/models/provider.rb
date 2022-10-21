@@ -192,12 +192,10 @@ class Provider < ApplicationRecord
   end
 
   def services
-    Service
-      .left_joins(:service_providers)
-      .where(
-        "(status = 'unverified' OR status = 'published') AND
+    Service.left_joins(:service_providers).where(
+      "(status = 'unverified' OR status = 'published') AND
     (service_providers.provider_id = #{id} OR resource_organisation_id = #{id})"
-      )
+    )
   end
 
   def set_default_logo

@@ -73,11 +73,7 @@ end
 
 crumb :category do |category|
   link category.name, category_services_path(category, params: (session[:query].blank? ? {} : session[:query]))
-  if category.parent
-    parent category.parent
-  else
-    parent :services
-  end
+  parent category.parent || :services
 end
 
 crumb :comparison do

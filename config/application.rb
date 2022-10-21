@@ -15,7 +15,7 @@ module Mp
     # This flag will influence all threads in the application
     Thread.abort_on_exception = true
 
-    config.assets.enabled = false
+    # config.assets.enabled = false
 
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
@@ -37,8 +37,8 @@ module Mp
     config.active_storage.queues.analysis = :active_storage_analysis
     config.active_storage.queues.purge = :active_storage_purge
 
-    config.matomo_url = ENV["MP_MATOMO_URL"] || "//providers.eosc-portal.eu/matomo/"
-    config.matomo_site_id = ENV["MP_MATOMO_SITE_ID"] || 1
+    config.matomo_url = ENV.fetch("MP_MATOMO_URL", "//providers.eosc-portal.eu/matomo/")
+    config.matomo_site_id = ENV.fetch("MP_MATOMO_SITE_ID", 1)
 
     # Hierachical locales file structure
     # see https://guides.rubyonrails.org/i18n.html#configure-the-i18n-module
@@ -57,40 +57,26 @@ module Mp
 
     config.portal_base_url = ENV["PORTAL_BASE_URL"].present? ? ENV["PORTAL_BASE_URL"] : "https://eosc-portal.eu"
 
-    config.providers_dashboard_url =
-      if ENV["PROVIDERS_DASHBOARD_URL"].present?
-        ENV["PROVIDERS_DASHBOARD_URL"]
-      else
-        "https://beta.providers.eosc-portal.eu"
-      end
+    config.providers_dashboard_url = ENV.fetch("PROVIDERS_DASHBOARD_URL", "https://beta.providers.eosc-portal.eu")
 
     config.monitoring_data_host = ENV.fetch("MONITORING_DATA_URL", "https://api.devel.argo.grnet.gr/api")
     config.monitoring_data_token = ENV.fetch("MONITORING_DATA_TOKEN",
                                              Rails.application.credentials.monitoring_data[:access_token])
-    config.similar_services_host = ENV["SIMILAR_SERVICES_HOST"] || "http://docker-fid.grid.cyf-kr.edu.pl:4559"
-    config.recommender_host = ENV["RECOMMENDER_HOST"]
-    config.recommendation_engine = ENV["RECOMMENDATION_ENGINE"] || "RL"
-    config.auth_mock = ENV["AUTH_MOCK"]
-    config.eosc_commons_base_url =
-      if ENV["EOSC_COMMONS_BASE_URL"].present?
-        ENV["EOSC_COMMONS_BASE_URL"]
-      else
-        "https://s3.cloud.cyfronet.pl/eosc-portal-common/"
-      end
-    config.eosc_commons_env = ENV["EOSC_COMMONS_ENV"].present? ? ENV["EOSC_COMMONS_ENV"] : "production"
 
-    config.user_actions_target = ENV["USER_ACTIONS_TARGET"].present? ? ENV["USER_ACTIONS_TARGET"] : "all"
+    config.similar_services_host = ENV.fetch("SIMILAR_SERVICES_HOST", "http://docker-fid.grid.cyf-kr.edu.pl:4559")
+    config.recommender_host = ENV.fetch("RECOMMENDER_HOST", nil)
+    config.recommendation_engine = ENV.fetch("RECOMMENDATION_ENGINE", "RL")
+    config.auth_mock = ENV.fetch("AUTH_MOCK", nil)
+    config.eosc_commons_base_url = ENV.fetch("EOSC_COMMONS_BASE_URL", "https://s3.cloud.cyfronet.pl/eosc-portal-common/")
 
-    config.profile_4_enabled = ENV["PROFILE_4_ENABLED"].present? ? ENV["PROFILE_4_ENABLED"] : false
-    config.home_page_external_links_enabled =
-      ENV["HOME_PAGE_EXTERNAL_LINKS_ENABLED"].present? ? ENV["HOME_PAGE_EXTERNAL_LINKS_ENABLED"] : true
-    config.search_service_base_url = ENV["SEARCH_SERVICE_BASE_URL"] || "https://search.eosc-portal.eu"
+    config.eosc_commons_env = ENV.fetch("EOSC_COMMONS_ENV", "production")
 
-    config.mp_stomp_publisher_enabled =
-      if ENV["MP_STOMP_PUBLISHER_ENABLED"].present?
-        ENV["MP_STOMP_PUBLISHER_ENABLED"]
-      else
-        Rails.env.test?
-      end
+    config.user_actions_target = ENV.fetch("USER_ACTIONS_TARGET", "all")
+
+    config.profile_4_enabled = ENV.fetch("PROFILE_4_ENABLED", true)
+    config.home_page_external_links_enabled = ENV.fetch("HOME_PAGE_EXTERNAL_LINKS_ENABLED", true)
+    config.search_service_base_url = ENV.fetch("SEARCH_SERVICE_BASE_URL", "https://search.eosc-portal.eu")
+
+    config.mp_stomp_publisher_enabled = ENV.fetch("MP_STOMP_PUBLISHER_ENABLED") { Rails.env.test? }
   end
 end

@@ -97,8 +97,8 @@ RSpec.feature "Services in backoffice" do
       fill_in "service_sources_attributes_0_eid", with: "12345a"
 
       expect { click_on "Create Resource" }.to change { user.owned_services.count }.by(1).and change { Offer.count }.by(
-                                                   1
-                                                 ).and have_enqueued_job(Ess::UpdateJob)
+              1
+            ).and have_enqueued_job(Ess::UpdateJob)
 
       expect(page).to have_content("service name")
       expect(page).to have_content("service description")

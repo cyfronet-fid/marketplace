@@ -10,7 +10,8 @@ class Sample < Jira::Checker
     raise StandardError
   end
 
-  def sample_method!; end
+  def sample_method!
+  end
 end
 
 class MockWebhook
@@ -107,19 +108,17 @@ describe Jira::Checker do
     let(:issue) { double("Issue") }
 
     it "check_create_issue!" do
-      expect(issue).to receive(:save)
-        .with(
-          fields: {
-            summary: "TEST TICKET, TO CHECK WHETHER JIRA INTEGRATION WORKS",
-            project: {
-              key: checker.client.jira_project_key
-            },
-            issuetype: {
-              id: checker.client.jira_issue_type_id
-            }
+      expect(issue).to receive(:save).with(
+        fields: {
+          summary: "TEST TICKET, TO CHECK WHETHER JIRA INTEGRATION WORKS",
+          project: {
+            key: checker.client.jira_project_key
+          },
+          issuetype: {
+            id: checker.client.jira_issue_type_id
           }
-        )
-        .and_return(true)
+        }
+      ).and_return(true)
       checker.check_create_issue! issue
     end
 

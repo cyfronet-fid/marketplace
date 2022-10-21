@@ -23,7 +23,7 @@ services:
     environment:
       discovery.type: single-node
   redis:
-    image: redis:6.2.6
+    image: redis:7.0.5
     ports:
       - "127.0.0.1:6379:6379"
     networks:

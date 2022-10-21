@@ -37,7 +37,8 @@ class OrderingConfiguration::OfferPolicy < ApplicationPolicy
       :default,
       :internal,
       :primary_oms_id,
-      oms_params: {},
+      oms_params: {
+      },
       parameters_attributes: %i[
         type
         name

@@ -15,12 +15,10 @@ class Datasource::PcCreateOrUpdate
     @is_active = is_active
     @source_type = "eosc_registry"
     @mp_datasource =
-      Datasource
-        .joins(:sources)
-        .find_by(
-          "datasource_sources.source_type": @source_type,
-          "datasource_sources.eid": eosc_registry_datasource["id"]
-        )
+      Datasource.joins(:sources).find_by(
+        "datasource_sources.source_type": @source_type,
+        "datasource_sources.eid": eosc_registry_datasource["id"]
+      )
     @datasource_hash = Importers::Datasource.call(eosc_registry_datasource, modified_at, eosc_registry_base_url, token)
     @new_update_available = Datasource::PcCreateOrUpdate.new_update_available(@mp_datasource, modified_at)
   end

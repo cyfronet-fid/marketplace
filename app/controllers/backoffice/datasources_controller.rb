@@ -9,7 +9,8 @@ class Backoffice::DatasourcesController < Backoffice::ApplicationController
     @pagy, @datasources = pagy(policy_scope(Datasource).order(:name))
   end
 
-  def show; end
+  def show
+  end
 
   def new
     @datasource = Datasource.new

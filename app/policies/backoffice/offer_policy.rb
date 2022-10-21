@@ -43,7 +43,8 @@ class Backoffice::OfferPolicy < ApplicationPolicy
       :internal,
       :from,
       :primary_oms_id,
-      oms_params: {},
+      oms_params: {
+      },
       parameters_attributes: %i[
         type
         name

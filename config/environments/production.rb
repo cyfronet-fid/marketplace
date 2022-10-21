@@ -88,7 +88,7 @@ Rails.application.configure do
   config.active_support.disallowed_deprecation_warnings = []
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
-  config.log_formatter = ::Logger::Formatter.new
+  config.log_formatter = Logger::Formatter.new
 
   # Use a different logger for distributed setups.
   # require "syslog/logger"
@@ -125,20 +125,20 @@ Rails.application.configure do
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 
   # Mailer settings
-  config.action_mailer.default_url_options = { host: ENV["ROOT_URL"] }
+  config.action_mailer.default_url_options = { host: ENV.fetch("ROOT_URL") }
   config.action_mailer.delivery_method = :smtp
 
   raise "Missing ASSET_HOST" if ENV["ASSET_HOST"].blank?
   raise "Missing ASSET_PROTOCOL" if ENV["ASSET_PROTOCOL"].blank?
-  config.action_controller.asset_host = "#{ENV["ASSET_HOST"]}"
-  config.action_mailer.asset_host = "#{ENV["ASSET_PROTOCOL"]}://#{ENV["ASSET_HOST"]}"
+  config.action_controller.asset_host = "#{ENV.fetch("ASSET_HOST")}"
+  config.action_mailer.asset_host = "#{ENV.fetch("ASSET_PROTOCOL")}://#{ENV.fetch("ASSET_HOST")}"
 
   # SMTP settings
   config.action_mailer.smtp_settings = {
-      address: ENV["SMPT_ADDRESS"],
+      address: ENV.fetch("SMPT_ADDRESS"),
       port: 587,
-      user_name: ENV["SMPT_USERNAME"],
-      password: ENV["SMPT_PASSWORD"],
+      user_name: ENV.fetch("SMPT_USERNAME"),
+      password: ENV.fetch("SMPT_PASSWORD"),
       authentication: "plain",
       enable_starttls_auto: true
   }
@@ -146,5 +146,5 @@ Rails.application.configure do
   # custom error pages with webpage layout
   config.exceptions_app = routes
 
-  config.robots = ENV["MP_INSTANCE"].present? ? "development" : "production"
+  config.robots = ENV.fetch("MP_INSTANCE").present? ? "development" : "production"
 end

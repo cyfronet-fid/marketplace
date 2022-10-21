@@ -148,8 +148,9 @@ RSpec.describe Service do
         .reject { |k| Service::PUBLIC_STATUSES.include?(k) }
         .each do |non_public_status|
           it "a new #{non_public_status} service" do
-            expect { create(:service, status: non_public_status) }.to have_enqueued_job(Ess::UpdateJob)
-              .with { |payload| expect(payload).to be_a_delete_operation }
+            expect { create(:service, status: non_public_status) }.to have_enqueued_job(Ess::UpdateJob).with { |payload|
+              expect(payload).to be_a_delete_operation
+            }
           end
 
           it "a service updated to #{non_public_status}" do

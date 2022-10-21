@@ -16,13 +16,15 @@ class Importers::Token
     end
   end
 
-  AAI_BASE_URL = "https://#{ENV["IMPORTER_AAI_BASE_URL"] || ENV["CHECKIN_HOST"] || "aai.eosc-portal.eu"}".freeze
+  AAI_BASE_URL =
+    "https://#{ENV.fetch("IMPORTER_AAI_BASE_URL") || ENV.fetch("CHECKIN_HOST") || "aai.eosc-portal.eu"}".freeze
   AAI_TOKEN_PATH = "/oidc/token"
   SCOPE = %w[openid profile email].freeze
-  REFRESH_TOKEN = ENV["IMPORTER_AAI_REFRESH_TOKEN"]
+  REFRESH_TOKEN = ENV.fetch("IMPORTER_AAI_REFRESH_TOKEN", nil)
 
   CLIENT_ID =
-    ENV["IMPORTER_AAI_CLIENT_ID"] || ENV["CHECKIN_IDENTIFIER"] || Rails.application.credentials.checkin[:identifier]
+    ENV.fetch("IMPORTER_AAI_CLIENT_ID") || ENV.fetch("CHECKIN_IDENTIFIER") ||
+      Rails.application.credentials.checkin[:identifier]
 
   def initialize(faraday: Faraday)
     @faraday = faraday

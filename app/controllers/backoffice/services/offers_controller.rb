@@ -23,7 +23,8 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+  end
 
   def update
     template = permitted_attributes(Offer.new)

@@ -60,8 +60,9 @@ module Import
 
           image_url = datasource["logo"]
           datasource = Importers::Datasource.call(datasource, Time.now, @eosc_registry_base_url, @token, "rest")
-          if (datasource_source = DatasourceSource.find_by(eid: eid(datasource_data), source_type: "eosc_registry"))
-               .nil?
+          if (
+               datasource_source = DatasourceSource.find_by(eid: eid(datasource_data), source_type: "eosc_registry")
+             ).nil?
             log "Adding [NEW] datasource: #{datasource[:name]}, eid: #{datasource[:pid]}"
             unless @dry_run
               datasource = Datasource.new(datasource)

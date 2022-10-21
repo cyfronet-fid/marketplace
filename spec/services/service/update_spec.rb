@@ -67,8 +67,9 @@ RSpec.describe Service::Update do
       bundled_offer = build(:offer, service: service)
       bundle_offer = create(:offer, bundled_offers: [bundled_offer])
 
-      expect { described_class.call(service, { status: "draft" }) }.to change { ActionMailer::Base.deliveries.count }
-        .by(1)
+      expect { described_class.call(service, { status: "draft" }) }.to change {
+        ActionMailer::Base.deliveries.count
+      }.by(1)
 
       bundle_offer.reload
       expect(bundle_offer).not_to be_bundle
