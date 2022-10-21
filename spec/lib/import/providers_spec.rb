@@ -100,8 +100,9 @@ describe Import::Providers do
     it "should not update provider which has upstream to null" do
       provider = create(:provider)
       create(:provider_source, eid: "phenomenal", provider_id: provider.id, source_type: "eosc_registry")
+      provider.update!(upstream_id: nil)
 
-      eosc_registry = make_and_stub_eosc_registry(ids: ["phenomenal"], log: true)
+      eosc_registry = make_and_stub_eosc_registry(default_upstream: :mp, ids: ["phenomenal"], log: true)
 
       expect { eosc_registry.call }.to output(/PROCESSED: 1, CREATED: 0, UPDATED: 0, NOT MODIFIED: 1$/)
         .to_stdout.and change { Provider.count }.by(0)
