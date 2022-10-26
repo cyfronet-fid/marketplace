@@ -7,6 +7,6 @@ describe('Sanity', () => {
             .find('a')
             .should("exist")
             .click();
-        cy.location('pathname').should('be.eq', "/services");
+        cy.location('pathname').should('be.eq', "/search/all");
     })
 })
