@@ -52,7 +52,7 @@ overview:
         element: "[data-shepherd-tour-target='overview_3']"
         placement: "auto"
     4:
-      title: Browse all resources
+      title: Browse all services
       text: |-
         Let’s first take a look at the unfiltered view of the catalogue.
 

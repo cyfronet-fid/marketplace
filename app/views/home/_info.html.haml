@@ -9,15 +9,16 @@
       = _("Welcome to the EOSC Portal Catalogue and Marketplace")
     %p.contentbox__lead
       -# haml-lint:disable MultilinePipe
-      = _("Integrated platform that allows easy access to lots of resources for various research domains along " + |
+      = _("Integrated platform that allows easy access to lots of services for various research domains along " + |
           "with integrated data analytics tools. Browse by scientific domain, resource category or provider and, " + |
           "if you need help, we are here for you!") |
       -# haml-lint:enable MultilinePipe
 
     .intro-box-wrapper
       .intro-box
-        = _("Find EOSC Resources that suit your use case yourself")
-        = link_to(services_path, "data-probe": "", "data-shepherd-tour-target": "overview_1") do
+        = _("Find EOSC Services that suit your use case yourself")
+
+        %a{ href: "#{search_service_base_url}/search/all?q=*", title: "Browse through catalogue" }
           %i.fas.fa-arrow-right
           = _("Browse through catalogue")
 
