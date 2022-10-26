@@ -6,13 +6,12 @@
     %li.tab-link{ data: { "target" => "home-page.changeTab",
                   "action" => "click->home-page#changeTab", "tab" => "tab-2" },
                   href: "#" } Categories
-
   #tab-1.tab-content-home.current{ "data-target" => "home-page.tab" }
     .container
       .row
         = render "home/products/cards",
           cards: scientific_domains,
-          url: -> (sd) { services_path(scientific_domains: [sd.to_param] + sd.children&.map(&:to_param)) },
+          url: -> (sd) { search_link_router(sd) },
           default_logo: "ico_ra_default.png"
 
   #tab-2.tab-content-home{ "data-target" => "home-page.tab" }
@@ -20,9 +19,11 @@
       .row
         = render "home/products/cards",
           cards: categories,
-          url: -> (category) { category },
+          url: -> (category) { search_link_router(category, "categories") },
           default_logo: "ico_default.png"
 
 .row.d-flex.justify-content-center.mt-4
-  = link_to "Browse all resources", services_path, class: "button button--primary",
+  = link_to "Browse all services",
+      home_page_external_links_enabled? ? "#{search_service_base_url}/search/service?q=*": services_path,
+      class: "button button--primary",
       "data-shepherd-tour-target": "overview_4"

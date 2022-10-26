@@ -5,14 +5,12 @@ describe("Scientific domain", () => {
 
   it("should go to services page with selected scientific domain", () => {
     cy.intercept("GET", "/services*").as("services");
-    cy.get("a[href*='services'][data-e2e='branch-link']")
-          .eq(0)
-          .click();
-        cy.wait("@services");
-        cy.location("href")
-          .should("include", "services?scientific_domains");
-        cy.get("[data-e2e='filter-tag']")
-          .should("be.visible");
+    cy.get("a[data-e2e='branch-link']")
+      .eq(0)
+      .click();
+    cy.location("href")
+      .should("include", "search/service");
+
   });
   it("should go to services page with selected category", () => {
     cy.intercept("GET", "/categories/*").as("categories");
@@ -20,10 +18,9 @@ describe("Scientific domain", () => {
       .contains("Categories")
       .click();
     cy.get("a[href*='categories'][data-e2e='branch-link']")
-          .eq(0)
-          .click();
-        cy.wait("@categories");
-        cy.location("href")
-          .should("include", "services/c/");
+      .eq(0)
+      .click();
+    cy.location("href")
+      .should("include", "search/service");
   });
 });
