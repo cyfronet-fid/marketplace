@@ -37,4 +37,20 @@ namespace :migration do
       end
     end
   end
+
+  desc "Remove unused services given by list in SERVICES_TO_DELETE env variable"
+  task remove_unused_services: :environment do
+    to_delete = Array(ENV["SERVICES_TO_DELETE"].split(","))
+    return "No services ids to remove" if to_delete.blank?
+    ActiveRecord::Base.transaction do
+      to_delete.each do |pid|
+        s = Service.find_by(pid: pid)
+        s.status = :deleted
+        s.save(validate: false)
+        puts "Service #{s.name} #{s.pid} successfully updated with status DELETED"
+      rescue StandardError => e
+        puts "Service #{s.name} #{s.pid} couldn't be moved to DELETED. Error: #{e}"
+      end
+    end
+  end
 end
