@@ -1,6 +1,24 @@
 # frozen_string_literal: true
 
 namespace :migration do
+  desc "Import catalogue info for services and providers"
+  task catalogue_data: :environment do
+    types = [{ clazz: Service, method: "resource" }, { clazz: Provider, method: "provider" }].freeze
+    ActiveRecord::Base.transaction do
+      types.each do |type|
+        url = (ENV["MP_IMPORT_EOSC_REGISTRY_URL"] || "https://beta.providers.eosc-portal.eu/api") + "/#{type[:method]}"
+        type[:clazz].find_each do |obj|
+          r = Faraday.get("#{url}/#{obj.pid}")
+          b = JSON.parse(r.body)
+          obj.catalogue = Catalogue.find_by(pid: b["catalogueId"])
+          obj.save(validate: false)
+        rescue JSON::ParserError, URI::InvalidURIError => e
+          puts "Object #{obj.name} #{obj.pid} could not be updated, enter Catalogue manually. ERROR: #{e.class} #{e}"
+        end
+      end
+    end
+  end
+
   desc "Add catalogue prefix to the existing services and providers sources"
   task eids: :environment do
     source_types = [
