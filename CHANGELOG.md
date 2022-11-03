@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.43.2] 2022-11-03
+
 ## [3.43.1] 2022-11-03
 
 ## [3.43.0] 2022-10-25
