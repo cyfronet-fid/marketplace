@@ -3,16 +3,24 @@
 namespace :migration do
   desc "Import catalogue info for services and providers"
   task catalogue_data: :environment do
+    @faraday = Faraday
     types = [{ clazz: Service, method: "resource" }, { clazz: Provider, method: "provider" }].freeze
     ActiveRecord::Base.transaction do
       types.each do |type|
-        url = (ENV["MP_IMPORT_EOSC_REGISTRY_URL"] || "https://beta.providers.eosc-portal.eu/api") + "/#{type[:method]}"
+        token = ENV["MP_IMPORT_TOKEN"] || Importers::Token.new(faraday: @faraday).receive_token
+        url = ENV["MP_IMPORT_EOSC_REGISTRY_URL"] || "https://beta.providers.eosc-portal.eu/api"
         type[:clazz].find_each do |obj|
-          r = Faraday.get("#{url}/#{obj.pid}")
-          b = JSON.parse(r.body)
+          if obj.pid.blank? && obj.sources.first.blank?
+            puts "Object #{obj.name} has no source, omit"
+            next
+          end
+          pid = obj.pid || obj.sources.first&.eid
+          r = Importers::Request.new(url, type[:method], faraday: @faraday, token: token, id: pid).call
+          b = r.body
           obj.catalogue = Catalogue.find_by(pid: b["catalogueId"])
           obj.save(validate: false)
-        rescue JSON::ParserError, URI::InvalidURIError => e
+          puts "Successfully imported #{obj.catalogue.pid} catalogue to the resource #{obj.name} #{pid}"
+        rescue Faraday::ParsingError, Errno::ECONNREFUSED, URI::InvalidURIError => e
           puts "Object #{obj.name} #{obj.pid} could not be updated, enter Catalogue manually. ERROR: #{e.class} #{e}"
         end
       end
