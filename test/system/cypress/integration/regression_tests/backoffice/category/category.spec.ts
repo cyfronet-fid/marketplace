@@ -46,7 +46,7 @@ describe("Category", () => {
           .contains(value)
           .click();
         cy.location("href")
-          .should("contain", `/services/c/${value}`)
+          .should("contain", `search/service`)
     });
   });
 
@@ -84,11 +84,12 @@ describe("Category", () => {
         cy.get("li")
           .contains("Categories")
           .click();
-        cy.get("a[href*='categories'][data-e2e='branch-link']")
+        cy.get("a[data-e2e='branch-link']")
           .contains(value)
           .click();
         cy.location("href")
-          .should("contain", `/services/c/${value}`);
+          .should("contain",
+              `search/service`);
     });
   });
 

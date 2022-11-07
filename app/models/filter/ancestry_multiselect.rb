@@ -1,8 +1,15 @@
 # frozen_string_literal: true
 
 class Filter::AncestryMultiselect < Filter
-  def initialize(params:, title:, field_name:, model:, joining_model:, index:, search: false)
-    super(params: params, type: :multiselect, field_name: field_name, title: title, index: index)
+  def initialize(params:, title:, field_name:, model:, joining_model:, index:, model_type: nil, search: false)
+    super(
+      params: params,
+      type: :multiselect,
+      field_name: field_name,
+      title: title,
+      model_type: model_type,
+      index: index
+    )
     @model = model
     @joining_model = joining_model
     @search = search
@@ -15,7 +22,7 @@ class Filter::AncestryMultiselect < Filter
   private
 
   def fetch_options
-    arranged = @model.arrange
+    arranged = @model_type.blank? ? @model.arrange : @model.arrange.select { |e| e.type == @model_type }
     @ancestry_counters = count(arranged)
     create_ancestry_tree(arranged)
   end

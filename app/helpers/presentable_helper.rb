@@ -1,6 +1,8 @@
 # frozen_string_literal: true
-
+require "uri"
 module PresentableHelper
+  HOME_PAGE_EXTERNAL_LINKS_ENABLED = Rails.configuration.home_page_external_links_enabled.freeze
+  SEARCH_SERVICE_BASE_URL = Rails.configuration.search_service_base_url.freeze
   def data_for_map(geographical_availabilities)
     countries = []
     geographical_availabilities.each do |place|
@@ -38,9 +40,53 @@ module PresentableHelper
     end
   end
 
+  def search_link_router(object, type = "scientific_domains")
+    return external_children_search_link(object, type) if home_page_external_links_enabled?
+    case type
+    when "scientific_domains"
+      services_path(scientific_domains: [object.to_param] + object.children&.map(&:to_param))
+    when "categories"
+      object
+    end
+  end
+
+  def external_children_search_link(object, type)
+    if type == "categories"
+      suffix = "#{type}:(#{deep_names(object, 2)})"
+    else
+      suffix = "#{type}:(#{deep_names(object)})"
+    end
+    "#{search_service_base_url}/search/service?q=*&fq=#{suffix}"
+  end
+
   private
 
   def any_non_european?(countries)
     (countries - Country.countries_for_region("Europe").map(&:alpha2)).present?
+  end
+
+  def deep_names(parent, level = 1)
+    if parent.children.present?
+      if level > 1
+        parent.children.map { |c| deep_names(c, level - 1) }.flatten.reject(&:blank?).join(" OR ")
+      else
+        parent
+          .children
+          .select { |c| c.services.published.size.positive? }
+          .map { |c| "\"#{CGI.escape(c.name)}\"" }
+          .compact
+          .join(" OR ")
+      end
+    else
+      "\"#{CGI.escape(parent.name)}\""
+    end
+  end
+
+  def home_page_external_links_enabled?
+    HOME_PAGE_EXTERNAL_LINKS_ENABLED
+  end
+
+  def search_service_base_url
+    SEARCH_SERVICE_BASE_URL
   end
 end
