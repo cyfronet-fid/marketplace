@@ -25,7 +25,7 @@
                     disabled: cant_edit([category_ids: []])
     = f.input :horizontal, as: :boolean, label: "Horizontal datasource",
             boolean_style: :inline, include_hidden: true
-    = f.association :research_categories, multiple: true, input_html: { data: { choice: true } }
+    = f.association :research_steps, multiple: true, input_html: { data: { choice: true } }
     = f.association :target_users,
             input_html: { data: { choice: true }, class: "target_users" },
             disabled: cant_edit([target_user_ids: []])

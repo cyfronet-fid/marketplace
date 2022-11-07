@@ -21,7 +21,7 @@ class Jms::ManageMessage < ApplicationService
     @token = token
   end
 
-  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity:
 
   def call
     log @message
@@ -35,10 +35,10 @@ class Jms::ManageMessage < ApplicationService
     case resource_type
     when "service", "infra_service"
       modified_at = modified_at(resource, "serviceBundle")
+      if resource["serviceBundle"]["service"]["id"].split(".").size != 3
+        raise WrongIdError, resource["serviceBundle"]["service"]["id"]
+      end
       if action != "delete" && resource["serviceBundle"]["service"]
-        if resource["serviceBundle"]["service"]["id"].split(".").size != 3
-          raise WrongIdError, resource["serviceBundle"]["service"]["id"]
-        end
         Service::PcCreateOrUpdateJob.perform_later(
           resource["serviceBundle"]["service"].merge(resource["serviceBundle"]["resourceExtras"] || {}),
           @eosc_registry_base_url,
@@ -51,13 +51,13 @@ class Jms::ManageMessage < ApplicationService
       end
     when "provider"
       modified_at = modified_at(resource, "providerBundle")
+      if resource["providerBundle"]["provider"]["id"].split(".").size != 2
+        raise WrongIdError, resource["providerBundle"]["provider"]["id"]
+      end
       case action
       when "delete"
         Provider::DeleteJob.perform_later(resource["providerBundle"]["provider"]["id"])
       when "update", "create"
-        if resource["providerBundle"]["provider"]["id"].split(".").size != 2
-          raise WrongIdError, resource["providerBundle"]["provider"]["id"]
-        end
         Provider::PcCreateOrUpdateJob.perform_later(
           resource["providerBundle"]["provider"],
           resource["providerBundle"]["active"],
@@ -76,7 +76,12 @@ class Jms::ManageMessage < ApplicationService
       end
     when "datasource"
       modified_at = modified_at(resource, "datasourceBundle")
+      if resource["datasourceBundle"]["datasource"]["id"].split(".").size != 3
+        raise WrongIdError, resource["datasourceBundle"]["datasource"]["id"]
+      end
       case action
+      when "delete"
+        Datasource::DeleteJob.perform_later(resource["datasourceBundle"]["datasource"]["id"])
       when "update", "create"
         Datasource::PcCreateOrUpdateJob.perform_later(
           resource["datasourceBundle"]["datasource"],
@@ -96,7 +101,7 @@ class Jms::ManageMessage < ApplicationService
     warn "[WARN] eid #{e} for #{resource_type} has a wrong format - update disabled"
   end
 
-  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity:
 
   private
 
