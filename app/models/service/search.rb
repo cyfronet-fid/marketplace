@@ -23,6 +23,7 @@ module Service::Search
       status: status,
       rating: rating,
       categories: categories.map(&:id),
+      research_categories: research_categories&.map(&:id),
       scientific_domains: search_scientific_domains_ids,
       resource_organisation_name: resource_organisation.name,
       providers: resource_organisation_and_providers.map(&:id),

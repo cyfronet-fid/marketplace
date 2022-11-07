@@ -4,12 +4,13 @@ class Filter
   attr_accessor :counters
   attr_reader :title, :field_name, :type, :index
 
-  def initialize(field_name:, type:, title:, index:, params: {})
+  def initialize(field_name:, type:, title:, index:, model_type: nil, params: {})
     @params = params
     @field_name = field_name
     @title = title
     @type = type
     @index = index
+    @model_type = model_type
   end
 
   def options
