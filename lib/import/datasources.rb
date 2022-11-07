@@ -23,16 +23,23 @@ module Import
       @filepath = filepath
     end
 
-    # rubocop:disable Metrics/BlockNesting, Metrics/PerceivedComplexity, Metrics/AbcSize
+    # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
 
     def call
       log "Importing datasources from EOSC Registry..."
 
       begin
-        token = Importers::Token.new(faraday: @faraday).receive_token
+        @token ||= Importers::Token.new(faraday: @faraday).receive_token
         response =
-          Importers::Request.new(@eosc_registry_base_url, "/public/datasource", faraday: @faraday, token: token).call
+          Importers::Request.new(
+            @eosc_registry_base_url,
+            "/public/datasource/adminPage",
+            faraday: @faraday,
+            token: @token
+          ).call
       rescue Errno::ECONNREFUSED, Importers::Token::RequestError => e
+        output = response
+        File.open(@filepath, "w") { |file| file << output } unless @filepath.nil?
         abort("import exited with errors - could not connect to #{@eosc_registry_base_url} \n #{e.message}")
       end
 
@@ -47,11 +54,12 @@ module Import
       response.body["results"]
         .select { |res| @ids.empty? || @ids.include?(res["id"]) }
         .each do |datasource_data|
-          datasource = datasource_data
+          datasource = datasource_data&.[]("datasource")&.merge(datasource_data["resourceExtras"] || {})
+          datasource["status"] = datasource_data["active"] ? :published : :draft
           output.append(datasource_data)
 
           image_url = datasource["logo"]
-          datasource = Importers::Datasource.new(datasource, Time.now, @eosc_registry_base_url, @token, "rest").call
+          datasource = Importers::Datasource.call(datasource, Time.now, @eosc_registry_base_url, @token, "rest")
           if (datasource_source = DatasourceSource.find_by(eid: eid(datasource_data), source_type: "eosc_registry"))
                .nil?
             log "Adding [NEW] datasource: #{datasource[:name]}, eid: #{datasource[:pid]}"
@@ -89,6 +97,7 @@ module Import
           else
             existing_datasource = Datasource.find_by(id: datasource_source.datasource_id)
             if existing_datasource.upstream_id == datasource_source.id
+              updated += 1
               log "Updating [EXISTING] datasource #{datasource[:name]}, " +
                     "id: #{datasource_source["id"]}, eid: #{datasource[:pid]}"
               unless @dry_run
@@ -98,21 +107,9 @@ module Import
                 existing_datasource.save!
               end
             else
-              existing_datasource = Datasource.find_by(id: datasource_source.datasource_id)
-              if existing_datasource.upstream_id == datasource_source.id
-                updated += 1
-                log "Updating [EXISTING] datasource #{datasource[:name]}, " +
-                      " id: #{datasource_source.id}, eid: #{datasource[:pid]}"
-                unless @dry_run
-                  Datasource::Update.new(existing_datasource, datasource).call
-                  Importers::Logo.call(existing_datasource, image_url)
-                  existing_datasource.save!
-                end
-              else
-                log "Datasource upstream is not set to EOSC Registry," \
-                      " not updating #{existing_datasource.name}, id: #{datasource_source.id}"
-                not_modified += 1
-              end
+              log "Datasource upstream is not set to EOSC Registry," \
+                    " not updating #{existing_datasource.name}, id: #{datasource_source.id}"
+              not_modified += 1
             end
           end
         rescue ActiveRecord::RecordInvalid => e
@@ -129,7 +126,7 @@ module Import
       File.open(@filepath, "w") { |file| file << JSON.pretty_generate(output) } unless @filepath.nil?
     end
 
-    # rubocop:enable Metrics/BlockNesting, Metrics/PerceivedComplexity, Metrics/AbcSize
+    # rubocop:enable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
 
     private
 

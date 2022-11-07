@@ -57,7 +57,7 @@ class Datasource::PcCreateOrUpdate
   end
 
   def self.new_update_available(datasource, modified_at)
-    return true unless datasource&.synchronized_at.present?
+    return true unless datasource&.synchronized_at.present? && modified_at.present?
     modified_at >= datasource.synchronized_at
   end
 

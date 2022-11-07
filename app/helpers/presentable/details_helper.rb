@@ -36,7 +36,7 @@ module Presentable::DetailsHelper
         datasource_content,
         research_product_licensing,
         research_product_access_policies,
-        research_product_metadata,
+        research_product_metadata_licensing,
         research_product_metadata_access_policies
       ]
     ]
@@ -231,9 +231,9 @@ module Presentable::DetailsHelper
     }
   end
 
-  def research_product_metadata
+  def research_product_metadata_licensing
     {
-      name: "research_product_metadata",
+      name: "research_product_metadata_licensing",
       template: "links",
       fields: %w[link_research_product_metadata_license_urls],
       type: "array"

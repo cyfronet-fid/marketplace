@@ -66,10 +66,10 @@ class Datasource < ApplicationRecord
   has_one :main_contact, as: :contactable, dependent: :destroy, autosave: true
   has_many :public_contacts, as: :contactable, dependent: :destroy, autosave: true
   has_many :datasource_vocabularies, dependent: :destroy
-  has_many :research_categories,
+  has_many :research_steps,
            through: :datasource_vocabularies,
            source: :vocabulary,
-           source_type: "Vocabulary::ResearchCategory"
+           source_type: "Vocabulary::ResearchStep"
   has_many :access_types, through: :datasource_vocabularies, source: :vocabulary, source_type: "Vocabulary::AccessType"
   has_many :access_modes, through: :datasource_vocabularies, source: :vocabulary, source_type: "Vocabulary::AccessMode"
   has_many :trl, through: :datasource_vocabularies, source: :vocabulary, source_type: "Vocabulary::Trl"

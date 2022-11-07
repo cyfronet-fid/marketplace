@@ -17,6 +17,7 @@ module Importable
     domains.present? ? ScientificDomain.where(eid: domains) : []
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
   def map_link(link, type = "multimedia")
     if link&.[]("multimediaURL").blank? && link&.[]("researchProductLicenseURL").blank? &&
          link&.[]("researchProductMetadataLicenseURL").blank? && link&.[]("useCaseURL").blank? && !UrlHelper.url?(link)
@@ -24,29 +25,37 @@ module Importable
     end
     case type
     when "multimedia"
-      Link::MultimediaUrl.new(name: link["multimediaName"].presence, url: link["multimediaURL"] || link)
+      Link::MultimediaUrl.new(name: link&.[]("multimediaName") || "", url: link["multimediaURL"] || link)
     when "use_cases"
-      Link::UseCasesUrl.new(name: link["useCaseName"].presence, url: link["useCaseURL"] || link)
+      Link::UseCasesUrl.new(name: link&.[]("useCaseName") || "", url: link["useCaseURL"] || link)
     when "research_product_metadata"
-      Link::ResearchProductLicenseUrl.new(
-        name: link["researchProductMetadataLicenseName"].presence,
+      Link::ResearchProductMetadataLicenseUrl.new(
+        name: link&.[]("researchProductMetadataLicenseName") || "",
         url: link["researchProductMetadataLicenseURL"]
       )
     when "research_product"
       Link::ResearchProductLicenseUrl.new(
-        name: link["researchProductLicenseName"].presence,
+        name: link&.[]("researchProductLicenseName") || "",
         url: link["researchProductLicenseURL"]
       )
     end
   end
 
-  def map_persistent_identity_system(system)
-    if system.present?
-      {
-        entity_type: Vocabulary::EntityType.find_by(eid: system["persistentIdentityEntityType"]),
-        entity_type_schemes: Vocabulary::EntityTypeScheme.where(eid: system["persistentIdentityEntityTypeSchemes"])
-      }
-    end
+  # rubocop:enable Metrics/CyclomaticComplexity
+
+  def map_persistent_identity_system(system, importer = "jms")
+    return if system.blank?
+    PersistentIdentitySystem.new(
+      entity_type: Vocabulary::EntityType.find_by(eid: system["persistentIdentityEntityType"]),
+      entity_type_schemes:
+        if importer == "jms"
+          Vocabulary::EntityTypeScheme.where(
+            eid: system.dig("persistentIdentityEntityTypeSchemes", "persistentIdentityEntityType")
+          )
+        else
+          Vocabulary::EntityTypeScheme.where(eid: system["persistentIdentityEntityTypeSchemes"])
+        end
+    )
   end
 
   def map_contact(contact)
@@ -146,7 +155,14 @@ module Importable
   end
 
   def map_access_policies(policies)
-    Vocabulary::ResearchProductAccessPolicy.where(eid: policies)
+    Vocabulary::ResearchProductAccessPolicy.where(eid: policies, type: "Vocabulary::ResearchProductAccessPolicy")
+  end
+
+  def map_metadata_access_policies(policies)
+    Vocabulary::ResearchProductMetadataAccessPolicy.where(
+      eid: policies,
+      type: "Vocabulary::ResearchProductMetadataAccessPolicy"
+    )
   end
 
   def map_entity_types(types)
