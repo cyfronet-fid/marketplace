@@ -13,10 +13,10 @@
       %h2.font-weight-bolder= @title
       %p.abbreviation= @abbreviation.presence
       %p.mb-1= @subtitle
-      - if @object.instance_of?(Service)
+      - unless @object.instance_of?(Provider)
         = render "components/presentable/header_component/categorization",
           service: @object, highlights: nil, preview: @preview
-
+      - if @object.instance_of?(Service)
         .row.mt-2
           .col
             .stars

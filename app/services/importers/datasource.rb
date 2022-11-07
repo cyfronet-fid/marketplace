@@ -31,7 +31,7 @@ class Importers::Datasource < ApplicationService
           [@data.dig("useCases", "useCase")] || []
         end
       link_rpl_url =
-        if @data.dig("researchProductLicensings", "researchProductLicensings").is_a?(Array)
+        if @data.dig("researchProductLicensings", "researchProductLicensing").is_a?(Array)
           Array(@data.dig("researchProductLicensings", "researchProductLicensing")) || []
         else
           [@data.dig("researchProductLicensings", "researchProductLicensing")] || []
@@ -40,7 +40,7 @@ class Importers::Datasource < ApplicationService
         if @data.dig("researchProductMetadataLicensings", "researchProductMetadataLicense").is_a?(Array)
           Array(@data.dig("researchProductMetadataLicensings", "researchProductMetadataLicense")) || []
         else
-          [@data.dig("researchProductMetadataLicensings", "researchProductMetadataLicense")] || []
+          [@data["researchProductMetadataLicensing"]] || []
         end
       scientific_domains =
         if @data.dig("scientificDomains", "scientificDomain").is_a?(Array)
@@ -64,23 +64,33 @@ class Importers::Datasource < ApplicationService
         Array(@data.dig("resourceGeographicLocations", "resourceGeographicLocation")) || []
       public_contacts =
         Array.wrap(@data.dig("publicContacts", "publicContact"))&.map { |c| PublicContact.new(map_contact(c)) } || []
-      certifications = Array(@data.dig("certifications", "certification"))
-      standards = Array(@data.dig("standards", "standard"))
-      open_source_technologies = Array(@data.dig("openSourceTechnologies", "openSourceTechnology"))
+      certifications = Array(@data.dig("certifications", "certification")) || []
+      standards = Array(@data.dig("standards", "standard")) || []
+      open_source_technologies = Array(@data.dig("openSourceTechnologies", "openSourceTechnology")) || []
       last_update = @data["lastUpdate"].present? ? Time.at(@data["lastUpdate"].to_i) : nil
-      changelog = Array(@data.dig("changeLog", "changeLog"))
-      required_services = map_related_services(Array(@data.dig("requiredResources", "requiredResource")))
-      related_services = map_related_services(Array(@data.dig("relatedResources", "relatedResource")))
-      platforms = map_platforms(Array(@data.dig("relatedPlatforms", "relatedPlatform")))
-      funding_bodies = map_funding_bodies(@data.dig("fundingBody", "fundingBody"))
-      funding_programs = map_funding_programs(@data.dig("fundingPrograms", "fundingProgram"))
-      grant_project_names = Array(@data.dig("grantProjectNames", "grantProjectName"))
-      catalogue = map_catalogue(@data["catalogueId"])
+      changelog = Array(@data.dig("changeLog", "changeLog")) || []
+      required_services = map_related_services(Array(@data.dig("requiredResources", "requiredResource"))) || []
+      related_services = map_related_services(Array(@data.dig("relatedResources", "relatedResource"))) || []
+      platforms = map_platforms(Array(@data.dig("relatedPlatforms", "relatedPlatform"))) || []
+      funding_bodies = map_funding_bodies(@data.dig("fundingBody", "fundingBody")) || []
+      funding_programs = map_funding_programs(@data.dig("fundingPrograms", "fundingProgram")) || []
+      grant_project_names = Array(@data.dig("grantProjectNames", "grantProjectName")) || []
       persistent_identity_systems =
-        Array(@data.dig("persistentIdentitySystems", "persistentIdentitySystem"))&.map do |c|
-          PersistentIdentitySystem.new(map_persistent_identity_system(c))
-        end || []
+        if @data.dig("persistentIdentitySystems", "persistentIdentitySystem").is_a?(Array)
+          Array(@data.dig("persistentIdentitySystems", "persistentIdentitySystem")) || []
+        else
+          [@data.dig("persistentIdentitySystems", "persistentIdentitySystem")] || []
+        end
       entity_types = map_entity_types(@data.dig("researchEntityTypes", "researchEntityType"))
+      research_product_access_policies = @data.dig("researchProductAccessPolicies", "researchProductAccessPolicy") || []
+      research_product_metadata_access_policies =
+        @data.dig("researchProductMetadataAccessPolicies", "researchProductMetadataAccessPolicy") || []
+      research_steps =
+        if @data.dig("researchCategories", "researchCategory").present?
+          Array(@data.dig("researchCategories", "researchCategory"))
+        else
+          []
+        end
     when "rest"
       providers = Array(@data["resourceProviders"]) || []
       multimedia = Array(@data["multimedia"]) || []
@@ -106,12 +116,7 @@ class Importers::Datasource < ApplicationService
       funding_bodies = map_funding_bodies(Array(@data["fundingBody"]))
       funding_programs = map_funding_programs(Array(@data["fundingPrograms"]))
       grant_project_names = Array(@data["grantProjectNames"])
-      persistent_identity_systems =
-        Array(
-          @data["persistentIdentitySystems"]&.map do |c|
-            PersistentIdentitySystem.new(map_persistent_identity_system(c))
-          end || []
-        )
+      persistent_identity_systems = Array(@data["persistentIdentitySystems"] || [])
       link_rpl_url =
         if @data["researchProductLicensings"].is_a?(Array)
           @data["researchProductLicensings"]
@@ -125,10 +130,12 @@ class Importers::Datasource < ApplicationService
           [@data["researchProductMetadataLicensing"]] || []
         end
       entity_types = map_entity_types(Array(@data["researchEntityTypes"]) || [])
-      catalogue = map_catalogue(@data["catalogueId"]) || []
+      research_product_access_policies = @data["researchProductMetadataAccessPolicies"] || []
+      research_product_metadata_access_policies = @data["researchProductMetadataAccessPolicies"] || []
+      research_steps = @data["researchCategories"] || []
     end
 
-    status = ENV["RESOURCE_IMPORT_STATUS"] || "published"
+    status = @data["status"] || ENV["RESOURCE_IMPORT_STATUS"] || "published"
 
     main_contact = MainContact.new(map_contact(@data["mainContact"])) if @data["mainContact"]
 
@@ -146,11 +153,13 @@ class Importers::Datasource < ApplicationService
       link_multimedia_urls: multimedia&.map { |item| map_link(item) }&.compact || [],
       link_use_cases_urls: use_cases_url&.map { |item| map_link(item, "use_cases") }&.compact || [],
       # Classification
-      scientific_domains: map_scientific_domains(scientific_domains),
+      scientific_domains: map_scientific_domains(scientific_domains) || [],
       categories: map_categories(categories) || [],
-      target_users: map_target_users(target_users),
-      access_types: map_access_types(access_types),
-      access_modes: map_access_modes(access_modes),
+      research_steps: map_research_steps(research_steps) || [],
+      horizontal: @data["horizontal"] || false,
+      target_users: map_target_users(target_users) || [],
+      access_types: map_access_types(access_types) || [],
+      access_modes: map_access_modes(access_modes) || [],
       tag_list: tag_list,
       # Availability
       geographical_availabilities: geographical_availabilities,
@@ -159,12 +168,12 @@ class Importers::Datasource < ApplicationService
       geographic_locations: resource_geographic_locations,
       # Contact
       main_contact: main_contact,
-      public_contacts: public_contacts,
+      public_contacts: public_contacts || [],
       helpdesk_email: @data["helpdeskEmail"] || "",
       security_contact_email: @data["securityContactEmail"] || "",
       # Maturity
-      trl: map_trl(@data["trl"]),
-      life_cycle_status: map_life_cycle_status(@data["lifeCycleStatus"]),
+      trl: map_trl(@data["trl"]) || [],
+      life_cycle_status: map_life_cycle_status(@data["lifeCycleStatus"]) || [],
       certifications: certifications,
       standards: standards,
       open_source_technologies: open_source_technologies,
@@ -175,7 +184,7 @@ class Importers::Datasource < ApplicationService
       required_services: required_services,
       related_services: related_services,
       platforms: platforms,
-      catalogue_ids: [catalogue.id],
+      catalogue_ids: [map_catalogue(@data["catalogueId"]).id] || [],
       # Attribution
       funding_bodies: funding_bodies,
       funding_programs: funding_programs,
@@ -186,33 +195,34 @@ class Importers::Datasource < ApplicationService
       terms_of_use_url: @data["termsOfUse"] || "",
       privacy_policy_url: @data["privacyPolicy"] || "",
       access_policy_url: @data["accessPolicy"] || "",
-      resource_level_url: @data["serviceLevel"] || "",
+      resource_level_url: @data["resourceLevel"] || "",
       training_information_url: @data["trainingInformation"] || "",
       status_monitoring_url: @data["statusMonitoring"] || "",
       maintenance_url: @data["maintenance"] || "",
       # Order
-      order_type: map_order_type(@data["orderType"]),
+      order_type: map_order_type(@data["orderType"]) || "other",
       order_url: @data["order"] || "",
       # Financial
       payment_model_url: @data["paymentModel"] || "",
       pricing_url: @data["pricing"] || "",
       # Datasource policies
-      submission_policy_url: @data["submissionPolicy"],
-      preservation_policy_url: @data["preservationPolicy"],
-      version_control: @data["versionControl"],
-      persistent_identity_systems: persistent_identity_systems,
-      jurisdiction: map_jurisdiction(@data["jurisdiction"]),
-      datasource_classification: map_datasource_classification(@data["datasourceClassification"]),
+      submission_policy_url: @data["submissionPolicyURL"] || "",
+      preservation_policy_url: @data["preservationPolicyURL"] || "",
+      version_control: @data["versionControl"] || false,
+      persistent_identity_systems:
+        persistent_identity_systems&.map { |s| map_persistent_identity_system(s, @source) }&.compact || [],
+      jurisdiction: map_jurisdiction(@data["jurisdiction"]) || nil,
+      datasource_classification: map_datasource_classification(@data["datasourceClassification"]) || nil,
       research_entity_types: entity_types,
       thematic: @data["thematic"],
       # Research product policies
       link_research_product_license_urls:
         link_rpl_url&.map { |item| map_link(item, "research_product") }&.compact || [],
-      research_product_access_policies: map_access_policies(@data["researchProductAccessPolicies"]) || [],
+      research_product_access_policies: map_access_policies(research_product_access_policies) || [],
       link_research_product_metadata_license_urls:
         link_rpml_url&.map { |item| map_link(item, "research_product_metadata") }&.compact || [],
       research_product_metadata_access_policies:
-        map_access_policies(@data["researchProductMetadataAccessPolicies"]) || [],
+        map_metadata_access_policies(research_product_metadata_access_policies) || [],
       status: status,
       synchronized_at: @synchronized_at
     }

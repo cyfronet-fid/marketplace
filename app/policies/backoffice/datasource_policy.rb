@@ -64,7 +64,7 @@ class Backoffice::DatasourcePolicy < ApplicationPolicy
       # Classification
       [scientific_domain_ids: []],
       [category_ids: []],
-      [research_category_ids: []],
+      [research_step_ids: []],
       :horizontal,
       [target_user_ids: []],
       [access_type_ids: []],
