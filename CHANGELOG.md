@@ -20,6 +20,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 - Horizontal services (@goreck888)
 - Research categories for services (@goreck888)
+- Research categories filter (@goreck888)
 - Datasources (@goreck888)
 
 ### Deprecated
