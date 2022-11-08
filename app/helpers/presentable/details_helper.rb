@@ -47,9 +47,10 @@ module Presentable::DetailsHelper
     {
       name: "classification",
       template: "array",
-      fields: %w[target_users access_types access_modes tag_list],
+      fields: %w[research_steps target_users access_types access_modes tag_list],
       with_desc: true,
       nested: {
+        research_steps: "name",
         target_users: "name",
         access_types: "name",
         access_modes: "name",

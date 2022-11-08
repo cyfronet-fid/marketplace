@@ -73,9 +73,9 @@ class Backoffice::VocabulariesController < Backoffice::ApplicationController
       name: "MERIL Scientific Domain",
       klass: Vocabulary::MerilScientificDomain
     },
-    research_category: {
-      name: "Research Category",
-      klass: Vocabulary::ResearchCategory
+    research_step: {
+      name: "Research Step",
+      klass: Vocabulary::ResearchStep
     }
   }.freeze
 
