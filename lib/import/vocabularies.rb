@@ -28,7 +28,7 @@ class Import::Vocabularies
     PROVIDER_MERIL_SCIENTIFIC_SUBDOMAIN: Vocabulary::MerilScientificDomain,
     PROVIDER_HOSTING_LEGAL_ENTITY: Vocabulary::HostingLegalEntity,
     RELATED_PLATFORM: Platform,
-    RESEARCH_CATEGORY: Vocabulary::ResearchCategory
+    RESEARCH_CATEGORY: Vocabulary::ResearchStep
   }.freeze
 
   def initialize(

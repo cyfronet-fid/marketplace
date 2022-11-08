@@ -21,7 +21,7 @@ FactoryBot.define do
             <tns:resourceExtras>
               <tns:horizontalService>true</tns:horizontalService>
               <tns:researchCategories>
-                <tns:researchCategory>research_category-ari</tns:researchCategory>
+                <tns:researchCategory>research_step-ari</tns:researchCategory>
               </tns:researchCategories>
             </tns:resourceExtras>
             <tns:service>
