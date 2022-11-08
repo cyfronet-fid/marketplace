@@ -39,7 +39,7 @@ jobs:
         RAILS_ENV: development
         RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
       run: |
-        bundle exec rake db:drop db:setup searchkick:reindex:all
+        bundle exec rake db:drop db:create db:migrate searchkick:reindex:all
         bundle exec rails dev:prime_e2e
     - name: Run App
       env:

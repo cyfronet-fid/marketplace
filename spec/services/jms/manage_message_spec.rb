@@ -56,9 +56,6 @@ describe Jms::ManageMessage do
 
     $stdout = StringIO.new
     resource = parser.parse(provider_resource["resource"])
-    puts "Misiu kolorowy #{resource}"
-    puts "proszę Cię #{resource["providerBundle"]["provider"]}"
-    puts "zadziałaj swoją mocą #{resource["providerBundle"]["metadata"]["modified At"]}"
     expect(Provider::PcCreateOrUpdateJob).to receive(:perform_later).with(
       resource["providerBundle"]["provider"],
       resource["providerBundle"]["active"],

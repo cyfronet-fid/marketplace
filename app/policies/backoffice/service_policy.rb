@@ -20,7 +20,7 @@ class Backoffice::ServicePolicy < ApplicationPolicy
     :activate_message,
     :upstream_id,
     :horizontal,
-    [research_category_ids: []],
+    [research_step_ids: []],
     [owner_ids: []],
     [sources_attributes: %i[id source_type eid _destroy]]
   ].freeze
@@ -125,7 +125,7 @@ class Backoffice::ServicePolicy < ApplicationPolicy
       [life_cycle_status_ids: []],
       :resource_organisation_id,
       :horizontal,
-      [research_category_ids: []],
+      [research_step_ids: []],
       [main_contact_attributes: %i[id first_name last_name email phone organisation position]],
       [sources_attributes: %i[id source_type eid _destroy]],
       [public_contacts_attributes: %i[id first_name last_name email phone organisation position _destroy]]
