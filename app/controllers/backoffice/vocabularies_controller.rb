@@ -73,9 +73,9 @@ class Backoffice::VocabulariesController < Backoffice::ApplicationController
       name: "MERIL Scientific Domain",
       klass: Vocabulary::MerilScientificDomain
     },
-    research_category: {
-      name: "Research Category",
-      klass: Vocabulary::ResearchCategory
+    research_step: {
+      name: "Research Step",
+      klass: Vocabulary::ResearchStep
     },
     jurisdiction: {
       name: "Jurisdiction",
@@ -163,7 +163,6 @@ class Backoffice::VocabulariesController < Backoffice::ApplicationController
   end
 
   def instantiate_type
-    puts "ELO #{params[:type]}"
     @type = VOCABULARY_TYPES[params[:type].to_sym][:name]
   end
 

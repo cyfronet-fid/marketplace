@@ -120,7 +120,7 @@ Rails.application.routes.draw do
       resources :societal_grand_challenges, controller: "vocabularies", type: "societal_grand_challenge"
       resources :structure_types, controller: "vocabularies", type: "structure_type"
       resources :meril_scientific_domains, controller: "vocabularies", type: "meril_scientific_domain"
-      resources :research_categories, controller: "vocabularies", type: "research_category"
+      resources :research_steps, controller: "vocabularies", type: "research_step"
       resources :jurisdictions, controller: "vocabularies", type: "jurisdiction"
       resources :datasource_classifications, controller: "vocabularies", type: "datasource_classification"
       resources :research_entity_types, controller: "vocabularies", type: "research_entity_type"
