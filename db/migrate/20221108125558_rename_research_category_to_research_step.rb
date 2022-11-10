@@ -13,5 +13,11 @@ class RenameResearchCategoryToResearchStep < ActiveRecord::Migration[6.1]
       SET vocabulary_type='Vocabulary::ResearchStep'
       WHERE vocabulary_type='Vocabulary::ResearchCategory';
     SQL
+
+    execute(<<~SQL)
+      UPDATE datasource_vocabularies 
+      SET vocabulary_type='Vocabulary::ResearchStep'
+      WHERE vocabulary_type='Vocabulary::ResearchCategory';
+    SQL
   end
 end
