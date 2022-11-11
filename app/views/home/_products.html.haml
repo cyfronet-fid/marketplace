@@ -19,11 +19,11 @@
       .row
         = render "home/products/cards",
           cards: categories,
-          url: -> (category) { search_link_router(category, "categories") },
+          url: -> (category) { category[:url] },
           default_logo: "ico_default.png"
 
 .row.d-flex.justify-content-center.mt-4
-  = link_to "Browse all services",
-      home_page_external_links_enabled? ? "#{search_service_base_url}/search/service?q=*": services_path,
+  = link_to "Browse all resources",
+      home_page_external_links_enabled? ? "#{search_service_base_url}/search/all?q=*": services_path,
       class: "button button--primary",
       "data-shepherd-tour-target": "overview_4"
