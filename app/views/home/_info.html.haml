@@ -9,18 +9,24 @@
       = _("Welcome to the EOSC Portal Catalogue and Marketplace")
     %p.contentbox__lead
       -# haml-lint:disable MultilinePipe
-      = _("Integrated platform that allows easy access to lots of services for various research domains along " + |
-          "with integrated data analytics tools. Browse by scientific domain, resource category or provider and, " + |
-          "if you need help, we are here for you!") |
+      = _("Integrated platform that allows easy access to lots of services for various research domains along" + |
+          " with data and integrated data analytics tools. Browse by scientific domain, your current research " + |
+          "activity or provider that you know and trust and, if you need help, we are here for you!") |
       -# haml-lint:enable MultilinePipe
 
     .intro-box-wrapper
       .intro-box
         = _("Find EOSC Services that suit your use case yourself")
 
-        %a{ href: "#{search_service_base_url}/search/all?q=*", title: "Browse through catalogue" }
+        %a{ href: "#{search_service_base_url}/search/all?q=*",
+            title: "Discover research products and services all together" }
           %i.fas.fa-arrow-right
-          = _("Browse through catalogue")
+          = _("Discover research products and services all together")
+
+        %a{ href: "https://marketplace.eosc-portal.eu/services/",
+            title: "Browse through service catalogue" }
+          %i.fas.fa-arrow-right
+          = _("Browse through service catalogue")
 
       .intro-box
         =  _("Describe your use case and get support from our experts")

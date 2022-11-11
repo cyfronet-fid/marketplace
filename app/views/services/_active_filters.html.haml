@@ -5,7 +5,7 @@
         = _("Looking for") + ":"
       #{params[:q]}
     - else
-      = category&.name || "Resources"
+      = category&.name || "EOSC Services and Data Sources"
   .col-md-12.mb-1
     - if category && params[:q].blank?
       %p.text-muted.mb-4.ml-1= category.description
