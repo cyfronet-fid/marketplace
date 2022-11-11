@@ -21,6 +21,6 @@ describe("Scientific domain", () => {
       .eq(0)
       .click();
     cy.location("href")
-      .should("include", "search/service");
+      .should("include", "search");
   });
 });

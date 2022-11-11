@@ -17,7 +17,7 @@ RSpec.feature "Service searching in top bar", js: true do
 
     expect(url.path).to eq(services_path)
 
-    expect(page).to have_text("All resources")
+    expect(page).to have_text("EOSC Services")
   end
 
   scenario "search with any category selected should submit to /categories" do
