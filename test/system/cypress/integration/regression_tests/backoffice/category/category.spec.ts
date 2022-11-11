@@ -33,21 +33,6 @@ describe("Category", () => {
     cy.get("[data-e2e='create-category-btn']")
       .click();
     cy.contains("div.alert-success", message.successCreationMessage)
-    cy.get("h1")
-      .invoke("text")
-      .then(value=>{
-        cy.location("href")
-          .should("contain", `/backoffice/categories/${value}`);
-        cy.visit("/")
-        cy.get("li")
-          .contains("Categories")
-          .click();
-        cy.get("a[href*='categories'][data-e2e='branch-link']")
-          .contains(value)
-          .click();
-        cy.location("href")
-          .should("contain", `search/service`)
-    });
   });
 
   it("should create new category with parent", () => {
@@ -75,22 +60,8 @@ describe("Category", () => {
     cy.fillFormCreateCategory(category2, false);
     cy.get("[data-e2e='create-category-btn']")
       .click();
-    cy.get("h1")
-      .invoke("text")
-      .then(value=>{
-        cy.location("href")
-          .should("contain", `/backoffice/categories/${value}`);
-        cy.visit("/")
-        cy.get("li")
-          .contains("Categories")
-          .click();
-        cy.get("a[data-e2e='branch-link']")
-          .contains(value)
-          .click();
-        cy.location("href")
-          .should("contain",
-              `search/service`);
-    });
+    cy.contains("div.alert-success", message.successCreationMessage)
+
   });
 
   it("shouldn't create new category", () => {
