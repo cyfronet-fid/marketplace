@@ -2518,7 +2518,7 @@ label[data-multicheckbox].small {
 
   .access-type {
     font-size: 0.8em;
-    padding: 7px 14px;
+    padding: 7px 11px;
     text-align: center;
     color: $palette-gray-70;
     //margin-bottom: 30px;
@@ -2573,6 +2573,10 @@ label[data-multicheckbox].small {
       padding-right: 10px;
       border: 1px solid $palette-yellow;
       color: $palette-gray-100;
+
+      &.datasource {
+        padding-right: 24px;
+      }
 
       &:after {
         position: absolute;
