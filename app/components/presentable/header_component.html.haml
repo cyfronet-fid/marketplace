@@ -1,7 +1,7 @@
-- horizontal = @object.instance_of?(Service) && @object&.horizontal
+- horizontal = !@object.instance_of?(Provider) && @object&.horizontal
 .row
   - if horizontal
-    %span.horizontal-badge Horizontal service
+    %span.horizontal-badge Horizontal #{@object.class.to_s.humanize}
   .col-12.col-lg-9.row
     .col-12.col-sm-3.d-flex.img-service-detail
       - if @preview
