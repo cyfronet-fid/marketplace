@@ -6,6 +6,6 @@ class DatasourcesController < ApplicationController
   end
 
   def show
-    @datasource = Datasource.friendly.find(params[:id])
+    @datasource = Datasource.visible.friendly.find(params[:id])
   end
 end

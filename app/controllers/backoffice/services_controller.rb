@@ -10,7 +10,10 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   before_action :find_and_authorize, only: %i[show edit update destroy]
   before_action :sort_options, :favourites
   before_action :load_query_params_from_session, only: :index
-  prepend_before_action(only: [:index]) { authorize(Service) }
+  prepend_before_action(only: [:index]) do
+    authorize(Service)
+    authorize(Datasource)
+  end
   helper_method :cant_edit
 
   def index
@@ -30,15 +33,15 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
         redirect_to backoffice_datasource_path(Datasource.friendly.find(params["object_id"]))
       end
     end
-    @services, @offers = search(scope)
+    @presentable, @services, @offers = search(scope, datasource_scope: datasource_scope, only_visible: false)
     begin
-      @pagy = Pagy.new_from_searchkick(@services, items: params[:per_page])
+      @pagy = Pagy.new_from_searchkick(@presentable, items: params[:per_page])
     rescue Pagy::OverflowError
       params[:page] = 1
-      @services, @offers = search(scope)
-      @pagy = Pagy.new_from_searchkick(@services, items: params[:per_page])
+      @presentable, @services, @offers = search(scope, datasource_scope: datasource_scope, only_visible: false)
+      @pagy = Pagy.new_from_searchkick(@presentable, items: params[:per_page])
     end
-    @highlights = highlights(@services)
+    @highlights = highlights(@presentable)
     @comparison_enabled = false
   end
 

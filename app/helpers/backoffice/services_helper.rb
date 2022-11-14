@@ -16,6 +16,7 @@ module Backoffice::ServicesHelper
   end
 
   def offers_status(service)
+    return if service.is_a?(Datasource)
     if service.offers.blank?
       content_tag(:span, "NO OFFERS", class: "badge badge-error")
     elsif service.published? && service.offers.published.blank?

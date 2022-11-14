@@ -25,6 +25,7 @@ class Datasource < ApplicationRecord
   enum status: STATUSES
 
   scope :visible, -> { where(status: %i[published unverified]) }
+  scope :horizontal, -> { where(horizontal: true) }
 
   before_save do
     self.pid = sources&.first&.eid || abbreviation if pid.blank?

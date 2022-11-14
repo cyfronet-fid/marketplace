@@ -14,7 +14,24 @@ module Service::Searchable
     end
   end
 
-  def search(scope, filters = all_filters, additionals_size: 0)
+  def search(scope, filters = all_filters, only_visible: true, datasource_scope: nil, additionals_size: 0)
+    current_scope = only_visible ? { status: %i[published unverified errored] } : {}
+    presentable =
+      Searchkick.search(
+        query,
+        **common_params.merge(
+          where: filter_constr(filters, scope_constr(scope, datasource_scope, category_constr)).merge(current_scope),
+          page: params[:page],
+          per_page: "#{per_page(additionals_size)}",
+          order: ordering,
+          index_name: [Service, Datasource],
+          highlight: {
+            tag: "<mark>"
+          },
+          scope_results: ->(r) { r.includes(:scientific_domains, :providers, :target_users).with_attached_logo }
+        )
+      )
+
     services =
       Service.search(
         query,
@@ -46,35 +63,61 @@ module Service::Searchable
           tag: "<mark>"
         }
       )
-    [services, service_offers(services, offers)]
+    [presentable, services, service_offers(services, offers)]
   end
 
-  def search_for_filters(scope, filters, current_filter)
+  def search_for_filters(scope, filters, current_filter, datasource_scope = {}, only_visible: true)
+    current_scope = only_visible ? { status: %i[published unverified errored] } : {}
     filters -= [current_filter]
-    Service.search(
-      query,
-      **common_params.merge(
-        where: filter_constr(filters, scope_constr(scope, category_constr)),
-        aggs: [current_filter.index],
-        load: false
+    presentable =
+      Searchkick.search(
+        query,
+        **common_params.merge(
+          where: filter_constr(filters, scope_constr(scope, datasource_scope, category_constr)).merge(current_scope),
+          index_name: [Service, Datasource],
+          aggs: [current_filter.index],
+          load: false
+        )
       )
-    )
+    services =
+      Service.search(
+        query,
+        **common_params.merge(
+          where: filter_constr(filters, scope_constr(scope, category_constr)),
+          aggs: [current_filter.index],
+          load: false
+        )
+      )
+    [services, presentable]
   end
 
-  def search_for_categories(scope, filters)
-    Service.search(
-      query,
-      **common_params.merge(where: filter_constr(filters, scope_constr(scope)), aggs: [:categories], load: false)
-    )
+  def search_for_categories(scope, filters, datasource_scope: nil, only_visible: true)
+    current_scope = only_visible ? { status: %i[published unverified errored] } : {}
+    presentable =
+      Searchkick.search(
+        query,
+        **common_params.merge(
+          where: filter_constr(filters, scope_constr(scope, datasource_scope)).merge(current_scope),
+          index_name: [Service, Datasource],
+          aggs: [:categories],
+          load: false
+        )
+      )
+    services =
+      Service.search(
+        query,
+        **common_params.merge(where: filter_constr(filters, scope_constr(scope)), aggs: [:categories], load: false)
+      )
+    [services, presentable]
   end
 
   def filter_counters(scope, filters, current_filter)
     {}.tap do |hash|
       unless current_filter.index.blank?
-        services = search_for_filters(scope, filters, current_filter)
-        services.aggregations[current_filter.index][current_filter.index]["buckets"].each_with_object(hash) do |e, h|
-          h[e["key"]] = e["doc_count"]
-        end
+        _services, presentable = search_for_filters(scope, filters, current_filter, only_visible: true)
+        presentable.aggregations[current_filter.index][current_filter.index]["buckets"].each_with_object(
+          hash
+        ) { |e, h| h[e["key"]] = e["doc_count"] }
       end
     end
   end
@@ -95,14 +138,16 @@ module Service::Searchable
 
   def common_params
     {
-      fields: %w[name^7 tagline^3 description offer_names provider_names resource_organisation_name],
+      fields: %w[name^7 datasource_name^7 tagline^3 description offer_names provider_names resource_organisation_name],
       operator: "or",
       match: :word_middle
     }
   end
 
-  def scope_constr(scope, constr = {})
-    constr.tap { |c| c[:id] = scope.ids.uniq }
+  def scope_constr(scope, ds_scope = {}, constr = {})
+    ids = scope.ids
+    ids += ds_scope.ids if ds_scope.present?
+    constr.tap { |c| c[:id] = ids }
   end
 
   def category_constr(constr = {})

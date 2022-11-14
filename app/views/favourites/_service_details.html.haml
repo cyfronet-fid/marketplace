@@ -3,7 +3,9 @@
     .pl-4.pr-4.mb-3
       %h2.mb-3{ "data-probe" => "", "data-service-id" => service.id }= yield
       - if service.horizontal
-        %span.badge.badge-blue Horizontal service
+        %span.badge.badge-blue
+          Horizontal
+          = service.class.to_s.humanize
       %p.mb-3= service.tagline
       = render "components/presentable/header_component/categorization", service: service, highlights: nil
       - if content_for(:comparison_checkbox)

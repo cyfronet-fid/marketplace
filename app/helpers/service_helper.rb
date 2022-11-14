@@ -42,7 +42,7 @@ module ServiceHelper
     link_to_unless(
       target.deleted? || target.draft?,
       highlighted_for(:resource_organisation_name, service, highlights),
-      provider_path(target),
+      provider_path(target.id),
       preview_options
     )
   end
@@ -70,8 +70,8 @@ module ServiceHelper
   def providers(service, highlights = nil, preview: false)
     highlighted = highlights.present? ? sanitize(highlights[:provider_names])&.to_str : ""
     preview_options = preview ? { "data-target": "preview.link" } : {}
-    service
-      .providers
+    Provider
+      .where(id: service.providers)
       .reject(&:blank?)
       .reject(&:deleted?)
       .reject { |p| p == service.resource_organisation }

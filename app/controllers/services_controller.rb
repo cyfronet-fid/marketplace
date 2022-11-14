@@ -10,7 +10,7 @@ class ServicesController < ApplicationController
   before_action :sort_options
   before_action :load_query_params_from_session, only: :index
 
-  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def index
     if params["object_id"].present?
       case params["type"]
@@ -32,28 +32,30 @@ class ServicesController < ApplicationController
     end
     subgroup_quantity = 5
     additionals_size =
-      if Service.horizontal.size.zero? || params[:q].present? || active_filters.size.positive? || @category
+      if (Service.published.horizontal.size.zero? && Datasource.visible.horizontal.size.zero?) || params[:q].present? ||
+           active_filters.size.positive? || @category
         0
       else
         per_page / subgroup_quantity
       end
-    @services, @offers = search(scope, additionals_size: additionals_size)
-    @horizontal_services = horizontal_services(@services, additionals_size)
-    @presentable = presentable
+    @presentable, @services, @offers =
+      search(scope, only_visible: true, datasource_scope: datasource_scope, additionals_size: additionals_size)
+    @horizontal_services = horizontal_services(@presentable, additionals_size)
     begin
-      @pagy = Pagy.new_from_searchkick(@services, items: per_page(additionals_size))
+      @pagy = Pagy.new_from_searchkick(@presentable, items: per_page(additionals_size))
     rescue Pagy::OverflowError
       params[:page] = 1
-      @services, @offers = search(scope)
-      @pagy = Pagy.new_from_searchkick(@services, items: params[:per_page])
+      @presentable, @services, @offers = search(scope, only_visible: true, datasource_scope: datasource_scope)
+      @pagy = Pagy.new_from_searchkick(@presentable, page: params[:page], items: params[:per_page])
     end
-    @highlights = highlights(@services)
+    @presentable = presentable
+    @highlights = highlights(@presentable)
     @recommended_services = fetch_recommended
     @favourite_services =
       current_user&.favourite_services || Service.where(slug: Array(cookies[:favourites]&.split("&") || []))
   end
 
-  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
   def show
     @service = Service.includes(:offers).friendly.find(params[:id])
@@ -82,8 +84,8 @@ class ServicesController < ApplicationController
     @sort_options = [
       ["by name A-Z", "sort_name"],
       ["by name Z-A", "-sort_name"],
-      ["by rate 1-5", "rating"],
-      ["by rate 5-1", "-rating"],
+      # ["by rate 1-5", "rating"],
+      # ["by rate 5-1", "-rating"],
       ["Best match", "_score"]
     ]
   end
@@ -102,17 +104,21 @@ class ServicesController < ApplicationController
 
   def presentable
     if @horizontal_services.size.zero? || active_filters.size.positive? || params[:q] || @category
-      @services
+      @presentable
     else
-      @services
+      @presentable
         .each_slice(per_page(@horizontal_services.size) / @horizontal_services.size)
         .zip(@horizontal_services)
         .flatten
     end
   end
 
-  def horizontal_services(services, limit)
-    service_ids = services.map(&:id)
-    Service.published.horizontal.reject { |s| service_ids.include? s.id }.sample(limit)
+  def horizontal_services(presentable, limit)
+    service_ids = presentable.select { |p| p.is_a?(Service) }.map(&:id)
+    datasource_ids = presentable.select { |p| p.is_a?(Datasource) }.map(&:id)
+    [
+      Service.published.horizontal.reject { |s| service_ids.include? s.id },
+      Datasource.visible.horizontal.reject { |d| datasource_ids.include? d.id }
+    ].flatten.sample(limit)
   end
 end

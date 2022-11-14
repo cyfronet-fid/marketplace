@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.44.2]
+
+### Fixed
+- Searching datasources in the main search (@goreck888)
+
 ## [3.44.1] 2022-11-11
 
 ## [3.44.0] 2022-11-11

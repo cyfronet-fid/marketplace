@@ -23,7 +23,7 @@
         = render partial: "service", collection: presentable,
                  locals: { highlights: highlights,
                            category: category,
-                           offers: offers,
+                           offers: offers || [],
                            favourite_services: favourite_services,
                            comparison_enabled: comparison_enabled,
                            remote: true,

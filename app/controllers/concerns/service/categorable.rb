@@ -5,13 +5,13 @@ module Service::Categorable
 
   included { before_action :init_categories_tree, only: :index }
 
-  def category_counters(scope, filters)
-    services = search_for_categories(scope, filters)
+  def category_counters(scope, filters, datasource_scope: [])
+    _services, presentable = search_for_categories(scope, filters, datasource_scope: datasource_scope)
     counters =
-      services.aggregations["categories"]["categories"]["buckets"].each_with_object({}) do |e, h|
+      presentable.aggregations["categories"]["categories"]["buckets"].each_with_object({}) do |e, h|
         h[e["key"]] = e["doc_count"]
       end
-    counters.tap { |c| c[nil] = services.aggregations["categories"]["doc_count"] }
+    counters.tap { |c| c[nil] = presentable.aggregations["categories"]["doc_count"] }
   end
 
   private
@@ -52,12 +52,15 @@ module Service::Categorable
   end
 
   def count_services(category)
-    services = search_for_categories(scope, all_filters).map { |s| s.id.to_i }
+    results = search_for_categories(scope, all_filters, datasource_scope: datasource_scope)
+    services = results[0].map { |s| s.id.to_i }
+    _datasources = results[1].map { |s| s.id.to_i }
     (counters[category.id] || 0) +
       category.descendants.map { |c| c.services.to_a.map(&:id) & services }.flatten.uniq.size
+    # category.descendants.map { |c| c.datasources.to_a.map(&:id) & datasources}.flatten.uniq.size
   end
 
   def counters
-    @counters ||= category_counters(scope, all_filters)
+    @counters ||= category_counters(scope, all_filters, datasource_scope: datasource_scope)
   end
 end

@@ -184,7 +184,7 @@ class Importers::Datasource < ApplicationService
       required_services: required_services,
       related_services: related_services,
       platforms: platforms,
-      catalogue_ids: [map_catalogue(@data["catalogueId"]).id] || [],
+      catalogue_ids: [map_catalogue(@data["catalogueId"])&.id] || [],
       # Attribution
       funding_bodies: funding_bodies,
       funding_programs: funding_programs,

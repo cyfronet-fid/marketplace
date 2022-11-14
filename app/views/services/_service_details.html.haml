@@ -5,7 +5,9 @@
       %h2.mb-3{ "data-probe" => "", "data-service-id" => service.id, "data-e2e" => "service-id" }
         = yield
         - if service.horizontal
-          %span.badge.badge-blue Horizontal service
+          %span.badge.badge-blue
+            Horizontal
+            = service.class.to_s.humanize
         .abbreviation.list
           = service.abbreviation
       %p.mb-3= highlighted_for(:tagline, service, highlights)
