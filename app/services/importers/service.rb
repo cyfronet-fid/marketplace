@@ -119,7 +119,7 @@ class Importers::Service < ApplicationService
       scientific_domains: map_scientific_domains(scientific_domains),
       categories: map_categories(categories) || [],
       horizontal: @data["horizontalService"] || false,
-      research_steps: map_research_steps(research_steps),
+      research_step_ids: map_research_step_ids(research_steps),
       target_users: map_target_users(target_users),
       access_types: map_access_types(access_types),
       access_modes: map_access_modes(access_modes),
