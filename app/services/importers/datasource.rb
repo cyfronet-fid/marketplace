@@ -155,8 +155,8 @@ class Importers::Datasource < ApplicationService
       # Classification
       scientific_domains: map_scientific_domains(scientific_domains) || [],
       categories: map_categories(categories) || [],
-      research_steps: map_research_steps(research_steps) || [],
-      horizontal: @data["horizontal"] || false,
+      research_step_ids: map_research_step_ids(research_steps) || [],
+      horizontal: @data["horizontalService"] || false,
       target_users: map_target_users(target_users) || [],
       access_types: map_access_types(access_types) || [],
       access_modes: map_access_modes(access_modes) || [],
