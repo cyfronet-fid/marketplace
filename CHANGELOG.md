@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [3.44.2] 
+## [3.44.2] 2022-11-22
 
 ### Fixed
 - EOSC Explore banner link (@goreck888)
