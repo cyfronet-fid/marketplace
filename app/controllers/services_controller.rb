@@ -10,7 +10,7 @@ class ServicesController < ApplicationController
   before_action :sort_options
   before_action :load_query_params_from_session, only: :index
 
-  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/AbcSize
   def index
     if params["object_id"].present?
       case params["type"]
@@ -31,14 +31,9 @@ class ServicesController < ApplicationController
       end
     end
     subgroup_quantity = 5
-    additionals_size =
-      if Service.horizontal.size.zero? || params[:q].present? || active_filters.size.positive? || @category
-        0
-      else
-        per_page / subgroup_quantity
-      end
+    additionals_size = hide_horizontals? ? 0 : (per_page / subgroup_quantity)
     @services, @offers = search(scope, additionals_size: additionals_size)
-    @horizontal_services = horizontal_services(@services, additionals_size)
+    @horizontals = horizontals(@services, additionals_size)
     @presentable = presentable
     begin
       @pagy = Pagy.new_from_searchkick(@services, items: per_page(additionals_size))
@@ -53,7 +48,7 @@ class ServicesController < ApplicationController
       current_user&.favourite_services || Service.where(slug: Array(cookies[:favourites]&.split("&") || []))
   end
 
-  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/AbcSize
 
   def show
     @service = Service.includes(:offers).friendly.find(params[:id])
@@ -101,18 +96,20 @@ class ServicesController < ApplicationController
   end
 
   def presentable
-    if @horizontal_services.size.zero? || active_filters.size.positive? || params[:q] || @category
+    if hide_horizontals?(init: false)
       @services
     else
-      @services
-        .each_slice(per_page(@horizontal_services.size) / @horizontal_services.size)
-        .zip(@horizontal_services)
-        .flatten
+      @services.each_slice(per_page(@horizontals.size) / @horizontals.size).zip(@horizontals).flatten
     end
   end
 
-  def horizontal_services(services, limit)
+  def horizontals(services, limit)
     service_ids = services.map(&:id)
     Service.published.horizontal.reject { |s| service_ids.include? s.id }.sample(limit)
+  end
+
+  def hide_horizontals?(init: true)
+    empty_listed = init ? Service.published.horizontal.size.zero? : @horizontals.size.zero?
+    empty_listed || active_filters.size.positive? || params[:q].present? || @category.present?
   end
 end
