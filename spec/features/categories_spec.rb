@@ -9,7 +9,7 @@ RSpec.feature "Service categories" do
 
   before do
     resources_selector = "body main div:nth-child(2).container div.container div.row div.col-lg-9"
-    service_selector = "div.media.mb-3.service-box.shadow-sm"
+    service_selector = "div.media.mb-3.service-box"
     @services_selector = resources_selector + " " + service_selector
 
     checkin_sign_in_as(user)

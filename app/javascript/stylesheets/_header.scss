@@ -26,6 +26,9 @@
 
     .nav-link {
       position: relative;
+      font-size: 14px;
+      padding-left: 0.4rem;
+      padding-right: 0.4rem;
 
       &::before {
         display: block;
@@ -74,7 +77,6 @@
   }
 }
 
-
 .search-box {
   position: relative;
 }
@@ -85,6 +87,17 @@
   border: 1px solid $palette-solid-50;
 }
 
+.navbar-expand-lg {
+  padding-left: 0;
+  padding-right: 0;
+
+  .navbar-nav {
+    .nav-link {
+      padding-left: 0.4rem;
+      padding-right: 0.4rem;
+    }
+  }
+}
 
 
 /////////////////////////////////////////////////

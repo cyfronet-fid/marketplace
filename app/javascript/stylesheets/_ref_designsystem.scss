@@ -155,7 +155,7 @@ li {
   margin: 50px auto 0;
   flex-direction: row;
   justify-content: space-between;
-  border-radius: 5px;
+  border-radius: 8px;
   padding: 1.5rem;
 }
 
@@ -188,7 +188,8 @@ li {
     }
 
     &:hover {
-      color: $color-secondary;
+      color: $color-white;
+      text-decoration: underline;
     }
   }
 
@@ -227,8 +228,8 @@ li {
         white-space: nowrap;
 
         &:hover {
-          color: $color-secondary;
-          text-decoration: none;
+          color: $color-white;
+          text-decoration: underline;
         }
       }
     }
@@ -381,15 +382,15 @@ li {
   margin: 0 10px;
   flex-direction: column;
   margin-bottom: 25px;
-  border-radius: 2px;
+  overflow: hidden;
+  border-radius: 8px;
   background: $color-1;
-  box-shadow: 0 0.125rem 0.25rem $palette-gray-30;
+  border: 1px solid $palette-gray-10;
 
   &.recommendation {
     margin: 0 10px 0 0;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 0.125rem 0.25rem rgba($palette-black, 0.075);
 
     .recommend-box {
       position: absolute;
@@ -403,10 +404,13 @@ li {
     }
 
     header {
+      background: $color-primary;
+      color: $palette-white;
       z-index: unset;
+      font-weight: 400;
       font-size: 1.125rem;
       margin-bottom: 20px;
-      padding: 1.6rem 1rem 0;
+      padding: 1.1rem 1rem 0;
       line-height: 1.3;
     }
 
@@ -417,7 +421,8 @@ li {
 
   header {
     align-items: center;
-    padding: 1.4rem 1rem 0;
+    padding: 1rem 1rem 0;
+    margin-bottom: 1.2rem;
   }
 
   .title {
@@ -425,14 +430,15 @@ li {
     float: left;
     display: block;
     margin-bottom: 15px;
-    font-weight: bold;
+    font-weight: 500;
     line-height: 1.4rem;
     font-size: 1.3em;
     text-decoration: none;
-    color: $color-link;
+    color: $palette-white;
 
     &:hover {
-      color: $palette-gray-100;
+      color: $palette-white;
+      text-decoration: underline;
     }
   }
 
@@ -517,6 +523,7 @@ li {
     header {
       padding: 1.4rem 1rem 0;
       margin-bottom: 10px;
+      background: none;
     }
 
     article {
@@ -756,7 +763,7 @@ li {
 
   li {
     background: none;
-    color: $palette-gray-100;
+    color: $color-secondary;
     display: inline-block;
     font-size: 17px;
     float: left;
@@ -770,6 +777,7 @@ li {
 
   .current {
     background: $color-secondary;
+    color: $palette-white;
   }
 
   li:first-child {
@@ -876,7 +884,7 @@ li {
     li {
       margin: 0 0.5rem;
       display: inline-block;
-      font-family: 'Ubuntu';
+      font-family: 'Inter';
       font-size: 0.875rem;
       font-weight: 300;
       color: $palette-gray-80;
@@ -899,12 +907,6 @@ li {
         }
       }
     }
-  }
-}
-
-.main {
-  .top {
-    margin-bottom: 30px;
   }
 }
 
@@ -931,12 +933,18 @@ li {
     text-align: right;
     position: relative;
 
+    a {
+      &.menu__label {
+        color: $palette-white;
+      }
+    }
+
     &__label {
       &::after {
         content: '';
         position: absolute;
         border-style: solid;
-        border-color: $palette-gray-70;
+        border-color: $palette-white;
         border-width: 0 2px 2px 0;
         transform: rotate(45deg);
         width: 9px;
@@ -979,7 +987,7 @@ li {
         height: 3px;
         margin-bottom: 5px;
         position: relative;
-        background: $color-text;
+        background: $color-white;
         border-radius: 3px;
         z-index: 1;
         display: block;
@@ -1080,7 +1088,8 @@ li {
     font-size: 1rem;
     margin-right: -1px;
     width: 100%;
-    border-radius: $border-radius-default 0 0 $border-radius-default;
+    border: none;
+    border-radius: 25px 0 0 25px;
     position: relative;
     z-index: 20;
     font-weight: 300;
@@ -1090,7 +1099,6 @@ li {
     font-size: 0.875rem;
     padding-left: 10px;
     width: 150px;
-    border: 1px solid $palette-gray-50;
     position: relative;
     background: $color-white;
     margin-left: -1px;
@@ -1130,10 +1138,11 @@ li {
 
   button {
     background: transparent;
-    border: 1px solid $palette-gray-50;
     padding: 0 15px;
     font-size: 1rem;
+    border: none;
     margin-left: -1px;
+    border-radius: 0 25px 25px 0;
   }
 }
 
@@ -1179,11 +1188,18 @@ li {
   }
 }
 
-
 .bundle-status {
   font-size: 12px;
   font-weight: bold;
   margin-right: 10px;
+}
+
+.btn-success {
+  background-color: $color-primary;
+
+  &:hover {
+    background-color: $color-7;
+  }
 }
 
 @import 'ref_mobile';
