@@ -65,15 +65,16 @@ module PresentableHelper
     (countries - Country.countries_for_region("Europe").map(&:alpha2)).present?
   end
 
-  def deep_names(parent, level = 1)
+  def deep_names(parent, level = 1, current_parent_name = nil)
     if parent.children.present?
+      current = [current_parent_name, parent.name].compact.join(">")
       if level > 1
-        parent.children.map { |c| deep_names(c, level - 1) }.flatten.reject(&:blank?).join(" OR ")
+        parent.children.map { |c| deep_names(c, level - 1, current) }.flatten.reject(&:blank?).join(" OR ")
       else
         parent
           .children
           .select { |c| c.services.published.size.positive? }
-          .map { |c| "\"#{CGI.escape(c.name)}\"" }
+          .map { |c| "\"#{CGI.escape(current)}>#{CGI.escape(c.name)}\"" }
           .compact
           .join(" OR ")
       end
