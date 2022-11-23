@@ -36,7 +36,7 @@
     .col-12.col-md-10
 
       #accordion-form.accordion
-        .card.shadow-sm.rounded
+        .card.rounded
           %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
               [:name, :abbreviation, :resource_organisation, :providers, :webpage_url])),
               data: { toggle: "collapse", target: "#basic" },
@@ -62,7 +62,7 @@
                               disabled: cant_edit([provider_ids: []]),
                               collection: Provider.active.sort_by { |e| e.name.strip.downcase }
             = f.input :webpage_url, disabled: cant_edit(:webpage_url)
-        .card.shadow-sm.rounded
+        .card.rounded
           %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
               [:description, :tagline, :logo, :link_multimedia_urls, :link_use_cases_urls,
                :"link_multimedia_urls.url", :"link_use_cases_urls.url"])),
@@ -112,7 +112,7 @@
                   fields: f.fields_for(:link_use_cases_urls, Link::UseCasesUrl.new,
                   child_index: "new_field") { |lf| render "backoffice/common_parts/form/link_fields",
                   link_form: lf, object: service, link_name: "useCase" } }
-        .card.shadow-sm.rounded
+        .card.rounded
           %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
               [:scientific_domains, :categories, :target_users, :access_types,
               :access_modes, :tag_list])),
@@ -151,7 +151,7 @@
             = f.association :access_modes, input_html: { data: { choice: true } },
                             disabled: cant_edit([access_mode_ids: []])
             = f.input :tag_list, input_html: { value: service.tag_list.to_s }, disabled: cant_edit(:tag_list)
-        .card.shadow-sm.rounded
+        .card.rounded
           %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
               [:geographical_availabilities, :language_availability])),
               data: { toggle: "collapse", target: "#availability" },
@@ -176,7 +176,7 @@
                 collection: I18nData.languages.map { |k, v| [v, k] },
                 disabled: cant_edit([language_availability: []])
 
-        .card.shadow-sm.rounded
+        .card.rounded
           %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
                   [:resource_geographic_locations])),
                   data: { toggle: "collapse", target: "#location" },
@@ -198,7 +198,7 @@
                   disabled: cant_edit([resource_geographic_locations: []]),
                   input_html: { data: { choice: true },  "multiple" => "true" }
 
-        .card.shadow-sm.rounded
+        .card.rounded
           %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
               [:"main_contact.first_name", :"main_contact.last_name",
               :"main_contact.email", :"public_contacts.email", :public_contacts])),
@@ -252,7 +252,7 @@
                 = f.input :security_contact_email, input_html: { type: "text" },
                     disabled: cant_edit(:security_contact_email)
 
-        .card.shadow-sm.rounded
+        .card.rounded
           %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
               [:trl, :life_cycle_status, :certifications, :standards,
               :open_source_technologies, :version, :last_update, :changelog])),
@@ -301,7 +301,7 @@
                    input_html: { class: "form-control text optional" }
             = link_to_add_array_field("service", "changelog")
 
-        .card.shadow-sm.rounded
+        .card.rounded
           %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
               [:required_services, :related_services, :related_platforms, :platforms])),
                 data: { toggle: "collapse", target: "#dependencies" },
@@ -338,7 +338,7 @@
             input_html: { multiple: false, data: { choice: true } },
             collection: Catalogue.all, selected: service.catalogue&.id || nil
 
-        .card.shadow-sm.rounded
+        .card.rounded
           %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
               [:funding_bodies, :funding_programs, :grant_project_names])),
               data: { toggle: "collapse", target: "#attribution" },
