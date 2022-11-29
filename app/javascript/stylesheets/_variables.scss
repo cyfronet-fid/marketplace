@@ -1,4 +1,4 @@
-$font-family-sans-serif: 'Ubuntu', Roboto, 'Helvetica Neue', Arial, sans-serif;
+$font-family-sans-serif: 'Inter', Roboto, 'Helvetica Neue', Arial, sans-serif;
 
 $font-size-base: 1rem;
 
@@ -11,7 +11,7 @@ $font-weight-normal: 300; // Ubuntu regular
 $font-weight-bold: 400; // Ubuntu medium
 $font-weight-bolder: 600; // Ubuntu bold
 
-$link-color: #3540b6;
+$link-color: #3d4db6;
 $font-size-base: 1rem;
 
 $headings-font-weight: $font-weight-bolder;
@@ -46,13 +46,13 @@ $palette-solid-100: #1c313a;
 
 $palette-white: #fff;
 
-$palette-blue: #0c2bd5;
+$palette-blue: #3d4db6;
 $palette-light-blue: #e6fafd;
 $palette-yellow: #ffcd00;
 $palette-yellow-opacity: rgba(255, 205, 0, 0.2);
 $palette-orange: #ffa900;
 $palette-salmon: #ff715b;
-$palette-gradient-start: #05cae7;
+$palette-gradient-start: #3d4db6;
 $palette-gradient-end: $palette-blue;
 $palette-lightblue: #e1f9fb;
 $palette-lightblue2: #f9fcfe;
@@ -134,3 +134,5 @@ $status-bg-rejected: rgba(232, 62, 62, 0.32);
 $status-bg-ready: rgba(48, 174, 55, 0.3);
 $status-bg-registered: rgba(255, 205, 0, 0.3);
 $services-list-bg: rgba(28, 49, 58, 0.03);
+$alert-bg: #edf4ff;
+$alert-color: #3d4db6;
