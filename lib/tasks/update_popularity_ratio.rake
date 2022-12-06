@@ -10,7 +10,7 @@ namespace :services do
       path = "/services/#{service.slug}"
       views = Analytics::PageViewsAndRedirects.new(analytics).call(path)[:views].to_d
       project_items = service.project_items_count.to_d
-      service.popularity_ratio = 1000 * ((views / total_views) + (project_items / total_project_items))
+      service.popularity_ratio = ((views / total_views) + (project_items / total_project_items)) * 1000
       puts "#{service.name}: #{service.popularity_ratio}"
       service.save!
     end

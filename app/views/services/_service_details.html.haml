@@ -1,5 +1,5 @@
-.media.mb-3.service-box{ "data-shepherd-tour-target": local_assigns[:tour_overview_9_target] ?
-                                     "overview_9" : nil, class: ("horizontal" if service.horizontal) }
+.media.mb-3.service-box{ "data-shepherd-tour-target": local_assigns[:tour_overview_9_target] ? "overview_9" : nil,
+  class: ("horizontal" if service.horizontal) }
   .media-body.pt-4{ class: ("backoffice" if request.fullpath.include?("backoffice")) }
     .pl-4.pr-4.mb-3
       %h2.mb-3{ "data-probe" => "", "data-service-id" => service.id, "data-e2e" => "service-id" }

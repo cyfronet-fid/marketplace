@@ -31,7 +31,7 @@ namespace :rdt do
   task add_vocabularies: :environment do
     require "yaml"
     puts "Creating funding bodies from yaml"
-    yaml_hash = YAML.load_file("db/vocabulary.yml")
+    yaml_hash = YAML.load_file("db/vocabulary.yml", aliases: true)
 
     yaml_hash["funding_body"].each do |_, hash|
       Vocabulary::FundingBody.find_or_initialize_by(eid: hash["eid"]) do |funding_body|

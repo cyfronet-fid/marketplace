@@ -10,6 +10,6 @@ class Report::Register
     client.create!(@report)
     true
   rescue Report::Client::XGUSIssueCreateError => e
-    raise e
+    e
   end
 end

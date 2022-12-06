@@ -277,7 +277,7 @@ Devise.setup do |config|
   }
   endpoints = ENV.fetch("OIDC_AAI_NEW_API", true) ? new_endpoints : old_endpoints
   scope = if ENV["CHECKIN_SCOPE"].nil?
-            %w[openid profile email eduperson_scoped_affiliation offline_access]
+            %w[openid profile email aarc offline_access]
           else
             ENV["CHECKIN_SCOPE"].split(",")
           end

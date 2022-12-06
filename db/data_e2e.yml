@@ -46,7 +46,7 @@ platforms:
 
 categories:
   Sharing & Discovery:
-    name: &sharingAndDicoveryParent "Sharing & Discovery"
+    name: &sharingAndDiscoveryParent "Sharing & Discovery"
     description: Services to search and discover data, publications, tools and other resources useful for your research
   Processing & Analysis:
     name: &processingAndAnalysisParent "Processing & Analysis"
@@ -71,7 +71,7 @@ categories:
     description: Services to integrate identity management, authorisation and other security services to comply with policies and regulations or access services to support the operations of your infrastructures and services
   Software Development Kits:
     name: &softwareDevelopmentKits "Software Development Kits"
-    parent: *sharingAndDicoveryParent
+    parent: *sharingAndDiscoveryParent
 
 catalogues:
   EOSC:
@@ -1262,7 +1262,7 @@ services:
     offers: *cloudComputeOffers
   B2DROP:
     name: &b2drop B2DROP
-    parents: [*storageParent, *sharingAndDicoveryParent, *softwareDevelopmentKits]
+    parents: [*storageParent, *sharingAndDiscoveryParent, *softwareDevelopmentKits]
     resource_organisation: *eudat
     logo: b2drop.png
     open_access: false
@@ -1391,7 +1391,7 @@ services:
 
   B2FIND:
     name: &b2find B2FIND
-    parents: [*sharingAndDicoveryParent, *dataManagementParent]
+    parents: [*sharingAndDiscoveryParent, *dataManagementParent]
     resource_organisation: *eudat
     logo: b2find.png
     open_access: false
@@ -1522,7 +1522,7 @@ services:
           in the metadata, Local B2FIND instace. Ideal for: Community/organisational data managers.
   B2HANDLE:
     name: &b2handle B2HANDLE
-    parents: [*dataManagementParent, *sharingAndDicoveryParent]
+    parents: [*dataManagementParent, *sharingAndDiscoveryParent]
     resource_organisation: *eudat
     logo: b2handle.png
     open_access: false
@@ -1645,7 +1645,7 @@ services:
             value: 365
   B2NOTE:
     name: &b2note B2NOTE
-    parents: [*sharingAndDicoveryParent, *dataManagementParent]
+    parents: [*sharingAndDiscoveryParent, *dataManagementParent]
     resource_organisation: *eudat
     logo: b2note.png
     open_access: false
@@ -1790,7 +1790,7 @@ services:
           (expected in the next stable release).
   B2SHARE:
     name: &b2share B2SHARE
-    parents: [*sharingAndDicoveryParent, *dataManagementParent]
+    parents: [*sharingAndDiscoveryParent, *dataManagementParent]
     resource_organisation: *eudat
     logo: b2share.png
     open_access: false
@@ -2274,7 +2274,7 @@ services:
             value: 365
   #    Argo:
   #        name: Argo
-  #        parents: *sharingAndDicoveryParent
+  #        parents: *sharingAndDiscoveryParent
   #        providers: [*not] #TODO: not specified
   #        logo: argo-data.png
   #        open_access: false
@@ -2302,7 +2302,7 @@ services:
   GEOSS Portal:
     status: "draft"
     name: &geossPortal GEOSS Web Portal
-    parents: *sharingAndDicoveryParent
+    parents: *sharingAndDiscoveryParent
     resource_organisation: *esa
     logo: geoss-portal.png
     external: true
@@ -2336,7 +2336,7 @@ services:
   GEO DAB:
     status: unverified
     name: &geossDab GEO DAB
-    parents: *sharingAndDicoveryParent
+    parents: *sharingAndDiscoveryParent
     resource_organisation: *cnr
     logo: geo-dab.jpg
     open_access: true
@@ -2379,7 +2379,7 @@ services:
         order_url: http://www.geodab.net
   VLO:
     name: &vloService Virtual Language Observatory
-    parents: *sharingAndDicoveryParent
+    parents: *sharingAndDiscoveryParent
     providers: [*eudat]
     resource_organistation: *clarin
     logo: vlo-logo.png #component-metadata-infrastructure.png
@@ -2428,7 +2428,7 @@ services:
 
   LRS:
     name: &lrsService Language Resource Switchboard
-    parents: *sharingAndDicoveryParent
+    parents: *sharingAndDiscoveryParent
     providers: [*clarin]
     resource_organisation: *clarin
     logo: lrs-logo.png #component-metadata-infrastructure.png
@@ -2496,7 +2496,7 @@ services:
         order_url: https://switchboard.clarin.eu/
   VCR:
     name: &vcrService Virtual Collection Registry
-    parents: *sharingAndDicoveryParent
+    parents: *sharingAndDiscoveryParent
     providers: [*clarin]
     resource_organisation: *clarin
     logo: vcr-logo.png #component-metadata-infrastructure.png
@@ -4029,7 +4029,7 @@ services:
           new gitlab repositories, events streaming from the dCache backend.
   "da|ra - DOI Registration Service for social science and economic data":
     name: &daRaDoiRegistrationServiceForSocialScienceAndEconomicData "da|ra - DOI Registration Service for social science and economic data"
-    parents: *sharingAndDicoveryParent
+    parents: *sharingAndDiscoveryParent
     providers: [*desyProvider]
     logo: panFaas.png
     open_access: true
@@ -4265,7 +4265,7 @@ services:
 
   GEP - EO:
     name: &gepEO GEP - EO Services for Earthquake Response and Landslides Analysis
-    parents: *sharingAndDicoveryParent
+    parents: *sharingAndDiscoveryParent
     providers: [*terradue]
     logo: gep-eo.png
     open_access: false

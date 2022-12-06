@@ -111,7 +111,7 @@ class ServicesController < ApplicationController
   end
 
   def hide_horizontals?(init: true)
-    empty_listed = init ? Service.published.horizontal.size.zero? : @horizontals.size.zero?
+    empty_listed = init ? Service.published.horizontal.empty? : @horizontals.empty?
     empty_listed || active_filters.size.positive? || params[:q].present? || @category.present?
   end
 end

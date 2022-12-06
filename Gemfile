@@ -12,6 +12,7 @@ gem "nori"
 
 gem "uglifier", ">= 1.3.0"
 gem "webpacker", "~> 5.0"
+gem "sprockets-rails"
 gem "view_component"
 gem "haml-rails"
 gem "turbolinks", "~> 5", require: false
@@ -47,7 +48,7 @@ gem "json-schema"
 gem "public_suffix"
 
 gem "searchkick"
-gem "elasticsearch", "8.5.2"
+gem "elasticsearch", "7.17.7"
 
 gem "devise"
 gem "omniauth"
@@ -101,6 +102,7 @@ group :development do
   gem "spring", "~> 4.0.0"
   gem "spring-watcher-listen", "~> 2.1.0"
   gem "spring-commands-rspec"
+  gem "brakeman"
   gem "prettier", require: false
   gem "overcommit", require: false
   gem "haml_lint", require: false

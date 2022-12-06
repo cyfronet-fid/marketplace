@@ -206,7 +206,7 @@ RSpec.feature "My Services" do
         visit project_service_conversation_path(project, project_item)
 
         message_label =
-          "#{Message.last.created_at.to_s(:db)}, " \
+          "#{Message.last.created_at.to_fs(:db)}, " \
             "#{provider_message.author_name} " \
             "(#{provider_message.author_email}), Provider"
 
@@ -221,7 +221,7 @@ RSpec.feature "My Services" do
         visit project_service_conversation_path(project, project_item)
 
         message_label =
-          "#{Message.last.created_at.to_s(:db)}, " \
+          "#{Message.last.created_at.to_fs(:db)}, " \
             "#{provider_message.author_name}, Provider"
 
         expect(page).to have_text(provider_message.message)
@@ -235,7 +235,7 @@ RSpec.feature "My Services" do
         visit project_service_conversation_path(project, project_item)
 
         message_label =
-          "#{Message.last.created_at.to_s(:db)}, " \
+          "#{Message.last.created_at.to_fs(:db)}, " \
             "#{provider_message.author_email}, Provider"
 
         expect(page).to have_text(provider_message.message)
@@ -248,7 +248,7 @@ RSpec.feature "My Services" do
 
         visit project_service_conversation_path(project, project_item)
 
-        message_label = "#{Message.last.created_at.to_s(:db)}, Provider"
+        message_label = "#{Message.last.created_at.to_fs(:db)}, Provider"
 
         expect(page).to have_text(provider_message.message)
         expect(page).to have_text(message_label)
@@ -285,7 +285,7 @@ RSpec.feature "My Services" do
         click_button "Send message"
 
         expect(page).to have_text("This is my question")
-        expect(page).to have_text("You, #{Message.last.created_at.to_s(:db)}")
+        expect(page).to have_text("You, #{Message.last.created_at.to_fs(:db)}")
         expect(page).to_not have_selector(".new-message-icon")
         expect(page).to_not have_selector(".new-message-separator")
       end

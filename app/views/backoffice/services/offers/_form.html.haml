@@ -11,7 +11,7 @@
       input_html: { "data-target": "ordering.orderType",
                     "data-action": "ordering#updateVisibility",
                     class: "form-control-lg col-lg-6" },
-                    readonly: service.offers.published.size.zero? && service.order_type.present?
+                    readonly: service.offers.published.empty? && service.order_type.present?
     = f.input :internal,
       wrapper_html: { "data-target": "ordering.internalWrapper" },
       input_html: { "data-target": "ordering.internal",

@@ -19,7 +19,7 @@ namespace :projects do
   end
 
   def to_remove?(project)
-    project.name == "Services" && project.project_items.size.zero?
+    project.name == "Services" && project.project_items.empty?
   end
 
   def to_fill_in?(project)

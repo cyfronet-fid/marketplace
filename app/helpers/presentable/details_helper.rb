@@ -15,12 +15,7 @@ module Presentable::DetailsHelper
     [
       [provider_classification, esfri_types, esfri_domains, meril_scientific_domains],
       [networks, areas_of_activity, affiliations, certifications, catalogue],
-      [
-        resource_profile_4? ? hosting_legal_entity : hosting_legal_entity_string,
-        structure_types,
-        societal_grand_challenges,
-        national_roadmaps
-      ]
+      [hosting_legal_entity, structure_types, societal_grand_challenges, national_roadmaps]
     ]
   end
 
@@ -343,10 +338,6 @@ module Presentable::DetailsHelper
     }
   end
 
-  def hosting_legal_entity_string
-    { name: "hosting_legal_entity", template: "array", fields: %w[hosting_legal_entity_string] }
-  end
-
   def networks
     { name: "networks", template: "list", fields: %w[networks], nested: { networks: "name" } }
   end
@@ -357,5 +348,9 @@ module Presentable::DetailsHelper
 
   def national_roadmaps
     { name: "national_roadmaps", template: "list", fields: %w[national_roadmaps] }
+  end
+
+  def backoffice_class(param)
+    "backoffice" if param == "backoffice_service"
   end
 end

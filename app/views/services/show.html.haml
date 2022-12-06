@@ -1,7 +1,7 @@
 - content_for :title, @service.name
 - id = @service.sources&.first&.eid || @service.slug
 :javascript
-  _paq.push(['trackEvent', 'Service', 'Visit', '#{id}']);
+  _paq.push(['trackEvent', 'Service', 'Visit', '#{h(id)}']);
 - breadcrumb :service, @service
 = render "services/errors", service: @service
 .container{ "data-controller": "comparison", "data-shepherd-tour-target": "overview_10" }
@@ -17,8 +17,8 @@
       - c.buttons do
         = render "components/presentable/header_component/order_buttons", service: @service
     = render "services/tabs", service: @service
-  #comparison-bar.comparison-bar.fixed-bottom{ class: (session[:comparison]&.size || 0).positive? ?
-  "d-block" : "d-none", "data-target": "comparison.bar", "data-e2e": "comparison-bar" }
+  #comparison-bar.comparison-bar.fixed-bottom{ class: (session[:comparison].blank? ? "d-none" : "d-block"),
+  "data-target": "comparison.bar", "data-e2e": "comparison-bar" }
     = render "comparisons/bar", services: @compare_services, category: @category
 .tab-content
   = render Presentable::DescriptionComponent.new(object: @service) do |c|

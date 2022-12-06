@@ -14,7 +14,7 @@ services:
       POSTGRES_USER: ${DB_POSTGRES_USER:-mp}
       POSTGRES_PASSWORD: ${DB_POSTGRES_PASSWORD:-mp}
   el:
-    image: elasticsearch:7.5.2
+    image: elasticsearch:7.17.7
     ports:
       - "127.0.0.1:9200:9200"
       - "127.0.0.1:9300:9300"

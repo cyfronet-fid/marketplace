@@ -7,7 +7,7 @@ module CategoriesHelper
 
   def style_indentation_variables(record)
     level = record&.ancestry_depth
-    "--pl-level: #{(20 * level) + 20}px;
-     --bg-level: #{(26 * level) + 8}px;"
+    "--pl-level: #{(level * 20) + 20}px;
+     --bg-level: #{(level * 26) + 8}px;"
   end
 end

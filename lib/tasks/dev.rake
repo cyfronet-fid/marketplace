@@ -18,7 +18,7 @@ namespace :dev do
   end
 
   def create_all_from_path(path)
-    yaml_hash = YAML.load_file(path)
+    yaml_hash = YAML.load_file(path, aliases: true)
 
     create_vocabularies
     create_categories(yaml_hash["categories"])

@@ -14,7 +14,6 @@ class Backoffice::ServicePolicy < ApplicationPolicy
   end
 
   MP_INTERNAL_FIELDS = [
-    [platform_ids: []],
     :restrictions,
     :status,
     :activate_message,

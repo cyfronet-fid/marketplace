@@ -215,7 +215,7 @@ RSpec.feature "Project" do
         visit project_conversation_path(project)
 
         message_label =
-          "#{Message.last.created_at.to_s(:db)}, " \
+          "#{Message.last.created_at.to_fs(:db)}, " \
             "#{mediator_message.author_name} " \
             "(#{mediator_message.author_email}), Customer service"
 
@@ -230,7 +230,7 @@ RSpec.feature "Project" do
         visit project_conversation_path(project)
 
         message_label =
-          "#{Message.last.created_at.to_s(:db)}, " \
+          "#{Message.last.created_at.to_fs(:db)}, " \
             "#{mediator_message.author_name}, Customer service"
 
         expect(page).to have_text(mediator_message.message)
@@ -244,7 +244,7 @@ RSpec.feature "Project" do
         visit project_conversation_path(project)
 
         message_label =
-          "#{Message.last.created_at.to_s(:db)}, " \
+          "#{Message.last.created_at.to_fs(:db)}, " \
             "#{mediator_message.author_email}, Customer service"
 
         expect(page).to have_text(mediator_message.message)
@@ -257,7 +257,7 @@ RSpec.feature "Project" do
 
         visit project_conversation_path(project)
 
-        message_label = "#{Message.last.created_at.to_s(:db)}, Customer service"
+        message_label = "#{Message.last.created_at.to_fs(:db)}, Customer service"
 
         expect(page).to have_text(mediator_message.message)
         expect(page).to have_text(message_label)
@@ -293,7 +293,7 @@ RSpec.feature "Project" do
         click_button "Send message"
 
         expect(page).to have_text("This is my question")
-        expect(page).to have_text("You, #{Message.last.created_at.to_s(:db)}")
+        expect(page).to have_text("You, #{Message.last.created_at.to_fs(:db)}")
         expect(page).to_not have_selector(".new-message-separator")
         expect(page).to_not have_selector(".new-message-icon")
       end

@@ -66,10 +66,7 @@ class Offer < ApplicationRecord
   validate :same_order_type_as_in_service,
            if: -> {
              service&.order_type.present? &&
-               (
-                 (new_record? && service.offers.published.size.zero?) ||
-                   (persisted? && service.offers.published.size == 1)
-               )
+               ((new_record? && service.offers.published.empty?) || (persisted? && service.offers.published.size == 1))
            }
 
   def current_oms
