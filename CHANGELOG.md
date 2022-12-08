@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.44.6]
+
+### Fixed
+- Services import endpoint (@goreck888)
+
 ## [3.44.5] 2022-12-06
 
 ## [3.44.4] 2022-11-29
