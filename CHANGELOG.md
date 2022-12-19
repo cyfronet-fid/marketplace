@@ -9,9 +9,10 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [3.45.0-milestone]
 
 ### Fixed
-- styles in the datasources views (@jarekzet)
+- Styles in the datasources views (@jarekzet)
+- Displaying search bar in the backoffice (@jarekzet)
 
-## [3.44.6]
+## [3.44.6] 2022-12-08
 
 ### Fixed
 - Services import endpoint (@goreck888)
