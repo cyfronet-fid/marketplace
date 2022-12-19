@@ -1028,7 +1028,6 @@ li {
   flex-grow: 2;
   margin: 0 5%;
 
-
   &__input {
     position: relative;
     width: 100%;
@@ -1143,6 +1142,18 @@ li {
     border: none;
     margin-left: -1px;
     border-radius: 0 25px 25px 0;
+  }
+
+  &.backoffice {
+    border: 1px solid $color-8;
+    border-radius: 30px;
+    margin-left: 2%;
+    margin-bottom: 12px;
+
+    input {
+      padding-top: 8px;
+      padding-bottom: 8px;
+    }
   }
 }
 
