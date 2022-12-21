@@ -15,6 +15,7 @@ gem "webpacker", "~> 5.0"
 gem "view_component"
 gem "haml-rails"
 gem "turbolinks", "~> 5", require: false
+gem "render_async"
 
 gem "bootsnap", ">= 1.4.2", require: false
 gem "colorize", ">= 0.8.1", require: false
