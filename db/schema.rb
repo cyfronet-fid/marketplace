@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_08_125558) do
+ActiveRecord::Schema.define(version: 2022_12_12_232052) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -251,6 +251,8 @@ ActiveRecord::Schema.define(version: 2022_11_08_125558) do
     t.datetime "synchronized_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.float "availability_cache"
+    t.float "reliability_cache"
     t.index ["name"], name: "index_datasources_on_name"
     t.index ["pid"], name: "index_datasources_on_pid"
     t.index ["resource_organisation_id"], name: "index_datasources_on_resource_organisation_id"
@@ -767,6 +769,8 @@ ActiveRecord::Schema.define(version: 2022_11_08_125558) do
     t.string "pid"
     t.string "abbreviation"
     t.boolean "horizontal", default: false, null: false
+    t.float "availability_cache"
+    t.float "reliability_cache"
     t.index ["name"], name: "index_services_on_name"
     t.index ["provider_id"], name: "index_services_on_provider_id"
     t.index ["resource_organisation_id"], name: "index_services_on_resource_organisation_id"

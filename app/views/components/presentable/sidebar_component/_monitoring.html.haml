@@ -1,0 +1,22 @@
+%ul.list-group.uptime-list
+  %li.list-group-item{ title: "The percentage of time that the service was working
+   (with or without warnings) over a period of time (#{1.month.before.strftime("%B %Y")})" }
+    %span
+      Availability
+    %strong.status-info{ class: "#{monitoring_numerable_class(object.availability_cache)}" }
+      #{object.availability_cache.floor(2)}%
+  %li.list-group-item{ title: "The percentage of time that the service was working
+  (with or without warnings) over a period of time excluding the scheduled downtimes" }
+    %span
+      Reliability
+    %strong.status-info{ class: "#{monitoring_numerable_class(object.reliability_cache)}" }
+      #{object.reliability_cache.floor(2)}%
+  %li.list-group-item{ title: "#{monitoring_tooltip(object.monitoring_status)}" }
+    %span
+      Status
+    %strong.status-info{ class: "#{monitoring_status_class(object.monitoring_status)}" }
+      .big-dot &#8226;
+      = t("components.presentable.sidebar_component.fields.monitoring_data.#{object.monitoring_status}")
+  = link_to _("Read full monitoring on ARGO"),
+    "https://monitoring.eosc-portal.eu/eosc/report-ar-group-details/Default/SERVICEGROUPS/" + |
+      "#{object.pid.to_s.partition(".").last}/details" |
