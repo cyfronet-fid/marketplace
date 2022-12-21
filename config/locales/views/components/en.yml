@@ -15,6 +15,7 @@ en:
           phase: Resource phase
           scientific_categorisation: Scientific categorisation
           categorisation: Categorisation
+          uptime_monitoring: Uptime monitoring
           target_users: Target users
           resource_availability_and_languages: Resource availability and languages
         fields:
@@ -41,6 +42,18 @@ en:
             beta: "Beta (min. TRL 7)"
             production: "Production (min. TRL 8)"
             retired: "Retired (n/a)"
+          monitoring_data:
+            OK: OK
+            WARNING: Warning
+            UNKNOWN: Unknown
+            CRITICAL: Critical
+            MISSING: Missing
+          monitoring_data_tooltip:
+            OK: The Service is working properly
+            WARNING:  The service is working but with some warnings
+            CRITICAL: The service is not working
+            UNKNOWN:  The checks cannot reason about the status of the service
+            MISSING: There are no results about the service
       details_component:
         details:
           title:

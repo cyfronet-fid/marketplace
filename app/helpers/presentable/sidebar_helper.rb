@@ -2,7 +2,7 @@
 
 module Presentable::SidebarHelper
   def service_sidebar_fields
-    [scientific_categorisation, categorisation, target_users, resource_availability_and_languages]
+    [scientific_categorisation, categorisation, monitoring_data, target_users, resource_availability_and_languages]
   end
 
   def provider_sidebar_fields
@@ -36,6 +36,10 @@ module Presentable::SidebarHelper
         pc_categories: "name"
       }
     }
+  end
+
+  def monitoring_data
+    { name: "uptime_monitoring", fields: %w[availability_cache reliability_cache], template: "monitoring" }
   end
 
   def target_users

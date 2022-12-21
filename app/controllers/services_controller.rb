@@ -5,6 +5,7 @@ class ServicesController < ApplicationController
   include Service::Categorable
   include Service::Autocomplete
   include Service::Comparison
+  include Service::Monitorable
   include Service::Recommendable
 
   before_action :sort_options
@@ -52,6 +53,7 @@ class ServicesController < ApplicationController
 
   def show
     @service = Service.includes(:offers).friendly.find(params[:id])
+    @service.monitoring_status = fetch_status(@service.pid)
 
     authorize(ServiceContext.new(@service, params.key?(:from) && params[:from] == "backoffice_service"))
     @offers = policy_scope(@service.offers.published).order(:created_at).select { |o| o.bundle? == false }
