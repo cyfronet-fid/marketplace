@@ -9,8 +9,8 @@ module Importable
     Category.where(eid: categories)
   end
 
-  def map_research_steps(research_steps)
-    research_steps.present? ? Vocabulary::ResearchStep.where(eid: research_steps) : []
+  def map_research_step_ids(research_steps)
+    research_steps.present? ? Vocabulary::ResearchStep.where(eid: research_steps).map(&:id) : []
   end
 
   def map_scientific_domains(domains)
