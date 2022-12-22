@@ -84,7 +84,7 @@ class Jms::ManageMessage < ApplicationService
         Datasource::DeleteJob.perform_later(resource["datasourceBundle"]["datasource"]["id"])
       when "update", "create"
         Datasource::PcCreateOrUpdateJob.perform_later(
-          resource["datasourceBundle"]["datasource"],
+          resource["datasourceBundle"]["datasource"].merge(resource["datasourceBundle"]["resourceExtras"] || {}),
           resource["datasourceBundle"]["active"],
           @eosc_registry_base_url,
           @token,
