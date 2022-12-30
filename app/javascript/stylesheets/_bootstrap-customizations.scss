@@ -981,7 +981,7 @@ Service detail
 
 .more-details {
   color: $palette-blue;
-  font-weight: bold;
+  font-weight: 600;
   font-size: 14px;
   margin-top: 10px;
   float: left;
@@ -1738,7 +1738,7 @@ h5 {
 
     a {
       color: $palette-blue;
-      font-weight: bold;
+      font-weight: 600;
       font-size: 15px;
 
       &:hover {
@@ -1824,7 +1824,7 @@ h5 {
 
   .num {
     font-size: 65px;
-    font-weight: bold;
+    font-weight: 600;
     line-height: 1;
     margin-top: 10px;
     color: $palette-solid-100;
@@ -2005,7 +2005,7 @@ h5 {
   }
 
   dd {
-    font-weight: bold;
+    font-weight: 600;
   }
 
   dt {
@@ -2041,7 +2041,7 @@ h5 {
     }
 
     label {
-      font-weight: bold;
+      font-weight: 600;
     }
 
     textarea {
@@ -2089,7 +2089,7 @@ h5 {
 
   .voucher-name {
     font-size: 22px;
-    font-weight: bold;
+    font-weight: 600;
   }
 }
 
@@ -2176,7 +2176,7 @@ label[data-multicheckbox].small {
 
   .voucher-title {
     border-right: 1px solid $white;
-    font-weight: bold;
+    font-weight: 600;
     font-size: 15px;
 
     .big {
@@ -2211,7 +2211,7 @@ label[data-multicheckbox].small {
 
 .service-name {
   font-size: 22px;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .vertical-middle {
@@ -2562,7 +2562,7 @@ label[data-multicheckbox].small {
     }
 
     .btn-outline-primary {
-      font-weight: bold;
+      font-weight: 600;
       padding: 0.475rem 1.4rem 0.3rem;
     }
 
@@ -2828,7 +2828,7 @@ label[data-multicheckbox].small {
 
     dd {
       a {
-        font-weight: bold;
+        font-weight: 600;
       }
     }
   }
@@ -3053,7 +3053,7 @@ label[data-multicheckbox].small {
 
   .btn {
     text-transform: uppercase;
-    font-weight: bold;
+    font-weight: 600;
     font-size: 12px;
     padding-bottom: 0.0625rem;
     color: $palette-gray-100;
@@ -3162,7 +3162,7 @@ label[data-multicheckbox].small {
   }
 
   .active {
-    font-weight: bold;
+    font-weight: 600;
     color: $palette-gray-100;
   }
 
@@ -3247,7 +3247,7 @@ label[data-multicheckbox].small {
 .project-heading {
   h1 {
     font-size: 24px;
-    font-weight: bold;
+    font-weight: 600;
   }
 }
 
@@ -3662,7 +3662,7 @@ abbr[title] {
     .card-title {
       font-size: 18px;
       line-height: 1.2;
-      font-weight: bold;
+      font-weight: 600;
       color: $palette-blue;
     }
 
@@ -3837,7 +3837,7 @@ abbr[title] {
       padding-bottom: 0.35rem;
       text-transform: uppercase;
       margin-bottom: 17px;
-      font-weight: bold;
+      font-weight: 600;
       width: 100%;
     }
   }
@@ -3853,7 +3853,7 @@ abbr[title] {
 
   .btn-outline-primary {
     max-width: 255px;
-    font-weight: bold;
+    font-weight: 600;
   }
 }
 
@@ -3998,7 +3998,7 @@ abbr[title] {
 
       .service-title {
         color: $palette-blue;
-        font-weight: bold;
+        font-weight: 600;
         margin-left: 10px;
         height: 100%;
         line-height: 40px;
@@ -4212,7 +4212,7 @@ abbr[title] {
       font-size: 14px;
       text-transform: uppercase;
       line-height: 19px;
-      font-weight: bold;
+      font-weight: 600;
       float:left;
     }
 
@@ -4234,7 +4234,7 @@ abbr[title] {
 
   h5 {
     font-size: 16px;
-    font-weight: bold;
+    font-weight: 600;
     margin-bottom:7px;
   }
 
@@ -4496,7 +4496,7 @@ abbr[title] {
     }
 
     a[aria-expanded="true"] {
-      font-weight: bold;
+      font-weight: 600;
     }
   }
 }
@@ -4670,19 +4670,19 @@ abbr[title] {
     overflow: hidden;
 
     .btn-primary {
-      font-weight: bold;
+      font-weight: 600;
       padding: 0.5rem 3rem 0.375rem;
     }
 
     .btn-outline-danger {
-      font-weight: bold;
+      font-weight: 600;
       padding: 0.5rem 3rem 0.375rem;
       border: 1px solid $btn-error-hover;
     }
   }
 
   .active {
-    font-weight: bold;
+    font-weight: 600;
     font-size: 20px;
     line-height: 27px;
     margin-bottom: 5px;
@@ -4691,7 +4691,7 @@ abbr[title] {
   .token-visibility {
     color: $palette-gray-70;
     font-size: 12px;
-    font-weight: bold;
+    font-weight: 600;
   }
 }
 
@@ -4858,7 +4858,7 @@ abbr[title] {
     border-radius: 5px;
     border: 1px solid $palette-gray-30;
     padding: 20px 30px;
-    font-weight: bold;
+    font-weight: 600;
   }
 
   ul {
