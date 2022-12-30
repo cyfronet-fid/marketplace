@@ -6,7 +6,7 @@
       .col-md-8.d-flex.align-items-center
         .box-wrapper
           %h1.flex-grow-1.text-break
-            #{project_item.service.name}.service-info-box.ver-1 header
+            #{project_item.service.name}
           .col-md-12.back-link
           %i.fas.fa-chevron-left.fa-xs.mr-1
           - if project_item.is_root?
@@ -20,7 +20,7 @@
             -# TODO: refactor dynamic translation
             %span{ class: "status-#{project_item.status_type}" }= t("project_items.status.#{project_item.status_type}")
         = render Services::InlineOrderUrlComponent.new(offerable: project_item,
-          classes: "btn btn-primary float-right pl-3 pr-3")
+          classes: "btn btn-primary float-right pl-4 pr-4")
         - if project_item.bundle?
           .project-badge.text-uppercase.d-inline.float-right.font-weight-bold.mb-0.ml-2
             = _("BUNDLE")
