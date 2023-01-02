@@ -14,7 +14,7 @@ class Service < ApplicationRecord
 
   before_save { self.catalogue = Catalogue.find(catalogue_id) if catalogue_id.present? }
 
-  attr_accessor :analytics, :catalogue_id, :monitoring_status
+  attr_accessor :analytics, :catalogue_id, :monitoring_status, :bundle_id
 
   PUBLIC_STATUSES = %w[published unverified errored].freeze
 
@@ -49,6 +49,7 @@ class Service < ApplicationRecord
   enum status: STATUSES
 
   has_many :offers, dependent: :restrict_with_error
+  has_many :bundles, dependent: :restrict_with_error
   has_many :project_items, through: :offers
   has_many :categorizations, dependent: :destroy
   has_many :categories, through: :categorizations

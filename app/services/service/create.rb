@@ -9,7 +9,7 @@ class Service::Create < ApplicationService
 
   def call
     @service.update_logo!(@logo) if @logo && @service.logo.blank?
-    @service.save
+    @service.save!
 
     new_offer =
       Offer.new(
@@ -22,6 +22,9 @@ class Service::Create < ApplicationService
         service: @service
       )
     Offer::Create.call(new_offer)
+    @service
+  rescue ActiveRecord::RecordNotSaved, ActiveRecord::RecordInvalid => e
+    Rails.logger.error "Service not saved: #{e}"
     @service
   end
 end

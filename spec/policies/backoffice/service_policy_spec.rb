@@ -93,7 +93,6 @@ RSpec.describe Backoffice::ServicePolicy do
         [
           :restrictions,
           :activate_message,
-          [platform_ids: []],
           [owner_ids: []],
           :status,
           :upstream_id,

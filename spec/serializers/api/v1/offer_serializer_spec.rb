@@ -88,7 +88,7 @@ RSpec.describe Api::V1::OfferSerializer do
   it "properly serializes a bundle offer" do
     offer1 = build(:offer)
     offer2 = build(:offer)
-    bundle_offer = create(:offer, bundled_offers: [offer1, offer2])
+    bundle_offer = create(:offer, bundled_connected_offers: [offer1, offer2])
     default_oms = create(:default_oms)
 
     serialized = JSON.parse(described_class.new(bundle_offer).to_json)

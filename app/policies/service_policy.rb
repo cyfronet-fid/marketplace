@@ -34,7 +34,8 @@ class ServicePolicy < ApplicationPolicy
   end
 
   def any_published_bundled_offers?
-    record.offers? && record.offers.any? { |s| s.bundled_offers_count.positive? && s.published? }
+    record.offers? &&
+      record.offers.any? { |s| (s.bundled_offers_count.positive? || s.bundles.present?) && s.published? }
   end
 
   def any_published_offers?

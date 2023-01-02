@@ -25,7 +25,7 @@
     - c.description_panels do
       - if policy(@service).order? && (policy(@service).offers_show? || policy(@service).bundles_show?)
         = render "services/offers", offers: @offers, service: @service,
-                                    bundles: @bundles, preview: local_assigns[:preview]
+                                    bundles: @bundles, bundled: @bundled, preview: local_assigns[:preview]
 
   = render "taggable/details_section", taggable: @service
 

@@ -17,7 +17,7 @@ FactoryBot.define do
     public_contacts { [build(:public_contact)] }
     main_contact { build(:main_contact) }
     data_administrators { [build(:data_administrator)] }
-    sources { [build(:provider_source)] }
+    sources { [build(:provider_source, eid: pid)] }
 
     after(:build) do |provider|
       image =

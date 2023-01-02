@@ -54,6 +54,6 @@ module ProjectItem::Customization
   end
 
   def id_to_bundled_offer
-    @id_to_bundled_offer ||= offer.bundled_offers.index_by { |o| "o#{o.id}" }
+    @id_to_bundled_offer ||= offer.bundled_connected_offers.index_by { |o| "o#{o.id}" }
   end
 end

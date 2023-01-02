@@ -17,7 +17,7 @@ RSpec.describe Service::Draft do
     it "sends notification and unbundles" do
       service = build(:service)
       bundled_offer = build(:offer, service: service)
-      bundle_offer = create(:offer, bundled_offers: [bundled_offer])
+      bundle_offer = create(:offer, bundled_connected_offers: [bundled_offer])
 
       expect { described_class.call(service) }.to change { ActionMailer::Base.deliveries.count }.by(1)
 

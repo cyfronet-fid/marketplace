@@ -69,8 +69,7 @@ RSpec.feature "Api docs page" do
       expect(page).to have_content("Signed out successfully.")
 
       find_link("Login").click
-      expect(page).to have_content("Successfully authenticated from Checkin account.")
-
+      within("body") { expect(page).to have_content("Successfully authenticated from Checkin account.") }
       visit api_docs_path
 
       expect(page).to have_content("API")

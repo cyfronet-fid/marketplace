@@ -140,11 +140,11 @@ RSpec.describe Offer do
   end
 
   context "bundle offer" do
-    let!(:source) { create(:offer, bundled_offers: [target]) }
+    let!(:source) { create(:offer, bundled_connected_offers: [target]) }
     let(:target) { build(:offer) }
 
     it "returns linked offer targets" do
-      expect(source.bundled_offers).to contain_exactly(target)
+      expect(source.bundled_connected_offers).to contain_exactly(target)
     end
 
     it "remove link when source is removed" do
@@ -168,11 +168,11 @@ RSpec.describe Offer do
       expect(bundle_offer.bundled_offers_count).to eq(0)
 
       bundled_offer = create(:offer)
-      bundle_offer.update!({ bundled_offers: [bundled_offer] })
+      bundle_offer.update!({ bundled_connected_offers: [bundled_offer] })
 
       expect(bundle_offer.bundled_offers_count).to eq(1)
 
-      bundle_offer.update!({ bundled_offers: [] })
+      bundle_offer.update!({ bundled_connected_offers: [] })
 
       expect(bundle_offer.bundled_offers_count).to eq(0)
     end
@@ -188,7 +188,7 @@ RSpec.describe Offer do
 
       it "allows published internal offers" do
         bundled_offer = build(:offer)
-        offer.bundled_offers = [bundled_offer]
+        offer.bundled_connected_offers = [bundled_offer]
 
         expect(offer.valid?).to be_truthy
       end
@@ -196,7 +196,7 @@ RSpec.describe Offer do
       Service::PUBLIC_STATUSES.each do |accepted_status|
         it "allows offer from #{accepted_status} service" do
           bundled_offer = build(:offer, service: build(:service, status: accepted_status))
-          offer.bundled_offers = [bundled_offer]
+          offer.bundled_connected_offers = [bundled_offer]
 
           expect(offer.valid?).to be_truthy
         end
@@ -211,54 +211,40 @@ RSpec.describe Offer do
 
         it "rejects any bundled offer" do
           bundled_offer = build(:offer)
-          offer.bundled_offers = [bundled_offer]
+          offer.bundled_connected_offers = [bundled_offer]
 
           expect_error_messages "only internal offer can have bundled offers"
         end
       end
 
       context "bundled bundle offer" do
-        let(:offer) { build(:offer, bundle_offers: [build(:offer)]) }
+        let(:offer) { build(:offer, bundle_connected_offers: [build(:offer)]) }
 
         it "allows empty" do
           expect(offer.valid?).to be_truthy
         end
-
-        it "rejects any bundled offer" do
-          next_level_bundled_offer = build(:offer)
-          offer.bundled_offers = [next_level_bundled_offer]
-
-          expect_error_messages "only non-bundled offer can have bundled offers"
-        end
       end
 
       it "rejects self" do
-        offer.bundled_offers = [offer]
+        offer.bundled_connected_offers = [offer]
 
         expect_error_messages "cannot bundle self", "cannot bundle bundle offers", "is invalid"
       end
 
       it "removes duplicates" do
         bundled_offer = build(:offer)
-        offer.bundled_offers = [bundled_offer, bundled_offer]
+        offer.bundled_connected_offers = [bundled_offer, bundled_offer]
 
         expect(offer.valid?).to be_truthy
-        expect(offer.bundled_offers.size).to eq(1)
+        expect(offer.bundled_connected_offers.size).to eq(1)
       end
 
       it "rejects bundle offers" do
         bundled_offer = build(:offer)
-        bundle_offer = build(:offer, bundled_offers: [bundled_offer])
-        offer.bundled_offers = [bundle_offer]
+        bundle_offer = build(:offer, bundled_connected_offers: [bundled_offer])
+        offer.bundled_connected_offers = [bundle_offer]
 
         expect_error_messages "cannot bundle bundle offers"
-      end
-
-      it "rejects non-internal offers" do
-        bundled_offer = build(:offer, internal: false)
-        offer.bundled_offers = [bundled_offer]
-
-        expect_error_messages "all bundled offers must be internal"
       end
 
       Service::STATUSES
@@ -267,7 +253,7 @@ RSpec.describe Offer do
         .each do |rejected_status|
           it "rejects offer from a #{rejected_status} service" do
             bundled_offer = build(:offer, service: build(:service, status: rejected_status))
-            offer.bundled_offers = [bundled_offer]
+            offer.bundled_connected_offers = [bundled_offer]
 
             expect_error_messages "all bundled offers' services must be public"
           end
@@ -279,7 +265,7 @@ RSpec.describe Offer do
         .each do |status|
           it "rejects #{status} offers" do
             bundled_offer = build(:offer, status: status)
-            offer.bundled_offers = [bundled_offer]
+            offer.bundled_connected_offers = [bundled_offer]
 
             expect_error_messages "all bundled offers must be published"
           end
@@ -289,7 +275,7 @@ RSpec.describe Offer do
 
       def expect_error_messages(*msg)
         expect(offer.valid?).to be_falsey
-        expect(offer.errors.messages_for(:bundled_offers)).to eq(msg)
+        expect(offer.errors.messages_for(:bundled_connected_offers)).to eq(msg)
       end
     end
   end

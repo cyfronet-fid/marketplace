@@ -41,14 +41,14 @@ RSpec.describe Service::Publish do
   context "#bundled_offers" do
     it "doesn't send notification if service wasn't made public" do
       service = build(:service, status: "errored")
-      create(:offer, service: service, bundled_offers: [build(:offer)])
+      create(:offer, service: service, bundled_connected_offers: [build(:offer)])
 
       expect { described_class.call(service) }.not_to change { ActionMailer::Base.deliveries.count }
     end
 
     it "sends notification if service made public" do
       service = build(:service, status: "draft")
-      create(:offer, service: service, bundled_offers: [build(:offer)])
+      create(:offer, service: service, bundled_connected_offers: [build(:offer)])
 
       expect { described_class.call(service) }.to change { ActionMailer::Base.deliveries.count }.by(1)
     end

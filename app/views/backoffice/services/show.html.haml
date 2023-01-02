@@ -59,7 +59,7 @@
 .tab-content
   = render Presentable::DescriptionComponent.new(object: @service, from: "backoffice_service") do |c|
     - c.description_panels do
-      = render "layouts/common_parts/services/offers", offers: @offers, service: @service
+      = render "layouts/common_parts/services/offers", offers: @offers, service: @service, bundles: @bundles
     - c.sidebar_options do
       %h5
         = _("Updates")

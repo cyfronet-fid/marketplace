@@ -17,7 +17,7 @@
 .tab-content
   = render Presentable::DescriptionComponent.new(object: @service, from: "ordering_configuration") do |c|
     - c.description_panels do
-      = render "layouts/common_parts/services/offers", offers: @offers, service: @service
+      = render "layouts/common_parts/services/offers", offers: @offers, service: @service, bundles: @bundles
   = render "taggable/details_section", taggable: @service
 
 .container.mt-4.pt-4.related-container

@@ -80,7 +80,7 @@ RSpec.describe ProjectItem::Create do
   end
 
   context "#bundle" do
-    let(:offer) { create(:offer, service: service, bundled_offers: [child1, child2]) }
+    let(:offer) { create(:offer, service: service, bundled_connected_offers: [child1, child2]) }
     let(:child1) { build(:offer) }
     let(:child2) { build(:offer) }
 

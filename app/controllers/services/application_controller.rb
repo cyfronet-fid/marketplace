@@ -102,6 +102,12 @@ class Services::ApplicationController < ApplicationController
   end
 
   def wizard_title
-    step.offer && (@service.offers_count > 1) ? "#{@service.name} - #{step.offer.name}" : @service.name
+    if step.offer && (@service.offers_count > 1)
+      "#{@service.name} - #{step.offer.name}"
+    elsif step.offer&.main_bundles&.first.present?
+      "#{@service.name} - #{step.offer.main_bundles.first.name}"
+    else
+      @service.name
+    end
   end
 end

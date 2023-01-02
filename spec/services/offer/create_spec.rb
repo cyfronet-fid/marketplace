@@ -12,7 +12,7 @@ RSpec.describe Offer::Create do
         build(
           :open_access_offer,
           service: build(:open_access_service, resource_organisation: provider2),
-          bundled_offers: [bundled_offer]
+          bundled_connected_offers: [bundled_offer]
         )
 
       expect { Offer::Create.call(bundle_offer) }.not_to change { ActionMailer::Base.deliveries.count }
@@ -28,7 +28,11 @@ RSpec.describe Offer::Create do
       provider = build(:provider)
       bundled_offer = build(:offer, service: build(:service, resource_organisation: provider))
       bundle_offer =
-        build(:offer, service: build(:service, resource_organisation: provider), bundled_offers: [bundled_offer])
+        build(
+          :offer,
+          service: build(:service, resource_organisation: provider),
+          bundled_connected_offers: [bundled_offer]
+        )
 
       expect { Offer::Create.call(bundle_offer) }.not_to change { ActionMailer::Base.deliveries.count }
     end
@@ -45,7 +49,7 @@ RSpec.describe Offer::Create do
         build(
           :offer,
           service: build(:service, resource_organisation: provider2),
-          bundled_offers: [bundled_offer1, bundled_offer2, bundled_offer3, bundled_offer4]
+          bundled_connected_offers: [bundled_offer1, bundled_offer2, bundled_offer3, bundled_offer4]
         )
 
       expect { Offer::Create.call(bundle_offer) }.to change { ActionMailer::Base.deliveries.count }.by(3)
