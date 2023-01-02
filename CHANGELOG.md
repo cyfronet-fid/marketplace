@@ -8,6 +8,9 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ## [3.45.0-milestone]
 
+### Changed
+- AAI authorization endpoints (@goreck888)
+
 ### Fixed
 - Styles in the datasources views (@jarekzet)
 - Displaying search bar in the backoffice (@jarekzet)

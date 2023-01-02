@@ -193,6 +193,7 @@ We are currently using the following ENV variables:
     encrypted properties)
   * `CHECKIN_SECRET` (Optional) - checkin IDP secret (default taken from
     encrypted properties)
+  * `OIDC_AAI_NEW_API` - if you want to use old AAI endpoints, set it to false
   * `ROOT_URL` (Optional) - root application URL (default
     `http://localhost:#{ENV["PORT"] || 3000}` (when foreman is used to start
     application 5000 ENV variable is set)
