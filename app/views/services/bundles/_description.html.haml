@@ -1,0 +1,25 @@
+.card-body.pt-4
+  .bundle-goals
+    - bundle.bundle_goals.each do |goal|
+      %span.goal= goal.name
+  %h4.card-title.pt-3= bundle.name
+  .bundle-elements
+    = ([bundle.service.name] << bundle.offers.map { |o| o.service.name }).join(" + ")
+
+  .row.bundle-description
+    .col-md-8
+      .card-text.mb-2{ "data-controller" => "paragraph" }
+        - if bundle.description.size > 500
+          = markdown(bundle.description.truncate(500, separator: " "))
+          = link_to _("Show more"), "#", class: "show-more-#{bundle.id}",
+                                      data: { "target" => "paragraph.showMore",
+                                              "action" => "click->paragraph#showMore",
+                                              text: markdown(bundle.description) }
+        - else
+          = markdown(bundle.description)
+    .col-md-4
+      = render "services/offers/bundle_parameters",
+          technical_parameters: bundle.main_offer.attributes.map(&:to_json),
+          research_steps: bundle.research_steps || [],
+          contact_email: bundle.contact_email || "",
+          related_training: bundle.related_training_url || ""

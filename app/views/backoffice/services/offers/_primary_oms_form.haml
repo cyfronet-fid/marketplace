@@ -2,11 +2,11 @@
   value_method: :id,
   label_method: :name,
   include_blank: false,
-  wrapper_html: { "data-target": "ordering.primaryOmsWrapper" },
-  input_html: { "data-target": "ordering.primaryOms",
+  wrapper_html: { "data-ordering-target": "primaryOmsWrapper" },
+  input_html: { "data-ordering-target": "primaryOms",
                 "data-action": "ordering#updateVisibility",
                 class: "form-control-lg col-lg-6" }
-%div{ "data-target": "ordering.omsParamsContainer" }
+%div{ "data-ordering-target": "omsParamsContainer" }
   = form.simple_fields_for Offer::OMSParams.new(offer.oms_params) do |field|
     - available_omses.each do |oms|
       %label{ "data-oms-id": oms.id }

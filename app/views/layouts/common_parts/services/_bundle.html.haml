@@ -1,0 +1,9 @@
+.col-md-6.edit-offer{ id: "bundle-#{bundle.id}", "data-e2e": "bundle" }
+  .card.m-0.mb-5
+    = render "services/bundles/description", bundle: bundle
+
+    .card-button.text-center
+      %label
+        = link_to edit_bundle_link(offer.service, bundle, controller_name) do
+          %span.btn.btn-outline-secondary.font-weight-bold
+            = _("Edit")

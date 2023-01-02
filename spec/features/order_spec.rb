@@ -183,15 +183,16 @@ RSpec.feature "Service ordering" do
           order_type: service2.order_type,
           order_url: service2.order_url
         )
-      _bundle =
+      bundle =
         create(
           :offer,
           service: service,
           internal: true,
           order_type: service.order_type,
           order_url: service.order_url,
-          bundled_offers: [bundled]
+          bundled_connected_offers: [bundled]
         )
+      create(:bundle, service: service, order_type: service.order_type, main_offer: bundle, offers: [bundled])
 
       _default_project = user.projects.find_by(name: "Services")
 
@@ -218,14 +219,15 @@ RSpec.feature "Service ordering" do
       service = create(:service)
       service2 = create(:service)
       bundled = create(:offer, service: service2, order_type: service2.order_type, order_url: service2.order_url)
-      _bundle =
+      bundle =
         create(
           :offer,
           service: service,
           order_type: service.order_type,
           order_url: service.order_url,
-          bundled_offers: [bundled]
+          bundled_connected_offers: [bundled]
         )
+      create(:bundle, service: service, order_type: service.order_type, main_offer: bundle, offers: [bundled])
 
       _default_project = user.projects.find_by(name: "Services")
 
@@ -708,11 +710,12 @@ RSpec.feature "Service ordering" do
       scenario "I can order a service bundle" do
         child1 = create(:offer_with_parameters)
         child2 = create(:offer_with_parameters)
-        parent = create(:offer, service: service, bundled_offers: [child1, child2])
+        parent = create(:offer, service: service, bundled_connected_offers: [child1, child2])
+        create(:bundle, service: service, main_offer: parent, offers: parent.bundled_connected_offers)
 
         visit service_path(service)
 
-        click_on "Select a bundle"
+        click_on "Select bundle"
 
         # Step 1 is skipped
         # Step 2
@@ -758,7 +761,7 @@ RSpec.feature "Service ordering" do
         expect(page).to have_content(child2.service.name)
 
         # The bundle reference should stay after unbundling offers
-        parent.update(bundled_offers: [])
+        parent.update(bundled_connected_offers: [])
 
         visit project_services_path(pi1.project)
 

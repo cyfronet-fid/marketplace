@@ -55,7 +55,7 @@ RSpec.describe Service::Update do
     it "sends notification if service made public" do
       service = build(:service, status: "draft")
       bundled_offer = build(:offer)
-      create(:offer, service: service, bundled_offers: [bundled_offer])
+      create(:offer, service: service, bundled_connected_offers: [bundled_offer])
 
       expect { described_class.call(service, { status: "published" }) }.to change {
         ActionMailer::Base.deliveries.count
@@ -65,7 +65,7 @@ RSpec.describe Service::Update do
     it "sends notification and unbundles if service made non-public" do
       service = build(:service)
       bundled_offer = build(:offer, service: service)
-      bundle_offer = create(:offer, bundled_offers: [bundled_offer])
+      bundle_offer = create(:offer, bundled_connected_offers: [bundled_offer])
 
       expect { described_class.call(service, { status: "draft" }) }.to change { ActionMailer::Base.deliveries.count }
         .by(1)

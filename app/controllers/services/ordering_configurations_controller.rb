@@ -10,6 +10,7 @@ class Services::OrderingConfigurationsController < Services::OrderingConfigurati
   def show
     @service = Service.includes(:offers).friendly.find(params[:service_id])
     @offers = @service&.offers&.published&.order(:iid)
+    @bundles = @service.bundles.published
     @related_services = @service.related_services
     @related_services_title = "Related services"
     @client = @client&.credentials&.expires_at.blank? ? Google::Analytics.new : @client

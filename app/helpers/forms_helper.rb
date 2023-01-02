@@ -38,4 +38,11 @@ module FormsHelper
         "href=\"https://eosc-helpdesk.scc.kit.edu/aup\">Acceptable Use Policy</a>"
     message.html_safe
   end
+
+  def other_offers(service)
+    Offer
+      .published
+      .reject { |item| (item.in? service.offers) || item.service.nil? }
+      .map { |item| ["#{item.service.name} > #{item.name}", item.id] }
+  end
 end

@@ -86,7 +86,7 @@ class Api::V1::Resources::OffersController < Api::V1::ApplicationController
   end
 
   def load_bundled_offers
-    bundled_offers = params[:bundled_offers]
+    bundled_offers = params[:bundled_connected_offers]
     unless bundled_offers.nil?
       if bundled_offers.is_a?(Array) && bundled_offers.all? { |o| o.is_a?(String) }
         @bundled_offers = bundled_offers.map { |val| Offer.find_by_slug_iid!(val) }
@@ -109,7 +109,7 @@ class Api::V1::Resources::OffersController < Api::V1::ApplicationController
   end
 
   def mapped_bundled_offers
-    @bundled_offers.is_a?(Array) ? { bundled_offers: @bundled_offers } : {}
+    @bundled_offers.is_a?(Array) ? { bundled_connected_offers: @bundled_offers } : {}
   end
 
   def transform(attributes)

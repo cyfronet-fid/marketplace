@@ -1,11 +1,20 @@
-- if technical_parameters.present?
-  #collapse-example.bundle-box.collapse.mt-4
-    %h5.text-uppercase.parameters-title.mb-0.mt-4
-      %i.fas.fa-tachometer-alt
-      = _("Technical Parameters")
-    %table.offer-params.table.table-hover
+.bundle-box
+  - if technical_parameters.present?
+    %h5.parameters-title
+      = _("Available Technical Parameters")
+    %table.offer-params.table.table-borderless
       %tbody
         - technical_parameters.each do |parameter|
           %tr
             %td= parameter["label"]
             %td.text-right.text-nowrap.font-weight-bold= parse_offer_parameter_value(parameter)
+  - if local_assigns[:research_steps].present?
+    %h5.parameters-title.mt-4
+      = _("Research steps")
+    %ul.list-unstyled
+      - research_steps.each do |rs|
+        %li= rs.name
+  - if local_assigns[:contact_email].present?
+    = mail_to contact_email, _("Contact bundle support"), class: "contact-link"
+  - if local_assigns[:related_training].present?
+    = link_to _("Access training"), related_training, class: "training-link"

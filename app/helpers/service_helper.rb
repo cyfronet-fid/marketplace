@@ -90,12 +90,29 @@ module ServiceHelper
     end
   end
 
+  def new_bundle_link(service, controller_name)
+    if controller_name == "ordering_configuration"
+      new_service_ordering_configuration_bundle_path(service)
+    else
+      new_backoffice_service_bundle_path(service)
+    end
+  end
+
   def edit_offer_link(service, offer, controller_name)
     case controller_name
     when "ordering_configurations"
       edit_service_ordering_configuration_offer_path(service, offer, from: params[:from])
     when "services"
       edit_backoffice_service_offer_path(service, offer)
+    end
+  end
+
+  def edit_bundle_link(service, bundle, controller_name)
+    case controller_name
+    when "ordering_configuration"
+      edit_service_ordering_configuration_bundle_path(service, bundle, from: params[:from])
+    when "service"
+      edit_backoffice_service_bundle_path(service, bundle)
     end
   end
 

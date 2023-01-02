@@ -9,6 +9,10 @@ class Offer::Update < ApplicationService
 
   def call
     effective_params = @offer.service.offers.published.size == 1 ? @params : @params.merge(default: false)
+
+    if effective_params["primary_oms_id"] && OMS.find(effective_params["primary_oms_id"])&.custom_params.blank?
+      effective_params["oms_params"] = {}
+    end
     @offer.reset_added_bundled_offers!
     if @offer.update(effective_params)
       offer_bundlable? ? notify_added_bundled_offers! : unbundle_and_notify!
@@ -28,8 +32,11 @@ class Offer::Update < ApplicationService
   end
 
   def unbundle_and_notify!
-    @offer.bundle_offers.each do |bundle_offer|
-      Offer::Update.call(bundle_offer, { bundled_offers: bundle_offer.bundled_offers.to_a.reject { |o| o == @offer } })
+    @offer.bundle_connected_offers.each do |bundle_offer|
+      Offer::Update.call(
+        bundle_offer,
+        { bundled_connected_offers: bundle_offer.bundled_connected_offers.to_a.reject { |o| o == @offer } }
+      )
       Offer::Mailer::Unbundled.call(bundle_offer, @offer)
     end
   end
