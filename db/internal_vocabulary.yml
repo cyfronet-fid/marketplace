@@ -1,0 +1,59 @@
+bundle_goals:
+  processing:
+    name: Processing
+  publishing:
+    name: Publishing
+  anonymisation:
+    name: Anonymisation
+  data_storage:
+    name: Data Storage
+  computing_resources:
+    name: Computing Resources
+  discover_reuse_data:
+    name: Discover & Re-use Data
+  data_management:
+    name: Data Management
+  produce_data:
+    name: Produce Data
+
+bundle_capabilities_of_goals:
+  data_transfer:
+    name: Data Transfer
+  compute:
+    name: Compute
+  processing_tool:
+    name: Processing Tool
+  storage:
+    name: Storage
+  big_data_storage:
+    name: Big Data Storage
+  long_term_storage:
+    name: Long Term Storage
+  anonymisation:
+    name: Anonymisation
+  pseudonymisation:
+    name: Pseudonymisation
+  metadata_removal_tool:
+    name: Metadata Removal Tool
+  data_discoverability:
+    name: Data Discoverability
+  data_download:
+    name: Data Download
+  data_sources:
+    name: Data Sources
+  publishing_service:
+    name: Publishing Service
+  doi:
+    name: DOI
+  free:
+    name: Free
+  domain_availability:
+    name: Domain Availability
+  data_security:
+    name: Data Security
+  long_term:
+    name: Long Term
+  publishing:
+    name: Publishing
+  other:
+    name: Other

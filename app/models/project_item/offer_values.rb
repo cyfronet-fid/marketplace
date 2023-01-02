@@ -40,6 +40,8 @@ class ProjectItem::OfferValues
   end
 
   def bundled_parts
-    offer.bundled_offers.map { |offer| ProjectItem::Part.new(offer: offer, parameters: offer.parameters.map(&:dump)) }
+    offer.bundled_connected_offers.map do |offer|
+      ProjectItem::Part.new(offer: offer, parameters: offer.parameters.map(&:dump))
+    end
   end
 end

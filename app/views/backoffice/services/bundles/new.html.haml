@@ -1,0 +1,12 @@
+- content_for :title, _("Create new bundle")
+- breadcrumb :backoffice_bundle_new, @bundle
+.container
+  .mb-4.pb-4.border-header
+    %h1= _("Create new bundle")
+
+  = render "form",
+    service: @service,
+    bundle: @bundle,
+    show_delete_button: false,
+    bundle_form_source_module: [:backoffice, @service, @bundle],
+    back_link: backoffice_service_path(@service)

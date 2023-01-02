@@ -29,7 +29,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         let(:draft_offer) { build(:offer, status: "draft") }
         let(:bundled_offer1) { build(:offer) }
         let(:bundled_offer2) { build(:offer) }
-        let(:bundle_offer) { build(:offer, bundled_offers: [bundled_offer1, bundled_offer2]) }
+        let(:bundle_offer) { build(:offer, bundled_connected_offers: [bundled_offer1, bundled_offer2]) }
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
         let!(:service) do
@@ -202,7 +202,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
             description: "bundle description",
             order_type: "order_required",
             internal: true,
-            bundled_offers: [bundled_offer1.slug_iid, bundled_offer2.slug_iid]
+            bundled_connected_offers: [bundled_offer1.slug_iid, bundled_offer2.slug_iid]
           }
         end
         let(:resource_id) { service.slug }
@@ -214,7 +214,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
 
           expect(data).to eq(JSON.parse(Api::V1::OfferSerializer.new(service.offers.first).to_json))
           expect(service.offers.length).to eq(1)
-          expect(service.offers.first.bundled_offers).to eq([bundled_offer1, bundled_offer2])
+          expect(service.offers.first.bundled_connected_offers).to eq([bundled_offer1, bundled_offer2])
         end
       end
 
@@ -606,7 +606,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
             name: "bundle offer",
             description: "bundle description",
             order_type: "open_access",
-            bundled_offers: ["doesnt_exist/0"]
+            bundled_connected_offers: ["doesnt_exist/0"]
           }
         end
         let(:resource_id) { service.slug }
@@ -1024,7 +1024,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
 
         let(:bundled_offer) { build(:offer) }
         let(:offer_to_bundle) { create(:offer) }
-        let(:offer) { build(:offer, bundled_offers: [bundled_offer]) }
+        let(:offer) { build(:offer, bundled_connected_offers: [bundled_offer]) }
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { build(:data_administrator, email: data_admin_user.email) }
         let!(:service) do
@@ -1034,7 +1034,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
             offers: [offer]
           )
         end
-        let(:offer_payload) { { bundled_offers: [bundled_offer, offer_to_bundle].map(&:slug_iid) } }
+        let(:offer_payload) { { bundled_connected_offers: [bundled_offer, offer_to_bundle].map(&:slug_iid) } }
         let(:resource_id) { service.slug }
         let(:id) { offer.iid }
         let(:"X-User-Token") { data_admin_user.authentication_token }
@@ -1044,7 +1044,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
           service.reload
 
           expect(data).to eq(JSON.parse(Api::V1::OfferSerializer.new(service.offers.first).to_json))
-          expect(service.offers.first.bundled_offers).to eq([bundled_offer, offer_to_bundle])
+          expect(service.offers.first.bundled_connected_offers).to eq([bundled_offer, offer_to_bundle])
         end
       end
 
@@ -1052,7 +1052,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         schema "$ref" => "offer/offer_read.json"
 
         let(:bundled_offer) { build(:offer) }
-        let(:offer) { build(:offer, bundled_offers: [bundled_offer]) }
+        let(:offer) { build(:offer, bundled_connected_offers: [bundled_offer]) }
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { build(:data_administrator, email: data_admin_user.email) }
         let!(:service) do
@@ -1062,7 +1062,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
             offers: [offer]
           )
         end
-        let(:offer_payload) { { bundled_offers: [] } }
+        let(:offer_payload) { { bundled_connected_offers: [] } }
         let(:resource_id) { service.slug }
         let(:id) { offer.iid }
         let(:"X-User-Token") { data_admin_user.authentication_token }
@@ -1072,7 +1072,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
           service.reload
 
           expect(data).to eq(JSON.parse(Api::V1::OfferSerializer.new(service.offers.first).to_json))
-          expect(service.offers.first.bundled_offers.size).to eq(0)
+          expect(service.offers.first.bundled_connected_offers.size).to eq(0)
         end
       end
 
@@ -1232,7 +1232,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
             offers: [offer]
           )
         end
-        let(:offer_payload) { { bundled_offers: ["doesnt-exist/0"] } }
+        let(:offer_payload) { { bundled_connected_offers: ["doesnt-exist/0"] } }
         let(:resource_id) { service.slug }
         let(:id) { offer.iid }
         let(:"X-User-Token") { data_admin_user.authentication_token }

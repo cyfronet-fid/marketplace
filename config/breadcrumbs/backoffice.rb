@@ -70,6 +70,15 @@ crumb :backoffice_offer_edit do |offer|
   parent :backoffice_service, offer.service
 end
 
+crumb :backoffice_bundle_new do |bundle|
+  link "New", backoffice_service_path(bundle.service)
+  parent :backoffice_service, bundle.service
+end
+
+crumb :backoffice_bundle_edit do |bundle|
+  link "Edit", edit_backoffice_service_bundle_path(bundle)
+  parent :backoffice_service, bundle.service
+end
 crumb :backoffice_datasources do
   link "Owned Datasources", backoffice_datasources_path
   parent :backoffice_root

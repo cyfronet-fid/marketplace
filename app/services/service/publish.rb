@@ -22,7 +22,7 @@ class Service::Publish < ApplicationService
       .published
       .filter(&:bundle?)
       .each do |published_bundle|
-        published_bundle.bundled_offers.each do |bundled_offer|
+        published_bundle.bundled_connected_offers.each do |bundled_offer|
           Offer::Mailer::Bundled.call(bundled_offer, published_bundle)
         end
       end

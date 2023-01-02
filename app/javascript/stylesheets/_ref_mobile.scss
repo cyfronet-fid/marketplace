@@ -885,6 +885,25 @@
     }
   }
 
+  .bundle-box {
+    &.padding {
+      padding-left: 30px;
+    }
+  }
+
+  .bundle {
+    .card {
+      .row {
+        .bundle-box {
+          margin: 0;
+
+          .bundle-item {
+            margin-top: 25px;
+          }
+        }
+      }
+    }
+  }
 }
 
 @media (min-width: 991px) and (max-width: 1140px) {

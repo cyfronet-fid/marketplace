@@ -28,6 +28,20 @@ namespace :rdt do
 
   desc "Create new Vocabularies"
 
+  task add_internal_vocabularies: :environment do
+    require "yaml"
+    puts "Creating internal marketplace vocabularies"
+    yaml_hash = YAML.load_file("db/internal_vocabulary.yml")
+
+    puts "Creating bundle goals"
+    yaml_hash["bundle_goals"].each { |_, hash| Vocabulary::BundleGoal.find_or_create_by(name: hash["name"]) }
+
+    puts "Creating bundle capabilities of goals"
+    yaml_hash["bundle_capabilities_of_goals"].each do |_, hash|
+      Vocabulary::BundleCapabilityOfGoal.find_or_create_by(name: hash["name"])
+    end
+  end
+
   task add_vocabularies: :environment do
     require "yaml"
     puts "Creating funding bodies from yaml"

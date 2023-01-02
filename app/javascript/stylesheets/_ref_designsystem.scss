@@ -1182,8 +1182,11 @@ li {
 
 .bundle-item {
   .card {
-    border-color: $palette-gray-10;
+    border: 1px solid $bundle-border;
     margin: 0;
+    border-radius: 4px;
+    width: 100%;
+    background: $bundle-bg;
   }
 }
 

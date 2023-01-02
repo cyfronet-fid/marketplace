@@ -7,8 +7,8 @@
     = f.hidden_field :order_type, value: service.order_type
     - if offer.order_required?
       = f.input :internal,
-        wrapper_html: { "data-target": "ordering.internalWrapper" },
-        input_html: { "data-target": "ordering.internal",
+        wrapper_html: { "data-ordering-target": "internalWrapper" },
+        input_html: { "data-ordering-target": "internal",
                       "data-action": "ordering#updateVisibility" }
       = render "backoffice/services/offers/primary_oms_form",
                 form: f,
@@ -22,7 +22,7 @@
       .float-left.parameter-list
         = parameter_templates(f)
       .float-right.parameter-cards
-        .offer-attributes{ "data-target": "offer.attributes" }
+        .offer-attributes{ "data-offer-target": "attributes" }
           - offer.parameters.each_with_index do |p, idx|
             = render "parameters/template", parameter: p, form: f, index: idx
 

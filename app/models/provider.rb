@@ -35,6 +35,7 @@ class Provider < ApplicationRecord
   has_many :services, through: :service_providers
   has_many :link_multimedia_urls, as: :linkable, dependent: :destroy, autosave: true, class_name: "Link::MultimediaUrl"
   has_many :categorizations, through: :services
+  has_many :bundles, foreign_key: "resource_organisation_id"
   has_many :categories, through: :categorizations
   has_many :provider_data_administrators
   has_many :provider_scientific_domains, dependent: :destroy

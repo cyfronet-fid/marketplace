@@ -1,4 +1,4 @@
-- if offers&.find { |offer| offer.voucherable }
+- if offers&.find(&:voucherable)
   .container
     .voucher-box.row.p-3
       .col-12.col-lg-4.pl-0.pt-2.voucher-title
@@ -28,4 +28,7 @@
               "of research. The bundle is configured to make your research easier and done more efficiently.") |
     -# haml-lint:enable MultilinePipe
   .row
-    = render partial: "services/bundle_box", collection: bundles, as: :offer
+    = render partial: "services/bundle_box", collection: bundles, as: :bundle, locals: { bundled: false }
+    - if bundled.present?
+      = _("This service is included in bundles:")
+      = render partial: "services/bundle_box", collection: bundled, as: :bundle, locals: { bundled: true }

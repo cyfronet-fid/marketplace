@@ -14,12 +14,16 @@ RSpec.describe Offer::Destroy do
       provider = build(:provider)
       bundled_offer = build(:offer, service: build(:service, resource_organisation: provider))
       bundle_offer =
-        create(:offer, service: build(:service, resource_organisation: provider), bundled_offers: [bundled_offer])
+        create(
+          :offer,
+          service: build(:service, resource_organisation: provider),
+          bundled_connected_offers: [bundled_offer]
+        )
 
       expect { Offer::Destroy.call(bundled_offer) }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
       bundle_offer.reload
-      expect(bundle_offer.bundled_offers).to be_blank
+      expect(bundle_offer.bundled_connected_offers).to be_blank
     end
 
     context "with project items" do
@@ -37,14 +41,14 @@ RSpec.describe Offer::Destroy do
           create(
             :offer,
             service: build(:service, resource_organisation: provider),
-            bundled_offers: [destroyed_bundled_offer]
+            bundled_connected_offers: [destroyed_bundled_offer]
           )
         create(:project_item, offer: destroyed_bundled_offer)
 
         expect { Offer::Destroy.call(destroyed_bundled_offer) }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
         bundle_offer.reload
-        expect(bundle_offer.bundled_offers).to be_blank
+        expect(bundle_offer.bundled_connected_offers).to be_blank
       end
     end
   end

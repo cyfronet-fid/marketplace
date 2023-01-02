@@ -1288,7 +1288,7 @@ Service detail
 }
 
 .card {
-  border-color: $palette-yellow;
+  border-color: $card-border;
   border-radius: $radius-common;
 
   &.offers {
@@ -1719,8 +1719,6 @@ h5 {
 }
 
 .parameters-title {
-  padding: 0 0 7px;
-  border-bottom: 2px solid $secondary;
   font-size: 1.05em;
 
   svg {
@@ -3146,8 +3144,146 @@ label[data-multicheckbox].small {
 }
 
 .bundle-box {
+
+  .bundle-offer-pic {
+    img {
+      max-width: 65px;
+      height: auto;
+    }
+  }
+
   &.padding {
     padding-left: 30px;
+  }
+}
+
+.bundle {
+  .card {
+    margin-right: 0;
+
+    .table {
+      td {
+        padding: 2px 0;
+        font-size: 12px;
+      }
+    }
+
+    .list-unstyled {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        list-style: none;
+        list-style-type: none !important;
+        line-height: 21px;
+      }
+    }
+
+    .bundle-goals {
+      display: inline-block;
+
+      .goal {
+        font-size: 12px;
+        padding: 4px 12px;
+        float: left;
+        margin: 0 20px 0 0;
+        border-radius: 4px;
+        background: $tag-bg-1;
+        color: $tag-color-1;
+
+        &:nth-child(2) {
+          background: $tag-bg-2;
+          color: $tag-color-2;
+        }
+
+        &:nth-child(3) {
+          background: $tag-bg-3;
+          color: $tag-color-3;
+        }
+      }
+    }
+
+    .contact-link {
+      display: block;
+      margin: 25px 0 0;
+      font-size: 14px;
+      text-decoration: underline;
+      color: $palette-gray-80;
+      padding-left: 25px;
+      background: url('../images/ico_contact.svg') 0 59% no-repeat;
+      background-size: 16px auto;
+
+      &:hover {
+        color: $primary;
+      }
+    }
+
+    .training-link {
+      display: block;
+      margin: 20px 0 0;
+      font-size: 14px;
+      text-decoration: underline;
+      color: $palette-gray-80;
+      padding-left: 25px;
+      background: url('../images/ico_training.svg') 0 59% no-repeat;
+      background-size: 21px auto;
+
+      &:hover {
+        color: $primary;
+      }
+    }
+
+    .card-body {
+
+      .card-title {
+        margin-bottom: 0.35rem;
+        padding: 0;
+      }
+
+      .text-muted {
+        font-size: 12px;
+      }
+    }
+
+    .bundle-elements {
+      margin-bottom: 25px;
+      font-size: 12px;
+    }
+
+    .bundle-description {
+      font-size: 12px;
+      line-height: 18px;
+    }
+
+    .bundle-box {
+      margin-bottom: 30px;
+    }
+
+    .order-type {
+      font-size: 12px;
+      color: $green;
+      text-align: center;
+      width: 100%;
+    }
+
+    .card-button {
+      margin-bottom: 7px;
+
+      &.backoffice-button {
+        margin-bottom: -28px;
+      }
+
+      .btn {
+        &.small-button {
+          font-size: 12px;
+          border-radius: 4px;
+          text-align: center;
+          padding: 10px 13px;
+          width: 100%;
+        }
+      }
+    }
   }
 }
 
@@ -4683,14 +4819,9 @@ abbr[title] {
     .card-button {
 
       .btn-outline-secondary {
-        border: 1px solid $palette-yellow;
-        background: $footer-color;
-        color: $palette-gray-100;
-
-        &:hover {
-          background: $palette-yellow;
-          color: $footer-color;
-        }
+        border: 1px solid $primary;
+        background: $primary;
+        color: $white;
       }
     }
   }
@@ -4698,7 +4829,7 @@ abbr[title] {
   .edit-offer {
 
     .card {
-      border: 1px solid $palette-yellow;
+      border: 1px solid $bundle-border;
       padding: 15px 0 0;
 
       &:not(.default) {

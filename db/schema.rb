@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_12_232052) do
+ActiveRecord::Schema.define(version: 2023_03_21_113526) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,77 @@ ActiveRecord::Schema.define(version: 2022_12_12_232052) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "bundle_categories", force: :cascade do |t|
+    t.bigint "bundle_id", null: false
+    t.bigint "category_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["bundle_id"], name: "index_bundle_categories_on_bundle_id"
+    t.index ["category_id"], name: "index_bundle_categories_on_category_id"
+  end
+
+  create_table "bundle_offers", force: :cascade do |t|
+    t.bigint "bundle_id", null: false
+    t.bigint "offer_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["bundle_id"], name: "index_bundle_offers_on_bundle_id"
+    t.index ["offer_id"], name: "index_bundle_offers_on_offer_id"
+  end
+
+  create_table "bundle_scientific_domains", force: :cascade do |t|
+    t.bigint "bundle_id", null: false
+    t.bigint "scientific_domain_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["bundle_id"], name: "index_bundle_scientific_domains_on_bundle_id"
+    t.index ["scientific_domain_id"], name: "index_bundle_scientific_domains_on_scientific_domain_id"
+  end
+
+  create_table "bundle_target_users", force: :cascade do |t|
+    t.bigint "bundle_id", null: false
+    t.bigint "target_user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["bundle_id"], name: "index_bundle_target_users_on_bundle_id"
+    t.index ["target_user_id"], name: "index_bundle_target_users_on_target_user_id"
+  end
+
+  create_table "bundle_vocabularies", force: :cascade do |t|
+    t.bigint "bundle_id", null: false
+    t.bigint "vocabulary_id", null: false
+    t.string "vocabulary_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["bundle_id", "vocabulary_id", "vocabulary_type"], name: "index_bundles_vocabularies"
+    t.index ["bundle_id"], name: "index_bundle_vocabularies_on_bundle_id"
+    t.index ["vocabulary_id"], name: "index_bundle_vocabularies_on_vocabulary_id"
+  end
+
+  create_table "bundles", force: :cascade do |t|
+    t.bigint "iid", null: false
+    t.string "name", null: false
+    t.string "capability_of_goal_suggestion"
+    t.text "description", null: false
+    t.string "order_type", null: false
+    t.jsonb "parameters"
+    t.bigint "main_offer_id", null: false
+    t.bigint "service_id", null: false
+    t.bigint "resource_organisation_id", null: false
+    t.string "status", default: "published"
+    t.boolean "related_training", default: false
+    t.string "related_training_url"
+    t.string "contact_email"
+    t.string "helpdesk_url", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["iid"], name: "index_bundles_on_iid"
+    t.index ["main_offer_id"], name: "index_bundles_on_main_offer_id"
+    t.index ["resource_organisation_id"], name: "index_bundles_on_resource_organisation_id"
+    t.index ["service_id", "iid"], name: "index_bundles_on_service_id_and_iid", unique: true
+    t.index ["service_id"], name: "index_bundles_on_service_id"
   end
 
   create_table "catalogues", force: :cascade do |t|

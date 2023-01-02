@@ -54,7 +54,8 @@ describe Import::Resources do
 
   let!(:compute) { create(:category, name: "Compute") }
   let!(:networking) { create(:category, name: "Networking") }
-  let!(:provider) { create(:provider, name: "BlueBRIDGE") }
+  let!(:provider) { create(:provider, name: "BlueBRIDGE", pid: "bluebridge") }
+  let!(:second_provider) { create(:provider, name: "Prov", pid: "awesome") }
 
   def expect_responses(test_url, services_response = nil)
     unless services_response.nil?
@@ -94,7 +95,6 @@ describe Import::Resources do
     before(:each) do
       response = double(status: 200, body: create(:eosc_registry_services_response))
       expect_responses(test_url, response)
-      allow_any_instance_of(Importers::Service).to receive(:map_provider).and_return(provider)
       mock_access_token
     end
 
@@ -142,6 +142,9 @@ describe Import::Resources do
 
       expect { eosc_registry.call }.to output(/PROCESSED: 3, CREATED: 0, UPDATED: 1, NOT MODIFIED: 0$/)
         .to_stdout.and change { Service.count }.by(0)
+
+      service.reload
+
       expect(Service.first.as_json(except: %i[created_at updated_at])).to eq(
         service.as_json(except: %i[created_at updated_at])
       )

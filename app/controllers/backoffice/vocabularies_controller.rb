@@ -96,6 +96,14 @@ class Backoffice::VocabulariesController < Backoffice::ApplicationController
     product_access_policy: {
       name: "Product Access Policy",
       klass: Vocabulary::ResearchProductAccessPolicy
+    },
+    bundle_goal: {
+      name: "Bundle Goal",
+      klass: Vocabulary::BundleGoal
+    },
+    bundle_capability_of_goal: {
+      name: "Bundle Capability of Goal",
+      klass: Vocabulary::BundleCapabilityOfGoal
     }
   }.freeze
 

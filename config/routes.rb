@@ -86,6 +86,7 @@ Rails.application.routes.draw do
       scope module: :services do
         resource :logo_preview, only: :show
         resources :offers
+        resources :bundles
         resource :publish, only: :create
         resource :draft, only: :create
       end
@@ -127,6 +128,8 @@ Rails.application.routes.draw do
       resources :research_entity_types, controller: "vocabularies", type: "research_entity_type"
       resources :entity_type_schemes, controller: "vocabularies", type: "entity_type_scheme"
       resources :product_access_policies, controller: "vocabularies", type: "product_access_policy"
+      resources :bundle_goals, controller: "vocabularies", type: "bundle_goal"
+      resources :bundle_capabilities_of_goal, controller: "vocabularies", type: "bundle_capability_of_goal"
     end
   end
 
