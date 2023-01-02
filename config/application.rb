@@ -61,7 +61,7 @@ module Mp
       if ENV["PROVIDERS_DASHBOARD_URL"].present?
         ENV["PROVIDERS_DASHBOARD_URL"]
       else
-        " https://beta.providers.eosc-portal.eu"
+        "https://beta.providers.eosc-portal.eu"
       end
 
     config.similar_services_host = ENV["SIMILAR_SERVICES_HOST"] || "http://docker-fid.grid.cyf-kr.edu.pl:4559"

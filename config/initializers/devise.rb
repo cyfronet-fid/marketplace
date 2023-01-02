@@ -261,13 +261,29 @@ Devise.setup do |config|
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
   checkin_host = ENV["CHECKIN_HOST"] || "aai.eosc-portal.eu"
   root_url = ENV["ROOT_URL"] || "http://localhost:#{ENV["PORT"] || 3000}"
+  old_endpoints = {
+    issuer: "oidc",
+    authorize: "/oidc/authorize",
+    token: "/oidc/token",
+    userinfo: "/oidc/userinfo",
+    jwk: "/oidc/jwk"
+  }
+  new_endpoints = {
+    issuer: "auth/realms/core",
+    authorize: "/auth/realms/core/protocol/openid-connect/auth",
+    token: "/auth/realms/core/protocol/openid-connect/token",
+    userinfo: "/auth/realms/core/protocol/openid-connect/userinfo",
+    jwk: "/auth/realms/core/protocol/openid-connect/certs"
+  }
+  endpoints = ENV.fetch("OIDC_AAI_NEW_API", true) ? new_endpoints : old_endpoints
   scope = ENV["CHECKIN_SCOPE"].nil? ? %w[openid profile email refeds_edu offline_access] : ENV["CHECKIN_SCOPE"].split(",")
   config.omniauth :openid_connect,
                   name: :checkin,
                   scope: scope,
                   response_type: :code,
-                  issuer: ENV["CHECKIN_ISSUER_URI"] || "https://#{checkin_host}/oidc/",
+                  issuer: ENV["CHECKIN_ISSUER_URI"] || "https://#{checkin_host}/#{endpoints[:issuer]}",
                   discovery: true,
+                  pkce: ENV["CHECKIN_PKCE"] || false,
                   client_options: {
                     port: nil,
                     scheme: "https",
@@ -276,10 +292,10 @@ Devise.setup do |config|
                     secret: ENV["CHECKIN_SECRET"] || Rails.application.credentials.checkin[:secret],
                     redirect_uri: ENV["REDIRECT_URI"] ||
                                   "#{root_url}/users/auth/checkin/callback",
-                    authorization_endpoint: ENV["CHECKIN_AUTHORIZATION_ENDPOINT"] || "/oidc/authorize",
-                    token_endpoint: ENV["CHECKIN_TOKEN_ENDPOINT"] || "/oidc/token",
-                    userinfo_endpoint: ENV["CHECKIN_USERINFO_ENDPOINT"] || "/oidc/userinfo",
-                    jwks_uri: ENV["CHECKIN_JWKS_ENDPOINT"] || "/oidc/jwk"
+                    authorization_endpoint: ENV["CHECKIN_AUTHORIZATION_ENDPOINT"] || endpoints[:authorize],
+                    token_endpoint: ENV["CHECKIN_TOKEN_ENDPOINT"] || endpoints[:token],
+                    userinfo_endpoint: ENV["CHECKIN_USERINFO_ENDPOINT"] || endpoints[:userinfo],
+                    jwks_uri: ENV["CHECKIN_JWKS_ENDPOINT"] || endpoints[:jwk]
                   }
 
 

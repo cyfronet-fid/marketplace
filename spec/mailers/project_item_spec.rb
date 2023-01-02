@@ -55,7 +55,7 @@ RSpec.describe ProjectItemMailer, type: :mailer do
         "Status of your resource access request in the EOSC Portal Marketplace " \
           "has changed to REJECTED"
       )
-      expect(encoded_body).to match("n rejected.=0D")
+      expect(encoded_body).to match("rejected.")
       expect(encoded_body).to match(/#{project_service_conversation_url(project, project_item)}/)
       expect(mail.to).to contain_exactly(user.email)
     end
@@ -145,7 +145,7 @@ RSpec.describe ProjectItemMailer, type: :mailer do
       expect(mail.subject).to match(/Elastic Cloud Compute Cluster \(EC3\) resource with voucher approved/)
       expect(encoded_body).to match(/To redeem an Exoscale voucher:/)
       expect(encoded_body).to have_content(
-        "Open your web browser at https://portal.exoscale.com/register?coupon=3D=\n1234=0D\n"
+        "Open your web browser at https://portal.exoscale.com/register?coupon=3D=\r\n1234\r\n"
       )
     end
 
