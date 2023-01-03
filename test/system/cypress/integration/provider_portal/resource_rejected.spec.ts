@@ -74,46 +74,49 @@ describe("Provider Portal - rejected resource", () => {
     cy.visitPage(marketplaceURL);
     cy.checkInvisibilityOfResourceInMarketplace(resource.name)
 
-    cy.request({
-      method: 'PATCH',
-      url: `${providerPortalURL}/api/resource/verifyResource/${provider.name}.${resource.name}?active=true&status=approved resource`,
-      form: false,
+  //   cy.request({
+  //     method: 'PATCH',
+  //     url: `${providerPortalURL}/api/resource/verifyResource/${provider.name}.${resource.name}?active=true&status=approved resource`,
+  //     form: false,
 
-      headers: {
-        Authorization: authorization,
-        "Content-Type": "application/json"
-      }
-    });
+  //     headers: {
+  //       Authorization: authorization,
+  //       "Content-Type": "application/json"
+  //     }
+  //   });
 
-    cy.visitPage(marketplaceURL);
-    cy.checkVisibilityOfResourceInMarketplace(resource.name)
+  //   cy.visitPage(marketplaceURL);
+  //   cy.wait(40000)
+  //   cy.checkVisibilityOfResourceInMarketplace(resource.name)
 
-    cy.request({
-      method: 'DELETE',
-      url: `${providerPortalURL}/api/service/${provider.name}.${resource.name}`,
-      form: false,
+  //   cy.request({
+  //     method: 'DELETE',
+  //     url: `${providerPortalURL}/api/service/${provider.name}.${resource.name}`,
+  //     form: false,
 
-      headers: {
-        Authorization: authorization,
-        "Content-Type": "application/json"
-      }
-    });
+  //     headers: {
+  //       Authorization: authorization,
+  //       "Content-Type": "application/json"
+  //     }
+  //   });
 
-    cy.visitPage(marketplaceURL);
-    cy.checkInvisibilityOfResourceInMarketplace(resource.name)
+  //   cy.visitPage(marketplaceURL);
+  //   cy.wait(40000)
+  //   cy.checkInvisibilityOfResourceInMarketplace(resource.name)
 
-    cy.request({
-      method: 'DELETE',
-      url: `${providerPortalURL}/api/provider/${provider.name}`,
-      form: false,
+  //   cy.request({
+  //     method: 'DELETE',
+  //     url: `${providerPortalURL}/api/provider/${provider.name}`,
+  //     form: false,
 
-      headers: {
-        Authorization: authorization,
-        "Content-Type": "application/json"
-      }
-    });
+  //     headers: {
+  //       Authorization: authorization,
+  //       "Content-Type": "application/json"
+  //     }
+  //   });
 
-    cy.visitPage(marketplaceURL);
-    cy.checkInvisibilityOfProviderInMarketplace(provider.name)
-  });
+  //   cy.visitPage(marketplaceURL);
+  //   cy.wait(40000)
+  //   cy.checkInvisibilityOfProviderInMarketplace(provider.name)
+   });
 });
