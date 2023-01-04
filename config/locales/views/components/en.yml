@@ -49,11 +49,11 @@ en:
             CRITICAL: Critical
             MISSING: Missing
           monitoring_data_tooltip:
-            OK: The Service is working properly
-            WARNING:  The service is working but with some warnings
-            CRITICAL: The service is not working
-            UNKNOWN:  The checks cannot reason about the status of the service
-            MISSING: There are no results about the service
+            OK: The Service is working properly.
+            WARNING:  The service is working but with some warnings.
+            CRITICAL: The service is not working.
+            UNKNOWN:  The checks cannot reason about the status of the service.
+            MISSING: There are no results about the service.
       details_component:
         details:
           title:
