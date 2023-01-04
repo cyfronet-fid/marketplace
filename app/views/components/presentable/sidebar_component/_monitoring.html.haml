@@ -1,12 +1,12 @@
 %ul.list-group.uptime-list
   %li.list-group-item{ title: "The percentage of time that the service was working
-   (with or without warnings) over a period of time (#{1.month.before.strftime("%B %Y")})" }
+  (with or without warnings) over a month (#{1.month.before.strftime("%B %Y")})" }
     %span
       Availability
     %strong.status-info{ class: "#{monitoring_numerable_class(object.availability_cache)}" }
       #{object.availability_cache.floor(2)}%
   %li.list-group-item{ title: "The percentage of time that the service was working
-  (with or without warnings) over a period of time excluding the scheduled downtimes" }
+  (with or without warnings) over a month (#{1.month.before.strftime("%B %Y")}) excluding the scheduled downtimes" }
     %span
       Reliability
     %strong.status-info{ class: "#{monitoring_numerable_class(object.reliability_cache)}" }

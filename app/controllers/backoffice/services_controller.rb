@@ -5,6 +5,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   include Service::Categorable
   include Service::Recommendable
   include Service::Searchable
+  include Service::Monitorable
   include Backoffice::ServicesSessionHelper
 
   before_action :find_and_authorize, only: %i[show edit update destroy]
@@ -43,6 +44,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   end
 
   def show
+    @service.monitoring_status = fetch_status(@service.pid)
     @offer = Offer.new(service: @service, status: :draft)
     @offers = @service.offers.published.order(:created_at)
     if current_user&.executive?
