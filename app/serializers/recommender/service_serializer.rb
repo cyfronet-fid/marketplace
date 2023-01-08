@@ -15,6 +15,7 @@ class Recommender::ServiceSerializer < ActiveModel::Serializer
   attribute :life_cycle_status_ids, key: :life_cycle_statuses
   attribute :required_service_ids, key: :required_services
   attribute :related_services
+  attribute :pid
 
   def countries
     object.geographical_availabilities.map(&:alpha2)
