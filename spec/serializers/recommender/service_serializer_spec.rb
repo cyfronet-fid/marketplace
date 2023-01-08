@@ -21,13 +21,15 @@ RSpec.describe Recommender::ServiceSerializer do
         access_modes: create_list(:access_mode, 2),
         access_types: create_list(:access_type, 2),
         trl: [create(:trl)],
-        life_cycle_status: [create(:life_cycle_status)]
+        life_cycle_status: [create(:life_cycle_status)],
+        pid: "pid"
       )
 
     serialized = described_class.new(service).as_json
 
     expect(serialized[:id]).to eq(service.id)
     expect(serialized[:name]).to eq(service.name)
+    expect(serialized[:pid]).to eq(service.pid)
     expect(serialized[:description]).to eq(service.description)
     expect(serialized[:tagline]).to eq(service.tagline)
     expect(serialized[:rating]).to eq(service.rating)
