@@ -276,7 +276,11 @@ Devise.setup do |config|
     jwk: "/auth/realms/core/protocol/openid-connect/certs"
   }
   endpoints = ENV.fetch("OIDC_AAI_NEW_API", true) ? new_endpoints : old_endpoints
-  scope = ENV["CHECKIN_SCOPE"].nil? ? %w[openid profile email refeds_edu offline_access] : ENV["CHECKIN_SCOPE"].split(",")
+  scope = if ENV["CHECKIN_SCOPE"].nil?
+            %w[openid profile email eduperson_scoped_affiliation offline_access]
+          else
+            ENV["CHECKIN_SCOPE"].split(",")
+          end
   config.omniauth :openid_connect,
                   name: :checkin,
                   scope: scope,
