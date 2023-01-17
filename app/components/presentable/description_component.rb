@@ -7,7 +7,6 @@ class Presentable::DescriptionComponent < ApplicationComponent
   renders_one :main_options
   renders_one :sidebar_options
   renders_one :description_panels
-  renders_one :analytics
 
   def initialize(object:, preview: false, from: nil)
     super()

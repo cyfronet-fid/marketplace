@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Services::OrderingConfigurationsController < Services::OrderingConfiguration::ApplicationController
+  include Service::Monitorable
+
   before_action :load_and_authenticate_service!, only: :show
 
   layout "ordering_configuration"
@@ -10,10 +12,9 @@ class Services::OrderingConfigurationsController < Services::OrderingConfigurati
     @offers = @service&.offers&.published&.order(:iid)
     @related_services = @service.related_services
     @related_services_title = "Related resources"
-    if current_user&.executive?
-      @client = @client&.credentials&.expires_at.blank? ? Google::Analytics.new : @client
-      @analytics = Analytics::PageViewsAndRedirects.new(@client).call(request.path)
-    end
+    @client = @client&.credentials&.expires_at.blank? ? Google::Analytics.new : @client
+    @service.analytics = Analytics::PageViewsAndRedirects.new(@client).call(request.path)
+    @service.monitoring_status = fetch_status(@service.pid)
   end
 
   private

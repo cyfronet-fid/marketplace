@@ -10,7 +10,7 @@
     %sidebar.col-12.col-xl-3{ "data-shepherd-tour-target": "service-classification" }
       = render Presentable::SidebarComponent.new(@object)
       -# TODO: refactor dynamic translation (above)
-      = analytics
+      = sidebar_options
 
       - if @preview
         %a.more-details{ href: "javascript:;",
