@@ -28,7 +28,7 @@ module Presentable::DetailsStyleHelper
 
   def monitoring_numerable_class(number)
     case number
-    when 80..100
+    when 80..200
       "text-success"
     when 50..80
       "text-warning"

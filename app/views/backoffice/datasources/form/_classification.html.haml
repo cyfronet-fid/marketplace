@@ -23,7 +23,7 @@
     = f.association :categories, multiple: true, input_html: { data: { choice: true } },
                     collection: Category.child_names.map { |name, c| [name, c.id] },
                     disabled: cant_edit([category_ids: []])
-    = f.input :horizontal, as: :boolean, label: "Horizontal datasource",
+    = f.input :horizontal, as: :boolean, label: "Horizontal service",
             boolean_style: :inline, include_hidden: true
     = f.association :research_steps, multiple: true, input_html: { data: { choice: true } }
     = f.association :target_users,
