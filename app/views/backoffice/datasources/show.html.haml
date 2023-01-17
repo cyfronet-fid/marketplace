@@ -46,7 +46,7 @@
   .tab-content
     #about{ "data-target": "datasource.content" }
       = render Presentable::DescriptionComponent.new(object: @datasource, from: "backoffice_service") do |c|
-        - c.analytics do
+        - c.sidebar_options do
           %h5
             = _("Updates")
           %ul.list-group

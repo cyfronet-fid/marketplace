@@ -3,6 +3,7 @@
 class Backoffice::ServicesController < Backoffice::ApplicationController
   include Service::Autocomplete
   include Service::Categorable
+  include Service::Monitorable
   include Service::Recommendable
   include Service::Searchable
   include Service::Monitorable
@@ -47,10 +48,8 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     @service.monitoring_status = fetch_status(@service.pid)
     @offer = Offer.new(service: @service, status: :draft)
     @offers = @service.offers.published.order(:created_at)
-    if current_user&.executive?
-      @client = @client&.credentials&.expires_at.blank? ? Google::Analytics.new : @client
-      @analytics = Analytics::PageViewsAndRedirects.new(@client).call(request.path)
-    end
+    @client = @client&.credentials&.expires_at.blank? ? Google::Analytics.new : @client
+    @service.analytics = Analytics::PageViewsAndRedirects.new(@client).call(request.path)
     @similar_services = fetch_similar(@service.id, current_user&.id)
     @similar_services_title = "Similar services"
     @related_services = @service.target_relationships
@@ -148,10 +147,8 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     @offers = @service.offers.where(status: :published).order(:created_at)
     @related_services = @service.target_relationships
     @related_services_title = "Suggested compatible resources"
-    if current_user&.executive?
-      @client = @client&.credentials&.expires_at.blank? ? Google::Analytics.new : @client
-      @analytics = Analytics::PageViewsAndRedirects.new(@client).call(request.path)
-    end
+    @client = @client&.credentials&.expires_at.blank? ? Google::Analytics.new : @client
+    @service.analytics = Analytics::PageViewsAndRedirects.new(@client).call(request.path)
     render :preview
   end
 

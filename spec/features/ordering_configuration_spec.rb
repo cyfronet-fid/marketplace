@@ -4,6 +4,7 @@ require "rails_helper"
 
 RSpec.feature "Services in ordering_configuration panel" do
   include OmniauthHelper
+  include ExternalServiceDataHelper
 
   context "As a data_administrator" do
     let(:user) { create(:user) }
@@ -18,6 +19,7 @@ RSpec.feature "Services in ordering_configuration panel" do
       service_source = create(:eosc_registry_service_source, service: service)
       service.update!(resource_organisation: provider, upstream: service_source)
       checkin_sign_in_as(user)
+      stub_external_data
     end
 
     scenario "I can see ordering_configuration panel" do
