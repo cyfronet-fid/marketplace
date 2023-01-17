@@ -60,9 +60,7 @@
   = render Presentable::DescriptionComponent.new(object: @service, from: "backoffice_service") do |c|
     - c.description_panels do
       = render "layouts/common_parts/services/offers", offers: @offers, service: @service
-    - c.analytics do
-      - if current_user&.executive?
-        = render "services/analytics", service: @service, analytics: @analytics
+    - c.sidebar_options do
       %h5
         = _("Updates")
       %ul.list-group

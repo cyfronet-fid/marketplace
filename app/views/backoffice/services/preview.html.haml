@@ -40,9 +40,6 @@
           - if policy(@service).order? && (policy(@service).offers_show? || policy(@service).bundles_show?)
             = render "services/offers", offers: @offers, service: @service,
                                         bundles: @bundles, preview: local_assigns[:preview]
-        - c.analytics do
-          - if current_user&.executive?
-            = render "services/analytics", service: @service, analytics: @analytics
       = render "taggable/details_section", taggable: @service, preview: true
     #details.d-none{ "data-target": "preview.content" }
       = render Presentable::DetailsComponent.new(@service, preview: true)
