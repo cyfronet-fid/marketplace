@@ -4,11 +4,15 @@ require "rails_helper"
 
 RSpec.feature "Services in backoffice" do
   include OmniauthHelper
+  include ExternalServiceDataHelper
 
   context "As a service portolio manager" do
     let(:user) { create(:user, roles: [:service_portfolio_manager]) }
 
-    before { checkin_sign_in_as(user) }
+    before do
+      checkin_sign_in_as(user)
+      stub_external_data
+    end
 
     scenario "I can see all services" do
       create(:service, name: "service1")

@@ -18,9 +18,6 @@
   = render Presentable::DescriptionComponent.new(object: @service, from: "ordering_configuration") do |c|
     - c.description_panels do
       = render "layouts/common_parts/services/offers", offers: @offers, service: @service
-    - c.analytics do
-      - if current_user&.executive?
-        = render "services/analytics", service: @service, analytics: @analytics
   = render "taggable/details_section", taggable: @service
 
 .container.mt-4.pt-4.related-container
