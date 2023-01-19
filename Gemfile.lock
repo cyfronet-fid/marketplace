@@ -205,7 +205,7 @@ GEM
     gettext_i18n_rails (1.8.1)
       fast_gettext (>= 0.9.0)
     github-markup (4.0.0)
-    globalid (1.0.0)
+    globalid (1.0.1)
       activesupport (>= 5.0)
     google-apis-analyticsreporting_v4 (0.7.0)
       google-apis-core (>= 0.4, < 2.a)
