@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [3.45.1]
+## [3.45.1] 2023-01-20
 
 ### Added
 - Service statistics available for all users (@goreck888)
