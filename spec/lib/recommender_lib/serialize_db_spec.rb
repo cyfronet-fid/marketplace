@@ -8,6 +8,7 @@ describe RecommenderLib::SerializeDb do
     create_list(:service, 2)
     create_list(:user, 2)
     create_list(:category, 2)
+    create_list(:catalogue, 2)
     create_list(:provider, 2)
     create_list(:scientific_domain, 2)
     create_list(:platform, 2)
@@ -32,6 +33,10 @@ describe RecommenderLib::SerializeDb do
 
     expect(serialized["categories"].map { |x| x["id"] }).to match_array(Category.all.pluck(:id))
     expect(serialized["categories"].map { |x| x["name"] }).to match_array(Category.all.pluck(:name))
+
+    expect(serialized["catalogues"].map { |x| x["id"] }).to match_array(Catalogue.all.pluck(:id))
+    expect(serialized["catalogues"].map { |x| x["name"] }).to match_array(Catalogue.all.pluck(:name))
+    expect(serialized["catalogues"].map { |x| x["pid"] }).to match_array(Catalogue.all.pluck(:pid))
 
     expect(serialized["providers"].map { |x| x["id"] }).to match_array(Provider.all.pluck(:id))
     expect(serialized["providers"].map { |x| x["name"] }).to match_array(Provider.all.pluck(:name))

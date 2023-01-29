@@ -4,12 +4,15 @@ module RecommenderLib
   class SerializeDb
     def initialize; end
 
+    # rubocop:disable Metrics/AbcSize
     def call
       {
         services: Service.all.map { |s| Recommender::ServiceSerializer.new(s).as_json },
+        datasources: Datasource.all.map { |s| Recommender::DatasourceSerializer.new(s).as_json },
         users: User.all.map { |s| Recommender::UserSerializer.new(s).as_json },
         projects: Project.all.map { |s| Recommender::ProjectSerializer.new(s).as_json },
         categories: Category.all.map { |s| Recommender::CategorySerializer.new(s).as_json },
+        catalogues: Catalogue.all.map { |s| Recommender::CatalogueSerializer.new(s).as_json },
         providers: Provider.all.map { |s| Recommender::ProviderSerializer.new(s).as_json },
         scientific_domains: ScientificDomain.all.map { |s| Recommender::ScientificDomainSerializer.new(s).as_json },
         platforms: Platform.all.map { |s| Recommender::PlatformSerializer.new(s).as_json },
@@ -23,5 +26,6 @@ module RecommenderLib
           Vocabulary::LifeCycleStatus.all.map { |s| Recommender::Vocabulary::LifeCycleStatusSerializer.new(s).as_json }
       }.as_json
     end
+    # rubocop:enable Metrics/AbcSize
   end
 end

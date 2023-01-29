@@ -2,6 +2,8 @@
 
 class Catalogue < ApplicationRecord
   extend FriendlyId
+  include Publishable
+
   friendly_id :pid
 
   has_many :service_catalogues, dependent: :destroy

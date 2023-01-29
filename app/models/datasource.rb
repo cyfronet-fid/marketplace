@@ -4,6 +4,7 @@ class Datasource < ApplicationRecord
   include Datasource::Search
   include LogoAttachable
   include Presentable
+  include Publishable
 
   extend FriendlyId
   friendly_id :pid
