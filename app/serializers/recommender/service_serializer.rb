@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Recommender::ServiceSerializer < ActiveModel::Serializer
-  attributes :id, :name, :description, :tagline, :countries, :order_type, :rating, :status
+  attributes :id, :pid, :name, :description, :tagline, :countries, :order_type, :rating, :status, :horizontal
   attribute :category_ids, key: :categories
   attribute :provider_ids, key: :providers
   attribute :resource_organisation_id, key: :resource_organisation
@@ -14,9 +14,7 @@ class Recommender::ServiceSerializer < ActiveModel::Serializer
   attribute :trl_ids, key: :trls
   attribute :life_cycle_status_ids, key: :life_cycle_statuses
   attribute :required_service_ids, key: :required_services
-  attribute :horizontal
   attribute :related_services
-  attribute :pid
 
   def countries
     object.geographical_availabilities.map(&:alpha2)
