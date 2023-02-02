@@ -1,0 +1,10 @@
+.col-md-6.col-sm-12
+  .carousel-box
+    .row
+      .col-4.text-center.pt-3
+        %a{ href: "#{item[:path]}", target: "_blank" }= image_pack_tag "#{item[:image]}"
+      .col-8
+        .pt-3
+          %span.widget-header-theme= item[:title]
+          .pt-3
+            %span.widget-header-place= item[:body]

@@ -46,6 +46,10 @@ $palette-solid-100: #1c313a;
 
 $palette-white: #fff;
 
+$palette-new-background: rgba(25, 117, 255, 0.08);
+$palette-new-darkblue: #1a2128;
+$palette-new-blue: #144b9e;
+$palette-new-lightblue: #919ba2;
 $palette-blue: #3d4db6;
 $palette-light-blue: #e6fafd;
 $palette-yellow: #ffcd00;
@@ -59,7 +63,9 @@ $palette-lightblue2: #f9fcfe;
 $palette-lightblue3: #e3eff8;
 $palette-black: #000;
 $palette-pink: #e83e8c;
+$palette-navy: #000745;
 $palette-end-opacity: rgba(27, 48, 58, 0.85);
+$palette-box-shadow: rgba(0, 0, 0, 0.04);
 
 $primary: $palette-blue;
 $secondary: $palette-yellow;
@@ -81,6 +87,7 @@ $btn-error-hover: #ff5557;
 $btn-info: $info;
 $btn-info-hover: #a1acaf;
 $badge-blue: #f0f3f5;
+$link-blue: #1975ff;
 
 $btn-focus-width: 0;
 $btn-border-width: 0;
@@ -136,3 +143,5 @@ $status-bg-registered: rgba(255, 205, 0, 0.3);
 $services-list-bg: rgba(28, 49, 58, 0.03);
 $alert-bg: #edf4ff;
 $alert-color: #3d4db6;
+$button-blue: #144b9e;
+$lightgrey-bg: #d7d7d7;
