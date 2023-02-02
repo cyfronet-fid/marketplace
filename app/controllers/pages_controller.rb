@@ -12,4 +12,8 @@ class PagesController < ApplicationController
   def target_users
     @target_users = TargetUser.all.order(:name).partition { |tu| tu.name != "Other" }.flatten(1)
   end
+
+  def landing_page
+    render layout: "clear"
+  end
 end

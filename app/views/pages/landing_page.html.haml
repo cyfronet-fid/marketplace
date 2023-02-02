@@ -1,0 +1,138 @@
+%main
+  %section.text-center.heading
+    .container
+      .row.py-lg-3
+        .col-md-8.col-sm-12.mx-auto
+          .logo-box
+            %img{ alt: "EOSC Portal Catalogue and Marketplace", src: "assets/logo-eosc-white.png" }
+          %h1 EOSC Portal Marketplace
+          %p
+            Search. Browse. Access. Hundreds of research and innovation tools
+            and services, thousands of datasets from a wide scale of research
+            domains from renowned European service providers.
+          %ess-search-input
+            %p search-input
+          %p.lead Browse solutions
+          .solutions-box
+            %a Discover research outputs
+            %a Publish research outputs
+            %a Process and analyse
+            %a Access computing resources
+            %a{ href: "#" } Find bundles
+            %a Find instruments  equipment
+            %a Access training materials
+            %a
+              Access research infrastructures
+  %section.who-are-you.py-5.text-center.bg-light
+    .container
+      %h2 Who are you?
+      .col-md-6.col-sm-12.mx-auto.intro-box
+        %p.text-center
+          Are you a researcher, citizen scientist or an educator looking for
+          research data, tools or services? Are you a service provider keen on
+          sharing its brand new tool or service to advance European research and
+          innovation? Access the EOSC Portal services you need.
+      .col-md-6.col-sm-12.mx-auto
+        .row
+          %a.col-lg-5.col-sm-12.bg-light.mx-auto.py-4.px-4{ href: "javascript:void(0)" }
+            .icon-box
+              %img.img-responsive.vertical-center{ alt: "Researcher Citizen science Educator",
+              src: "assets/research.png" }
+            .card-title Researcher Citizen science Educator
+          %a.col-lg-5.col-sm-12.bg-light.mx-auto.py-4.px-4{ href: "javascript:void(0)" }
+            .icon-box
+              %img.img-responsive.vertical-center{ alt: "Provider", src: "assets/provider.png" }
+            .card-title Provider
+%section.looking.py-4
+  .container
+    .row
+      .col-md-7.col-sm-12
+        %img{ alt: "Loking for services", src: "assets/looking.png" }
+      .col-md-5.col-sm-12
+        %h3 Looking for services?
+        %p
+          Access the EOSC Portal Marketplace to find hundreds of research and
+          innovation tools and services and thousands of datasets from
+          renowned European service providers.
+        %a.btn.btn-primary.mt-3{ href: "https://marketplace.eosc-portal.eu" } Go to Marketplace
+%section.help.bg-light
+  .container
+    .row
+      .col-md-6.col-sm-12.cards-container
+        .row
+          .col-6.gx-1.gy-1.py-0
+            %a.card{ title: "fqBy('scientific_domains_ss', 'Medical  Health Sciences')" }
+              .icon-box
+                %img.img-responsive{ alt: "Medical  Health Sciences", src: "assets/ico-09.png" }
+              .card-title Medical  Health Sciences
+          .col-6.gx-1.gy-1.py-0
+            %a.card{ title: "fqBy('scientific_domains_ss', 'Engineering  Technology')" }
+              .icon-box
+                %img.img-responsive{ alt: "Engineering  technology", src: "assets/ico-10.png" }
+              .card-title Engineering  technology
+          .col-6.gx-1.gy-1.py-0
+            %a.card{ title: "fqBy('scientific_domains_ss', 'Natural Sciences')" }
+              .icon-box
+                %img.img-responsive{ alt: "Natural Sciences", src: "assets/ico-11.png" }
+              .card-title Natural Sciences
+          .col-6.gx-1.gy-1.py-0
+            %a.card{ title: "fqBy('scientific_domains_ss', 'Generic')" }
+              .icon-box
+                %img.img-responsive{ alt: "Generic", src: "assets/ico-12.png" }
+              .card-title Generic
+          .col-6.gx-1.gy-1.py-0
+            %a.card{ title: "fqBy('scientific_domains_ss', 'Humanities')" }
+              .icon-box
+                %img.img-responsive{ alt: "Humanities", src: "assets/ico-13.png" }
+              .card-title Humanities
+          .col-6.gx-1.gy-1.py-0
+            %a.card{ title: "fqBy('scientific_domains_ss', 'Agricultural Sciences')" }
+              .icon-box
+                %img.img-responsive{ alt: "Agricultural sciences", src: "assets/ico-14.png" }
+              .card-title Agricultural sciences
+          .col-6.gx-1.gy-1.py-0
+            %a.card{ title: "fqBy('scientific_domains_ss', 'Social Sciences')" }
+              .icon-box
+                %img.img-responsive{ alt: "Social Sciences", src: "assets/ico-15.png" }
+              .card-title Social sciences
+          .col-6.gx-1.gy-1.py-0
+            %a.card{ title: "fqBy('scientific_domains_ss', 'Other')" }
+              .icon-box
+                %img.img-responsive{ alt: "Other", src: "assets/ico-16.png" }
+              .card-title Other
+      .col-md-2.col-sm-12
+      .col-md-4.col-sm-12
+        %h3 Hundreds of solutions grouped by research domain.
+        %p
+          %strong Your research. Your domain. Your category.
+        %p
+          Find the service, tool or data you need to research and innovate via
+          the domains listed.
+%section.provider.py-5.text-center.bg-light
+  .container
+    %h2 How can we help you provide your service?
+    .col-md-6.col-sm-12.mx-auto.intro-box
+      %p
+        Contribute to advancing European Research and Innovation, provide your
+        service. Pick the support you need.
+    .row.help-row
+      .col-lg-3.gx-4
+        %a.card.bg-light.py-4.px-4{ href: "https://providers.eosc-portal.eu/becomeAProvider" }
+          .icon-box
+            %img.img-responsive.vertical-center{ alt: "Onboard resources", src: "assets/provider-01.png" }
+          .card-title Onboard resources
+      .col-lg-3.gx-4
+        %a.card.bg-light.py-4.px-4{ href: "https://providers.eosc-portal.eu/home" }
+          .icon-box
+            %img.img-responsive.vertical-center{ alt: "Provider dashboard", src: "assets/provider-02.png" }
+          .card-title Provider dashboard
+      .col-lg-3.gx-4
+        %a.card.bg-light.py-4.px-4{ href: "https://providers.eosc-portal.eu/developers" }
+          .icon-box
+            %img.img-responsive.vertical-center{ alt: "API", src: "assets/provider-03.png" }
+          .card-title API
+      .col-lg-3.gx-4
+        %a.card.bg-light.py-4.px-4{ href: "https://eosc-portal.eu/providers-documentation" }
+          .icon-box
+            %img.img-responsive.vertical-center{ alt: "Documentation", src: "assets/provider-04.png" }
+          .card-title Documentation

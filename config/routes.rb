@@ -194,6 +194,7 @@ Rails.application.routes.draw do
   match "target_users", to: "pages#target_users", via: "get", as: :target_users
   match "communities", to: "pages#communities", via: "get", as: :communities
   match "about_projects", to: "pages#about_projects", via: "get", as: :about_projects
+  match "landing_page", to: "pages#landing_page", via: "get", as: :landing_page
 
   if Rails.env.development?
     get "designsystem" => "designsystem#index"
