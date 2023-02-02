@@ -84,7 +84,7 @@ module Mp
     config.profile_4_enabled = ENV["PROFILE_4_ENABLED"].present? ? ENV["PROFILE_4_ENABLED"] : false
     config.home_page_external_links_enabled =
       ENV["HOME_PAGE_EXTERNAL_LINKS_ENABLED"].present? ? ENV["HOME_PAGE_EXTERNAL_LINKS_ENABLED"] : true
-    config.search_service_base_url = ENV["SEARCH_SERVICE_BASE_URL"] || "https://search.eosc-portal.eu"
+    config.search_service_base_url = ENV.fetch("SEARCH_SERVICE_BASE_URL", "https://search.marketplace.eosc-portal.eu")
 
     config.mp_stomp_publisher_enabled =
       if ENV["MP_STOMP_PUBLISHER_ENABLED"].present?

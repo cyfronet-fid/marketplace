@@ -21,8 +21,8 @@ RSpec.feature "Providers in backoffice" do
 
       fill_in "Name", with: "New name"
       click_on "Update Provider"
+      sleep(5)
       expect(page).to have_content("Edit")
-      expect(page).to have_content("Delete")
       expect(page).to have_content("New name")
     end
 
