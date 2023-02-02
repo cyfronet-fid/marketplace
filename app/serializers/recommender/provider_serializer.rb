@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 class Recommender::ProviderSerializer < ActiveModel::Serializer
-  attributes :id, :name
+  attributes :id, :pid, :name
 end

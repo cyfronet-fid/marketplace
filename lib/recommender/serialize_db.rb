@@ -20,7 +20,9 @@ module RecommenderLib
           Vocabulary::AccessType.all.map { |s| Recommender::Vocabulary::AccessTypeSerializer.new(s).as_json },
         trls: Vocabulary::Trl.all.map { |s| Recommender::Vocabulary::TrlSerializer.new(s).as_json },
         life_cycle_statuses:
-          Vocabulary::LifeCycleStatus.all.map { |s| Recommender::Vocabulary::LifeCycleStatusSerializer.new(s).as_json }
+          Vocabulary::LifeCycleStatus.all.map { |s| Recommender::Vocabulary::LifeCycleStatusSerializer.new(s).as_json },
+        research_steps:
+          Vocabulary::ResearchStep.all.map { |s| Recommender::Vocabulary::ResearchStepSerializer.new(s).as_json }
       }.as_json
     end
   end

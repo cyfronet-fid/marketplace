@@ -22,7 +22,9 @@ RSpec.describe Recommender::ServiceSerializer do
         access_types: create_list(:access_type, 2),
         trl: [create(:trl)],
         life_cycle_status: [create(:life_cycle_status)],
-        pid: "pid"
+        pid: "pid",
+        horizontal: true,
+        research_steps: create_list(:research_step, 2)
       )
 
     serialized = described_class.new(service).as_json
@@ -48,5 +50,7 @@ RSpec.describe Recommender::ServiceSerializer do
     expect(serialized[:access_types]).to match_array(service.access_type_ids)
     expect(serialized[:trls]).to match_array(service.trl_ids)
     expect(serialized[:life_cycle_statuses]).to match_array(service.life_cycle_status_ids)
+    expect(serialized[:horizontal]).to eq(service.horizontal)
+    expect(serialized[:research_steps]).to match_array(service.research_step_ids)
   end
 end
