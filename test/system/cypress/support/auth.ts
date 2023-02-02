@@ -52,12 +52,12 @@ Cypress.Commands.add('setSessionId', (user: IUser, preserveUser) => {
 Cypress.Commands.add('loginAs', function (user: IUser, preserveUser: boolean = false) {
     cy.setSessionId(user, preserveUser);
     cy.reload();
-    cy.get('a[data-e2e="logout"]').should('be.visible');
+    cy.contains('My EOSC').should('be.visible');
 });
 Cypress.Commands.add('logout', () => {
     cy.clearCookie(APP_SESSION_COOKIE_NAME);
     cy.reload();
-    cy.get('a[data-e2e="login"]').should('be.visible');
+    cy.contains('Login').should('be.visible');
 });
 
 /**

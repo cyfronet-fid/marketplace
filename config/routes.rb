@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   get "service_autocomplete", to: "services#autocomplete", as: :service_autocomplete
   get "/robots.txt" => "home#robots"
   post "user_action", to: "user_action#create"
+  get "/", to: "pages#landing_page", as: :new_landing_page if ENV.fetch("EXTERNAL_LANDING_PAGE", false)
 
   resources :services, only: [:index, :show], constraints: { id: %r{[^/]+} } do
     scope module: :services do
@@ -194,6 +195,7 @@ Rails.application.routes.draw do
   match "target_users", to: "pages#target_users", via: "get", as: :target_users
   match "communities", to: "pages#communities", via: "get", as: :communities
   match "about_projects", to: "pages#about_projects", via: "get", as: :about_projects
+  match "landing_page", to: "pages#landing_page", via: "get", as: :landing_page
 
   if Rails.env.development?
     get "designsystem" => "designsystem#index"

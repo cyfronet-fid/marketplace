@@ -14,17 +14,6 @@
           "activity or provider that you know and trust and, if you need help, we are here for you!") |
       -# haml-lint:enable MultilinePipe
 
-    -# temporary measure should be removed in the future
-    %p.contentbox__lead
-      -# haml-lint:disable MultilinePipe
-      - link = link_to "search interface", "https://search.eosc-portal.eu/search/all?q=*"
-      = _("EOSC Marketplace has been integrated with a new joint catalogue exposing both services and research" + |
-          " products. Please note that the search capabilities of the Marketplace, including these available from" + |
-          " the services' entry pages, are focusing on the services only, while all EOSC Resources are findable" + |
-          " via the new #{link}.").html_safe |
-      -# haml-lint:enable MultilinePipe
-
-
     .intro-box-wrapper
       .intro-box
         = _("Find EOSC Services that suit your use case yourself")

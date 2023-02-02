@@ -1,0 +1,278 @@
+.landing-header
+  %section.text-center.heading
+    .container
+      .row.py-lg-3
+        .col-md-8.col-sm-12.mx-auto
+          .logo-box
+            = image_pack_tag "eosc-logo-mono.svg", alt: "EOSC Portal Catalogue and Marketplace"
+          %h1 Browse EOSC<br>Marketplace Resources
+          %p
+            Browse through over 3 millions of research and innovation tools and services, thousands of datasets
+            from a wide scale of research domains from renowned European service providers.
+          .searchbar{ "data-controller": "external" }
+            .searchbar__input
+              %label.sr-only{ for: "search" }= _("Search")
+              = text_field_tag :q, params[:q], class: "autocomplete-input",
+                placeholder: "Find resource...",
+                "data-e2e": "searchbar-input",
+                "data-external-target": "query",
+                "data-base": external_search_base_url,
+                "data-action": "keydown.esc->external#clear keydown.enter->external#search input->external#toggleClear",
+                "data-probe": ""
+              %a.d-none.search-clear{ "data-external-target": "clear",
+                                      "data-action": "click->external#clear",
+                                      title: _("Clear search"),
+                                      "data-e2e": "search-clear-btn" }
+                .fas.fa-times
+            .input-group-append
+              %button#query-submit.input-group-text.bg-white{ "data-external-target": "search",
+              "data-action": "click->external#search", "data-e2e": "query-submit-btn" }
+                %i.fas.fa-search
+          .browse
+            .browse-label
+              Browse by category
+            .solutions-box
+              = render partial: "pages/solutions_box_link", collection: LandingPageHelper::SEARCH_ITEMS, as: :item
+%section.research-activity
+  .container
+    %h2.text-center Search by Research Activity
+
+    .row
+      .col-md-4.col-sm-12
+        %a.activity{ href: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:
+        (%22Discover%20Research%20Outputs%22)" }
+          .activity-icon
+            = image_pack_tag "landing_page/ico-01.svg", alt: "Discover Research Outputs"
+          .activity-texts
+            .activity-title Discover Research Outputs
+            .activity-subtitle
+              Find datasets, scientific publications, software.
+      .col-md-4.col-sm-12
+        %a.activity{ href: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:
+        (%22Manage%20Research%20Data%22)" }
+          .activity-icon
+            = image_pack_tag "landing_page/ico-09.svg", alt: "Data Management"
+          .activity-texts
+            .activity-title Data Management
+            .activity-subtitle
+              Find robust, feature-rich and user-friendly services for Data Management.
+      .col-md-4.col-sm-12
+        %a.activity{ href: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:
+        (%22Access%20Research%20Infrastructures%22)" }
+          .activity-icon
+            = image_pack_tag "landing_page/ico-07.svg", alt: "Access research infrastructures"
+          .activity-texts
+            .activity-title Access research infrastructures
+            .activity-subtitle
+              Find frameworks made by scientific clusters or RIs that will equip you with the tools to tackle
+              your use case.
+    .row
+      .col-md-4.col-sm-12
+        %a.activity{ href: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:
+        (%22Find%20Instruments%20%5C%26%20Equipment%22)" }
+          .activity-icon
+            = image_pack_tag "landing_page/ico-05.svg", alt: "Find Instruments & Equipment"
+          .activity-texts
+            .activity-title Find Instruments & Equipment
+            .activity-subtitle
+              Find research instruments and scientific equipment.
+      .col-md-4.col-sm-12
+        %a.activity{ href: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:
+        (%22Publish%20Research%20Outputs%22)" }
+          .activity-icon
+            = image_pack_tag "landing_page/ico-02.svg", alt: "Publish research outputs"
+          .activity-texts
+            .activity-title Publish research outputs
+            .activity-subtitle
+              Store, backup, archive your data, publications, software.
+      .col-md-4.col-sm-12
+        %a.activity{ href: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:
+        (%22Access%20Computing%20and%20Storage%20Resources%22)" }
+          .activity-icon
+            = image_pack_tag "landing_page/ico-04.svg", alt: "Access computing and storage resources"
+          .activity-texts
+            .activity-title Access computing and storage resources
+            .activity-subtitle
+              Find HPC, IT centres for science, cloud computing, cloud container computing, online storage.
+    .row
+      .col-md-4.col-sm-12
+        %a.activity{ href: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:
+        (%22Process%20and%20Analyse%22)" }
+          .activity-icon
+            = image_pack_tag "landing_page/ico-03.svg", alt: "Process and analyse"
+          .activity-texts
+            .activity-title Process and analyse
+            .activity-subtitle
+              Verify, organise, transform and integrate data, then export it in the format that works with your tools.
+      .col-md-4.col-sm-12
+        %a.activity{ href: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:
+        (%22Access%20Training%20Material%22)" }
+          .activity-icon
+            = image_pack_tag "landing_page/ico-06.svg", alt: "Access training material"
+          .activity-texts
+            .activity-title Access training material
+            .activity-subtitle
+              Find lessons, courses, videos.
+
+%section.support
+  .container
+    .row
+      .col-md-6.col-sm-12
+        = image_pack_tag "landing_page/landing-pic-01.png", alt: "We can provide you full support", class: "img-fluid"
+      .col-md-5.col-sm-12
+        %h3 Create space for your<br> scientific activity
+        %p.description
+          Adding the project will help you organize your services a into logical blocks and gaining
+          support in the scope of the created idea.
+        %a.btn.btn-primary.mt-3{ href: "https://marketplace.eosc-portal.eu/projects" } Add project
+
+
+%section.eosc-navy
+  .container
+    .row
+      .col-md-3.col-sm-12.mb-5
+        = image_pack_tag "eosc-logo-mono.svg", alt: "EOSC Portal Catalogue and Marketplace", class: "eosc-logo-navy"
+      .col-md-9.col-sm-12
+        %h4
+          We are the European Open Science Cloud (EOSC), an environment for hosting and processing research
+          data to support EU open science
+    .row.mt-5
+      .col-md-3.col-sm-12
+        %a.eosc-info{ href: "#{external_search_base_url}/" }
+          .eosc-info-icon
+            = image_pack_tag "landing_page/browse-marketplace.svg", alt: "Browse Marketplace"
+          .eosc-info-texts
+            .eosc-info-title Browse Marketplace
+            .eosc-info-subtitle
+              Browse through over 3 million research and innovation tools and services, thousands of datasets
+              from a wide range of research domains from renowned European service providers.
+      .col-md-3.col-sm-12
+        %a.eosc-info{ href: "https://eosc-user-dashboard.docker-fid.grid.cyf-kr.edu.pl/" }
+          .eosc-info-icon
+            = image_pack_tag "landing_page/dashboard.svg", alt: "My EOSC Dashboard"
+          .eosc-info-texts
+            .eosc-info-title My EOSC Dashboard
+            .eosc-info-subtitle
+              Manage your research projects, access your activity history, and get resource recommendations.
+      .col-md-3.col-sm-12
+        %a.eosc-info{ href: "https://eosc-portal.eu/" }
+          .eosc-info-icon
+            = image_pack_tag "landing_page/portal.svg", alt: "EOSC Portal"
+          .eosc-info-texts
+            .eosc-info-title EOSC Portal
+            .eosc-info-subtitle
+              Stay up to date with news and events. Read use cases or success stories that highlight how EOSC
+              resources can support the daily work of researchers and innovators.
+      .col-md-3.col-sm-12
+        %a.eosc-info{ href: "https://providers.eosc-portal.eu/home" }
+          .eosc-info-icon
+            = image_pack_tag "landing_page/hub.svg", alt: "Providers Hub"
+          .eosc-info-texts
+            .eosc-info-title Providers Hub
+            .eosc-info-subtitle
+              A single platform for providers to onboard their organization into the EOSC portal,
+              register and manage their resources and gain rich insights about the usage of their offerings.
+
+%section.provider
+  .container
+    .row
+      .col-md-4.col-sm-12
+        = image_pack_tag "landing_page/provider.svg", alt: "Are you a provider?"
+      .col-md-8.col-sm-12
+        %h3
+          Are you a provider?<br>
+          We can help you contribute to European research and innovation. Increase the visibility and usability of
+          your resources across the European research community by onboarding them.
+        %a.btn.btn-primary.mt-3{ href: "https://providers.eosc-portal.eu/becomeAProvider" } Onboard Resources
+
+%section.research
+  .container
+    .row
+      %h3.text-center Research Communities
+      %p.lead.text-center
+        Get a chance to be part of rewarding collaborations and join or create interesting scientific projects
+        in the EOSC communities.
+    .row
+      .carousel-wrapper
+        = render "pages/discover_communities", communities: @discover_communities
+
+%section.questions
+  .container
+    .row
+      .col-md-5.col-sm-12
+        = image_pack_tag "landing_page/questions.svg", alt: "Have any questions?"
+        %h3 Have any questions?
+        %p.lead
+          Contact us if you encounter any<br>
+          issues while using the website or<br>
+          have any other suggestions that<br>
+          we should know about.
+        %a.blue-link{ href: "https://eosc-portal.eu/about/faqs" } Frequently Asked Questions >
+      .col-md-2.col-sm-12
+      .col-md-5.col-sm-12.contact-form
+        %script{ src: "https://code.jquery.com/jquery-3.6.0.min.js" }
+        %button{ id: "zammad-feedback-form" }
+        %script{ src: "https://eosc-helpdesk.eosc-portal.eu/assets/form/form.js", id: "zammad_form_script" }
+        :javascript
+          $(function() {
+            $('#zammad-feedback-form').ZammadForm({
+          agreementMessage: '#{contact_form_message}',
+          messageTitle: 'Report a problem/feedback',
+          messageSubmit: 'Submit',
+          messageThankYou: 'Thank you for your inquiry (#%s)! We\'ll contact you as soon as possible.',
+          modal: false,
+          targetGroupID: 15,
+          attributes: [
+            {
+              display: 'Name',
+              name: 'name',
+              tag: 'input',
+              type: 'text',
+              id: 'zammad-form-name',
+              required: true,
+              placeholder: 'Your Name',
+              defaultValue: '',
+            },
+            {
+              display: 'Email',
+              name: 'email',
+              tag: 'input',
+              type: 'email',
+              id: 'zammad-form-email',
+              required: true,
+              placeholder: 'Your Email',
+              defaultValue: '',
+            },
+            {
+              display: 'Subject',
+              name: 'title',
+              tag: 'input',
+              id: 'zammad-form-subject',
+              required: false,
+              placeholder: 'My subject',
+              defaultValue: '',
+            },
+            {
+              display: 'Message',
+              name: 'body',
+              tag: 'textarea',
+              id: 'zammad-form-body',
+              required: true,
+              placeholder: 'Your Message...',
+              defaultValue: '',
+              rows: 7,
+            }
+              ]
+            });
+          });
+
+%section.facilities
+  .container
+    .row
+      .col-md-6.col-sm-12
+        %h3
+          Facilities that provide resources and services to the scientific community to conduct research
+        %p
+          %a.blue-link{ href: "https://marketplace.eosc-portal.eu/providers" } Over 250 providers >
+        %p
+          %a.blue-link{ href: "https://marketplace.eosc-portal.eu/communities" } 64 Communities and infrastructures >
