@@ -52,20 +52,4 @@ module ProjectItemsHelper
       )
     end
   end
-
-  def service_resource_organisation(project_item)
-    organisation = project_item.service.resource_organisation
-    link_to organisation.name, services_path(providers: organisation.id)
-  end
-
-  def service_providers_list(project_item)
-    organisation = project_item.service.resource_organisation
-    providers =
-      project_item
-        .service
-        .providers
-        .reject { |p| p == organisation }
-        .map { |p| link_to(p.name, services_path(providers: p.id)) }
-    safe_join(providers, ", ")
-  end
 end

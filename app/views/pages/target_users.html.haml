@@ -9,4 +9,4 @@
         %ul.special-list
           - @target_users.each do |target_user|
             %li.special-list-item
-              = link_to target_user.name, services_path(target_users: target_user.to_param)
+              = link_to target_user.name, target_users_link(target_user)
