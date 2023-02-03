@@ -13,6 +13,11 @@ class ServicesController < ApplicationController
 
   # rubocop:disable Metrics/AbcSize
   def index
+    search_base_url = Mp::Application.config.search_base_url
+    if search_base_url
+      redirect_to search_base_url + "/search/service?q=*"
+    end
+
     if params["object_id"].present?
       case params["type"]
       when "provider"

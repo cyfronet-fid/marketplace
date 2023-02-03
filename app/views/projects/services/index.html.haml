@@ -7,27 +7,27 @@
   - else
     - if @order_required_items.any?
       .ordered-resources
-        %h3.mt-5.mb-3= _("Ordered resources")
+        %h3.mt-5.mb-3= _("Ordered services")
         %ul.list-group
           = render(partial: "projects/services/project_item",
             collection: @order_required_items,
             locals: { project: @project })
     - if @open_access_items.any?
       .open-access-resources
-        %h3.mt-5.mb-3= _("Open access resources")
+        %h3.mt-5.mb-3= _("Open access services")
         %ul.list-group
           = render(partial: "projects/services/project_item",
             collection: @open_access_items,
             locals: { project: @project })
     - if @other_items.any?
       .other-resources
-        %h3.mt-5.mb-3= _("Other resources")
+        %h3.mt-5.mb-3= _("Other services")
         %ul.list-group
           = render(partial: "projects/services/project_item",
             collection: @other_items,
             locals: { project: @project })
     %hr.bottom-hr.mt-3.mb-4
     - unless @project.archived?
-      = link_to "Add resource to this project", project_add_path(@project),
+      = link_to "Add service to this project", project_add_link(@project),
         class: "btn btn btn-primary pl-5 pr-5 mr-5",
         method: :post

@@ -3,22 +3,22 @@
     .col-lg-6.pt-5.pb-4.pl-5.order-lg-first.order-md-last.order-sm-last.order-last
       -# haml-lint:disable MultilinePipe
       %h3
-        = _("You have no resources in this project yet.")
+        = _("You have no services in this project yet.")
       %ul.simple-list
         %li
           %span
-            = _("Browse our catalogue to find EOSC resources that can support your scientific work and add them " + |
+            = _("Browse our catalogue to find EOSC services that can support your scientific work and add them " + |
               "to your Marketplace Project") |
         %li
           %span
-            = _("Follow the status of your resource access request and gain all necessary information")
+            = _("Follow the status of your service access request and gain all necessary information")
         %li
           %span
             = _("If you need help with any of these, don't hesitate and contact our customer support in " + |
             "‘CONTACT WITH EOSC EXPERTS’ tab") |
       -# haml-lint:enable MultilinePipe
 
-      = link_to _("Add your first resource"), project_add_path(project),
+      = link_to _("Add your first service"), project_add_link(project),
         class: "btn btn-primary mb-4 pl-5 pr-5 mt-3 text-center",
         method: :post
     .col.pt-5.order-lg-last.order-md-first.order-sm-first.order-first

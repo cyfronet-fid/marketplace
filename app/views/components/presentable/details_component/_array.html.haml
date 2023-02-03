@@ -12,12 +12,12 @@
       - elsif field == "geographical_availabilities"
         %span
           = safe_join(get_only_regions(object.send(field)).map { |c| link_to c,
-            services_path(geographical_availabilities: c),
+            services_geographical_availabilities_link(object, c),
             "data-target": local_assigns[:preview] ? "preview.link" : "" }.sort, ", ")
         - if get_only_countries(object.send(field)).present?
           %span.geographical
             = safe_join(get_only_countries(object.send(field)).map { |c| link_to c,
-            services_path(geographical_availabilities: c),
+            services_geographical_availabilities_link(object, c),
             "data-target": local_assigns[:preview] ? "preview.link" : "" }.sort, ", ")
       - else
         - Array(object.send(field)).map.with_index do |element, idx|
