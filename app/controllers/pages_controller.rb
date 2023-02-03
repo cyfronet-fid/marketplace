@@ -1,9 +1,26 @@
 # frozen_string_literal: true
 
 class PagesController < ApplicationController
+  helper_method :community_link
+  helper_method :target_users_link
   def about; end
 
   def about_projects; end
+
+  def community_link(platform)
+
+    if @search_base_url
+      return @search_base_url + "/search/service?q=*&fq=platforms:(%22#{platform.name}%22)"
+    end
+    services_path(related_platforms: platform.to_param)
+  end
+
+  def target_users_link(target_user)
+    if @search_base_url
+      return @search_base_url + "/search/service?q=*&fq=dedicated_for:(%22#{target_user.name}%22)"
+    end
+    services_path(target_users: target_user.to_param)
+  end
 
   def communities
     @platforms = Platform.all.order(:name)
@@ -11,6 +28,11 @@ class PagesController < ApplicationController
 
   def target_users
     @target_users = TargetUser.all.order(:name).partition { |tu| tu.name != "Other" }.flatten(1)
+  end
+
+  def initialize
+    super
+    @search_base_url = Mp::Application.config.search_base_url
   end
 
   def landing_page

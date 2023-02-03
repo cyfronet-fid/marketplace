@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Datasource < ApplicationRecord
+  include Rails.application.routes.url_helpers
   include Datasource::Search
   include LogoAttachable
   include Presentable
@@ -239,7 +240,32 @@ class Datasource < ApplicationRecord
     datasource_categories.first&.update(main: true)
   end
 
+  def organisation_search_link(target_name, default_path = nil)
+    _provider_search_link(target_name, "resource_organisation", default_path)
+  end
+
+  def provider_search_link(target_name, default_path = nil)
+    _provider_search_link(target_name, "providers", default_path)
+  end
+
+  def geographical_availabilities_link(gc)
+    _provider_search_link(gc, "", services_path(geographical_availabilities: gc))
+  end
+
   private
+
+  def _provider_search_link(target_name, fq, default_path = nil)
+    search_base_url = Mp::Application.config.search_base_url
+    if search_base_url
+      search_base_url + "/search/data-source?q=*&fq=#{fq}:(%22#{target_name}%22)"
+    else
+      if default_path
+        default_path
+      else
+        provider_path(self)
+      end
+    end
+  end
 
   def main_category_missing?
     datasource_categories.where(main: true).count.zero?

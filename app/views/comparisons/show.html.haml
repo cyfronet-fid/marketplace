@@ -32,7 +32,7 @@
               = service.description.truncate(80, separator: " ")
         - i.times do
           %td.title-col.empty.text-uppercase
-            = link_to _("Add next resource"), services_path(params: @query_params),
+            = link_to _("Add next resource"), services_comparison_link(@query_params),
             "data-e2e": "add-next-resource-btn", "data-probe": ""
       %tr{ class: row_class(row_idx) }
         %th{ "data-toggle": "tooltip",

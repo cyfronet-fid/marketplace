@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Service < ApplicationRecord
+  include Rails.application.routes.url_helpers
   include Service::Search
   include LogoAttachable
   include Publishable
@@ -245,7 +246,32 @@ class Service < ApplicationRecord
     service_user_relationships.where(user: user).count.positive?
   end
 
+  def organisation_search_link(target_name, default_path = nil)
+    _provider_search_link(target_name, "resource_organisation", default_path)
+  end
+
+  def provider_search_link(target_name, default_path = nil)
+    _provider_search_link(target_name, "providers", default_path)
+  end
+
+  def geographical_availabilities_link(gc)
+    _provider_search_link(gc, "geographical_availabilities", services_path(geographical_availabilities: gc))
+  end
+
   private
+
+  def _provider_search_link(target_name, fq, default_path = nil)
+    search_base_url = Mp::Application.config.search_base_url
+    if search_base_url
+      search_base_url + "/search/service?q=*&fq=#{fq}:(%22#{target_name}%22)"
+    else
+      if default_path
+        default_path
+      else
+        provider_path(self)
+      end
+    end
+  end
 
   def main_category_missing?
     categorizations.where(main: true).count.zero?
