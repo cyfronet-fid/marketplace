@@ -9,8 +9,19 @@
           %p
             Browse through over 3 millions of research and innovation tools and services, thousands of datasets
             from a wide scale of research domains from renowned European service providers.
-          %ess-search-input
-            %p search-input
+          .searchbar
+            .searchbar__input
+              %label.sr-only{ for: "search" }= _("Search")
+              = text_field_tag :q, params[:q], class: "autocomplete-input",
+                                               placeholder: "Find resource...",
+                                               "data-e2e": "searchbar-input",
+                                               "data-probe": ""
+              - if params[:q].present? && params.permitted?
+                %a.search-clear{ href: url_for(params.except(:q, :sort, :page)), title: _("Clear search"),
+                "data-e2e": "search-clear-btn" }
+                  .fas.fa-times
+            .input-group-append
+              %button#query-submit.input-group-text.bg-white{ "data-e2e": "query-submit-btn" }
           %p.lead Browse by category
           .solutions-box
             %a Discover research outputs

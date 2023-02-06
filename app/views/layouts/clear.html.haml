@@ -7,7 +7,7 @@
       %div
       %div
       %div
-  %body{ class: ("main" if current_page?("/")) }
+  %body{ class: "#{action_name}" }
     - if current_page?("/")
       .main-elements
     - if ENV["MP_INSTANCE"]
