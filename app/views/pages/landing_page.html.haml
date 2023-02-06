@@ -1,18 +1,17 @@
-%main
+.landing-header
   %section.text-center.heading
     .container
       .row.py-lg-3
         .col-md-8.col-sm-12.mx-auto
           .logo-box
-            %img{ alt: "EOSC Portal Catalogue and Marketplace", src: "assets/logo-eosc-white.png" }
-          %h1 EOSC Portal Marketplace
+            = image_pack_tag "eosc-logo-mono.svg", alt: "EOSC Portal Catalogue and Marketplace"
+          %h1 Browse EOSC<br>Marketplace Resources
           %p
-            xxxSearch. Browse. Access. Hundreds of research and innovation tools
-            and services, thousands of datasets from a wide scale of research
-            domains from renowned European service providers.
+            Browse through over 3 millions of research and innovation tools and services, thousands of datasets
+            from a wide scale of research domains from renowned European service providers.
           %ess-search-input
             %p search-input
-          %p.lead Browse solutions
+          %p.lead Browse by category
           .solutions-box
             %a Discover research outputs
             %a Publish research outputs
@@ -23,26 +22,26 @@
             %a Access training materials
             %a
               Access research infrastructures
-  %section.who-are-you.py-5.text-center.bg-light
-    .container
-      %h2 Who are you?
-      .col-md-6.col-sm-12.mx-auto.intro-box
-        %p.text-center
-          Are you a researcher, citizen scientist or an educator looking for
-          research data, tools or services? Are you a service provider keen on
-          sharing its brand new tool or service to advance European research and
-          innovation? Access the EOSC Portal services you need.
-      .col-md-6.col-sm-12.mx-auto
-        .row
-          %a.col-lg-5.col-sm-12.bg-light.mx-auto.py-4.px-4{ href: "javascript:void(0)" }
-            .icon-box
-              %img.img-responsive.vertical-center{ alt: "Researcher Citizen science Educator",
+%section.who-are-you.py-5.text-center.bg-light
+  .container
+    %h2 Who are you?
+    .col-md-6.col-sm-12.mx-auto.intro-box
+      %p.text-center
+        Are you a researcher, citizen scientist or an educator looking for
+        research data, tools or services? Are you a service provider keen on
+        sharing its brand new tool or service to advance European research and
+        innovation? Access the EOSC Portal services you need.
+    .col-md-6.col-sm-12.mx-auto
+      .row
+        %a.col-lg-5.col-sm-12.bg-light.mx-auto.py-4.px-4{ href: "javascript:void(0)" }
+          .icon-box
+            %img.img-responsive.vertical-center{ alt: "Researcher Citizen science Educator",
               src: "assets/research.png" }
-            .card-title Researcher Citizen science Educator
-          %a.col-lg-5.col-sm-12.bg-light.mx-auto.py-4.px-4{ href: "javascript:void(0)" }
-            .icon-box
-              %img.img-responsive.vertical-center{ alt: "Provider", src: "assets/provider.png" }
-            .card-title Provider
+          .card-title Researcher Citizen science Educator
+        %a.col-lg-5.col-sm-12.bg-light.mx-auto.py-4.px-4{ href: "javascript:void(0)" }
+          .icon-box
+            %img.img-responsive.vertical-center{ alt: "Provider", src: "assets/provider.png" }
+          .card-title Provider
 %section.looking.py-4
   .container
     .row

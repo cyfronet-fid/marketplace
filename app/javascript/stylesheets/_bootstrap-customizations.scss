@@ -5048,3 +5048,16 @@ abbr[title] {
   border: none;
   border-radius: 0;
 }
+
+/** LANDING PAGE **/
+
+.body > main {
+  padding: 0;
+}
+
+.landing-header {
+  background: url('../images/landing_page/landing-top-bg.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  padding: 65px 0 100px;
+}
