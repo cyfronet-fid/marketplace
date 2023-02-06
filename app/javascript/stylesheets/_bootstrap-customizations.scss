@@ -5155,7 +5155,7 @@ abbr[title] {
       font-size: 32px;
       line-height: 39px;
       color: $palette-black;
-      margin: 0 0 45px;
+      margin: 0 0 55px;
     }
 
     .activity {
@@ -5165,6 +5165,7 @@ abbr[title] {
 
       .activity-icon {
         margin-right: 25px;
+        transition: all 0.5s ease;
       }
 
       &:hover {
@@ -5188,6 +5189,77 @@ abbr[title] {
           font-size: 16px;
           line-height: 21px;
           color: $palette-black;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .landing_page {
+
+    .landing-header {
+      padding: 50px 0 50px;
+
+      h1 {
+        font-size: 22px;
+        line-height: 27px;
+        margin: 0 0 20px;
+      }
+
+      p {
+        font-size: 14px;
+        line-height: 20px;
+        max-width: 90%;
+        margin: 0 auto 30px;
+      }
+
+      .browse {
+        width: 95%;
+        margin: 25px auto 0;
+        text-align: center;
+
+        .browse-label {
+          text-align: center;
+          margin-bottom: 15px;
+        }
+
+        .solutions-box {
+          display: block;
+
+          a {
+            margin:0 5px 15px 5px;
+            display: inline-block;
+          }
+        }
+      }
+    }
+
+    .research-activity {
+      padding: 50px 0;
+
+      h2 {
+        font-size: 25px;
+        line-height: 30px;
+      }
+
+      .activity {
+        width: 95%;
+        margin: 0 auto 50px;
+
+        .activity-texts {
+
+          .activity-title {
+            font-size: 15px;
+            line-height: 20px;
+            margin-bottom: 5px;
+          }
+
+          .activity-subtitle {
+            font-size: 13px;
+            line-height: 18px;
+          }
+
         }
       }
     }
