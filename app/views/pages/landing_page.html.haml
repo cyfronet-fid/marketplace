@@ -22,37 +22,97 @@
                   .fas.fa-times
             .input-group-append
               %button#query-submit.input-group-text.bg-white{ "data-e2e": "query-submit-btn" }
-          %p.lead Browse by category
-          .solutions-box
-            %a Discover research outputs
-            %a Publish research outputs
-            %a Process and analyse
-            %a Access computing resources
-            %a{ href: "#" } Find bundles
-            %a Find instruments  equipment
-            %a Access training materials
-            %a
-              Access research infrastructures
-%section.who-are-you.py-5.text-center.bg-light
+                %i.fas.fa-search
+          .browse
+            .browse-label
+              Browse by category
+            .solutions-box
+              %a{ href: "#" } Software
+              %a{ href: "#" } Services
+              %a{ href: "#" } Publications
+              %a{ href: "#" } Data
+              %a{ href: "#" } Trainings
+              %a{ href: "#" } Providers
+
+%section.research-activity
   .container
-    %h2 Who are you?
-    .col-md-6.col-sm-12.mx-auto.intro-box
-      %p.text-center
-        Are you a researcher, citizen scientist or an educator looking for
-        research data, tools or services? Are you a service provider keen on
-        sharing its brand new tool or service to advance European research and
-        innovation? Access the EOSC Portal services you need.
-    .col-md-6.col-sm-12.mx-auto
-      .row
-        %a.col-lg-5.col-sm-12.bg-light.mx-auto.py-4.px-4{ href: "javascript:void(0)" }
-          .icon-box
-            %img.img-responsive.vertical-center{ alt: "Researcher Citizen science Educator",
-              src: "assets/research.png" }
-          .card-title Researcher Citizen science Educator
-        %a.col-lg-5.col-sm-12.bg-light.mx-auto.py-4.px-4{ href: "javascript:void(0)" }
-          .icon-box
-            %img.img-responsive.vertical-center{ alt: "Provider", src: "assets/provider.png" }
-          .card-title Provider
+    %h2.text-center Search by Research Activity
+
+    .row
+      .col-md-4.col-sm-12
+        %a.activity{ href: "#" }
+          .activity-icon
+            = image_pack_tag "landing_page/ico-01.svg", alt: "Discover Research Outputs"
+          .activity-texts
+            .activity-title Discover Research Outputs
+            .activity-subtitle
+              Find datasets, scientific publications, software
+      .col-md-4.col-sm-12
+        %a.activity{ href: "#" }
+          .activity-icon
+            = image_pack_tag "landing_page/ico-09.svg", alt: "Data Management"
+          .activity-texts
+            .activity-title Data Management
+            .activity-subtitle
+              Find robust, feature-rich and user-friendly services for Data Management
+      .col-md-4.col-sm-12
+        %a.activity{ href: "#" }
+          .activity-icon
+            = image_pack_tag "landing_page/ico-07.svg", alt: "Access research infrastructures"
+          .activity-texts
+            .activity-title Access research infrastructures
+            .activity-subtitle
+              Find framework made by scientific clusters or RIs that will equip you with all tools for your use case
+    .row
+      .col-md-4.col-sm-12
+        %a.activity{ href: "#" }
+          .activity-icon
+            = image_pack_tag "landing_page/ico-05.svg", alt: "Find Instruments & Equipment"
+          .activity-texts
+            .activity-title Find Instruments & Equipment
+            .activity-subtitle
+              Find research instruments and scientific equipment
+      .col-md-4.col-sm-12
+        %a.activity{ href: "#" }
+          .activity-icon
+            = image_pack_tag "landing_page/ico-02.svg", alt: "Publish research outputs"
+          .activity-texts
+            .activity-title Publish research outputs
+            .activity-subtitle
+              Store, backup, archive your data, publications, software
+      .col-md-4.col-sm-12
+        %a.activity{ href: "#" }
+          .activity-icon
+            = image_pack_tag "landing_page/ico-04.svg", alt: "Access computing and storage resources"
+          .activity-texts
+            .activity-title Access computing and storage resources
+            .activity-subtitle
+              Find HPC, IT centres for science, cloud computing, cloud container computing, online storage
+    .row
+      .col-md-4.col-sm-12
+        %a.activity{ href: "#" }
+          .activity-icon
+            = image_pack_tag "landing_page/ico-01.svg", alt: "Discover Research Outputs"
+          .activity-texts
+            .activity-title Discover Research Outputs
+            .activity-subtitle
+              Find datasets, scientific publications, software
+      .col-md-4.col-sm-12
+        %a.activity{ href: "#" }
+          .activity-icon
+            = image_pack_tag "landing_page/ico-02.svg", alt: "Data Management"
+          .activity-texts
+            .activity-title Data Management
+            .activity-subtitle
+              Find robust, feature-rich and  user-friendly services for Data Management
+      .col-md-4.col-sm-12
+        %a.activity{ href: "#" }
+          .activity-icon
+            = image_pack_tag "landing_page/ico-07.svg", alt: "Access research infrastructures"
+          .activity-texts
+            .activity-title Access research infrastructures
+            .activity-subtitle
+              Find framework made by scientific clusters or RIs that will equip you with all tools for your use case
 %section.looking.py-4
   .container
     .row
