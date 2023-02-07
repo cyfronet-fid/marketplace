@@ -110,7 +110,7 @@
   .container
     .row
       .col-md-6.col-sm-12
-        = image_pack_tag "landing_page/landing-pic-01.png", alt: "We can provide you with full support"
+        = image_pack_tag "landing_page/landing-pic-01.png", alt: "We can provide you full support", class: "img-fluid"
       .col-md-5.col-sm-12
         %h3 We can provide you<br>with full support for each research step
         %p.description
@@ -183,3 +183,80 @@
     .row
       .carousel-box
         Carousel here
+
+%section.questions
+  .container
+    .row
+      .col-md-5.col-sm-12
+        %h3 Have any questions?<br>Contact Us
+        .links
+          %a{ href: "#" } Knowledge Hub
+          %a{ href: "#" } Frequently Asked Questions
+          %a{ href: "#" } Lorem ipsum dolor amet
+      .col-md-2.col-sm-12
+      .col-md-5.col-sm-12
+        %form
+          .form-group
+            %label{ for: "inputname" } Name
+            %input.form-control{ type: "text", id: "inputname", placeholder: "Your First Name" }
+          .form-group
+            %label{ for: "inputemail" } Email
+            %input.form-control{ type: "email", id: "inputemail", placeholder: "Your Email Address" }
+          .form-group
+            %label{ for: "inputsubject" } Subject
+            %input.form-control{ type: "text", id: "inputsubject", placeholder: "Message subject" }
+          .form-group
+            %label{ for: "inputmessage" } Message
+            %textarea.form-control.textarea{ id: "inputmessage", placeholder: "Message" }
+          %button.btn.btn-primary{ type: "submit" }Send Message
+
+%section.grids
+  .container
+    .container-narrow
+      .row
+        .col-md-9.col-sm-12
+          %h3 Providers
+        .col-md-3.col-sm-12
+          %a.see-all{ href: "#" } See all >
+      .row.grid-row
+        .col-md-3.col-6
+          %a.sample-frame{ href: "#" }
+        .col-md-3.col-6
+          %a.sample-frame{ href: "#" }
+        .col-md-3.col-6
+          %a.sample-frame{ href: "#" }
+        .col-md-3.col-6
+          %a.sample-frame{ href: "#" }
+      .row
+        .col-md-3.col-6
+          %a.sample-frame{ href: "#" }
+        .col-md-3.col-6
+          %a.sample-frame{ href: "#" }
+        .col-md-3.col-6
+          %a.sample-frame{ href: "#" }
+        .col-md-3.col-6
+          %a.sample-frame{ href: "#" }
+    .container-narrow.mt-5
+      .row
+        .col-md-9.col-sm-12
+          %h3 Infrastructures and Platforms
+        .col-md-3.col-sm-12
+          %a.see-all{ href: "#" } See all >
+      .row.grid-row
+        .col-md-3.col-6
+          %a.sample-frame{ href: "#" }
+        .col-md-3.col-6
+          %a.sample-frame{ href: "#" }
+        .col-md-3.col-6
+          %a.sample-frame{ href: "#" }
+        .col-md-3.col-6
+          %a.sample-frame{ href: "#" }
+      .row
+        .col-md-3.col-6
+          %a.sample-frame{ href: "#" }
+        .col-md-3.col-6
+          %a.sample-frame{ href: "#" }
+        .col-md-3.col-6
+          %a.sample-frame{ href: "#" }
+        .col-md-3.col-6
+          %a.sample-frame{ href: "#" }
