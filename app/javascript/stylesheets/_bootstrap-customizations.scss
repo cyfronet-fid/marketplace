@@ -5281,13 +5281,32 @@ abbr[title] {
   }
 
   .provider {
-    padding: 65px 0 165px;
+    padding: 65px 0 150px;
+    background: linear-gradient(180deg, rgba(237, 243, 250, 0) 0%, #EDF3FA 100%);
 
     h3 {
-      font-size: 32px;
+      font-size: 31px;
       line-height: 38px;
       font-weight: 600;
       margin: 40px 0 25px;
+    }
+
+    .communities {
+      margin-top: 160px;
+
+      h3 {
+        text-align: center;
+        width: 100%;
+        margin: 0 0 30px;
+      }
+
+      .lead {
+        text-align: center;
+        font-size: 24px;
+        line-height: 30px;
+        max-width: 820px;
+        margin: 0 auto 60px;
+      }
     }
   }
 }
