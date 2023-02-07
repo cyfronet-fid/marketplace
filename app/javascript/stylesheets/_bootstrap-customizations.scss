@@ -5193,6 +5193,103 @@ abbr[title] {
       }
     }
   }
+
+  .btn {
+    background: $button-blue;
+    border-radius: 8px;
+    color: $palette-white;
+    font-size: 16px;
+    padding: 0.5rem 1.2rem;
+
+    &:hover {
+      background: $palette-navy;
+    }
+  }
+
+  .support {
+    padding: 10px 0 200px;
+
+    h3 {
+      font-size: 32px;
+      line-height: 38px;
+      font-weight: 600;
+      margin: 40px 0 25px;
+    }
+
+    .description {
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 24px;
+      margin: 0 0 25px;
+    }
+  }
+
+  .eosc-navy {
+    padding: 75px 0 45px;
+    background: $palette-navy;
+    color: $palette-white;
+
+    .eosc-logo-navy {
+      width: 210px;
+      height: auto;
+    }
+
+    h4 {
+      font-weight: 400;
+      font-size: 24px;
+      line-height: 29px;
+      border: none;
+      padding: 0;
+      margin: 10px 0 0;
+    }
+
+    .eosc-info {
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 50px;
+
+      .eosc-info-icon {
+        margin-right: 20px;
+        transition: all 0.5s ease;
+      }
+
+      &:hover {
+        .eosc-info-icon {
+          margin-top: 5px;
+        }
+      }
+
+      .eosc-info-texts {
+
+        .eosc-info-title {
+          font-weight: 600;
+          font-size: 18px;
+          line-height: 23px;
+          text-decoration: underline;
+          margin-bottom: 19px;
+          color: $palette-white;
+        }
+
+        .eosc-info-subtitle {
+          font-weight: 400;
+          font-size: 13px;
+          line-height: 19px;
+          color: $palette-white;
+        }
+      }
+    }
+  }
+
+  .provider {
+    padding: 65px 0 165px;
+
+    h3 {
+      font-size: 32px;
+      line-height: 38px;
+      font-weight: 600;
+      margin: 40px 0 25px;
+    }
+  }
 }
 
 @media (max-width: 768px) {

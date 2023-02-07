@@ -106,96 +106,72 @@
             .activity-subtitle
               Find lessons, courses, videos
 
-%section.looking.py-4
+%section.support
   .container
     .row
-      .col-md-7.col-sm-12
-        %img{ alt: "Loking for services", src: "assets/looking.png" }
+      .col-md-6.col-sm-12
+        = image_pack_tag "landing_page/landing-pic-01.png", alt: "We can provide you with full support"
       .col-md-5.col-sm-12
-        %h3 Looking for services?
-        %p
-          Access the EOSC Portal Marketplace to find hundreds of research and
-          innovation tools and services and thousands of datasets from
-          renowned European service providers.
-        %a.btn.btn-primary.mt-3{ href: "https://marketplace.eosc-portal.eu" } Go to Marketplace
-%section.help.bg-light
+        %h3 We can provide you<br>with full support for each research step
+        %p.description
+          Get assistance from international technical teams who can provide advice on the
+          most suitable solutions to address your digital needs.
+        %a.btn.btn-primary.mt-3{ href: "#" } Contact our experts
+
+%section.eosc-navy
   .container
     .row
-      .col-md-6.col-sm-12.cards-container
-        .row
-          .col-6.gx-1.gy-1.py-0
-            %a.card{ title: "fqBy('scientific_domains_ss', 'Medical  Health Sciences')" }
-              .icon-box
-                %img.img-responsive{ alt: "Medical  Health Sciences", src: "assets/ico-09.png" }
-              .card-title Medical  Health Sciences
-          .col-6.gx-1.gy-1.py-0
-            %a.card{ title: "fqBy('scientific_domains_ss', 'Engineering  Technology')" }
-              .icon-box
-                %img.img-responsive{ alt: "Engineering  technology", src: "assets/ico-10.png" }
-              .card-title Engineering  technology
-          .col-6.gx-1.gy-1.py-0
-            %a.card{ title: "fqBy('scientific_domains_ss', 'Natural Sciences')" }
-              .icon-box
-                %img.img-responsive{ alt: "Natural Sciences", src: "assets/ico-11.png" }
-              .card-title Natural Sciences
-          .col-6.gx-1.gy-1.py-0
-            %a.card{ title: "fqBy('scientific_domains_ss', 'Generic')" }
-              .icon-box
-                %img.img-responsive{ alt: "Generic", src: "assets/ico-12.png" }
-              .card-title Generic
-          .col-6.gx-1.gy-1.py-0
-            %a.card{ title: "fqBy('scientific_domains_ss', 'Humanities')" }
-              .icon-box
-                %img.img-responsive{ alt: "Humanities", src: "assets/ico-13.png" }
-              .card-title Humanities
-          .col-6.gx-1.gy-1.py-0
-            %a.card{ title: "fqBy('scientific_domains_ss', 'Agricultural Sciences')" }
-              .icon-box
-                %img.img-responsive{ alt: "Agricultural sciences", src: "assets/ico-14.png" }
-              .card-title Agricultural sciences
-          .col-6.gx-1.gy-1.py-0
-            %a.card{ title: "fqBy('scientific_domains_ss', 'Social Sciences')" }
-              .icon-box
-                %img.img-responsive{ alt: "Social Sciences", src: "assets/ico-15.png" }
-              .card-title Social sciences
-          .col-6.gx-1.gy-1.py-0
-            %a.card{ title: "fqBy('scientific_domains_ss', 'Other')" }
-              .icon-box
-                %img.img-responsive{ alt: "Other", src: "assets/ico-16.png" }
-              .card-title Other
-      .col-md-2.col-sm-12
-      .col-md-4.col-sm-12
-        %h3 Hundreds of solutions grouped by research domain.
-        %p
-          %strong Your research. Your domain. Your category.
-        %p
-          Find the service, tool or data you need to research and innovate via
-          the domains listed.
-%section.provider.py-5.text-center.bg-light
+      .col-md-3.col-sm-12.mb-5
+        = image_pack_tag "eosc-logo-mono.svg", alt: "EOSC Portal Catalogue and Marketplace", class: "eosc-logo-navy"
+      .col-md-9.col-sm-12
+        %h4
+          We are the European Open Science Cloud (EOSC), an environment for hosting and processing research
+          data to support EU open science
+    .row.mt-5
+      .col-md-3.col-sm-12
+        %a.eosc-info{ href: "#" }
+          .eosc-info-icon
+            = image_pack_tag "landing_page/browse-marketplace.svg", alt: "Browse Marketplace"
+          .eosc-info-texts
+            .eosc-info-title Browse Marketplace
+            .eosc-info-subtitle
+              Browse through over 3 million research and innovation tools and services, thousands of datasets
+              from a wide range of research domains from renowned European service providers.
+      .col-md-3.col-sm-12
+        %a.eosc-info{ href: "#" }
+          .eosc-info-icon
+            = image_pack_tag "landing_page/dashboard.svg", alt: "My EOSC Dashboard"
+          .eosc-info-texts
+            .eosc-info-title My EOSC Dashboard
+            .eosc-info-subtitle
+              Manage your research projects, access your activity history, and get resource recommendations.
+      .col-md-3.col-sm-12
+        %a.eosc-info{ href: "#" }
+          .eosc-info-icon
+            = image_pack_tag "landing_page/portal.svg", alt: "EOSC Portal"
+          .eosc-info-texts
+            .eosc-info-title EOSC Portal
+            .eosc-info-subtitle
+              Stay up to date with news and events. Read use cases or success stories that highlight how EOSC
+              resources can support the daily work of researchers and innovators.
+      .col-md-3.col-sm-12
+        %a.eosc-info{ href: "#" }
+          .eosc-info-icon
+            = image_pack_tag "landing_page/hub.svg", alt: "Providers Hub"
+          .eosc-info-texts
+            .eosc-info-title Providers Hub
+            .eosc-info-subtitle
+              A single platform for providers to onboard their organization into the EOSC portal,
+              register and manage their resources and gain rich insights about the usage of their offerings.
+
+%section.provider
   .container
-    %h2 How can we help you provide your service?
-    .col-md-6.col-sm-12.mx-auto.intro-box
-      %p
-        Contribute to advancing European Research and Innovation, provide your
-        service. Pick the support you need.
-    .row.help-row
-      .col-lg-3.gx-4
-        %a.card.bg-light.py-4.px-4{ href: "https://providers.eosc-portal.eu/becomeAProvider" }
-          .icon-box
-            %img.img-responsive.vertical-center{ alt: "Onboard resources", src: "assets/provider-01.png" }
-          .card-title Onboard resources
-      .col-lg-3.gx-4
-        %a.card.bg-light.py-4.px-4{ href: "https://providers.eosc-portal.eu/home" }
-          .icon-box
-            %img.img-responsive.vertical-center{ alt: "Provider dashboard", src: "assets/provider-02.png" }
-          .card-title Provider dashboard
-      .col-lg-3.gx-4
-        %a.card.bg-light.py-4.px-4{ href: "https://providers.eosc-portal.eu/developers" }
-          .icon-box
-            %img.img-responsive.vertical-center{ alt: "API", src: "assets/provider-03.png" }
-          .card-title API
-      .col-lg-3.gx-4
-        %a.card.bg-light.py-4.px-4{ href: "https://eosc-portal.eu/providers-documentation" }
-          .icon-box
-            %img.img-responsive.vertical-center{ alt: "Documentation", src: "assets/provider-04.png" }
-          .card-title Documentation
+    .row
+      .col-md-4.col-sm-12
+        = image_pack_tag "landing_page/provider.svg", alt: "Are you a provider?"
+      .col-md-8.col-sm-12
+        %h3
+          Are you a provider?<br>
+          We can help you contribute to European research and innovation. Increase the visibility and usability of
+          your resources across the European research community by onboarding them.
+        %a.btn.btn-primary.mt-3{ href: "#" } Onboard Resources
