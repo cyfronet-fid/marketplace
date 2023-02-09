@@ -27,11 +27,11 @@
             .browse-label
               Browse by category
             .solutions-box
-              %a{ href: "#" } Software
-              %a{ href: "#" } Services
-              %a{ href: "#" } Publications
-              %a{ href: "#" } Data
-              %a{ href: "#" } Trainings
+              %a{ href: "https://search.marketplace.eosc-portal.eu/search/software?q=*" } Software
+              %a{ href: "https://search.marketplace.eosc-portal.eu/search/service?q=*" } Services
+              %a{ href: "https://search.marketplace.eosc-portal.eu/search/publication?q=*" } Publications
+              %a{ href: "https://search.marketplace.eosc-portal.eu/search/dataset?q=*" } Data
+              %a{ href: "https://search.marketplace.eosc-portal.eu/search/training?q=*" } Trainings
               %a{ href: "#" } Providers
 
 %section.research-activity
@@ -40,7 +40,8 @@
 
     .row
       .col-md-4.col-sm-12
-        %a.activity{ href: "#" }
+        %a.activity{ href: "https://search.marketplace.eosc-portal.eu/search/all?q=*&fq=unified_categories:
+        (%22Discover%20Research%20Outputs%22)" }
           .activity-icon
             = image_pack_tag "landing_page/ico-01.svg", alt: "Discover Research Outputs"
           .activity-texts
@@ -48,7 +49,8 @@
             .activity-subtitle
               Find datasets, scientific publications, software
       .col-md-4.col-sm-12
-        %a.activity{ href: "#" }
+        %a.activity{ href: "https://search.marketplace.eosc-portal.eu/search/all?q=*&fq=unified_categories:
+        (%22Manage%20Research%20Data%22)" }
           .activity-icon
             = image_pack_tag "landing_page/ico-09.svg", alt: "Data Management"
           .activity-texts
@@ -56,7 +58,8 @@
             .activity-subtitle
               Find robust, feature-rich and user-friendly services for Data Management
       .col-md-4.col-sm-12
-        %a.activity{ href: "#" }
+        %a.activity{ href: "https://search.marketplace.eosc-portal.eu/search/all?q=*&fq=unified_categories:
+        (%22Access%20Research%20Infrastructures%22)" }
           .activity-icon
             = image_pack_tag "landing_page/ico-07.svg", alt: "Access research infrastructures"
           .activity-texts
@@ -65,7 +68,8 @@
               Find framework made by scientific clusters or RIs that will equip you with all tools for your use case
     .row
       .col-md-4.col-sm-12
-        %a.activity{ href: "#" }
+        %a.activity{ href: "https://search.marketplace.eosc-portal.eu/search/all?q=*&fq=unified_categories:
+        (%22Find%20Instruments%20%5C%26%20Equipment%22)" }
           .activity-icon
             = image_pack_tag "landing_page/ico-05.svg", alt: "Find Instruments & Equipment"
           .activity-texts
@@ -73,7 +77,8 @@
             .activity-subtitle
               Find research instruments and scientific equipment
       .col-md-4.col-sm-12
-        %a.activity{ href: "#" }
+        %a.activity{ href: "https://search.marketplace.eosc-portal.eu/search/all?q=*&fq=unified_categories:
+        (%22Publish%20Research%20Outputs%22)" }
           .activity-icon
             = image_pack_tag "landing_page/ico-02.svg", alt: "Publish research outputs"
           .activity-texts
@@ -81,7 +86,8 @@
             .activity-subtitle
               Store, backup, archive your data, publications, software
       .col-md-4.col-sm-12
-        %a.activity{ href: "#" }
+        %a.activity{ href: "https://search.marketplace.eosc-portal.eu/search/all?q=*&fq=unified_categories:
+        (%22Access%20Computing%20and%20Storage%20Resources%22)" }
           .activity-icon
             = image_pack_tag "landing_page/ico-04.svg", alt: "Access computing and storage resources"
           .activity-texts
@@ -90,7 +96,8 @@
               Find HPC, IT centres for science, cloud computing, cloud container computing, online storage
     .row
       .col-md-4.col-sm-12
-        %a.activity{ href: "#" }
+        %a.activity{ href: "https://search.marketplace.eosc-portal.eu/search/all?q=*&fq=unified_categories:
+        (%22Process%20and%20Analyse%22)" }
           .activity-icon
             = image_pack_tag "landing_page/ico-03.svg", alt: "Process and analyse"
           .activity-texts
@@ -98,7 +105,8 @@
             .activity-subtitle
               Verify, organise, integrate and extract data in an appropriate output format software service
       .col-md-4.col-sm-12
-        %a.activity{ href: "#" }
+        %a.activity{ href: "https://search.marketplace.eosc-portal.eu/search/all?q=*&fq=unified_categories:
+        (%22Access%20Training%20Material%22)" }
           .activity-icon
             = image_pack_tag "landing_page/ico-06.svg", alt: "Access training material"
           .activity-texts
@@ -129,7 +137,7 @@
           data to support EU open science
     .row.mt-5
       .col-md-3.col-sm-12
-        %a.eosc-info{ href: "#" }
+        %a.eosc-info{ href: "https://search.marketplace.eosc-portal.eu/" }
           .eosc-info-icon
             = image_pack_tag "landing_page/browse-marketplace.svg", alt: "Browse Marketplace"
           .eosc-info-texts
@@ -146,7 +154,7 @@
             .eosc-info-subtitle
               Manage your research projects, access your activity history, and get resource recommendations.
       .col-md-3.col-sm-12
-        %a.eosc-info{ href: "#" }
+        %a.eosc-info{ href: "https://eosc-portal.eu/" }
           .eosc-info-icon
             = image_pack_tag "landing_page/portal.svg", alt: "EOSC Portal"
           .eosc-info-texts
@@ -155,7 +163,7 @@
               Stay up to date with news and events. Read use cases or success stories that highlight how EOSC
               resources can support the daily work of researchers and innovators.
       .col-md-3.col-sm-12
-        %a.eosc-info{ href: "#" }
+        %a.eosc-info{ href: "https://providers.eosc-portal.eu/home" }
           .eosc-info-icon
             = image_pack_tag "landing_page/hub.svg", alt: "Providers Hub"
           .eosc-info-texts
@@ -174,7 +182,7 @@
           Are you a provider?<br>
           We can help you contribute to European research and innovation. Increase the visibility and usability of
           your resources across the European research community by onboarding them.
-        %a.btn.btn-primary.mt-3{ href: "#" } Onboard Resources
+        %a.btn.btn-primary.mt-3{ href: "https://providers.eosc-portal.eu/becomeAProvider" } Onboard Resources
     .row.communities
       %h3.text-center Research Communities
       %p.lead.text-center
