@@ -182,7 +182,7 @@
           Are you a provider?<br>
           We can help you contribute to European research and innovation. Increase the visibility and usability of
           your resources across the European research community by onboarding them.
-        %a.btn.btn-primary.mt-3{ href: "https://providers.eosc-portal.eu/becomeAProvider" } Onboard Resources
+        %a.btn.btn-primary.mt-3{ href: "https://marketplace.eosc-portal.eu/projects" } Add the project
     .row.communities
       %h3.text-center Research Communities
       %p.lead.text-center
@@ -203,20 +203,64 @@
           %a{ href: "#" } Lorem ipsum dolor amet
       .col-md-2.col-sm-12
       .col-md-5.col-sm-12
-        %form
-          .form-group
-            %label{ for: "inputname" } Name
-            %input.form-control{ type: "text", id: "inputname", placeholder: "Your First Name" }
-          .form-group
-            %label{ for: "inputemail" } Email
-            %input.form-control{ type: "email", id: "inputemail", placeholder: "Your Email Address" }
-          .form-group
-            %label{ for: "inputsubject" } Subject
-            %input.form-control{ type: "text", id: "inputsubject", placeholder: "Message subject" }
-          .form-group
-            %label{ for: "inputmessage" } Message
-            %textarea.form-control.textarea{ id: "inputmessage", placeholder: "Message" }
-          %button.btn.btn-primary{ type: "submit" }Send Message
+        %script{ src: "https://code.jquery.com/jquery-3.6.0.min.js" }
+        %button{ id: "zammad-feedback-form" }
+
+        %script{ src: "https://eosc-helpdesk.eosc-portal.eu/assets/form/form.js", id: "zammad_form_script" }
+        :javascript
+          $(function() {
+            $('#zammad-feedback-form').ZammadForm({
+          agreementMessage:'  Accept CESSDA <a target="_blank" href="https://eosc-helpdesk.scc.kit.edu/privacy-policy">
+          Data Privacy Policy</a> & <a target="_blank" href="https://eosc-helpdesk.scc.kit.edu/aup">
+          Acceptable Use Policy</a>',
+          messageTitle: 'Report a problem/feedback',
+          messageSubmit: 'Submit',
+          messageThankYou: 'Thank you for your inquiry (#%s)! We\'ll contact you as soon as possible.',
+          modal: false,
+          targetGroupID: 15,
+          attributes: [
+            {
+              display: 'Name',
+              name: 'name',
+              tag: 'input',
+              type: 'text',
+              id: 'zammad-form-name',
+              required: true,
+              placeholder: 'Your Name',
+              defaultValue: '',
+            },
+            {
+              display: 'Email',
+              name: 'email',
+              tag: 'input',
+              type: 'email',
+              id: 'zammad-form-email',
+              required: true,
+              placeholder: 'Your Email',
+              defaultValue: '',
+            },
+            {
+              display: 'Subject',
+              name: 'title',
+              tag: 'input',
+              id: 'zammad-form-subject',
+              required: false,
+              placeholder: 'My subject',
+              defaultValue: '',
+            },
+            {
+              display: 'Message',
+              name: 'body',
+              tag: 'textarea',
+              id: 'zammad-form-body',
+              required: true,
+              placeholder: 'Your Message...',
+              defaultValue: '',
+              rows: 7,
+            }
+              ]
+            });
+          });
 
 %section.grids
   .container
