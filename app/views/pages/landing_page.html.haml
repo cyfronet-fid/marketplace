@@ -205,14 +205,11 @@
       .col-md-5.col-sm-12
         %script{ src: "https://code.jquery.com/jquery-3.6.0.min.js" }
         %button{ id: "zammad-feedback-form" }
-
         %script{ src: "https://eosc-helpdesk.eosc-portal.eu/assets/form/form.js", id: "zammad_form_script" }
         :javascript
           $(function() {
             $('#zammad-feedback-form').ZammadForm({
-          agreementMessage:'  Accept CESSDA <a target="_blank" href="https://eosc-helpdesk.scc.kit.edu/privacy-policy">
-          Data Privacy Policy</a> & <a target="_blank" href="https://eosc-helpdesk.scc.kit.edu/aup">
-          Acceptable Use Policy</a>',
+          agreementMessage:'  Accept CESSDA <a target="_blank" href="https://eosc-helpdesk.scc.kit.edu/privacy-policy">Data Privacy Policy</a> & <a target="_blank" href="https://eosc-helpdesk.scc.kit.edu/aup">Acceptable Use Policy</a>',
           messageTitle: 'Report a problem/feedback',
           messageSubmit: 'Submit',
           messageThankYou: 'Thank you for your inquiry (#%s)! We\'ll contact you as soon as possible.',
