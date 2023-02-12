@@ -8,11 +8,9 @@ describe("My profile", () => {
   });
 
   it("should add and remove Additional information", () => {
-   // cy.get("[data-e2e='my-eosc-button']")
-    //   .click();
-    // cy.get("[data-e2e='backoffice']")
-    //   .click();
-    cy.visit("/profile")
+    cy.openUserDropdown();
+    cy.get("[data-e2e='profile']")
+      .click();
     cy.location("href")
       .should("contain", "/profile");
     cy.get("[data-e2e='additional-inf-edit']")

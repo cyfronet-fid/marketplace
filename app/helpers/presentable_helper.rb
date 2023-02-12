@@ -3,6 +3,7 @@ require "uri"
 module PresentableHelper
   HOME_PAGE_EXTERNAL_LINKS_ENABLED = Rails.configuration.home_page_external_links_enabled.freeze
   SEARCH_SERVICE_BASE_URL = Rails.configuration.search_service_base_url.freeze
+
   def data_for_map(geographical_availabilities)
     countries = []
     geographical_availabilities.each do |place|

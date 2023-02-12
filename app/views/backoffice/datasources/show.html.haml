@@ -13,19 +13,19 @@
             = link_to _("Publish"),
                       backoffice_datasource_publish_path(@datasource),
                       method: :post,
-                      data: { confirm: _("Are you sure you want to publish this resource?"), e2e: "publish-btn" },
+                      data: { confirm: _("Are you sure you want to publish this service?"), e2e: "publish-btn" },
                       class: "btn btn-success btn-sm"
           - if policy([:backoffice, @datasource]).publish_unverified?
-            = link_to _("Publish as unverified resource"),
+            = link_to _("Publish as unverified service"),
                       backoffice_datasource_publish_path(@datasource, unverified: true),
                       method: :post,
-                      data: { confirm: _("Are you sure you want to publish this resource as unverified resource?") },
+                      data: { confirm: _("Are you sure you want to publish this service as unverified service?") },
                       class: "btn btn-warning btn-sm"
           - if policy([:backoffice, @datasource]).draft?
             = link_to _("Stop showing in the MP"),
                       backoffice_datasource_draft_path(@datasource),
                       method: :post,
-                      data: { confirm: _("Are you sure you want to stop showing this resource?"), e2e: "draft-btn" },
+                      data: { confirm: _("Are you sure you want to stop showing this service?"), e2e: "draft-btn" },
                       class: "btn btn-error btn-sm"
 .container{ "data-controller": "datasource" }
   .container

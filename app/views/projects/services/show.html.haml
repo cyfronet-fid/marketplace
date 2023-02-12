@@ -7,7 +7,7 @@
     = render "details", project: @project, project_item: @project_item
     = render "attributes/index", property_values: @project_item.property_values
   - if @project_item.bundle?
-    = _("This resource was ordered with resources below (Bundle):")
+    = _("This service was ordered with services below (Bundle):")
     %ul.list-group.mt-3
     = render(partial: "projects/services/project_item",
       collection: @project_item.children,

@@ -5,7 +5,7 @@ class Filter::Location < Filter
     super(
       params: params.fetch(:params, {}),
       field_name: "geographical_availabilities",
-      title: "Resource availability",
+      title: "Service availability",
       type: :select,
       index: "geographical_availabilities"
     )

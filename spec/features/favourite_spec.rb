@@ -94,7 +94,7 @@ RSpec.feature "Favourites" do
 
         visit favourites_path
 
-        expect(page).to have_content "Favourite resources"
+        expect(page).to have_content "Favourite services"
         expect(page).to have_content fav1.name
         expect(page).to have_content fav2.name
       end
@@ -107,7 +107,7 @@ RSpec.feature "Favourites" do
 
         visit favourites_path
 
-        expect(page).to have_content "Favourite resources"
+        expect(page).to have_content "Favourite services"
         expect(page).to have_content fav1.name
         expect(page).to have_content fav2.name
 

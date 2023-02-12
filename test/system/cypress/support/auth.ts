@@ -13,6 +13,7 @@ declare global {
             setSessionId(user: IUser, preserveUser: boolean): Cypress.Chainable<string>;
             loginAs(user: IUser, preserveUser?: boolean): Cypress.Chainable<void>;
             logout(): Cypress.Chainable<void>;
+            openUserDropdown(): Cypress.Chainable<void>
         }
     }
 }
@@ -52,12 +53,17 @@ Cypress.Commands.add('setSessionId', (user: IUser, preserveUser) => {
 Cypress.Commands.add('loginAs', function (user: IUser, preserveUser: boolean = false) {
     cy.setSessionId(user, preserveUser);
     cy.reload();
-    cy.contains('My EOSC').should('be.visible');
+    cy.get('nav.eosc-common.top .right-links .account-dropdown').should('be.visible');
 });
+
+Cypress.Commands.add("openUserDropdown", function () {
+    cy.get("nav.eosc-common.top .right-links .account-dropdown").click()
+});
+
 Cypress.Commands.add('logout', () => {
     cy.clearCookie(APP_SESSION_COOKIE_NAME);
     cy.reload();
-    cy.contains('Login').should('be.visible');
+    cy.get('a[data-e2e="login"]').should('be.visible');
 });
 
 /**

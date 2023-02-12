@@ -11,13 +11,13 @@ en:
           platforms: Related Infrastructures and Platforms
           support: Support
           documents: Documents
-          restrictions: Resource restrictions
-          phase: Resource phase
+          restrictions: Service restrictions
+          phase: Service phase
           scientific_categorisation: Scientific categorisation
           categorisation: Categorisation
           uptime_monitoring: Uptime monitoring
           target_users: Target users
-          resource_availability_and_languages: Resource availability and languages
+          resource_availability_and_languages: Service availability and languages
         fields:
           link_multimedia_urls: Multimedia %{idx}
           webpage_url: Webpage
@@ -111,7 +111,7 @@ en:
           grant_project_names: Grant Project Names
           trl: Trl
           life_cycle_status: Life Cycle Status
-          required_services: Required Resources
-          related_services: Related Resources
+          required_services: Required Services
+          related_services: Related Services
           related_platforms: Related Platforms
           catalogue: Catalogue

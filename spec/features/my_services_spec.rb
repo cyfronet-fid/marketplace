@@ -37,36 +37,36 @@ RSpec.feature "My Services" do
         create(:project_item, project: project, offer: offer)
         visit project_services_path(project)
 
-        expect(page).to have_text("Ordered resources")
-        expect(page).to_not have_text("Open access resources")
-        expect(page).to_not have_text("Other resources")
+        expect(page).to have_text("Ordered services")
+        expect(page).to_not have_text("Open access services")
+        expect(page).to_not have_text("Other services")
       end
 
       scenario "I can see open_access section with a open_access project item" do
         create(:project_item, project: project, offer: build(:open_access_offer))
         visit project_services_path(project)
 
-        expect(page).to_not have_text("Ordered resources")
-        expect(page).to have_text("Open access resources")
-        expect(page).to_not have_text("Other resources")
+        expect(page).to_not have_text("Ordered services")
+        expect(page).to have_text("Open access services")
+        expect(page).to_not have_text("Other services")
       end
 
       scenario "I can see open_access section with a fully_open_access project item" do
         create(:project_item, project: project, offer: build(:fully_open_access_offer))
         visit project_services_path(project)
 
-        expect(page).to_not have_text("Ordered resources")
-        expect(page).to have_text("Open access resources")
-        expect(page).to_not have_text("Other resources")
+        expect(page).to_not have_text("Ordered services")
+        expect(page).to have_text("Open access services")
+        expect(page).to_not have_text("Other services")
       end
 
       scenario "I can see other section with an other project item" do
         create(:project_item, project: project, offer: build(:other_offer))
         visit project_services_path(project)
 
-        expect(page).to_not have_text("Ordered resources")
-        expect(page).to_not have_text("Open access resources")
-        expect(page).to have_text("Other resources")
+        expect(page).to_not have_text("Ordered services")
+        expect(page).to_not have_text("Open access services")
+        expect(page).to have_text("Other services")
       end
 
       scenario "proper items are in a proper sections" do
@@ -305,7 +305,7 @@ RSpec.feature "My Services" do
         expect(page).to have_selector(".project-listing-item > .new-message-icon")
         expect(page).to have_selector(".new-message-icon", count: 2)
 
-        click_link "Contact with resource provider"
+        click_link "Contact with service provider"
         expect(page).to_not have_selector(".new-message-icon")
         expect(page).to have_selector(".new-message-separator")
       end
@@ -327,7 +327,7 @@ RSpec.feature "My Services" do
         visit project_service_path(project, project_item)
         expect(page).to_not have_selector(".new-message-icon")
 
-        click_link "Contact with resource provider"
+        click_link "Contact with service provider"
         create(:provider_message, messageable: project_item, scope: "internal")
 
         visit current_path

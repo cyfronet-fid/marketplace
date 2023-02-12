@@ -18,7 +18,7 @@ class Services::InlineOrderUrlComponent < ApplicationComponent
   end
 
   def link_name
-    @offerable.external? ? _("Go to the order website") : _("Go to the resource")
+    @offerable.external? ? _("Go to the order website") : _("Go to the service")
   end
 
   def render?

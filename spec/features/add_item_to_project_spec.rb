@@ -16,7 +16,7 @@ RSpec.feature "Add project item to project" do
     project = create(:project, user: user, name: "my fancy project")
 
     visit project_services_path(project)
-    click_on "Add your first resource"
+    click_on "Add your first service"
 
     visit service_information_path(service)
     click_on "Next", match: :first

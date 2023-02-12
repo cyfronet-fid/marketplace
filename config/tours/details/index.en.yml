@@ -10,7 +10,7 @@ service_details_intro:
   feedback:
     title: Congratulations!
     text: |-
-      You have completed the resource presentation page tour guide. We hope you like our new resource presentation
+      You have completed the service presentation page tour guide. We hope you like our new service presentation
       layout and find the provided information useful.
 
 
@@ -27,31 +27,31 @@ service_details_intro:
 
   steps:
     1:
-      title: Resource details
+      title: Service details
       text: |-
-        The **Details** page will help you to get additional information about the resource.
-        The details provided by resource providers during the EOSC Resource Onboarding
-        Process will help you to assess if the resource is suitable for you or not.
+        The **Details** page will help you to get additional information about the service.
+        The details provided by service providers during the EOSC Service Onboarding
+        Process will help you to assess if the service is suitable for you or not.
       attachTo:
         element: "[data-shepherd-tour-target='service-details-tab']"
         placement: "top"
     2:
-      title: Resource details
+      title: Service details
       text: |-
         In this summary you will find:
 
-        * Information about the resource **Classification**
-        * Information about the resource **Geographical Availability** and **Location**
+        * Information about the service **Classification**
+        * Information about the service **Geographical Availability** and **Location**
         * **Marketing** information such as linked **Multimedia** and **Use Cases**
-        * Information about **Public Contacts** for the resource
+        * Information about **Public Contacts** for the service
         * **Maturity** Information such as **TRL**, **Life Cycle Status** or **Certification**
-        * **Dependencies** - information about other resources needed to use this resource
-        * Resource attribution to **Funding Programs** and **Grants**
+        * **Dependencies** - information about other services needed to use this service
+        * Service attribution to **Funding Programs** and **Grants**
         * Information about **Ordering methods**
         * **Financial** Information
 
         If you don’t find the needed information here do not hesitate to use the '**Ask a question about this
-        resource**' link to ask for help. Also, consider letting the providers know in case you find some
+        service**' link to ask for help. Also, consider letting the providers know in case you find some
         information missing or inaccurate.
       attachTo:
         element: "[data-shepherd-tour-target='service-details-content']"
@@ -74,7 +74,7 @@ query_param_2:
   feedback:
     title: Congratulations!
     text: |-
-      You have completed the resource presentation page tour guide. We hope you like our new resource presentation
+      You have completed the service presentation page tour guide. We hope you like our new service presentation
       layout and find the provided information useful.
 
 
@@ -91,31 +91,31 @@ query_param_2:
 
   steps:
     1:
-      title: Resource details
+      title: Service details
       text: |-
-        The **Details** page will help you to get additional information about the resource.
-        The details provided by resource providers during the EOSC Resource Onboarding
-        Process will help you to assess if the resource is suitable for you or not.
+        The **Details** page will help you to get additional information about the service.
+        The details provided by service providers during the EOSC Service Onboarding
+        Process will help you to assess if the service is suitable for you or not.
       attachTo:
         element: "[data-shepherd-tour-target='service-details-tab']"
         placement: "top"
     2:
-      title: Resource details
+      title: Service details
       text: |-
         In this summary you will find:
 
-        * Information about the resource **Classification**
-        * Information about the resource **Geographical Availability** and **Location**
+        * Information about the service **Classification**
+        * Information about the service **Geographical Availability** and **Location**
         * **Marketing** information such as linked **Multimedia** and **Use Cases**
-        * Information about **Public Contacts** for the resource
+        * Information about **Public Contacts** for the service
         * **Maturity** Information such as **TRL**, **Life Cycle Status** or **Certification**
-        * **Dependencies** - information about other resources needed to use this resource
-        * Resource attribution to **Funding Programs** and **Grants**
+        * **Dependencies** - information about other services needed to use this service
+        * Service attribution to **Funding Programs** and **Grants**
         * Information about **Ordering methods**
         * **Financial** Information
 
         If you don’t find the needed information here do not hesitate to use the '**Ask a question about this
-        resource**' link to ask for help. Also, consider letting the providers know in case you find some
+        service**' link to ask for help. Also, consider letting the providers know in case you find some
         information missing or inaccurate.
       attachTo:
         element: "[data-shepherd-tour-target='service-details-content']"

@@ -14,7 +14,7 @@ overview:
       welcome: true
       title: Welcome!
       text: |-
-        Welcome to the EOSC Portal Catalogue and Marketplace! We offer resources and services to discover, store, share, compose and analyse research data.
+        Welcome to the EOSC Portal Catalogue and Marketplace! We offer services and services to discover, store, share, compose and analyse research data.
 
         Are you curious to find out how we can support your research?
     1:
@@ -22,7 +22,7 @@ overview:
       text: |-
         There are different ways to navigate our catalogue.
 
-        Do you want to browse all our resources? Then click **Browse through catalogue**
+        Do you want to browse all our services? Then click **Browse through catalogue**
 
       attachTo:
         element: "[data-shepherd-tour-target='overview_1']"
@@ -30,10 +30,10 @@ overview:
     2:
       title: Catalogue options
       text: |-
-        Want to narrow down the selection to resources for your field?
+        Want to narrow down the selection to services for your field?
         No problem! Simply click **Scientific Domains** and select the academic field that best describes your work.
 
-        Or are you looking for a specific type of resource?
+        Or are you looking for a specific type of service?
         You can also click **Categories** to filter our catalogue.
 
       attachTo:
@@ -42,7 +42,7 @@ overview:
     3:
       title: More catalogue options
       text: |-
-        We also offer more **advanced browsing options.** You can use this menu to select resources by specific
+        We also offer more **advanced browsing options.** You can use this menu to select services by specific
         
         - **Communities and infrastructures**
         - **Providers**

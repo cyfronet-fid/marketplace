@@ -7,4 +7,4 @@
     = render "messages/messages", messages: @messages, earliest_new_message: @earliest_new_message
     = render Conversations::MessageBoxComponent.new(@message,
                                                 project_service_conversation_path(@project, @project_item),
-                                                _("Your message to the resource provider"))
+                                                _("Your message to the service provider"))
