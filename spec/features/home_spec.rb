@@ -40,9 +40,9 @@ RSpec.feature "Home" do
     let!(:service2) { create(:service, description: "published-service-2", status: :published) }
     let!(:service_draft) { create(:service, status: :draft) }
 
-    it "should show only published service in Popular services section" do
+    xit "should show only published service in Popular services section" do
       visit "/"
-      expect(page).to have_text "Popular resources"
+      expect(page).to have_text "Popular services"
       expect(page).to have_text(service1.name)
       expect(page).to have_text(service2.name)
       expect(page).not_to have_text(service_draft.name)

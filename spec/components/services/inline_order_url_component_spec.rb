@@ -8,7 +8,7 @@ RSpec.describe Services::InlineOrderUrlComponent, type: :component do
       offer = create(:offer, order_type: type)
       render_inline(Services::InlineOrderUrlComponent.new(offerable: offer))
 
-      expect(page).to have_link("Go to the resource")
+      expect(page).to have_link("Go to the service")
     end
   end
 
@@ -24,6 +24,6 @@ RSpec.describe Services::InlineOrderUrlComponent, type: :component do
 
     render_inline(Services::InlineOrderUrlComponent.new(offerable: offer))
     expect(page).to_not have_link("Order externally")
-    expect(page).to_not have_link("Go to the resource")
+    expect(page).to_not have_link("Go to the service")
   end
 end

@@ -12,12 +12,9 @@ describe("My project", () => {
 
   const openAccessResource = "DisVis";
 
-  it("should add new project, pin a resource and add review", () => {
-   // cy.get("[data-e2e='my-eosc-button']")
-    //   .click();
-    // cy.get("[data-e2e='backoffice']")
-    //   .click();
-    cy.visit("/projects")
+  it("should add new project, pin a service and add review", () => {
+   cy.get('a[data-e2e="goToProjectsBtn"]')
+     .click();
    cy.location('pathname')
      .should('equal', '/projects');
    cy.get('a[data-e2e="go-to-create-project-form-btn"]')
@@ -31,9 +28,9 @@ describe("My project", () => {
      .should("contain", "/projects/");
    cy.contains("a", "Project details")
      .should("be.visible");
-   cy.contains("a", "Resources")
+   cy.contains("a", "Services")
      .click();
-   cy.contains("a", "Add your first resource")
+   cy.contains("a", "Add your first service")
      .click();
     cy.get("[data-e2e='searchbar-input']")
      .type(openAccessResource);

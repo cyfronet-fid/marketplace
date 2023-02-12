@@ -10,7 +10,7 @@
           .col-md-12.back-link
           %i.fas.fa-chevron-left.fa-xs.mr-1
           - if project_item.is_root?
-            = link_to _("back to %{pn} project resources") % { pn: project.name }, [project, :services]
+            = link_to _("back to %{pn} project services") % { pn: project.name }, [project, :services]
           - else
             = link_to _("back to %{pn}") % { pn: project_item.parent.name },
                 project_service_path(project, project_item.parent)
@@ -33,7 +33,7 @@
           = link_to _("Order history"), project_service_timeline_path(project, project_item),
             class: "nav-link #{"active" if controller.controller_name == "timelines"} text-uppercase"
       %li.nav-item.contact-nav
-        = link_to _("Contact with resource provider"),
+        = link_to _("Contact with service provider"),
           project_service_conversation_path(project, project_item),
           class: "nav-link #{"active" if controller.controller_name == "conversations"} text-uppercase"
         - if project_item.user_has_new_messages?

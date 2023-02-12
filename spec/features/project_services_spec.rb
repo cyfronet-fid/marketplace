@@ -18,7 +18,7 @@ RSpec.feature "Project services" do
     visit project_service_path(project, project_item)
 
     expect(page).to have_link("Order history")
-    expect(page).to have_link("Contact with resource provider")
+    expect(page).to have_link("Contact with service provider")
     expect(page).to have_link("Details")
   end
 
@@ -81,7 +81,7 @@ RSpec.feature "Project services" do
 
     expect(page).to have_text("Open")
     expect(page).to_not have_text("Internal ordering")
-    expect(page).to have_link("Go to the resource", href: "http://old.pl")
-    expect(page).to_not have_link("Go to the resource", href: "http://new.pl")
+    expect(page).to have_link("Go to the service", href: "http://old.pl")
+    expect(page).to_not have_link("Go to the service", href: "http://new.pl")
   end
 end

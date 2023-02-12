@@ -1,5 +1,6 @@
-= link_to _("Browse resources"),
-                  services_path(providers: provider.id),
-                  class: "btn btn-primary d-block mb-3", "data-e2e": "btn-browse-service"
+- unless external_search_enabled
+  = link_to _("Browse services"),
+                    services_path(providers: provider.id),
+                    class: "btn btn-primary d-block mb-3", "data-e2e": "btn-browse-service"
 - if user_signed_in? && show_manage_button?(provider)
   = render "components/presentable/header_component/provider_drop_down_menu", provider: provider

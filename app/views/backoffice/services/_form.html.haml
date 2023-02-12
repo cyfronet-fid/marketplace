@@ -57,6 +57,7 @@
             = f.input :name, disabled: cant_edit(:name)
             = f.input :abbreviation, disabled: cant_edit(:abbreviation)
             = f.association :resource_organisation, disabled: cant_edit(:resource_organisation_id),
+                              label: "Service organisation",
                               collection: Provider.active.sort_by { |e| e.name.strip.downcase }
             = f.association :providers, multiple: true, input_html: { data: { choice: true } },
                               disabled: cant_edit([provider_ids: []]),
@@ -194,6 +195,7 @@
             class: ("show" unless collapsed?(service, [:resource_geographic_locations])) }
           .card-body
             = f.input :resource_geographic_locations, as: :select,
+                  label: "Service geographic locations",
                   collection: Country.options.map { |c| [ c.iso_short_name, "value" => c.alpha2 ] },
                   disabled: cant_edit([resource_geographic_locations: []]),
                   input_html: { data: { choice: true },  "multiple" => "true" }
@@ -327,7 +329,7 @@
             - if resource_profile_4?
               = f.association :platforms, label: _("Related platforms"),
                                  multiple: true, input_html: { data: { choice: true } },
-                                 disabled: cant_edit([platform_ids: []])
+                                 disabled: cant_edit([platform: []])
             - else
               = f.input :related_platforms, label: _("Related platforms"), multiple: true,
                   input_html: { class: "form-control" },
@@ -471,7 +473,7 @@
             .row
               .col-12
                 = f.input :upstream_id, collection: f.object.sources.reject { |source| source.id.nil? },
-                                          include_blank: "MP", label: _("Resource Upstream")
+                                          include_blank: "MP", label: _("Service Upstream")
 
                 %h3.mt-4
                   = _("External Sources")

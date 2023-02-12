@@ -2,10 +2,9 @@
 
 class DatasourcesController < ApplicationController
   def index
-    search_base_url = Mp::Application.config.search_base_url
-    if search_base_url
-      redirect_to search_base_url + "/search/data-source?q=*"
-    end
+    search_service_base_url = Mp::Application.config.search_service_base_url
+    enable_external_search = Mp::Application.config.enable_external_search
+    redirect_to search_service_base_url + "/search/data-source?q=*" if enable_external_search
     @datasources = Datasource.visible.sort_by(&:name)
   end
 

@@ -70,7 +70,7 @@ RSpec.feature "Query param tour" do
     expect(page).to have_current_path(service_details_path(service))
 
     expect(page).to have_text("Congratulations!")
-    expect(page).to have_text("You have completed the resource presentation page tour guide.")
+    expect(page).to have_text("You have completed the service presentation page tour guide.")
     expect(page).to have_text("Please also leave a comment on how we can improve it")
 
     click_on "Cancel and end tour"

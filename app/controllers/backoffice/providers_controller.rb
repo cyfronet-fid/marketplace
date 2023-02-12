@@ -70,7 +70,7 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
       redirect_to backoffice_providers_path, notice: "Provider removed successfully"
     else
       redirect_to backoffice_providers_path,
-                  alert: "This Provider has resources connected to it, therefore is not possible to remove it."
+                  alert: "This Provider has services connected to it, therefore is not possible to remove it."
     end
   end
 

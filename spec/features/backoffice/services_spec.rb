@@ -48,7 +48,7 @@ RSpec.feature "Services in backoffice" do
       access_mode = create(:access_mode)
 
       visit backoffice_services_path
-      click_on "Create new Resource"
+      click_on "Create new Service"
 
       fill_in "service_name", with: "service name"
       fill_in "Description", with: "service description"
@@ -57,7 +57,7 @@ RSpec.feature "Services in backoffice" do
       fill_in "service_link_multimedia_urls_attributes_0_url", with: "https://sample.url"
       select "English", from: "Language availability"
       select "Poland", from: "Geographical availabilities"
-      select "Poland", from: "Resource geographic locations"
+      select "Poland", from: "Service geographic locations"
       select trl.name, from: "Trl"
       select life_cycle_status.name, from: "Life cycle status"
       select funding_body.name, from: "Funding bodies"
@@ -90,7 +90,7 @@ RSpec.feature "Services in backoffice" do
       select scientific_domain.name, from: "Scientific domains"
       select provider.name, from: "Providers"
       select "open_access", from: "Order type"
-      select resource_organisation.name, from: "Resource organisation"
+      select resource_organisation.name, from: "Service organisation"
 
       # TODO: uncomment when Resource Profile 4.0 will be released
       # select platform.name, from: "Platforms"
@@ -100,7 +100,7 @@ RSpec.feature "Services in backoffice" do
 
       fill_in "service_sources_attributes_0_eid", with: "12345a"
 
-      expect { click_on "Create Resource" }.to change { user.owned_services.count }.by(1).and change { Offer.count }.by(
+      expect { click_on "Create Service" }.to change { user.owned_services.count }.by(1).and change { Offer.count }.by(
                                                    1
                                                  ).and have_enqueued_job(Ess::UpdateJob)
 
@@ -139,13 +139,13 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_content("Please review the problems below:")
 
       fill_in "service_name", with: "service name"
-      select resource_organisation.name, from: "Resource organisation"
+      select resource_organisation.name, from: "Service organisation"
       fill_in "Description", with: "service description"
       fill_in "Tagline", with: "service tagline"
       select scientific_domain.name, from: "Scientific domains"
       select "English", from: "Language availability"
       select "Poland", from: "Geographical availabilities"
-      select "Poland", from: "Resource geographic locations"
+      select "Poland", from: "Service geographic locations"
       fill_in "service_main_contact_attributes_first_name", with: "John"
       fill_in "service_main_contact_attributes_last_name", with: "Doe"
       fill_in "service_main_contact_attributes_email", with: "john@doe.com"
@@ -154,9 +154,9 @@ RSpec.feature "Services in backoffice" do
       fill_in "service_public_contacts_attributes_0_email", with: "jane@doe.com"
       select "open_access", from: "Order type"
 
-      click_on "Create Resource"
+      click_on "Create Service"
 
-      expect(page).to have_content("New resource created successfully")
+      expect(page).to have_content("New service created successfully")
 
       expect(page).to have_content("service name")
       expect(page).to have_content("service description")
@@ -188,7 +188,7 @@ RSpec.feature "Services in backoffice" do
       fill_in "service_public_contacts_attributes_2_last_name", with: "Doe"
       fill_in "service_public_contacts_attributes_2_email", with: "john@doe.com"
 
-      click_on "Update Resource"
+      click_on "Update Service"
 
       click_on "Details"
 
@@ -208,7 +208,7 @@ RSpec.feature "Services in backoffice" do
       find("a", id: "public-contact-delete-0").click
       find("a", id: "public-contact-delete-1").click
 
-      click_on "Update Resource"
+      click_on "Update Service"
 
       expect(page).to_not have_content(public_contacts.first.email)
       expect(page).to_not have_content(public_contacts.second.email)
@@ -220,7 +220,7 @@ RSpec.feature "Services in backoffice" do
       visit backoffice_service_path(service)
 
       expect(page).to have_content(
-        "This resource has no offers. " \
+        "This service has no offers. " \
           "Add one offer to make possible for a user to Access the service."
       )
     end
@@ -231,7 +231,7 @@ RSpec.feature "Services in backoffice" do
       resource_organisation = create(:provider)
 
       visit backoffice_services_path
-      click_on "Create new Resource"
+      click_on "Create new Service"
 
       fill_in "service_name", with: "service name"
       fill_in "Tagline", with: "tagline"
@@ -240,14 +240,14 @@ RSpec.feature "Services in backoffice" do
       select provider.name, from: "Providers"
       select "English", from: "Language availability"
       select "Poland", from: "Geographical availabilities"
-      select "Poland", from: "Resource geographic locations"
+      select "Poland", from: "Service geographic locations"
       fill_in "service_main_contact_attributes_first_name", with: "John"
       fill_in "service_main_contact_attributes_last_name", with: "Doe"
       fill_in "service_main_contact_attributes_email", with: "john@doe.com"
       fill_in "service_public_contacts_attributes_0_first_name", with: "Jane"
       fill_in "service_public_contacts_attributes_0_last_name", with: "Doe"
       fill_in "service_public_contacts_attributes_0_email", with: "jane@doe.com"
-      select resource_organisation.name, from: "Resource organisation"
+      select resource_organisation.name, from: "Service organisation"
       select "open_access", from: "Order type"
 
       click_on "Preview"
@@ -256,7 +256,7 @@ RSpec.feature "Services in backoffice" do
       expect(Ess::UpdateJob).not_to have_been_enqueued
 
       click_on "Go back to edit"
-      expect { click_on "Create Resource" }.to change { Service.count }.by(1).and have_enqueued_job(Ess::UpdateJob)
+      expect { click_on "Create Service" }.to change { Service.count }.by(1).and have_enqueued_job(Ess::UpdateJob)
       expect(page).to have_content("service name")
     end
 
@@ -280,8 +280,8 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_link("Manual", href: "javascript:;")
       expect(page).to have_link("Helpdesk", href: "javascript:;")
       expect(page).to have_link("Training information", href: "javascript:;")
-      expect(page).to have_link("Ask a question about this resource?", href: "javascript:;")
-      expect(page).to have_link("Access the resource", href: "javascript:;")
+      expect(page).to have_link("Ask a question about this service?", href: "javascript:;")
+      expect(page).to have_link("Access the service", href: "javascript:;")
       expect(page).to have_link("tag", href: "javascript:;")
       expect(page).to have_link(service.related_services.first.name, href: "javascript:;")
     end
@@ -291,7 +291,7 @@ RSpec.feature "Services in backoffice" do
       scientific_domain = create(:scientific_domain)
 
       visit backoffice_services_path
-      click_on "Create new Resource"
+      click_on "Create new Service"
 
       attach_file("service_logo", "spec/lib/images/invalid-logo.svg")
       fill_in "service_name", with: "service name"
@@ -300,7 +300,7 @@ RSpec.feature "Services in backoffice" do
       select scientific_domain.name, from: "Scientific domains"
       select provider.name, from: "Providers"
 
-      expect { click_on "Create Resource" }.to change { user.owned_services.count }.by(0)
+      expect { click_on "Create Service" }.to change { user.owned_services.count }.by(0)
 
       expect(page).to have_content("Logo format you're trying to attach is not supported.")
     end
@@ -318,7 +318,7 @@ RSpec.feature "Services in backoffice" do
       service = create(:service, status: :draft)
 
       visit backoffice_service_path(service)
-      expect { click_on "Publish as unverified resource" }.to have_enqueued_job(Ess::UpdateJob)
+      expect { click_on "Publish as unverified service" }.to have_enqueued_job(Ess::UpdateJob)
 
       expect(page).to have_content("Status: unverified")
     end
@@ -339,7 +339,7 @@ RSpec.feature "Services in backoffice" do
       click_on "Edit"
 
       fill_in "service_name", with: "updated name"
-      expect { click_on "Update Resource" }.to have_enqueued_job(Ess::UpdateJob)
+      expect { click_on "Update Service" }.to have_enqueued_job(Ess::UpdateJob)
 
       expect(page).to have_content("updated name")
     end
@@ -357,13 +357,13 @@ RSpec.feature "Services in backoffice" do
       end
 
       visit backoffice_service_path(service)
-      click_on "Edit resource"
+      click_on "Edit service"
 
       fill_in "service_name", with: "updated name"
       fill_in "Order url", with: "http://order.com"
       select "fully_open_access", from: "Order type"
 
-      click_on "Update Resource"
+      click_on "Update Service"
 
       expect(page).to have_content("updated name")
 
@@ -397,7 +397,7 @@ RSpec.feature "Services in backoffice" do
 
       click_on "Create Offer"
 
-      expect(page).to have_text("must be the same as in the resource: open_access")
+      expect(page).to have_text("must be the same as in the service: open_access")
     end
 
     scenario "I can set different order type in the second offer" do
@@ -474,14 +474,14 @@ RSpec.feature "Services in backoffice" do
 
       visit backoffice_service_path(service)
 
-      click_on "Edit resource"
+      click_on "Edit service"
 
       find_button("Order").click
 
       select "open_access", from: "Order type"
       fill_in "Order url", with: "http://google.com"
 
-      click_on "Update Resource"
+      click_on "Update Service"
 
       service.reload
       service.offers.each do |offer|
@@ -512,7 +512,7 @@ RSpec.feature "Services in backoffice" do
       visit backoffice_service_path(service)
 
       expect(page).to have_content(
-        "This resource has no offers. " \
+        "This service has no offers. " \
           "Add one offer to make possible for a user to Access the service."
       )
       offer = create(:offer, service: service)
@@ -625,7 +625,7 @@ RSpec.feature "Services in backoffice" do
       visit backoffice_service_path(service)
 
       expect(page).to have_content(
-        "This resource has no offers. " \
+        "This service has no offers. " \
           "Add one offer to make possible for a user to Access the service."
       )
     end
@@ -648,7 +648,7 @@ RSpec.feature "Services in backoffice" do
 
       expect(page).to have_content("777")
       fill_in "service_sources_attributes_0_eid", with: "12345a"
-      click_on "Update Resource"
+      click_on "Update Service"
       service.reload
       expect(service.sources.first.eid).to eq("12345a")
     end
@@ -660,8 +660,8 @@ RSpec.feature "Services in backoffice" do
       visit backoffice_service_path(service)
       click_on "Edit"
 
-      select external_source.to_s, from: "Resource Upstream"
-      click_on "Update Resource"
+      select external_source.to_s, from: "Service Upstream"
+      click_on "Update Service"
 
       service.reload
 
@@ -714,7 +714,7 @@ RSpec.feature "Services in backoffice" do
       click_on "Edit"
 
       expect(page).to have_field "Name", disabled: true
-      expect(page).to have_field "Resource organisation", disabled: true
+      expect(page).to have_field "Service organisation", disabled: true
       expect(page).to have_field "Logo", disabled: true
       expect(page).to have_field "Tag list", disabled: true
       expect(page).to have_field "Description", disabled: true
@@ -753,8 +753,8 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_field "Last update", disabled: true
       expect(page).to have_field "service_changelog_0", disabled: true
       expect(page).to have_field "service_related_platforms_0", disabled: true
-      expect(page).to have_field "Required Resources", disabled: true
-      expect(page).to have_field "Related Resources", disabled: true
+      expect(page).to have_field "Required Services", disabled: true
+      expect(page).to have_field "Related Services", disabled: true
       expect(page).to have_field "Scientific domains", disabled: true
       expect(page).to have_field "Dedicated For", disabled: true
       expect(page).to have_field "Funding bodies", disabled: true
@@ -763,7 +763,7 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_field "Owners", disabled: false
       expect(page).to have_field "Language availability", disabled: true
       expect(page).to have_field "Geographical availabilities", disabled: true
-      expect(page).to have_field "Resource geographic locations", disabled: true
+      expect(page).to have_field "Service geographic locations", disabled: true
       expect(page).to have_field "Terms of use url", disabled: true
       expect(page).to have_field "Access policies url", disabled: true
       expect(page).to have_field "Sla url", disabled: true
@@ -892,7 +892,7 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_content("Name")
 
       fill_in "service_name", with: "Owner can edit service draft"
-      click_on "Update Resource"
+      click_on "Update Service"
       expect(page).to have_content("Owner can edit service draft")
     end
 

@@ -13,23 +13,23 @@ en:
         orderable:
           title: Orderable
           description: |
-              Number of resources orderable through the Marketplace
+              Number of services orderable through the Marketplace
               (Sum of all offers with Internal ordering access type)
         not_orderable:
           title: Not orderable/open access
           description: |
-            Number of resources not orderable (Sum of all offers with External
+            Number of services not orderable (Sum of all offers with External
             and Open access type added to the projects)
         all_services:
-          title: All resources
+          title: All services
           description: |
-            All resources registered in Marketplace
+            All services registered in Marketplace
         providers:
           title: Providers (%{count})
           description: "Providers in the Marketplace:"
         disciplines:
           title: Domains (%{count})
-          description: "Scientific domains ordered resources are used for:"
+          description: "Scientific domains ordered services are used for:"
         countries:
           title: Origins (%{count})
-          description: "Countries of users ordering resources:"
+          description: "Countries of users ordering services:"

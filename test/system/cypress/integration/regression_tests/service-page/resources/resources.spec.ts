@@ -50,7 +50,7 @@ describe("Resources", () => {
       .should("be.visible");
 
     cy.visit("/projects")
-    cy.contains("a", "Add resource to this project")
+    cy.contains("a", "Add service to this project")
       .click();
     cy.get("[data-e2e='searchbar-input']")
       .type(openAccessResource)
@@ -105,7 +105,7 @@ describe("Resources", () => {
       .should("be.visible");
 
     cy.visit("/projects");
-    cy.contains("a", "Add resource to this project")
+    cy.contains("a", "Add service to this project")
       .click();
     cy.get("[data-e2e='searchbar-input']")
       .type(orderRequiredResourceInternal);
@@ -127,7 +127,7 @@ describe("Resources", () => {
       .should("be.visible");
   });
 
-  it.only("should add resource with few offers", () => {
+  it("should add service with few offers", () => {
     cy.get("[data-e2e='searchbar-input']")
       .type(resourceWithFewOffer)
       .type('{enter}');

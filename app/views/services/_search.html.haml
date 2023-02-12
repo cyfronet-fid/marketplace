@@ -16,7 +16,7 @@
   .searchbar__input
     %label.sr-only{ for: "search" }= _("Search")
     = text_field_tag :q, params[:q],  class: "autocomplete-input",
-                                     placeholder: "Find resource...",
+                                     placeholder: "Find service...",
                                      "data-target": "autocomplete.input",
                                      "data-toggle": "dropdown",
                                      "data-e2e": "searchbar-input",
