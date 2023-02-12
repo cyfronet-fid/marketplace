@@ -47,7 +47,7 @@ class Backoffice::ScientificDomainsController < Backoffice::ApplicationControlle
                             edit them so they are not associated with this scientific domain anymore"
     elsif @scientific_domain.services.present?
       redirect_back fallback_location: backoffice_scientific_domain_path(@scientific_domain),
-                    alert: "This scientific domain has resources connected to it, remove associations to delete it."
+                    alert: "This scientific domain has services connected to it, remove associations to delete it."
     elsif @scientific_domain.providers.present?
       redirect_back fallback_location: backoffice_scientific_domain_path(@scientific_domain),
                     alert: "This scientific domain has providers connected to it, remove associations to delete it."

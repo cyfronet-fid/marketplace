@@ -44,7 +44,7 @@ class Services::SummariesController < Services::ApplicationController
       redirect_to project_service_path(project_item.project, project_item),
                   notice: project_item.orderable? ? "Offer ordered successfully" : "Offer pinned successfully"
     else
-      redirect_to url_for([@service, prev_visible_step_key]), alert: "Resource request configuration is invalid"
+      redirect_to url_for([@service, prev_visible_step_key]), alert: "Service request configuration is invalid"
     end
   end
 

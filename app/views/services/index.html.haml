@@ -5,7 +5,7 @@
     elsif @category
       @category.name
     else
-      _("All resources")
+      _("All service")
     end
 .container
   - @category ? breadcrumb(:category, @category) : breadcrumb(:services)

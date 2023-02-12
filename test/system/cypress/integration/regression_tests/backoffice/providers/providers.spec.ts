@@ -29,11 +29,9 @@ describe("Providers", () => {
   });
 
   it("should go to Providers in Backoffice and select one of providers", { tags: '@extended-test' }, () => {
-    // cy.get("[data-e2e='my-eosc-button']")
-    //   .click();
-    // cy.get("[data-e2e='backoffice']")
-    //   .click();
-    cy.visit("/backoffice")
+      cy.openUserDropdown();
+    cy.get("[data-e2e='backoffice']")
+      .click();
     cy.location("href")
       .should("contain", "/backoffice");
     cy.get("[data-e2e='providers']")
@@ -129,7 +127,7 @@ describe("Providers", () => {
       .should("be.visible");
   });
 
-  it("should deleted provider without resource and find only in filter and autocomplete in backoffice", () => {
+  it("should deleted provider without service and find only in filter and autocomplete in backoffice", () => {
     cy.visit("/backoffice/providers/new");
     cy.location("href")
       .should("contain", "/providers/new");
@@ -181,7 +179,7 @@ describe("Providers", () => {
       });
   });
 
-  it("should delete provider with resources with deleted status", () => {
+  it("should delete provider with services with deleted status", () => {
     cy.visit("/backoffice/providers");
     cy.contains("a", providerWithResourceDeleted)
       .parents('li.providers')
@@ -191,7 +189,7 @@ describe("Providers", () => {
       .should("be.visible");
   });
 
-  it("shouldn't delete provider with resources with draft status", () => {
+  it("shouldn't delete provider with services with draft status", () => {
     cy.visit("/backoffice/providers");
     cy.contains("a", providerWithResourceDraft)
       .parents('li.providers')
@@ -201,7 +199,7 @@ describe("Providers", () => {
       .should("be.visible");
   });
 
-  it("shouldn't delete provider with resources with published status", () => {
+  it("shouldn't delete provider with services with published status", () => {
     cy.visit("/backoffice/providers");
     cy.contains("a", providerWithResourcePublished)
       .parents('li.providers')
@@ -211,7 +209,7 @@ describe("Providers", () => {
       .should("be.visible");
   });
 
-  it("shouldn't delete provider with resources with errored status", () => {
+  it("shouldn't delete provider with services with errored status", () => {
     cy.visit("/backoffice/providers");
     cy.contains("a", providerWithResourceErrored)
       .parents('li.providers')
@@ -221,7 +219,7 @@ describe("Providers", () => {
       .should("be.visible");
   });
 
-  it("shouldn't delete provider with resources with unverified status", () => {
+  it("shouldn't delete provider with services with unverified status", () => {
     cy.visit("/backoffice/providers");
     cy.contains("a", providerWithResourceUnverified)
       .parents('li.providers')
@@ -231,7 +229,7 @@ describe("Providers", () => {
       .should("be.visible");
   });
 
-  it("should delete provider which is resources provider for published resources", () => {
+  it("should delete provider which is services provider for published resources", () => {
     cy.visit("/backoffice/providers");
     cy.contains("a", resourceProviderForPublishedResource)
       .parents('li.providers')

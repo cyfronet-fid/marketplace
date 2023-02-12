@@ -27,7 +27,7 @@ RSpec.feature "Services in ordering_configuration panel" do
 
       expect(page).to have_content("Ordering configuration")
       expect(page).to have_content(service.name)
-      expect(page).to have_link("Back to the resource")
+      expect(page).to have_link("Back to the service")
       expect(page).to have_link("Set parameters and offers")
     end
 
@@ -271,7 +271,7 @@ RSpec.feature "Services in ordering_configuration panel" do
           expect(page).to_not have_content("You are not authorized to see this page")
           expect(page).to have_content("Ordering configuration")
           expect(page).to have_content(service.name)
-          expect(page).to have_link("Back to the resource")
+          expect(page).to have_link("Back to the service")
           expect(page).to have_link("Set parameters and offers")
         else
           expect(page.current_path).to_not eq(service_ordering_configuration_path(service))

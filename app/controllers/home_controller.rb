@@ -23,7 +23,7 @@ class HomeController < ApplicationController
         url: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:(%22Publish%20Research%20Outputs%22)"
       },
       {
-        name: "Access Computing and Storage Resources",
+        name: "Access Computing and Storage Services",
         logo: "research_step/ico-03.png",
         url:
           "#{external_search_base_url}/search/all?q=*&fq=unified_categories:(%22Access%20Computing%20and%20Storage%20Resources%22)"

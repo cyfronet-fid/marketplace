@@ -32,28 +32,28 @@
               = service.description.truncate(80, separator: " ")
         - i.times do
           %td.title-col.empty.text-uppercase
-            = link_to _("Add next resource"), services_comparison_link(@query_params),
+            = link_to _("Add next service"), services_comparison_link(@query_params),
             "data-e2e": "add-next-resource-btn", "data-probe": ""
       %tr{ class: row_class(row_idx) }
         %th{ "data-toggle": "tooltip",
-        title: "The name(s) (or abbreviation(s)) of Provider that manage the Resource in |
+        title: "The name(s) (or abbreviation(s)) of Provider that manage the Service in |
         federated scenarios." } |
-          = _("Resource Organisation")
+          = _("Service Organisation")
         - @services.each do |service|
           %td= service.resource_organisation.name
         - row_idx += 1
       - if @services.any? { |s| s.providers.reject { |p| p == s.resource_organisation }.present? }
         %tr{ class: row_class(row_idx) }
           %th{ "data-toggle": "tooltip",
-          title: "The name(s) (or abbreviation(s)) of Provider(s) that deliver the Resource in |
+          title: "The name(s) (or abbreviation(s)) of Provider(s) that deliver the Service in |
           federated scenarios." } |
-            = _("Resource Providers")
+            = _("Service Providers")
           - @services.each do |service|
             %td= service.providers.reject { |p| p == service.resource_organisation }.map(&:name).join(", ")
           - row_idx += 1
       %tr{ class: row_idx.even? ? nil : "lightgrey-row" }
         %th{ "data-toggle": "tooltip",
-        title: "The branch of science, scientific discipline that is related to the Resource." }
+        title: "The branch of science, scientific discipline that is related to the Service." }
           = _("Scientific Domain")
         - @services.each do |service|
           %td
@@ -68,7 +68,7 @@
         - row_idx += 1
       %tr{ class: row_class(row_idx) }
         %th{ "data-toggle": "tooltip",
-        title: "A named group of Resources that offer access to the same type of Resource or capabilities." }
+        title: "A named group of Services that offer access to the same type of Resource or capabilities." }
           = _("Categorisation")
         - @services.each do |service|
           %td
@@ -84,7 +84,7 @@
       - if @services.any? { |s| s.target_users.present? }
         %tr{ class: row_class(row_idx) }
           %th{ "data-toggle": "tooltip",
-          title: "Type of users/customers that commissions a Provider to deliver a Resource." }
+          title: "Type of users/customers that commissions a Provider to deliver a Service." }
             = _("Target Users")
           - @services.each do |service|
             %td= service.target_users.map(&:name).join(", ")
@@ -92,8 +92,8 @@
       - if @services.any? { |s| s.access_types.present? }
         %tr{ class: row_class(row_idx) }
           %th{ "data-toggle": "tooltip",
-          title: "The way a user can access the Resource (Remote, Physical, Virtual, etc.)" }
-            = _("Resource Access Type")
+          title: "The way a user can access the Service (Remote, Physical, Virtual, etc.)" }
+            = _("Service Access Type")
           - @services.each do |service|
             %td= service.access_types.map(&:name).join(", ")
           - row_idx += 1
@@ -101,30 +101,30 @@
         %tr{ class: row_class(row_idx) }
           %th{ "data-toggle": "tooltip",
           title: "Eligibility/criteria for granting access to users (excellence-based, free-conditionally, free etc.)" }
-            = _("Resource Access Mode")
+            = _("Service Access Mode")
           - @services.each do |service|
             %td= service.access_modes.map(&:name).join(", ")
           - row_idx += 1
       - if @services.any? { |s| s.tags.present? }
         %tr{ class: row_class(row_idx) }
           %th{ "data-toggle": "tooltip",
-          title: "Keywords associated to the Resource to simplify search by relevant keywords." }
+          title: "Keywords associated to the Service to simplify search by relevant keywords." }
             = _("Tags")
           - @services.each do |service|
             %td
               - service.tag_list.sort.each do |tag|
-                = link_to tag, services_path(tag: tag), class: "badge badge-light"
+                = link_to tag, services_tag_link(tag), class: "badge badge-light"
           - row_idx += 1
       - if @services.any? { |s| s.geographical_availabilities.present? }
         %tr{ class: row_class(row_idx) }
-          %th{ "data-toggle": "tooltip", title: "Locations where the Resource is offered." }
+          %th{ "data-toggle": "tooltip", title: "Locations where the Service is offered." }
             = _("Geographical Availability")
           - @services.each do |service|
             %td= service.geographical_availabilities.join(", ")
           - row_idx += 1
       - if @services.any? { |s| s.language_availability.present? }
         %tr{ class: row_class(row_idx) }
-          %th{ "data-toggle": "tooltip", title: "Languages of the (user interface of the) Resource." }
+          %th{ "data-toggle": "tooltip", title: "Languages of the (user interface of the) Service." }
             = _("Language Availability")
           - @services.each do |service|
             %td
@@ -135,7 +135,7 @@
       - if @services.any? { |s| s.trl.present? }
         %tr{ class: row_class(row_idx) }
           %th{ "data-toggle": "tooltip",
-          title: "The Technology Readiness Level of the Resource updated in the context of the EOSC." }
+          title: "The Technology Readiness Level of the Service updated in the context of the EOSC." }
             = _("Technology Readiness Level")
           - @services.each do |service|
             %td{ "data-toggle": "tooltip", title: service.trl.present? ? trl_description_text(service) : nil }
@@ -143,8 +143,8 @@
           - row_idx += 1
       - if @services.any? { |s| s.life_cycle_status.present? }
         %tr{ class: row_class(row_idx) }
-          %th{ "data-toggle": "tooltip", title: "Phase of the Resource life-cycle." }
-            = _("Resource Life Cycle Status")
+          %th{ "data-toggle": "tooltip", title: "Phase of the Service life-cycle." }
+            = _("Service Life Cycle Status")
           - @services.each do |service|
             - if service.life_cycle_status.present?
               %td= service.life_cycle_status.first.name
@@ -153,7 +153,7 @@
         %th{ "data-toggle": "tooltip",
         title: "Information on the order type (requires an ordering procedure, or no ordering and if fully open or |
         requires authentication)" } |
-          = _("Resource Order Type")
+          = _("Service Order Type")
         - @services.each do |service|
           %td
             = render Services::InlineOrderTypeComponent.new(:span, order_type(service))

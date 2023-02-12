@@ -6,7 +6,7 @@
     %h2.mb-4.mt-5.font-weight-normal
       = _("Offers")
     %p.mb-4
-      = _("To gain the access to the resource, please select an offer that suits your needs best.")
+      = _("To gain the access to the service, please select an offer that suits your needs best.")
     .card-deck.row
       = render partial: "services/offers/offer",
         collection: @offers, as: :offer, locals: { f: f, project_item: @step }
@@ -14,9 +14,9 @@
     .row
       .col-12
         %h2.mb-4.mt-5.font-weight-normal
-          = _("Resource bundles")
+          = _("Service bundles")
         %p.mb-4
-          = _("To gain the access to the resource, please select an offer that suits your needs best.")
+          = _("To gain the access to the service, please select an offer that suits your needs best.")
     .card-deck.row
       = render partial: "services/offers/bundle_box",
         collection: @bundles, as: :offer, locals: { f: f, project_item: @step }

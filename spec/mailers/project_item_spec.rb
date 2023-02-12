@@ -37,7 +37,7 @@ RSpec.describe ProjectItemMailer, type: :mailer do
       encoded_body = mail.body.encoded
 
       expect(mail.subject).to match(
-        "Status of your resource access request " \
+        "Status of your service access request " \
           "in the EOSC Portal Marketplace has changed to WAITING FOR RESPONSE"
       )
       expect(encoded_body).to match(/You have received a message from a customer service expert related/)
@@ -52,7 +52,7 @@ RSpec.describe ProjectItemMailer, type: :mailer do
       encoded_body = mail.body.encoded
 
       expect(mail.subject).to match(
-        "Status of your resource access request in the EOSC Portal Marketplace " \
+        "Status of your service access request in the EOSC Portal Marketplace " \
           "has changed to REJECTED"
       )
       expect(encoded_body).to match("rejected.")
@@ -67,7 +67,7 @@ RSpec.describe ProjectItemMailer, type: :mailer do
       encoded_body = mail.body.encoded
 
       expect(mail.subject).to match(
-        "Status of your resource access request in the EOSC Portal Marketplace " \
+        "Status of your service access request in the EOSC Portal Marketplace " \
           "has changed to CLOSED"
       )
       expect(encoded_body).to match(/has been closed/)
@@ -82,7 +82,7 @@ RSpec.describe ProjectItemMailer, type: :mailer do
       encoded_body = mail.body.encoded
 
       expect(mail.subject).to match(
-        "Status of your resource access request in the EOSC Portal Marketplace " \
+        "Status of your service access request in the EOSC Portal Marketplace " \
           "has changed to APPROVED"
       )
       expect(encoded_body).to match(/is approved/)
@@ -96,8 +96,8 @@ RSpec.describe ProjectItemMailer, type: :mailer do
       mail = described_class.rate_service(project_item).deliver_now
       encoded_body = mail.body.encoded
 
-      expect(mail.subject).to match(/EOSC Portal - Rate your resource/)
-      expect(encoded_body).to match(/Rate your resource/)
+      expect(mail.subject).to match(/EOSC Portal - Rate your service/)
+      expect(encoded_body).to match(/Rate your service/)
       expect(encoded_body).to match(/#{project_service_url(project, project_item)}/)
     end
   end
@@ -107,10 +107,10 @@ RSpec.describe ProjectItemMailer, type: :mailer do
       mail = described_class.aod_accepted(project_item).deliver_now
       encoded_body = mail.body.encoded
 
-      expect(mail.subject).to match(/EGI Applications on Demand resource approved/)
+      expect(mail.subject).to match(/EGI Applications on Demand service approved/)
       expect(encoded_body).to include(
         "This email is to inform you that your request to access the EGI\r\n" \
-          "Applications on Demand (AoD) resource has been approved."
+          "Applications on Demand (AoD) service has been approved."
       )
     end
 
@@ -120,7 +120,7 @@ RSpec.describe ProjectItemMailer, type: :mailer do
       mail = described_class.aod_voucher_accepted(project_item).deliver_now
       encoded_body = mail.body.encoded
 
-      expect(mail.subject).to match(/Elastic Cloud Compute Cluster \(EC3\) resource with voucher approved/)
+      expect(mail.subject).to match(/Elastic Cloud Compute Cluster \(EC3\) service with voucher approved/)
       expect(encoded_body).to match(/To redeem an Exoscale voucher:/)
       expect(encoded_body).to have_content("1234")
     end
@@ -131,7 +131,7 @@ RSpec.describe ProjectItemMailer, type: :mailer do
       mail = described_class.aod_voucher_accepted(project_item).deliver_now
       encoded_body = mail.body.encoded
 
-      expect(mail.subject).to match(/Elastic Cloud Compute Cluster \(EC3\) resource with voucher approved/)
+      expect(mail.subject).to match(/Elastic Cloud Compute Cluster \(EC3\) service with voucher approved/)
       expect(encoded_body).to match(/To redeem an Exoscale voucher:/)
       expect(encoded_body).to have_content("1234")
     end
@@ -142,7 +142,7 @@ RSpec.describe ProjectItemMailer, type: :mailer do
       mail = described_class.aod_voucher_accepted(project_item).deliver_now
       encoded_body = mail.body.encoded
 
-      expect(mail.subject).to match(/Elastic Cloud Compute Cluster \(EC3\) resource with voucher approved/)
+      expect(mail.subject).to match(/Elastic Cloud Compute Cluster \(EC3\) service with voucher approved/)
       expect(encoded_body).to match(/To redeem an Exoscale voucher:/)
       expect(encoded_body).to have_content(
         "Open your web browser at https://portal.exoscale.com/register?coupon=3D=\r\n1234\r\n"
@@ -153,7 +153,7 @@ RSpec.describe ProjectItemMailer, type: :mailer do
       mail = described_class.aod_voucher_rejected(project_item).deliver_now
       encoded_body = mail.body.encoded
 
-      expect(mail.subject).to match(/Elastic Cloud Compute Cluster \(EC3\) resource with voucher rejected/)
+      expect(mail.subject).to match(/Elastic Cloud Compute Cluster \(EC3\) service with voucher rejected/)
       expect(encoded_body).to match(/Cloud Computing Cluster \(EC3\) platform has been rejected./)
     end
 
@@ -161,7 +161,7 @@ RSpec.describe ProjectItemMailer, type: :mailer do
       mail = described_class.aod_voucher_rejected(project_item).deliver_now
       encoded_body = mail.body.encoded
 
-      expect(mail.subject).to match(/Elastic Cloud Compute Cluster \(EC3\) resource with voucher rejected/)
+      expect(mail.subject).to match(/Elastic Cloud Compute Cluster \(EC3\) service with voucher rejected/)
       expect(encoded_body).to match(/Cloud Computing Cluster \(EC3\) platform has been rejected./)
     end
   end

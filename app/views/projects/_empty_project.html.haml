@@ -18,8 +18,12 @@
             "‘CONTACT WITH EOSC EXPERTS’ tab") |
       -# haml-lint:enable MultilinePipe
 
-      = link_to _("Add your first service"), project_add_link(project),
-        class: "btn btn-primary mb-4 pl-5 pr-5 mt-3 text-center",
-        method: :post
+      - if external_search_enabled
+        = link_to _("Add your first service"), project_add_external_link,
+          class: "btn btn-primary mb-4 pl-5 pr-5 mt-3 text-center"
+      - else
+        = link_to _("Add your first service"), project_add_path(project),
+          class: "btn btn-primary mb-4 pl-5 pr-5 mt-3 text-center",
+          method: :post
     .col.pt-5.order-lg-last.order-md-first.order-sm-first.order-first
       .empty-list-img.mt-5

@@ -1,15 +1,15 @@
-- content_for :title, _("Favourite resources")
+- content_for :title, _("Favourite services")
 - breadcrumb(:favourites)
 .container{ "data-controller": "favourite comparison" }
   %h1.mb-4
-    = _("Favourite resources")
+    = _("Favourite services")
   .row
     .col-lg-3.mb-5
       .favourite-icon
         = image_pack_tag "gfx_heart.svg"
       .mt-4
       - unless @favourites.blank?
-        = link_to "Go back to the resources list", services_path,
+        = link_to "Go back to the services list", services_path,
         class: "btn btn-sm btn-outline-primary d-block mb-3", "data-target": "favourite.backlink"
     .col-lg-9.favourites{ "data-target": "favourite.serviceBox" }
       - if @favourites.blank?

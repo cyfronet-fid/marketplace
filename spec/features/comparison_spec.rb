@@ -82,10 +82,13 @@ RSpec.feature "Comparison", js: true do
     expect(page).to have_content(service1.name)
     sleep(20)
     find("#comparison-#{service1.id}", visible: false).click
+    sleep(1)
     expect(page.find("input#comparison-#{service1.id}", visible: false)).to be_checked
     find("#comparison-#{service2.id}", visible: false).click
+    sleep(1)
     expect(page.find("input#comparison-#{service2.id}", visible: false)).to be_checked
     find("#comparison-#{service3.id}", visible: false).click
+    sleep(1)
     expect(page.find("input#comparison-#{service3.id}", visible: false)).to be_checked
     sleep(10)
     click_on "Compare"
@@ -96,9 +99,9 @@ RSpec.feature "Comparison", js: true do
     expect(page).to have_content(service2.name)
     expect(page).to have_content(service3.name)
 
-    expect(page).to have_text("Resource Organisation")
+    expect(page).to have_text("Service Organisation")
 
-    expect(page).to have_text("Resource Providers")
+    expect(page).to have_text("Service Providers")
     expect(page).to have_text(service1.providers.map(&:name).join(", "))
     expect(page).to have_text(service2.providers.map(&:name).join(", "))
     expect(page).to have_text(service3.providers.map(&:name).join(", "))
@@ -133,12 +136,12 @@ RSpec.feature "Comparison", js: true do
     expect(page).to have_text(service2.trl.first.name.upcase)
     expect(page).to have_text(service3.trl.first.name.upcase)
 
-    expect(page).to have_text("Resource Life Cycle Status")
+    expect(page).to have_text("Service Life Cycle Status")
     expect(page).to have_text(service1.life_cycle_status.map(&:name).join(", "))
     expect(page).to have_text(service2.life_cycle_status.map(&:name).join(", "))
     expect(page).to have_text(service3.life_cycle_status.map(&:name).join(", "))
 
-    expect(page).to have_text("Resource Order Type")
+    expect(page).to have_text("Service Order Type")
     expect(page).to have_text("Open Access")
     expect(page).to have_text("Order Required").twice
   end

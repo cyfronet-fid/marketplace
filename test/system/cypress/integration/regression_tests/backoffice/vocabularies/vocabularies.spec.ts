@@ -13,11 +13,9 @@ describe("Vocabularies", () => {
   });
 
   it("should create new vocabularies without parent", () => {
-    // cy.get("[data-e2e='my-eosc-button']")
-    //   .click();
-    // cy.get("[data-e2e='backoffice']")
-    //   .click();
-    cy.visit("/backoffice")
+    cy.openUserDropdown();
+    cy.get("[data-e2e='backoffice']")
+      .click();
     cy.location("href")
       .should("contain", "/backoffice");
     cy.get("[data-e2e='vocabularies']")
@@ -84,7 +82,7 @@ describe("Vocabularies", () => {
       .should("be.visible");
   });
 
-  it("shouldn't delete scientific domain with resources connected to it", () => {
+  it("shouldn't delete scientific domain with services connected to it", () => {
     cy.visit("/backoffice/vocabularies");
     cy.get("[data-e2e='backoffice-vocabulary-list'] li")
       .contains("Providers")
@@ -95,7 +93,7 @@ describe("Vocabularies", () => {
       .should("be.visible");
   });
 
-  it("should delete vocabulary without resources", () => {
+  it("should delete vocabulary without services", () => {
     cy.visit("/backoffice/vocabularies");
     cy.get("[data-e2e='add-new-vocabulary-btn']")
       .click();

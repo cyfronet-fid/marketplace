@@ -3,11 +3,11 @@
 .container
   - if @service.offers.blank?
     .alert.alert-danger.mb-0.text-center
-      = _("This resource has no offers. Add one offer to make possible for a user to Access the service.")
+      = _("This service has no offers. Add one offer to make possible for a user to Access the service.")
   - elsif @service.published? && @service.offers.published.blank?
     .alert.alert-warning.mb-0.text-center
       -# haml-lint:disable MultilinePipe
-      = ("The resource is published but has no published offers. Publish one offer to make possible for a user to " + |
+      = ("The service is published but has no published offers. Publish one offer to make possible for a user to " + |
          "Access the service.") |
       -# haml-lint:enable MultilinePipe
   = render "services/errors", service: @service
@@ -25,19 +25,19 @@
             = link_to _("Publish"),
                       backoffice_service_publish_path(@service),
                       method: :post,
-                      data: { confirm: _("Are you sure you want to publish this resource?"), e2e: "publish-btn" },
+                      data: { confirm: _("Are you sure you want to publish this service?"), e2e: "publish-btn" },
                       class: "btn btn-success btn-sm"
           - if policy([:backoffice, @service]).publish_unverified?
-            = link_to _("Publish as unverified resource"),
+            = link_to _("Publish as unverified service"),
                       backoffice_service_publish_path(@service, unverified: true),
                       method: :post,
-                      data: { confirm: _("Are you sure you want to publish this resource as unverified resource?") },
+                      data: { confirm: _("Are you sure you want to publish this service as unverified service?") },
                       class: "btn btn-warning btn-sm"
           - if policy([:backoffice, @service]).draft?
             = link_to _("Stop showing in the MP"),
                       backoffice_service_draft_path(@service),
                       method: :post,
-                      data: { confirm: _("Are you sure you want to stop showing this resource?"), e2e: "draft-btn" },
+                      data: { confirm: _("Are you sure you want to stop showing this service?"), e2e: "draft-btn" },
                       class: "btn btn-error btn-sm"
 
 

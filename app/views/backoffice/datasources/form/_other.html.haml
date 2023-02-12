@@ -18,7 +18,7 @@
       .row
         .col-12
           = f.input :upstream_id, collection: f.object.sources.reject { |source| source.id.nil? },
-                                              include_blank: "MP", label: _("Resource Upstream")
+                                              include_blank: "MP", label: _("Service Upstream")
 
           %h3.mt-4
             = _("External Sources")

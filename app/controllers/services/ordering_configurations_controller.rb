@@ -11,7 +11,7 @@ class Services::OrderingConfigurationsController < Services::OrderingConfigurati
     @service = Service.includes(:offers).friendly.find(params[:service_id])
     @offers = @service&.offers&.published&.order(:iid)
     @related_services = @service.related_services
-    @related_services_title = "Related resources"
+    @related_services_title = "Related services"
     @client = @client&.credentials&.expires_at.blank? ? Google::Analytics.new : @client
     @service.analytics = Analytics::PageViewsAndRedirects.new(@client).call(request.path)
     @service.monitoring_status = fetch_status(@service.pid)

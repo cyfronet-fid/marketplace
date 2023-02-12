@@ -51,16 +51,16 @@ en:
         additional_comment: Please enter additional details of your request
       service:
         grant_project_names: Grant/Project names
-        required_services: Required Resources
-        related_services: Related Resources
+        required_services: Required Services
+        related_services: Related Services
       user:
         categories: Categories of interests
         scientific_domains: Scientific domains of interests
-        categories_updates: New resource in Category of interest
-        scientific_domains_updates: New resource in Scientific domain of interest
+        categories_updates: New Service in Category of interest
+        scientific_domains_updates: New Service in Scientific domain of interest
       project:
         name: Project name
-        reason_for_access: Reason to request access to the EOSC resources
+        reason_for_access: Reason to request access to the EOSC services
         country_of_origin: Origin country
         countries_of_partnership: Collaboration countries
       provider:
@@ -93,7 +93,7 @@ en:
           You will receive an answer to %{email} email address.
       question:
         text: |
-          We will send your question to the resource provider.
+          We will send your question to the service provider.
           You will receive an answer to %{email} email address.
       lead:
         header: |
@@ -110,7 +110,7 @@ en:
         manual_url: *url_hint
         webpage_url: |
           Url should start with http:// or https:// prefix [e.g. https://example.com]<br/>
-          This url will be available under "Webpage" in Support section in the resource view
+          This url will be available under "Webpage" in Support section in the service view
         sla_url: *url_hint
         access_policies_url: *url_hint
         terms_of_use_url: *url_hint
@@ -130,14 +130,14 @@ en:
       offer:
         order_url: |
           Url should start with http:// or https:// prefix [e.g. https://example.com].<br/>
-          Given URL will be used in the offer order/access mechanism - on the resource access information step this URL
-          will be used under 'Go to the order website' / 'Go to the resource' button (depending on the offer order
-          type). If it isn't specified it will fall back to the resource's webpage URL.
+          Given URL will be used in the offer order/access mechanism - on the service access information step this URL
+          will be used under 'Go to the order website' / 'Go to the service' button (depending on the offer order
+          type). If it isn't specified it will fall back to the service's webpage URL.
       project_item:
         additional_comment: |
           Use it to describe your additional comments/questions related to the
-          resource. The text is to be sent to the resource provider and will be
-          accessible in the "Contact with resource provider" tab.
+          service. The text is to be sent to the service provider and will be
+          accessible in the "Contact with service provider" tab.
     #     username: 'User name to sign in.'
     #     password: 'No special characters, please.'
     # include_blanks:

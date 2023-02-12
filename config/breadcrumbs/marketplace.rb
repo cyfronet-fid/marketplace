@@ -20,7 +20,7 @@ crumb :datasource do |datasource|
 end
 
 crumb :services do
-  link "Resources", services_path(params: (session[:query].blank? ? {} : session[:query]))
+  link "Services", services_path(params: (session[:query].blank? ? {} : session[:query]))
   parent :marketplace_root
 end
 
@@ -95,11 +95,11 @@ crumb :project_item do |project_item|
     if project_item.has_children?
       link "Bundle (#{project_item.service.name})", project_service_path(project_item.project, project_item)
     else
-      link "Resource (#{project_item.service.name})", project_service_path(project_item.project, project_item)
+      link "Service (#{project_item.service.name})", project_service_path(project_item.project, project_item)
     end
     parent :project, project_item.project
   else
-    link "Resource (#{project_item.service.name})", project_service_path(project_item.project, project_item)
+    link "Service (#{project_item.service.name})", project_service_path(project_item.project, project_item)
     parent :project_item, project_item.parent
   end
 end
@@ -166,6 +166,6 @@ crumb :api_docs do
 end
 
 crumb :favourites do
-  link "Favourite resources", favourites_path
+  link "Favourite services", favourites_path
   parent :marketplace_root
 end

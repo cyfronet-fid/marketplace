@@ -41,14 +41,14 @@ RSpec.feature "Executive stistics" do
 
       expect(page.body).to have_selector("h1", text: "Statistics")
       expect(page.body).to have_text(
-        "1\nNumber of EOSC resources with offerings using EOSC Marketplace ordering process"
+        "1\nNumber of EOSC services with offerings using EOSC Marketplace ordering process"
       )
-      expect(page.body).to have_text("2\nNumber of EOSC resources not using EOSC Marketplace ordering process")
-      expect(page.body).to have_text("3\nNumber of all EOSC resources registered in the EOSC Marketplace")
-      expect(page.body).to have_text("0\nNumber of resources with at least one fully open access offer")
-      expect(page.body).to have_text("1\nNumber of resources with at least one open access offer")
-      expect(page.body).to have_text("1\nNumber of resources with at least one offer requiring ordering")
-      expect(page.body).to have_text("1\nNumber of resources with at least one other offer.")
+      expect(page.body).to have_text("2\nNumber of EOSC services not using EOSC Marketplace ordering process")
+      expect(page.body).to have_text("3\nNumber of all EOSC services registered in the EOSC Marketplace")
+      expect(page.body).to have_text("0\nNumber of services with at least one fully open access offer")
+      expect(page.body).to have_text("1\nNumber of services with at least one open access offer")
+      expect(page.body).to have_text("1\nNumber of services with at least one offer requiring ordering")
+      expect(page.body).to have_text("1\nNumber of services with at least one other offer.")
 
       expect(page.body).to have_text("Providers (3)")
       expect(page.body).to have_text("Domains (4)")

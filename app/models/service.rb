@@ -254,22 +254,19 @@ class Service < ApplicationRecord
     _provider_search_link(target_name, "providers", default_path)
   end
 
-  def geographical_availabilities_link(gc)
-    _provider_search_link(gc, "geographical_availabilities", services_path(geographical_availabilities: gc))
+  def geographical_availabilities_link(gcap)
+    _provider_search_link(gcap, "geographical_availabilities", services_path(geographical_availabilities: gcap))
   end
 
   private
 
-  def _provider_search_link(target_name, fq, default_path = nil)
-    search_base_url = Mp::Application.config.search_base_url
-    if search_base_url
-      search_base_url + "/search/service?q=*&fq=#{fq}:(%22#{target_name}%22)"
+  def _provider_search_link(target_name, filter_query, default_path = nil)
+    search_base_url = Mp::Application.config.search_service_base_url
+    enable_external_search = Mp::Application.config.enable_external_search
+    if enable_external_search
+      search_base_url + "/search/service?q=*&fq=#{filter_query}:(%22#{target_name}%22)"
     else
-      if default_path
-        default_path
-      else
-        provider_path(self)
-      end
+      default_path || provider_path(self)
     end
   end
 
