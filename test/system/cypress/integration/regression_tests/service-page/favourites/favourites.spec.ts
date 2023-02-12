@@ -10,12 +10,10 @@ const user = UserFactory.create();
 
   it("should add and delete service from favourites - login user", () => {
     cy.loginAs(user);
-    // cy.get("[data-e2e='my-eosc-button']")
-    //   .click();
-    // cy.get("[data-e2e='backoffice']")
-    //   .click();
-    cy.visit("/favourites")
-    cy.contains("You have no favourite resources yet.")
+    cy.openUserDropdown();
+    cy.get("[data-e2e='favourites']")
+       .click();
+    cy.contains("You have no favourite services yet.")
       .should("be.visible");
     cy.get("[data-e2e='go-to-resources-button']")
       .click();
@@ -41,7 +39,7 @@ const user = UserFactory.create();
 
     cy.get("[data-e2e='favourite-checkbox']")
       .click();
-    cy.contains("You have no favourite resources yet.")
+    cy.contains("You have no favourite services yet.")
       .should("be.visible");
   });
 

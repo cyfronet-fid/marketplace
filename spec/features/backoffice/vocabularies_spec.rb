@@ -117,7 +117,7 @@ RSpec.feature "Vocabularies in backoffice" do
           click_on "Delete"
 
           expect(page).to have_text(
-            "This vocabulary has resources connected to it, remove associations to delete it."
+            "This vocabulary has services connected to it, remove associations to delete it."
           ).or have_text("This vocabulary has providers connected to it, remove associations to delete it.")
         end
 

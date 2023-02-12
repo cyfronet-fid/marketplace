@@ -22,11 +22,9 @@ describe("Scientific Domain", () => {
   });
 
   it("should create new scientific domain without parent", () => {
-    // cy.get("[data-e2e='my-eosc-button']")
-    //   .click();
-    // cy.get("[data-e2e='backoffice']")
-    //   .click();
-    cy.visit("/backoffice")
+    cy.openUserDropdown();
+    cy.get("[data-e2e='backoffice']")
+      .click();
     cy.location("href").should("contain", "/backoffice");
     cy.get("[data-e2e='scientific-domains']")
       .click();
@@ -114,7 +112,7 @@ describe("Scientific Domain", () => {
       .should("be.visible");
   });
 
-  it("shouldn't delete scientific domain with resources connected to it", () => {
+  it("shouldn't delete scientific domain with services connected to it", () => {
     cy.visit("/backoffice/scientific_domains");
     cy.get("[data-e2e='backoffice-scientific-domains-list'] li")
       .contains("Biological Sciences")
@@ -125,7 +123,7 @@ describe("Scientific Domain", () => {
       .should("be.visible");
   });
 
-  it("should delete scientific domain without resources", () => {
+  it("should delete scientific domain without services", () => {
     cy.visit("/backoffice/scientific_domains/new");
     cy.fillFormCreateScientificDomain(scientificDomain5, correctLogo);
     cy.get("[data-e2e='create-scientific-domain-btn']")

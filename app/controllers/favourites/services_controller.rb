@@ -27,11 +27,11 @@ class Favourites::ServicesController < FavouritesController
 
   def text
     if logged?
-      "You have added the first EOSC Resource to your favourites list. \n" \
-        "You can reach your Favourite Resources using My EOSC Marketplace menu available in the top right corner."
+      "You have added the first EOSC Service to your favourites list. \n" \
+        "You can reach your Favourite Services using My EOSC Marketplace menu available in the top right corner."
     else
-      "If you want this EOSC resource to be added to your Favourite Resources list, " \
-        "please log in. In other case, we won't be able to remember this resource as your favourite."
+      "If you want this EOSC service to be added to your Favourite Services list, " \
+        "please log in. In other case, we won't be able to remember this service as your favourite."
     end
   end
 

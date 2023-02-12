@@ -2,27 +2,27 @@ en:
   helpers:
     submit:
       service:
-        create: Create Resource
-        update: Update Resource
+        create: Create Service
+        update: Update Service
   backoffices:
     show:
       title: Backoffice
   backoffice:
     services:
       index:
-        title: Owned resources
+        title: Owned Services
       new:
-        link: Create new Resource
-        title: New Resource
+        link: Create new Service
+        title: New Service
       edit:
         link: Edit
-        title: Edit Resource
+        title: Edit Service
       destroy:
         link: Decommission
       publish:
         link: Publish
       publish_as_unverified:
-        link: Publish as unverified resource
+        link: Publish as unverified Service
       draft:
         link: Stop showing in the MP
       offers:

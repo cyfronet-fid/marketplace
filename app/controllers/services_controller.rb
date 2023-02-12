@@ -13,10 +13,9 @@ class ServicesController < ApplicationController
 
   # rubocop:disable Metrics/AbcSize
   def index
-    search_base_url = Mp::Application.config.search_base_url
-    if search_base_url
-      redirect_to search_base_url + "/search/service?q=*"
-    end
+    search_base_url = Mp::Application.config.search_service_base_url
+    enable_external_search = Mp::Application.config.enable_external_search
+    redirect_to search_base_url + "/search/service?q=*" if enable_external_search
 
     if params["object_id"].present?
       case params["type"]
@@ -66,7 +65,7 @@ class ServicesController < ApplicationController
     @similar_services = fetch_similar(@service.id, current_user&.id)
     @similar_services_title = "Similar services"
     @related_services = @service.target_relationships
-    @related_services_title = "Suggested compatible resources"
+    @related_services_title = "Suggested compatible services"
 
     @service_opinions = ServiceOpinion.joins(project_item: :offer).where(offers: { service_id: @service })
     @question = Service::Question.new(service: @service)

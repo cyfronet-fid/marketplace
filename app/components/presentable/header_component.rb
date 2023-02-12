@@ -41,6 +41,6 @@ class Presentable::HeaderComponent < ApplicationComponent
   end
 
   def new_question_prompt
-    @object.instance_of?(Service) ? "Ask a question about this resource?" : "Ask this provider a question"
+    @object.instance_of?(Service) ? "Ask a question about this service?" : "Ask this provider a question"
   end
 end

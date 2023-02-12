@@ -19,9 +19,9 @@
         .pl-4.pr-4
           %span.x-small.text-uppercase
             - if service_offers.size == 1
-              = _("The resource has 1 offer that matches your search criteria")
+              = _("The service has 1 offer that matches your search criteria")
             - else
-              = _("The resource has %{sos} offers that match your search criteria") % { sos: service_offers.size }
+              = _("The service has %{sos} offers that match your search criteria") % { sos: service_offers.size }
           = render "services/offers_box", service_offers: service_offers,
             service: service
   .right-extra-info

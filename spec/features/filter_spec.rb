@@ -47,7 +47,7 @@ RSpec.feature "Service filter" do
 
     visit services_path(q: "dd", providers: [provider.id], scientific_domains: [scientific_domain.id])
     find("a[href='/services/dd']").click
-    click_on "Resources"
+    click_on "Services"
 
     expect(page).to have_text("Looking for: dd")
     expect(page).to have_text("Providers: Cyfronet provider")

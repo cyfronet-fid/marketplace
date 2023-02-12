@@ -35,7 +35,7 @@ RSpec.feature "Provider browsing" do
 
     visit provider_path(provider)
 
-    expect(page).to have_content "Recently added resources"
+    expect(page).to have_content "Recently added services"
     expect(page).to have_content service.name
   end
 
@@ -44,10 +44,10 @@ RSpec.feature "Provider browsing" do
 
     visit provider_path(provider)
 
-    expect(body).to_not have_content "Recently added resources"
+    expect(body).to_not have_content "Recently added services"
   end
 
-  scenario "I can see 'Manage the resource' button if i am an admin provider and its eosc_registry" do
+  scenario "I can see 'Manage the service' button if i am an admin provider and its eosc_registry" do
     admin = create(:user)
     data_admin =
       create(:data_administrator, first_name: admin.first_name, last_name: admin.last_name, email: admin.email)
@@ -60,11 +60,11 @@ RSpec.feature "Provider browsing" do
 
     visit provider_path(provider)
 
-    expect(page).to have_link("Browse resources")
+    expect(page).to have_link("Browse services")
     expect(page).to have_content("Manage the provider")
   end
 
-  scenario "I cannnot see 'Manage the resource' button if it is 'eosc_registry' resource and i am not an admin" do
+  scenario "I cannnot see 'Manage the service' button if it is 'eosc_registry' service and i am not an admin" do
     user, admin = create_list(:user, 2)
     data_admin =
       create(:data_administrator, first_name: admin.first_name, last_name: admin.last_name, email: admin.email)
@@ -77,11 +77,11 @@ RSpec.feature "Provider browsing" do
 
     visit provider_path(provider)
 
-    expect(page).to have_link("Browse resources")
+    expect(page).to have_link("Browse services")
     expect(page).to_not have_content("Manage the provider")
   end
 
-  scenario "I cannnot see 'Manage the resource' button if it not eosc_registry provider and i am an admin" do
+  scenario "I cannnot see 'Manage the service' button if it not eosc_registry provider and i am an admin" do
     admin = create(:user)
     data_admin =
       create(:data_administrator, first_name: admin.first_name, last_name: admin.last_name, email: admin.email)
@@ -91,7 +91,7 @@ RSpec.feature "Provider browsing" do
 
     visit provider_path(provider)
 
-    expect(page).to have_link("Browse resources")
+    expect(page).to have_link("Browse services")
     expect(page).to_not have_content("Manage the provider")
   end
 end
