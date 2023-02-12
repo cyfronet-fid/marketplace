@@ -27,22 +27,22 @@ RSpec.feature "Service opinions" do
         checkin_sign_in_as(user)
         visit project_service_path(project, project_item)
 
-        click_on "Review resource"
+        click_on "Review service"
 
         expect(page).to have_content(
-          "How satisfied you are with the #{service.name} resource on a scale " \
+          "How satisfied you are with the #{service.name} service on a scale " \
             "of 1 - dissatisfied to 5 - very satisfied?"
         )
 
         expect(page).to have_content(
-          "Was adding the resource to the project useful for you on a scale " \
+          "Was adding the service to the project useful for you on a scale " \
             "of 1 - not useful at all to 5 - very useful?"
         )
       end
     end
   end
   [true, false].each do |internal|
-    context "for orderable resource" do
+    context "for orderable service" do
       let(:user) { create(:user, first_name: "John", last_name: "Doe") }
       let(:project) { create(:project, user: user) }
       let(:service) { create(:service, order_type: :order_required) }
@@ -53,10 +53,10 @@ RSpec.feature "Service opinions" do
         checkin_sign_in_as(user)
         visit project_service_path(project, project_item)
 
-        click_on "Review resource"
+        click_on "Review service"
 
         expect(page).to have_content(
-          "How satisfied you are with the #{service.name} resource on a scale " \
+          "How satisfied you are with the #{service.name} service on a scale " \
             "of 1 - dissatisfied to 5 - very satisfied?"
         )
         if internal
@@ -65,7 +65,7 @@ RSpec.feature "Service opinions" do
           )
         else
           expect(page).to have_content(
-            "Was adding the resource to the project useful for you on a scale " \
+            "Was adding the service to the project useful for you on a scale " \
               "of 1 - not useful at all to 5 - very useful?"
           )
         end

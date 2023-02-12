@@ -162,7 +162,7 @@ class Offer < ApplicationRecord
 
   def same_order_type_as_in_service
     unless order_type == service.order_type
-      errors.add(:order_type, "must be the same as in the resource: #{service.order_type}")
+      errors.add(:order_type, "must be the same as in the service: #{service.order_type}")
     end
   end
 
@@ -182,7 +182,7 @@ class Offer < ApplicationRecord
 
   def proper_oms?
     unless service.available_omses.include? primary_oms
-      errors.add(:primary_oms, "has to be available in the resource scope")
+      errors.add(:primary_oms, "has to be available in the service scope")
     end
   end
 

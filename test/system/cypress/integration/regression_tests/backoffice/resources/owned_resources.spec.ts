@@ -4,7 +4,7 @@ import { UserFactory } from "../../../../factories/user.factory";
 import { ParametersFactory } from "../../../../factories/resource.factory";
 import { ResourceMessages } from "../../../../fixtures/messages";
 
-describe("Owned resources", () => {
+describe("Owned services", () => {
   const user = UserFactory.create({roles: ["service_portfolio_manager"]});
   const [resource, resource2, resource3, resource4, resource5, resource6] = [...Array(6)].map(() =>
     ResourcesFactory.create()
@@ -25,12 +25,10 @@ describe("Owned resources", () => {
     cy.loginAs(user);
   });
   
-  it("should go to Owned resources in Backoffice and select one of resources", { tags: '@extended-test' }, () => {
-    // cy.get("[data-e2e='my-eosc-button']")
-    //   .click();
-    // cy.get("[data-e2e='backoffice']")
-    //   .click();
-    cy.visit("/backoffice")
+  it("should go to Owned services in Backoffice and select one of services", () => {
+    cy.openUserDropdown();
+    cy.get("[data-e2e='backoffice']")
+      .click();
     cy.location("href")
       .should("contain", "/backoffice");
     cy.get("[data-e2e='owned-services']")
@@ -40,17 +38,17 @@ describe("Owned resources", () => {
     cy.get("[data-e2e='service-id'] a")
       .eq(0)
       .click()
-    cy.contains("a","Edit resource")
+    cy.contains("a","Edit service")
       .should("be.visible")   
   });
 
-  it("should add new resource and published it", () => {
+  it("should add new service and published it", () => {
     cy.visit("/backoffice/services/new")
     cy.fillFormCreateResource(resource, correctLogo);
     cy.get("[data-e2e='submit-btn']").click()
     cy.contains("div.alert-success", message.successCreationMessage)
       .should("be.visible");
-    cy.contains("a","Edit resource")
+    cy.contains("a","Edit service")
       .should("be.visible") 
     cy.contains("a","Set parameters and offers")
       .should("be.visible")  
@@ -77,7 +75,7 @@ describe("Owned resources", () => {
     });
   });
 
-  it("shouldn't add new resource", ()=> {
+  it("shouldn't add new service", ()=> {
     cy.visit("/backoffice/services/new")
     cy.fillFormCreateResource({...resource, basicWebpage_url:"wrongFormat", contactEmail:"wrongFormat"}, wrongLogo);
     cy.get("[data-e2e='submit-btn']")
@@ -157,7 +155,7 @@ describe("Owned resources", () => {
         cy.get("[data-e2e='select-offer-btn']")
           .eq(2)
           .click();
-        cy.contains("a", "Go to the resource")
+        cy.contains("a", "Go to the service")
           .should("be.visible")
         cy.contains("a", "Configuration")
           .should("not.exist")
@@ -172,23 +170,23 @@ describe("Owned resources", () => {
     });
   });
 
-  it("should go to Resources in Backoffice and edit one of resources", () => {
+  it("should go to Resources in Backoffice and edit one of service", () => {
     cy.visit("/backoffice/services/new");
     cy.fillFormCreateResource(resource, correctLogo);
     cy.get("[data-e2e='submit-btn']")
       .click();
     cy.contains("a","Edit")
       .click();
-    cy.fillFormCreateResource({basicName: "Edited resource"}, correctLogo);
+    cy.fillFormCreateResource({basicName: "Edited service"}, correctLogo);
     cy.get("[data-e2e='submit-btn']")
       .click();
     cy.contains(".alert-success",message.successUpdationMessage)
       .should("be.visible");
-    cy.contains("h2", "Edited resource")
+    cy.contains("h2", "Edited service")
       .should("be.visible");
   });
   
-  it("should go to Preview mode, back to edit and create resource", ()=> {
+  it("should go to Preview mode, back to edit and create service", ()=> {
     cy.visit("/backoffice/services/new")
     cy.fillFormCreateResource(resource4, correctLogo);
     cy.get("[data-e2e='preview-btn']")
@@ -201,7 +199,7 @@ describe("Owned resources", () => {
       .click()
     cy.contains("div.alert-success", message.successCreationMessage)
       .should("be.visible");
-    cy.contains("a","Edit resource")
+    cy.contains("a","Edit service")
       .should("be.visible") 
     cy.contains("a","Set parameters and offers")
       .should("be.visible")   
@@ -218,7 +216,7 @@ describe("Owned resources", () => {
       .click();
     cy.contains("div.alert-success", message.successCreationMessage)
       .should("be.visible");
-    cy.contains("a","Edit resource")
+    cy.contains("a","Edit service")
       .should("be.visible");
     cy.contains("a","Set parameters and offers")
       .should("be.visible");
@@ -244,13 +242,13 @@ describe("Owned resources", () => {
       .should("be.visible");
   });
 
-  it("should go to Backoffice and create resource by filling in all fields", { tags: '@extended-test' }, () => {
+  it("should go to Backoffice and create service by filling in all fields", { tags: '@extended-test' }, () => {
     cy.visit("/backoffice/services/new")
     cy.fillFormCreateResource(resourceExtented, correctLogo);
     cy.get("[data-e2e='submit-btn']").click()
     cy.contains("div.alert-success", message.successCreationMessage)
       .should("be.visible");
-    cy.contains("a","Edit resource")
+    cy.contains("a","Edit service")
       .should("be.visible") 
     cy.contains("a","Set parameters and offers")
       .should("be.visible")  

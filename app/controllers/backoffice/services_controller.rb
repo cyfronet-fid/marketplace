@@ -53,7 +53,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     @similar_services = fetch_similar(@service.id, current_user&.id)
     @similar_services_title = "Similar services"
     @related_services = @service.target_relationships
-    @related_services_title = "Suggested compatible resources"
+    @related_services_title = "Suggested compatible services"
   end
 
   def new
@@ -79,7 +79,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     end
 
     remove_temp_data!
-    redirect_to backoffice_service_path(@service), notice: "New resource created successfully"
+    redirect_to backoffice_service_path(@service), notice: "New service created successfully"
   end
 
   def edit
@@ -102,12 +102,12 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     end
 
     remove_temp_data!
-    redirect_to backoffice_service_path(@service), notice: "Resource updated successfully"
+    redirect_to backoffice_service_path(@service), notice: "Service updated successfully"
   end
 
   def destroy
     Service::Destroy.new(@service).call
-    redirect_to backoffice_services_path, notice: "Resource removed successfully"
+    redirect_to backoffice_services_path, notice: "Service removed successfully"
   end
 
   def cant_edit(attribute)
@@ -146,7 +146,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
     @offers = @service.offers.where(status: :published).order(:created_at)
     @related_services = @service.target_relationships
-    @related_services_title = "Suggested compatible resources"
+    @related_services_title = "Suggested compatible services"
     @client = @client&.credentials&.expires_at.blank? ? Google::Analytics.new : @client
     @service.analytics = Analytics::PageViewsAndRedirects.new(@client).call(request.path)
     render :preview

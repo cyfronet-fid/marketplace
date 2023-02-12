@@ -144,7 +144,7 @@ class Backoffice::VocabulariesController < Backoffice::ApplicationController
                             edit them so they are not associated with this #{@type} anymore"
     elsif @vocabulary.try(:services).present?
       redirect_back fallback_location: send("backoffice_#{@vocabulary.model_name.element}_path", @vocabulary),
-                    alert: "This vocabulary has resources connected to it, remove associations to delete it."
+                    alert: "This vocabulary has services connected to it, remove associations to delete it."
     elsif @vocabulary.try(:providers).present?
       redirect_back fallback_location: send("backoffice_#{@vocabulary.model_name.element}_path", @vocabulary),
                     alert: "This vocabulary has providers connected to it, remove associations to delete it."

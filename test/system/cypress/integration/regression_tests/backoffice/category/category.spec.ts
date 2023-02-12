@@ -17,11 +17,9 @@ describe("Category", () => {
   });
   
   it("should create new category without parent", () => {
-    // cy.get("[data-e2e='my-eosc-button']")
-    //   .click();
-    // cy.get("[data-e2e='backoffice']")
-    //   .click();
-    cy.visit("/backoffice")
+    cy.openUserDropdown();
+    cy.get("[data-e2e='backoffice']")
+      .click();
     cy.location("href")
       .should("contain", "/backoffice");
     cy.get("[data-e2e='categories']")
@@ -86,7 +84,7 @@ describe("Category", () => {
       .should("be.visible");
   });
 
-  it("shouldn't delete category with resource connected to it", () => {
+  it("shouldn't delete category with services connected to it", () => {
     cy.visit("/backoffice/categories");
     cy.get("[data-e2e='backoffice-categories-list'] li")
       .eq(2)
@@ -96,7 +94,7 @@ describe("Category", () => {
       .should("be.visible");
   });
 
-  it("should delete category without resources", () => {
+  it("should delete category without services", () => {
     cy.visit("/backoffice/categories/new");
     cy.fillFormCreateCategory(category4, correctLogo);
     cy.get("[data-e2e='create-category-btn']")

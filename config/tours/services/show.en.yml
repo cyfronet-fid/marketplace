@@ -11,17 +11,17 @@ service_about_intro:
   steps:
     1:
       welcome: true
-      title: New resource presentation layout!
+      title: New service presentation layout!
       text: |-
-        The resources shown in the EOSC Portal come from a wide variety of sources.
-        A large number of resource attributes are being collected from providers during the resource onboarding process.
+        The services shown in the EOSC Portal come from a wide variety of sources.
+        A large number of service attributes are being collected from providers during the service onboarding process.
 
-        The new layout of the resource  presentation page highlights the most necessary information,
-        to ensure the presentation of a resource is helping users finding the ones, that are most relevant to their work.
+        The new layout of the service  presentation page highlights the most necessary information,
+        to ensure the presentation of a service is helping users finding the ones, that are most relevant to their work.
     2:
       title: Main section
       text: |-
-        The **main section** of the resource presentation page highlights the most important elements of the resource 
+        The **main section** of the service presentation page highlights the most important elements of the service 
         description such as the **name**, **logotype**, list of **providers** and all the **necessary links** you will 
         need to access and use it.
 
@@ -31,12 +31,12 @@ service_about_intro:
     3:
       title: About
       text: |-
-        The section “About” allows to analyse the resource description 
+        The section “About” allows to analyse the service description 
         and choose the offer appropriate for the desired use case. You will find out about:
 
         * **A high-level description** in fairly non-technical terms of what the service does,
-          functionality it provides, resources it enables to access and the benefit to a user delivered by it
-        * Information about the **resource offerings**
+          functionality it provides, services it enables to access and the benefit to a user delivered by it
+        * Information about the **service offerings**
 
       attachTo:
         element: "[data-shepherd-tour-target='service-about']"
@@ -44,13 +44,13 @@ service_about_intro:
     4:
       title: Classification
       text: |-
-        This section describes how the resource has been classified by the provider and who is it for. You will find out about:
+        This section describes how the service has been classified by the provider and who is it for. You will find out about:
 
-        * **Scientific Classification** - the branch of science / scientific discipline that the resource is related to
-        * **Categorisation** - a position in a tree-like hierarchy of resources of the same type
-        * **Target users** - user groups the resource is provided for
-        * **Locations** where the resource is provided
-        * **Languages** supported while the resource is being delivered and used
+        * **Scientific Classification** - the branch of science / scientific discipline that the service is related to
+        * **Categorisation** - a position in a tree-like hierarchy of services of the same type
+        * **Target users** - user groups the service is provided for
+        * **Locations** where the service is provided
+        * **Languages** supported while the service is being delivered and used
 
       attachTo:
         element: "[data-shepherd-tour-target='service-classification']"
@@ -58,8 +58,8 @@ service_about_intro:
     5:
       title: More about...
       text: |-
-        In order to review more advanced attributes of the resource, use the **More about...**
-        link to navigate to the resource **Details** page.
+        In order to review more advanced attributes of the service, use the **More about...**
+        link to navigate to the service **Details** page.
 
       attachTo:
         element: "[data-shepherd-tour-target='service-more-about']"
@@ -78,9 +78,9 @@ overview:
 
   steps:
     10:
-      title: Resource details
+      title: Service details
       text: |-
-        For each resource, you’ll find a **short description** of the resource as well as more **detailed information** such as the **maturity level of a resource, contact information, accessibility** or **other resources this one relies on.**
+        For each service, you’ll find a **short description** of the service as well as more **detailed information** such as the **maturity level of a service, contact information, accessibility** or **other services this one relies on.**
 
       attachTo:
         element: "[data-shepherd-tour-target='overview_10']"
@@ -88,7 +88,7 @@ overview:
     11:
       title: Feedback ribbon
       text: |-
-        Do you have feedback about the catalogue or any of the resources in it? Don’t hesitate to let us know.
+        Do you have feedback about the catalogue or any of the services in it? Don’t hesitate to let us know.
 
       attachTo:
         element: ".atlwdg-trigger"
@@ -97,7 +97,7 @@ overview:
   feedback:
     title: Congratulations!
     text: |-
-      You have completed the available resources tour guide. We hope you like our presentation for new researchers and find the provided information useful.
+      You have completed the available services tour guide. We hope you like our presentation for new researchers and find the provided information useful.
       **Please take a moment and tell us how helpful this tour was?**
     questions:
       -

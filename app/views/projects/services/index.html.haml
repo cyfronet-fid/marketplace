@@ -28,6 +28,10 @@
             locals: { project: @project })
     %hr.bottom-hr.mt-3.mb-4
     - unless @project.archived?
-      = link_to "Add service to this project", project_add_link(@project),
-        class: "btn btn btn-primary pl-5 pr-5 mr-5",
-        method: :post
+      - if external_search_enabled
+        = link_to _("Add service to this project"), project_add_external_link,
+          class: "btn btn btn-primary pl-5 pr-5 mr-5"
+      - else
+        = link_to _("Add service to this project"), project_add_path(@project),
+          class: "btn btn btn-primary pl-5 pr-5 mr-5",
+          method: :post
