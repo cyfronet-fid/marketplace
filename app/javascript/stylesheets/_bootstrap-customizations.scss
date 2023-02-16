@@ -5129,10 +5129,10 @@ abbr[title] {
         gap: 16px;
 
         a {
-          font-size: 14px;
+          font-size: 13px;
           color: $palette-white;
           border: 1px solid $palette-white;
-          padding: 1px 12px;
+          padding: 1px 8px;
           border-radius: 16px;
 
           &:hover {
@@ -5317,33 +5317,25 @@ abbr[title] {
       font-size: 32px;
       line-height: 38px;
       font-weight: 600;
-      margin: 0 0 100px;
+      margin: 35px 0 15px;
     }
 
-    .links {
-      width: 100%;
-      border-top: 1px solid $palette-solid-10;
-      font-weight: 600;
+    .lead {
+      font-size: 24px;
+      line-height: 30px;
+      font-weight: 500;
+    }
+
+    .blue-link {
+      color: $link-blue;
       font-size: 16px;
-      line-height: 19px;
+      margin-top: 25px;
+      font-weight: 600;
 
-      a {
-        width: 100%;
-        border-bottom: 1px solid $palette-solid-10;
-        padding: 20px 0 20px 15px;
-        display: block;
-        background: url('../images/landing_page/arrow-right.svg') no-repeat 99% 50%;
-        background-size: 9px 14px;
-        color: $palette-solid-80;
-        transition: all 0.5s ease;
-
-        &:hover {
-          color: $palette-blue;
-          background-position: 98% 50%;
-        }
+      &:hover {
+        color: $palette-navy;
       }
     }
-
     #zammad-feedback-form {
       background: none;
       border: none;
@@ -5550,10 +5542,6 @@ abbr[title] {
         font-size: 25px;
         line-height: 30px;
         margin: 0 0 50px;
-      }
-
-      .links {
-        margin-bottom: 70px;
       }
     }
 

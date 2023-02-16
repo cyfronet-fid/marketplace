@@ -31,8 +31,8 @@
               %a{ href: "https://search.marketplace.eosc-portal.eu/search/service?q=*" } Services
               %a{ href: "https://search.marketplace.eosc-portal.eu/search/publication?q=*" } Publications
               %a{ href: "https://search.marketplace.eosc-portal.eu/search/dataset?q=*" } Data
-              %a{ href: "https://search.marketplace.eosc-portal.eu/search/training?q=*" } Trainings
-              %a{ href: "#" } Providers
+              %a{ href: "https://search.marketplace.eosc-portal.eu/search/data-source?q=*" } Data Sources
+              %a{ href: "https://search.marketplace.eosc-portal.eu/search/training?q=*" } Training Materials
 
 %section.research-activity
   .container
@@ -120,10 +120,10 @@
       .col-md-6.col-sm-12
         = image_pack_tag "landing_page/landing-pic-01.png", alt: "We can provide you full support", class: "img-fluid"
       .col-md-5.col-sm-12
-        %h3 We can provide you<br>with full support for each research step
+        %h3 Create space for your<br> scientific activity
         %p.description
-          Get assistance from international technical teams who can provide advice on the
-          most suitable solutions to address your digital needs.
+          Adding the project will help you organize your services a into logical blocks and gaining
+          support in the scope of the created idea.
         %a.btn.btn-primary.mt-3{ href: "https://marketplace.eosc-portal.eu/projects" } Add project
 
 
@@ -197,11 +197,14 @@
   .container
     .row
       .col-md-5.col-sm-12
-        %h3 Have any questions?<br>Contact Us
-        .links
-          %a{ href: "#" } Knowledge Hub
-          %a{ href: "#" } Frequently Asked Questions
-          %a{ href: "#" } Lorem ipsum dolor amet
+        = image_pack_tag "landing_page/questions.svg", alt: "Have any questions?"
+        %h3 Have any questions?
+        %p.lead
+          Contact us if you encounter any<br>
+          issues while using the website or<br>
+          have any other suggestions that<br>
+          we should know about.
+        %a.blue-link{ href: "https://eosc-portal.eu/about/faqs" } Frequently Asked Questions >
       .col-md-2.col-sm-12
       .col-md-5.col-sm-12
         %script{ src: "https://code.jquery.com/jquery-3.6.0.min.js" }
@@ -267,7 +270,7 @@
         .col-md-9.col-sm-12
           %h3 Providers
         .col-md-3.col-sm-12
-          %a.see-all{ href: "#" } See all >
+          %a.see-all{ href: "https://marketplace.eosc-portal.eu/providers" } See all >
       .row.grid-row
         .col-md-3.col-6
           %a.sample-frame{ href: "#" }
@@ -291,7 +294,7 @@
         .col-md-9.col-sm-12
           %h3 Infrastructures and Platforms
         .col-md-3.col-sm-12
-          %a.see-all{ href: "#" } See all >
+          %a.see-all{ href: "https://marketplace.eosc-portal.eu/communities" } See all >
       .row.grid-row
         .col-md-3.col-6
           %a.sample-frame{ href: "#" }
