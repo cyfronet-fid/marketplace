@@ -5057,6 +5057,7 @@ abbr[title] {
 
   main {
     padding: 0;
+    margin: 0;
   }
 
   .breadcrumbs {
@@ -5311,7 +5312,7 @@ abbr[title] {
   }
 
   .questions {
-    padding: 95px 0 75px;
+    padding: 95px 0 105px;
 
     h3 {
       font-size: 32px;
@@ -5327,7 +5328,7 @@ abbr[title] {
     }
 
     .blue-link {
-      color: $link-blue;
+      color: $link-color;
       font-size: 16px;
       margin-top: 25px;
       font-weight: 600;
@@ -5358,64 +5359,35 @@ abbr[title] {
     }
   }
 
-  .grids {
-    padding: 90px 0 0;
-    background: linear-gradient(180deg, #EDF3FA 0%, rgba(237, 243, 250, 0) 100%);
-
-    .container-narrow {
-      width: 85%;
-      margin: auto;
-
-      &.mt-5 {
-        margin-top: 6rem !important;
-      }
-    }
+  .facilities {
+    padding: 0 0 75px;
+    background: url('../images/landing_page/facilities.png') bottom right no-repeat;
+    background-size: auto 625px;
+    min-height: 625px;
 
     h3 {
       font-size: 32px;
       line-height: 38px;
       font-weight: 600;
-      margin: 0;
+      margin: 195px 0 25px;
     }
 
-    .see-all {
-      font-size: 20px;
-      line-height: 30px;
-      color: $palette-solid-80;
-      margin-top: 5px;
-      float: right;
-      transition: all 0.5s ease;
+    .blue-link {
+      color: $link-color;
+      font-size: 16px;
+      margin-top: 20px;
+      font-weight: 600;
 
       &:hover {
-        color: $palette-blue;
-        margin-right: 8px;
-      }
-    }
-
-    .grid-row {
-      margin: 40px -15px 25px;
-    }
-
-    .sample-frame {
-      width: 100%;
-      background: $palette-solid-30;
-      height: 95px;
-      display: block;
-      transition: all 0.5s ease;
-
-      &:hover {
-        box-shadow: 0 0 10px 10px RGB(0, 0, 0, 0.1);
+        color: $palette-navy;
       }
     }
   }
+
 }
 
 @media (max-width: 768px) {
   .landing_page {
-
-    main {
-      margin-bottom: 50px;
-    }
 
     .landing-header {
       padding: 50px 0 50px;
@@ -5519,8 +5491,8 @@ abbr[title] {
       padding: 45px 15px 60px;
 
       h3 {
-        font-size: 25px;
-        line-height: 30px;
+        font-size: 20px;
+        line-height: 25px;
         margin: 25px 0 25px;
       }
 
@@ -5539,35 +5511,39 @@ abbr[title] {
       padding: 70px 15px 65px;
 
       h3 {
-        font-size: 25px;
-        line-height: 30px;
-        margin: 0 0 50px;
+        font-size: 22px;
+        line-height: 25px;
+        margin: 30px 0 15px;
+      }
+
+      .lead {
+        font-size: 17px;
+        line-height: 22px;
+      }
+
+      .contact-form {
+        margin-top: 40px;
       }
     }
 
-    .grids {
-      padding: 45px 0 0;
+    .facilities {
+      padding: 0 15px 55px;
+      background: url('../images/landing_page/facilities.png') 30% 100% no-repeat;
+      background-size: auto 100%;
+      min-height: 310px;
 
       h3 {
-        font-size: 25px;
+        font-size: 22px;
         line-height: 30px;
-        margin: 0;
-      }
-      .grid-row {
-        margin: 40px -15px 0;
-      }
-      .sample-frame {
-        height: 75px;
-        margin-bottom: 20px;
+        margin: 50px 0 25px;
       }
 
-      .container-narrow {
-        &.mt-5 {
-          margin-top: 4rem !important;
-        }
-
+      .blue-link {
+        font-size: 15px;
+        margin-top: 20px;
       }
     }
+
   }
 }
 

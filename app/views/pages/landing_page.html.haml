@@ -206,7 +206,7 @@
           we should know about.
         %a.blue-link{ href: "https://eosc-portal.eu/about/faqs" } Frequently Asked Questions >
       .col-md-2.col-sm-12
-      .col-md-5.col-sm-12
+      .col-md-5.col-sm-12.contact-form
         %script{ src: "https://code.jquery.com/jquery-3.6.0.min.js" }
         %button{ id: "zammad-feedback-form" }
         %script{ src: "https://eosc-helpdesk.eosc-portal.eu/assets/form/form.js", id: "zammad_form_script" }
@@ -263,53 +263,13 @@
             });
           });
 
-%section.grids
+%section.facilities
   .container
-    .container-narrow
-      .row
-        .col-md-9.col-sm-12
-          %h3 Providers
-        .col-md-3.col-sm-12
-          %a.see-all{ href: "https://marketplace.eosc-portal.eu/providers" } See all >
-      .row.grid-row
-        .col-md-3.col-6
-          %a.sample-frame{ href: "#" }
-        .col-md-3.col-6
-          %a.sample-frame{ href: "#" }
-        .col-md-3.col-6
-          %a.sample-frame{ href: "#" }
-        .col-md-3.col-6
-          %a.sample-frame{ href: "#" }
-      .row
-        .col-md-3.col-6
-          %a.sample-frame{ href: "#" }
-        .col-md-3.col-6
-          %a.sample-frame{ href: "#" }
-        .col-md-3.col-6
-          %a.sample-frame{ href: "#" }
-        .col-md-3.col-6
-          %a.sample-frame{ href: "#" }
-    .container-narrow.mt-5
-      .row
-        .col-md-9.col-sm-12
-          %h3 Infrastructures and Platforms
-        .col-md-3.col-sm-12
-          %a.see-all{ href: "https://marketplace.eosc-portal.eu/communities" } See all >
-      .row.grid-row
-        .col-md-3.col-6
-          %a.sample-frame{ href: "#" }
-        .col-md-3.col-6
-          %a.sample-frame{ href: "#" }
-        .col-md-3.col-6
-          %a.sample-frame{ href: "#" }
-        .col-md-3.col-6
-          %a.sample-frame{ href: "#" }
-      .row
-        .col-md-3.col-6
-          %a.sample-frame{ href: "#" }
-        .col-md-3.col-6
-          %a.sample-frame{ href: "#" }
-        .col-md-3.col-6
-          %a.sample-frame{ href: "#" }
-        .col-md-3.col-6
-          %a.sample-frame{ href: "#" }
+    .row
+      .col-md-6.col-sm-12
+        %h3
+          Facilities that provide resources and services to the scientific community to conduct research
+        %p
+          %a.blue-link{ href: "#" } Over 250 providers >
+        %p
+          %a.blue-link{ href: "#" } 64 Communities and infrastructures >
