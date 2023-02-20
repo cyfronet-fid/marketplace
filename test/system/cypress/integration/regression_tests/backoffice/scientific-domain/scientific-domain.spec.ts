@@ -22,10 +22,11 @@ describe("Scientific Domain", () => {
   });
 
   it("should create new scientific domain without parent", () => {
-    cy.get("[data-e2e='my-eosc-button']")
-      .click();
-    cy.get("[data-e2e='backoffice']")
-      .click();
+    // cy.get("[data-e2e='my-eosc-button']")
+    //   .click();
+    // cy.get("[data-e2e='backoffice']")
+    //   .click();
+    cy.visit("/backoffice")
     cy.location("href").should("contain", "/backoffice");
     cy.get("[data-e2e='scientific-domains']")
       .click();

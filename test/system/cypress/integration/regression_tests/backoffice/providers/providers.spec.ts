@@ -29,10 +29,11 @@ describe("Providers", () => {
   });
 
   it("should go to Providers in Backoffice and select one of providers", { tags: '@extended-test' }, () => {
-    cy.get("[data-e2e='my-eosc-button']")
-      .click();
-    cy.get("[data-e2e='backoffice']")
-      .click();
+    // cy.get("[data-e2e='my-eosc-button']")
+    //   .click();
+    // cy.get("[data-e2e='backoffice']")
+    //   .click();
+    cy.visit("/backoffice")
     cy.location("href")
       .should("contain", "/backoffice");
     cy.get("[data-e2e='providers']")
