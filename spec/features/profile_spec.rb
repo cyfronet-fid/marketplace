@@ -11,6 +11,7 @@ RSpec.feature "Profile page" do
     before { checkin_sign_in_as(user) }
 
     scenario "can be seen by authenticated user" do
+      allow(Rails.configuration).to receive(:whitelabel).and_return(true)
       visit root_path
 
       click_link("Profile", match: :first)

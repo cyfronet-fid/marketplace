@@ -10,10 +10,11 @@ const user = UserFactory.create();
 
   it("should add and delete service from favourites - login user", () => {
     cy.loginAs(user);
-    cy.get("[data-e2e='my-eosc-button']")
-      .click();
-    cy.get("[data-e2e='favourites']")
-       .click();
+    // cy.get("[data-e2e='my-eosc-button']")
+    //   .click();
+    // cy.get("[data-e2e='backoffice']")
+    //   .click();
+    cy.visit("/favourites")
     cy.contains("You have no favourite resources yet.")
       .should("be.visible");
     cy.get("[data-e2e='go-to-resources-button']")

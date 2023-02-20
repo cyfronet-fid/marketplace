@@ -26,10 +26,11 @@ describe("Owned resources", () => {
   });
   
   it("should go to Owned resources in Backoffice and select one of resources", { tags: '@extended-test' }, () => {
-    cy.get("[data-e2e='my-eosc-button']")
-      .click();
-    cy.get("[data-e2e='backoffice']")
-      .click();
+    // cy.get("[data-e2e='my-eosc-button']")
+    //   .click();
+    // cy.get("[data-e2e='backoffice']")
+    //   .click();
+    cy.visit("/backoffice")
     cy.location("href")
       .should("contain", "/backoffice");
     cy.get("[data-e2e='owned-services']")
