@@ -17,10 +17,11 @@ describe("Category", () => {
   });
   
   it("should create new category without parent", () => {
-    cy.get("[data-e2e='my-eosc-button']")
-      .click();
-    cy.get("[data-e2e='backoffice']")
-      .click();
+    // cy.get("[data-e2e='my-eosc-button']")
+    //   .click();
+    // cy.get("[data-e2e='backoffice']")
+    //   .click();
+    cy.visit("/backoffice")
     cy.location("href")
       .should("contain", "/backoffice");
     cy.get("[data-e2e='categories']")

@@ -92,5 +92,9 @@ module Mp
       else
         Rails.env.test?
       end
+
+    config.enable_external_search = ENV.fetch("MP_ENABLE_EXTERNAL_SEARCH", false)
+
+    config.whitelabel = ENV.fetch("MP_WHITELABEL", false)
   end
 end

@@ -53,4 +53,33 @@ module ApplicationHelper
   def placeholder(variant, text = "Placeholder - link to about", link = about_path)
     render "layouts/placeholder", text: text, link: link, variant: variant
   end
+
+  def eosc_commons_profile_links
+    links = []
+    links.push({ href: "/projects", caption: _("My projects") })
+    links.push({ href: "/favourites", caption: _("Favourite resources"), "data-e2e": "favourites" })
+    links.push({ href: "/profile", caption: _("Profile"), "data-e2e": "profile" })
+    links.push({ href: "/api_docs", caption: _("Marketplace API"), "data-e2e": "marketplace-api" })
+
+    # if show_administrative_sections?
+    #   .border-top
+    if policy(%i[backoffice backoffice]).show?
+      links.push({ href: backoffice_path, caption: _("Backoffice"), "data-e2e": "backoffice" })
+    end
+    if policy(%i[admin admin]).show?
+      links.push({ href: admin_path, caption: _("Admin") })
+      links.push({ href: executive_path, caption: _("Executive") }) if policy(%i[executive executive]).show?
+    end
+    links.to_json
+  end
+
+  def external_search_url
+    if Rails.configuration.enable_external_search && Rails.configuration.search_service_base_url.present?
+      Rails.configuration.search_service_base_url
+    end
+  end
+
+  def whitelabel
+    Rails.configuration.whitelabel
+  end
 end

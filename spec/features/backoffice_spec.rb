@@ -27,6 +27,7 @@ RSpec.feature "Backoffice" do
     let(:user) { create(:user, roles: [:service_portfolio_manager]) }
 
     scenario "I see Backoffice link in navbar" do
+      allow(Rails.configuration).to receive(:whitelabel).and_return(true)
       visit root_path
 
       expect(page).to have_content("Backoffice")
@@ -48,6 +49,7 @@ RSpec.feature "Backoffice" do
     end
 
     scenario "I see Backoffice link in navbar" do
+      allow(Rails.configuration).to receive(:whitelabel).and_return(true)
       visit root_path
 
       expect(page).to have_content("Backoffice")
