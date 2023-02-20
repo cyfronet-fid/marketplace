@@ -673,7 +673,6 @@ DEPENDENCIES
   gretel
   haml-rails
   haml_lint
-  html2haml
   image_processing
   jira-ruby
   json-schema

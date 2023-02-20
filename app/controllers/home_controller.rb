@@ -9,51 +9,54 @@ class HomeController < ApplicationController
 
     # this hack with the research_step is temporary and should be integrated into CMS backend
     # @root_categories_with_logos = @root_categories.with_attached_logo.reject { |c| c.name == "Other" }
+    # rubocop:disable Layout/LineLength
     @root_categories_with_logos = [
       {
         name: "Discover Research Outputs",
         logo: "research_step/ico-01.png",
-        url: "https://search.eosc-portal.eu/search/all?q=*&fq=unified_categories:(%22Discover%20Research%20Outputs%22)"
+        url: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:(%22Discover%20Research%20Outputs%22)"
       },
       {
         name: "Publish Research Outputs",
         logo: "research_step/ico-02.png",
-        url: "https://search.eosc-portal.eu/search/all?q=*&fq=unified_categories:(%22Publish%20Research%20Outputs%22)"
+        url: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:(%22Publish%20Research%20Outputs%22)"
       },
       {
         name: "Access Computing and Storage Resources",
         logo: "research_step/ico-03.png",
         url:
-          "https://search.eosc-portal.eu/search/all?q=*&fq=unified_categories:(%22Access%20Computing%20and%20Storage%20Resources%22)"
+          "#{external_search_base_url}/search/all?q=*&fq=unified_categories:(%22Access%20Computing%20and%20Storage%20Resources%22)"
       },
       {
         name: "Process and Analyse",
         logo: "research_step/ico-04.png",
-        url: "https://search.eosc-portal.eu/search/all?q=*&fq=unified_categories:(%22Process%20and%20Analyse%22)"
+        url: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:(%22Process%20and%20Analyse%22)"
       },
       {
         name: "Access Research Infrastructures",
         logo: "research_step/ico-05.png",
         url:
-          "https://search.eosc-portal.eu/search/all?q=*&fq=unified_categories:(%22Access%20Research%20Infrastructures%22)"
+          "#{external_search_base_url}/search/all?q=*&fq=unified_categories:(%22Access%20Research%20Infrastructures%22)"
       },
       {
         name: "Manage Research Data",
         logo: "research_step/ico-06.png",
-        url: "https://search.eosc-portal.eu/search/all?q=*&fq=unified_categories:(%22Manage%20Research%20Data%22)"
+        url: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:(%22Manage%20Research%20Data%22)"
       },
       {
         name: "Access Training Material",
         logo: "research_step/ico-07.png",
-        url: "https://search.eosc-portal.eu/search/all?q=*&fq=unified_categories:(%22Access%20Training%20Material%22)"
+        url: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:(%22Access%20Training%20Material%22)"
       },
       {
         name: "Find Instruments & Equipment",
         logo: "research_step/ico-09.png",
         url:
-          "https://search.eosc-portal.eu/search/all?q=*&fq=unified_categories:(%22Find%20Instruments%20%5C%26%20Equipment%22)"
+          "#{external_search_base_url}/search/all?q=*&fq=unified_categories:(%22Find%20Instruments%20%5C%26%20Equipment%22)"
       }
     ]
+
+    # rubocop:enable Layout/LineLength
 
     @main_scientific_domains =
       ScientificDomain.with_attached_logo.roots.partition { |sd| sd.name != "Other" }.flatten(1)

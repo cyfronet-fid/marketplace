@@ -8,8 +8,6 @@
       %div
       %div
   %body{ class: "#{action_name}" }
-    - if current_page?("/")
-      .main-elements
     - if ENV["MP_INSTANCE"]
       = render "layouts/badge"
     = render "layouts/flash"

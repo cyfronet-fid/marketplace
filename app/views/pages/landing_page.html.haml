@@ -9,38 +9,36 @@
           %p
             Browse through over 3 millions of research and innovation tools and services, thousands of datasets
             from a wide scale of research domains from renowned European service providers.
-          .searchbar
+          .searchbar{ "data-controller": "external" }
             .searchbar__input
               %label.sr-only{ for: "search" }= _("Search")
               = text_field_tag :q, params[:q], class: "autocomplete-input",
-                                               placeholder: "Find resource...",
-                                               "data-e2e": "searchbar-input",
-                                               "data-probe": ""
-              - if params[:q].present? && params.permitted?
-                %a.search-clear{ href: url_for(params.except(:q, :sort, :page)), title: _("Clear search"),
-                "data-e2e": "search-clear-btn" }
-                  .fas.fa-times
+                placeholder: "Find resource...",
+                "data-e2e": "searchbar-input",
+                "data-external-target": "query",
+                "data-action": "keydown.esc->external#clear keydown.enter->external#search input->external#toggleClear",
+                "data-probe": ""
+              %a.d-none.search-clear{ "data-external-target": "clear",
+                                      "data-action": "click->external#clear",
+                                      title: _("Clear search"),
+                                      "data-e2e": "search-clear-btn" }
+                .fas.fa-times
             .input-group-append
-              %button#query-submit.input-group-text.bg-white{ "data-e2e": "query-submit-btn" }
+              %button#query-submit.input-group-text.bg-white{ "data-external-target": "search",
+              "data-action": "click->external#search", "data-e2e": "query-submit-btn" }
                 %i.fas.fa-search
           .browse
             .browse-label
               Browse by category
             .solutions-box
-              %a{ href: "https://search.marketplace.eosc-portal.eu/search/software?q=*" } Software
-              %a{ href: "https://search.marketplace.eosc-portal.eu/search/service?q=*" } Services
-              %a{ href: "https://search.marketplace.eosc-portal.eu/search/publication?q=*" } Publications
-              %a{ href: "https://search.marketplace.eosc-portal.eu/search/dataset?q=*" } Data
-              %a{ href: "https://search.marketplace.eosc-portal.eu/search/data-source?q=*" } Data Sources
-              %a{ href: "https://search.marketplace.eosc-portal.eu/search/training?q=*" } Training Materials
-
+              = render partial: "pages/solutions_box_link", collection: LandingPageHelper::SEARCH_ITEMS, as: :item
 %section.research-activity
   .container
     %h2.text-center Search by Research Activity
 
     .row
       .col-md-4.col-sm-12
-        %a.activity{ href: "https://search.marketplace.eosc-portal.eu/search/all?q=*&fq=unified_categories:
+        %a.activity{ href: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:
         (%22Discover%20Research%20Outputs%22)" }
           .activity-icon
             = image_pack_tag "landing_page/ico-01.svg", alt: "Discover Research Outputs"
@@ -49,7 +47,7 @@
             .activity-subtitle
               Find datasets, scientific publications, software.
       .col-md-4.col-sm-12
-        %a.activity{ href: "https://search.marketplace.eosc-portal.eu/search/all?q=*&fq=unified_categories:
+        %a.activity{ href: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:
         (%22Manage%20Research%20Data%22)" }
           .activity-icon
             = image_pack_tag "landing_page/ico-09.svg", alt: "Data Management"
@@ -58,7 +56,7 @@
             .activity-subtitle
               Find robust, feature-rich and user-friendly services for Data Management.
       .col-md-4.col-sm-12
-        %a.activity{ href: "https://search.marketplace.eosc-portal.eu/search/all?q=*&fq=unified_categories:
+        %a.activity{ href: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:
         (%22Access%20Research%20Infrastructures%22)" }
           .activity-icon
             = image_pack_tag "landing_page/ico-07.svg", alt: "Access research infrastructures"
@@ -69,7 +67,7 @@
               your use case.
     .row
       .col-md-4.col-sm-12
-        %a.activity{ href: "https://search.marketplace.eosc-portal.eu/search/all?q=*&fq=unified_categories:
+        %a.activity{ href: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:
         (%22Find%20Instruments%20%5C%26%20Equipment%22)" }
           .activity-icon
             = image_pack_tag "landing_page/ico-05.svg", alt: "Find Instruments & Equipment"
@@ -78,7 +76,7 @@
             .activity-subtitle
               Find research instruments and scientific equipment.
       .col-md-4.col-sm-12
-        %a.activity{ href: "https://search.marketplace.eosc-portal.eu/search/all?q=*&fq=unified_categories:
+        %a.activity{ href: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:
         (%22Publish%20Research%20Outputs%22)" }
           .activity-icon
             = image_pack_tag "landing_page/ico-02.svg", alt: "Publish research outputs"
@@ -87,7 +85,7 @@
             .activity-subtitle
               Store, backup, archive your data, publications, software.
       .col-md-4.col-sm-12
-        %a.activity{ href: "https://search.marketplace.eosc-portal.eu/search/all?q=*&fq=unified_categories:
+        %a.activity{ href: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:
         (%22Access%20Computing%20and%20Storage%20Resources%22)" }
           .activity-icon
             = image_pack_tag "landing_page/ico-04.svg", alt: "Access computing and storage resources"
@@ -97,7 +95,7 @@
               Find HPC, IT centres for science, cloud computing, cloud container computing, online storage.
     .row
       .col-md-4.col-sm-12
-        %a.activity{ href: "https://search.marketplace.eosc-portal.eu/search/all?q=*&fq=unified_categories:
+        %a.activity{ href: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:
         (%22Process%20and%20Analyse%22)" }
           .activity-icon
             = image_pack_tag "landing_page/ico-03.svg", alt: "Process and analyse"
@@ -106,7 +104,7 @@
             .activity-subtitle
               Verify, organise, transform and integrate data, then export it in the format that works with your tools.
       .col-md-4.col-sm-12
-        %a.activity{ href: "https://search.marketplace.eosc-portal.eu/search/all?q=*&fq=unified_categories:
+        %a.activity{ href: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:
         (%22Access%20Training%20Material%22)" }
           .activity-icon
             = image_pack_tag "landing_page/ico-06.svg", alt: "Access training material"
@@ -139,7 +137,7 @@
           data to support EU open science
     .row.mt-5
       .col-md-3.col-sm-12
-        %a.eosc-info{ href: "https://search.marketplace.eosc-portal.eu/" }
+        %a.eosc-info{ href: "#{external_search_base_url}/" }
           .eosc-info-icon
             = image_pack_tag "landing_page/browse-marketplace.svg", alt: "Browse Marketplace"
           .eosc-info-texts
