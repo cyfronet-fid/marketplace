@@ -16,6 +16,7 @@
                 placeholder: "Find resource...",
                 "data-e2e": "searchbar-input",
                 "data-external-target": "query",
+                "data-base": external_search_base_url,
                 "data-action": "keydown.esc->external#clear keydown.enter->external#search input->external#toggleClear",
                 "data-probe": ""
               %a.d-none.search-clear{ "data-external-target": "clear",
@@ -146,7 +147,7 @@
               Browse through over 3 million research and innovation tools and services, thousands of datasets
               from a wide range of research domains from renowned European service providers.
       .col-md-3.col-sm-12
-        %a.eosc-info{ href: "#" }
+        %a.eosc-info{ href: "https://eosc-user-dashboard.docker-fid.grid.cyf-kr.edu.pl/" }
           .eosc-info-icon
             = image_pack_tag "landing_page/dashboard.svg", alt: "My EOSC Dashboard"
           .eosc-info-texts
@@ -193,7 +194,7 @@
         in the EOSC communities.
     .row
       .carousel-box
-        Carousel here
+        = render "pages/discover_communities", communities: @discover_communities
 
 %section.questions
   .container

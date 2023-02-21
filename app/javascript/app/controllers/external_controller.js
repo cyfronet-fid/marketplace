@@ -19,6 +19,6 @@ export default class extends Controller {
   }
 
   search() {
-    window.location = `https://search.marketplace.eosc-portal.eu/search/all?q=${this.queryTarget.value || "*"}`;
+    window.location = `${this.queryTarget.dataset.base}/search/all?q=${this.queryTarget.value || "*"}`;
   }
 }

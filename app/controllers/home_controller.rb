@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class HomeController < ApplicationController
+  include LandingPageHelper
   before_action :load_services, :load_platforms, :load_providers, :load_target_users, :load_opinion
 
   def index

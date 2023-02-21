@@ -1939,6 +1939,53 @@ h5 {
   }
 }
 
+.widget-header-place {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 26px;
+  color: $palette-new-darkblue;
+}
+
+.widget-header-theme {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 26px;
+  color: $palette-new-darkblue;
+}
+
+.interested {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 6px 16px;
+  background: $palette-new-background;
+  border-radius: 10px;
+}
+
+.interested-text {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 18px;
+  color: $palette-new-blue;
+}
+
+.going-text {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  color: $palette-new-lightblue;
+}
+
 .carousel-indicators li,
 .carousel-indicators .active {
   width: 15px;

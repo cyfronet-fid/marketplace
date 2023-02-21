@@ -1,0 +1,11 @@
+%div
+  .row.pt-4
+    .col-4.text-center
+      %a{ href: "#{item[:path]}", target: "_blank" }= image_pack_tag "#{item[:image]}"
+    .col-8
+      .row.pt-3
+        %span.widget-header-theme= item[:title]
+      .row.pt-2
+        .col-12
+          .row.pt-3.pr-3
+            %span.widget-header-place= item[:body]
