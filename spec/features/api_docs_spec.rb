@@ -64,13 +64,11 @@ RSpec.feature "Api docs page" do
 
       expect(page).to have_content("Welcome to the EOSC")
       expect(page).to have_content("Successfully authenticated from Checkin account.")
-
       find("a", class: "account-dropdown").click
       find("a", id: "logout-btn").click
       expect(page).to have_content("Signed out successfully.")
 
       find_link("Login").click
-      sleep(10)
       expect(page).to have_content("Successfully authenticated from Checkin account.")
 
       visit api_docs_path
