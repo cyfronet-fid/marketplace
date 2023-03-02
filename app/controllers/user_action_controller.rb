@@ -6,7 +6,7 @@ class UserActionController < ApplicationController
     return if Mp::Application.config.recommender_host.nil?
 
     request_body = {
-      timestamp: params[:timestamp],
+      timestamp: Time.now.utc.iso8601,
       source: JSON.parse(params[:source].to_json),
       target: JSON.parse(params[:target].to_json),
       action: JSON.parse(params[:user_action].to_json),
