@@ -92,6 +92,12 @@ class Services::SummariesController < Services::ApplicationController
       client_id: "marketplace"
     }
 
-    Probes::ProbesJob.perform_later(request_body.to_json)
+    if %w[all recommender].include? Mp::Application.config.user_actions_target
+      Probes::ProbesJob.perform_later(request_body.to_json)
+    end
+
+    if %w[all jms].include? Mp::Application.config.user_actions_target
+      Jms::PublishJob.perform_later(request_body.to_json, :user_actions)
+    end
   end
 end
