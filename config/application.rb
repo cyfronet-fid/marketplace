@@ -71,13 +71,8 @@ module Mp
     config.recommender_host = ENV["RECOMMENDER_HOST"]
     config.recommendation_engine = ENV["RECOMMENDATION_ENGINE"] || "RL"
     config.auth_mock = ENV["AUTH_MOCK"]
-    config.eosc_commons_base_url =
-      if ENV["EOSC_COMMONS_BASE_URL"].present?
-        ENV["EOSC_COMMONS_BASE_URL"]
-      else
-        "https://s3.cloud.cyfronet.pl/eosc-portal-common/"
-      end
-    config.eosc_commons_env = ENV["EOSC_COMMONS_ENV"].present? ? ENV["EOSC_COMMONS_ENV"] : "production"
+    config.eosc_commons_base_url = "https://s3.cloud.cyfronet.pl/eosc-portal-common/pr-227-header-mods/"
+    config.eosc_commons_env = "development"
 
     config.user_actions_target = ENV["USER_ACTIONS_TARGET"].present? ? ENV["USER_ACTIONS_TARGET"] : "all"
 
