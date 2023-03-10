@@ -13,4 +13,8 @@ module LandingPageHelper
   def external_search_base_url
     Rails.configuration.search_service_base_url
   end
+
+  def user_dashboard_url
+    Rails.configuration.user_dashboard_url
+  end
 end
