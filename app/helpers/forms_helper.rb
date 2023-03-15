@@ -33,7 +33,7 @@ module FormsHelper
 
   def contact_form_message
     message =
-      "  Accept CESSDA <a target=\"_blank\" href=\"https://eosc-helpdesk.scc.kit.edu/privacy-policy\">" +
+      "  Accept EOSC Helpdesk <a target=\"_blank\" href=\"https://eosc-helpdesk.scc.kit.edu/privacy-policy\">" +
         "Data Privacy Policy</a> & <a target=\"_blank\" " +
         "href=\"https://eosc-helpdesk.scc.kit.edu/aup\">Acceptable Use Policy</a>"
     message.html_safe
