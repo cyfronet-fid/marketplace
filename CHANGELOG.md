@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
+## [3.47.1] 2023-03-16
+
+## [3.47.0] 2023-03-14
+
+### Changed
+- New landing page (@jarekzet, @goreck888)
 
 ## [3.46.0] 2023-02-28
 
