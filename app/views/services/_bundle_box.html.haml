@@ -15,5 +15,5 @@
       %label
         = link_to service_offers_path(offer.service, customizable_project_item: { offer_id: offer.iid }),
         "data-probe": "", "data-service-id": offer.service.id, method: :put do
-          %span.btn.btn-primary.font-webtn-linkight-bold
+          %span.btn.btn-primary.btn-link.font-weight-bold
             = _("Select a bundle")
