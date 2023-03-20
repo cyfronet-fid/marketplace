@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 Please view this file on the master branch, on stable branches it's out of date.
 ## [3.47.1] 2023-03-16
 
+## [3.47.2]
+
+### Changed
+- Primary styles colors (@goreck888)
+
 ## [3.47.0] 2023-03-14
 
 ### Changed
