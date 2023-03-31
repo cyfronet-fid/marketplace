@@ -9,7 +9,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [3.47.2]
 
 ### Changed
-- Primary styles colors (@goreck888)
+- Adjustment buttons color to the new landing page (@goreck888)
 
 ## [3.47.1] 2023-03-16
 
