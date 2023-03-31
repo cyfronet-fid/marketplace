@@ -7,12 +7,12 @@
   %ul
     %li
       %a.dropdown-item.dropdown-details{ href:
-        Mp::Application.config.providers_dashboard_url + "/dashboard/#{catalogue_pid(provider)}/#{provider.pid}/stats",
+        providers_dashboard_url + "/dashboard/#{catalogue_pid(provider)}/#{provider.pid}/stats",
         target: :_blank, "data-probe": "" }
         = _("Provider dashboard")
     - if catalogue_pid(provider) == "eosc"
       %li
         %a.dropdown-item.dropdown-details{ href:
-          Mp::Application.config.providers_dashboard_url + "/provider/update/#{provider.pid}",
+          providers_dashboard_url + "/provider/update/#{provider.pid}",
           target: :_blank, "data-probe": "" }
           = _("Edit provider details")
