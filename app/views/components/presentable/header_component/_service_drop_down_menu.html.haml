@@ -7,7 +7,7 @@
   %ul
     %li
       %a.dropdown-item.dropdown-details{ href:
-        Mp::Application.config.providers_dashboard_url +
+        providers_dashboard_url +
         "/dashboard/#{catalogue_pid(service)}/" +
         "#{resource_organisation_pid(service)}/resource-dashboard/#{service.pid}/stats",
         target: :_blank, "data-probe": "", "data-service-id": service.id }
@@ -15,7 +15,7 @@
     - if catalogue_pid(service) == "eosc"
       %li
         %a.dropdown-item.dropdown-details{ href:
-                  Mp::Application.config.providers_dashboard_url +
+                  providers_dashboard_url +
                   "/provider/#{resource_organisation_pid(service)}/resource/update/#{service.pid}",
                   target: :_blank, "data-probe": "", "data-service-id": service.id }
           = _("Edit service details")

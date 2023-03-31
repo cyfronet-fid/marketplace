@@ -17,4 +17,8 @@ module LandingPageHelper
   def user_dashboard_url
     Rails.configuration.user_dashboard_url
   end
+
+  def providers_dashboard_url
+    Rails.configuration.providers_dashboard_url
+  end
 end
