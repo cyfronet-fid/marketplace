@@ -7,12 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [3.47.3]
+## [3.47.3] 2023-04-03
 
 ### Fixed
 - Path flow between the marketplace and the user dashboard (@goreck888)
 
-## [3.47.2]
+## [3.47.2] 2023-03-31
 
 ### Changed
 - Adjustment buttons color to the new landing page (@goreck888)
