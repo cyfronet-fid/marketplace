@@ -85,8 +85,7 @@ module Mp
     config.home_page_external_links_enabled =
       ENV["HOME_PAGE_EXTERNAL_LINKS_ENABLED"].present? ? ENV["HOME_PAGE_EXTERNAL_LINKS_ENABLED"] : true
     config.search_service_base_url = ENV.fetch("SEARCH_SERVICE_BASE_URL", "https://search.marketplace.eosc-portal.eu")
-    config.user_dashboard_url = ENV.fetch("USER_DASHBOARD_URL",
-                                          "https://eosc-user-dashboard.docker-fid.grid.cyf-kr.edu.pl")
+    config.user_dashboard_url = ENV.fetch("USER_DASHBOARD_URL", "https://my.eosc-portal.eu")
 
     config.mp_stomp_publisher_enabled =
       if ENV["MP_STOMP_PUBLISHER_ENABLED"].present?
