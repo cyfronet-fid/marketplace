@@ -42,9 +42,8 @@ class Services::OffersController < Services::ApplicationController
 
   def init_step_data
     @offers = policy_scope(@service.offers.published).order(:iid).select { |o| o.bundle? == false }
-    @bundles =
-      policy_scope(@service.offers.published).order(:iid).select(&:bundle?) +
-        policy_scope(@service.offers.published).order(:iid).select(&:bundled?)
+    @bundles = policy_scope(@service.offers.published).order(:iid).select(&:bundle?)
+    @bundled = policy_scope(@service.offers.published).order(:iid).select(&:bundled?)
     @step = step(session[session_key])
   end
 end

@@ -39,7 +39,7 @@ RSpec.feature "Service ordering" do
 
       # Step 1
       expect(page).to have_current_path(service_offers_path(service))
-      expect(page).to have_text(service.name)
+      expect(page).to have_text("Select an offer or service bundle")
       expect(page).to have_selector(:link_or_button, "Next", exact: true)
 
       choose "customizable_project_item_offer_id_#{offer.iid}"
@@ -784,7 +784,7 @@ RSpec.feature "Service ordering" do
 
       click_on "Access the service", match: :first
 
-      expect(page).to have_text(service.name)
+      expect(page).to have_text("Select an offer or service bundle")
       expect(page).to have_text(o1.name)
       expect(page).to have_text(o2.name)
     end
