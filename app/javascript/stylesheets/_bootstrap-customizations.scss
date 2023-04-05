@@ -3205,8 +3205,9 @@ label[data-multicheckbox].small {
 
     .table {
       td {
-        padding: 2px 0;
+        padding: 0 10px;
         font-size: 12px;
+        width: auto;
       }
     }
 
@@ -3227,22 +3228,12 @@ label[data-multicheckbox].small {
 
       .goal {
         font-size: 12px;
-        padding: 4px 12px;
+        padding: 3px 11px;
         float: left;
         margin: 0 20px 0 0;
         border-radius: 4px;
         background: $tag-bg-1;
         color: $tag-color-1;
-
-        &:nth-child(2) {
-          background: $tag-bg-2;
-          color: $tag-color-2;
-        }
-
-        &:nth-child(3) {
-          background: $tag-bg-3;
-          color: $tag-color-3;
-        }
       }
     }
 
@@ -3278,16 +3269,31 @@ label[data-multicheckbox].small {
 
     .card-body {
       padding: 1.1rem 1.5rem;
+      align-items: center;
 
-      .card-title {
-        margin-bottom: 0.25rem;
-        font-size: 1em;
-        padding: 0;
+      .bundle-offer-desc {
+        flex-grow: 1;
+
+        .card-title {
+          margin-bottom: 0.25rem;
+          font-size: 1em;
+          padding: 0;
+        }
+
+        .provided-by {
+          font-size: 12px;
+          color: $palette-gray-70;
+        }
       }
 
-      .provided-by {
-        font-size: 12px;
-        color: $palette-gray-70;
+      .bundle-offer-parameters {
+        margin-left: auto;
+        flex-grow: 1;
+
+        .offer-params {
+          padding: 3px 10px;
+          margin: 0;
+        }
       }
     }
 
