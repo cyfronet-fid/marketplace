@@ -1,13 +1,23 @@
-%h1 You can order this bundle via EOSC Marketplace.
+.col-md-5.access-information
+  %h2.mb-4.mt-3.font-bold Access Instruction · Service Bundle
 
-%p
-  Bundle is a service consisting of two or more service offers to serve you as a separate,
-  integrated product giving a full spectrum of resource capabilities.
-%p
-  To access the bundle:
-  Specify parameters of your bundle and place your order to request access.
-  Once you submit the order, your request will be sent to a service provider.
-  You will receive the summary of your order via email.
-  The order status and its updates will be visible at your Project space.
-  You will be contacted by the support team once your bundle is ready for you to use.
-  To find out more about Projects in EOSC Marketplace, please refer to our FAQ
+  %p
+    In the next step choose parameters of your bundle, place an order and we will
+    process your request with a resource providers.
+  %p
+    We will inform you when your bundle will be ready to use via e-mail,
+    you can also track updates on your project space.
+  %p
+    To find out more about Projects in EOSC Marketplace, please refer to our FAQ.
+
+  .small-links
+    = render "services/offers/bundle_links",
+           contact_email: offer.main_bundles.first.contact_email || "",
+           related_training: offer.main_bundles.first.related_training_url || "",
+           helpdesk_url: offer.main_bundles.first.helpdesk_url || ""
+.col-md-7
+  %h4.card-title.mt-5.mb-3= offer.main_bundles.first.name
+  .bundle.bundle-special
+    .card
+      .card-body
+        = render "services/bundle", bundled_offers:  offer.main_bundles.first.all_offers, parent: offer

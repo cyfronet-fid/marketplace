@@ -10,6 +10,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - Bundles functionality (@goreck888)
+- Improvements for the UI of bundles (@jarekzet)
 
 ## [3.47.2]
 

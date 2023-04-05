@@ -15,7 +15,7 @@ body {
 
   > main {
     padding: 0 15px;
-    margin-bottom: 8.9rem;
+    margin-bottom: 6.5rem;
   }
 }
 
@@ -56,6 +56,18 @@ header {
 
 .container {
   max-width: 1180px;
+}
+
+.font-bold {
+  font-weight: 600 !important;
+}
+
+.btn-group-toogle {
+  .border-secondary {
+    border-color: $palette-blue !important;
+    background: $palette-blue;
+    color: $palette-white;
+  }
 }
 
 *:focus {
@@ -1322,8 +1334,9 @@ Service detail
     }
 
     input[type="radio"]:checked+span {
-      background: $yellow;
+      background: $black;
       color: $white;
+      border-color: $black !important;
 
       svg {
         display: inline-block;
@@ -3366,6 +3379,95 @@ label[data-multicheckbox].small {
           width: 100%;
         }
       }
+    }
+  }
+
+  &.bundle-order {
+    .card {
+      .card-body {
+        .bundle-offer-order-type {
+          display: block;
+          font-size: 11px;
+          border-radius: 3px;
+          margin-left: 20px;
+          border: 1px solid $bundle-border3;
+          padding: 4px 7px;
+          color: $palette-gray-80;
+          min-width: 92px;
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+
+.bundle-special {
+
+  .card {
+    border: none;
+
+    .card-body {
+      padding: 0;
+
+      .bundle-box {
+        padding: 0;
+      }
+    }
+  }
+}
+
+.contact-link {
+  display: block;
+  margin: 25px 0 0;
+  font-size: 14px;
+  text-decoration: underline;
+  color: $palette-gray-80;
+  padding-left: 28px;
+  background: url('../images/ico_contact.svg') 0 59% no-repeat;
+  background-size: 16px auto;
+
+  &:hover {
+    color: $primary;
+  }
+}
+
+.training-link {
+  display: block;
+  margin: 20px 0 0;
+  font-size: 14px;
+  text-decoration: underline;
+  color: $palette-gray-80;
+  padding-left: 28px;
+  background: url('../images/ico_training.svg') 0 59% no-repeat;
+  background-size: 21px auto;
+
+  &:hover {
+    color: $primary;
+  }
+}
+
+.helpdesk-link {
+  display: block;
+  margin: 20px 0 0;
+  font-size: 14px;
+  text-decoration: underline;
+  color: $palette-gray-80;
+  padding-left: 28px;
+  background: url('../images/ico_helpdesk.svg') 0 59% no-repeat;
+  background-size: 17px auto;
+
+  &:hover {
+    color: $primary;
+  }
+}
+
+.small-links {
+  .card-body {
+    padding-left: 0;
+    padding-top: 20px !important;
+
+    a {
+      margin-top: 12px;
     }
   }
 }
