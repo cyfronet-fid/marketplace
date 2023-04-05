@@ -3144,6 +3144,47 @@ label[data-multicheckbox].small {
 }
 
 .bundle-box {
+  padding: 0 1.5rem;
+
+  .bundle-item {
+    border-left: 4px solid $bundle-border2;
+
+    .card {
+      background: none;
+      border-radius: 0;
+      border: none;
+      border-bottom: 2px dashed $bundle-border3;
+      border-top: none;
+
+      &::after {
+        content: '+';
+        font-size: 35px;
+        position: absolute;
+        padding: 0 8px;
+        bottom: -16px;
+        line-height: 1;
+        left: 48%;
+        background: $palette-white;
+        color: $bundle-border3;
+      }
+    }
+
+    &:first-child {
+      .card {
+        border-top: 1px solid $bundle-border3;
+      }
+    }
+
+    &:last-child {
+      .card {
+        border-bottom: 1px solid $bundle-border3;
+
+        &::after {
+          display: none;
+        }
+      }
+    }
+  }
 
   .bundle-offer-pic {
     img {
@@ -3160,6 +3201,7 @@ label[data-multicheckbox].small {
 .bundle {
   .card {
     margin-right: 0;
+    width: 100%;
 
     .table {
       td {
@@ -3235,14 +3277,17 @@ label[data-multicheckbox].small {
     }
 
     .card-body {
+      padding: 1.1rem 1.5rem;
 
       .card-title {
-        margin-bottom: 0.35rem;
+        margin-bottom: 0.25rem;
+        font-size: 1em;
         padding: 0;
       }
 
-      .text-muted {
+      .provided-by {
         font-size: 12px;
+        color: $palette-gray-70;
       }
     }
 
@@ -3252,12 +3297,12 @@ label[data-multicheckbox].small {
     }
 
     .bundle-description {
-      font-size: 12px;
-      line-height: 18px;
+      font-size: 14px;
+      line-height: 20px;
     }
 
-    .bundle-box {
-      margin-bottom: 30px;
+    .bundle-links {
+      margin-bottom: 45px;
     }
 
     .order-type {
@@ -3268,7 +3313,9 @@ label[data-multicheckbox].small {
     }
 
     .card-button {
-      margin-bottom: 7px;
+      width: 100%;
+      bottom: 0;
+      position: absolute;
 
       &.backoffice-button {
         margin-bottom: -28px;
