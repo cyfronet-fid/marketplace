@@ -1,6 +1,6 @@
-.col-md-6.bundle-item.align-items-stretch{ id: "offer-#{offer.id}" }
+.bundle-item.align-items-stretch{ id: "offer-#{offer.id}" }
   .card
-    .card-body.d-flex.flex-row.p-2
+    .card-body.d-flex.flex-row.p-3
       - if offer.service.logo.attached? && offer.service.logo.variable?
         .bundle-offer-pic.p-2
           = image_tag offer.service.logo.variant(resize: "84x84")
@@ -10,8 +10,9 @@
       .bundle-offer-desc.p-2
         %h4.card-title
           = offer.name
-        .text-muted
+        .provided-by
           = _("Provided by #{offer.service.name}")
+      .bundle-offer-parameters.p-2
         .card-text{ "data-controller" => "paragraph" }
           = render "services/offers/bundle_parameters",
                 technical_parameters: offer.attributes.map(&:to_json)

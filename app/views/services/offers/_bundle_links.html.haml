@@ -1,0 +1,5 @@
+.bundle-links.card-body.pt-0
+  - if local_assigns[:contact_email].present?
+    = mail_to contact_email, _("Contact bundle support"), class: "contact-link"
+  - if local_assigns[:related_training].present?
+    = link_to _("Access training"), related_training, class: "training-link"

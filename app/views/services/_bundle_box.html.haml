@@ -1,17 +1,14 @@
 .col-md-12.d-flex.align-items-stretch.bundle{ id: "bundle-#{bundle.id}" }
-  .card
-    .row.mr-0
-      .col-md-10.m-0.pr-0
-        = render "services/bundles/description", bundle: bundle
-
-      .col-md-2.m-0.mb-5.pt-4
-        .card-button.text-center
-          = link_to service_offers_path(bundle.main_offer.service,
+  .card.mb-5
+    = render "services/bundles/description", bundle: bundle
+    = render "services/bundle", bundled_offers: bundle.offers, parent: bundle.main_offer
+    = render "services/offers/bundle_links",
+       contact_email: bundle.contact_email || "",
+       related_training: bundle.related_training_url || ""
+    .card-button.text-center
+      %label
+        = link_to service_offers_path(bundle.main_offer.service,
               customizable_project_item: { offer_id: bundle.main_offer.iid }),
               "data-probe": "", "data-service-id": bundle.service.id, method: :put do
-            %span.btn.btn-primary.btn-link.font-weight-bold.small-button
-              = _("Select bundle")
-        .order-type
-          = t("offers.type.#{bundle.order_type}")
-      .col-md-12.m-0.pr-0
-        = render "services/bundle", bundled_offers: bundle.offers, parent: bundle.main_offer
+          %span.btn.btn-primary
+            = _("Select bundle")
