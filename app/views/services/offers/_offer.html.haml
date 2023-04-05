@@ -5,7 +5,7 @@
       technical_parameters: offer.attributes.map(&:to_json)
     - if offer.bundle?
       = link_to _("Read technical parameters"), "#", class: "btn-link"
-      = render "services/bundle", bundled_offers: offer.bundled_offers, parent: offer
+      = render "services/bundle", bundled_offers: offer.main_bundles.first.all_offers, parent: offer
 
     .card-button.text-center
       %label
