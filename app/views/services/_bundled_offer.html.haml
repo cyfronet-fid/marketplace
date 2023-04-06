@@ -1,6 +1,6 @@
 .bundle-item.align-items-stretch{ id: "offer-#{offer.id}" }
   .card
-    .card-body.d-flex.flex-row.p-3
+    .card-body.d-flex.flex-row
       - if offer.service.logo.attached? && offer.service.logo.variable?
         .bundle-offer-pic.p-2
           = image_tag offer.service.logo.variant(resize: "84x84")
@@ -16,3 +16,5 @@
         .card-text{ "data-controller" => "paragraph" }
           = render "services/offers/bundle_parameters",
                 technical_parameters: offer.attributes.map(&:to_json)
+      .bundle-offer-order-type
+        = t("offers.type.#{offer.order_type}")
