@@ -1,7 +1,10 @@
-.col-md-12.d-flex.align-items-stretch.bundle{ id: "bundle-#{bundle.iid}" }
+.col-md-12.d-flex.align-items-stretch.bundle.backoffice-bundle{ id: "bundle-#{bundle.iid}" }
   .card.col-md-12.m-0.mb-5
     = render "services/bundles/description", bundle: bundle
     = render "services/bundle", bundled_offers: bundle.offers, parent: bundle.main_offer
+    = render "services/offers/bundle_links",
+       contact_email: bundle.contact_email || "",
+       related_training: bundle.related_training_url || ""
     .card-button.text-center.backoffice-button
       %label
         = link_to edit_backoffice_service_bundle_path(bundle.service, bundle) do
