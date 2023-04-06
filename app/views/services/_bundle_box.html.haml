@@ -5,6 +5,8 @@
     = render "services/offers/bundle_links",
        contact_email: bundle.contact_email || "",
        related_training: bundle.related_training_url || ""
+    .order-type
+      = t("offers.type.#{bundle.order_type}")
     .card-button.text-center
       %label
         = link_to service_offers_path(bundle.main_offer.service,
