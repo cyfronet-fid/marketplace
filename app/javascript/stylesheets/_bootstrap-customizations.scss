@@ -3268,7 +3268,7 @@ label[data-multicheckbox].small {
     }
 
     .card-body {
-      padding: 1.1rem 1.5rem;
+      padding: 0.8rem 0 0.8rem 0.5rem;
       align-items: center;
 
       .bundle-offer-desc {
@@ -3287,13 +3287,23 @@ label[data-multicheckbox].small {
       }
 
       .bundle-offer-parameters {
-        margin-left: auto;
         flex-grow: 1;
 
         .offer-params {
           padding: 3px 10px;
           margin: 0;
         }
+      }
+
+      .bundle-offer-order-type {
+        font-size: 11px;
+        border-radius: 3px;
+        margin-left: 20px;
+        border: 1px solid $bundle-border3;
+        padding: 4px 7px;
+        color: $palette-gray-80;
+        min-width: 92px;
+        text-align: center;
       }
     }
 
