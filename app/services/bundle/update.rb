@@ -23,7 +23,7 @@ class Bundle::Update < ApplicationService
 
   def notify_added_bundled_offers!
     @bundle.main_offer.added_bundled_offers&.each do |added_bundled_offer|
-      Offer::Mailer::Bundled.call(added_bundled_offer, @offer)
+      Offer::Mailer::Bundled.call(@bundle, added_bundled_offer)
     end
   end
 end

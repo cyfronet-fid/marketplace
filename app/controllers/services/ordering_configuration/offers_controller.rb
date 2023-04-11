@@ -39,7 +39,19 @@ class Services::OrderingConfiguration::OffersController < Services::OrderingConf
 
   def destroy
     @offer = @service.offers.find_by(iid: params[:id])
-    if Offer::Destroy.call(@offer)
+    if @offer.main_bundles.size.positive?
+      redirect_back fallback_location: edit_service_ordering_configuration_offer_path(@offer),
+                    alert:
+                      "This offer is connected as main offer to the bundle,
+                       therefore is not possible to remove it. If you want to remove it,
+                       edit bundle and choose another main offer."
+    elsif @offer.bundles.size.positive?
+      redirect_back fallback_location: edit_service_ordering_configuration_offer_path(@offer),
+                    alert:
+                      "This offer is connected to the bundle,
+                       therefore is not possible to remove it. If you want to remove it,
+                       edit bundles #{@offer.bundles.map(&:name).split(", ")} and choose another main offer."
+    elsif Offer::Destroy.call(@offer)
       redirect_to service_ordering_configuration_path(@service, from: params[:from]),
                   notice: "Offer removed successfully"
     end

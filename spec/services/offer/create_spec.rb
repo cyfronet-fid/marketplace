@@ -51,8 +51,15 @@ RSpec.describe Offer::Create do
           service: build(:service, resource_organisation: provider2),
           bundled_connected_offers: [bundled_offer1, bundled_offer2, bundled_offer3, bundled_offer4]
         )
+      bundle =
+        build(
+          :bundle,
+          service: bundle_offer.service,
+          main_offer: bundle_offer,
+          offers: bundle_offer.bundled_connected_offers
+        )
 
-      expect { Offer::Create.call(bundle_offer) }.to change { ActionMailer::Base.deliveries.count }.by(3)
+      expect { Bundle::Create.call(bundle) }.to change { ActionMailer::Base.deliveries.count }.by(3)
     end
   end
 end

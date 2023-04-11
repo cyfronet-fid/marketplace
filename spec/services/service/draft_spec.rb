@@ -19,6 +19,9 @@ RSpec.describe Service::Draft do
       bundled_offer = build(:offer, service: service)
       bundle_offer = create(:offer, bundled_connected_offers: [bundled_offer])
 
+      _bundle =
+        create(:bundle, service: service, main_offer: bundle_offer, offers: bundle_offer.bundled_connected_offers)
+
       expect { described_class.call(service) }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
       bundle_offer.reload

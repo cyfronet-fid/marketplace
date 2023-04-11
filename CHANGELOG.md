@@ -13,6 +13,9 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Improvements for the UI of bundles (@jarekzet)
 - Interoperability guidelines import (@michal-szostak)
 
+### Changed
+- Content for bundle e-mails (@eldenkat, @goreck888)
+
 ## [3.47.3] 2023-04-03
 
 ### Fixed

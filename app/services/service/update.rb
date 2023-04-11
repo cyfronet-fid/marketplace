@@ -56,30 +56,21 @@ class Service::Update < ApplicationService
   end
 
   def notify_bundled_offers!
-    @service
-      .offers
-      .published
-      .filter(&:bundle?)
-      .each do |published_bundle|
-        published_bundle.bundled_connected_offers.each do |bundled_offer|
-          Offer::Mailer::Bundled.call(bundled_offer, published_bundle)
-        end
-      end
+    @service.bundles.published.each do |published_bundle|
+      published_bundle.offers.each { |bundled_offer| Offer::Mailer::Bundled.call(published_bundle, bundled_offer) }
+    end
   end
 
   def unbundle_and_notify!
-    @service
-      .offers
-      .filter(&:bundled?)
-      .each do |bundled_offer|
-        bundled_offer.bundle_connected_offers.each do |bundle_offer|
-          Offer::Update.call(
-            bundle_offer,
-            { bundled_connected_offers: bundle_offer.bundled_connected_offers.to_a.reject { |o| o == bundled_offer } }
-          )
-          Offer::Mailer::Unbundled.call(bundle_offer, bundled_offer)
-        end
+    @service.bundles.each do |bundle|
+      bundle.offers.each do |offer|
+        Offer::Update.call(
+          bundle.main_offer,
+          { bundled_connected_offers: bundle.main_offer.bundled_connected_offers.to_a.reject { |o| o == offer } }
+        )
+        Offer::Mailer::Unbundled.call(bundle, offer)
       end
+    end
     @service.reload
   end
 end

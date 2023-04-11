@@ -54,6 +54,14 @@ RSpec.describe Offer::Update do
           bundled_connected_offers: [bundled_offer1, bundled_offer2]
         )
 
+      _bundle =
+        create(
+          :bundle,
+          service: bundle_offer.service,
+          main_offer: bundle_offer,
+          offers: bundle_offer.bundled_connected_offers
+        )
+
       expect do
         Offer::Update.call(bundle_offer, { bundled_connected_offers: [bundled_offer1, bundled_offer3] })
       end.to change { ActionMailer::Base.deliveries.count }.by(1)

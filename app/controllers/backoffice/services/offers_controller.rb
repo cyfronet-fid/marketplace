@@ -36,8 +36,21 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
 
   def destroy
     @offer = @service.offers.find_by(iid: params[:id])
-    Offer::Destroy.call(@offer)
-    redirect_to backoffice_service_path(@service), notice: "Offer removed successfully"
+    if @offer.main_bundles.size.positive?
+      redirect_back fallback_location: edit_backoffice_service_offer_path(@offer),
+                    alert:
+                      "This offer is connected as main offer to the bundle,
+                       therefore is not possible to remove it. If you want to remove it,
+                       edit bundle and choose another main offer."
+    elsif @offer.bundles.size.positive?
+      redirect_back fallback_location: edit_backoffice_service_offer_path(@offer),
+                    alert:
+                      "This offer is connected to the bundle,
+                       therefore is not possible to remove it. If you want to remove it,
+                       edit bundles #{@offer.bundles.map(&:name).split(", ")} and choose another main offer."
+    elsif Offer::Destroy.call(@offer)
+      redirect_to backoffice_service_path(@service), notice: "Offer removed successfully"
+    end
   end
 
   private

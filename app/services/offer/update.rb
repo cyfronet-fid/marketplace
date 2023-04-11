@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 class Offer::Update < ApplicationService
-  def initialize(offer, params)
+  def initialize(offer, params, bundle = nil)
     super()
     @offer = offer
     @params = params
+    @bundle = bundle || @offer.main_bundles.first
   end
 
   def call
@@ -24,7 +25,9 @@ class Offer::Update < ApplicationService
   private
 
   def notify_added_bundled_offers!
-    @offer.added_bundled_offers&.each { |added_bundled_offer| Offer::Mailer::Bundled.call(added_bundled_offer, @offer) }
+    @offer.added_bundled_offers&.each do |added_bundled_offer|
+      Offer::Mailer::Bundled.call(@bundle, added_bundled_offer)
+    end
   end
 
   def offer_bundlable?
@@ -32,12 +35,14 @@ class Offer::Update < ApplicationService
   end
 
   def unbundle_and_notify!
-    @offer.bundle_connected_offers.each do |bundle_offer|
-      Offer::Update.call(
-        bundle_offer,
-        { bundled_connected_offers: bundle_offer.bundled_connected_offers.to_a.reject { |o| o == @offer } }
-      )
-      Offer::Mailer::Unbundled.call(bundle_offer, @offer)
+    if @bundle.present?
+      @bundle.offers.each do |bundled_offer|
+        Offer::Update.call(
+          bundled_offer,
+          { bundle_connected_offers: bundled_offer.bundle_connected_offers.to_a.reject { |o| o == @bundle.main_offer } }
+        )
+        Offer::Mailer::Unbundled.call(@bundle, bundled_offer)
+      end
     end
   end
 end

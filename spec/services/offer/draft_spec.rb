@@ -20,7 +20,15 @@ RSpec.describe Offer::Draft do
           bundled_connected_offers: [bundled_offer]
         )
 
-      expect { Offer::Draft.call(bundled_offer) }.to change { ActionMailer::Base.deliveries.count }.by(1)
+      bundle =
+        create(
+          :bundle,
+          service: bundle_offer.service,
+          main_offer: bundle_offer,
+          offers: bundle_offer.bundled_connected_offers
+        )
+
+      expect { Offer::Draft.call(bundled_offer, bundle) }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
       bundle_offer.reload
       expect(bundle_offer.bundled_connected_offers).to be_blank

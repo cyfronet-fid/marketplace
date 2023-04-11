@@ -1,6 +1,6 @@
-%p Dear #{@bundle_offer.service.name} administrator,
+%p Dear #{@unbundled_offer.service.name} Provider,
 %p
-  Your bundle offer's (#{offer_full_name(@bundle_offer)}) bundled offer (#{@unbundled_offer_full_name})
-  was unbundled.
-%p Go to the #{link_to "Offering API", api_docs_url} to verify your bundle offer.
-%em Please note that you can’t reply to this message.
+  The bundle (#{offer_full_name(@main_offer)}) containing
+  your offer (#{offer_full_name(@unbundled_offer)}) has been deleted.
+%p To check its current status please go to #{link_to "Offering API", api_docs_url}
+%em This is an automatically generated message, please do not reply.

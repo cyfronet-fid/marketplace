@@ -8,17 +8,15 @@ class Bundle::Destroy < ApplicationService
 
   def call
     @service = @bundle.service
-    @bundle_offers = @bundle.main_offer.bundle_connected_offers.to_a
-    if @bundle&.project_items.present?
+    @bundle_offers = @bundle.main_offer.bundled_connected_offers.to_a
+    if @bundle.main_offer&.project_items.present?
       if @bundle.update(status: :deleted)
         unbundle!
         notify_unbundled!
       end
     elsif @bundle.destroy
+      unbundle!
       notify_unbundled!
-    end
-    if @service.offers.published.size == 1
-      Offer::Update.call(@service.offers.published.last, { order_type: @service&.order_type })
     end
     @service.reindex
     true
@@ -30,12 +28,13 @@ class Bundle::Destroy < ApplicationService
     @bundle_offers.each do |bundle_offer|
       Offer::Update.call(
         bundle_offer,
-        { bundled_connected_offers: bundle_offer.bundled_connected_offers.to_a.reject { |o| o == @offer } }
+        { bundle_connected_offers: bundle_offer.bundle_connected_offers.to_a.reject { |o| o == @bundle.main_offer } },
+        @bundle
       )
     end
   end
 
   def notify_unbundled!
-    @bundle_offers.each { |bundle_offer| Offer::Mailer::Unbundled.call(bundle_offer, @offer) }
+    @bundle_offers.each { |bundle_offer| Offer::Mailer::Unbundled.call(@bundle, bundle_offer) }
   end
 end

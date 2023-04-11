@@ -1,7 +1,8 @@
-Dear #{@bundled_offer.service.name} administrator,
+Dear #{@main_offer.service.name} Provider,
 \
-Your offer #{offer_full_name(@bundled_offer)} was bundled in #{offer_full_name(@bundle_offer)}.
+Your offer #{offer_full_name(@bundled_offer)} has been incorporated into a unique offer package called bundle
+along with #{offer_full_name(@main_offer)}.
+You can see the bundle offer #{@bundle_name}
+at this link #{link_to @main_offer.service.name, service_url(@main_offer.service)}.
 \
-You can view the bundle offer under #{service_url(@bundle_offer.service)}.
-\
-Please note that you can’t reply to this message.
+This is an automatically generated message, please do not reply.

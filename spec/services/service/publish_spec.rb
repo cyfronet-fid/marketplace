@@ -48,7 +48,9 @@ RSpec.describe Service::Publish do
 
     it "sends notification if service made public" do
       service = build(:service, status: "draft")
-      create(:offer, service: service, bundled_connected_offers: [build(:offer)])
+      offer = create(:offer, service: service, bundled_connected_offers: [build(:offer)])
+
+      create(:bundle, service: service, main_offer: offer, offers: offer.bundled_connected_offers)
 
       expect { described_class.call(service) }.to change { ActionMailer::Base.deliveries.count }.by(1)
     end
