@@ -1,7 +1,7 @@
 .col-md-12.d-flex.align-items-stretch.bundle{ id: "bundle-#{bundle.id}" }
   .card.mb-5
     = render "services/bundles/description", bundle: bundle
-    = render "services/bundle", bundled_offers: bundle.offers, parent: bundle.main_offer
+    = render "services/bundle", bundled_offers: bundle.all_offers, parent: bundle.main_offer
     = render "services/offers/bundle_links",
        contact_email: bundle.contact_email || "",
        related_training: bundle.related_training_url || "",
