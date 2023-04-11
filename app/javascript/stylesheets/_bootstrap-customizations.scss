@@ -3167,6 +3167,10 @@ label[data-multicheckbox].small {
         background: $palette-white;
         color: $bundle-border3;
       }
+
+      .card-body {
+        padding: 0.7rem 0 0.5rem 0.5rem;
+      }
     }
 
     &:first-child {
@@ -3243,7 +3247,7 @@ label[data-multicheckbox].small {
       font-size: 14px;
       text-decoration: underline;
       color: $palette-gray-80;
-      padding-left: 25px;
+      padding-left: 28px;
       background: url('../images/ico_contact.svg') 0 59% no-repeat;
       background-size: 16px auto;
 
@@ -3258,7 +3262,7 @@ label[data-multicheckbox].small {
       font-size: 14px;
       text-decoration: underline;
       color: $palette-gray-80;
-      padding-left: 25px;
+      padding-left: 28px;
       background: url('../images/ico_training.svg') 0 59% no-repeat;
       background-size: 21px auto;
 
@@ -3267,8 +3271,23 @@ label[data-multicheckbox].small {
       }
     }
 
+    .helpdesk-link {
+      display: block;
+      margin: 20px 0 0;
+      font-size: 14px;
+      text-decoration: underline;
+      color: $palette-gray-80;
+      padding-left: 28px;
+      background: url('../images/ico_helpdesk.svg') 0 59% no-repeat;
+      background-size: 17px auto;
+
+      &:hover {
+        color: $primary;
+      }
+    }
+
     .card-body {
-      padding: 0.8rem 0 0.8rem 0.5rem;
+      padding: 1.5rem 1.5rem 0.8rem;
       align-items: center;
 
       .bundle-offer-desc {
