@@ -70,6 +70,10 @@ class Bundle < ApplicationRecord
     end
   end
 
+  def all_offers
+    [main_offer] + offers
+  end
+
   def bundles_count
     (service && service.bundles.maximum(:iid).to_i) || 0
   end
