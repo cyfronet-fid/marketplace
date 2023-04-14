@@ -17,8 +17,7 @@ class Importers::Token
   end
 
   AAI_BASE_URL = "https://#{ENV["IMPORTER_AAI_BASE_URL"] || ENV["CHECKIN_HOST"] || "aai.eosc-portal.eu"}".freeze
-  AAI_TOKEN_PATH = "/oidc/token"
-  SCOPE = %w[openid profile email].freeze
+  AAI_TOKEN_PATH = "/auth/realms/core/protocol/openid-connect/token"
   REFRESH_TOKEN = ENV["IMPORTER_AAI_REFRESH_TOKEN"]
 
   CLIENT_ID =
@@ -29,8 +28,8 @@ class Importers::Token
   end
 
   def receive_token
-    data = { grant_type: "refresh_token", refresh_token: REFRESH_TOKEN, scope: SCOPE, client_id: CLIENT_ID }
-    response = Faraday.post("#{AAI_BASE_URL}#{AAI_TOKEN_PATH}", data)
+    data = { grant_type: "refresh_token", refresh_token: REFRESH_TOKEN, client_id: CLIENT_ID }
+    response = @faraday.post("#{AAI_BASE_URL}#{AAI_TOKEN_PATH}", data)
     raise RequestError if response.blank? || !response.body&.include?("access_token")
     JSON.parse(response.body)["access_token"]
   end

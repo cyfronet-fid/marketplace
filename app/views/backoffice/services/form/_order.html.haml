@@ -1,0 +1,24 @@
+.card.shadow-sm.rounded
+  %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
+              [:order_type, :order_url])),
+              data: { toggle: "collapse", target: "#order" },
+              aria: { expanded: true, controls: "order" } }
+    .card-header.text-left{ id: "order-header" }
+      .row
+        .col-10
+          = _("Order")
+        .col-2.text-right
+          .collapse-icon
+            %i.fas.fa-chevron-down
+            %i.fas.fa-chevron-up
+  .collapse{ id: "order", "aria-labelledby": "order-header",
+            "data-parent": "#accordion-form",
+            class: ("show" unless collapsed?(service, [:order_type, :order_url])) }
+    .card-body
+      .row
+        .col-12
+          = f.input :order_type, collection: Service.order_types.keys.map(&:to_sym),
+                    disabled: cant_edit(:order_type)
+      .row
+        .col-12
+          = f.input :order_url, disabled: cant_edit(:order_url)

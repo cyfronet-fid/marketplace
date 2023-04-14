@@ -101,7 +101,7 @@ class Backoffice::DatasourcePolicy < ApplicationPolicy
       :user_manual_url,
       :terms_of_use_url,
       :privacy_policy_url,
-      :access_policy_url,
+      :access_policies_url,
       :resource_level_url,
       :training_information_url,
       :status_monitoring_url,

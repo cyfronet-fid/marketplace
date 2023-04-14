@@ -17,8 +17,10 @@ class Service < ApplicationRecord
   attr_accessor :analytics, :catalogue_id, :monitoring_status, :bundle_id
 
   PUBLIC_STATUSES = %w[published unverified errored].freeze
+  SERVICE_TYPES = %w[Service Datasource].freeze
 
   scope :horizontal, -> { where(horizontal: true) }
+  scope :visible, -> { where(status: %i[published unverified]) }
 
   has_one_attached :logo
 
@@ -140,6 +142,46 @@ class Service < ApplicationRecord
   has_one :service_catalogue, dependent: :destroy
   has_one :catalogue, through: :service_catalogue
 
+  has_many :link_research_product_license_urls,
+           as: :linkable,
+           dependent: :destroy,
+           autosave: true,
+           class_name: "Link::ResearchProductLicenseUrl"
+  has_many :link_research_product_metadata_license_urls,
+           as: :linkable,
+           dependent: :destroy,
+           autosave: true,
+           class_name: "Link::ResearchProductMetadataLicenseUrl"
+
+  has_many :persistent_identity_systems,
+           class_name: "PersistentIdentitySystem",
+           autosave: true,
+           dependent: :destroy,
+           inverse_of: :datasource
+  belongs_to :jurisdiction, class_name: "Vocabulary::Jurisdiction", optional: true
+  belongs_to :datasource_classification, class_name: "Vocabulary::DatasourceClassification", optional: true
+  has_many :research_entity_types,
+           through: :service_vocabularies,
+           source: :vocabulary,
+           source_type: "Vocabulary::EntityType"
+  has_many :research_product_access_policies,
+           through: :service_vocabularies,
+           source: :vocabulary,
+           source_type: "Vocabulary::ResearchProductAccessPolicy"
+  has_many :research_product_metadata_access_policies,
+           through: :service_vocabularies,
+           source: :vocabulary,
+           source_type: "Vocabulary::ResearchProductMetadataAccessPolicy"
+
+  accepts_nested_attributes_for :persistent_identity_systems,
+                                reject_if:
+                                  lambda { |attributes|
+                                    attributes["entity_type_id"].blank? && attributes["entity_type_scheme_ids"].blank?
+                                  },
+                                allow_destroy: true
+  accepts_nested_attributes_for :link_research_product_license_urls, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :link_research_product_metadata_license_urls, reject_if: :all_blank, allow_destroy: true
+
   serialize :geographical_availabilities, Country::Array
   serialize :resource_geographic_locations, Country::Array
 
@@ -148,7 +190,7 @@ class Service < ApplicationRecord
   auto_strip_attributes :tagline, nullify: false
   auto_strip_attributes :terms_of_use_url, nullify: false
   auto_strip_attributes :access_policies_url, nullify: false
-  auto_strip_attributes :sla_url, nullify: false
+  auto_strip_attributes :resource_level_url, nullify: false
   auto_strip_attributes :webpage_url, nullify: false
   auto_strip_attributes :manual_url, nullify: false
   auto_strip_attributes :helpdesk_url, nullify: false
@@ -173,13 +215,14 @@ class Service < ApplicationRecord
   auto_strip_attributes :related_platforms, nullify_array: false
   auto_strip_attributes :grant_project_names, nullify_array: false
 
+  validates :type, presence: true
   validates :name, presence: true
   validates :description, presence: true
   validates :tagline, presence: true
   validates :rating, presence: true
   validates :terms_of_use_url, mp_url: true, if: :terms_of_use_url?
   validates :access_policies_url, mp_url: true, if: :access_policies_url?
-  validates :sla_url, mp_url: true, if: :sla_url?
+  validates :resource_level_url, mp_url: true, if: :resource_level_url?
   validates :webpage_url, mp_url: true, if: :webpage_url?
   validates :order_type, presence: true
   validates :status_monitoring_url, mp_url: true, if: :status_monitoring_url?

@@ -5,7 +5,7 @@ class Backoffice::Services::DraftsController < Backoffice::ApplicationController
 
   def create
     Service::Draft.call(@service)
-    redirect_to [:backoffice, @service]
+    redirect_to backoffice_service_path(@service)
   end
 
   private

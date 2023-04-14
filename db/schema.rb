@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
     t.string "name", null: false
     t.text "body"
     t.string "record_type", null: false
-    t.bigint "record_id", null: false
+    t.integer "record_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
   end
 
   create_table "active_storage_variant_records", force: :cascade do |t|
-    t.bigint "blob_id", null: false
+    t.integer "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
@@ -165,7 +165,7 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
     t.string "organisation"
     t.string "contactable_type"
     t.string "type"
-    t.bigint "contactable_id", null: false
+    t.integer "contactable_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["contactable_id"], name: "index_contacts_on_contactable_id"
@@ -183,156 +183,10 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
     t.index ["last_name"], name: "index_data_administrators_on_last_name"
   end
 
-  create_table "datasource_catalogues", force: :cascade do |t|
-    t.bigint "datasource_id"
-    t.bigint "catalogue_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["catalogue_id"], name: "index_datasource_catalogues_on_catalogue_id"
-    t.index ["datasource_id", "catalogue_id"], name: "index_datasource_catalogues_on_datasource_id_and_catalogue_id", unique: true
-    t.index ["datasource_id"], name: "index_datasource_catalogues_on_datasource_id"
-  end
-
-  create_table "datasource_categories", force: :cascade do |t|
-    t.bigint "datasource_id"
-    t.bigint "category_id"
-    t.boolean "main", default: false, null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["category_id"], name: "index_datasource_categories_on_category_id"
-    t.index ["datasource_id", "category_id"], name: "index_datasource_categories_on_datasource_id_and_category_id", unique: true
-    t.index ["datasource_id"], name: "index_datasource_categories_on_datasource_id"
-  end
-
-  create_table "datasource_platforms", force: :cascade do |t|
-    t.bigint "datasource_id"
-    t.bigint "platform_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["datasource_id", "platform_id"], name: "index_datasource_platforms_on_datasource_id_and_platform_id", unique: true
-    t.index ["datasource_id"], name: "index_datasource_platforms_on_datasource_id"
-    t.index ["platform_id"], name: "index_datasource_platforms_on_platform_id"
-  end
-
-  create_table "datasource_providers", force: :cascade do |t|
-    t.bigint "datasource_id"
-    t.bigint "provider_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["datasource_id", "provider_id"], name: "index_datasource_providers_on_datasource_id_and_provider_id", unique: true
-    t.index ["datasource_id"], name: "index_datasource_providers_on_datasource_id"
-    t.index ["provider_id"], name: "index_datasource_providers_on_provider_id"
-  end
-
-  create_table "datasource_scientific_domains", force: :cascade do |t|
-    t.bigint "datasource_id"
-    t.bigint "scientific_domain_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["datasource_id", "scientific_domain_id"], name: "index_datasource_scientific_domains", unique: true
-    t.index ["datasource_id"], name: "index_datasource_scientific_domains_on_datasource_id"
-    t.index ["scientific_domain_id"], name: "index_datasource_scientific_domains_on_scientific_domain_id"
-  end
-
-  create_table "datasource_services", force: :cascade do |t|
-    t.bigint "datasource_id"
-    t.bigint "service_id"
-    t.string "type"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["datasource_id", "service_id", "type"], name: "index_datasource_id_on_service_and_type", unique: true
-    t.index ["datasource_id"], name: "index_datasource_services_on_datasource_id"
-    t.index ["service_id"], name: "index_datasource_services_on_service_id"
-  end
-
-  create_table "datasource_sources", force: :cascade do |t|
-    t.string "eid", null: false
-    t.string "source_type", null: false
-    t.bigint "datasource_id", null: false
-    t.jsonb "errored"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["datasource_id"], name: "index_datasource_sources_on_datasource_id"
-    t.index ["eid", "source_type", "datasource_id"], name: "index_datasource_sources_on_eid_type_and_id", unique: true
-  end
-
-  create_table "datasource_target_users", force: :cascade do |t|
-    t.bigint "datasource_id"
-    t.bigint "target_user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["datasource_id", "target_user_id"], name: "index_datasource_target_users", unique: true
-    t.index ["datasource_id"], name: "index_datasource_target_users_on_datasource_id"
-    t.index ["target_user_id"], name: "index_datasource_target_users_on_target_user_id"
-  end
-
-  create_table "datasource_vocabularies", force: :cascade do |t|
-    t.bigint "datasource_id"
-    t.bigint "vocabulary_id"
-    t.string "vocabulary_type"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["datasource_id", "vocabulary_id", "vocabulary_type"], name: "index_datasources_vocabularies"
-    t.index ["datasource_id"], name: "index_datasource_vocabularies_on_datasource_id"
-    t.index ["vocabulary_id"], name: "index_datasource_vocabularies_on_vocabulary_id"
-  end
-
-  create_table "datasources", force: :cascade do |t|
-    t.string "pid", null: false
-    t.string "status", default: "published", null: false
-    t.string "order_type"
-    t.string "abbreviation"
-    t.string "name", null: false
-    t.string "tagline"
-    t.text "description", null: false
-    t.bigint "resource_organisation_id", null: false
-    t.string "webpage_url"
-    t.string "helpdesk_url"
-    t.string "helpdesk_email"
-    t.string "security_contact_email"
-    t.string "certifications", default: [], array: true
-    t.string "standards", default: [], array: true
-    t.string "open_source_technologies", default: [], array: true
-    t.string "changelog", default: [], array: true
-    t.string "grant_project_names", default: [], array: true
-    t.string "version"
-    t.string "geographical_availabilities", default: [], array: true
-    t.string "geographic_locations", default: [], array: true
-    t.string "language_availability", default: [], array: true
-    t.datetime "last_update"
-    t.string "submission_policy_url"
-    t.string "preservation_policy_url"
-    t.boolean "version_control"
-    t.string "jurisdiction_id"
-    t.string "datasource_classification_id"
-    t.boolean "thematic", default: false
-    t.boolean "horizontal", default: false
-    t.string "user_manual_url"
-    t.string "terms_of_use_url"
-    t.string "privacy_policy_url"
-    t.string "access_policy_url"
-    t.string "resource_level_url"
-    t.string "training_information_url"
-    t.string "status_monitoring_url"
-    t.string "maintenance_url"
-    t.string "order_url"
-    t.string "payment_model_url"
-    t.string "pricing_url"
-    t.bigint "upstream_id"
-    t.datetime "synchronized_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.float "availability_cache"
-    t.float "reliability_cache"
-    t.index ["name"], name: "index_datasources_on_name"
-    t.index ["pid"], name: "index_datasources_on_pid"
-    t.index ["resource_organisation_id"], name: "index_datasources_on_resource_organisation_id"
-  end
-
   create_table "events", force: :cascade do |t|
     t.string "action", null: false
     t.string "eventable_type"
-    t.bigint "eventable_id", null: false
+    t.integer "eventable_id", null: false
     t.jsonb "updates", array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -363,7 +217,7 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
     t.string "title", null: false
     t.string "slug"
     t.integer "position", default: 0, null: false
-    t.bigint "help_section_id", null: false
+    t.integer "help_section_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["help_section_id"], name: "index_help_items_on_help_section_id"
@@ -389,7 +243,7 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
     t.string "header", null: false
     t.string "body", null: false
     t.string "url", null: false
-    t.bigint "lead_section_id", null: false
+    t.integer "lead_section_id", null: false
     t.integer "position", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -424,7 +278,7 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
     t.string "author_uid"
     t.index ["author_id"], name: "index_messages_on_author_id"
     t.index ["author_role"], name: "index_messages_on_author_role"
-    t.index ["messageable_type", "messageable_id"], name: "index_messages_on_messageable_type_and_messageable_id"
+    t.index ["messageable_type", "messageable_id"], name: "index_messages_on_messageable"
     t.index ["scope"], name: "index_messages_on_scope"
   end
 
@@ -442,13 +296,13 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
     t.string "name"
     t.text "description"
     t.integer "iid", null: false
-    t.bigint "service_id"
+    t.bigint "service_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "parameters", default: [], null: false
     t.boolean "voucherable", default: false, null: false
-    t.string "order_type", null: false
     t.string "status"
+    t.string "order_type", null: false
     t.boolean "internal", default: false
     t.string "order_url", default: "", null: false
     t.boolean "default", default: false
@@ -462,8 +316,8 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
   end
 
   create_table "oms_administrations", force: :cascade do |t|
-    t.bigint "oms_id", null: false
-    t.bigint "user_id", null: false
+    t.integer "oms_id", null: false
+    t.integer "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["oms_id", "user_id"], name: "index_oms_administrations_on_oms_id_and_user_id", unique: true
@@ -472,7 +326,7 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
   end
 
   create_table "oms_authorizations", force: :cascade do |t|
-    t.bigint "oms_trigger_id", null: false
+    t.integer "oms_trigger_id", null: false
     t.string "type", null: false
     t.string "user"
     t.string "password"
@@ -482,8 +336,8 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
   end
 
   create_table "oms_providers", force: :cascade do |t|
-    t.bigint "oms_id", null: false
-    t.bigint "provider_id", null: false
+    t.integer "oms_id", null: false
+    t.integer "provider_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["oms_id", "provider_id"], name: "index_oms_providers_on_oms_id_and_provider_id", unique: true
@@ -492,7 +346,7 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
   end
 
   create_table "oms_triggers", force: :cascade do |t|
-    t.bigint "oms_id", null: false
+    t.integer "oms_id", null: false
     t.string "url", null: false
     t.string "method", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -505,35 +359,12 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
     t.string "type", null: false
     t.jsonb "custom_params"
     t.boolean "default", default: false, null: false
-    t.bigint "service_id"
+    t.integer "service_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["default"], name: "index_omses_on_default"
     t.index ["service_id"], name: "index_omses_on_service_id"
     t.index ["type"], name: "index_omses_on_type"
-  end
-
-  create_table "order_changes", force: :cascade do |t|
-    t.string "status"
-    t.text "message"
-    t.bigint "order_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "author_id"
-    t.index ["author_id"], name: "index_order_changes_on_author_id"
-    t.index ["order_id"], name: "index_order_changes_on_order_id"
-  end
-
-  create_table "orders", force: :cascade do |t|
-    t.string "status", null: false
-    t.bigint "service_id", null: false
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "issue_id"
-    t.integer "issue_status", default: 2, null: false
-    t.index ["service_id"], name: "index_orders_on_service_id"
-    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "persistent_identity_system_vocabularies", force: :cascade do |t|
@@ -548,14 +379,14 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
   end
 
   create_table "persistent_identity_systems", force: :cascade do |t|
-    t.bigint "datasource_id", null: false
+    t.bigint "service_id", null: false
     t.bigint "entity_type_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["datasource_id", "entity_type_id"], name: "index_persistent_id_systems"
-    t.index ["datasource_id"], name: "index_persistent_identity_systems_on_datasource_id"
     t.index ["entity_type_id"], name: "index_persistent_identity_systems_on_entity_type_id"
-    t.index ["id", "entity_type_id"], name: "index_persistent_id_systems_on_self_and_entity_type"
+    t.index ["id", "entity_type_id"], name: "index_persistent_identity_systems_on_id_and_entity_type_id"
+    t.index ["service_id", "entity_type_id"], name: "index_persistent_id_systems"
+    t.index ["service_id"], name: "index_persistent_identity_systems_on_service_id"
   end
 
   create_table "platforms", force: :cascade do |t|
@@ -647,8 +478,8 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
   end
 
   create_table "provider_data_administrators", force: :cascade do |t|
-    t.bigint "data_administrator_id"
-    t.bigint "provider_id"
+    t.integer "data_administrator_id"
+    t.integer "provider_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["data_administrator_id"], name: "index_provider_data_administrators_on_data_administrator_id"
@@ -656,8 +487,8 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
   end
 
   create_table "provider_scientific_domains", force: :cascade do |t|
-    t.bigint "provider_id"
-    t.bigint "scientific_domain_id"
+    t.integer "provider_id"
+    t.integer "scientific_domain_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["provider_id", "scientific_domain_id"], name: "index_psd_on_provider_id_and_sd_id", unique: true
@@ -677,8 +508,8 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
   end
 
   create_table "provider_vocabularies", force: :cascade do |t|
-    t.bigint "provider_id"
-    t.bigint "vocabulary_id"
+    t.integer "provider_id"
+    t.integer "vocabulary_id"
     t.string "vocabulary_type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -819,8 +650,8 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
   end
 
   create_table "service_vocabularies", force: :cascade do |t|
-    t.bigint "service_id"
-    t.bigint "vocabulary_id"
+    t.integer "service_id"
+    t.integer "vocabulary_id"
     t.string "vocabulary_type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -843,7 +674,7 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
     t.string "dedicated_for", array: true
     t.string "terms_of_use_url"
     t.string "access_policies_url"
-    t.string "sla_url"
+    t.string "resource_level_url"
     t.string "webpage_url"
     t.string "manual_url"
     t.string "helpdesk_url"
@@ -881,7 +712,15 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
     t.boolean "horizontal", default: false, null: false
     t.float "availability_cache"
     t.float "reliability_cache"
+    t.string "submission_policy_url"
+    t.string "preservation_policy_url"
+    t.bigint "jurisdiction_id"
+    t.bigint "datasource_classification_id"
+    t.boolean "version_control"
+    t.boolean "thematic", default: false
+    t.string "type", default: "Service"
     t.index ["name"], name: "index_services_on_name"
+    t.index ["pid"], name: "index_services_on_pid"
     t.index ["provider_id"], name: "index_services_on_provider_id"
     t.index ["resource_organisation_id"], name: "index_services_on_resource_organisation_id"
   end
@@ -895,7 +734,7 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
     t.datetime "updated_at", null: false
     t.string "status", null: false
     t.index ["author_id"], name: "index_statuses_on_author_id"
-    t.index ["status_holder_type", "status_holder_id"], name: "index_statuses_on_status_holder_type_and_status_holder_id"
+    t.index ["status_holder_type", "status_holder_id"], name: "index_statuses_on_status_holder"
   end
 
   create_table "taggings", id: :serial, force: :cascade do |t|
@@ -938,7 +777,7 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
     t.string "controller_name"
     t.string "action_name"
     t.string "tour_name"
-    t.bigint "user_id"
+    t.integer "user_id"
     t.string "email"
     t.json "content"
     t.datetime "created_at", precision: 6, null: false
@@ -954,7 +793,7 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
     t.string "controller_name"
     t.string "action_name"
     t.string "tour_name"
-    t.bigint "user_id", null: false
+    t.integer "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["created_at"], name: "index_tour_histories_on_created_at"
@@ -963,8 +802,8 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
   end
 
   create_table "user_categories", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "category_id"
+    t.integer "user_id"
+    t.integer "category_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["category_id"], name: "index_user_categories_on_category_id"
@@ -973,8 +812,8 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
   end
 
   create_table "user_scientific_domains", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "scientific_domain_id"
+    t.integer "user_id"
+    t.integer "scientific_domain_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["scientific_domain_id"], name: "index_user_scientific_domains_on_scientific_domain_id"
@@ -983,8 +822,8 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
   end
 
   create_table "user_services", force: :cascade do |t|
-    t.bigint "service_id"
-    t.bigint "user_id"
+    t.integer "service_id"
+    t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["service_id", "user_id"], name: "index_user_services_on_service_id_and_user_id", unique: true
@@ -1031,22 +870,6 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "datasource_catalogues", "catalogues"
-  add_foreign_key "datasource_catalogues", "datasources"
-  add_foreign_key "datasource_categories", "categories"
-  add_foreign_key "datasource_categories", "datasources"
-  add_foreign_key "datasource_platforms", "datasources"
-  add_foreign_key "datasource_platforms", "platforms"
-  add_foreign_key "datasource_providers", "datasources"
-  add_foreign_key "datasource_providers", "providers"
-  add_foreign_key "datasource_scientific_domains", "datasources"
-  add_foreign_key "datasource_scientific_domains", "scientific_domains"
-  add_foreign_key "datasource_services", "datasources"
-  add_foreign_key "datasource_services", "services"
-  add_foreign_key "datasource_target_users", "datasources"
-  add_foreign_key "datasource_target_users", "target_users"
-  add_foreign_key "datasource_vocabularies", "datasources"
-  add_foreign_key "datasource_vocabularies", "vocabularies"
   add_foreign_key "offer_links", "offers", column: "source_id"
   add_foreign_key "offer_links", "offers", column: "target_id"
   add_foreign_key "offers", "omses", column: "primary_oms_id"
@@ -1057,7 +880,7 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
   add_foreign_key "oms_providers", "providers"
   add_foreign_key "oms_triggers", "omses"
   add_foreign_key "omses", "services"
-  add_foreign_key "persistent_identity_systems", "datasources"
+  add_foreign_key "persistent_identity_systems", "services"
   add_foreign_key "project_items", "offers"
   add_foreign_key "project_items", "projects"
   add_foreign_key "project_scientific_domains", "projects"

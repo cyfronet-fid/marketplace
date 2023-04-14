@@ -1261,7 +1261,7 @@ services:
     helpdesk_url: https://www.egi.eu/more-information/
     training_information_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
     terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-    sla_url: https://documents.egi.eu/document/2733
+    resource_level_url: https://documents.egi.eu/document/2733
     access_policies_url: https://marketplace.egi.eu/content/7-access-policy
     language_availability: &english EN
     geographical_availabilities: &poland PL
@@ -1567,7 +1567,7 @@ services:
     helpdesk_url: https://www.egi.eu/more-information/
     training_information_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
     terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-    sla_url: https://documents.egi.eu/document/2733
+    resource_level_url: https://documents.egi.eu/document/2733
     access_policies_url: https://marketplace.egi.eu/content/7-access-policy
     language_availability: *english
     geographical_availabilities: *poland
@@ -1735,7 +1735,7 @@ services:
     helpdesk_url: https://www.egi.eu/more-information/
     training_information_url: https://www.eosc-hub.eu/training-material/egi-cloud-container-compute-training-material
     terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-    sla_url: https://documents.egi.eu/document/2733
+    resource_level_url: https://documents.egi.eu/document/2733
     access_policies_url: https://marketplace.egi.eu/content/7-access-policy
     language_availability: *english
     geographical_availabilities: *poland
@@ -1771,7 +1771,7 @@ services:
     helpdesk_url: https://www.eudat.eu/support-request?service=B2DROP
     training_information_url: https://eudat.eu/services/userdoc/b2drop
     terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-    sla_url:
+    resource_level_url:
     access_policies_url: https://eudat.eu/policy
     language_availability: *english
     geographical_availabilities: *poland
@@ -1905,7 +1905,7 @@ services:
     helpdesk_url: http://www.egi.eu/more-information/
     training_information_url: http://eudat.eu/services/userdoc/b2find
     terms_of_use_url: http://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-    sla_url:
+    resource_level_url:
     access_policies_url: http://eudat.eu/policy
     language_availability: *english
     geographical_availabilities: *poland
@@ -2036,7 +2036,7 @@ services:
     helpdesk_url: https://www.egi.eu/more-information/
     training_information_url: https://eudat.eu/services/userdoc/b2handle
     terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-    sla_url:
+    resource_level_url:
     access_policies_url: https://eudat.eu/policy
     language_availability: *english
     geographical_availabilities: *poland
@@ -2159,7 +2159,7 @@ services:
     helpdesk_url: https://www.eudat.eu/contact-support-request?service=B2NOTE
     training_information_url:
     terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-    sla_url:
+    resource_level_url:
     access_policies_url: https://eudat.eu/policy
     language_availability: *english
     geographical_availabilities: *poland
@@ -2248,7 +2248,7 @@ services:
     helpdesk_url: https://eudat.eu/contact-support-request
     training_information_url:
     terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-    sla_url:
+    resource_level_url:
     access_policies_url: https://eudat.eu/policy
     language_availability: *english
     geographical_availabilities: *poland
@@ -2304,7 +2304,7 @@ services:
     helpdesk_url: https://eudat.eu/contact-support-request
     training_information_url:
     terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-    sla_url:
+    resource_level_url:
     access_policies_url: https://eudat.eu/policy
     language_availability: *english
     geographical_availabilities: *poland
@@ -2435,7 +2435,7 @@ services:
     helpdesk_url: https://eudat.eu/contact-support-request
     training_information_url:
     terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-    sla_url:
+    resource_level_url:
     access_policies_url: https://eudat.eu/policy
     language_availability: *english
     domain: *otherOther
@@ -2500,7 +2500,7 @@ services:
     helpdesk_url: https://eudat.eu/contact-support-request
     training_information_url:
     terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-    sla_url: http://hdl.handle.net/11304/e43b2e3f-83c5-4e3f-b8b7-18d38d37a6cd
+    resource_level_url: http://hdl.handle.net/11304/e43b2e3f-83c5-4e3f-b8b7-18d38d37a6cd
     access_policies_url: https://eudat.eu/policy
     language_availability: *english
     domain: *otherOther
@@ -2544,7 +2544,7 @@ services:
     helpdesk_url: https://www.egi.eu/more-information/
     training_information_url: https://wiki.egi.eu/wiki/Online_Storage
     terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-    sla_url:
+    resource_level_url:
     access_policies_url: https://eudat.eu/policy
     language_availability: *english
     geographical_availabilities: *poland
@@ -2614,7 +2614,7 @@ services:
     helpdesk_url: https://www.egi.eu/more-information/
     training_information_url: https://wiki.egi.eu/wiki/Online_Storage
     terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-    sla_url:
+    resource_level_url:
     access_policies_url: https://marketplace.egi.eu/content/7-access-policy
     language_availability: *english
     geographical_availabilities: *poland
@@ -2787,7 +2787,7 @@ services:
   #        helpdesk_url: https://www.egi.eu/more-information/
   #        training_information_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
   #        terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-  #        sla_url:
+  #        resource_level_url:
   #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
   #        geographical_availabilities: *poland
   #        dedicated_for: ["Researchers"] #TODO: but not specified
@@ -2815,7 +2815,7 @@ services:
     helpdesk_url:
     training_information_url:
     terms_of_use_url: http://geosspublish.uat.esaportal.eu/community/guest/terms-conditions
-    sla_url:
+    resource_level_url:
     access_policies_url:
     geographical_availabilities: *poland
     language_availability: *english
@@ -2849,7 +2849,7 @@ services:
     helpdesk_url: http://api.geodab.eu/index.html
     training_information_url: http://eosc.geodab.eu/gi-cat-StP/
     terms_of_use_url:
-    sla_url:
+    resource_level_url:
     access_policies_url:
     geographical_availabilities: *poland
     language_availability: *english
@@ -2892,7 +2892,7 @@ services:
     helpdesk_url: https://www.egi.eu/more-information/
     training_information_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
     terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-    sla_url:
+    resource_level_url:
     access_policies_url: https://marketplace.egi.eu/content/7-access-policy
     language_availability: *english
     domain: [*otherSocialSciences, *otherHumanities]
@@ -2940,7 +2940,7 @@ services:
     helpdesk_url: https://www.egi.eu/more-information/
     training_information_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
     terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-    sla_url:
+    resource_level_url:
     access_policies_url: https://marketplace.egi.eu/content/7-access-policy
     language_availability: *english
     domain: [*otherSocialSciences, *otherHumanities]
@@ -3007,7 +3007,7 @@ services:
     helpdesk_url: https://www.egi.eu/more-information/
     training_information_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
     terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-    sla_url:
+    resource_level_url:
     access_policies_url: https://marketplace.egi.eu/content/7-access-policy
     language_availability: *english
     geographical_availabilities: *poland
@@ -3068,7 +3068,7 @@ services:
   #        helpdesk_url:
   #        training_information_url:
   #        terms_of_use_url:
-  #        sla_url:
+  #        resource_level_url:
   #        access_policies_url:
   #        target_users: ["Reaserchers"] #TODO: but not specified
   #        language_availability: *english
@@ -3092,7 +3092,7 @@ services:
   #        helpdesk_url: https://www.egi.eu/more-information/
   #        training_information_url: https://wiki.egi.eu/wiki/HowToAccessTheEGIMarketPlace
   #        terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-  #        sla_url:
+  #        resource_level_url:
   #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
   #        language_availability: *english
   #        geographical_availabilities: *poland
@@ -3128,7 +3128,7 @@ services:
   #        helpdesk_url:
   #        training_information_url:
   #        terms_of_use_url:
-  #        sla_url:
+  #        resource_level_url:
   #        access_policies_url:
   #        language_availability: *english
   #        geographical_availabilities: *poland
@@ -3204,7 +3204,7 @@ services:
   #        helpdesk_url:
   #        training_information_url:
   #        terms_of_use_url:
-  #        sla_url:
+  #        resource_level_url:
   #        access_policies_url:
   #        geographical_availabilities: *poland
   #        language_availability: *english
@@ -3233,7 +3233,7 @@ services:
   #        helpdesk_url:
   #        training_information_url:
   #        terms_of_use_url:
-  #        sla_url:
+  #        resource_level_url:
   #        access_policies_url:
   #        geographical_availabilities: *poland
   #        language_availability: *english
@@ -3305,7 +3305,7 @@ services:
   #        helpdesk_url:
   #        training_information_url:
   #        terms_of_use_url:
-  #        sla_url:
+  #        resource_level_url:
   #        access_policies_url:
   #        geographical_availabilities: *poland
   #        language_availability: *english
@@ -3339,7 +3339,7 @@ services:
   #        helpdesk_url:
   #        training_information_url:
   #        terms_of_use_url:
-  #        sla_url:
+  #        resource_level_url:
   #        access_policies_url:
   #        geographical_availabilities: *poland
   #        language_availability: *english
@@ -3371,7 +3371,7 @@ services:
   #        helpdesk_url:
   #        training_information_url:
   #        terms_of_use_url:
-  #        sla_url:
+  #        resource_level_url:
   #        access_policies_url:
   #        geographical_availabilities: *poland
   #        language_availability: *english
@@ -3403,7 +3403,7 @@ services:
   #        helpdesk_url:
   #        training_information_url:
   #        terms_of_use_url:
-  #        sla_url:
+  #        resource_level_url:
   #        access_policies_url:
   #        geographical_availabilities: *poland
   #        language_availability: *english
@@ -3436,7 +3436,7 @@ services:
   #        helpdesk_url:
   #        training_information_url:
   #        terms_of_use_url:
-  #        sla_url:
+  #        resource_level_url:
   #        access_policies_url:
   #        geographical_availabilities: *poland
   #        language_availability: *english
@@ -3468,7 +3468,7 @@ services:
   #        helpdesk_url:
   #        training_information_url:
   #        terms_of_use_url:
-  #        sla_url:
+  #        resource_level_url:
   #        access_policies_url:
   #        geographical_availabilities: *poland
   #        language_availability: *english
@@ -3501,7 +3501,7 @@ services:
   #        helpdesk_url:
   #        training_information_url:
   #        terms_of_use_url:
-  #        sla_url:
+  #        resource_level_url:
   #        access_policies_url:
   #        geographical_availabilities: *poland
   #        language_availability: *english
@@ -3533,7 +3533,7 @@ services:
   #        helpdesk_url:
   #        training_information_url:
   #        terms_of_use_url:
-  #        sla_url:
+  #        resource_level_url:
   #        access_policies_url:
   #        geographical_availabilities: *poland
   #        language_availability: *english
@@ -3567,7 +3567,7 @@ services:
     training_information_url:
     #contact: applications-platform-info@mailman.egi.eu
     terms_of_use_url: https://csgf.egi.eu/terms-of-use
-    sla_url: https://documents.egi.eu/document/2733
+    resource_level_url: https://documents.egi.eu/document/2733
     access_policies_url: https://documents.egi.eu/public/ShowDocument?docid=2635
     geographical_availabilities: *poland
     language_availability: *english
@@ -3614,7 +3614,7 @@ services:
   #        helpdesk_url:
   #        training_information_url:
   #        terms_of_use_url:
-  #        sla_url:
+  #        resource_level_url:
   #        access_policies_url:
   #        geographical_availabilities: *poland
   #        language_availability: *english
@@ -3643,7 +3643,7 @@ services:
   #        helpdesk_url:
   #        training_information_url:
   #        terms_of_use_url:
-  #        sla_url:
+  #        resource_level_url:
   #        access_policies_url:
   #        geographical_availabilities: *poland
   #        language_availability: *english
@@ -3675,7 +3675,7 @@ services:
     helpdesk_url:
     training_information_url:
     terms_of_use_url:
-    sla_url:
+    resource_level_url:
     access_policies_url:
     target_users: [*researchers, *research_organisations]
     language_availability: *english
@@ -3775,7 +3775,7 @@ services:
   #        helpdesk_url: https://www.clarin.eu/content/support
   #        training_information_url: https://www.eosc-hub.eu/training-material/component-metadata-infrastructure-services
   #        terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-  #        sla_url:
+  #        resource_level_url:
   #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
   #        geographical_availabilities: *poland
   #        language_availability: *english
@@ -3818,7 +3818,7 @@ services:
     helpdesk_url: https://www.dariah.eu/contact
     training_information_url: https://www.dariah.eu/tools-services/dariah-training/
     terms_of_use_url:
-    sla_url:
+    resource_level_url:
     access_policies_url: https://www.dariah.eu/privacy-notice/
     geographical_availabilities: *poland
     language_availability: *english
@@ -3880,7 +3880,7 @@ services:
     helpdesk_url:
     training_information_url:
     terms_of_use_url:
-    sla_url:
+    resource_level_url:
     access_policies_url:
     geographical_availabilities: *poland
     language_availability: *english
@@ -3961,7 +3961,7 @@ services:
     helpdesk_url: https://github.com/markusstocker/pynpf-d4science
     training_information_url: https://youtu.be/ra9W7b5DbgI
     terms_of_use_url: https://documents.egi.eu/public/ShowDocument?docid=2623
-    sla_url: https://documents.egi.eu/document/2875
+    resource_level_url: https://documents.egi.eu/document/2875
     access_policies_url: https://wiki.d4science.org/index.php?title=D4Science_Deployment_and_Operation:_Policies
     geographical_availabilities: *poland
     language_availability: *english
@@ -3995,7 +3995,7 @@ services:
     helpdesk_url: https://portal.enes.org/contact
     training_information_url:
     terms_of_use_url:
-    sla_url:
+    resource_level_url:
     access_policies_url:
     geographical_availabilities: *poland
     language_availability: *english
@@ -4069,7 +4069,7 @@ services:
     helpdesk_url:
     training_information_url:
     terms_of_use_url:
-    sla_url:
+    resource_level_url:
     access_policies_url:
     geographical_availabilities: *poland
     language_availability: *english
@@ -4132,7 +4132,7 @@ services:
   #        helpdesk_url:
   #        training_information_url:
   #        terms_of_use_url:
-  #        sla_url:
+  #        resource_level_url:
   #        access_policies_url:
   #        geographical_availabilities: *poland
   #        language_availability: *english
@@ -4154,7 +4154,7 @@ services:
   #        helpdesk_url:
   #        training_information_url:
   #        terms_of_use_url:
-  #        sla_url:
+  #        resource_level_url:
   #        access_policies_url:
   #        geographical_availabilities: *poland
   #        language_availability: *english
@@ -4176,7 +4176,7 @@ services:
   #        helpdesk_url:
   #        training_information_url:
   #        terms_of_use_url:
-  #        sla_url:
+  #        resource_level_url:
   #        access_policies_url:
   #        geographical_availabilities: *poland
   #        language_availability: *english
@@ -4200,7 +4200,7 @@ services:
     helpdesk_url:
     training_information_url: https://www.eosc-hub.eu/training-material/opencoasts-service
     terms_of_use_url:
-    sla_url:
+    resource_level_url:
     access_policies_url:
     geographical_availabilities: *poland
     language_availability: *english
@@ -4290,7 +4290,7 @@ services:
   #        helpdesk_url: https://www.wenmr.eu/support/
   #        training_information_url: https://www.wenmr.eu/tutorials/
   #        terms_of_use_url:
-  #        sla_url:
+  #        resource_level_url:
   #        access_policies_url:
   #        language_availability: *english
   #        domain: *otherOther
@@ -4342,7 +4342,7 @@ services:
     helpdesk_url: http://ask.bioexcel.eu/c/haddock
     training_information_url: https://www.wenmr.eu/tutorials/#haddock
     terms_of_use_url: https://wenmr.science.uu.nl/conditions
-    sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
+    resource_level_url: https://documents.egi.eu/public/ShowDocument?docid=2751
     access_policies_url: https://wenmr.science.uu.nl/conditions
     geographical_availabilities: *poland
     language_availability: *english
@@ -4382,7 +4382,7 @@ services:
     helpdesk_url: http://ask.bioexcel.eu/c/powerfit
     training_information_url: https://www.wenmr.eu/tutorials/#powerfit
     terms_of_use_url: https://wenmr.science.uu.nl/conditions
-    sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
+    resource_level_url: https://documents.egi.eu/public/ShowDocument?docid=2751
     access_policies_url: https://wenmr.science.uu.nl/conditions
     geographical_availabilities: *poland
     language_availability: *english
@@ -4412,7 +4412,7 @@ services:
     helpdesk_url: http://ask.bioexcel.eu/c/disvis
     training_information_url: https://www.wenmr.eu/tutorials/#disvis
     terms_of_use_url: https://wenmr.science.uu.nl/conditions
-    sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
+    resource_level_url: https://documents.egi.eu/public/ShowDocument?docid=2751
     access_policies_url: https://wenmr.science.uu.nl/conditions
     geographical_availabilities: *poland
     language_availability: *english
@@ -4444,7 +4444,7 @@ services:
     helpdesk_url:
     training_information_url: https://www.wenmr.eu/tutorials/
     terms_of_use_url: https://wenmr.science.uu.nl/conditions
-    sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
+    resource_level_url: https://documents.egi.eu/public/ShowDocument?docid=2751
     access_policies_url: https://wenmr.science.uu.nl/conditions
     geographical_availabilities: *poland
     language_availability: *english
@@ -4475,7 +4475,7 @@ services:
     helpdesk_url: http://py-enmr.cerm.unifi.it/feedback/index?type=amps-nmr
     training_information_url: https://www.wenmr.eu/tutorials/
     terms_of_use_url: http://py-enmr.cerm.unifi.it/POLICY.pdf
-    sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
+    resource_level_url: https://documents.egi.eu/public/ShowDocument?docid=2751
     access_policies_url: http://py-enmr.cerm.unifi.it/POLICY.pdf
     geographical_availabilities: *poland
     language_availability: *english
@@ -4512,7 +4512,7 @@ services:
     helpdesk_url:
     training_information_url: https://www.wenmr.eu/tutorials/
     terms_of_use_url: http://py-enmr.cerm.unifi.it/POLICY.pdf
-    sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
+    resource_level_url: https://documents.egi.eu/public/ShowDocument?docid=2751
     access_policies_url: http://py-enmr.cerm.unifi.it/POLICY.pdf
     geographical_availabilities: *poland
     language_availability: *english
@@ -4545,7 +4545,7 @@ services:
     helpdesk_url: http://ask.bioexcel.eu/c/spoton
     training_information_url: https://www.wenmr.eu/tutorials/#spoton
     terms_of_use_url: https://wenmr.science.uu.nl/conditions
-    sla_url: https://documents.egi.eu/public/ShowDocument?docid=2751
+    resource_level_url: https://documents.egi.eu/public/ShowDocument?docid=2751
     access_policies_url: https://wenmr.science.uu.nl/conditions
     geographical_availabilities: *poland
     language_availability: *english
@@ -4577,7 +4577,7 @@ services:
     #contect: support@terradue.com
     training_information_url: https://discuss.terradue.com/t/interpreting-the-layers-of-dlr-s-insar-browse-service/216 #TODO: should be able to link several urls
     terms_of_use_url:
-    sla_url:
+    resource_level_url:
     access_policies_url:
     geographical_availabilities: *poland
     language_availability: *english
@@ -4612,7 +4612,7 @@ services:
     #contect: support@terradue.com
     training_information_url: https://terradue.github.io/doc-tep-geohazards/tutorials/index.html
     terms_of_use_url:
-    sla_url:
+    resource_level_url:
     access_policies_url:
     geographical_availabilities: *poland
     language_availability: *english
@@ -4646,7 +4646,7 @@ services:
     helpdesk_url: https://www.eodc.eu/support-request/
     training_information_url:
     terms_of_use_url:
-    sla_url:
+    resource_level_url:
     access_policies_url:
     geographical_availabilities: *poland
     language_availability: *english
@@ -4705,7 +4705,7 @@ services:
     #contact: support@eodc.eu
     training_information_url:
     terms_of_use_url:
-    sla_url:
+    resource_level_url:
     access_policies_url:
     geographical_availabilities: *poland
     language_availability: *english
@@ -4744,7 +4744,7 @@ services:
     helpdesk_url:
     training_information_url:
     terms_of_use_url:
-    sla_url:
+    resource_level_url:
     access_policies_url:
     geographical_availabilities: *poland
     language_availability: *english
@@ -4773,7 +4773,7 @@ services:
     helpdesk_url:
     training_information_url:
     terms_of_use_url:
-    sla_url:
+    resource_level_url:
     access_policies_url:
     geographical_availabilities: *poland
     language_availability: *english
@@ -4802,7 +4802,7 @@ services:
     helpdesk_url:
     training_information_url:
     terms_of_use_url:
-    sla_url:
+    resource_level_url:
     access_policies_url:
     geographical_availabilities: *poland
     language_availability: *english
@@ -4857,7 +4857,7 @@ services:
     helpdesk_url:
     training_information_url: https://creodias.eu/knowledgebase
     terms_of_use_url: https://creodias.eu/terms-of-service
-    sla_url: https://creodias.eu/appendix-service-level
+    resource_level_url: https://creodias.eu/appendix-service-level
     access_policies_url: https://creodias.eu/legal-matters
     geographical_availabilities: *poland
     language_availability: *english
@@ -4902,7 +4902,7 @@ services:
     helpdesk_url:
     training_information_url: https://creodias.eu/knowledgebase
     terms_of_use_url: https://creodias.eu/terms-of-service
-    sla_url: https://creodias.eu/appendix-service-level
+    resource_level_url: https://creodias.eu/appendix-service-level
     access_policies_url: https://creodias.eu/legal-matters
     geographical_availabilities: *poland
     language_availability: *english
@@ -4943,7 +4943,7 @@ services:
     helpdesk_url:
     training_information_url: https://creodias.eu/knowledgebase
     terms_of_use_url: https://creodias.eu/terms-of-service
-    sla_url: https://creodias.eu/appendix-service-level
+    resource_level_url: https://creodias.eu/appendix-service-level
     access_policies_url: https://creodias.eu/legal-matters
     geographical_availabilities: *poland
     language_availability: *english
@@ -4976,7 +4976,7 @@ services:
     helpdesk_url:
     training_information_url: https://creodias.eu/knowledgebase
     terms_of_use_url: https://creodias.eu/terms-of-service
-    sla_url: https://creodias.eu/appendix-service-level
+    resource_level_url: https://creodias.eu/appendix-service-level
     access_policies_url: https://creodias.eu/legal-matters
     geographical_availabilities: *poland
     language_availability: *english
@@ -5018,7 +5018,7 @@ services:
     helpdesk_url:
     training_information_url:
     terms_of_use_url:
-    sla_url:
+    resource_level_url:
     access_policies_url:
     geographical_availabilities: *poland
     language_availability: *english
@@ -5074,7 +5074,7 @@ services:
   #        helpdesk_url:
   #        training_information_url:
   #        terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-  #        sla_url: https://documents.egi.eu/document/2733
+  #        resource_level_url: https://documents.egi.eu/document/2733
   #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
   #        geographical_availabilities: *poland
   #        language_availability: *english
@@ -5107,7 +5107,7 @@ services:
     helpdesk_url: https://www.egi.eu/more-information/
     training_information_url: https://wiki.egi.eu/wiki/Training_infrastructure
     terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
-    sla_url: https://documents.egi.eu/document/2733
+    resource_level_url: https://documents.egi.eu/document/2733
     access_policies_url: https://marketplace.egi.eu/content/7-access-policy
     geographical_availabilities: *poland
     language_availability: *english
@@ -5223,7 +5223,7 @@ services:
     helpdesk_url: https://www.egi.eu/more-information/
     training_information_url: https://www.egi.eu/services/fitsm-training/
     terms_of_use_url: https://www.egi.eu/services/fitsm-training/terms-and-conditions/
-    sla_url: https://documents.egi.eu/document/2733
+    resource_level_url: https://documents.egi.eu/document/2733
     access_policies_url: https://marketplace.egi.eu/content/7-access-policy
     geographical_availabilities: *poland
     language_availability: *english
@@ -5318,7 +5318,7 @@ services:
     helpdesk_url: https://support.d4science.org/
     training_information_url: https://dev.d4science.org/
     terms_of_use_url: https://services.d4science.org/terms-of-use
-    sla_url: https://wiki.d4science.org/index.php?title=D4Science_Deployment_and_Operation:_Policies#Service_Level_Agreement
+    resource_level_url: https://wiki.d4science.org/index.php?title=D4Science_Deployment_and_Operation:_Policies#Service_Level_Agreement
     access_policies_url: https://wiki.d4science.org/index.php?title=D4Science_Deployment_and_Operation:_Policies
     geographical_availabilities: *poland
     target_users: [*research_groups]
@@ -5366,7 +5366,7 @@ services:
   #      helpdesk_url:
   #      training_information_url:
   #      terms_of_use_url:
-  #      sla_url:
+  #      resource_level_url:
   #      access_policies_url:
   #      geographical_availabilities: *poland
   #      language_availability: *english
@@ -5394,7 +5394,7 @@ services:
     helpdesk_url:
     training_information_url:
     terms_of_use_url:
-    sla_url:
+    resource_level_url:
     access_policies_url:
     geographical_availabilities: *poland
     language_availability: *english
@@ -5436,7 +5436,7 @@ services:
     helpdesk_url: https://eosc-pan-git.desy.de/support
     training_information_url: https://eosc-pan-git.desy.de
     terms_of_use_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
-    sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
+    resource_level_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
     access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
     geographical_availabilities: *poland
     language_availability: *english
@@ -5475,7 +5475,7 @@ services:
     helpdesk_url: https://eosc-pan-git.desy.de/support
     training_information_url: https://eosc-pan-git.desy.de
     terms_of_use_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
-    sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
+    resource_level_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
     access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
     geographical_availabilities: *poland
     language_availability: *english
@@ -5511,7 +5511,7 @@ services:
     helpdesk_url: https://eosc-pan-git.desy.de/support
     training_information_url: https://eosc-pan-git.desy.de
     terms_of_use_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
-    sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
+    resource_level_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
     access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
     geographical_availabilities: *poland
     language_availability: *english
@@ -5566,7 +5566,7 @@ services:
     helpdesk_url: https://eosc-pan-git.desy.de/support
     training_information_url: https://eosc-pan-git.desy.de
     terms_of_use_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
-    sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
+    resource_level_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
     access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
     geographical_availabilities: *poland
     language_availability: *english
@@ -5602,7 +5602,7 @@ services:
     helpdesk_url: https://eosc-pan-git.desy.de/support
     training_information_url: https://eosc-pan-git.desy.de
     terms_of_use_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
-    sla_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
+    resource_level_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
     access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
     geographical_availabilities: *poland
     language_availability: *english
@@ -5639,7 +5639,7 @@ services:
     helpdesk_url: https://wiki.egi.eu/wiki/GGUS:WS-PGRADE/gUSE_FAQ
     training_information_url: https://ltos-gateway.lpds.sztaki.hu/web/wizard/help
     terms_of_use_url: https://ltos-gateway.lpds.sztaki.hu/web/wizard/terms-of-use
-    sla_url: https://documents.egi.eu/document/2733
+    resource_level_url: https://documents.egi.eu/document/2733
     access_policies_url: https://documents.egi.eu/public/ShowDocument?docid=2635
     geographical_availabilities: *poland
     language_availability: *english
@@ -5686,7 +5686,7 @@ services:
     helpdesk_url:
     training_information_url:
     terms_of_use_url: https://research.csc.fi/pouta-user-policy
-    sla_url: https://research.csc.fi/documents/48467/0/ePouta+SLA/cbac49af-f069-4a8b-9636-e519b1ee331d
+    resource_level_url: https://research.csc.fi/documents/48467/0/ePouta+SLA/cbac49af-f069-4a8b-9636-e519b1ee331d
     access_policies_url: https://research.csc.fi/pricing-of-computing-services
     geographical_availabilities: *poland
     language_availability: *english
@@ -5720,7 +5720,7 @@ services:
     helpdesk_url: https://www.uio.no/english/services/it/research/sensitive-data/
     training_information_url:
     terms_of_use_url:
-    sla_url:
+    resource_level_url:
     access_policies_url:
     geographical_availabilities: *poland
     language_availability: *english
@@ -5755,7 +5755,7 @@ services:
     helpdesk_url: https://wiki.egi.eu/wiki/GGUS:EC3_FAQ
     training_information_url: https://github.com/grycap/ec3
     terms_of_use_url: https://servproject.i3m.upv.es/ec3-ltos/terms.html
-    sla_url: https://documents.egi.eu/document/2733
+    resource_level_url: https://documents.egi.eu/document/2733
     access_policies_url: https://documents.egi.eu/public/ShowDocument?docid=2635
     geographical_availabilities: *poland
     language_availability: *english

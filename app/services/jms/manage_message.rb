@@ -81,7 +81,7 @@ class Jms::ManageMessage < ApplicationService
       end
       case action
       when "delete"
-        Datasource::DeleteJob.perform_later(resource["datasourceBundle"]["datasource"]["id"])
+        Service::DeleteJob.perform_later(resource["datasourceBundle"]["datasource"]["id"])
       when "update", "create"
         Datasource::PcCreateOrUpdateJob.perform_later(
           resource["datasourceBundle"]["datasource"].merge(resource["datasourceBundle"]["resourceExtras"] || {}),

@@ -7,13 +7,13 @@ module Service::Autocomplete
     query =
       Searchkick.search(
         params[:q],
-        fields: %w[name offer_name provider_name datasource_name],
+        fields: %w[name offer_name provider_name],
         operator: "or",
         match: :word_middle,
         limit: 10,
         load: false,
         where: {
-          _or: [{ service_id: scope.ids }, { provider_id: provider_scope.ids }, { datasource_id: datasource_scope.ids }]
+          _or: [{ service_id: scope.ids }, { provider_id: provider_scope.ids }]
         },
         highlight: {
           multiple: true,
