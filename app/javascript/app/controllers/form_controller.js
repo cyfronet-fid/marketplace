@@ -11,6 +11,8 @@ export default class extends Controller {
     "destroy",
     "multimedia",
     "useCase",
+    "serviceType",
+    "datasourceFields",
     "researchProductLicense",
     "researchProductMetadataLicense",
     "persistentIdentitySystem",
@@ -38,14 +40,31 @@ export default class extends Controller {
   onScroll(event) {
     const titlePosition = document.getElementById("title").offsetTop;
     const footerPosition = document.getElementsByTagName("footer")[0].offsetTop;
-    if (window.scrollY > titlePosition && window.scrollY < footerPosition - 500) {
+    if (window.scrollY > titlePosition && window.scrollY < footerPosition - 750) {
       this.fixmeTarget.style.position = "fixed";
       this.fixmeTarget.style.top = "10px";
-    } else if (window.scrollY > footerPosition - 750) {
+    } else if (window.scrollY > footerPosition - 1000) {
       this.fixmeTarget.style.position = "absolute";
-      this.fixmeTarget.style.top = footerPosition - 750 + "px";
+      this.fixmeTarget.style.top = footerPosition - 1000 + "px";
     } else {
       this.fixmeTarget.style.position = "static";
+    }
+  }
+
+  updateForm() {
+    switch (this.serviceTypeTarget.value) {
+      case "Service": {
+        this.datasourceFieldsTargets.forEach((el) => {
+          el.classList.add("d-none");
+        });
+        break;
+      }
+      case "Datasource": {
+        this.datasourceFieldsTargets.forEach((el) => {
+          el.classList.remove("d-none");
+        });
+        break;
+      }
     }
   }
 

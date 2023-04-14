@@ -159,7 +159,7 @@ class Importers::Service < ApplicationService
       terms_of_use_url: @data["termsOfUse"] || "",
       privacy_policy_url: @data["privacyPolicy"] || "",
       access_policies_url: @data["accessPolicy"] || "",
-      sla_url: @data["serviceLevel"] || "",
+      resource_level_url: @data["serviceLevel"] || "",
       training_information_url: @data["trainingInformation"] || "",
       status_monitoring_url: @data["statusMonitoring"] || "",
       maintenance_url: @data["maintenance"] || "",

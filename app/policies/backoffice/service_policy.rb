@@ -66,6 +66,7 @@ class Backoffice::ServicePolicy < ApplicationPolicy
 
   def permitted_attributes
     attrs = [
+      :type,
       :name,
       :abbreviation,
       :description,
@@ -80,7 +81,7 @@ class Backoffice::ServicePolicy < ApplicationPolicy
       [link_use_cases_urls_attributes: %i[id name url _destroy]],
       :terms_of_use_url,
       :access_policies_url,
-      :sla_url,
+      :resource_level_url,
       :webpage_url,
       :manual_url,
       :helpdesk_url,
@@ -124,7 +125,24 @@ class Backoffice::ServicePolicy < ApplicationPolicy
       [life_cycle_status_ids: []],
       :resource_organisation_id,
       :horizontal,
+      # Datasource Policies
+      :submission_policy_url,
+      :preservation_policy_url,
+      :version_control,
+      # Datasource content
+      :jurisdiction_id,
+      :datasource_classification_id,
+      [research_entity_type_ids: []],
+      :thematic,
+      # Research Product Policies
+      [research_product_access_policy_ids: []],
+      # Reseach Product Metadata
+      [research_product_metadata_access_policy_ids: []],
       [research_step_ids: []],
+      [entity_type_scheme_ids: []],
+      [persistent_identity_systems_attributes: %i[id entity_type_id entity_type_scheme_ids _destroy]],
+      [link_research_product_license_urls_attributes: %i[id url name _destroy]],
+      [link_research_product_metadata_license_urls_attributes: %i[id url name _destroy]],
       [main_contact_attributes: %i[id first_name last_name email phone organisation position]],
       [sources_attributes: %i[id source_type eid _destroy]],
       [public_contacts_attributes: %i[id first_name last_name email phone organisation position _destroy]]

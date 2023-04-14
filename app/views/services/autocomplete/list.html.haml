@@ -1,13 +1,8 @@
 %li.label
-  = _("Services")
+  = _("Services & Datasources")
 - results.each do |elem, highlights|
   - if highlights[:name]
     = render "services/autocomplete/service_item", service: elem, highlights: highlights
-%li.label
-  = _("Datasources")
-- results.each do |elem, highlights|
-  - if highlights[:datasource_name]
-    = render "services/autocomplete/datasource_item", datasource: elem, highlights: highlights
 %li.label
   = _("Offers")
 - results.each do |elem, highlights|

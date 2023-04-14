@@ -28,7 +28,7 @@
                       data: { confirm: _("Are you sure you want to publish this service?"), e2e: "publish-btn" },
                       class: "btn btn-success btn-sm"
           - if policy([:backoffice, @service]).publish_unverified?
-            = link_to _("Publish as unverified service"),
+            = link_to _("Publish as unverified #{@service.type.downcase}"),
                       backoffice_service_publish_path(@service, unverified: true),
                       method: :post,
                       data: { confirm: _("Are you sure you want to publish this service as unverified service?") },

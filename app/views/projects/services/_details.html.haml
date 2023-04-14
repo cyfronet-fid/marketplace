@@ -21,11 +21,11 @@
   %dt
     = _("Project name") + ":"
   %dd= link_to project.name, project
-- if project_item.service.sla_url.present?
+- if project_item.service.resource_level_url.present?
   %dl
     %dt
       = _("SLA") + ":"
-    %dd= link_to _("Service Level Agreement"), project_item.service.sla_url
+    %dd= link_to _("Service Level Agreement"), project_item.service.resource_level_url
 %dl
   %dt
     = _("Service Organisation") + ":"

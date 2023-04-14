@@ -68,11 +68,10 @@ describe Import::Providers do
     allow_any_instance_of(Faraday::Connection).to(
       receive(:post)
         .with(
-          "https://#{ENV["CHECKIN_HOST"] || "aai.eosc-portal.eu"}/oidc/token",
+          "https://#{ENV["CHECKIN_HOST"] || "aai.eosc-portal.eu"}/auth/realms/core/protocol/openid-connect/token",
           {
             grant_type: "refresh_token",
             refresh_token: nil,
-            scope: %w[openid profile email],
             client_id:
               ENV["IMPORTER_AAI_CLIENT_ID"] || ENV["CHECKIN_IDENTIFIER"] ||
                 Rails.application.credentials.checkin[:identifier]

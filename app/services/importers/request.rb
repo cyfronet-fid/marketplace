@@ -21,6 +21,7 @@ class Importers::Request
 
   def all
     command = @suffix == "vocabulary/byType" ? nil : "all?quantity=10000&from=0"
+    command.slice("catalogue_id=all&") if @suffix == "catalogue/bundle"
     @conn.get("#{@eosc_registry_base_url}/#{@suffix}/#{command}")
   end
 

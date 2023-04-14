@@ -84,7 +84,7 @@ class Offer < ApplicationRecord
   end
 
   def offer_type
-    super || service.service_type
+    super || service.order_type
   end
 
   def bundle?

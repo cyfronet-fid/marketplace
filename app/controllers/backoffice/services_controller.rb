@@ -29,7 +29,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
                       anchor: ("offer-#{params["anchor"]}" if params["anchor"].present?)
                     )
       when "datasource"
-        redirect_to backoffice_datasource_path(Datasource.friendly.find(params["object_id"]))
+        redirect_to backoffice_service_path(Datasource.friendly.find(params["object_id"]))
       end
     end
     @services, @offers = search(scope)
@@ -123,6 +123,11 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     service.public_contacts.build if service.public_contacts.empty?
     service.link_multimedia_urls.build if service.link_multimedia_urls.blank?
     service.link_use_cases_urls.build if service.link_use_cases_urls.blank?
+    service.link_research_product_license_urls.build if service.link_research_product_license_urls.blank?
+    if service.link_research_product_metadata_license_urls.blank?
+      service.link_research_product_metadata_license_urls.build
+    end
+    service.persistent_identity_systems.build if service.persistent_identity_systems.blank?
   end
 
   def perform_preview(error_view)
@@ -145,10 +150,12 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
       return
     end
 
-    @offers = @service.offers.where(status: :published).order(:created_at)
+    @offers = @service.offers.where(status: :published).order(:created_at).reject(&:bundle?)
     @related_services = @service.target_relationships
     @related_services_title = "Suggested compatible services"
     @client = @client&.credentials&.expires_at.blank? ? Google::Analytics.new : @client
+    @bundles = policy_scope(@service.bundles.published)
+    @bundled = @service.offers.select(&:bundled?) ? @service.offers.select(&:bundled?).map(&:bundles).flatten.uniq : []
     @service.analytics = Analytics::PageViewsAndRedirects.new(@client).call(request.path)
     render :preview
   end

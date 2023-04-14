@@ -155,14 +155,14 @@ module Importable
   end
 
   def map_access_policies(policies)
-    Vocabulary::ResearchProductAccessPolicy.where(eid: policies, type: "Vocabulary::ResearchProductAccessPolicy")
+    Vocabulary::ResearchProductAccessPolicy.where(eid: policies, type: "Vocabulary::ResearchProductAccessPolicy").uniq
   end
 
   def map_metadata_access_policies(policies)
     Vocabulary::ResearchProductMetadataAccessPolicy.where(
       eid: policies,
       type: "Vocabulary::ResearchProductMetadataAccessPolicy"
-    )
+    ).uniq
   end
 
   def map_entity_types(types)
@@ -171,9 +171,10 @@ module Importable
 
   def map_provider(prov_eid)
     if prov_eid.present?
-      Provider
-        .joins(:sources)
-        .find_by("provider_sources.source_type": "eosc_registry", "provider_sources.eid": prov_eid)
+      Provider.find_by(pid: prov_eid) ||
+        Provider
+          .joins(:sources)
+          .find_by("provider_sources.source_type": "eosc_registry", "provider_sources.eid": prov_eid)
     end
   end
 end

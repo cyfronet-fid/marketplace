@@ -1,0 +1,36 @@
+.card.rounded
+  %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
+              [:required_services, :related_services, :related_platforms, :platforms])),
+                data: { toggle: "collapse", target: "#dependencies" },
+                aria: { expanded: true, controls: "dependencies" } }
+    .card-header.text-left{ id: "dependencies-header" }
+      .row
+        .col-10
+          = _("Dependencies")
+        .col-2.text-right
+          .collapse-icon
+            %i.fas.fa-chevron-down
+            %i.fas.fa-chevron-up
+  .collapse{ id: "dependencies", "aria-labelledby": "dependencies-header",
+            "data-parent": "#accordion-form",
+            class: ("show" unless collapsed?(service, [:required_services, :related_services,
+                                                      :related_platforms, :platforms])) }
+    .card-body
+      = f.association :required_services, multiple: true, input_html: { data: { choice: true } },
+            disabled: cant_edit([required_service_ids: []])
+
+      = f.association :related_services, multiple: true, input_html: { data: { choice: true } },
+            disabled: cant_edit([related_service_ids: []])
+      - if resource_profile_4?
+        = f.association :platforms, label: _("Related platforms"),
+                                 multiple: true, input_html: { data: { choice: true } },
+                                 disabled: cant_edit([platform_ids: []])
+      - else
+        = f.input :related_platforms, label: _("Related platforms"), multiple: true,
+                  input_html: { class: "form-control" },
+                  wrapper_html: { "data-target" => "service.relatedPlatforms" },
+                  disabled: cant_edit([related_platforms: []]), as: :array
+        = link_to_add_array_field("service", "related_platforms")
+      = f.input :catalogue_id, disabled: cant_edit(:catalogue_id),
+            input_html: { multiple: false, data: { choice: true } },
+            collection: Catalogue.all, selected: service.catalogue&.id || nil

@@ -5,7 +5,7 @@ class Backoffice::Services::PublishesController < Backoffice::ApplicationControl
 
   def create
     Service::Publish.call(@service, verified: verified?)
-    redirect_to [:backoffice, @service]
+    redirect_to backoffice_service_path(@service)
   end
 
   private

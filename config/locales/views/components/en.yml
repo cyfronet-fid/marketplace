@@ -24,17 +24,15 @@ en:
           helpdesk_url: Helpdesk
           helpdesk_email: Helpdesk e-mail
           manual_url: Manual
-          user_manual_url: User Manual
           privacy_policy_url: Privacy policy
           status_monitoring_url: Status Monitoring
           maintenance_url: Maintenance
           payment_model_url: Payment Model
           pricing_url: Pricing
           training_information_url: Training information
-          sla_url: Corporate SLA
+          resource_level_url: Corporate SLA
           terms_of_use_url: Terms of use
           access_policies_url: Access policies
-          access_policy_url: Access policy
           phase:
             discovery: "Discovery (min. TRL 1)"
             planned: "Planned (min. TRL 3)"

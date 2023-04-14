@@ -165,7 +165,7 @@ class Importers::Datasource < ApplicationService
       geographical_availabilities: geographical_availabilities,
       language_availability: language_availability,
       # Location
-      geographic_locations: resource_geographic_locations,
+      resource_geographic_locations: resource_geographic_locations,
       # Contact
       main_contact: main_contact,
       public_contacts: public_contacts || [],
@@ -184,17 +184,17 @@ class Importers::Datasource < ApplicationService
       required_services: required_services,
       related_services: related_services,
       platforms: platforms,
-      catalogue_ids: [map_catalogue(@data["catalogueId"]).id] || [],
+      catalogue: map_catalogue(@data["catalogueId"]) || [],
       # Attribution
       funding_bodies: funding_bodies,
       funding_programs: funding_programs,
       grant_project_names: grant_project_names,
       # Management
       helpdesk_url: @data["helpdeskPage"] || "",
-      user_manual_url: @data["userManual"] || "",
+      manual_url: @data["userManual"] || "",
       terms_of_use_url: @data["termsOfUse"] || "",
       privacy_policy_url: @data["privacyPolicy"] || "",
-      access_policy_url: @data["accessPolicy"] || "",
+      access_policies_url: @data["accessPolicy"] || "",
       resource_level_url: @data["resourceLevel"] || "",
       training_information_url: @data["trainingInformation"] || "",
       status_monitoring_url: @data["statusMonitoring"] || "",

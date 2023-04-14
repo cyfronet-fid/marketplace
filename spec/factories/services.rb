@@ -24,7 +24,7 @@ FactoryBot.define do
     sequence(:helpdesk_url) { "https://helpdesk.url" }
     sequence(:training_information_url) { "https://tutorial.url" }
     sequence(:terms_of_use_url) { "https://terms.of.use.url" }
-    sequence(:sla_url) { "https://corporate.sla.url" }
+    sequence(:resource_level_url) { "https://corporate.sla.url" }
     sequence(:access_policies_url) { "https://access.policies.url" }
 
     sequence(:language_availability) { [I18nData.languages.values.sample] }

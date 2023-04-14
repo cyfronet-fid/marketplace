@@ -111,7 +111,7 @@ en:
         webpage_url: |
           Url should start with http:// or https:// prefix [e.g. https://example.com]<br/>
           This url will be available under "Webpage" in Support section in the service view
-        sla_url: *url_hint
+        resource_level_url: *url_hint
         access_policies_url: *url_hint
         terms_of_use_url: *url_hint
         tag_list: |

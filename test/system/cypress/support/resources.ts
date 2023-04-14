@@ -360,7 +360,7 @@ Cypress.Commands.add("fillFormCreateResource", (resource: IResourcesExtended, lo
   }
 
   if (resource.managementSlaUrl) {
-    cy.get("#service_sla_url")
+    cy.get("#service_resource_level_url")
       .clear({ force: true })
       .type(resource.managementSlaUrl);
   }
