@@ -245,7 +245,7 @@ RSpec.feature "Service browsing" do
     scenario "should have 'All' link in categories with all services count" do
       visit services_path
 
-      expect(page).to have_text("EOSC Services #{Service.count}")
+      expect(page).to have_text("EOSC Services & Datasources #{Service.count}")
     end
 
     scenario "should by default sort services by name, ascending" do

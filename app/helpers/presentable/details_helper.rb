@@ -27,7 +27,7 @@ module Presentable::DetailsHelper
   def datasource_details_columns
     [
       [classification, availability, marketing, dependencies, attribution, order],
-      [public_contacts, maturity_information, datasource_management, financial_information],
+      [public_contacts, maturity_information, management, financial_information],
       [
         version_control,
         changelog,
@@ -154,24 +154,6 @@ module Presentable::DetailsHelper
         terms_of_use_url
         privacy_policy_url
         access_policies_url
-        training_information_url
-        status_monitoring_url
-        maintenance_url
-      ],
-      with_desc: true
-    }
-  end
-
-  def datasource_management
-    {
-      name: "management",
-      template: "links",
-      fields: %w[
-        helpdesk_url
-        user_manual_url
-        terms_of_use_url
-        privacy_policy_url
-        access_policy_url
         training_information_url
         status_monitoring_url
         maintenance_url

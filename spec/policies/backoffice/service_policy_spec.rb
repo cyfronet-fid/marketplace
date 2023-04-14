@@ -18,6 +18,7 @@ RSpec.describe Backoffice::ServicePolicy do
       policy = described_class.new(service_owner, create(:service))
       expect(policy.permitted_attributes).to match_array(
         [
+          :type,
           :name,
           :abbreviation,
           :description,
@@ -30,7 +31,7 @@ RSpec.describe Backoffice::ServicePolicy do
           [target_user_ids: []],
           :terms_of_use_url,
           :access_policies_url,
-          :sla_url,
+          :resource_level_url,
           :webpage_url,
           :manual_url,
           :helpdesk_url,
@@ -69,7 +70,24 @@ RSpec.describe Backoffice::ServicePolicy do
           [category_ids: []],
           [pc_category_ids: []],
           :horizontal,
+          # Datasource Policies
+          :submission_policy_url,
+          :preservation_policy_url,
+          :version_control,
+          # Datasource content
+          :jurisdiction_id,
+          :datasource_classification_id,
+          [research_entity_type_ids: []],
+          :thematic,
+          # Research Product Policies
+          [research_product_access_policy_ids: []],
+          # Reseach Product Metadata
+          [research_product_metadata_access_policy_ids: []],
           [research_step_ids: []],
+          [entity_type_scheme_ids: []],
+          [persistent_identity_systems_attributes: %i[id entity_type_id entity_type_scheme_ids _destroy]],
+          [link_research_product_license_urls_attributes: %i[id url name _destroy]],
+          [link_research_product_metadata_license_urls_attributes: %i[id url name _destroy]],
           [owner_ids: []],
           :status,
           :upstream_id,

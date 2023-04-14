@@ -1,0 +1,19 @@
+.card.shadow-sm.rounded
+  %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
+            [:payment_model_url, :pricing_url])),
+            data: { toggle: "collapse", target: "#financial" },
+            aria: { expanded: true, controls: "financial" } }
+    .card-header.text-left{ id: "financial-header" }
+      .row
+        .col-10
+          = _("Financial")
+        .col-2.text-right
+          .collapse-icon
+            %i.fas.fa-chevron-down
+            %i.fas.fa-chevron-up
+  .collapse{ id: "financial", "aria-labelledby": "financial-header",
+          "data-parent": "#accordion-form",
+          class: ("show" unless collapsed?(service, [:payment_model_url, :pricing_url])) }
+    .card-body
+      = f.input :payment_model_url, disabled: cant_edit(:payment_model_url)
+      = f.input :pricing_url, disabled: cant_edit(:pricing_url)

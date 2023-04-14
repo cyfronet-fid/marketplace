@@ -74,7 +74,7 @@ RSpec.feature "Services in backoffice" do
       fill_in "Terms of use url", with: "https://sample.url"
       fill_in "Access policies url", with: "https://sample.url"
       fill_in "Privacy policy url", with: "https://sample.url"
-      fill_in "Sla url", with: "https://sample.url"
+      fill_in "Resource level url", with: "https://sample.url"
       fill_in "service_link_use_cases_urls_attributes_0_url", with: "https://sample.url"
       fill_in "Webpage url", with: "https://sample.url"
       fill_in "Manual url", with: "https://sample.url"
@@ -694,7 +694,7 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_field "Geographical availabilities", disabled: false
       expect(page).to have_field "Terms of use url", disabled: false
       expect(page).to have_field "Access policies url", disabled: false
-      expect(page).to have_field "Sla url", disabled: false
+      expect(page).to have_field "Resource level url", disabled: false
       expect(page).to have_field "Webpage url", disabled: false
       expect(page).to have_field "Manual url", disabled: false
       expect(page).to have_field "Helpdesk url", disabled: false
@@ -766,7 +766,7 @@ RSpec.feature "Services in backoffice" do
       expect(page).to have_field "Service geographic locations", disabled: true
       expect(page).to have_field "Terms of use url", disabled: true
       expect(page).to have_field "Access policies url", disabled: true
-      expect(page).to have_field "Sla url", disabled: true
+      expect(page).to have_field "Resource level url", disabled: true
       expect(page).to have_field "Webpage url", disabled: true
       expect(page).to have_field "Manual url", disabled: true
       expect(page).to have_field "Helpdesk url", disabled: true

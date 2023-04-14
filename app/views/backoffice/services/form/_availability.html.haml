@@ -1,0 +1,24 @@
+.card.rounded
+  %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
+              [:geographical_availabilities, :language_availability])),
+              data: { toggle: "collapse", target: "#availability" },
+              aria: { expanded: true, controls: "availability" } }
+    .card-header.text-left{ id: "availability-header" }
+      .row
+        .col-10
+          = _("Availability")
+        .col-2.text-right
+          .collapse-icon
+            %i.fas.fa-chevron-down
+            %i.fas.fa-chevron-up
+  .collapse{ id: "availability", "aria-labelledby": "availability-header",
+            "data-parent": "#accordion-form",
+            class: ("show" unless collapsed?(service, [:geographical_availabilities, :language_availability])) }
+    .card-body
+      = f.input :geographical_availabilities, as: :select,
+                collection: Country.options.map { |c| [ c.iso_short_name, "value" => c.alpha2 ] },
+                disabled: cant_edit([geographical_availabilities: []]),
+                input_html: { data: { choice: true },  "multiple" => "true" }
+      = f.input :language_availability, input_html: { multiple: true, data: { choice: true } },
+                collection: I18nData.languages.map { |k, v| [v, k] },
+                disabled: cant_edit([language_availability: []])

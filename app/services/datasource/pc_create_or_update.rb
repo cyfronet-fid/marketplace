@@ -17,10 +17,7 @@ class Datasource::PcCreateOrUpdate
     @mp_datasource =
       Datasource
         .joins(:sources)
-        .find_by(
-          "datasource_sources.source_type": @source_type,
-          "datasource_sources.eid": eosc_registry_datasource["id"]
-        )
+        .find_by("service_sources.source_type": @source_type, "service_sources.eid": eosc_registry_datasource["id"])
     @datasource_hash = Importers::Datasource.call(eosc_registry_datasource, modified_at, eosc_registry_base_url, token)
     @new_update_available = Datasource::PcCreateOrUpdate.new_update_available(@mp_datasource, modified_at)
   end
@@ -37,13 +34,13 @@ class Datasource::PcCreateOrUpdate
       return @mp_datasource
     end
 
-    update_valid = Datasource::Update.call(@mp_datasource, @datasource_hash)
+    update_valid = Service::Update.call(@mp_datasource, @datasource_hash)
     unless update_valid
       Datasource::PcCreateOrUpdate.handle_invalid_data(@mp_datasource, @datasource_hash, @error_message)
       return @mp_datasource
     end
 
-    Datasource::Draft.call(@mp_datasource) unless @is_active
+    Service::Draft.call(@mp_datasource) unless @is_active
     if source_id.present?
       @mp_datasource.update(upstream_id: source_id.id)
       @mp_datasource.sources.first.update(errored: nil)
@@ -71,12 +68,12 @@ class Datasource::PcCreateOrUpdate
   def self.create_datasource(datasource_hash, logo)
     datasource = Datasource.new(datasource_hash)
     if datasource.valid?
-      Datasource::Create.call(datasource)
+      Service::Create.call(datasource)
     else
       datasource.status = "errored"
       datasource.save(validate: false)
     end
-    DatasourceSource::Create.call(datasource)
+    ServiceSource::Create.call(datasource)
 
     Importers::Logo.call(datasource, logo)
     datasource.save!(validate: false)

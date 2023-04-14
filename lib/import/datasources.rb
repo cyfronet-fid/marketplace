@@ -60,16 +60,15 @@ module Import
 
           image_url = datasource["logo"]
           datasource = Importers::Datasource.call(datasource, Time.now, @eosc_registry_base_url, @token, "rest")
-          if (datasource_source = DatasourceSource.find_by(eid: eid(datasource_data), source_type: "eosc_registry"))
-               .nil?
+          if (datasource_source = ServiceSource.find_by(eid: eid(datasource_data), source_type: "eosc_registry")).nil?
             log "Adding [NEW] datasource: #{datasource[:name]}, eid: #{datasource[:pid]}"
             unless @dry_run
               datasource = Datasource.new(datasource)
               if datasource.valid?
-                datasource.save
+                Service::Create.call(datasource)
                 datasource_source =
-                  DatasourceSource.create!(
-                    datasource_id: datasource.id,
+                  ServiceSource.create!(
+                    service_id: datasource.id,
                     eid: eid(datasource_data),
                     source_type: "eosc_registry"
                   )
@@ -80,8 +79,8 @@ module Import
               else
                 datasource.save(validate: false)
                 datasource_source =
-                  DatasourceSource.create!(
-                    datasource_id: datasource.id,
+                  ServiceSource.create!(
+                    service_id: datasource.id,
                     eid: "eosc.#{eid(datasource_data)}",
                     source_type: "eosc_registry"
                   )
@@ -95,13 +94,13 @@ module Import
             end
             created += 1
           else
-            existing_datasource = Datasource.find_by(id: datasource_source.datasource_id)
+            existing_datasource = Datasource.find_by(id: datasource_source.service_id)
             if existing_datasource.upstream_id == datasource_source.id
               updated += 1
               log "Updating [EXISTING] datasource #{datasource[:name]}, " +
                     "id: #{datasource_source["id"]}, eid: #{datasource[:pid]}"
               unless @dry_run
-                Datasource::Update.new(existing_datasource, datasource).call
+                Service::Update.new(existing_datasource, datasource).call
 
                 Importers::Logo.new(existing_datasource, image_url).call
                 existing_datasource.save!

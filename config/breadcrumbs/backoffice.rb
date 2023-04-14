@@ -13,7 +13,7 @@ crumb :backoffice_services do |category|
       parent :backoffice_services
     end
   else
-    link "Owned Services", backoffice_services_path
+    link "Owned Services & Datasources", backoffice_services_path
     parent :backoffice_root
   end
 end
@@ -78,25 +78,6 @@ end
 crumb :backoffice_bundle_edit do |bundle|
   link "Edit", edit_backoffice_service_bundle_path(bundle)
   parent :backoffice_service, bundle.service
-end
-crumb :backoffice_datasources do
-  link "Owned Datasources", backoffice_datasources_path
-  parent :backoffice_root
-end
-
-crumb :backoffice_datasource do |datasource|
-  link datasource.name, backoffice_datasource_path(datasource)
-  parent :backoffice_datasources
-end
-
-crumb :backoffice_datasource_new do |datasource|
-  link datasource.name, new_backoffice_datasource_path(datasource)
-  parent :backoffice_datasources
-end
-
-crumb :backoffice_datasource_edit do |datasource|
-  link datasource.name, edit_backoffice_datasource_path(datasource)
-  parent :backoffice_datasource, datasource
 end
 
 crumb :backoffice_scientific_domains do

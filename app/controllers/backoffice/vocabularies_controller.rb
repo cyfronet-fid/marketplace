@@ -85,8 +85,8 @@ class Backoffice::VocabulariesController < Backoffice::ApplicationController
       name: "Datasource Classification",
       klass: Vocabulary::DatasourceClassification
     },
-    research_entity_type: {
-      name: "Research Entity Type",
+    entity_type: {
+      name: "Entity Type",
       klass: Vocabulary::EntityType
     },
     entity_type_scheme: {
