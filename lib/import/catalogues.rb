@@ -82,8 +82,8 @@ class Import::Catalogues
 
   def external_catalogues_data
     begin
-      token = Importers::Token.new(faraday: @faraday).receive_token
-      rp = Importers::Request.new(@eosc_registry_base_url, "catalogue/bundle", faraday: @faraday, token: token).call
+      @token ||= Importers::Token.new(faraday: @faraday).receive_token
+      rp = Importers::Request.new(@eosc_registry_base_url, "catalogue/bundle", faraday: @faraday, token: @token).call
     rescue Errno::ECONNREFUSED, Importers::Token::RequestError => e
       abort("import exited with errors - could not connect to #{@eosc_registry_base_url} \n #{e.message}")
     end

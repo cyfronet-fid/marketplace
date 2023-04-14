@@ -10,7 +10,7 @@ en:
   backoffice:
     services:
       index:
-        title: Owned Services
+        title: Owned Services & Datasources
       new:
         link: Create new Service
         title: New Service

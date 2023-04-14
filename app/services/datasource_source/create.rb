@@ -9,8 +9,8 @@ class DatasourceSource::Create < ApplicationService
 
   def call
     new_source =
-      DatasourceSource.create(
-        datasource_id: @datasource.id,
+      ServiceSource.create(
+        service_id: @datasource.id,
         source_type: @source_type,
         eid: @datasource.pid,
         errored: @datasource.errors.to_hash

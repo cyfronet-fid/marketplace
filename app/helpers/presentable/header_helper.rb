@@ -75,7 +75,7 @@ module Presentable::HeaderHelper
     {
       name: "links",
       template: "links",
-      fields: %w[webpage_url helpdesk_url helpdesk_email user_manual_url training_information_url]
+      fields: %w[webpage_url helpdesk_url helpdesk_email manual_url training_information_url]
     }
   end
 

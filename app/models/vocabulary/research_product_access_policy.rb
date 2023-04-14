@@ -2,6 +2,8 @@
 
 class Vocabulary::ResearchProductAccessPolicy < Vocabulary
   after_save do
-    Vocabulary::ResearchProductMetadataAccessPolicy.new(name: name, eid: eid, description: description).save
+    Vocabulary::ResearchProductMetadataAccessPolicy
+      .find_or_initialize_by(eid: eid)
+      .update(name: name, description: description)
   end
 end

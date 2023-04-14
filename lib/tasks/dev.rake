@@ -167,7 +167,7 @@ namespace :dev do
         funding_bodies: funding_bodies,
         funding_programs: funding_programs,
         terms_of_use_url: hash["terms_of_use_url"],
-        sla_url: hash["sla_url"],
+        resource_level_url: hash["resource_level_url"],
         access_policies_url: hash["access_policies_url"],
         language_availability: hash["language_availability"],
         geographical_availabilities: [hash["geographical_availabilities"]],
