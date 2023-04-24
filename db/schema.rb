@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_03_21_113526) do
+ActiveRecord::Schema.define(version: 2023_04_22_004536) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,7 +103,7 @@ ActiveRecord::Schema.define(version: 2023_03_21_113526) do
   create_table "bundles", force: :cascade do |t|
     t.bigint "iid", null: false
     t.string "name", null: false
-    t.string "capability_of_goal_suggetstion"
+    t.string "capability_of_goal_suggestion"
     t.text "description", null: false
     t.string "order_type", null: false
     t.jsonb "parameters"
@@ -349,6 +349,14 @@ ActiveRecord::Schema.define(version: 2023_03_21_113526) do
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
     t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
+  end
+
+  create_table "guidelines", force: :cascade do |t|
+    t.string "title"
+    t.string "eid"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["eid"], name: "index_guidelines_on_eid", unique: true
   end
 
   create_table "help_items", force: :cascade do |t|
@@ -721,6 +729,14 @@ ActiveRecord::Schema.define(version: 2023_03_21_113526) do
     t.index ["catalogue_id"], name: "index_service_catalogues_on_catalogue_id"
     t.index ["service_id", "catalogue_id"], name: "index_service_catalogues_on_service_id_and_catalogue_id", unique: true
     t.index ["service_id"], name: "index_service_catalogues_on_service_id"
+  end
+
+  create_table "service_guidelines", id: false, force: :cascade do |t|
+    t.bigint "service_id", null: false
+    t.bigint "guideline_id", null: false
+    t.index ["guideline_id", "service_id"], name: "index_service_guidelines_on_guideline_id_and_service_id", unique: true
+    t.index ["guideline_id"], name: "index_service_guidelines_on_guideline_id"
+    t.index ["service_id"], name: "index_service_guidelines_on_service_id"
   end
 
   create_table "service_opinions", force: :cascade do |t|
