@@ -15,6 +15,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Changed
 - Datasources as services (@goreck888)
+- Design of Bundle configuration's step (@jarekzet, @goreck888)
 
 ### Fixed
 - REST data import token exchange (@goreck888)
