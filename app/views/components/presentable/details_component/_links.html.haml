@@ -1,6 +1,12 @@
 - fields.map do |field|
   - if object.send(field).present?
     - case type
+    - when "guideline"
+      - object.send(field).each do |guideline|
+        %li.links
+          %i.fas.fa-arrow-right
+          = link_to(guideline.title, guideline_link(guideline), "data-probe": "",
+                  "data-target": local_assigns[:preview] ? "preview.link" : "")
     - when "array"
       - object.send(field).each_with_index do |link, idx|
         %li.links

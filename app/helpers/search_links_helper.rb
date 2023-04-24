@@ -89,4 +89,9 @@ module SearchLinksHelper
     return search_base_url + "/search/service?q=*" if enable_external_search
     services_path(params: query_params)
   end
+
+  def guideline_link(guideline)
+    search_base_url = Mp::Application.config.search_service_base_url
+    search_base_url + "/guidelines/" + guideline.eid
+  end
 end

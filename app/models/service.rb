@@ -126,6 +126,9 @@ class Service < ApplicationRecord
 
   has_many :sources, class_name: "ServiceSource", dependent: :destroy
 
+  has_many :service_guidelines
+  has_many :guidelines, through: :service_guidelines
+
   accepts_nested_attributes_for :sources,
                                 reject_if:
                                   lambda { |attributes| attributes["eid"].blank? || attributes["source_type"].blank? },
