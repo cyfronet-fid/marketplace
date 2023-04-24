@@ -11,6 +11,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 - Bundles functionality (@goreck888)
 - Improvements for the UI of bundles (@jarekzet)
+- Interoperability guidelines import (@michal-szostak)
 
 ## [3.47.2]
 

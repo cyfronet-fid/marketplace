@@ -7,7 +7,7 @@ module Presentable::DetailsHelper
     [
       [classification, availability, marketing, dependencies, attribution, order],
       [public_contacts, maturity_information, management, financial_information],
-      [changelog]
+      [guidelines, changelog]
     ]
   end
 
@@ -256,6 +256,10 @@ module Presentable::DetailsHelper
 
   def changelog
     { name: "changelog", template: "list", fields: ["changelog"] }
+  end
+
+  def guidelines
+    { name: "guidelines", template: "links", fields: ["guidelines"], type: "guideline" }
   end
 
   def statuses

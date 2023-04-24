@@ -57,4 +57,13 @@ namespace :import do
       token: ENV["MP_IMPORT_TOKEN"]
     ).call
   end
+
+  task guidelines: :environment do
+    Import::Guidelines.new(
+      ENV["MP_IMPORT_EOSC_REGISTRY_URL"] || "https://beta.providers.eosc-portal.eu/api",
+      dry_run: ENV["DRY_RUN"] || false,
+      filepath: ENV["OUTPUT"],
+      token: ENV["MP_IMPORT_TOKEN"]
+    ).call
+  end
 end
