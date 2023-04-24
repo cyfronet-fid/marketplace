@@ -243,7 +243,10 @@
   }
 
   .bundle-info {
-    margin: 35px 0 20px;
+    margin: 0 0 30px;
+    border: 1px solid $palette-gray-10;
+    border-radius: 4px;
+    padding: 30px 30px 45px;
 
     p {
       color: $palette-gray-70;

@@ -626,7 +626,6 @@ textarea:-ms-input-placeholder { /* IE 10+ */
 .table {
   thead {
     th {
-      border-bottom: 2px solid $secondary;
       border-top: none;
       text-transform: uppercase;
       padding: 0.65rem;
@@ -3305,6 +3304,7 @@ label[data-multicheckbox].small {
 
       .bundle-offer-desc {
         flex-grow: 1;
+        width: 30%;
 
         .card-title {
           margin-bottom: 0.25rem;
@@ -3331,7 +3331,7 @@ label[data-multicheckbox].small {
       .bundle-offer-order-type {
         font-size: 11px;
         border-radius: 3px;
-        margin-left: 20px;
+        margin-left: 5px;
         border: 1px solid $bundle-border3;
         padding: 4px 7px;
         color: $palette-gray-80;
@@ -4248,7 +4248,7 @@ abbr[title] {
 .additional-information {
   .offer-description {
     h4 {
-      border-bottom: 2px solid $palette-yellow;
+      border-bottom: 2px solid $border-color;
       margin-top: 0;
       font-size: 0.875rem;
       padding-bottom: 0.65rem;
@@ -4258,9 +4258,7 @@ abbr[title] {
   &.technical {
     .col-form-label,
     .form-control-label {
-      border-bottom: 2px solid $palette-yellow;
       font-size: 0.875rem;
-      padding-bottom: 0.35rem;
       text-transform: uppercase;
       margin-bottom: 17px;
       font-weight: 600;
