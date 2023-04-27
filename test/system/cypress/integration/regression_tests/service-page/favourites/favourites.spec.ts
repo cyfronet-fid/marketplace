@@ -1,6 +1,7 @@
 import { UserFactory} from "../../../../factories/user.factory";
 
-describe("Favourites", () => {
+// favourites has been removed until they are migrated to dashboard
+describe.skip("Favourites", () => {
 const user = UserFactory.create();
 
   beforeEach(() => {

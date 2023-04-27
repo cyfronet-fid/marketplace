@@ -65,7 +65,7 @@
   .container.eosc-back-search-bar
     .eosc-back-link
       .chevron-left
-      %a{ href: external_search_url }
+      %a{ href: external_search_url(include_query: true) }
         Go to Search
 - else
   .container

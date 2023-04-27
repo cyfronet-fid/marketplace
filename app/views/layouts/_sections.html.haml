@@ -15,6 +15,7 @@
                                             current_user&.first_name.to_s + " " + current_user&.last_name.to_s
                                             : "",
                                             "profile-links": eosc_commons_profile_links,
+                                            "show-eosc-links": "true",
                                             "login-url": user_checkin_omniauth_authorize_url,
                                             "(on-logout)": "document.getElementById('hidden_logout').click()" }
   = link_to "logout",
