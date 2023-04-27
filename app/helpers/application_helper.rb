@@ -56,10 +56,6 @@ module ApplicationHelper
 
   def eosc_commons_profile_links
     links = []
-    links.push({ href: "/projects", caption: _("My projects") })
-    links.push({ href: "/favourites", caption: _("Favourite resources"), "data-e2e": "favourites" })
-    links.push({ href: "/profile", caption: _("Profile"), "data-e2e": "profile" })
-    links.push({ href: "/api_docs", caption: _("Marketplace API"), "data-e2e": "marketplace-api" })
 
     # if show_administrative_sections?
     #   .border-top
@@ -73,9 +69,16 @@ module ApplicationHelper
     links.to_json
   end
 
-  def external_search_url
+  def external_search_url(include_query: false)
     if Rails.configuration.enable_external_search && Rails.configuration.search_service_base_url.present?
-      Rails.configuration.search_service_base_url
+      query = ""
+      if include_query
+        category = request.query_parameters["pv"] || "search/all"
+        q = request.query_parameters["q"] || "*"
+        query = "/#{category}?q=#{q}"
+      end
+
+      Rails.configuration.search_service_base_url + query
     end
   end
 

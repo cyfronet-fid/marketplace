@@ -8,9 +8,7 @@ describe("My profile", () => {
   });
 
   it("should add and remove Additional information", () => {
-    cy.openUserDropdown();
-    cy.get("[data-e2e='profile']")
-      .click();
+    cy.visit("/profile")
     cy.location("href")
       .should("contain", "/profile");
     cy.get("[data-e2e='additional-inf-edit']")

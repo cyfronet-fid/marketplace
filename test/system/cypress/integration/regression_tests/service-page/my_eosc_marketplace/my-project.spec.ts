@@ -13,8 +13,7 @@ describe("My project", () => {
   const openAccessResource = "DisVis";
 
   it("should add new project, pin a service and add review", () => {
-   cy.get('a[data-e2e="goToProjectsBtn"]')
-     .click();
+    cy.visit("/projects");
    cy.location('pathname')
      .should('equal', '/projects');
    cy.get('a[data-e2e="go-to-create-project-form-btn"]')
