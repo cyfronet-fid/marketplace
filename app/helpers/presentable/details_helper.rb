@@ -259,7 +259,7 @@ module Presentable::DetailsHelper
   end
 
   def guidelines
-    { name: "guidelines", template: "links", fields: ["guidelines"], type: "guideline" }
+    { name: "Supported Interoperability Guidelines", template: "links", fields: ["guidelines"], type: "guideline" }
   end
 
   def statuses
