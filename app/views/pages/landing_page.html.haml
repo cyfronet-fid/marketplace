@@ -124,7 +124,7 @@
         %p.description
           Adding the project will help you organize your services a into logical blocks and gaining
           support in the scope of the created idea.
-        %a.btn.btn-primary.mt-3{ href: "https://marketplace.eosc-portal.eu/projects" } Add project
+        %a.btn.btn-primary.mt-3{ href: "#{root_url}projects" } Add project
 
 
 %section.eosc-navy
@@ -164,7 +164,7 @@
               Stay up to date with news and events. Read use cases or success stories that highlight how EOSC
               resources can support the daily work of researchers and innovators.
       .col-md-3.col-sm-12
-        %a.eosc-info{ href: "https://providers.eosc-portal.eu/home" }
+        %a.eosc-info{ href: "#{providers_dashboard_url}" }
           .eosc-info-icon
             = image_pack_tag "landing_page/hub.svg", alt: "Providers Hub"
           .eosc-info-texts
@@ -183,7 +183,7 @@
           Are you a provider?<br>
           We can help you contribute to European research and innovation. Increase the visibility and usability of
           your resources across the European research community by onboarding them.
-        %a.btn.btn-primary.mt-3{ href: "https://providers.eosc-portal.eu/becomeAProvider" } Onboard Resources
+        %a.btn.btn-primary.mt-3{ href: "#{providers_dashboard_url}/becomeAProvider" } Onboard Resources
 
 %section.research
   .container
@@ -273,6 +273,6 @@
         %h3
           Facilities that provide resources and services to the scientific community to conduct research
         %p
-          %a.blue-link{ href: "https://marketplace.eosc-portal.eu/providers" } Over 250 providers >
+          %a.blue-link{ href: "#{root_url}providers" } Over 250 providers >
         %p
-          %a.blue-link{ href: "https://marketplace.eosc-portal.eu/communities" } 64 Communities and infrastructures >
+          %a.blue-link{ href: "#{root_url}communities" } 64 Communities and infrastructures >
