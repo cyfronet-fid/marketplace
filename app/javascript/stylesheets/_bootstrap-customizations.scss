@@ -5499,13 +5499,13 @@ abbr[title] {
       }
 
       .solutions-box {
-        display: flex;
-        flex-direction: row;
+        //display: flex;
+        //flex-direction: row;
         align-items: center;
         gap: 16px;
 
         a {
-          font-size: 13px;
+          font-size: 10px;
           color: $palette-white;
           border: 1px solid $palette-white;
           padding: 1px 8px;
