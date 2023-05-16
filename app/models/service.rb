@@ -274,7 +274,7 @@ class Service < ApplicationRecord
   end
 
   def propagate_to_ess
-    public? && !destroyed? ? Service::Ess::Add.call(self) : Service::Ess::Delete.call(id)
+    public? && !destroyed? ? Service::Ess::Add.call(self) : Service::Ess::Delete.call(id, type)
   end
 
   def offers?
