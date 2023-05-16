@@ -32,6 +32,7 @@ Rails.application.routes.draw do
       resource :ordering_configuration, only: :show do
         scope module: :ordering_configuration do
           resources :offers, only: [:new, :edit, :create, :update, :destroy]
+          resources :bundles, only: [:edit, :update]
         end
       end
     end

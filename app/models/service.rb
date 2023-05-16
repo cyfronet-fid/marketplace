@@ -293,12 +293,12 @@ class Service < ApplicationRecord
     service_user_relationships.where(user: user).count.positive?
   end
 
-  def organisation_search_link(target_name, default_path = nil)
-    _provider_search_link(target_name, "resource_organisation", default_path)
+  def organisation_search_link(target, default_path = nil)
+    _provider_search_link(target, "resource_organisation", default_path)
   end
 
-  def provider_search_link(target_name, default_path = nil)
-    _provider_search_link(target_name, "providers", default_path)
+  def provider_search_link(target, default_path = nil)
+    _provider_search_link(target, "providers", default_path)
   end
 
   def geographical_availabilities_link(gcap)
@@ -307,13 +307,14 @@ class Service < ApplicationRecord
 
   private
 
-  def _provider_search_link(target_name, filter_query, default_path = nil)
+  def _provider_search_link(target, filter_query, default_path = nil)
+    target_name = target.respond_to?(:name) ? target.name : target
     search_base_url = Mp::Application.config.search_service_base_url
     enable_external_search = Mp::Application.config.enable_external_search
     if enable_external_search
       search_base_url + "/search/service?q=*&fq=#{filter_query}:(%22#{target_name}%22)"
     else
-      default_path || provider_path(self)
+      default_path || provider_path(target)
     end
   end
 
