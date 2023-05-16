@@ -75,6 +75,8 @@ class Offer < ApplicationRecord
                )
            }
 
+  after_commit :propagate_to_ess
+
   def current_oms
     primary_oms || OMS.find_by(default: true)
   end
@@ -201,5 +203,9 @@ class Offer < ApplicationRecord
 
   def sanitize_oms_params
     oms_params.select! { |_, v| v.present? } if oms_params.present?
+  end
+
+  def propagate_to_ess
+    status == "published" && !destroyed? ? Offer::Ess::Add.call(self) : Offer::Ess::Delete.call(id)
   end
 end

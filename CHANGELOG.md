@@ -12,6 +12,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Bundles functionality (@goreck888)
 - Improvements for the UI of bundles (@jarekzet)
 - Interoperability guidelines import (@michal-szostak)
+- New task to create data dumps for SOLR (@goreck888)
+- Live update for SOLR collections (@goreck888)
 
 ### Changed
 - Datasources as services (@goreck888)
