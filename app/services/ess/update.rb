@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "sentry-ruby"
+require "erb"
 
 class Ess::Update < ApplicationService
   class Error < StandardError
@@ -10,17 +11,19 @@ class Ess::Update < ApplicationService
     super()
     @payload = payload
     @config = Mp::Application.config_for(:ess_update)
+    @link = "#{@config["url"]}?data_type=#{ERB::Util.url_encode(@payload["data_type"])}&action=#{@payload["action"]}"
   end
 
   def call
-    Rails.logger.info("Updating ESS with payload: #{@payload}")
+    Rails.logger.info("Updating on #{@link} ESS with payload: #{@payload["data"].to_json}")
     @config["enabled"] ? update : Rails.logger.info("Ess::Update disabled, enable with ESS_UPDATE_ENABLED=true")
   end
 
   private
 
   def update
-    response = Faraday.post(@config["url"], @payload, headers) { |conn| conn.options.timeout = @config["timeout"] }
+    response =
+      Faraday.post(@link, @payload["data"].to_json, headers) { |conn| conn.options.timeout = @config["timeout"] }
     Rails.logger.info("Response (status #{response.status}): #{response.body}")
     if response.status >= 400
       msg = "ESS::Update returned #{response.status}\nPayload:\n#{@payload}\nResponse:\n#{response.body}"

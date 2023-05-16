@@ -115,9 +115,10 @@ RSpec.describe Service do
     context "adds" do
       Service::PUBLIC_STATUSES.each do |public_status|
         it "a new #{public_status} service" do
-          expect { create(:service, status: public_status) }.to have_enqueued_job(Ess::UpdateJob).with { |payload|
-            expect(payload).to be_an_add_operation
-          }
+          expect { create(:service, status: public_status) }.to have_enqueued_job(Ess::UpdateJob)
+            .exactly(3)
+            .times
+            .with { |payload| expect(payload).to be_an_add_operation }
         end
 
         it "a service updated to #{public_status}" do
@@ -138,7 +139,7 @@ RSpec.describe Service do
       end
 
       matcher :be_an_add_operation do
-        match { |payload| expect(payload["add"]).to be_present }
+        match { |payload| expect(payload["action"]).to eq("update") }
       end
     end
 
@@ -148,8 +149,10 @@ RSpec.describe Service do
         .reject { |k| Service::PUBLIC_STATUSES.include?(k) }
         .each do |non_public_status|
           it "a new #{non_public_status} service" do
-            expect { create(:service, status: non_public_status) }.to have_enqueued_job(Ess::UpdateJob)
-              .with { |payload| expect(payload).to be_a_delete_operation }
+            provider = create(:provider)
+            expect do
+              create(:service, resource_organisation: provider, providers: [provider], status: non_public_status)
+            end.to have_enqueued_job(Ess::UpdateJob).with { |payload| expect(payload).to be_a_delete_operation }
           end
 
           it "a service updated to #{non_public_status}" do
@@ -170,7 +173,7 @@ RSpec.describe Service do
       end
 
       matcher :be_a_delete_operation do
-        match { |payload| expect(payload["delete"]).to be_present }
+        match { |payload| expect(payload["action"]).to eq("delete") }
       end
     end
   end

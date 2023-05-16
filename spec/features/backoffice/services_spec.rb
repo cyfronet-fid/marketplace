@@ -102,7 +102,7 @@ RSpec.feature "Services in backoffice" do
 
       expect { click_on "Create Service" }.to change { user.owned_services.count }.by(1).and change { Offer.count }.by(
                                                    1
-                                                 ).and have_enqueued_job(Ess::UpdateJob)
+                                                 ).and have_enqueued_job(Ess::UpdateJob).exactly(2).times
 
       expect(page).to have_content("service name")
       expect(page).to have_content("service description")
@@ -250,6 +250,8 @@ RSpec.feature "Services in backoffice" do
       select resource_organisation.name, from: "Service organisation"
       select "open_access", from: "Order type"
 
+      enqueued_jobs.each(&:clear)
+
       click_on "Preview"
 
       expect(page).to have_content("service name")
@@ -257,6 +259,8 @@ RSpec.feature "Services in backoffice" do
 
       click_on "Go back to edit"
       expect { click_on "Create Service" }.to change { Service.count }.by(1).and have_enqueued_job(Ess::UpdateJob)
+                                       .exactly(2)
+                                       .times
       expect(page).to have_content("service name")
     end
 
@@ -339,7 +343,7 @@ RSpec.feature "Services in backoffice" do
       click_on "Edit"
 
       fill_in "service_name", with: "updated name"
-      expect { click_on "Update Service" }.to have_enqueued_job(Ess::UpdateJob)
+      expect { click_on "Update Service" }.to have_enqueued_job(Ess::UpdateJob).exactly(2).times
 
       expect(page).to have_content("updated name")
     end
