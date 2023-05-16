@@ -17,7 +17,7 @@ class Services::OrderingConfiguration::BundlesController < Services::OrderingCon
     @bundle = Bundle::Create.call(template)
 
     if @bundle.persisted?
-      redirect_to backoffice_service_path(@service), notice: "New bundle created successfully"
+      redirect_to service_ordering_configuration_path(@service), notice: "New bundle created successfully"
     else
       render :new, status: :bad_request
     end
@@ -28,7 +28,7 @@ class Services::OrderingConfiguration::BundlesController < Services::OrderingCon
   def update
     template = permitted_attributes(Bundle.new)
     if Bundle::Update.call(@bundle, transform_attributes(template))
-      redirect_to backoffice_service_path(@service), notice: "Bundle updated successfully"
+      redirect_to service_ordering_configuration_path(@service), notice: "Bundle updated successfully"
     else
       render :edit, status: :bad_request
     end
@@ -37,7 +37,7 @@ class Services::OrderingConfiguration::BundlesController < Services::OrderingCon
   def destroy
     @bundle = @service.bundles.find_by(iid: params[:id])
     Offer::Destroy.call(@offer)
-    redirect_to backoffice_service_path(@service), notice: "Bundle removed successfully"
+    redirect_to service_ordering_configuration_path(@service), notice: "Bundle removed successfully"
   end
 
   private

@@ -8,6 +8,11 @@
        helpdesk_url: bundle.helpdesk_url || ""
     .card-button.text-center.backoffice-button
       %label
-        = link_to edit_backoffice_service_bundle_path(bundle.service, bundle) do
-          %span.btn.btn-primary.font-webtn-linkight-bold
-            = _("Edit")
+        - if controller_name == "ordering_configurations"
+          = link_to edit_service_ordering_configuration_bundle_path(bundle.service, bundle) do
+            %span.btn.btn-primary.font-webtn-linkight-bold
+              = _("Edit")
+        - else
+          = link_to edit_backoffice_service_bundle_path(bundle.service, bundle) do
+            %span.btn.btn-primary.font-webtn-linkight-bold
+              = _("Edit")

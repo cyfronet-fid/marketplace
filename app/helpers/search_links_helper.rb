@@ -32,7 +32,7 @@ module SearchLinksHelper
     link_to_unless(
       target.deleted? || target.draft?,
       highlighted_for(:resource_organisation_name, service, highlights),
-      service.organisation_search_link(target.name),
+      service.organisation_search_link(target),
       preview_options
     )
   end
@@ -55,7 +55,7 @@ module SearchLinksHelper
         else
           link_to_unless target.deleted? || target.draft?,
                          target.name,
-                         service.provider_search_link(target.name),
+                         service.provider_search_link(target),
                          preview_options
         end
       end
