@@ -56,6 +56,7 @@ class Bundle < ApplicationRecord
   validates :related_training_url, mp_url: true, if: :related_training?
   validates :helpdesk_url, mp_url: true, presence: true
 
+  after_commit :propagate_to_ess
   def set_iid
     self.iid = bundles_count + 1 if iid.blank?
   end
@@ -76,5 +77,9 @@ class Bundle < ApplicationRecord
 
   def bundles_count
     (service && service.bundles.maximum(:iid).to_i) || 0
+  end
+
+  def propagate_to_ess
+    status == "published" && !destroyed? ? Bundle::Ess::Add.call(self) : Bundle::Ess::Delete.call(id)
   end
 end

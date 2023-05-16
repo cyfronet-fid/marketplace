@@ -330,6 +330,27 @@ You can customize it by using environment variables:
   * `MP_DATABASE_PASSWORD` - PostgreSQL database password
 
 
+## SOLR dumps
+You can use a rake task `ess:dump[#{collections}]` to get data in 
+`#{collection}.json` prepared for SOLR-Transformation API/script.
+Possible options:
+- all
+- providers
+- services
+- datasources
+- offers
+- bundles
+
+E.g. call `rake ess:dump[all]` to return all collections,
+`rake ess:dump[providers]` will generate file providers.json,
+and `rake ess:dump[services offers]` creates services.json and offers.json
+
+## SOLR Live connection
+
+Set ENV variable `ESS_UPDATE_ENABLED` to `true` 
+to enable live update objects to the SOLR transformation service.
+To get it working set also `ESS_UPDATE_URL`.
+
 ## OpenAPI docs
 Marketplace is using OpenAPI documentation standard([swagger](https://swagger.io/)). To do this we are using `rswag` gem.
 To check API documentation go to `/api-docs`.
