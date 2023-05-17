@@ -7,8 +7,9 @@ module LandingPageHelper
     publication: "Publications",
     dataset: "Data",
     "data-source": "Data Sources",
-    training: "Training Materials",
-    guideline: "Interoperability Guidelines"
+    training: "Training Materials"
+    # Will be unlocked in the next release
+    # guideline: "Interoperability Guidelines"
   }.freeze
 
   def external_search_base_url
