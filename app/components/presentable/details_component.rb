@@ -5,18 +5,23 @@ class Presentable::DetailsComponent < ApplicationComponent
   include Presentable::DetailsStyleHelper
   include PresentableHelper
 
-  def initialize(object, preview: false)
+  def initialize(object, preview: false, guidelines: false)
     super()
     @object = object
+    @guidelines = guidelines
     @preview = preview
   end
 
   def details_columns
-    case @object
-    when Provider
-      provider_details_columns
-    when Service
-      @object.type == "Datasource" ? datasource_details_columns : service_details_columns
+    if @guidelines
+      guidelines_details_columns
+    else
+      case @object
+      when Provider
+        provider_details_columns
+      when Service
+        @object.type == "Datasource" ? datasource_details_columns : service_details_columns
+      end
     end
   end
 end
