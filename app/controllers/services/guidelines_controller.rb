@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Services::DetailsController < ApplicationController
+class Services::GuidelinesController < ApplicationController
   include Service::Comparison
   layout :choose_layout
 
