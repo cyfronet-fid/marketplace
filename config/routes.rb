@@ -18,6 +18,8 @@ Rails.application.routes.draw do
   get "/robots.txt" => "home#robots"
   post "user_action", to: "user_action#create"
   get "/", to: "pages#landing_page", as: :new_landing_page if ENV.fetch("EXTERNAL_LANDING_PAGE", false)
+  get "/datasources/:id", to: redirect("/services/%{id}")
+  get "backoffice/datasources/:id", to: redirect("backoffice/services/%{id}")
 
   resources :services, only: [:index, :show], constraints: { id: %r{[^/]+} } do
     scope module: :services do
@@ -29,6 +31,7 @@ Rails.application.routes.draw do
       resource :question, only: [:new, :create], constraints: lambda { |req| req.format == :js }
       resources :opinions, only: :index
       resources :details, only: :index
+      resources :guidelines, only: :index
       resource :ordering_configuration, only: :show do
         scope module: :ordering_configuration do
           resources :offers, only: [:new, :edit, :create, :update, :destroy]
