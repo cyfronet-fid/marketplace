@@ -29,7 +29,7 @@ module Import
 
     def import_guidelines
       log "Importing guidelines from EOSC Registry #{@eosc_registry_base_url}..."
-      @request_guidelines = external_guidelines_data("interoperabilityRecord")
+      @request_guidelines = external_guidelines_data("public/interoperabilityRecord")
 
       @request_guidelines.each do |external_data|
         eid = external_data["id"]
@@ -67,10 +67,10 @@ module Import
 
     def connect_guidelines
       log "Importing guidelines connections from EOSC Registry #{@eosc_registry_base_url}..."
-      @request_connections = external_guidelines_data("resourceInteroperabilityRecord")
+      @request_connections = external_guidelines_data("public/resourceInteroperabilityRecord")
 
       @request_connections.each do |external_data|
-        eid = external_data["catalogueId"] + "." + external_data["resourceId"]
+        eid = external_data["resourceId"]
         guideline_eids = external_data["interoperabilityRecordIds"]
         if (service_source = ServiceSource.find_by(eid: eid, source_type: "eosc_registry")).nil?
           next
