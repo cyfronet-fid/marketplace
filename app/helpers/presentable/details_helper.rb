@@ -7,8 +7,12 @@ module Presentable::DetailsHelper
     [
       [classification, availability, marketing, dependencies, attribution, order],
       [public_contacts, maturity_information, management, financial_information],
-      [guidelines, changelog]
+      [changelog]
     ]
+  end
+
+  def guidelines_details_columns
+    [[guidelines]]
   end
 
   def provider_details_columns

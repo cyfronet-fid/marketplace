@@ -65,4 +65,15 @@ class ApplicationController < ActionController::Base
     #   - put specific language shortcut (for example "pl") to the `FastGettext.default_available_locales`
     #     in the file `config/initializers/fast_gettext.rb`
   end
+
+  def choose_layout
+    case params[:from]
+    when "backoffice_service"
+      "backoffice"
+    when "ordering_configuration"
+      "ordering_configuration"
+    else
+      "application"
+    end
+  end
 end
