@@ -74,9 +74,21 @@ class ServicesController < ApplicationController
       current_user&.favourite_services || Service.where(slug: Array(cookies[:favourites]&.split("&") || []))
     @client = @client&.credentials&.expires_at.blank? ? Google::Analytics.new : @client
     @service.analytics = Analytics::PageViewsAndRedirects.new(@client).call(request.path)
+
+    override_user_action_info
   end
 
   private
+
+  def override_user_action_info
+    # Overrides for user actions when the client is being redirected from outside
+
+    if !params[:client_uid].nil? && validate_uuid_format(params[:client_uid])
+      cookies[:client_uid] = { value: params[:client_uid], expires: 1.week.from_now }
+    end
+
+    @source_id_override = params[:source_id] if !params[:source_id].nil? && validate_uuid_format(params[:source_id])
+  end
 
   def sort_options
     @sort_options = [

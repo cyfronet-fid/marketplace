@@ -1,5 +1,8 @@
 :javascript
   if (!window.popstateHandler) {
+    window.sourceIdOverride =
+      #{ @source_id_override.nil? ? "null" : ("'" + sanitize(@source_id_override) + "'").html_safe };
+
     window.recommendationSourceId =
       #{ @recommendation_source_id.nil? ? "null" : ("'" + sanitize(@recommendation_source_id) + "'").html_safe };
 
