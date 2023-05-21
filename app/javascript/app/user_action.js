@@ -10,6 +10,7 @@ const WINDOW_EVENTS_HANDLERS = {
       setCookies();
     }
     window.probesInitialized = false;
+    window.sourceIdOverride = null;
   },
   popstate: async (event) => popstate(event),
 };
@@ -58,13 +59,7 @@ async function _initProbes(force, skipInitial) {
     ...Array.from(window.document.querySelectorAll(".data-probe")),
   ];
   const elementsSize = elements.length;
-  let actions, actionsSize;
   for (let i = 0; i < elementsSize; i++) {
-    actions = get_event_actions_by(elements[i].tagName);
-    actionsSize = actions.length;
-    for (let x = 0; x < actionsSize; x++) {
-      add_dom_event_listener(elements[i], actions[x]);
-    }
     elements[i].addEventListener("mousedown", updateCookiesEventHandler);
     elements[i].addEventListener("mouseup", updateCookiesEventHandler);
     elements[i].addEventListener("contextmenu", updateCookiesEventHandler);
@@ -82,10 +77,6 @@ export default async function initProbes() {
 
 let currentMouseTarget = null;
 
-function updateCookiesMoveHandler(event) {
-  setCookies(undefined, undefined, currentMouseTarget);
-}
-
 function updateCookiesEventHandler(event) {
   currentMouseTarget = event.target;
   setCookies(undefined, undefined, event.target);
@@ -98,7 +89,7 @@ function setCookies(targetId, source, element) {
 
   if (source == null) {
     source = get_source_by(element, true);
-    source.visit_id = window.recommendationSourceId;
+    source.visit_id = window.sourceIdOverride ?? window.recommendationSourceId;
   }
 
   const expires = new Date(new Date().getTime() + 5000);
@@ -106,24 +97,6 @@ function setCookies(targetId, source, element) {
   Cookies.set("source", JSON.stringify(source), { expires });
   Cookies.set("targetId", targetId, { expires });
   Cookies.set("lastPageId", window.location.pathname, { expires });
-}
-
-function add_dom_event_listener(element, action) {
-  element.addEventListener(action, async (event) => {
-    // IMPORTANT!!! In case when child dom element "a" (link) can't be tagged directly
-    const isTargetElementLink = event.target.tagName.toLowerCase() === "a";
-    const isTargetButton = event.target.tagName.toLowerCase() === "button";
-    const targetElement = isTargetElementLink ? event.target : element;
-    if (targetElement.disabled) {
-      return;
-    }
-    if ((isTargetElementLink || isTargetButton) && !isOutsideUrl(targetElement)) {
-      setCookies(uuidv1(), get_source_by(element));
-      return;
-    }
-
-    await handle_any_event(targetElement);
-  });
 }
 
 function handle_browser_events() {
@@ -142,11 +115,6 @@ function remove_browser_events_listeners() {
   for (let i = 0; i < windowEventsSize; i++) {
     window.removeEventListener(events[i], WINDOW_EVENTS_HANDLERS[events[i]]);
   }
-}
-
-function isOutsideUrl(element) {
-  const href = element.getAttribute("href");
-  return !!href && !href.includes(window.location.origin) && !href.startsWith("/");
 }
 
 async function handle_any_event(element = null) {
@@ -191,19 +159,6 @@ const call_user_action_controller = (body) => {
     .then()
     .catch((error) => console.log(error));
 };
-
-function get_event_actions_by(tagName) {
-  switch (
-    tagName.toLowerCase()
-    // for now disable all JS based user actions, they'll return later
-    // case 'a':
-    //     return ['click', 'auxclick'];
-    // default:
-    //     return ['click'];
-  ) {
-  }
-  return [];
-}
 
 function get_action_by(element) {
   const is_ordered = !!(
