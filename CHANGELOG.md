@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [3.48.0-milestone]
+## [3.48.0] 2023-05-23
 
 ### Added
 - Bundles functionality (@goreck888)
