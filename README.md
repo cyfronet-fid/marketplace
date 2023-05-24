@@ -238,6 +238,7 @@ We are currently using the following ENV variables:
   * `MP_STOMP_PUBLISHER_MP_DB_EVENTS_TOPIC` (Optional) - topic for publishing database create, update and destroy events (default `mp_db_events`)
   * `MP_STOMP_PUBLISHER_USER_ACTIONS_TOPIC` (Optional) - topic for publishing user actions events(default `user_actions`)
   * `MP_ENABLE_EXTERNAL_SEARCH` - should be set to `1` if external search is used. If set top bars will be replaced
+  * `SEARCH_SERVICE_BASE_URL` - default: `https://search.marketplace.eosc-portal.eu`
   * `USER_ACTIONS_TARGET` (Optional) - target to which user_actions should be published (options: `all, recommender, databus`) (default `all`)
     * For the `databus` target to work you must also enable JMS publishing, i.e. set `MP_STOMP_PUBLISHER_ENABLED=true`.  
   * `ESS_UPDATE_ENABLED` (Optional) - turn on updating ESS if set to `true` (default `false`)
