@@ -73,9 +73,9 @@ module ApplicationHelper
     if Rails.configuration.enable_external_search && Rails.configuration.search_service_base_url.present?
       query = ""
       if include_query
-        category = request.query_parameters["pv"] || "search/all"
-        q = request.query_parameters["q"] || "*"
-        query = "/#{category}?q=#{q}"
+        category = request.query_parameters["return_path"] || "search/all"
+        search_params = CGI.unescape(request.query_parameters["search_params"])
+        query = "/#{category}?#{search_params}"
       end
 
       Rails.configuration.search_service_base_url + query
