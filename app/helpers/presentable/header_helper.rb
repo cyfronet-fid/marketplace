@@ -29,14 +29,16 @@ module Presentable::HeaderHelper
     policy(record).data_administrator? && record.upstream&.eosc_registry?
   end
 
-  def about_link(service, from)
+  def about_link(service, query_params)
+    query_params ||= {}
+    from = query_params[:from]
     case from
     when "ordering_configuration"
-      service_ordering_configuration_path(service, { from: from })
+      service_ordering_configuration_path(service, query_params)
     when "backoffice_service"
-      backoffice_service_path(service, { from: from })
+      backoffice_service_path(service, query_params)
     else
-      service_path(service)
+      service_path(service, query_params)
     end
   end
 
