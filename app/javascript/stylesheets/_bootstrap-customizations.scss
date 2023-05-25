@@ -3324,6 +3324,7 @@ label[data-multicheckbox].small {
 
         .offer-params {
           padding: 3px 10px;
+
           margin: 0;
         }
       }
@@ -5498,13 +5499,16 @@ abbr[title] {
       }
 
       .solutions-box {
-        //display: flex;
-        //flex-direction: row;
         align-items: center;
-        gap: 16px;
+        grid-gap: 16px;
+        gap: 10px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
 
         a {
-          font-size: 10px;
+          font-size: 13px;
           color: $palette-white;
           border: 1px solid $palette-white;
           padding: 1px 8px;

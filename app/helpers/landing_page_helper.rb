@@ -2,11 +2,13 @@
 
 module LandingPageHelper
   SEARCH_ITEMS = {
+    all: "All catalogs",
     software: "Software",
     service: "Services",
     publication: "Publications",
     dataset: "Data",
     "data-source": "Data Sources",
+    bundle: "Service Bundle",
     training: "Training Materials",
     guideline: "Interoperability Guidelines"
   }.freeze
