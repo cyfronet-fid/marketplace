@@ -94,4 +94,12 @@ module SearchLinksHelper
     search_base_url = Mp::Application.config.search_service_base_url
     search_base_url + "/guidelines/" + guideline.eid
   end
+
+  def go_to_search_query_params(controller_params = nil)
+    controller_params ||= {}
+    query_params_to_pass = %w[return_path search_params from]
+    @query_params = request.query_parameters.select { |k, _| query_params_to_pass.include? k }
+    @query_params[:from] = controller_params[:from] if controller_params[:from].present?
+    @query_params
+  end
 end
