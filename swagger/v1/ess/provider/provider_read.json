@@ -1,0 +1,164 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "pid": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "catalogue": {
+      "type": "string",
+      "nullable": true
+    },
+    "abbreviation": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "legal_entity": {
+      "type": "boolean"
+    },
+    "description": {
+      "type": "string"
+    },
+    "multimedia_urls": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "$ref": "../link_read.json"
+      }
+    },
+    "scientific_domains": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tag_list": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "structure_types": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "street_name_and_number": {
+      "type": "string"
+    },
+    "postal_code": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "region": {
+      "type": "string",
+      "nullable": true
+    },
+    "country": {
+      "type": "string"
+    },
+    "public_contacts": {
+      "type": "array",
+      "items": {
+        "$ref": "../contact_read.json"
+      }
+    },
+    "certifications": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "participating_countries": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "networks": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "affiliations": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "esfri_domains": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "meril_scientific_domains": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "areas_of_activity": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "societal_grand_challenges": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "hosting_legal_entity": {
+      "type": "string",
+      "nullable": true
+    },
+    "provider_life_cycle_status": {
+      "type": "string",
+      "nullable": true
+    },
+    "esfri_type": {
+      "type": "string",
+      "nullable": true
+    },
+    "legal_status": {
+      "type": "string",
+      "nullable": true
+    },
+    "webpage_url": {
+      "type": "string",
+      "nullable": true
+    },
+    "national_roadmaps": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": ["id", "pid", "abbreviation", "name", "description"]
+}

@@ -40,7 +40,7 @@
               %span
                 -# TODO: refactor dynamic translation
                 = t(".#{element}")
-            - elsif field == "trl"
+            - elsif field == "trls"
               %span
                 %text{ "data-toggle": "tooltip", title: trl_description_text(object) }
                   #{element.send(nested[field.to_sym]).upcase}

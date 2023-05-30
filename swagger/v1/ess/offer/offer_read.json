@@ -1,0 +1,49 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "service_id": {
+      "type": "integer"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["published", "draft", "deleted"]
+    },
+    "order_type": {
+      "type": "string",
+      "enum": ["open_access", "fully_open_access", "order_required", "other"]
+    },
+    "internal": {
+      "type": "boolean"
+    },
+    "voucherable": {
+      "type": "boolean"
+    },
+    "parameters": {
+      "type": "array",
+      "nullable": true,
+      "uniqueItems": true,
+      "items": {
+        "oneOf": [
+          { "$ref": "../../offer/offer_definitions.json#attribute_parameter" },
+          { "$ref": "../../offer/offer_definitions.json#input_parameter" },
+          { "$ref": "../../offer/offer_definitions.json#select_parameter" },
+          { "$ref": "../../offer/offer_definitions.json#multiselect_parameter" },
+          { "$ref": "../../offer/offer_definitions.json#date_parameter" },
+          { "$ref": "../../offer/offer_definitions.json#range_parameter" },
+          { "$ref": "../../offer/offer_definitions.json#quantity_price_parameter" }
+        ]
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": ["id", "name", "description", "status", "order_type"]
+}
