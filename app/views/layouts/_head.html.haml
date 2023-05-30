@@ -12,6 +12,7 @@
   = favicon_pack_tag "favicon-180x180.png", rel: "apple-touch-icon", type: "image/png"
   = stylesheet_pack_tag "application"
   = javascript_pack_tag "application"
+  = yield :custom_scripts if content_for?(:custom_scripts)
   = render "layouts/version"
   - if Rails.env.production?
     = render "layouts/matomo"
