@@ -1,0 +1,45 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "first_name": {
+      "type": "string",
+      "nullable": true
+    },
+    "last_name": {
+      "type": "string",
+      "nullable": true
+    },
+    "email": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string",
+      "nullable": true
+    },
+    "position": {
+      "type": "string",
+      "nullable": true
+    },
+    "organisation": {
+      "type": "string",
+      "nullable": true
+    },
+    "contactable_type": {
+      "type": "string"
+    },
+    "contactable_id": {
+      "type": "integer"
+    },
+    "created_at": {
+      "type": "string"
+    },
+    "updated_at": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "required": ["email"]
+}

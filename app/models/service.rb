@@ -21,6 +21,7 @@ class Service < ApplicationRecord
 
   scope :horizontal, -> { where(horizontal: true) }
   scope :visible, -> { where(status: %i[published unverified]) }
+  scope :datasources, -> { where(type: "Datasource") }
 
   has_one_attached :logo
 
@@ -73,8 +74,8 @@ class Service < ApplicationRecord
            source_type: "Vocabulary::FundingProgram"
   has_many :access_modes, through: :service_vocabularies, source: :vocabulary, source_type: "Vocabulary::AccessMode"
   has_many :access_types, through: :service_vocabularies, source: :vocabulary, source_type: "Vocabulary::AccessType"
-  has_many :trl, through: :service_vocabularies, source: :vocabulary, source_type: "Vocabulary::Trl"
-  has_many :life_cycle_status,
+  has_many :trls, through: :service_vocabularies, source: :vocabulary, source_type: "Vocabulary::Trl"
+  has_many :life_cycle_statuses,
            through: :service_vocabularies,
            source: :vocabulary,
            source_type: "Vocabulary::LifeCycleStatus"
@@ -246,8 +247,8 @@ class Service < ApplicationRecord
               message: "are required. Please add at least one"
             }
   validates :status, presence: true
-  validates :trl, length: { maximum: 1 }
-  validates :life_cycle_status, length: { maximum: 1 }
+  validates :trls, length: { maximum: 1 }
+  validates :life_cycle_statuses, length: { maximum: 1 }
   validates :geographical_availabilities,
             presence: true,
             length: {

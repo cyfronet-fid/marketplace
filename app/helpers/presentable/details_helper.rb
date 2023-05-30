@@ -139,11 +139,11 @@ module Presentable::DetailsHelper
     {
       name: "maturity_information",
       template: "array",
-      fields: %w[trl life_cycle_status certifications standards open_source_technologies version last_update],
+      fields: %w[trls life_cycle_statuses certifications standards open_source_technologies version last_update],
       with_desc: true,
       nested: {
-        trl: "name",
-        life_cycle_status: "name"
+        trls: "name",
+        life_cycle_statuses: "name"
       }
     }
   end

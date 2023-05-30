@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "properties": {
+    "entity_type": {
+      "type": "string",
+      "nullable": true
+    },
+    "entity_type_schemes": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": ["url"]
+}

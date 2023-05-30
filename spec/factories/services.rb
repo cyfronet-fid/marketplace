@@ -3,6 +3,7 @@
 FactoryBot.define do
   factory :service do
     sequence(:name) { |n| "service #{n}" }
+    sequence(:abbreviation) { |n| "service-#{n}" }
     sequence(:description) { |n| "service #{n} description" }
     sequence(:tagline) { |n| "service #{n} tagline" }
     sequence(:order_type) { :order_required }
@@ -19,6 +20,10 @@ FactoryBot.define do
     factory :order_required_service do
       sequence(:order_type) { :order_required }
     end
+    factory(:datasource) do
+      sequence(:type) { "Datasource" }
+      sequence(:version_control) { false }
+    end
     sequence(:webpage_url) { "https://wabpage.url" }
     sequence(:manual_url) { "https://manual.url" }
     sequence(:helpdesk_url) { "https://helpdesk.url" }
@@ -34,14 +39,16 @@ FactoryBot.define do
     sequence(:scientific_domains) { |_n| [create(:scientific_domain)] }
     sequence(:resource_organisation) { |_n| create(:provider) }
     sequence(:providers) { |_n| [create(:provider)] }
-    sequence(:life_cycle_status) { |_n| [create(:life_cycle_status)] }
+    sequence(:life_cycle_statuses) { |_n| [create(:life_cycle_status)] }
     sequence(:categories) { |_n| [create(:category)] }
     sequence(:status) { :published }
     sequence(:version) { nil }
-    sequence(:trl) { [create(:trl)] }
+    sequence(:trls) { [create(:trl)] }
     sequence(:synchronized_at) { Time.now - 2.days }
     sequence(:main_contact) { build(:main_contact) }
     sequence(:public_contacts) { [build(:public_contact)] }
+    sequence(:catalogue) { create(:catalogue) }
+    sequence(:pid) { |_n| "#{catalogue.pid}.#{resource_organisation.pid}.#{abbreviation}" }
 
     upstream { nil }
 
