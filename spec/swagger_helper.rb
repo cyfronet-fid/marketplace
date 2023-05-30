@@ -51,6 +51,24 @@ RSpec.configure do |config|
           }
         }
       }
+    },
+    "v1/ess_swagger.json" => {
+      openapi: "3.0.1",
+      info: {
+        title: "EOSC Marketplace search API",
+        version: "v1",
+        description: "API for Search Service to integrate with EOSC Marketplace collections"
+      },
+      paths: {},
+      components: {
+        securitySchemes: {
+          authentication_token: {
+            type: :apiKey,
+            name: "X-User-Token",
+            in: :header
+          }
+        }
+      }
     }
   }
 

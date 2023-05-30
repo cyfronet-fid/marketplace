@@ -20,8 +20,8 @@ RSpec.describe Recommender::ServiceSerializer do
         manual_related_services: create_list(:service, 2),
         access_modes: create_list(:access_mode, 2),
         access_types: create_list(:access_type, 2),
-        trl: [create(:trl)],
-        life_cycle_status: [create(:life_cycle_status)],
+        trls: [create(:trl)],
+        life_cycle_statuses: [create(:life_cycle_status)],
         pid: "pid",
         horizontal: true,
         research_steps: create_list(:research_step, 2)

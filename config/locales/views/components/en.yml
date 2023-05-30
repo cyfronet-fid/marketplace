@@ -107,8 +107,8 @@ en:
           funding_bodies: Funding Bodies
           funding_programs: Funding Programs
           grant_project_names: Grant Project Names
-          trl: Trl
-          life_cycle_status: Life Cycle Status
+          trls: Trl
+          life_cycle_statuses: Life Cycle Status
           required_services: Required Services
           related_services: Related Services
           related_platforms: Related Platforms

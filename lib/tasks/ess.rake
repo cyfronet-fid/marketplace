@@ -45,8 +45,7 @@ namespace :ess do
 
       value = value.constantize
       dataset = load_dataset(value)
-      output =
-        dataset.each.map { |object| "#{object.class}::Ess::Add".constantize.call(object, async: false, dry_run: true) }
+      output = dataset.each.map { |object| "Ess::#{object.class}Serializer".constantize.new(object).as_json }
       File.write("#{key}.json", JSON.pretty_generate(output))
       puts "#{key.to_s.camelize} dump complete"
     end

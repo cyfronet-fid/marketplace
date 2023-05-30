@@ -61,6 +61,7 @@ RSpec.feature "Api docs page" do
 
     scenario "My token persists after signing out", js: true do
       token = user.authentication_token
+      page.driver.browser.manage.window.resize_to(1920, 1080)
 
       expect(page).to have_content("Welcome to the EOSC")
       expect(page).to have_content("Successfully authenticated from Checkin account.")

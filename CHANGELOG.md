@@ -6,7 +6,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [3.48.1]
+## [3.48.3] 2023-06-16
+
+### Added
+- API endpoints for search service data(@goreck888)
+
+## [3.48.2] 2023-06-13
+
+### Fixed
+- Minor view bugs and typos (@jarekzet, @goreck888)
+
+## [3.48.1] 2023-05-24
 
 ### Fixed
 - Resource organisation instead of service name in "Provided by" fields (@goreck888)
