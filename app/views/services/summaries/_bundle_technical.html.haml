@@ -3,7 +3,7 @@
     .card-body.p-4
       %h4.card-title.mb-1= offer.name
       .text-muted.mb-3
-        = _("Provided by #{ offer.service.name}")
+        = _("Provided by #{ offer.service.resource_organisation.name}")
       .card-text= markdown(offer.description)
 
       - if bundle_params[offer.id].present?
