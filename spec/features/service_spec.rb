@@ -63,7 +63,7 @@ RSpec.feature "Service browsing", end_user_frontend: true do
 
       visit service_details_path(service)
 
-      expect(body).to have_content service.trl.first.name.upcase
+      expect(body).to have_content service.trls.first.name.upcase
     end
 
     scenario "not allows to see draft service via direct link for default user" do

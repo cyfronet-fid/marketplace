@@ -1,0 +1,484 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "EOSC Marketplace search API",
+    "version": "v1",
+    "description": "API for Search Service to integrate with EOSC Marketplace collections"
+  },
+  "paths": {
+    "/api/v1/ess/bundles": {
+      "get": {
+        "summary": "lists published bundles",
+        "tags": ["bundles"],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "bundle found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ess/bundle/bundle_index.json"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ess/bundles/{bundle_id}": {
+      "parameters": [
+        {
+          "name": "bundle_id",
+          "in": "path",
+          "description": "bundle identifier id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "retrieves a bundle by id",
+        "tags": ["bundles"],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "bundle found by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ess/bundle/bundle_read.json"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "draft bundle not found by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "bundle not found by unpermitted user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ess/datasources": {
+      "get": {
+        "summary": "lists datasources",
+        "tags": ["datasources"],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "datasources found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ess/datasource/datasource_index.json"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ess/datasources/{datasource_id}": {
+      "parameters": [
+        {
+          "name": "datasource_id",
+          "in": "path",
+          "description": "Datasource identifier (id or eid)",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "retrieves a datasource by id",
+        "tags": ["datasources"],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "datasource found by slug",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ess/datasource/datasource_read.json"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ess/offers": {
+      "get": {
+        "summary": "lists published offers",
+        "tags": ["offers"],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "offer found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ess/offer/offer_index.json"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ess/offers/{offer_id}": {
+      "parameters": [
+        {
+          "name": "offer_id",
+          "in": "path",
+          "description": "Offer identifier id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "retrieves a offer by id",
+        "tags": ["offers"],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "offer found by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ess/offer/offer_read.json"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "draft offer not found by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "offer not found by unpermitted user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ess/providers": {
+      "get": {
+        "summary": "lists providers",
+        "tags": ["providers"],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "providers found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ess/provider/provider_index.json"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ess/providers/{provider_id}": {
+      "parameters": [
+        {
+          "name": "provider_id",
+          "in": "path",
+          "description": "Provider identifier (id or pid)",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "retrieves a provider by id",
+        "tags": ["providers"],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "provider found by pid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ess/provider/provider_read.json"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "draft provider not found by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "provider not found by unpermitted user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ess/services": {
+      "get": {
+        "summary": "lists services",
+        "tags": ["services"],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "services found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ess/service/service_index.json"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ess/services/{service_id}": {
+      "parameters": [
+        {
+          "name": "service_id",
+          "in": "path",
+          "description": "Service identifier (id or eid)",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "retrieves a service by id",
+        "tags": ["services"],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "service found by slug",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ess/service/service_read.json"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "draft service not found by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "service not found by unpermitted user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "authentication_token": {
+        "type": "apiKey",
+        "name": "X-User-Token",
+        "in": "header"
+      }
+    }
+  }
+}

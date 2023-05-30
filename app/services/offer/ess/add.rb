@@ -1,26 +1,21 @@
 # frozen_string_literal: true
 
 class Offer::Ess::Add < ApplicationService
-  def initialize(offer, async: true, dry_run: false)
+  def initialize(offer, async: true)
     super()
     @offer = offer
     @type = "offer"
     @async = async
-    @dry_run = dry_run
   end
 
   def call
-    if @dry_run
-      ess_data
-    else
-      @async ? Ess::UpdateJob.perform_later(payload) : Ess::Update.call(payload)
-    end
+    @async ? Ess::UpdateJob.perform_later(payload) : Ess::Update.call(payload)
   end
 
   private
 
   def payload
-    { action: "update", data_type: @type, data: ess_data }.as_json
+    { action: "update", data_type: @type, data: Ess::OfferSerializer.new(@offer).as_json }.as_json
   end
 
   def ess_data

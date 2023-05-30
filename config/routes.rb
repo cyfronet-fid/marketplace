@@ -154,6 +154,13 @@ Rails.application.routes.draw do
           resources :project_items, only: [:index, :show, :update], module: :projects
         end
       end
+      namespace :ess do
+        resources :services, only: %i[index show], constraints: { id: %r{[^/]+} }
+        resources :datasources, only: %i[index show], constraints: { id: %r{[^/]+} }
+        resources :providers, only: %i[index show]
+        resources :offers, only: %i[index show]
+        resources :bundles, only: %i[index show]
+      end
     end
   end
 

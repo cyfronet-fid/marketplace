@@ -1,0 +1,7 @@
+{
+  "type": "array",
+  "items": {
+    "$ref": "datasource_read.json"
+  },
+  "additionalProperties": false
+}

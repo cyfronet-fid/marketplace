@@ -132,22 +132,22 @@
               - service.language_availability.each do |language|
                 %li= I18nData.languages[language.upcase] || language
           - row_idx += 1
-      - if @services.any? { |s| s.trl.present? }
+      - if @services.any? { |s| s.trls.present? }
         %tr{ class: row_class(row_idx) }
           %th{ "data-toggle": "tooltip",
           title: "The Technology Readiness Level of the Service updated in the context of the EOSC." }
             = _("Technology Readiness Level")
           - @services.each do |service|
-            %td{ "data-toggle": "tooltip", title: service.trl.present? ? trl_description_text(service) : nil }
-              = service.trl.map { |trl| trl.name.upcase }.join(", ")
+            %td{ "data-toggle": "tooltip", title: service.trls.present? ? trl_description_text(service) : nil }
+              = service.trls.map { |trl| trl.name.upcase }.join(", ")
           - row_idx += 1
-      - if @services.any? { |s| s.life_cycle_status.present? }
+      - if @services.any? { |s| s.life_cycle_statuses.present? }
         %tr{ class: row_class(row_idx) }
           %th{ "data-toggle": "tooltip", title: "Phase of the Service life-cycle." }
             = _("Service Life Cycle Status")
           - @services.each do |service|
-            - if service.life_cycle_status.present?
-              %td= service.life_cycle_status.first.name
+            - if service.life_cycle_statuses.present?
+              %td= service.life_cycle_statuses.first.name
           - row_idx += 1
       %tr{ class: row_class(row_idx) }
         %th{ "data-toggle": "tooltip",

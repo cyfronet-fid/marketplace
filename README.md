@@ -352,6 +352,31 @@ Set ENV variable `ESS_UPDATE_ENABLED` to `true`
 to enable live update objects to the SOLR transformation service.
 To get it working set also `ESS_UPDATE_URL`.
 
+## Data To SOLR REST API
+
+There are endpoints for getting data to SOLR transformation service.
+Data is accessible via the path:
+`api/v1/ess/{{ collection }}`
+where the collection can be:
+- services 
+- datasources 
+- providers 
+- offers 
+- bundles 
+
+There is a possibility to get object by id, 
+and in case of service/datasource/provider by slug or pid 
+just by add `/{{ id }}` to path, 
+eg. `/api/v1/ess/services/egi-cloud-compute`
+
+You can test endpoints in the mp swagger
+
+NOTICE!
+To get the data you have to login
+or authenticate via the user's access_token
+with `service_portfolio_manager` role
+
+
 ## OpenAPI docs
 Marketplace is using OpenAPI documentation standard([swagger](https://swagger.io/)). To do this we are using `rswag` gem.
 To check API documentation go to `/api-docs`.

@@ -172,8 +172,8 @@ class Importers::Datasource < ApplicationService
       helpdesk_email: @data["helpdeskEmail"] || "",
       security_contact_email: @data["securityContactEmail"] || "",
       # Maturity
-      trl: map_trl(@data["trl"]) || [],
-      life_cycle_status: map_life_cycle_status(@data["lifeCycleStatus"]) || [],
+      trls: map_trl(@data["trl"]) || [],
+      life_cycle_statuses: map_life_cycle_status(@data["lifeCycleStatus"]) || [],
       certifications: certifications,
       standards: standards,
       open_source_technologies: open_source_technologies,
@@ -184,7 +184,7 @@ class Importers::Datasource < ApplicationService
       required_services: required_services,
       related_services: related_services,
       platforms: platforms,
-      catalogue: map_catalogue(@data["catalogueId"]) || [],
+      catalogue: map_catalogue(@data["catalogueId"]),
       # Attribution
       funding_bodies: funding_bodies,
       funding_programs: funding_programs,

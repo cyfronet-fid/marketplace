@@ -1,0 +1,319 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "pid": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "catalogue": {
+      "type": "string"
+    },
+    "abbreviation": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "tagline": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["published", "unverified"]
+    },
+    "order_type": {
+      "type": "string",
+      "enum": ["open_access", "fully_open_access", "order_required", "other"]
+    },
+    "categories": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "resource_organisation": {
+      "type": "string"
+    },
+    "providers": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "multimedia_urls": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "$ref": "../link_read.json"
+      }
+    },
+    "use_cases_urls": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "$ref": "../link_read.json"
+      }
+    },
+    "horizontal": {
+      "type": "boolean"
+    },
+    "scientific_domains": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "access_types": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "access_modes": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "platforms": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "related_platforms": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "funding_programs": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "funding_bodies": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "version": {
+      "type": "string",
+      "nullable": true
+    },
+    "phase": {
+      "type": "string",
+      "nullable": true
+    },
+    "activate_message": {
+      "type": "string",
+      "nullable": true
+    },
+    "terms_of_use_url": {
+      "type": "string",
+      "nullable": true
+    },
+    "sla_url": {
+      "type": "string",
+      "nullable": true
+    },
+    "status_monitoring_url": {
+      "type": "string",
+      "nullable": true
+    },
+    "training_information_url": {
+      "type": "string",
+      "nullable": true
+    },
+    "maintenance_url": {
+      "type": "string",
+      "nullable": true
+    },
+    "webpage_url": {
+      "type": "string",
+      "nullable": true
+    },
+    "order_url": {
+      "type": "string",
+      "nullable": true
+    },
+    "manual_url": {
+      "type": "string",
+      "nullable": true
+    },
+    "helpdesk_url": {
+      "type": "string",
+      "nullable": true
+    },
+    "helpdesk_email": {
+      "type": "string",
+      "nullable": true
+    },
+    "pricing_url": {
+      "type": "string",
+      "nullable": true
+    },
+    "payment_model_url": {
+      "type": "string",
+      "nullable": true
+    },
+    "access_policies_url": {
+      "type": "string",
+      "nullable": true
+    },
+    "changelog": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "tag_list": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "privacy_policy_url": {
+      "type": "string",
+      "nullable": true
+    },
+    "security_contact_email": {
+      "type": "string",
+      "nullable": true
+    },
+    "certifications": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "standards": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "open_source_technologies": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "grant_project_names": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "last_update": {
+      "type": "string",
+      "nullable": true
+    },
+    "upstream_id": {
+      "type": "integer",
+      "nullable": true
+    },
+    "created_at": {
+      "type": "string"
+    },
+    "updated_at": {
+      "type": "string"
+    },
+    "synchronized_at": {
+      "type": "string",
+      "nullable": true
+    },
+    "geographical_availabilities": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "resource_geographic_locations": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "public_contacts": {
+      "type": "array",
+      "items": {
+        "$ref": "../contact_read.json"
+      }
+    },
+    "trl": {
+      "type": "string",
+      "nullable": true
+    },
+    "life_cycle_status": {
+      "type": "string",
+      "nullable": true
+    },
+    "language_availability": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "unified_categories": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "dedicated_for": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "offers_count": {
+      "type": "integer"
+    },
+    "service_opinion_count": {
+      "type": "integer"
+    },
+    "project_items_count": {
+      "type": "integer"
+    },
+    "rating": {
+      "type": "string",
+      "nullable": true
+    },
+    "restrictions": {
+      "type": "string",
+      "nullable": true
+    }
+  },
+  "additionalProperties": false,
+  "required": ["id", "name", "description", "status"]
+}
