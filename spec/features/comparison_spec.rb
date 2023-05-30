@@ -132,14 +132,14 @@ RSpec.feature "Comparison", js: true, end_user_frontend: true do
     expect(page).to have_text(service3.languages.join(", "))
 
     expect(page).to have_text("Technology Readiness Level")
-    expect(page).to have_text(service1.trl.first.name.upcase)
-    expect(page).to have_text(service2.trl.first.name.upcase)
-    expect(page).to have_text(service3.trl.first.name.upcase)
+    expect(page).to have_text(service1.trls.first.name.upcase)
+    expect(page).to have_text(service2.trls.first.name.upcase)
+    expect(page).to have_text(service3.trls.first.name.upcase)
 
     expect(page).to have_text("Service Life Cycle Status")
-    expect(page).to have_text(service1.life_cycle_status.map(&:name).join(", "))
-    expect(page).to have_text(service2.life_cycle_status.map(&:name).join(", "))
-    expect(page).to have_text(service3.life_cycle_status.map(&:name).join(", "))
+    expect(page).to have_text(service1.life_cycle_statuses.map(&:name).join(", "))
+    expect(page).to have_text(service2.life_cycle_statuses.map(&:name).join(", "))
+    expect(page).to have_text(service3.life_cycle_statuses.map(&:name).join(", "))
 
     expect(page).to have_text("Service Order Type")
     expect(page).to have_text("Open Access")

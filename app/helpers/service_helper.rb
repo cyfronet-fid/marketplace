@@ -79,7 +79,7 @@ module ServiceHelper
   end
 
   def trl_description_text(service)
-    service.trl.first.description
+    service.trls.first.description
   end
 
   def new_offer_link(service, controller_name)

@@ -11,7 +11,7 @@ module OrderingApi
     def call
       provider = Provider.find_by(pid: @provider_pid)
       if provider.blank?
-        puts "Provider with pid '#{@provider_pid}' not found. It must exist to attach the OMS to it."
+        logger.info "Provider with pid '#{@provider_pid}' not found. It must exist to attach the OMS to it."
         return
       end
 
@@ -30,14 +30,18 @@ module OrderingApi
       append_if_not_present oms.administrators, admin
       oms.save!
 
-      puts "OMS id: #{oms.id}, name: '#{oms.name}', providers: #{oms.providers.pluck(:pid).join(", ")}"
-      puts "Admin user uid: '#{admin.uid}', token: '#{admin.authentication_token}'"
+      logger.info "OMS id: #{oms.id}, name: '#{oms.name}', providers: #{oms.providers.pluck(:pid).join(", ")}"
+      logger.info "Admin user uid: '#{admin.uid}', token: '#{admin.authentication_token}'"
     end
 
     private
 
     def append_if_not_present(association, element)
       association << element if association.exclude?(element)
+    end
+
+    def logger
+      Rails.logger
     end
   end
 end

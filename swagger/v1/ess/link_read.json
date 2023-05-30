@@ -1,0 +1,12 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "nullable": true
+    },
+    "url": { "type": "string" }
+  },
+  "additionalProperties": false,
+  "required": ["url"]
+}

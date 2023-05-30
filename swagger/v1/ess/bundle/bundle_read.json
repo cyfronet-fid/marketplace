@@ -1,0 +1,77 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string"
+    },
+    "bundle_goals": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "capabilities_of_goals": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "main_offer_id": {
+      "type": "integer"
+    },
+    "description": {
+      "type": "string"
+    },
+    "target_users": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "scientific_domains": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "research_steps": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "offer_ids": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      }
+    },
+    "related_training": {
+      "type": "boolean"
+    },
+    "contact_email": {
+      "type": "string"
+    },
+    "helpdesk_url": {
+      "type": "string"
+    },
+    "service_id": {
+      "type": "integer"
+    },
+    "resource_organisation": {
+      "type": "string"
+    },
+    "providers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": ["id", "name", "description"]
+}
