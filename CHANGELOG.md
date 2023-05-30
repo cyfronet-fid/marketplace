@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.48.1]
+
+### Fixed
+- Resource organisation instead of service name in "Provided by" fields (@goreck888)
+
 ## [3.48.0] 2023-05-23
 
 ### Added

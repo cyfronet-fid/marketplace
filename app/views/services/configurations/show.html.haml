@@ -17,7 +17,7 @@
             %h3.bundle-configuration-title
               = @step.offer.name
             %span.text-muted
-              = _("Provided by #{ @step.offer.service.name}")
+              = _("Provided by #{ @step.offer.service.resource_organisation.name}")
           = render "services/configurations/voucher", step: @step, f: f
           = render "services/configurations/attributes", step: @step, service: @service, form: f
       - else
