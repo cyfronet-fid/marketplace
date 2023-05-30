@@ -11,7 +11,7 @@
         %h4.card-title
           = offer.name
         .provided-by
-          = _("Provided by #{offer.service.name}")
+          = _("Provided by #{offer.service.resource_organisation.name}")
       .bundle-offer-parameters.p-2
         .card-text{ "data-controller" => "paragraph" }
           = render "services/offers/bundle_parameters",
