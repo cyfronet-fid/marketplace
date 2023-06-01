@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
     t.string "name", null: false
     t.text "body"
     t.string "record_type", null: false
-    t.integer "record_id", null: false
+    t.bigint "record_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
   end
 
   create_table "active_storage_variant_records", force: :cascade do |t|
-    t.integer "blob_id", null: false
+    t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
@@ -165,7 +165,7 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
     t.string "organisation"
     t.string "contactable_type"
     t.string "type"
-    t.integer "contactable_id", null: false
+    t.bigint "contactable_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["contactable_id"], name: "index_contacts_on_contactable_id"
@@ -186,7 +186,7 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
   create_table "events", force: :cascade do |t|
     t.string "action", null: false
     t.string "eventable_type"
-    t.integer "eventable_id", null: false
+    t.bigint "eventable_id", null: false
     t.jsonb "updates", array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -217,7 +217,7 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
     t.string "title", null: false
     t.string "slug"
     t.integer "position", default: 0, null: false
-    t.integer "help_section_id", null: false
+    t.bigint "help_section_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["help_section_id"], name: "index_help_items_on_help_section_id"
@@ -243,7 +243,7 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
     t.string "header", null: false
     t.string "body", null: false
     t.string "url", null: false
-    t.integer "lead_section_id", null: false
+    t.bigint "lead_section_id", null: false
     t.integer "position", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -316,8 +316,8 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
   end
 
   create_table "oms_administrations", force: :cascade do |t|
-    t.integer "oms_id", null: false
-    t.integer "user_id", null: false
+    t.bigint "oms_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["oms_id", "user_id"], name: "index_oms_administrations_on_oms_id_and_user_id", unique: true
@@ -326,7 +326,7 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
   end
 
   create_table "oms_authorizations", force: :cascade do |t|
-    t.integer "oms_trigger_id", null: false
+    t.bigint "oms_trigger_id", null: false
     t.string "type", null: false
     t.string "user"
     t.string "password"
@@ -336,8 +336,8 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
   end
 
   create_table "oms_providers", force: :cascade do |t|
-    t.integer "oms_id", null: false
-    t.integer "provider_id", null: false
+    t.bigint "oms_id", null: false
+    t.bigint "provider_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["oms_id", "provider_id"], name: "index_oms_providers_on_oms_id_and_provider_id", unique: true
@@ -346,7 +346,7 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
   end
 
   create_table "oms_triggers", force: :cascade do |t|
-    t.integer "oms_id", null: false
+    t.bigint "oms_id", null: false
     t.string "url", null: false
     t.string "method", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -359,7 +359,7 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
     t.string "type", null: false
     t.jsonb "custom_params"
     t.boolean "default", default: false, null: false
-    t.integer "service_id"
+    t.bigint "service_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["default"], name: "index_omses_on_default"
@@ -478,8 +478,8 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
   end
 
   create_table "provider_data_administrators", force: :cascade do |t|
-    t.integer "data_administrator_id"
-    t.integer "provider_id"
+    t.bigint "data_administrator_id"
+    t.bigint "provider_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["data_administrator_id"], name: "index_provider_data_administrators_on_data_administrator_id"
@@ -487,8 +487,8 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
   end
 
   create_table "provider_scientific_domains", force: :cascade do |t|
-    t.integer "provider_id"
-    t.integer "scientific_domain_id"
+    t.bigint "provider_id"
+    t.bigint "scientific_domain_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["provider_id", "scientific_domain_id"], name: "index_psd_on_provider_id_and_sd_id", unique: true
@@ -508,8 +508,8 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
   end
 
   create_table "provider_vocabularies", force: :cascade do |t|
-    t.integer "provider_id"
-    t.integer "vocabulary_id"
+    t.bigint "provider_id"
+    t.bigint "vocabulary_id"
     t.string "vocabulary_type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -650,8 +650,8 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
   end
 
   create_table "service_vocabularies", force: :cascade do |t|
-    t.integer "service_id"
-    t.integer "vocabulary_id"
+    t.bigint "service_id"
+    t.bigint "vocabulary_id"
     t.string "vocabulary_type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -777,7 +777,7 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
     t.string "controller_name"
     t.string "action_name"
     t.string "tour_name"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.string "email"
     t.json "content"
     t.datetime "created_at", precision: 6, null: false
@@ -793,7 +793,7 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
     t.string "controller_name"
     t.string "action_name"
     t.string "tour_name"
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["created_at"], name: "index_tour_histories_on_created_at"
@@ -802,8 +802,8 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
   end
 
   create_table "user_categories", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "category_id"
+    t.bigint "user_id"
+    t.bigint "category_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["category_id"], name: "index_user_categories_on_category_id"
@@ -812,8 +812,8 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
   end
 
   create_table "user_scientific_domains", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "scientific_domain_id"
+    t.bigint "user_id"
+    t.bigint "scientific_domain_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["scientific_domain_id"], name: "index_user_scientific_domains_on_scientific_domain_id"
@@ -822,8 +822,8 @@ ActiveRecord::Schema.define(version: 2023_04_22_004536) do
   end
 
   create_table "user_services", force: :cascade do |t|
-    t.integer "service_id"
-    t.integer "user_id"
+    t.bigint "service_id"
+    t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["service_id", "user_id"], name: "index_user_services_on_service_id_and_user_id", unique: true
