@@ -12,7 +12,7 @@ module EoscExploreBannerHelper
   end
 
   def eosc_explore_url(tags)
-    URI.parse(CONFIG[:base_url] + CONFIG[:search_url] + ERB::Util.url_encode(first_matching_tag(tags)).gsub("%", "%25"))
+    URI.parse(CONFIG[:base_url] + CONFIG[:search_url] + ERB::Util.url_encode("\"#{first_matching_tag(tags)}\""))
   end
 
   def show_banner?(tags)
