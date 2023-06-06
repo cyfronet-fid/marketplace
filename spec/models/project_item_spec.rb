@@ -3,7 +3,7 @@
 require "rails_helper"
 require_relative "messageable"
 
-RSpec.describe ProjectItem do
+RSpec.describe ProjectItem, backend: true do
   subject { create(:project_item) }
 
   it { should be_valid }

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Backoffice service" do
+RSpec.describe "Backoffice service", backend: true do
   include OmniauthHelper
   include ExternalServiceDataHelper
 

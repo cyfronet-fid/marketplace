@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Services::InlineOrderUrlComponent, type: :component do
+RSpec.describe Services::InlineOrderUrlComponent, type: :component, end_user_frontend: true do
   %i[open_access fully_open_access other].each do |type|
     it "shows button go to the service depending on #{type} order_type" do
       offer = create(:offer, order_type: type)

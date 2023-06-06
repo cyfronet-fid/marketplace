@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Filter::Platform do
+RSpec.describe Filter::Platform, backend: true do
   context "#options" do
     let!(:platform1) { create(:platform) }
     let!(:platform2) { create(:platform) }

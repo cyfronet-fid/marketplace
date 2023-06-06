@@ -3,7 +3,7 @@
 require "rails_helper"
 require "bcrypt"
 
-RSpec.describe UserActionController, type: :controller do
+RSpec.describe UserActionController, type: :controller, end_user_backend: true do
   let(:user_action_params) do
     {
       timestamp: "now",

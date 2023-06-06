@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "Backoffice" do
+RSpec.feature "Backoffice", manager_frontend: true do
   include OmniauthHelper
 
   before { checkin_sign_in_as(user) }

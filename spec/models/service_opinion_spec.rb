@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ServiceOpinion, type: :model do
+RSpec.describe ServiceOpinion, type: :model, backend: true do
   it { should validate_presence_of(:service_rating) }
   it { should validate_presence_of(:order_rating) }
   it { should validate_numericality_of(:service_rating).with_message("Please rate this question to help other users") }

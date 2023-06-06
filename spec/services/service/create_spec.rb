@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Service::Create do
+RSpec.describe Service::Create, backend: true do
   let(:user) { create(:user) }
 
   it "saves valid service in db" do

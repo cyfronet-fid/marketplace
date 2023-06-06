@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe "import:resources", type: :task do
+describe "import:resources", type: :task, backend: true do
   let(:resource_importer) { double("Import::Resources") }
   let(:provider_importer) { double("Import::Providers") }
 

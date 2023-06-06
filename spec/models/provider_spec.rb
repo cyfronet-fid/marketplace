@@ -3,7 +3,7 @@
 require "rails_helper"
 require_relative "publishable"
 
-RSpec.describe Provider, type: :model do
+RSpec.describe Provider, type: :model, backend: true do
   include_examples "publishable"
 
   describe "validations" do

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ProjectItemPolicy do
+RSpec.describe ProjectItemPolicy, backend: true do
   let(:user) { create(:user) }
 
   subject { described_class }

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe TourFeedback, type: :model do
+RSpec.describe TourFeedback, type: :model, backend: true do
   it "it should save" do
     TourFeedback.new(
       controller_name: "controller_name",

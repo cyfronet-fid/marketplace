@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Service::Delete do
+RSpec.describe Service::Delete, backend: true do
   it "Set delete status for service" do
     service = create(:service)
     create(:service_source, source_type: :eosc_registry, service: service, eid: service.id)

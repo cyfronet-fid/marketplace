@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe OMS::CallTriggerJob, type: :job do
+RSpec.describe OMS::CallTriggerJob, type: :job, backend: true do
   let(:call_trigger) { instance_double(Trigger::Call) }
   let(:oms) { build(:oms) }
 

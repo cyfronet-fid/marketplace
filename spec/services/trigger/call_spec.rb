@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Trigger::Call do
+RSpec.describe Trigger::Call, backend: true do
   it "executes" do
     allow(Faraday).to receive(:post)
 

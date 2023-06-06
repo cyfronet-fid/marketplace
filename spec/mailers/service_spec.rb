@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ServiceMailer, type: :mailer do
+RSpec.describe ServiceMailer, type: :mailer, backend: true do
   context "verification" do
     let(:recipient) { create(:user) }
     let(:author) { create(:user) }

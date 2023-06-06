@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "My Services" do
+RSpec.feature "My Services", end_user_frontend: true do
   include OmniauthHelper
 
   context "as a logged-in user" do

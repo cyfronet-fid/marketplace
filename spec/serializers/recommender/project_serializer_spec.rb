@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Recommender::ProjectSerializer do
+RSpec.describe Recommender::ProjectSerializer, backend: true do
   it "properly serializes a project" do
     service1 = create(:service)
     service2 = create(:service)

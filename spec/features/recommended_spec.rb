@@ -3,7 +3,7 @@
 require "rails_helper"
 require "sentry-ruby"
 
-RSpec.feature "Recommended services" do
+RSpec.feature "Recommended services", end_user_frontend: true do
   include OmniauthHelper
 
   it "should display recommended", js: true do

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Bundle, type: :model do
+RSpec.describe Bundle, type: :model, backend: true do
   describe "validations" do
     subject { build(:bundle) }
     it { should validate_presence_of(:name) }

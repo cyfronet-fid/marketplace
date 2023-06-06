@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "Services in backoffice" do
+RSpec.feature "Services in backoffice", manager_frontend: true do
   include OmniauthHelper
   include ExternalServiceDataHelper
 

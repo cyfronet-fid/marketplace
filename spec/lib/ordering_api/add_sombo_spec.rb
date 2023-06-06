@@ -3,7 +3,7 @@
 require "rails_helper"
 require "ordering_api/add_sombo"
 
-describe OrderingApi::AddSombo do
+describe OrderingApi::AddSombo, backend: true do
   it "creates SOMBO OMS and adds SOMBO admin to it" do
     described_class.new.call
 

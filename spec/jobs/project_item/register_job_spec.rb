@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ProjectItem::RegisterJob do
+RSpec.describe ProjectItem::RegisterJob, backend: true do
   let(:project_item_owner) { create(:user) }
   let(:project) { create(:project, user: project_item_owner) }
   let(:register_service) { instance_double(ProjectItem::Register) }

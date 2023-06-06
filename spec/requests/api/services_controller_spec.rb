@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Api::ServicesController" do
+RSpec.describe "Api::ServicesController", backend: true do
   let!(:published_service) { create(:service, public_contacts: [build(:public_contact)]) }
   let!(:unverified_service) { create(:service, public_contacts: [build(:public_contact)], status: :unverified) }
   let!(:draft_service) { create(:service, public_contacts: [build(:public_contact)], status: :draft) }

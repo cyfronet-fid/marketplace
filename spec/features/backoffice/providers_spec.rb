@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "Providers in backoffice" do
+RSpec.feature "Providers in backoffice", manager_frontend: true do
   include OmniauthHelper
   include WebsiteHelper
 

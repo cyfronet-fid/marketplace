@@ -3,7 +3,7 @@
 require "rails_helper"
 require "bcrypt"
 
-RSpec.describe Users::AuthMockController, type: :controller do
+RSpec.describe Users::AuthMockController, type: :controller, end_user_backend: true do
   controller { attr_accessor :params }
 
   before(:each) do

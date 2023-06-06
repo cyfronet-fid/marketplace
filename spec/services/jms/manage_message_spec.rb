@@ -4,7 +4,7 @@ require "rails_helper"
 require "stomp"
 require "nori"
 
-describe Jms::ManageMessage do
+describe Jms::ManageMessage, backend: true do
   let(:eosc_registry_base) { "localhost" }
   let(:logger) { Logger.new($stdout) }
   let(:parser) { Nori.new(strip_namespaces: true) }

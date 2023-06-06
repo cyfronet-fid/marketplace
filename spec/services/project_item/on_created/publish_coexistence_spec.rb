@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe ProjectItem::OnCreated::PublishCoexistence do
+describe ProjectItem::OnCreated::PublishCoexistence, backend: true do
   it "doesn't enqueue if empty" do
     project = double(Project)
     expect(project).to receive(:project_items).and_return([])

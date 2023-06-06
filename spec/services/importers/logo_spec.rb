@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Importers::Logo do
+RSpec.describe Importers::Logo, backend: true do
   let(:service) { create(:service) }
   let(:provider) { create(:provider) }
 

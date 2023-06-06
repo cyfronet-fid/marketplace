@@ -25,7 +25,7 @@ class MockWebhook
   end
 end
 
-describe "block_error_handling" do
+describe "block_error_handling", backend: true do
   let(:cls) { Sample.new(nil) }
 
   it "should wrap error in block" do
@@ -41,7 +41,7 @@ describe "block_error_handling" do
   end
 end
 
-describe Jira::Checker do
+describe Jira::Checker, backend: true do
   let(:checker) do
     jira_client =
       double(

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "Parameters in backoffice" do
+RSpec.feature "Parameters in backoffice", manager_frontend: true do
   include OmniauthHelper
 
   context "As a service portolio manager" do

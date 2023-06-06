@@ -3,7 +3,7 @@
 require "rails_helper"
 require "ordering_api/add_provider_oms"
 
-describe OrderingApi::AddProviderOMS do
+describe OrderingApi::AddProviderOMS, backend: true do
   let!(:provider) { create(:provider, pid: "test.pid") }
   let!(:another_provider) { create(:provider, pid: "another.pid") }
   let(:service) { create(:service, resource_organisation: provider) }

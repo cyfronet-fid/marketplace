@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "Service opinions" do
+RSpec.feature "Service opinions", end_user_frontend: true do
   include OmniauthHelper
 
   %i[open_access fully_open_access other].each do |type|

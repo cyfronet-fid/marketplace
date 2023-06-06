@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Lead, type: :model do
+RSpec.describe Lead, type: :model, backend: true do
   subject { create(:lead) }
 
   it { should validate_presence_of(:header) }

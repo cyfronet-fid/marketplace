@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Unauthenticated user" do
+RSpec.describe "Unauthenticated user", backend: true do
   it "should be redirected to checkin" do
     get profile_path
 

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "Checkin authentication" do
+RSpec.feature "Checkin authentication", end_user_frontend: true do
   include OmniauthHelper
 
   scenario "login" do

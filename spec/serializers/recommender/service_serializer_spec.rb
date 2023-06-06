@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Recommender::ServiceSerializer do
+RSpec.describe Recommender::ServiceSerializer, backend: true do
   it "properly serializes a service" do
     organisation = create(:provider)
 

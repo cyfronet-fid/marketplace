@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "Reports", js: true do
+RSpec.feature "Reports", js: true, end_user_frontend: true do
   include ActiveJob::TestHelper
   include OmniauthHelper
 

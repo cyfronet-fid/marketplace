@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Offer::Create do
+RSpec.describe Offer::Create, backend: true do
   context "#bundled_offers" do
     it "doesn't send notification if offer invalid" do
       provider1 = build(:provider)

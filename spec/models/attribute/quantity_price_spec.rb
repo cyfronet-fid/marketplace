@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Attribute::QuantityPrice do
+RSpec.describe Attribute::QuantityPrice, backend: true do
   let(:price) do
     Attribute.from_json(
       "id" => "id6",

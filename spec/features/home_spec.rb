@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "Home" do
+RSpec.feature "Home", end_user_frontend: true do
   include OmniauthHelper
 
   scenario "searching should go to /services with correct query", js: true do

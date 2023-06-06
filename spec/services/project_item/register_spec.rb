@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ProjectItem::Register do
+RSpec.describe ProjectItem::Register, backend: true do
   let(:project_item) { create(:project_item, offer: create(:offer)) }
   let(:issue) { double("Issue", id: 1) }
 

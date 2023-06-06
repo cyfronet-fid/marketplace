@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Parameter::Multiselect do
+RSpec.describe Parameter::Multiselect, backend: true do
   context "with string value type" do
     subject { build(:multiselect_parameter) }
 

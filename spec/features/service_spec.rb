@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "Service browsing" do
+RSpec.feature "Service browsing", end_user_frontend: true do
   include OmniauthHelper
   include ExternalServiceDataHelper
 

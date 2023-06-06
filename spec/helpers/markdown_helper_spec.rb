@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe MarkdownHelper do
+describe MarkdownHelper, backend: true do
   it "converts from markdown to html" do
     expect(markdown("# h1")).to match(/<h1>h1/)
   end

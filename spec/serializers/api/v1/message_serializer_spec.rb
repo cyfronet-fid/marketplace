@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Api::V1::MessageSerializer do
+RSpec.describe Api::V1::MessageSerializer, backend: true do
   it "it properly serializes a user message" do
     message = create(:message)
 

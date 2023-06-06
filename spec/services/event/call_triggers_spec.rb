@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Event::CallTriggers do
+RSpec.describe Event::CallTriggers, backend: true do
   before { allow(OMS::CallTriggerJob).to receive(:perform_later) }
 
   it "executes for each returned OMS" do

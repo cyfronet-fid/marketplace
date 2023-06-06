@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "Profile page" do
+RSpec.feature "Profile page", end_user_frontend: true do
   include OmniauthHelper
 
   let(:user) { create(:user) }

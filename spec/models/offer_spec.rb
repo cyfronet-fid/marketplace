@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Offer do
+RSpec.describe Offer, backend: true do
   describe "validations" do
     subject { build(:offer) }
     it { should validate_presence_of(:name) }

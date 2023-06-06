@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.feature "Help" do
-  scenario "I can see generated help page" do
+  scenario "I can see generated help page", end_user_frontend: true do
     section = create(:help_section)
     item = create(:help_item, help_section: section, content: "Help item content")
 

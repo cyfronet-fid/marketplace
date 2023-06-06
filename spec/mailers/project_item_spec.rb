@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ProjectItemMailer, type: :mailer do
+RSpec.describe ProjectItemMailer, type: :mailer, backend: true do
   let(:user) { create(:user) }
   let(:project) { create(:project, user: user) }
   let(:project_item) { create(:project_item, project: project) }

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe OMS, type: :model do
+RSpec.describe OMS, type: :model, backend: true do
   it { should have_one(:trigger).dependent(:destroy) }
 
   it { should validate_presence_of(:name) }

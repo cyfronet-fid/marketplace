@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Api::V1::ProjectSerializer do
+RSpec.describe Api::V1::ProjectSerializer, backend: true do
   it "properly serializes a project" do
     project = create(:project, user: build(:user), project_items: build_list(:project_item, 2))
 

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "Service filter" do
+RSpec.feature "Service filter", end_user_frontend: true do
   include OmniauthHelper
 
   before do
