@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Api::V1::ProjectItemSerializer do
+RSpec.describe Api::V1::ProjectItemSerializer, backend: true do
   it "properly serializes a project_item" do
     project_item = create(:project_item, offer: build(:offer, oms_params: { a: 1, b: 2 }))
 

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Tourable, type: :controller do
+RSpec.describe Tourable, type: :controller, backend: true do
   controller(ActionController::Base) do
     attr_accessor :available_tours
     attr_reader :tour

@@ -3,7 +3,7 @@
 require "rails_helper"
 require_relative "publishable"
 
-RSpec.describe Service do
+RSpec.describe Service, backend: true do
   include_examples "publishable"
 
   it { should validate_presence_of(:name) }

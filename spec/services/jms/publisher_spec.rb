@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe Jms::Publisher do
+describe Jms::Publisher, backend: true do
   let(:logger) { double }
   let(:client) { double(Stomp::Client) }
   let(:client_config) do

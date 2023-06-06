@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Offer::Destroy do
+RSpec.describe Offer::Destroy, backend: true do
   context "#bundled_offers" do
     it "doesn't send notification if no bundle offers" do
       destroyed_offer = create(:offer)

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Project::Archive do
+RSpec.describe Project::Archive, backend: true do
   let(:project) { create(:project) }
   let(:issue) { double("Issue", id: 1) }
   let(:transition) { double("Transition") }

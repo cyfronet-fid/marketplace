@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "Service ordering" do
+RSpec.feature "Service ordering", end_user_frontend: true do
   include OmniauthHelper
 
   context "as logged in user" do

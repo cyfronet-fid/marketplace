@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ServiceOpinion::UpdateService do
+RSpec.describe ServiceOpinion::UpdateService, backend: true do
   it "initializes service with rating and opinion_count eq zero not nil" do
     service = create(:service)
     expect(service.rating).to eq(0)

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Api::V1::EventSerializer do
+RSpec.describe Api::V1::EventSerializer, backend: true do
   let(:project) { create(:project) }
   let(:project_item) { create(:project_item, project: project) }
   let(:user_direct_message) { create(:provider_message, messageable: project_item, scope: "user_direct") }

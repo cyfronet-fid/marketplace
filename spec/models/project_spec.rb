@@ -4,7 +4,7 @@ require "rails_helper"
 require_relative "messageable"
 require_relative "publishable"
 
-RSpec.describe Project do
+RSpec.describe Project, backend: true do
   subject { create(:project, name: "New Project") }
 
   it { should belong_to(:user) }

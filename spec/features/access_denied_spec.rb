@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "Access denied" do
+RSpec.feature "Access denied", end_user_frontend: true do
   include OmniauthHelper
 
   context "After trying to enter an unauthorized resource" do

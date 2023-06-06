@@ -12,7 +12,7 @@ module Test
 end
 
 # Validator tests with the test object
-describe MpUrlValidator, type: :model do
+describe MpUrlValidator, type: :model, backend: true do
   subject { Test::MpUrlValidatable.new("http://testvalid.com") }
 
   it { is_expected.to be_valid(:webpage) }

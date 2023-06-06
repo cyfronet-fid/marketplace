@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Recommender::UserSerializer do
+RSpec.describe Recommender::UserSerializer, backend: true do
   it "properly serializer a user" do
     service1 = create(:service)
     service3 = create(:service)

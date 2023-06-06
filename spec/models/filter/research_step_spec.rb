@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Filter::ResearchStep do
+RSpec.describe Filter::ResearchStep, backend: true do
   context "#options" do
     it "returns tree structure with accumulated count with correct values" do
       root = create(:research_step)

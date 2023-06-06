@@ -3,7 +3,7 @@
 require "rails_helper"
 require_relative "publishable"
 
-RSpec.describe Category do
+RSpec.describe Category, backend: true do
   # TODO: fix shared publishable examples for Categories
   # include_examples "publishable"
 

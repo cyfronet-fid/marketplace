@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Backoffice: manage providers" do
+RSpec.describe "Backoffice: manage providers", backend: true do
   context "as a logged in service portfolio manager" do
     let(:user) { create(:user, roles: [:service_portfolio_manager]) }
 

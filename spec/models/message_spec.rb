@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Message do
+RSpec.describe Message, backend: true do
   it { should belong_to(:messageable) }
   it { should validate_presence_of(:message) }
   it { should validate_presence_of(:author_role) }

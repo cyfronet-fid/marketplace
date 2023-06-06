@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ServicePolicy do
+RSpec.describe ServicePolicy, backend: true do
   let(:user) { create(:user) }
   let(:stranger) { create(:user) }
   let(:data_administrator) { create(:data_administrator, email: user.email) }

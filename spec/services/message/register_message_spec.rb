@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Message::RegisterMessage do
+RSpec.describe Message::RegisterMessage, backend: true do
   include JiraHelper
 
   let(:project_item) { create(:project_item, issue_id: 1) }

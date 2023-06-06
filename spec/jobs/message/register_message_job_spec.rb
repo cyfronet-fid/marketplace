@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Message::RegisterMessageJob do
+RSpec.describe Message::RegisterMessageJob, backend: true do
   let(:project_item_owner) { create(:user) }
   let(:project) { create(:project, user: project_item_owner) }
   let(:project_item) { create(:project_item, project: project) }

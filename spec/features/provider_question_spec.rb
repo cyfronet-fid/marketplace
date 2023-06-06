@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "Question about provider" do
+RSpec.feature "Question about provider", end_user_frontend: true do
   include OmniauthHelper
 
   let(:provider) { create(:provider) }

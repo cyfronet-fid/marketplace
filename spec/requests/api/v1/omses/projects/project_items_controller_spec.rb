@@ -3,7 +3,7 @@
 require "swagger_helper"
 require "rails_helper"
 
-RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.json" do
+RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.json", backend: true do
   before(:all) do
     Dir.chdir Rails.root.join("swagger", "v1") # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
   end

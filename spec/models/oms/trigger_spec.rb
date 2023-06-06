@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe OMS::Trigger, type: :model do
+RSpec.describe OMS::Trigger, type: :model, backend: true do
   it { should belong_to(:oms) }
   it { should have_one(:authorization).dependent(:destroy) }
 

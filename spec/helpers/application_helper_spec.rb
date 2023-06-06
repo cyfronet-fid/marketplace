@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe ApplicationHelper, type: :helper do
+describe ApplicationHelper, type: :helper, backend: true do
   context "#current_controller?" do
     before { allow(controller).to receive(:controller_name).and_return("foo") }
 

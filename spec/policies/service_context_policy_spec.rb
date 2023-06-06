@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ServiceContextPolicy do
+RSpec.describe ServiceContextPolicy, backend: true do
   let(:user) { create(:user) }
   let(:data_administrator) { create(:data_administrator, email: user.email) }
   let(:provider) { create(:provider, data_administrators: [data_administrator]) }

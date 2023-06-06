@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ProjectPolicy do
+RSpec.describe ProjectPolicy, backend: true do
   let(:user) { create(:user) }
   let(:project_with_project_item) { create(:project) { |project| create(:project_item, project: project) } }
   let(:project_with_ended_project_item) do

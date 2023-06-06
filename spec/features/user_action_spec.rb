@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "User action", js: true do
+RSpec.feature "User action", js: true, end_user_frontend: true do
   it "should skip probes recording on unknown recommender host" do
     allow(Mp::Application.config).to(receive(:recommender_host).and_return(nil))
     expect(Probes::ProbesJob).to_not receive(:perform_later)

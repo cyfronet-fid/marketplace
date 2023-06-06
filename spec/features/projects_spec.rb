@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "Project" do
+RSpec.feature "Project", end_user_frontend: true do
   include OmniauthHelper
 
   let(:user) { create(:user) }

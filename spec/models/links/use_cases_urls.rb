@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Link::UseCasesUrl, type: :model do
+RSpec.describe Link::UseCasesUrl, type: :model, backend: true do
   it "should be valid with link and without name" do
     Link::UseCasesUrl.new(name: nil, url: "http://example.org").should be_valid
   end

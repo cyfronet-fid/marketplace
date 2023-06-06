@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Offer::Draft do
+RSpec.describe Offer::Draft, backend: true do
   context "#bundled_offers" do
     it "doesn't send notification if no bundle offers" do
       drafted_offer = create(:offer)

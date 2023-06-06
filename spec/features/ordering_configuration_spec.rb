@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "Services in ordering_configuration panel" do
+RSpec.feature "Services in ordering_configuration panel", end_user_frontend: true do
   include OmniauthHelper
   include ExternalServiceDataHelper
 

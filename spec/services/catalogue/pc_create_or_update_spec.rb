@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Catalogue::PcCreateOrUpdate do
+RSpec.describe Catalogue::PcCreateOrUpdate, backend: true do
   let(:published_catalogue_response) { create(:jms_catalogue_response) }
   let(:logger) { Logger.new($stdout) }
 

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ProjectItem::Create do
+RSpec.describe ProjectItem::Create, backend: true do
   let(:user) { create(:user) }
   let(:project) { create(:project, user: user) }
   let(:service) { create(:service) }

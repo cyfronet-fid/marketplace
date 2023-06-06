@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Vocabulary::FundingBody do
+RSpec.describe Vocabulary::FundingBody, backend: true do
   subject { Vocabulary::FundingBody.new(name: "Funding Body", description: "Poland", eid: "funding_body-fb") }
 
   it { should validate_presence_of(:name) }

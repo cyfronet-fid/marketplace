@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ProjectItem::ReadyJob do
+RSpec.describe ProjectItem::ReadyJob, backend: true do
   let(:project_item_owner) { create(:user) }
   let(:project) { create(:project, user: project_item_owner) }
   let(:ready_service) { instance_double(ProjectItem::Ready) }

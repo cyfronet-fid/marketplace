@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Backoffice::BackofficePolicy do
+RSpec.describe Backoffice::BackofficePolicy, backend: true do
   subject { described_class }
 
   permissions :show? do

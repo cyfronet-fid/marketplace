@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "Query param tour" do
+RSpec.feature "Query param tour", end_user_frontend: true do
   include CookieHelper
 
   let(:later_cookie_name) { "tours-marketplace-services-show-query_param_1" }

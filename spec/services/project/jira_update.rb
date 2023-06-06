@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Project::JiraUpdate do
+RSpec.describe Project::JiraUpdate, backend: true do
   let(:project) { create(:project) }
   let(:issue) { double("Issue", id: 1, key: "MP-1") }
 

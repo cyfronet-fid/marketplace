@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Backoffice::ServicePolicy do
+RSpec.describe Backoffice::ServicePolicy, backend: true do
   let(:service_portfolio_manager) { create(:user, roles: [:service_portfolio_manager]) }
   let(:service_owner) do
     create(:user).tap do |user|

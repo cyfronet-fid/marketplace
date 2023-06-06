@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "Provider browsing" do
+RSpec.feature "Provider browsing", end_user_frontend: true do
   include OmniauthHelper
 
   scenario "allows to see provider details" do

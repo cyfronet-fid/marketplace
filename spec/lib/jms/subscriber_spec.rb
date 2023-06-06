@@ -5,7 +5,7 @@ require "jms/subscriber"
 require "stomp"
 require "nori"
 
-describe Jms::Subscriber do
+describe Jms::Subscriber, backend: true do
   let(:eosc_registry_base) { "localhost" }
   let(:logger) { Logger.new($stdout) }
   let(:parser) { Nori.new(strip_namespaces: true) }

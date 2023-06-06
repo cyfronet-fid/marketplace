@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Importers::Request do
+RSpec.describe Importers::Request, backend: true do
   let(:request) { double("Importers::Request") }
   let(:test_url) { "https://localhost/api" }
 

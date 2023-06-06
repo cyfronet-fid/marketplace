@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe ProjectItem::OnCreated::PublishAddition do
+describe ProjectItem::OnCreated::PublishAddition, backend: true do
   it "doesn't enqueue if empty" do
     project = double(Project)
     allow(Jms::PublishJob).to receive(:perform_later)

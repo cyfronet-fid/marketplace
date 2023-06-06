@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "Api docs page" do
+RSpec.feature "Api docs page", end_user_frontend: true do
   include OmniauthHelper
 
   context "JS: as a regular user" do

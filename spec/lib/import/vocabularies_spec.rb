@@ -3,7 +3,7 @@
 require "rails_helper"
 require "jira/setup"
 
-describe Import::Providers do
+describe Import::Vocabularies, backend: true do
   let(:test_url) { "https://localhost/api" }
   let(:faraday) { Faraday }
 

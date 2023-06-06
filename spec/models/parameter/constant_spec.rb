@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Parameter::Constant do
+RSpec.describe Parameter::Constant, backend: true do
   subject { build(:input_parameter) }
 
   it "serializes to attribute schema" do

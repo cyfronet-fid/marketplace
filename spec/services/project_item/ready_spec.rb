@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ProjectItem::Ready do
+RSpec.describe ProjectItem::Ready, backend: true do
   let(:project_item) { create(:project_item) }
   let(:issue) { double("Issue", id: 1) }
   let(:transition) { double("Transition") }

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Api::V1::MessagePolicy, type: :policy do
+RSpec.describe Api::V1::MessagePolicy, type: :policy, backend: true do
   subject { described_class }
 
   let(:oms_admin) { create(:user) }

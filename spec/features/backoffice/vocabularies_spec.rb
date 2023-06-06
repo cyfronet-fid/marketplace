@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "Vocabularies in backoffice" do
+RSpec.feature "Vocabularies in backoffice", manager_frontend: true do
   include OmniauthHelper
 
   context "As a service portolio manager" do

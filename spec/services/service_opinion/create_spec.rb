@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ServiceOpinion::Create do
+RSpec.describe ServiceOpinion::Create, backend: true do
   it "creates service opinion" do
     service = create(:service)
     offer = create(:offer, service: service)

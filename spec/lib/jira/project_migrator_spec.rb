@@ -3,7 +3,7 @@
 require "rails_helper"
 require "jira/project_migrator"
 
-describe Jira::Setup do
+describe Jira::Setup, backend: true do
   let(:jira_project_key) { "MP" }
   let(:jira_client) do
     double(
