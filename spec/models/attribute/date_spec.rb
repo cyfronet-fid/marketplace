@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Attribute::Date do
+RSpec.describe Attribute::Date, backend: true do
   context "min validation" do
     let(:date_attribute) { Attribute.from_json(attr_json_with_config("min" => "now")) }
 

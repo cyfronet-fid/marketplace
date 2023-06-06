@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe NavHelper do
+describe NavHelper, backend: true do
   include ApplicationHelper
 
   describe "nav_link" do

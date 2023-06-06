@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "Service categories" do
+RSpec.feature "Service categories", end_user_frontend: true do
   include OmniauthHelper
 
   let(:user) { create(:user) }

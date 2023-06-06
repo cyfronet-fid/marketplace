@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Service::Publish do
+RSpec.describe Service::Publish, backend: true do
   context "publish" do
     it "publish service" do
       service = create(:service)

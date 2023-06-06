@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Importers::Provider do
+RSpec.describe Importers::Provider, backend: true do
   let(:provider_hash_instance) { double("Importers::Provider") }
   let(:parser) { Nori.new(strip_namespaces: true) }
   let(:legal_status) { create(:legal_status, eid: "provider_legal_status-public_legal_entity") }

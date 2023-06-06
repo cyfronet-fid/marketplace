@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Service::Update do
+RSpec.describe Service::Update, backend: true do
   it "updates attributes" do
     service = create(:service)
 

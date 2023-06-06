@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Api::V1::ProjectItemPolicy, type: :policy do
+RSpec.describe Api::V1::ProjectItemPolicy, type: :policy, backend: true do
   subject { described_class }
 
   let(:default_oms_admin) { create(:user) }

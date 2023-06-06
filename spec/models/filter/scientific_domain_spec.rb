@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Filter::ScientificDomain do
+RSpec.describe Filter::ScientificDomain, backend: true do
   context "#options" do
     it "returns tree structure with accumulated count" do
       root = create(:scientific_domain)

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Services::InformationDescriptionComponent, type: :component do
+RSpec.describe Services::InformationDescriptionComponent, type: :component, end_user_frontend: true do
   %i[open_access fully_open_access].each do |type|
     it "shows correct information page for #{type} order type" do
       service = create(:service, order_type: type)

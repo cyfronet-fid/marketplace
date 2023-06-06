@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Parameter::Date do
+RSpec.describe Parameter::Date, backend: true do
   subject { build(:date_parameter) }
 
   it "serializes to attribute schema" do

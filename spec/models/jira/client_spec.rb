@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe Jira::Client do
+describe Jira::Client, backend: true do
   let(:client) { Jira::Client.new }
   let(:over_255_characters) { "f" * 256 }
 

@@ -3,7 +3,7 @@
 require "rails_helper"
 require "jira/setup"
 
-describe Jira::Setup do
+describe Jira::Setup, backend: true do
   let(:jira_project_key) { "MP" }
   let(:jira_client) { double("Jira::Client", jira_project_key: jira_project_key, jira_config: { username: "admin" }) }
   let(:setup) { Jira::Setup.new(jira_client) }

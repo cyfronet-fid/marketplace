@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Service::Destroy do
+RSpec.describe Service::Destroy, backend: true do
   it "removes service from db" do
     service = create(:service)
 

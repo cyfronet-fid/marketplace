@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe "jira:check", type: :task do
+describe "jira:check", type: :task, backend: true do
   it "preloads the Rails environment" do
     expect(task.prerequisites).to include "environment"
   end

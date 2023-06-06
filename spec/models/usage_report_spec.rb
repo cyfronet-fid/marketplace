@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe UsageReport do
+RSpec.describe UsageReport, backend: true do
   context ".orderable_count" do
     it "counts orderable services" do
       s1 = create(:service, status: :published)

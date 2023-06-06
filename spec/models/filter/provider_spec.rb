@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Filter::Provider do
+RSpec.describe Filter::Provider, backend: true do
   context "#options" do
     let!(:provider1) { create(:provider) }
     let!(:provider2) { create(:provider) }

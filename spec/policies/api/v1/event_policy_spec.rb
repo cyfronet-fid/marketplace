@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Api::V1::EventPolicy, type: :policy do
+RSpec.describe Api::V1::EventPolicy, type: :policy, backend: true do
   subject { described_class }
 
   permissions ".scope" do

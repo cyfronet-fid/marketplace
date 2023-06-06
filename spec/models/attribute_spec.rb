@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Attribute do
+RSpec.describe Attribute, backend: true do
   it "creates correct string select with value from json" do
     attr =
       Attribute.from_json(

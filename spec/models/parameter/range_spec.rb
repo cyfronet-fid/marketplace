@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Parameter::Input do
+RSpec.describe Parameter::Input, backend: true do
   subject { build(:range_parameter) }
 
   it "serializes to attribute schema" do

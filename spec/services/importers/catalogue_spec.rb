@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Importers::Catalogue do
+RSpec.describe Importers::Catalogue, backend: true do
   let(:catalogue_hash_instance) { double("Importers::Catalogue") }
   let(:parser) { Nori.new(strip_namespaces: true) }
 

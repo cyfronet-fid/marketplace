@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ProjectItemsHelper, type: :helper do
+RSpec.describe ProjectItemsHelper, type: :helper, backend: true do
   describe "#show_rating_button?" do
     it "is false when project_item is not ready" do
       @project_item = create(:project_item, status: "custom_created", status_type: :created)

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ProjectItem::OnStatusTypeUpdated do
+RSpec.describe ProjectItem::OnStatusTypeUpdated, backend: true do
   let(:service) { create(:service, order_url: "http://not.empty") }
   let(:offer) { create(:offer, service: service) }
 

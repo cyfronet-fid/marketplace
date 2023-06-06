@@ -4,7 +4,7 @@ require "rails_helper"
 require "jira/setup"
 require "ostruct"
 
-describe Import::Providers do
+describe Import::Providers, backend: true do
   let(:test_url) { "https://localhost/api" }
   let(:faraday) { Faraday }
 

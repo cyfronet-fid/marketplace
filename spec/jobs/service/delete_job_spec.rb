@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Service::DeleteJob do
+RSpec.describe Service::DeleteJob, backend: true do
   let(:service) { create(:service) }
   let(:source) { create(:service_source, service: service) }
   let(:delete_service) { instance_double(Service::Delete) }

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe MessagePolicy, type: :policy do
+RSpec.describe MessagePolicy, type: :policy, backend: true do
   let(:user) { create(:user) }
 
   subject { described_class }

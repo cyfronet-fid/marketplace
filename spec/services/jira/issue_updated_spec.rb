@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Jira::IssueUpdated do
+RSpec.describe Jira::IssueUpdated, backend: true do
   include JiraHelper
 
   before { stub_jira }

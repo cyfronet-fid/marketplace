@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe AttributesHelper, type: :helper do
+RSpec.describe AttributesHelper, type: :helper, backend: true do
   context "parse_offer_parameter_value" do
     it "should display value" do
       expect(

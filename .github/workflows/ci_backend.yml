@@ -1,4 +1,4 @@
-name: Build & Test
+name: Backend tests
 on: [push]
 jobs:
   tests:
@@ -29,7 +29,7 @@ jobs:
         RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
       run: |
         bundle exec rake db:drop db:create db:migrate RAILS_ENV=test
-        bundle exec rspec
+        bundle exec rspec -t ~end_user_frontend -t ~manager_frontend
     - name: Containers logs
       if: failure()
       run: docker-compose logs

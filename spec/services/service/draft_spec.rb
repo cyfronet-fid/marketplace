@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Service::Draft do
+RSpec.describe Service::Draft, backend: true do
   it "draft service" do
     service = create(:service)
     offer = create(:offer, service: service)

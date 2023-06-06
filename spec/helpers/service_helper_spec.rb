@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ServiceHelper, type: :helper do
+RSpec.describe ServiceHelper, type: :helper, backend: true do
   it "converts from decimal 4.5 value to html" do
     expect(print_rating_stars(4.5)).to match(
       %r{<i class="fas fa-star fa-lg"></i><i class="fas fa-star fa-lg"></i><i class="fas fa-star fa-lg"></i><i class="fas fa-star fa-lg"></i><i class="fas fa-star-half-alt fa-lg"></i>}

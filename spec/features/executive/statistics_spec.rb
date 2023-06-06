@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "Executive stistics" do
+RSpec.feature "Executive stistics", manager_frontend: true do
   include OmniauthHelper
 
   before { checkin_sign_in_as(user) }

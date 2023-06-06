@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Backoffice::OfferPolicy do
+RSpec.describe Backoffice::OfferPolicy, backend: true do
   let(:service_portfolio_manager) { create(:user, roles: [:service_portfolio_manager]) }
   let(:owner) { create(:user) }
   let(:stranger) { create(:user) }

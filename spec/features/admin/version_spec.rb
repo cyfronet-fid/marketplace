@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "Marketplace version" do
+RSpec.feature "Marketplace version", manager_frontend: true do
   include OmniauthHelper
 
   let(:admin) { create(:user, roles: [:admin]) }

@@ -13,7 +13,7 @@ class SortableFakeController < ApplicationController
   include Service::Sortable
 end
 
-RSpec.describe SortableFakeController do
+RSpec.describe SortableFakeController, backend: true do
   let!(:controller) { SortableFakeController.new }
 
   context "ordering" do

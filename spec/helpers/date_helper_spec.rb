@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe DateHelper, type: :helper do
+RSpec.describe DateHelper, type: :helper, backend: true do
   it "converts date from proper date formatted string" do
     date = "2001-02-03T04:05:06Z"
     date_utc = "2001-02-03T04:05:06.000000Z"

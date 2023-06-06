@@ -3,7 +3,7 @@
 require "rails_helper"
 require_relative "publishable"
 
-RSpec.describe User do
+RSpec.describe User, backend: true do
   include_examples "publishable"
 
   it { should validate_presence_of(:first_name) }

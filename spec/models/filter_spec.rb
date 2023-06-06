@@ -22,7 +22,7 @@ class MyFilter < Filter
   end
 end
 
-RSpec.describe Filter do
+RSpec.describe Filter, backend: true do
   context "#options" do
     it "returns filter select options" do
       filter = MyFilter.new

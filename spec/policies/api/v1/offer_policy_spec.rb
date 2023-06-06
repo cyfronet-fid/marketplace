@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Api::V1::OfferPolicy, type: :policy do
+RSpec.describe Api::V1::OfferPolicy, type: :policy, backend: true do
   subject { described_class }
 
   let!(:data_admin_user) { create(:user) }

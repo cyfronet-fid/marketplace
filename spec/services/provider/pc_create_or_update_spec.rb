@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Provider::PcCreateOrUpdate do
+RSpec.describe Provider::PcCreateOrUpdate, backend: true do
   let(:published_provider_response) { create(:jms_published_provider_response) }
   let(:draft_provider_response) { create(:jms_draft_provider_response) }
   let(:logger) { Logger.new($stdout) }

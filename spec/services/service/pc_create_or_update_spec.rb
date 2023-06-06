@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Service::PcCreateOrUpdate do
+RSpec.describe Service::PcCreateOrUpdate, backend: true do
   let(:test_url) { "https://localhost/api" }
   let(:logger) { double("Logger").as_null_object }
   let!(:storage) { create(:category, name: "Storage") }

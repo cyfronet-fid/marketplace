@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Filter::TargetUser do
+RSpec.describe Filter::TargetUser, backend: true do
   context "#options" do
     let!(:target_user1) { create(:target_user) }
     let!(:target_user2) { create(:target_user) }

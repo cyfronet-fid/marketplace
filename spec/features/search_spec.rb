@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "Service searching in top bar", js: true do
+RSpec.feature "Service searching in top bar", js: true, end_user_frontend: true do
   include OmniauthHelper
 
   category = nil

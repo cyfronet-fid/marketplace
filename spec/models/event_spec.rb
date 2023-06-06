@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Event, type: :model do
+RSpec.describe Event, type: :model, backend: true do
   it { should belong_to(:eventable) }
   it { should validate_presence_of(:action) }
 

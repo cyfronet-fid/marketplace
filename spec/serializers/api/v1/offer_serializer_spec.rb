@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Api::V1::OfferSerializer do
+RSpec.describe Api::V1::OfferSerializer, backend: true do
   it "properly serializes an order_required internal offer" do
     offer =
       create(

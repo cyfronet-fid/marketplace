@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ScientificDomainsHelper, type: :helper do
+RSpec.describe ScientificDomainsHelper, type: :helper, backend: true do
   context "#grouped_scientific_domain" do
     it "groups scientific domains" do
       root1, root2 = create_list(:scientific_domain, 2)

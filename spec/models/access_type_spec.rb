@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Vocabulary::AccessType do
+RSpec.describe Vocabulary::AccessType, backend: true do
   subject { Vocabulary::AccessType.new(name: "AccessType", description: "description", eid: "access_type-at") }
 
   it { should validate_presence_of(:name) }

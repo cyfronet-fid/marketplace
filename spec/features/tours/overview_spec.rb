@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "Overview tour" do
+RSpec.feature "Overview tour", end_user_frontend: true do
   context "with several services" do
     before do
       create(:service, name: "a", status: :draft)

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Admin::AdminPolicy do
+RSpec.describe Admin::AdminPolicy, backend: true do
   subject { described_class }
 
   permissions :show? do

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ServiceProvider, type: :model do
+RSpec.describe ServiceProvider, type: :model, backend: true do
   it { should belong_to(:service) }
   it { should belong_to(:service) }
   it { should validate_presence_of(:service) }

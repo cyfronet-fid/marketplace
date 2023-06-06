@@ -4,7 +4,7 @@ require "rails_helper"
 require "jira/console_checker"
 require "colorize"
 
-describe Jira::ConsoleChecker do
+describe Jira::ConsoleChecker, backend: true do
   let(:checker) do
     double(
       "Jira::Checker",

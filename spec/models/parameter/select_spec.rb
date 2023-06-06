@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Parameter::Select do
+RSpec.describe Parameter::Select, backend: true do
   context "with string value type" do
     subject { build(:select_parameter) }
 

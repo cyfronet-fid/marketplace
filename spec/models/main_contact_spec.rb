@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe MainContact, type: :model do
+RSpec.describe MainContact, type: :model, backend: true do
   it { should validate_presence_of(:first_name) }
   it { should validate_presence_of(:last_name) }
   it { should validate_presence_of(:email) }

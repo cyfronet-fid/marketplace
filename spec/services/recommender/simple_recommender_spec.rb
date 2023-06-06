@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Recommender::SimpleRecommender do
+RSpec.describe Recommender::SimpleRecommender, backend: true do
   include SimpleRecommenderSpecHelper
   before :context do
     @categories, @services = populate_database

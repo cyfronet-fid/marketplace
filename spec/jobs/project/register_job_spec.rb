@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Project::ProjectRegisterJob do
+RSpec.describe Project::ProjectRegisterJob, backend: true do
   let(:project_owner) { create(:user) }
   let(:project) do
     project = create(:project, user: project_owner)
