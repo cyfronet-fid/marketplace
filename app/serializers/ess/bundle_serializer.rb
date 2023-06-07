@@ -7,6 +7,7 @@ class Ess::BundleSerializer < ApplicationSerializer
              :capabilities_of_goals,
              :main_offer_id,
              :description,
+             :tag_list,
              :target_users,
              :scientific_domains,
              :research_steps,

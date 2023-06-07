@@ -25,6 +25,13 @@
     "description": {
       "type": "string"
     },
+    "tag_list": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
     "target_users": {
       "type": "array",
       "nullable": true,

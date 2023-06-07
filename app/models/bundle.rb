@@ -5,6 +5,8 @@ class Bundle < ApplicationRecord
 
   # include Offer::Parameters
 
+  acts_as_taggable
+
   searchkick word_middle: %i[offer_name description], highlight: %i[offer_name description]
 
   STATUSES = { published: "published", draft: "draft", deleted: "deleted" }.freeze
