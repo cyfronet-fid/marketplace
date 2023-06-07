@@ -10,6 +10,13 @@
     "description": {
       "type": "string"
     },
+    "tag_list": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
     "service_id": {
       "type": "integer"
     },

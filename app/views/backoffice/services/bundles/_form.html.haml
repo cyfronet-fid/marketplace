@@ -11,6 +11,7 @@
     = f.association :main_offer, collection: service.offers.published, label_method: :name, value_method: :id,
             input_html: { multiple: false, data: { choice: true } }
     = f.input :description, input_html: { rows: 10 }
+    = f.input :tag_list, input_html: { value: bundle.tag_list.to_s, data: { choice: true } }
 
     = f.association :target_users, multiple: true, input_html: {data: { choice: true } }
     - sds = ScientificDomain.child_names.filter_map { |name, sd| [name, sd.id] if sd.parent.present? }

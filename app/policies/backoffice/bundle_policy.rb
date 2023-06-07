@@ -61,6 +61,7 @@ class Backoffice::BundlePolicy < ApplicationPolicy
       [target_user_ids: []],
       [research_step_ids: []],
       :main_offer_id,
+      :tag_list,
       :from,
       [offer_ids: []],
       :related_training,

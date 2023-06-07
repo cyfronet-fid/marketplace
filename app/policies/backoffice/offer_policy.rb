@@ -54,6 +54,7 @@ class Backoffice::OfferPolicy < ApplicationPolicy
       :internal,
       :from,
       :primary_oms_id,
+      :tag_list,
       oms_params: {},
       parameters_attributes: %i[
         type

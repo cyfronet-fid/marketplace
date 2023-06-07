@@ -36,4 +36,5 @@
                             disabled: cant_edit([access_type_ids: []])
       = f.association :access_modes, input_html: { data: { choice: true } },
                             disabled: cant_edit([access_mode_ids: []])
-      = f.input :tag_list, input_html: { value: service.tag_list.to_s }, disabled: cant_edit(:tag_list)
+      = f.input :tag_list, input_html: { value: service.tag_list.to_s, data: { choice: true } },
+      disabled: cant_edit(:tag_list)
