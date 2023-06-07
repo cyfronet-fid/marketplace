@@ -53,7 +53,7 @@ module Service::Recommendable
       end
     body = JSON.parse(response.body)
 
-    return if response.status != 200
+    raise StandardError if response.status != 200
 
     ids = body.is_a?(Array) ? body.each.map { |e| e["service_id"].to_i } : []
     Service.where(id: ids, status: %i[published unverified])
