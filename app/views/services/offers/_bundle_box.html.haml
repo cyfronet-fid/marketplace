@@ -1,11 +1,13 @@
+-# TODO: change to bundle model, not offer in controller of parent view
+- bundle = offer.main_bundles.first
 .col-12.d-flex.align-items-stretch.bundle.bundle-order
   .card.m-0.mb-5
-    = render "services/offers/bundle_description", offer: offer
-    = render "services/bundle", bundled_offers: offer.main_bundles.first.all_offers, parent: offer
+    = render "services/offers/bundle_description", offer: offer, bundle: bundle
+    = render "services/bundle", bundled_offers: bundle.all_offers, parent: offer
     = render "services/offers/bundle_links",
-       contact_email: offer.main_bundles.first.contact_email || "",
-       related_training: offer.main_bundles.first.related_training_url || "",
-       helpdesk_url: offer.main_bundles.first.helpdesk_url || ""
+       contact_email: bundle.contact_email || "",
+       related_training: bundle.related_training_url || "",
+       helpdesk_url: bundle.helpdesk_url || ""
 
     .card-button.text-center
       %label
