@@ -1,0 +1,21 @@
+name: Auto Comment
+on: [pull_request]
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Get branch name
+        id: branch-name
+        uses: tj-actions/branch-names@v4.5
+      - uses: bubkoo/auto-comment@v1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          pullRequestOpened: >
+            Hi @{{ author }},
+            
+            thank you for raising your pull request.
+            
+            Check your changes at the [URL](https://pr-${{github.event.number}}.docker-fid.grid.cyf-kr.edu.pl).
