@@ -8,7 +8,7 @@ module LandingPageHelper
     publication: "Publications",
     dataset: "Data",
     "data-source": "Data Sources",
-    bundle: "Service Bundle",
+    bundle: "Service Bundles",
     training: "Training Materials",
     guideline: "Interoperability Guidelines"
   }.freeze
