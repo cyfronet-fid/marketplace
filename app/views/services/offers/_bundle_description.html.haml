@@ -1,16 +1,16 @@
 .card-body
   .bundle-goals
-    - offer.main_bundles.first.bundle_goals.each do |goal|
+    - bundle&.bundle_goals&.each do |goal|
       %span.goal= goal.name
-  %h4.card-title.pt-2= offer.main_bundles.first.name
+  %h4.card-title.pt-2= bundle.name
 
   .bundle-description
     .card-text.mb-2{ "data-controller" => "paragraph" }
-      - if offer.main_bundles.first.description.size > 500
-        = markdown(offer.main_bundles.first.description.truncate(500, separator: " "))
+      - if bundle.description.size > 500
+        = markdown(bundle.description.truncate(500, separator: " "))
         = link_to _("Show more"), "#", class: "show-more-#{bundle.id}",
                                       data: { "target" => "paragraph.showMore",
                                               "action" => "click->paragraph#showMore",
-                                              text: markdown(offer.description)}
+                                              text: markdown(bundle.description)}
       - else
-        = markdown(offer.main_bundles.first.description)
+        = markdown(bundle.description)
