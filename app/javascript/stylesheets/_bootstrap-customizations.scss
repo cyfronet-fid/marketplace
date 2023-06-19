@@ -164,6 +164,7 @@ a {
 
 .btn-primary,
 .btn-secondary,
+.btn-info,
 .btn-error {
   color: $white !important;
 
@@ -1295,6 +1296,7 @@ Service detail
 .offer-params {
   td {
     width: 50%;
+    padding: 1rem;
   }
 }
 
@@ -1327,6 +1329,10 @@ Service detail
         display: inline-block;
       }
 
+      .disabled {
+        display: none;
+      }
+
       .checked {
         display: none;
       }
@@ -1347,7 +1353,33 @@ Service detail
         display: none;
       }
 
+      .disabled {
+        display: none;
+      }
+
       .checked {
+        display: inline-block;
+      }
+    }
+
+    input[type="radio"]:disabled + span {
+      background: $btn-light-grey;
+      color: $white;
+      border-color: $btn-light-grey !important;
+
+      svg {
+        display: none;
+      }
+
+      .unchecked {
+        display: none;
+      }
+
+      .checked {
+        display: none;
+      }
+
+      .disabled {
         display: inline-block;
       }
     }
@@ -1677,7 +1709,7 @@ h5 {
   }
 
   table {
-    margin-bottom: 0;
+    margin-bottom: 15px;
   }
 
   .form-check .form-check-input {
@@ -4364,7 +4396,7 @@ abbr[title] {
     background-color: $white;
   }
 
-  input[type=checkbox]:disabled + span {
+  input[type=checkbox]:disabled + span::after {
     opacity: .70;
     color: $palette-solid-50;
   }
@@ -5035,6 +5067,23 @@ abbr[title] {
   }
 }
 
+.counter {
+  margin-bottom: 35px;
+
+  .counter-txt {
+    display: inline-block;
+    float: right;
+  }
+
+  .big-dot {
+    font-size: 26px;
+    line-height: 18px;
+    margin-right: 5px;
+    display: inline-block;
+    float: right;
+  }
+}
+
 .service-buttons {
 
   .btn {
@@ -5410,6 +5459,10 @@ abbr[title] {
 }
 
 .resource-offers {
+  .btn-info {
+    background: $btn-light-grey;
+  }
+
   .card-button {
     width: 100%;
     bottom: 0;

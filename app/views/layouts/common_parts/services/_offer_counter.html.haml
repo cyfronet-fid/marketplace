@@ -1,0 +1,7 @@
+%table.offer-params.table.table-hover.counter
+  %tbody
+    %tr
+      %td Currently available
+      %td.text-right.font-weight-bold
+        %span.counter-txt #{limited ? available_count : "unlimited"} #{"offer".pluralize(available_count)}
+        %span.big-dot{ class: available_status(limited, available_count) } &#8226;

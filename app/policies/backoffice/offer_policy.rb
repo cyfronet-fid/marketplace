@@ -41,6 +41,8 @@ class Backoffice::OfferPolicy < ApplicationPolicy
       :order_type,
       :order_url,
       :internal,
+      :limited,
+      :available_count,
       :from,
       :primary_oms_id,
       oms_params: {},

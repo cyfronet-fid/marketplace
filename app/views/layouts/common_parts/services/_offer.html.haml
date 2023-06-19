@@ -2,6 +2,8 @@
   .card.m-0.mb-5
     = render "services/offers/description", offer: offer
     = render "layouts/common_parts/services/parameters", technical_parameters: offer.attributes.map(&:to_json)
+    = render "layouts/common_parts/services/offer_counter", limited: offer.limited,
+      available_count: offer.available_count
 
     .card-button.text-center
       %label

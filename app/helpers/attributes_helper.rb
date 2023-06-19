@@ -34,4 +34,14 @@ module AttributesHelper
   def from_to(from, to)
     "#{from || "?"} - #{to || "?"}"
   end
+
+  def available_status(limited, count = nil)
+    return "text-success" unless limited
+    case count
+    when 1..1_000_000
+      "text-success"
+    when 0
+      "text-danger"
+    end
+  end
 end

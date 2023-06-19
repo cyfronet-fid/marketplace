@@ -6,13 +6,17 @@
     - if offer.bundle?
       = link_to _("Read technical parameters"), "#", class: "btn-link"
       = render "services/bundle", bundled_offers: offer.main_bundles.first.all_offers, parent: offer
-
+    = render "layouts/common_parts/services/offer_counter", limited: offer.limited,
+      available_count: offer.available_count
     .card-button.text-center
       %label
-        = f.radio_button :offer_id, offer.iid, checked: project_item.offer == offer
+        = f.radio_button :offer_id, offer.iid, checked: project_item.offer == offer,
+          disabled: offer.limited && offer.available_count.zero?
         %span.btn.btn-light.border.border-secondary.font-weight-bold
           .unchecked
             = _("Select an offer")
+          .disabled
+            = _("No offers available")
           .checked
             = _("Selected offer")
           %i.fas.fa-check

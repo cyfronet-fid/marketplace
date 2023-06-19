@@ -32,6 +32,7 @@ class Offer < ApplicationRecord
   before_validation :set_internal
   before_validation :set_oms_details
   before_validation :sanitize_oms_params
+  before_save :default_availability
 
   has_many :target_offer_links,
            class_name: "OfferLink",
@@ -61,6 +62,7 @@ class Offer < ApplicationRecord
   validates :status, presence: true
   validates :order_url, mp_url: true, if: :order_url?
   validate :bundled_offers_correct, if: -> { bundled_connected_offers.present? }
+  validates :available_count, numericality: { greater_than_or_equal_to: 0, only_integer: true }
 
   validate :primary_oms_exists?, if: -> { primary_oms_id.present? }
   validate :proper_oms?, if: -> { primary_oms.present? }
@@ -199,6 +201,10 @@ class Offer < ApplicationRecord
       self.primary_oms = nil
       self.oms_params = nil
     end
+  end
+
+  def default_availability
+    self.available_count ||= 0
   end
 
   def sanitize_oms_params

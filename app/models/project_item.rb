@@ -34,6 +34,13 @@ class ProjectItem < ApplicationRecord
   has_many :statuses, as: :status_holder
   counter_culture %i[offer service], column_name: "project_items_count"
 
+  counter_culture :offer,
+                  column_name: "available_count",
+                  column_names: {
+                    ["offers.limited = ?", true] => "available_count"
+                  },
+                  delta_magnitude: -1
+
   validates :offer, presence: true
   validates :status, presence: true
   validates :status_type, presence: true

@@ -6,6 +6,17 @@
     = f.hidden_field :id
     = f.input :name, input_html: { class: "form-control-lg" }
     = f.input :description, input_html: { rows: 10 }
+    %h4.mt-5.mb-3.text-uppercase Determine the quantity of products available in the same time
+    %label{ "data-parent": "offer_limited_true", "data-action": "click->ordering#checkLimited" }
+      = f.radio_button :limited, true, value: true
+      .d-inline-block.ml-3
+        = f.input :available_count, label: "Enter the number of products available"
+
+    %label{ "data-parent": "offer_limited_false", "data-action": "click->ordering#checkLimited" }
+      = f.radio_button :limited, false, value: false
+      .d-inline-block.ml-3.mb-5
+        %label{ for: "unlimited" } or select this if you can process unlimitted usage of your products in parallel
+        %input.form-control{ type: "text", name: "unlimited", value: "Unlimited offers", disabled: true }
     = f.input :order_type, collection: Offer.order_types.keys.map(&:to_sym),
       selected: (offer.order_type || service.order_type),
       input_html: { "data-ordering-target": "orderType",

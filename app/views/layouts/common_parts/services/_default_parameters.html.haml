@@ -18,6 +18,8 @@
       - else
         = render "services/offers/description", offer: offer
     = render "layouts/common_parts/services/parameters", technical_parameters: technical_parameters
+    = render "layouts/common_parts/services/offer_counter", limited: offer.limited,
+      available_count: offer.available_count
 
     .card-button.text-center
       %label

@@ -6,10 +6,16 @@
     - if offer.bundle?
       = link_to _("Read technical parameters"), "#", class: "btn-link"
       = render "services/bundle", bundled_offers: offer.bundled_connected_offers, parent: offer
+    = render "layouts/common_parts/services/offer_counter", limited: offer.limited,
+      available_count: offer.available_count
     .card-button.text-center
       %label
-        = link_to service_offers_path(offer.service, customizable_project_item: { offer_id: offer.iid }),
-        "data-probe": "", "data-service-id": offer.service.id, "data-e2e": "select-offer-btn",
-        "data-target": local_assigns[:preview] ? "preview.link" : "", method: :put do
-          %span.btn.btn-primary.font-weight-bold
-            = _("Select an offer")
+        - if !offer.limited || offer.available_count.positive?
+          = link_to service_offers_path(offer.service, customizable_project_item: { offer_id: offer.iid }),
+          "data-probe": "", "data-service-id": offer.service.id, "data-e2e": "select-offer-btn",
+          "data-target": local_assigns[:preview] ? "preview.link" : "", method: :put do
+            %span.btn.btn-primary.font-weight-bold
+              = _("Select an offer")
+        - else
+          %span.btn.btn-info.font-weight-bold{ "data-toggle": "tooltip", title: "Currently unavailable" }
+            = _("No offers available")

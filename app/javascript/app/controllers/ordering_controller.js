@@ -17,6 +17,10 @@ export default class extends Controller {
     this.updateVisibility();
   }
 
+  checkLimited(event) {
+    document.getElementById(event.currentTarget.dataset.parent).checked = true;
+  }
+
   updateVisibility() {
     function doShowOrDisable(el, show) {
       if (show) {

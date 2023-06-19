@@ -6,7 +6,7 @@ $font-size-xs: 0.75 * $font-size-base;
 $font-size-navbar: 1 * $font-size-base;
 $font-size-footer: 0.75 * $font-size-base;
 
-$font-weight-light: 100; // Ubuntu light
+$font-weight-light: 100; // Ubuntu lightA
 $font-weight-normal: 300; // Ubuntu regular
 $font-weight-bold: 400; // Ubuntu medium
 $font-weight-bolder: 600; // Ubuntu bold
@@ -41,7 +41,7 @@ $palette-solid-10: #e8eaeb;
 $palette-solid-20: #ced4da;
 $palette-solid-30: #bac1c3;
 $palette-solid-50: #8d989c;
-$palette-solid-80: #495a61;
+$palette-solid-80: #424242;
 $palette-solid-100: #1c313a;
 
 $palette-white: #fff;
@@ -69,7 +69,7 @@ $palette-box-shadow: rgba(0, 0, 0, 0.04);
 
 $primary: $palette-blue;
 $secondary: $palette-yellow;
-$info: $palette-gray-30;
+$info: $palette-solid-80;
 $error: $palette-salmon;
 $body-color: #233d4c;
 $nav-color: #555;
@@ -88,6 +88,7 @@ $btn-info: $info;
 $btn-info-hover: #a1acaf;
 $badge-blue: #f0f3f5;
 $link-blue: #1975ff;
+$btn-light-grey: #aaa;
 
 $btn-focus-width: 0;
 $btn-border-width: 0;
