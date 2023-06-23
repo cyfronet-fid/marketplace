@@ -28,6 +28,7 @@ Rails.application.routes.draw do
       resource :information, only: [:show, :update]
       resource :summary, only: [:show, :create]
       resource :cancel, only: :destroy
+      resource :logo, only: :show
       resource :question, only: [:new, :create], constraints: lambda { |req| req.format == :js }
       resources :opinions, only: :index
       resources :details, only: :index
@@ -74,6 +75,7 @@ Rails.application.routes.draw do
     scope module: :providers do
       resource :question, only: [:new, :create], constraints: lambda { |req| req.format == :js }
       resources :details, only: :index
+      resource :logo, only: :show
     end
   end
 
