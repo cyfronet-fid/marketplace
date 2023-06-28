@@ -5443,31 +5443,32 @@ abbr[title] {
     background: url('../images/landing_page/landing-top-bg.jpg');
     background-size: cover;
     background-attachment: fixed;
-    padding: 60px 0 80px;
+    padding: 175px 0 175px;
 
     .logo-box {
       margin-bottom: 30px;
     }
 
     h1 {
-      color: $palette-white;
+      color: $palette-black;
       font-weight: 500;
       font-size: 32px;
+      letter-spacing: -0.64px;
       line-height: 39px;
       margin: 0 0 25px;
     }
 
     p {
-      color: $palette-white;
+      color: $palette-solid-50;
       font-weight: 400;
-      font-size: 16px;
-      line-height: 20px;
-      max-width: 520px;
-      margin: 0 auto 48px;
+      font-size: 24px;
+      line-height: 33px;
+      margin: 0 0 30px;
     }
 
     .searchbar {
-      justify-content: center;
+      justify-content: flex-start;
+      margin: 0;
 
       .searchbar__input {
         width: 80%;
@@ -5475,10 +5476,14 @@ abbr[title] {
 
       input {
         border-radius: 8px 0 0 8px;
+        border: 2px solid $palette-gray-30;
+        border-right: none;
       }
 
       button {
         border-radius: 0 8px 8px 0;
+        background: $palette-green;
+        color: $palette-white;
 
         svg {
           font-size: 20px;
@@ -5526,8 +5531,7 @@ abbr[title] {
   }
 
   .research-activity {
-    padding: 100px 0;
-    background: linear-gradient(180deg, #EDF3FA 0%, rgba(237, 243, 250, 0) 100%);
+    padding: 90px 0;
 
     h2 {
       font-weight: 600;
@@ -5604,9 +5608,9 @@ abbr[title] {
   }
 
   .eosc-navy {
-    padding: 75px 0 45px;
-    background: $palette-navy;
-    color: $palette-white;
+    padding: 50px 0 45px;
+    background: $palette-lightgreen;
+    color: $palette-black;
 
     .eosc-logo-navy {
       width: 210px;
@@ -5615,12 +5619,39 @@ abbr[title] {
     }
 
     h4 {
-      font-weight: 400;
+      font-weight: 600;
       font-size: 24px;
       line-height: 29px;
       border: none;
       padding: 0;
       margin: 10px 0 0;
+    }
+
+    ul {
+      margin: 0;
+      padding: 0 0 0 20px;
+
+      li {
+        margin-bottom: 8px;
+        list-style: disc;
+
+        a {
+          color: $palette-black;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+
+    .more-link {
+      color: $palette-black;
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 34px;
+      letter-spacing: -0.36px;
+      text-decoration-line: underline;
     }
 
     .eosc-info {
@@ -5661,13 +5692,33 @@ abbr[title] {
   }
 
   .provider {
-    padding: 65px 0 0;
+    padding: 120px 0;
 
     h3 {
-      font-size: 31px;
+      font-size: 32px;
       line-height: 38px;
       font-weight: 600;
-      margin: 40px 0 25px;
+      margin: 30px 0 25px;
+    }
+
+    p {
+      color: $palette-solid-50;
+      font-weight: 400;
+      font-size: 24px;
+      line-height: 33px;
+      margin: 0 0 30px;
+    }
+
+    input {
+      border: 2px solid $palette-gray-30;
+      padding: 10px 25px 10px 10px;
+      font-size: 1rem;
+      margin-right: -1px;
+      width: 100%;
+      border-radius: 8px;
+      position: relative;
+      z-index: 20;
+      font-weight: 300;
     }
   }
 
@@ -5788,16 +5839,14 @@ abbr[title] {
   }
 
   .facilities {
-    padding: 0 0 75px;
-    background: url('../images/landing_page/facilities.png') bottom right no-repeat;
-    background-size: auto 625px;
-    min-height: 625px;
+    padding: 80px 0;
+    text-align: center;
 
     h3 {
       font-size: 32px;
       line-height: 38px;
       font-weight: 600;
-      margin: 195px 0 25px;
+      margin: 0 auto 30px;
     }
 
     .blue-link {
@@ -5808,6 +5857,29 @@ abbr[title] {
 
       &:hover {
         color: $palette-navy;
+      }
+    }
+
+    .partners-wrapper {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: stretch;
+      align-content: center;
+      gap: 30px;
+
+      .partner-box {
+        width: 205px;
+        height: 100px;
+        background: $palette-gray-10;
+        transition: all 0.5s ease;
+
+        &:hover {
+          -webkit-box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.18);
+          -moz-box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.18);
+          box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.18);
+        }
       }
     }
   }
@@ -5838,10 +5910,13 @@ abbr[title] {
 
     .landing-header {
       padding: 50px 0 50px;
+      background-position: top center;
+      background-size: auto 100%;
 
       h1 {
         font-size: 22px;
         line-height: 27px;
+        text-align: center;
         margin: 0 0 20px;
       }
 
@@ -5849,7 +5924,12 @@ abbr[title] {
         font-size: 14px;
         line-height: 20px;
         max-width: 90%;
+        text-align: center;
         margin: 0 auto 30px;
+      }
+
+      .searchbar {
+        justify-content: center;
       }
 
       .browse {
@@ -5943,10 +6023,24 @@ abbr[title] {
     .provider {
       padding: 45px 15px 60px;
 
+      .img-responsive {
+        max-width: 100%;
+        height: auto;
+      }
+
       h3 {
         font-size: 20px;
         line-height: 25px;
         margin: 25px 0 25px;
+        text-align: center;
+      }
+
+      p {
+        font-size: 14px;
+        line-height: 20px;
+        max-width: 90%;
+        text-align: center;
+        margin: 0 auto 30px;
       }
 
       .communities {
@@ -6005,15 +6099,22 @@ abbr[title] {
     }
 
     .facilities {
-      padding: 0 15px 55px;
-      background: url('../images/landing_page/facilities.png') 30% 100% no-repeat;
-      background-size: auto 100%;
-      min-height: 310px;
+      padding-top: 40px;
 
       h3 {
         font-size: 22px;
         line-height: 30px;
-        margin: 50px 0 25px;
+        margin: 0 0 25px;
+      }
+
+      .partners-wrapper {
+        gap: 20px;
+        justify-content: center;
+        align-content: center;
+
+        .partner-box {
+          width: 45%;
+        }
       }
 
       .blue-link {
