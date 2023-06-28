@@ -75,7 +75,7 @@ module Mp
       if ENV["EOSC_COMMONS_BASE_URL"].present?
         ENV["EOSC_COMMONS_BASE_URL"]
       else
-        "https://s3.cloud.cyfronet.pl/eosc-portal-common/"
+        "https://s3.cloud.cyfronet.pl/eosc-portal-common/pr-header-class-names/"
       end
     config.eosc_commons_env = ENV["EOSC_COMMONS_ENV"].present? ? ENV["EOSC_COMMONS_ENV"] : "production"
 
