@@ -64,7 +64,7 @@ class Api::V1::Ess::ApplicationController < ActionController::API
       serializer = "Ess::#{controller_class(collection)}Serializer".constantize
       Rails
         .cache
-        .fetch("ess_#{collection}", expires_in: 2.hours) do
+        .fetch("ess_#{collection}", expires_in: Mp::Application.config.resource_cache_ttl) do
           instance_variable_get("@#{collection}")&.map { |o| serializer.new(o).as_json }
         end
     end
