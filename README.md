@@ -244,6 +244,7 @@ We are currently using the following ENV variables:
   * `ESS_UPDATE_ENABLED` (Optional) - turn on updating ESS if set to `true` (default `false`)
   * `ESS_UPDATE_URL` (Optional) - URL to which service updates will be sent (default `http://localhost:8983/solr/marketplace/update`)
   * `ESS_UPDATE_TIMEOUT` (Optional) - ESS update HTTP client timeout in seconds (default `1`)
+  * `ESS_RESOURCE_CACHE_TTL` (Optional) - TTL for caching resources for `ess/` API endpoints (default `60` (seconds))
   * **Provider importer**
     * `IMPORTER_AAI_BASE_URL` (Optional) - Base URL used to generate access token from a refresh token (default `ENV["CHECKIN_HOST"]` or "aai.eosc-portal.eu")
     * `IMPORTER_AAI_REFRESH_TOKEN` - The refresh token generated for specific instance of AAI
