@@ -88,6 +88,8 @@ module Mp
     config.user_dashboard_url = ENV.fetch("USER_DASHBOARD_URL",
                                           "https://eosc-user-dashboard.docker-fid.grid.cyf-kr.edu.pl")
 
+    config.resource_cache_ttl = ENV.fetch("ESS_RESOURCE_CACHE_TTL", "60").to_i.seconds
+
     config.mp_stomp_publisher_enabled =
       if ENV["MP_STOMP_PUBLISHER_ENABLED"].present?
         ENV["MP_STOMP_PUBLISHER_ENABLED"]
