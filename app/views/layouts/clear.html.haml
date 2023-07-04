@@ -1,7 +1,6 @@
 !!!
 %html{ lang: "en", class: "#{Rails.env}" }
   = content_for(:custom_scripts) do
-    %script{ src: "https://code.jquery.com/jquery-3.6.0.min.js" }
     %script{ src: "https://eosc-helpdesk.eosc-portal.eu/assets/form/form.js", id: "zammad_form_script" }
   = render "layouts/head"
   .spinner-background
