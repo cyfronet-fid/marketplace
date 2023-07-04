@@ -8,6 +8,9 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ## [3.49.0] 2023-06-27
 
+### Fixed
+- Feedback form (@michal-szostak)
+
 ## [3.48.3] 2023-06-16
 
 ### Added
