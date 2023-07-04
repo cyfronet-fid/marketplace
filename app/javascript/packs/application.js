@@ -15,4 +15,7 @@ if (process.env.CUSTOMIZATION_PATH) {
 
 require.context("../images");
 
+// required for ZammadForm plugin to work.
+global.jQuery = $;
+
 import "app";
