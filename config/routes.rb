@@ -35,8 +35,14 @@ Rails.application.routes.draw do
       resources :guidelines, only: :index
       resource :ordering_configuration, only: :show do
         scope module: :ordering_configuration do
-          resources :offers, only: [:new, :edit, :create, :update, :destroy]
-          resources :bundles, only: [:edit, :update]
+          resources :offers, only: [:new, :edit, :create, :update, :destroy] do
+            resource :publish, controller: "offers/publish", only: :create
+            resource :draft, controller: "offers/draft", only: :create
+          end
+          resources :bundles, only: [:edit, :update] do
+            resource :publish, controller: "bundles/publish", only: :create
+            resource :draft, controller: "bundles/draft", only: :create
+          end
         end
       end
     end
@@ -89,8 +95,14 @@ Rails.application.routes.draw do
     resources :services, controller: "services", constraints: { id: %r{[^/]+} } do
       scope module: :services do
         resource :logo_preview, only: :show
-        resources :offers
-        resources :bundles
+        resources :offers do
+          resource :publish, controller: "offers/publishes", only: :create
+          resource :draft, controller: "offers/drafts", only: :create
+        end
+        resources :bundles do
+          resource :publish, controller: "bundles/publishes", only: :create
+          resource :draft, controller: "bundles/drafts", only: :create
+        end
         resource :publish, only: :create
         resource :draft, only: :create
       end

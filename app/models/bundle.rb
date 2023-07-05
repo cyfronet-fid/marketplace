@@ -9,6 +9,12 @@ class Bundle < ApplicationRecord
 
   STATUSES = { published: "published", draft: "draft", deleted: "deleted" }.freeze
 
+  counter_culture :service,
+                  column_name: proc { |model| model.published? ? "bundles_count" : nil },
+                  column_names: {
+                    ["bundles.status = ?", "published"] => "bundles_count"
+                  }
+
   enum status: STATUSES
 
   belongs_to :service, optional: false
@@ -16,6 +22,7 @@ class Bundle < ApplicationRecord
   belongs_to :resource_organisation, class_name: "Provider", optional: false
   has_many :bundle_offers
   has_many :offers, through: :bundle_offers, dependent: :destroy
+  has_many :project_items
 
   has_many :bundle_target_users
   has_many :target_users, through: :bundle_target_users
@@ -51,24 +58,18 @@ class Bundle < ApplicationRecord
   validates :research_steps, presence: true, length: { minimum: 1, message: "are required. Please add at least one" }
   validates :order_type, presence: true
   validates :main_offer, presence: true
-  validate :main_offer_not_bundled
   validates :offers, presence: true, length: { minimum: 1, message: "are required. Please add at least one" }
+  validate :offers_correct
   validates :related_training_url, mp_url: true, if: :related_training?
   validates :helpdesk_url, mp_url: true, presence: true
 
   after_commit :propagate_to_ess
   def set_iid
-    self.iid = bundles_count + 1 if iid.blank?
+    self.iid = (service.bundles.maximum(:iid) || 0) + 1 if iid.blank?
   end
 
   def to_param
     iid.to_s
-  end
-
-  def main_offer_not_bundled
-    unless main_offer && (main_offer.bundles.size.zero? || main_offer.bundles.first == self)
-      errors.add(:main_offer, "Currently you cannot connect" + " the same main offer to bundle twice.")
-    end
   end
 
   def all_offers
@@ -76,10 +77,26 @@ class Bundle < ApplicationRecord
   end
 
   def bundles_count
-    (service && service.bundles.maximum(:iid).to_i) || 0
+    service&.bundles&.size || 0
   end
 
   def propagate_to_ess
     status == "published" && !destroyed? ? Bundle::Ess::Add.call(self) : Bundle::Ess::Delete.call(id)
+  end
+
+  def internal
+    true
+  end
+
+  def active?
+    all_offers.select { |o| (o.limited && o.available_count.zero?) }.empty?
+  end
+
+  private
+
+  def offers_correct
+    errors.add(:offers, "cannot bundle self") if offers.include?(main_offer)
+    errors.add(:offers, "all bundled offers must be published") unless offers.all?(&:published?)
+    errors.add(:offers, "all bundled offer's services must be public") unless offers.map(&:service).all?(&:public?)
   end
 end

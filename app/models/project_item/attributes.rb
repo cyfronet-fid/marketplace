@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class ProjectItem::Attributes
-  attr_reader :offer, :attributes
+  attr_reader :offer, :bundle, :attributes
 
   def initialize(offer:, parameters: nil)
     @offer = offer
-    parameters = offer.parameters.map(&:dump) if parameters.blank?
+    parameters = @offer.parameters.map(&:dump) if parameters.blank?
     @attributes = attributes_from_params(parameters)
   end
 

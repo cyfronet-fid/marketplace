@@ -4,9 +4,11 @@ class Backoffice::BundlePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       if user.service_portfolio_manager?
-        scope
+        scope.where.not(status: :deleted)
       elsif user.service_owner?
-        scope.joins(:service_user_relationships).where(service_user_relationships: { user: user })
+        scope
+          .joins(service: :service_user_relationships)
+          .where(status: %i[published draft], service: { service_user_relationships: { user: user } })
       else
         Service.none
       end
@@ -31,6 +33,18 @@ class Backoffice::BundlePolicy < ApplicationPolicy
 
   def destroy?
     managed? && orderless? && !service_deleted?
+  end
+
+  def delete?
+    managed? && record.persisted? && !service_deleted?
+  end
+
+  def draft?
+    managed? && record.persisted? && record.published?
+  end
+
+  def publish?
+    managed? && record.status == "draft"
   end
 
   def permitted_attributes

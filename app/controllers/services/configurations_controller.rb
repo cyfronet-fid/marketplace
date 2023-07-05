@@ -9,6 +9,7 @@ class Services::ConfigurationsController < Services::ApplicationController
     if prev_visible_step.valid?
       @step = step(saved_state)
       @offer = @step.offer
+      @bundle = @step.bundle
 
       redirect_to url_for([@service, next_step_key]) unless @step.visible?
     else
@@ -18,8 +19,9 @@ class Services::ConfigurationsController < Services::ApplicationController
 
   def update
     @step = step(configuration_params)
+    @offer = @step.offer || @step.bundle.main_offer
+    @bundle = @step.bundle
     @project_item = CustomizableProjectItem.new(configuration_params)
-    @offer = @step.offer
 
     @step.voucher_id = "" if @step.request_voucher
 

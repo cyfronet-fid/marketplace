@@ -183,22 +183,24 @@ RSpec.feature "Service ordering", end_user_frontend: true do
           order_type: service2.order_type,
           order_url: service2.order_url
         )
-      bundle =
+      bundle_offer =
         create(
           :offer,
           service: service,
           internal: true,
+          bundle_exclusive: true,
           order_type: service.order_type,
-          order_url: service.order_url,
-          bundled_connected_offers: [bundled]
+          order_url: service.order_url
         )
-      create(:bundle, service: service, order_type: service.order_type, main_offer: bundle, offers: [bundled])
+      _bundle =
+        create(:bundle, service: service, order_type: service.order_type, main_offer: bundle_offer, offers: [bundled])
 
       _default_project = user.projects.find_by(name: "Services")
 
       visit service_path(service)
 
       click_on "Access the service"
+
       click_on "Next", match: :first
 
       select "Services", from: "customizable_project_item_project_id"
@@ -208,6 +210,7 @@ RSpec.feature "Service ordering", end_user_frontend: true do
       visit service_path(service)
 
       click_on "Access the service"
+
       click_on "Next", match: :first
 
       select "Services", from: "customizable_project_item_project_id"
@@ -219,21 +222,19 @@ RSpec.feature "Service ordering", end_user_frontend: true do
       service = create(:service)
       service2 = create(:service)
       bundled = create(:offer, service: service2, order_type: service2.order_type, order_url: service2.order_url)
+      bundle_offer = create(:offer, service: service, order_type: service.order_type, order_url: service.order_url)
       bundle =
-        create(
-          :offer,
-          service: service,
-          order_type: service.order_type,
-          order_url: service.order_url,
-          bundled_connected_offers: [bundled]
-        )
-      create(:bundle, service: service, order_type: service.order_type, main_offer: bundle, offers: [bundled])
+        create(:bundle, service: service, order_type: service.order_type, main_offer: bundle_offer, offers: [bundled])
 
       _default_project = user.projects.find_by(name: "Services")
 
       visit service_path(service)
 
       click_on "Access the service"
+
+      choose "customizable_project_item_bundle_id_#{bundle.iid}"
+
+      click_on "Next", match: :first
       click_on "Next", match: :first
 
       select "Services", from: "customizable_project_item_project_id"
@@ -710,8 +711,9 @@ RSpec.feature "Service ordering", end_user_frontend: true do
       scenario "I can order a service bundle" do
         child1 = create(:offer_with_parameters)
         child2 = create(:offer_with_parameters)
-        parent = create(:offer, service: service, bundled_connected_offers: [child1, child2])
-        create(:bundle, service: service, main_offer: parent, offers: parent.bundled_connected_offers)
+        child3 = create(:offer_with_parameters)
+        parent = create(:offer, service: service)
+        bundle = create(:bundle, service: service, main_offer: parent, offers: [child1, child2])
 
         visit service_path(service)
 
@@ -761,7 +763,8 @@ RSpec.feature "Service ordering", end_user_frontend: true do
         expect(page).to have_content(child2.service.name)
 
         # The bundle reference should stay after unbundling offers
-        parent.update(bundled_connected_offers: [])
+
+        bundle.update(offers: [child3])
 
         visit project_services_path(pi1.project)
 

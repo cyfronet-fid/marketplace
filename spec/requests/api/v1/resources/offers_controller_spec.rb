@@ -29,14 +29,16 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         let(:draft_offer) { build(:offer, status: "draft") }
         let(:bundled_offer1) { build(:offer) }
         let(:bundled_offer2) { build(:offer) }
-        let(:bundle_offer) { build(:offer, bundled_connected_offers: [bundled_offer1, bundled_offer2]) }
+        let(:bundle_offer) { build(:offer) }
+        let(:bundle) { build(:bundle, main_offer: bundle_offer, offers: [bundled_offer1, bundled_offer2]) }
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
         let!(:service) do
           create(
             :service,
             resource_organisation: create(:provider, data_administrators: [data_administrator]),
-            offers: [published_offer1, published_offer2, draft_offer, bundle_offer]
+            offers: [published_offer1, published_offer2, draft_offer, bundle_offer],
+            bundles: [bundle]
           )
         end
         let(:resource_id) { service.slug }
@@ -70,7 +72,9 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
           expect(data["offers"][2]["internal"]).to eq(true)
           expect(data["offers"][2]["primary_oms_id"]).to eq(OMS.find_by(default: true).id)
           expect(data["offers"][2]["parameters"].length).to eq(0)
-          expect(data["offers"][2]["bundled_offers"]).to eq([bundled_offer1.slug_iid, bundled_offer2.slug_iid])
+          expect(data["offers"][2]["bundled_offers"]).to eq(
+            [{ "#{bundle.id}" => [bundled_offer1.slug_iid, bundled_offer2.slug_iid] }]
+          )
         end
       end
 
@@ -183,38 +187,6 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
           expect(service.offers.first.internal).to eq(false)
           expect(service.offers.first.primary_oms).to be_nil
           expect(service.offers.first.oms_params).to be_nil
-        end
-      end
-
-      response 201, "bundle offer created" do
-        schema "$ref" => "offer/offer_read.json"
-
-        let(:data_admin_user) { create(:user) }
-        let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) do
-          create(:service, resource_organisation: create(:provider, data_administrators: [data_administrator]))
-        end
-        let!(:bundled_offer1) { create(:offer) }
-        let!(:bundled_offer2) { create(:offer) }
-        let(:offer_payload) do
-          {
-            name: "bundle offer",
-            description: "bundle description",
-            order_type: "order_required",
-            internal: true,
-            bundled_connected_offers: [bundled_offer1.slug_iid, bundled_offer2.slug_iid]
-          }
-        end
-        let(:resource_id) { service.slug }
-        let(:"X-User-Token") { data_admin_user.authentication_token }
-
-        run_test! do |response|
-          data = JSON.parse(response.body)
-          service.reload
-
-          expect(data).to eq(JSON.parse(Api::V1::OfferSerializer.new(service.offers.first).to_json))
-          expect(service.offers.length).to eq(1)
-          expect(service.offers.first.bundled_connected_offers).to eq([bundled_offer1, bundled_offer2])
         end
       end
 
@@ -579,64 +551,6 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
         let(:offer_payload) do
           { name: "New offer", description: "sample description", order_type: "order_required", status: "draft" }
-        end
-        let(:resource_id) { service.slug }
-        let(:"X-User-Token") { data_admin_user.authentication_token }
-
-        run_test! do |response|
-          data = JSON.parse(response.body)
-          expect(data["error"]).to eq("The property '#/' of type object did not match all of the required schemas")
-        end
-      end
-
-      response 400, "fails model validation on non-existent bundled offer", document: false do
-        schema "$ref" => "error.json"
-
-        let(:data_admin_user) { create(:user) }
-        let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) do
-          create(
-            :service,
-            order_type: "open_access",
-            resource_organisation: create(:provider, data_administrators: [data_administrator])
-          )
-        end
-        let(:offer_payload) do
-          {
-            name: "bundle offer",
-            description: "bundle description",
-            order_type: "open_access",
-            bundled_connected_offers: ["doesnt_exist/0"]
-          }
-        end
-        let(:resource_id) { service.slug }
-        let(:"X-User-Token") { data_admin_user.authentication_token }
-
-        run_test! do |response|
-          data = JSON.parse(response.body)
-          expect(data["error"]).to eq("A bundled offer's resource not found")
-        end
-      end
-
-      response 400, "fails model validation on incorrect bundled offer id", document: false do
-        schema "$ref" => "error.json"
-
-        let(:data_admin_user) { create(:user) }
-        let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) do
-          create(
-            :service,
-            order_type: "open_access",
-            resource_organisation: create(:provider, data_administrators: [data_administrator])
-          )
-        end
-        let(:offer_payload) do
-          {
-            name: "bundle offer",
-            description: "bundle description",
-            order_type: "open_access",
-            bundled_offers: ["not-a-valid-id"]
-          }
         end
         let(:resource_id) { service.slug }
         let(:"X-User-Token") { data_admin_user.authentication_token }
@@ -1019,63 +933,6 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
       end
 
-      response 200, "adds bundled offers", document: false do
-        schema "$ref" => "offer/offer_read.json"
-
-        let(:bundled_offer) { build(:offer) }
-        let(:offer_to_bundle) { create(:offer) }
-        let(:offer) { build(:offer, bundled_connected_offers: [bundled_offer]) }
-        let(:data_admin_user) { create(:user) }
-        let!(:data_administrator) { build(:data_administrator, email: data_admin_user.email) }
-        let!(:service) do
-          create(
-            :service,
-            resource_organisation: create(:provider, data_administrators: [data_administrator]),
-            offers: [offer]
-          )
-        end
-        let(:offer_payload) { { bundled_connected_offers: [bundled_offer, offer_to_bundle].map(&:slug_iid) } }
-        let(:resource_id) { service.slug }
-        let(:id) { offer.iid }
-        let(:"X-User-Token") { data_admin_user.authentication_token }
-
-        run_test! do |response|
-          data = JSON.parse(response.body)
-          service.reload
-
-          expect(data).to eq(JSON.parse(Api::V1::OfferSerializer.new(service.offers.first).to_json))
-          expect(service.offers.first.bundled_connected_offers).to eq([bundled_offer, offer_to_bundle])
-        end
-      end
-
-      response 200, "removes bundled offers", document: false do
-        schema "$ref" => "offer/offer_read.json"
-
-        let(:bundled_offer) { build(:offer) }
-        let(:offer) { build(:offer, bundled_connected_offers: [bundled_offer]) }
-        let(:data_admin_user) { create(:user) }
-        let!(:data_administrator) { build(:data_administrator, email: data_admin_user.email) }
-        let!(:service) do
-          create(
-            :service,
-            resource_organisation: create(:provider, data_administrators: [data_administrator]),
-            offers: [offer]
-          )
-        end
-        let(:offer_payload) { { bundled_connected_offers: [] } }
-        let(:resource_id) { service.slug }
-        let(:id) { offer.iid }
-        let(:"X-User-Token") { data_admin_user.authentication_token }
-
-        run_test! do |response|
-          data = JSON.parse(response.body)
-          service.reload
-
-          expect(data).to eq(JSON.parse(Api::V1::OfferSerializer.new(service.offers.first).to_json))
-          expect(service.offers.first.bundled_connected_offers.size).to eq(0)
-        end
-      end
-
       response 200, "doesn't update primary_oms and oms_params if not internal" do
         schema "$ref" => "offer/offer_read.json"
 
@@ -1216,30 +1073,6 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
           expect(data["error"]).to eq("The property '#/' of type object did not match all of the required schemas")
 
           expect(service.offers.first.status).to eq("published")
-        end
-      end
-
-      response 400, "fails model validation on non-existent bundled offer", document: false do
-        schema "$ref" => "error.json"
-
-        let(:offer) { build(:offer) }
-        let(:data_admin_user) { create(:user) }
-        let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
-        let!(:service) do
-          create(
-            :service,
-            resource_organisation: create(:provider, data_administrators: [data_administrator]),
-            offers: [offer]
-          )
-        end
-        let(:offer_payload) { { bundled_connected_offers: ["doesnt-exist/0"] } }
-        let(:resource_id) { service.slug }
-        let(:id) { offer.iid }
-        let(:"X-User-Token") { data_admin_user.authentication_token }
-
-        run_test! do |response|
-          data = JSON.parse(response.body)
-          expect(data["error"]).to eq("A bundled offer's resource not found")
         end
       end
 

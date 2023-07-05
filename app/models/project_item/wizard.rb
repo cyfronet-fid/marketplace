@@ -36,7 +36,7 @@ class ProjectItem::Wizard
 
     delegate(*::ProjectItem.attribute_names.map { |a| [a, "#{a}="] }.flatten, to: :project_item)
 
-    delegate :offer, :project, :parent, to: :project_item
+    delegate :offer, :bundle, :project, :parent, to: :project_item
 
     def initialize(service, project_item_attributes)
       @service = service
@@ -49,14 +49,15 @@ class ProjectItem::Wizard
   end
 
   class OffersStep < Base
-    validates :offer, presence: true
+    validates :offer, presence: true, unless: :bundle
+    validates :bundle, presence: true, unless: :offer
 
     def visible?
-      service.offers_count > 1
+      service.offers.inclusive.size + service.bundles_count > 1
     end
 
     def error
-      "Please select one of the offer"
+      "Please select one of the offer or bundle"
     end
   end
 
@@ -73,7 +74,8 @@ class ProjectItem::Wizard
     delegate :created?, :bundled_parameters, to: :project_item
 
     def visible?
-      offer.nil? || offer.bundle_parameters? || project_item.property_values.count.positive? || voucherable?
+      offer.nil? || (bundle.present? && bundle&.all_offers&.map(&:parameters)&.any?(&:present?)) ||
+        project_item.property_values.count.positive? || voucherable?
     end
 
     def error

@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 class ProjectItem::ReadonlyPart
-  attr_reader :attributes, :service, :offer
+  attr_reader :attributes, :service, :offer, :bundle
 
   def initialize(parameters: {})
     @service = parameters["service"]
     @offer = parameters["offer"]
+    @bundle = parameters["bundle"]
 
     @attributes = attributes_from_params(parameters["attributes"])
   end

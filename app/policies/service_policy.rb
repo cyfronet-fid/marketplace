@@ -8,7 +8,7 @@ class ServicePolicy < ApplicationPolicy
   end
 
   def order?
-    record.offers? && record.offers.any?(&:published?)
+    (record.offers.inclusive.size + record.bundles.published.size).positive?
   end
 
   def offers_show?
@@ -30,15 +30,14 @@ class ServicePolicy < ApplicationPolicy
   private
 
   def enough_to_show?
-    record.offers? && record.offers.published.size > 1
+    record.offers? && record.offers.inclusive.size + record&.bundles&.published&.size > 1
   end
 
   def any_published_bundled_offers?
-    record.offers? &&
-      record.offers.any? { |s| (s.bundled_offers_count.positive? || s.bundles.present?) && s.published? }
+    record.bundles.published.size.positive? || record.offers.select(&:bundled?).size.positive?
   end
 
   def any_published_offers?
-    record.offers? && record.offers.any? { |s| s.bundled_offers_count.zero? && s.published? }
+    record.offers? && record.offers.any? { |o| !o.bundle_exclusive && o.published? }
   end
 end

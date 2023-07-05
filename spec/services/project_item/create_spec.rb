@@ -80,11 +80,12 @@ RSpec.describe ProjectItem::Create, backend: true do
   end
 
   context "#bundle" do
-    let(:offer) { create(:offer, service: service, bundled_connected_offers: [child1, child2]) }
+    let(:offer) { create(:offer, service: service) }
     let(:child1) { build(:offer) }
     let(:child2) { build(:offer) }
+    let(:bundle) { create(:bundle, service: service, offers: [child1, child2]) }
 
-    let(:project_item_template) { build(:project_item, project: project, offer: offer) }
+    let(:project_item_template) { build(:project_item, project: project, offer: offer, bundle: bundle) }
 
     it "creates bundled project_items" do
       expect { described_class.new(project_item_template, "test-msg", bundle_params: {}).call }.to change {

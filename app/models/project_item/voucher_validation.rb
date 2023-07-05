@@ -10,7 +10,7 @@ module ProjectItem::VoucherValidation
   end
 
   def voucherable?
-    offer&.voucherable
+    offer&.voucherable || bundle&.all_offers&.any?(&:voucherable)
   end
 
   def voucher_id_required?

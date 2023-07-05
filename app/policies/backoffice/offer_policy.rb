@@ -4,11 +4,13 @@ class Backoffice::OfferPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       if user.service_portfolio_manager?
-        scope
+        scope.where.not(status: :deleted)
       elsif user.service_owner?
-        scope.joins(:service_user_relationships).where(service_user_relationships: { user: user })
+        scope
+          .joins(service: :service_user_relationships)
+          .where(status: %i[published draft], service: { service_user_relationships: { user: user } })
       else
-        Service.none
+        Offer.none
       end
     end
   end
@@ -22,7 +24,7 @@ class Backoffice::OfferPolicy < ApplicationPolicy
   end
 
   def edit?
-    managed? && !service_deleted?
+    managed? && !record.deleted? && !service_deleted?
   end
 
   def update?
@@ -30,7 +32,15 @@ class Backoffice::OfferPolicy < ApplicationPolicy
   end
 
   def destroy?
-    managed? && orderless? && !service_deleted?
+    managed? && record.persisted? && orderless? && !service_deleted? && other_offers_with_service_order_type?
+  end
+
+  def publish?
+    managed? && record.persisted? && record.draft?
+  end
+
+  def draft?
+    managed? && record.persisted? && record.published? && other_offers_with_service_order_type?
   end
 
   def permitted_attributes
@@ -38,6 +48,7 @@ class Backoffice::OfferPolicy < ApplicationPolicy
       :id,
       :name,
       :description,
+      :bundle_exclusive,
       :order_type,
       :order_url,
       :internal,
@@ -67,7 +78,7 @@ class Backoffice::OfferPolicy < ApplicationPolicy
   private
 
   def managed?
-    service_portfolio_manager? || record.service.owned_by?(user)
+    service_portfolio_manager? || record.service.administered_by?(user) || record.service.owned_by?(user)
   end
 
   def service_portfolio_manager?
@@ -80,5 +91,11 @@ class Backoffice::OfferPolicy < ApplicationPolicy
 
   def service_deleted?
     record.service.deleted?
+  end
+
+  def other_offers_with_service_order_type?
+    service = record.service
+    offers_with_service_order_type = service.offers.published.select { |o| o.order_type == service.order_type }
+    (offers_with_service_order_type - [record]).present?
   end
 end

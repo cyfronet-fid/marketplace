@@ -29,12 +29,13 @@ class Importers::Logo < ApplicationService
         @object.logo.attach(io: logo, filename: filename + extension, content_type: logo_content_type)
       end
     rescue OpenURI::HTTPError, Errno::EHOSTUNREACH, LogoNotAvailableError, SocketError => e
-      puts "ERROR - there was a problem processing image for #{@object.name} #{@image_url}: #{e}"
+      Rails.logger.error "ERROR - there was a problem processing image for #{@object.name} #{@image_url}: #{e}"
     rescue StandardError => e
-      puts "ERROR - there was a unexpected problem processing image for #{@object.name} #{@image_url}: #{e}"
+      Rails
+        .logger.error "ERROR - there was a unexpected problem processing image for #{@object.name} #{@image_url}: #{e}"
     end
   rescue Timeout::Error => e
-    puts "ERROR - there was a problem with image loading from #{@image_url}: #{e}"
+    Rails.logger.error "ERROR - there was a problem with image loading from #{@image_url}: #{e}"
   end
 
   private

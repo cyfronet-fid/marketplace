@@ -17,6 +17,20 @@ class Offer < ApplicationRecord
     status == STATUSES[:published] && offers_count > 1
   end
 
+  scope :bundle_exclusive, -> { where(bundle_exclusive: true, status: :published) }
+  scope :inclusive,
+        -> {
+          joins(:service).where(
+            bundle_exclusive: false,
+            status: :published,
+            services: {
+              status: %i[published unverified]
+            }
+          )
+        }
+  scope :accessible, -> { joins(:service).where(status: :published, services: { status: %i[published unverified] }) }
+  scope :manageable, -> { where(status: %i[published draft]) }
+
   counter_culture :service,
                   column_name: proc { |model| model.published? ? "offers_count" : nil },
                   column_names: {
@@ -33,34 +47,15 @@ class Offer < ApplicationRecord
   before_validation :set_oms_details
   before_validation :sanitize_oms_params
 
-  has_many :target_offer_links,
-           class_name: "OfferLink",
-           foreign_key: "source_id",
-           inverse_of: "source",
-           dependent: :destroy
-
-  has_many :source_offer_links,
-           class_name: "OfferLink",
-           foreign_key: "target_id",
-           inverse_of: "target",
-           dependent: :destroy
-
-  has_many :bundled_connected_offers,
-           through: :target_offer_links,
-           source: :target,
-           dependent: :destroy,
-           after_add: :bundled_offer_added
-  has_many :bundle_connected_offers, through: :source_offer_links, source: :source, dependent: :destroy
   has_many :bundle_offers
-  has_many :bundles, through: :bundle_offers, source: :bundle, dependent: :destroy
-  has_many :main_bundles, class_name: "Bundle", foreign_key: "main_offer_id"
+  has_many :bundles, through: :bundle_offers, dependent: :destroy
+  has_many :main_bundles, class_name: "Bundle", foreign_key: "main_offer_id", dependent: :restrict_with_error
 
   validate :set_iid, on: :create
   validates :service, presence: true
   validates :iid, presence: true, numericality: true
   validates :status, presence: true
   validates :order_url, mp_url: true, if: :order_url?
-  validate :bundled_offers_correct, if: -> { bundled_connected_offers.present? }
 
   validate :primary_oms_exists?, if: -> { primary_oms_id.present? }
   validate :proper_oms?, if: -> { primary_oms.present? }
@@ -70,12 +65,13 @@ class Offer < ApplicationRecord
            if: -> {
              service&.order_type.present? &&
                (
-                 (new_record? && service.offers.published.size.zero?) ||
-                   (persisted? && service.offers.published.size == 1)
+                 (new_record? && service.offers.published.empty?) ||
+                   (persisted? && service.offers.published.select { |o| o.order_type == service&.order_type }.empty?)
                )
            }
 
   after_commit :propagate_to_ess
+  before_destroy :check_main_bundles
 
   def current_oms
     primary_oms || OMS.find_by(default: true)
@@ -90,15 +86,11 @@ class Offer < ApplicationRecord
   end
 
   def bundle?
-    bundled_connected_offers.size.positive?
+    main_bundles.published.size.positive?
   end
 
   def bundled?
-    bundle_connected_offers.size.positive?
-  end
-
-  def bundle_parameters?
-    bundle? && (parameters.present? || bundled_connected_offers.map(&:parameters).any?(&:present?))
+    bundles.published.size.positive?
   end
 
   def slug_iid
@@ -112,36 +104,10 @@ class Offer < ApplicationRecord
     Offer.find_by!(service: Service.find_by!(slug: split[0]), iid: split[1].to_i)
   end
 
-  attr_reader :added_bundled_offers
-
-  def reset_added_bundled_offers!
-    @added_bundled_offers = []
-  end
-
   private
 
-  def bundled_offer_added(new_bundled_offer)
-    @added_bundled_offers ||= []
-    @added_bundled_offers.push(new_bundled_offer)
-  end
-
   def set_iid
-    self.iid = offers_count + 1 if iid.blank?
-  end
-
-  def bundled_offers_correct
-    if internal?
-      errors.add(:bundled_connected_offers, "cannot bundle self") if bundled_connected_offers.include?(self)
-      errors.add(:bundled_connected_offers, "cannot bundle bundle offers") if bundled_connected_offers.any?(&:bundle?)
-      unless bundled_connected_offers.all?(&:published?)
-        errors.add(:bundled_connected_offers, "all bundled offers must be published")
-      end
-      unless bundled_connected_offers.map(&:service).all?(&:public?)
-        errors.add(:bundled_connected_offers, "all bundled offers' services must be public")
-      end
-    else
-      errors.add(:bundled_connected_offers, "only internal offer can have bundled offers")
-    end
+    self.iid = (service&.offers&.maximum(:iid) || 0) + 1 if iid.blank?
   end
 
   def duplicates?(list)
@@ -149,7 +115,7 @@ class Offer < ApplicationRecord
   end
 
   def offers_count
-    (service && service.offers.maximum(:iid).to_i) || 0
+    service&.offers&.size || 0
   end
 
   def oms_params_match?
@@ -168,6 +134,10 @@ class Offer < ApplicationRecord
     unless order_type == service.order_type
       errors.add(:order_type, "must be the same as in the service: #{service.order_type}")
     end
+  end
+
+  def check_main_bundles
+    errors.add(:base, "Offer is connected to bundle as main offer.") unless main_bundles.empty?
   end
 
   def check_oms_params

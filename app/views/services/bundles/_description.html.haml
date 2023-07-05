@@ -1,4 +1,8 @@
 .card-body
+  %span.text-sm-right.fa-pull-right.badge-right
+    %i{ class: "ordertype #{order_type(bundle)}" }
+    = t("offers.type.#{order_type(bundle)}")
+  = yield_content!(:status) if content_for?(:status)
   .bundle-goals
     - bundle.bundle_goals.each do |goal|
       %span.goal= goal.name

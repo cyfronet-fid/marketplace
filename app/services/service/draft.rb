@@ -18,14 +18,10 @@ class Service::Draft < ApplicationService
   def unbundle_and_notify!
     @service
       .offers
-      .filter(&:bundled?)
-      .each do |bundled_offer|
-        bundled_offer.bundle_connected_offers.each do |bundle_offer|
-          Offer::Update.call(
-            bundle_offer,
-            { bundled_connected_offers: bundle_offer.bundled_connected_offers.to_a.reject { |o| o == bundled_offer } }
-          )
-          Offer::Mailer::Unbundled.call(bundle_offer, bundled_offer)
+      .map { |o| [o, o.bundles] }
+      .each do |offer, bundles|
+        bundles.each do |bundle|
+          Bundle::Update.call(bundle, { offers: bundle.offers.to_a.reject { |o| o == offer } }, external_update: true)
         end
       end
   end

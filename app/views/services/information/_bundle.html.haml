@@ -12,11 +12,11 @@
 
   .small-links
     = render "services/offers/bundle_links",
-           contact_email: offer.main_bundles.first.contact_email || "",
-           related_training: offer.main_bundles.first.related_training_url || "",
-           helpdesk_url: offer.main_bundles.first.helpdesk_url || ""
+           contact_email: bundle.contact_email || "",
+           related_training: bundle.related_training_url || "",
+           helpdesk_url: bundle.helpdesk_url || ""
 .col-md-7
   .bundle.bundle-special
     .card
       .card-body
-        = render "services/bundle", bundled_offers:  offer.main_bundles.first.all_offers, parent: offer
+        = render "services/bundle", bundled_offers:  bundle.all_offers, parent: bundle.main_offer

@@ -17,14 +17,10 @@ class Service::Publish < ApplicationService
   private
 
   def notify_bundled_offers!
-    @service
-      .offers
-      .published
-      .filter(&:bundle?)
-      .each do |published_bundle|
-        published_bundle.bundled_connected_offers.each do |bundled_offer|
-          Offer::Mailer::Bundled.call(bundled_offer, published_bundle)
-        end
+    @service.bundles.published.each do |published_bundle|
+      published_bundle.offers.each do |bundled_offer|
+        Offer::Mailer::Bundled.call(bundled_offer, published_bundle.main_offer)
       end
+    end
   end
 end

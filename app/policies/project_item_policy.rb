@@ -26,6 +26,7 @@ class ProjectItemPolicy < ApplicationPolicy
     [
       :service_id,
       :project_id,
+      :bundle_id,
       :customer_typology,
       :access_reason,
       :additional_information,
@@ -38,6 +39,7 @@ class ProjectItemPolicy < ApplicationPolicy
       :company_website_url,
       :voucher_id,
       :request_voucher,
+      :additional_comment,
       property_values: attributes
     ]
   end

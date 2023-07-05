@@ -7,7 +7,12 @@ class Services::OffersController < Services::ApplicationController
     init_step_data
 
     unless step.visible?
-      params[:customizable_project_item] = { offer_id: (@offers + @bundles).first.iid }
+      if @offers.inclusive.size.positive?
+        params[:customizable_project_item] = { offer_id: @offers.inclusive.first.iid }
+      elsif @bundles.published.size.positive?
+        params[:customizable_project_item] = { bundle_id: @bundles.published.first.iid }
+      end
+
       update
     end
   end
@@ -32,18 +37,23 @@ class Services::OffersController < Services::ApplicationController
   end
 
   def step_params
-    { offer_id: offer&.id, project_id: session[:selected_project] }
+    { offer_id: offer&.id, bundle_id: bundle&.id, project_id: session[:selected_project] }
   end
 
   def offer
     form_params = params.fetch(:customizable_project_item, session[session_key] || {}).permit(:offer_id)
-    @service.offers.find_by(iid: form_params[:offer_id])
+    @service.offers.find_by(iid: form_params[:offer_id] || bundle&.main_offer&.iid)
+  end
+
+  def bundle
+    form_params = params.fetch(:customizable_project_item, session[session_key] || {}).permit(:bundle_id)
+    @service.bundles.find_by(iid: form_params[:bundle_id])
   end
 
   def init_step_data
-    @offers = policy_scope(@service.offers.published).order(:iid).select { |o| o.bundle? == false }
-    @bundles = policy_scope(@service.offers.published).order(:iid).select(&:bundle?)
-    @bundled = policy_scope(@service.offers.published).order(:iid).select(&:bundled?)
+    @offers = policy_scope(@service.offers.inclusive).order(:iid)
+    @bundles = policy_scope(@service.bundles.published).order(:iid)
+    @bundled = policy_scope(@service.offers.published).order(:iid).select(&:bundled?).map(&:bundles)&.flatten
     @step = step(session[session_key])
   end
 end
