@@ -18,7 +18,7 @@ FactoryBot.define do
     sequence(:resource_organisation) { |_n| service.resource_organisation }
     sequence(:research_steps) { |_n| [create(:research_step)] }
     sequence(:offers) { |_n| [create(:offer)] }
-    sequence(:scientific_domains) { |_n| [create(:scientific_domain)] }
+    sequence(:scientific_domains) { |_n| [create(:child_scientific_domain)] }
     sequence(:helpdesk_url) { |n| "https://example#{n}.com" }
   end
 end

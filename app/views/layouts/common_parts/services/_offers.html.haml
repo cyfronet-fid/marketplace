@@ -19,9 +19,9 @@
 %h2.mb-4.mt-5.font-weight-normal
   = _("Parameters and offers")
 .row.parameters
-  - if offers.published.present?
-    = render partial: "layouts/common_parts/services/default_parameters", locals: { offer: offers.published.first }
-  - if offers.published.size > 1
+  - if offers.present?
+    = render partial: "layouts/common_parts/services/default_parameters", locals: { offer: offers.manageable.first }
+  - if offers.size > 1
     = render partial: "layouts/common_parts/services/offer", collection: offers[1..], as: :offer
   = render "layouts/common_parts/services/new_offer", service: service
 .row.parameters

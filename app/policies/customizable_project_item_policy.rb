@@ -34,6 +34,7 @@ class CustomizableProjectItemPolicy < ApplicationPolicy
       :voucher_id,
       :request_voucher,
       :parent_id,
+      :additional_comment,
       property_values: permitted_offer_attributes,
       bundled_property_values: permitted_bundled_offers_attributes
     ]
@@ -46,7 +47,7 @@ class CustomizableProjectItemPolicy < ApplicationPolicy
   end
 
   def permitted_bundled_offers_attributes
-    record.offer.bundled_connected_offers.to_h { |o| ["o#{o.id}", to_permitted_attributes(o.attributes)] }
+    record&.bundle&.offers&.to_h { |o| ["o#{o.id}", to_permitted_attributes(o.attributes)] }
   end
 
   def to_permitted_attributes(attributes)

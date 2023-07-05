@@ -3,14 +3,12 @@
     = render "services/offers/description", offer: offer
     = render "services/offers/parameters",
       technical_parameters: offer.attributes.map(&:to_json)
-    - if offer.bundle?
-      = link_to _("Read technical parameters"), "#", class: "btn-link"
-      = render "services/bundle", bundled_offers: offer.main_bundles.first.all_offers, parent: offer
 
     .card-button.text-center
       %label
-        = f.radio_button :offer_id, offer.iid, checked: project_item.offer == offer
-        %span.btn.btn-light.border.border-secondary.font-weight-bold
+        = f.radio_button :offer_id, offer.iid, checked: project_item.offer == offer && project_item.bundle.blank?,
+          "data-order-target": "checkbox"
+        %span.btn.btn-light.border.border-secondary.font-weight-bold{ "data-action": "click->order#uncheck" }
           .unchecked
             = _("Select an offer")
           .checked

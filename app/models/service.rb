@@ -282,6 +282,10 @@ class Service < ApplicationRecord
     offers_count.positive?
   end
 
+  def bundles?
+    bundles_count.positive?
+  end
+
   def languages
     language_availability.map { |l| I18nData.languages[l.upcase] || l }
   end

@@ -1,9 +1,7 @@
--# TODO: change to bundle model, not offer in controller of parent view
-- bundle = offer.main_bundles.first
 .col-12.d-flex.align-items-stretch.bundle.bundle-order
   .card.m-0.mb-5
-    = render "services/offers/bundle_description", offer: offer, bundle: bundle
-    = render "services/bundle", bundled_offers: bundle.all_offers, parent: offer
+    = render "services/offers/bundle_description", bundle: bundle
+    = render "services/bundle", bundled_offers: bundle.all_offers, parent: bundle.main_offer
     = render "services/offers/bundle_links",
        contact_email: bundle.contact_email || "",
        related_training: bundle.related_training_url || "",
@@ -11,8 +9,9 @@
 
     .card-button.text-center
       %label
-        = f.radio_button :offer_id, offer.iid, checked: project_item.offer == offer
-        %span.btn.btn-light.border.border-secondary.font-weight-bold
+        = f.radio_button :bundle_id, bundle.iid, checked: project_item.bundle == bundle,
+        "data-order-target": "checkbox"
+        %span.btn.btn-light.border.border-secondary.font-weight-bold{ "data-action": "click->order#uncheck" }
           .unchecked
             = _("Select a bundle")
           .checked

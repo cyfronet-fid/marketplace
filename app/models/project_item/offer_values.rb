@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
 class ProjectItem::OfferValues
-  attr_reader :offer, :parts
+  attr_reader :offer, :bundle, :parts
 
-  def initialize(offer:, parameters: nil)
-    @offer = offer
+  def initialize(offer:, bundle:, parameters: nil)
+    @offer = offer || bundle.main_offer
+    @bundle = bundle
+    @parameters = parameters
     @main = ProjectItem::Part.new(offer: offer, parameters: parameters)
     @parts = bundled_parts
   end
@@ -22,7 +24,7 @@ class ProjectItem::OfferValues
   end
 
   def validate
-    all_parts.map(&:validate).all?
+    all_parts&.map(&:validate)&.all?
   end
 
   def to_hash
@@ -40,8 +42,8 @@ class ProjectItem::OfferValues
   end
 
   def bundled_parts
-    offer.bundled_connected_offers.map do |offer|
-      ProjectItem::Part.new(offer: offer, parameters: offer.parameters.map(&:dump))
+    if @bundle.present?
+      @bundle.offers.map { |offer| ProjectItem::Part.new(offer: offer, parameters: offer.parameters.map(&:dump)) }
     end
   end
 end

@@ -36,8 +36,11 @@ class Backoffice::Services::BundlesController < Backoffice::ApplicationControlle
 
   def destroy
     @bundle = @service.bundles.find_by(iid: params[:id])
-    Offer::Destroy.call(@offer)
-    redirect_to backoffice_service_path(@service), notice: "Bundle removed successfully"
+    if Bundle::Destroy.call(@bundle)
+      redirect_to backoffice_service_path(@service), notice: "Bundle removed successfully"
+    else
+      render :edit, status: :bad_request
+    end
   end
 
   private
@@ -52,7 +55,6 @@ class Backoffice::Services::BundlesController < Backoffice::ApplicationControlle
   end
 
   def transform_attributes(template)
-    # template["parameters_attributes"] = [] if template["parameters_attributes"].blank?
     template.except(:from)
   end
 

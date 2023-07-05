@@ -1363,7 +1363,29 @@ Service detail
   .card-body {
     padding: 0.8rem 1rem;
 
-    .badge {
+    .badge-left {
+      font-size: 0.8em;
+      padding: 10px 14px;
+      text-transform: uppercase;
+      position: absolute;
+      border-right: 1px solid $palette-solid-10;
+      border-bottom: 1px solid $palette-solid-10;
+      top: 0;
+      color: $palette-solid-50;
+      font-weight: 400;
+      left: 0;
+      -webkit-border-radius: 0;
+      -moz-border-radius: 0;
+      border-radius: 0;
+
+      &.badge-success,
+      &.badge-warning,
+      &.badge-error {
+        color: $white;
+      }
+    }
+
+    .badge-right {
       font-size: 0.8em;
       padding: 7px 14px;
       text-transform: uppercase;

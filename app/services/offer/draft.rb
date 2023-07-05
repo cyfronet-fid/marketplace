@@ -8,19 +8,20 @@ class Offer::Draft < ApplicationService
 
   def call
     result = @offer.update(status: :draft)
-    unbundle_and_notify!
+    unbundle!
     result
   end
 
   private
 
-  def unbundle_and_notify!
-    @offer.bundle_connected_offers.each do |bundle_offer|
-      Offer::Update.call(
-        bundle_offer,
-        { bundled_connected_offers: bundle_offer.bundled_connected_offers.to_a.reject { |o| o == @offer } }
+  def unbundle!
+    @offer.bundles.each do |bundle|
+      Bundle::Update.call(
+        bundle,
+        { offers: bundle.offers.to_a.reject { |o| o.id == @offer.id } }.stringify_keys,
+        external_update: true
       )
-      Offer::Mailer::Unbundled.call(bundle_offer, @offer)
     end
+    @offer.main_bundles.each { |bundle| Bundle::Draft.call(bundle) }
   end
 end

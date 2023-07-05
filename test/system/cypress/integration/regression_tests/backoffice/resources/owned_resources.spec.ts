@@ -102,7 +102,7 @@ describe("Owned services", () => {
       .click();
     cy.get("[data-e2e='offer']")
       .should("have.length", 2);
-    cy.get("[data-e2e='offer'] .badge")
+    cy.get("[data-e2e='offer'] .badge-right")
       .eq(1)
       .should("include.text", "Order required")
 
@@ -113,7 +113,7 @@ describe("Owned services", () => {
       .click();
     cy.get("[data-e2e='offer']")
       .should("have.length", 3);
-    cy.get("[data-e2e='offer'] .badge")
+    cy.get("[data-e2e='offer'] .badge-right")
       .eq(2)
       .should("include.text", "Open Access")
 
@@ -125,7 +125,7 @@ describe("Owned services", () => {
       .click();
     cy.get("[data-e2e='offer']")
       .should("have.length", 4);
-    cy.get("[data-e2e='offer'] .badge")
+    cy.get("[data-e2e='offer'] .badge-right")
       .eq(3)
       .should("include.text", "Order required")
 

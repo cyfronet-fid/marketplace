@@ -1,29 +1,50 @@
 # frozen_string_literal: true
 
 class Bundle::Update < ApplicationService
-  def initialize(bundle, params)
+  def initialize(bundle, params, external_update: false)
     super()
     @bundle = bundle
     @params = params
+    @external_update = external_update
+    @current_offer_ids = @params["offer_ids"] || @params["offers"]&.map(&:id) || []
+    @added_bundled_offer_ids = @current_offer_ids - @bundle.offers.map(&:id)
+    @removed_bundled_offer_ids = @bundle.offers.map(&:id) - @current_offer_ids
   end
 
   def call
-    @bundle.main_offer.reset_added_bundled_offers!
-    offer_ids = @params["offer_ids"].dup.reject(&:blank?).map(&:to_i)
-    offer = Offer.find(@params["main_offer_id"])
-    offer.update(bundled_connected_offers: Offer.find(offer_ids))
-    @params["order_type"] = Offer.find(@params["main_offer_id"]).order_type
-    notify_added_bundled_offers! if @bundle.update(@params)
+    result = @bundle.update(@params)
+    if @external_update
+      notify_own_offer!
+      @bundle = Bundle::Draft.call(@bundle, empty_offers: @current_offer_ids.empty?)
+    else
+      public_before = @bundle.published?
+      notify_bundled_offers! if result && public_before
+    end
     @bundle.service.reindex
     @bundle.offers.reindex
-    @bundle.valid?
+    @bundle.reindex
+    result || @bundle.draft?
   end
 
   private
 
-  def notify_added_bundled_offers!
-    @bundle.main_offer.added_bundled_offers&.each do |added_bundled_offer|
-      Offer::Mailer::Bundled.call(added_bundled_offer, @offer)
+  def notify_bundled_offers!
+    if @added_bundled_offer_ids.size.positive?
+      Offer
+        .where(id: @added_bundled_offer_ids)
+        .each { |added_bundled_offer| Offer::Mailer::Bundled.call(added_bundled_offer, @bundle.main_offer) }
     end
+
+    if @removed_bundled_offer_ids.size.positive?
+      Offer
+        .where(id: @removed_bundled_offer_ids)
+        .each { |removed_bundled_offer| Offer::Mailer::Unbundled.call(removed_bundled_offer, @bundle.main_offer) }
+    end
+  end
+
+  def notify_own_offer!
+    Offer
+      .where(id: @removed_bundled_offer_ids)
+      .each { |removed_bundled_offer| Offer::Mailer::Unbundled.call(@bundle.main_offer, removed_bundled_offer) }
   end
 end

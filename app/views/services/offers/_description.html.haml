@@ -4,10 +4,11 @@
       %i.fas.fa-ticket-alt
       %span
         = _("Voucher")
-  %span.text-sm-right.fa-pull-right.badge
+  %span.text-sm-right.fa-pull-right.badge-right
     %i{ class: "ordertype #{offer.order_type}" }
-    -# TODO: refactor dynamic translation
     = t("offers.type.#{offer.order_type}")
+    -# TODO: refactor dynamic translation
+  = yield_content!(:status) if content_for?(:status)
   %h4.card-title= offer.name
 
   .card-text.mb-2{ "data-controller" => "paragraph" }

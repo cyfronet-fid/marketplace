@@ -1,13 +1,13 @@
 - content_for :title, _("Information")
-.row{ class: "#{map_view_to_order_type(@offer)}" }
-  - if @offer.bundled_connected_offers.empty?
+.row{ class: "#{map_view_to_order_type(@offer || @bundle)}" }
+  - if @bundle.present?
+    = render "services/information/bundle", bundle: @bundle
+  - else
     .col-md-5.access-information
       = render Services::InformationDescriptionComponent.new(order_type: map_view_to_order_type(@offer),
-                                                             service_title: wizard_title,
-                                                             offer: @offer)
+                                                               service_title: wizard_title,
+                                                               offer: @offer)
     .col-md-7.access-image
-  - else
-    = render "services/information/bundle", service_title: wizard_title, offer: @offer
 
 = form_for @step, url: service_information_path(@service), method: :put, html: { id: "order-form" } do
   -# empty block

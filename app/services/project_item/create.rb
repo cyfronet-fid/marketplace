@@ -18,11 +18,11 @@ class ProjectItem::Create
         raise ActiveRecord::Rollback
       end
 
-      if @project_item&.offer&.bundle?
+      if @project_item&.bundle?
         bundled_project_items =
-          @project_item.offer.bundled_connected_offers.map do |offer|
+          @project_item.bundle.offers.map do |offer|
             bundled_parameters =
-              if @bundle_params.respond_to?(:has_key?) && @bundle_params&.key?(offer.id)
+              if @bundle_params.respond_to?(:key?) && @bundle_params&.key?(offer.id)
                 @bundle_params[offer.id].map(&:to_json)
               else
                 []
@@ -33,6 +33,7 @@ class ProjectItem::Create
               parent_id: @project_item.id,
               project_id: @project.id,
               offer_id: offer.id,
+              bundle_id: @project_item.bundle.id,
               properties: bundled_parameters
             )
           end

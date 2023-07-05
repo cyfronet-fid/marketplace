@@ -41,7 +41,7 @@ module FormsHelper
 
   def other_offers(service)
     Offer
-      .published
+      .accessible
       .reject { |item| (item.in? service.offers) || item.service.nil? }
       .map { |item| ["#{item.service.name} > #{item.name}", item.id] }
   end

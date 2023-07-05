@@ -86,10 +86,10 @@ class Api::V1::Resources::OffersController < Api::V1::ApplicationController
   end
 
   def load_bundled_offers
-    bundled_offers = params[:bundled_connected_offers]
-    unless bundled_offers.nil?
-      if bundled_offers.is_a?(Array) && bundled_offers.all? { |o| o.is_a?(String) }
-        @bundled_offers = bundled_offers.map { |val| Offer.find_by_slug_iid!(val) }
+    main_bundles = params[:main_bundles]
+    unless main_bundles.nil?
+      if main_bundles.is_a?(Hash) && main_bundles.values.flatten.all? { |o| o.is_a?(String) }
+        @bundled_offers = main_bundles.map { |val| Offer.find_by_slug_iid!(val) }
       else
         render json: { error: "Bundled offers must be an array of strings" }, status: 400
       end
@@ -109,7 +109,7 @@ class Api::V1::Resources::OffersController < Api::V1::ApplicationController
   end
 
   def mapped_bundled_offers
-    @bundled_offers.is_a?(Array) ? { bundled_connected_offers: @bundled_offers } : {}
+    @bundled_offers.is_a?(Hash) ? { bundled_offers: @bundled_offers } : {}
   end
 
   def transform(attributes)

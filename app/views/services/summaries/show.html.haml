@@ -10,8 +10,8 @@
 
 = render "services/summaries/technical_configuration",
          service: @service, step: @step
-- if @offer.bundle?
-  = render partial: "services/summaries/bundle_technical", collection: @offer.bundled_connected_offers, as: :offer,
+- if @bundle.present?
+  = render partial: "services/summaries/bundle_technical", collection: @bundle.offers, as: :offer,
   locals: { bundle_params: @bundle_params }
 
 = simple_form_for @step, url: service_summary_path(@service), html: { id: "order-form" } do |f|

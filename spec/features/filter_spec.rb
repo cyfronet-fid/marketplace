@@ -224,10 +224,14 @@ RSpec.feature "Service filter", end_user_frontend: true do
       open_access_service = create(:open_access_service, offers: [create(:open_access_offer)])
       internal_ordering_service = create(:service, offers: [create(:offer)])
       external_service = create(:external_service, offers: [create(:external_offer)])
-      mixed_offers_services = create(:service, offers: [create(:open_access_offer, iid: 1), create(:offer, iid: 2)])
-      visit services_path(order_type: "open_access")
+      mixed_offers_service = create(:service)
+      create(:offer, service: mixed_offers_service)
+      create(:open_access_offer, service: mixed_offers_service)
+      Service.reindex
+      visit services_path(order_type: :open_access)
+
       expect(page).to have_text(open_access_service.name)
-      expect(page).to have_text(mixed_offers_services.name)
+      expect(page).to have_text(mixed_offers_service.name)
       all(@services_selector).each do |element|
         expect(element).to_not have_text(external_service.name)
         expect(element).to_not have_text(internal_ordering_service.name)

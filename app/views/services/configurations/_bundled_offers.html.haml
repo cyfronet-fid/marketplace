@@ -1,4 +1,4 @@
-- if step.offer.bundle?
+- if step.bundle.present?
   - step.bundled_property_values.each do |offer, property_values|
 
     .row.bundle-info

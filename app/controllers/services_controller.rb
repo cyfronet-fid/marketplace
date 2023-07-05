@@ -60,13 +60,11 @@ class ServicesController < ApplicationController
     @service.monitoring_status = fetch_status(@service.pid)
 
     authorize(ServiceContext.new(@service, params.key?(:from) && params[:from] == "backoffice_service"))
-    @offers = policy_scope(@service.offers.published).order(:created_at).select { |o| o.bundle? == false }
-    @bundles = policy_scope(@service.bundles.published)
-    @bundled = @service.offers.select(&:bundled?) ? @service.offers.select(&:bundled?).map(&:bundles).flatten.uniq : []
+    @offers = policy_scope(@service.offers.inclusive).order(:iid)
+    @bundles = policy_scope(@service.bundles.published).order(:iid)
+    @bundled = bundled
     @similar_services = fetch_similar(@service.id, current_user&.id)
-    @similar_services_title = "Similar services"
     @related_services = @service.target_relationships
-    @related_services_title = "Suggested compatible services"
 
     @service_opinions = ServiceOpinion.joins(project_item: :offer).where(offers: { service_id: @service })
     @question = Service::Question.new(service: @service)
@@ -128,5 +126,13 @@ class ServicesController < ApplicationController
   def hide_horizontals?(init: true)
     empty_listed = init ? Service.published.horizontal.size.zero? : @horizontals.size.zero?
     empty_listed || active_filters.size.positive? || params[:q].present? || @category.present?
+  end
+
+  def bundled
+    if @service.offers.published.select(&:bundled?).present?
+      @service.offers.published.select(&:bundled?).map { |o| policy_scope(o.bundles) }.flatten.uniq
+    else
+      []
+    end
   end
 end

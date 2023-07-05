@@ -8,36 +8,21 @@ class Offer::Update < ApplicationService
   end
 
   def call
+    public_before = @offer.published?
     effective_params = @offer.service.offers.published.size == 1 ? @params : @params.merge(default: false)
 
     if effective_params["primary_oms_id"] && OMS.find(effective_params["primary_oms_id"])&.custom_params.blank?
       effective_params["oms_params"] = {}
     end
-    @offer.reset_added_bundled_offers!
-    if @offer.update(effective_params)
-      offer_bundlable? ? notify_added_bundled_offers! : unbundle_and_notify!
-    end
+    @offer.update(effective_params)
+    unbundle! if !@offer.published? && public_before
     @offer.service.reindex
     @offer.valid?
   end
 
-  private
-
-  def notify_added_bundled_offers!
-    @offer.added_bundled_offers&.each { |added_bundled_offer| Offer::Mailer::Bundled.call(added_bundled_offer, @offer) }
-  end
-
-  def offer_bundlable?
-    @offer.published? && @offer.internal? && @offer.service.public?
-  end
-
-  def unbundle_and_notify!
-    @offer.bundle_connected_offers.each do |bundle_offer|
-      Offer::Update.call(
-        bundle_offer,
-        { bundled_connected_offers: bundle_offer.bundled_connected_offers.to_a.reject { |o| o == @offer } }
-      )
-      Offer::Mailer::Unbundled.call(bundle_offer, @offer)
+  def unbundle!
+    @offer.bundles.each do |b|
+      Bundle::Update.call(b, { offers: b.offers.reject { |o| o == @offer } }, external_update: true)
     end
   end
 end

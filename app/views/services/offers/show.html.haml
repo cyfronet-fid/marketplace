@@ -1,6 +1,7 @@
 - content_for :title, _("Offer selection")
 = simple_form_for @step, url: service_offers_path(@service), method: :put,
-  html: { id: "order-form", role: "form", class: "btn-group-toogle", data: { toogle: "buttons" } } do |f|
+  html: { id: "order-form", role: "form", class: "btn-group-toogle",
+  data: { controller: "order", toogle: "buttons" } } do |f|
 
   - if policy(@service).offers_show?
     %h2.mb-4.mt-5.font-bold
@@ -15,5 +16,5 @@
           = _("Service bundles")
     .card-deck.row
       = render partial: "services/offers/bundle_box",
-        collection: @bundles, as: :offer, locals: { f: f, project_item: @step }
+        collection: @bundles, as: :bundle, locals: { f: f, project_item: @step }
 

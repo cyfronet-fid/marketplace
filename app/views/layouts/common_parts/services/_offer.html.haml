@@ -1,10 +1,13 @@
 .col-md-6.edit-offer{ id: "offer-#{offer.id}", "data-e2e": "offer" }
   .card.m-0.mb-5
+    - content_for :status do
+      = service_status(offer, "text-sm-left fa-pull-left badge-left")
     = render "services/offers/description", offer: offer
     = render "layouts/common_parts/services/parameters", technical_parameters: offer.attributes.map(&:to_json)
 
     .card-button.text-center
-      %label
-        = link_to edit_offer_link(offer.service, offer, controller_name) do
-          %span.btn.btn-outline-secondary.font-weight-bold
-            = _("Edit")
+      - if policy([:backoffice, offer]).edit?
+        %label
+          = link_to edit_offer_link(offer.service, offer, controller_name) do
+            %span.btn.btn-outline-secondary.font-weight-bold
+              = _("Edit")
