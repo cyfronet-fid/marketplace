@@ -5,7 +5,7 @@ module ProjectItem::Customization
 
   included do
     validate do
-      if offer&.bundle?
+      if bundle.present?
         bundled_property_values.each do |_offer, parameters|
           parameters.select(&:invalid?).each { |pv| errors.add(:bundled_property_values, :invalid, value: pv) }
         end
@@ -50,10 +50,10 @@ module ProjectItem::Customization
   end
 
   def offer_values
-    @offer_values ||= ProjectItem::OfferValues.new(offer: offer, parameters: properties)
+    @offer_values ||= ProjectItem::OfferValues.new(offer: offer, bundle: bundle, parameters: properties)
   end
 
   def id_to_bundled_offer
-    @id_to_bundled_offer ||= offer.bundled_connected_offers.index_by { |o| "o#{o.id}" }
+    @id_to_bundled_offer ||= bundle.offers.index_by { |o| "o#{o.id}" }
   end
 end

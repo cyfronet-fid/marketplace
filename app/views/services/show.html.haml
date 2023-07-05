@@ -17,8 +17,9 @@
       - c.buttons do
         = render "components/presentable/header_component/order_buttons", service: @service
     = render "services/tabs", service: @service
-  #comparison-bar.comparison-bar.fixed-bottom{ class: (session[:comparison]&.size || 0).positive? ?
-  "d-block" : "d-none", "data-target": "comparison.bar", "data-e2e": "comparison-bar" }
+  - dynamic_class = (session[:comparison]&.size || 0).positive? ? "d-block" : "d-none"
+  #comparison-bar.comparison-bar.fixed-bottom{ class: dynamic_class,
+    "data-target": "comparison.bar", "data-e2e": "comparison-bar" }
     = render "comparisons/bar", services: @compare_services, category: @category
 .tab-content
   = render Presentable::DescriptionComponent.new(object: @service) do |c|
@@ -30,6 +31,6 @@
   = render "taggable/details_section", taggable: @service
 
 .container.mt-4.pt-4.related-container
-  = render "services/related", related_services: @similar_services, title: @similar_services_title
+  = render "services/related", related_services: @similar_services, title: similar_services_title
 
-  = render "services/related", related_services: @related_services, title: @related_services_title
+  = render "services/related", related_services: @related_services, title: related_services_title

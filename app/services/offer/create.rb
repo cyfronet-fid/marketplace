@@ -7,14 +7,9 @@ class Offer::Create < ApplicationService
   end
 
   def call
-    notify_added_bundled_offers! if @offer.save
+    @offer.save
     @offer.service.reindex
+    @offer.reindex
     @offer
-  end
-
-  private
-
-  def notify_added_bundled_offers!
-    @offer.added_bundled_offers&.each { |added_bundled_offer| Offer::Mailer::Bundled.call(added_bundled_offer, @offer) }
   end
 end

@@ -47,14 +47,12 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   def show
     @service.monitoring_status = fetch_status(@service.pid)
     @offer = Offer.new(service: @service, status: :draft)
-    @offers = @service.offers.published.order(:created_at)
-    @bundles = @service.bundles.order(:created_at)
+    @offers = policy_scope(@service.offers).order(:created_at)
+    @bundles = policy_scope(@service.bundles).order(:created_at)
     @client = @client&.credentials&.expires_at.blank? ? Google::Analytics.new : @client
     @service.analytics = Analytics::PageViewsAndRedirects.new(@client).call(request.path)
     @similar_services = fetch_similar(@service.id, current_user&.id)
-    @similar_services_title = "Similar services"
     @related_services = @service.target_relationships
-    @related_services_title = "Suggested compatible services"
   end
 
   def new
@@ -152,7 +150,6 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
     @offers = @service.offers.where(status: :published).order(:created_at).reject(&:bundle?)
     @related_services = @service.target_relationships
-    @related_services_title = "Suggested compatible services"
     @client = @client&.credentials&.expires_at.blank? ? Google::Analytics.new : @client
     @bundles = policy_scope(@service.bundles.published)
     @bundled = @service.offers.select(&:bundled?) ? @service.offers.select(&:bundled?).map(&:bundles).flatten.uniq : []

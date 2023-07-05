@@ -11,8 +11,8 @@ module Backoffice::ServicesHelper
     "deleted" => "badge-error"
   }.freeze
 
-  def service_status(service)
-    content_tag(:span, service.status, class: "badge #{BADGES[service.status]}")
+  def service_status(service, additional_classes = nil)
+    content_tag(:span, service.status, class: "badge #{BADGES[service.status]} #{additional_classes}")
   end
 
   def offers_status(service)

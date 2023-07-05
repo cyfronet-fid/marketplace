@@ -88,7 +88,8 @@ RSpec.describe Api::V1::OfferSerializer, backend: true do
   it "properly serializes a bundle offer" do
     offer1 = build(:offer)
     offer2 = build(:offer)
-    bundle_offer = create(:offer, bundled_connected_offers: [offer1, offer2])
+    bundle_offer = create(:offer)
+    bundle = create(:bundle, main_offer: bundle_offer, offers: [offer1, offer2])
     default_oms = create(:default_oms)
 
     serialized = JSON.parse(described_class.new(bundle_offer).to_json)
@@ -102,7 +103,9 @@ RSpec.describe Api::V1::OfferSerializer, backend: true do
       order_url: bundle_offer.order_url,
       internal: true,
       primary_oms_id: default_oms.id,
-      bundled_offers: %W[#{offer1.service.slug}/#{offer1.iid} #{offer2.service.slug}/#{offer2.iid}]
+      bundled_offers: [
+        { "#{bundle.id}" => %W[#{offer1.service.slug}/#{offer1.iid} #{offer2.service.slug}/#{offer2.iid}] }
+      ]
     }
 
     expect(serialized).to eq(expected.deep_stringify_keys)

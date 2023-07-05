@@ -3,7 +3,7 @@
 class OfferPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.where(status: :published)
+      scope.joins(:service).where("offers.status = ? AND services.status IN (?)", "published", %w[published unverified])
     end
   end
 

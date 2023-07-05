@@ -1,5 +1,7 @@
 .col-md-12.d-flex.align-items-stretch.bundle.backoffice-bundle{ id: "bundle-#{bundle.iid}" }
   .card.m-0.mb-5
+    - content_for :status do
+      = service_status(bundle, "text-sm-left fa-pull-left badge-left")
     = render "services/bundles/description", bundle: bundle
     = render "services/bundle", bundled_offers: bundle.all_offers, parent: bundle.main_offer
     = render "services/offers/bundle_links",

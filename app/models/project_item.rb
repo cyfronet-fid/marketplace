@@ -27,6 +27,7 @@ class ProjectItem < ApplicationRecord
   enum issue_status: ISSUE_STATUSES
 
   belongs_to :offer
+  belongs_to :bundle, optional: true
   belongs_to :service, inverse_of: :project_items
   belongs_to :project
   belongs_to :scientific_domain, required: false
@@ -53,7 +54,7 @@ class ProjectItem < ApplicationRecord
   after_commit :dispatch_emails
 
   def service
-    offer&.service
+    offer&.service || bundle&.service
   end
 
   def public_statuses
@@ -65,7 +66,7 @@ class ProjectItem < ApplicationRecord
   end
 
   def bundle?
-    children.present?
+    bundle.present?
   end
 
   def new_status(status:, status_type:)
@@ -93,7 +94,7 @@ class ProjectItem < ApplicationRecord
   end
 
   def to_s
-    "\"#{project.name}##{id}\""
+    project.present? ? "\"#{project&.name}##{id}\"" : "\"new\""
   end
 
   private
@@ -111,12 +112,13 @@ class ProjectItem < ApplicationRecord
   end
 
   def copy_offer_fields
-    self.order_type = offer&.order_type
-    self.name = offer&.name
-    self.description = offer&.description
-    self.voucherable = offer&.voucherable
-    self.order_url = offer&.order_url
-    self.internal = offer&.internal
+    current = offer || bundle&.main_offer
+    self.order_type = current&.order_type
+    self.name = current&.name
+    self.description = current&.description
+    self.voucherable = bundle&.all_offers&.any?(&:voucherable) || current&.voucherable
+    self.order_url = current&.order_url
+    self.internal = current&.internal
   end
 
   def saved_status_change?

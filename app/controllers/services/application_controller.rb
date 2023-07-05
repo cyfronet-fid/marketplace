@@ -3,6 +3,7 @@
 class Services::ApplicationController < ApplicationController
   before_action :authenticate_user!
   before_action :load_and_authenticate_service!
+  before_action :saved_state
 
   layout "order"
 
@@ -26,7 +27,7 @@ class Services::ApplicationController < ApplicationController
   end
 
   def ensure_in_session!
-    redirect_to service_offers_path(@service), alert: "Service request template not found" unless saved_state
+    redirect_to service_offers_path(@service), alert: "Service request template not found" unless @saved_state
   end
 
   def load_and_authenticate_service!
@@ -42,14 +43,14 @@ class Services::ApplicationController < ApplicationController
   end
 
   def saved_state
-    session[session_key]
+    @saved_state = session[session_key]
   end
 
-  def step(attrs = saved_state)
+  def step(attrs = @saved_state)
     wizard.step(step_key, attrs)
   end
 
-  def step_for(step_key, attrs = saved_state)
+  def step_for(step_key, attrs = @saved_state)
     wizard.step(step_key, attrs)
   end
 
@@ -82,7 +83,7 @@ class Services::ApplicationController < ApplicationController
   end
 
   def prev_visible_step
-    wizard.step(prev_visible_step_key, saved_state)
+    wizard.step(prev_visible_step_key, @saved_state)
   end
 
   def step_key
@@ -104,8 +105,8 @@ class Services::ApplicationController < ApplicationController
   def wizard_title
     if step.offer && (@service.offers_count > 1)
       "#{@service.name} - #{step.offer.name}"
-    elsif step.offer&.main_bundles&.first.present?
-      "#{@service.name} - #{step.offer.main_bundles.first.name}"
+    elsif step.bundle.present?
+      "#{@service.name} - #{step.bundle.name}"
     else
       @service.name
     end

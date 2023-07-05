@@ -3,9 +3,6 @@
     = render "services/offers/description", offer: offer
     = render "services/offers/parameters",
       technical_parameters: offer.attributes.map(&:to_json)
-    - if offer.bundle?
-      = link_to _("Read technical parameters"), "#", class: "btn-link"
-      = render "services/bundle", bundled_offers: offer.bundled_connected_offers, parent: offer
     .card-button.text-center
       %label
         = link_to service_offers_path(offer.service, customizable_project_item: { offer_id: offer.iid }),

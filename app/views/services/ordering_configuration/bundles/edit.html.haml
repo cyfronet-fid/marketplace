@@ -7,6 +7,6 @@
     = render "backoffice/services/bundles/form",
       service: @service,
       bundle: @bundle,
-      show_delete_button: false,
       bundle_form_source_module: [@service, :ordering_configuration, @bundle],
-      back_link: service_ordering_configuration_path(@service)
+      back_link: service_ordering_configuration_path(@service),
+      bundle_delete_link: service_ordering_configuration_bundle_path(@service, @bundle)

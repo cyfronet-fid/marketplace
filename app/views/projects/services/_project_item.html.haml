@@ -1,5 +1,5 @@
 %li.projects-list
-  - if project_item.bundle?
+  - if project_item.children.present?
     %a.bundle-more.collapsed.dropdown{ href: "#collapse-example_#{project_item.id}",
                     "data-toggle" => "collapse",
                     "role" => "button",
@@ -11,7 +11,7 @@
       %span.new-message
         = image_pack_tag "ico_message.svg", class: "new-message-icon"
         = _("You have a new message")
-    - if project_item.bundle?
+    - if project_item.children.present?
       %span.bundle-status
         = _("BUNDLE")
     - if project_item.closed?

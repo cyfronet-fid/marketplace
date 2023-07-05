@@ -3,9 +3,11 @@
 
   .col-lg-8.pl-0{ "data-controller": "ordering" }
     = f.error_notification
+    = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
     = f.hidden_field :id
     = f.input :name, input_html: { class: "form-control-lg" }
     = f.input :description, input_html: { rows: 10 }
+    = f.input :bundle_exclusive
     = f.input :order_type, collection: Offer.order_types.keys.map(&:to_sym),
       selected: (offer.order_type || service.order_type),
       input_html: { "data-ordering-target": "orderType",
@@ -37,10 +39,18 @@
   .row
     .col-12
       = f.button :submit, class: "btn btn-primary pl-5 pr-5 mobile-bottom-margin", "data-e2e": "create-offer-btn"
-      - if show_delete_button
-        = link_to "Delete Offer", offer_delete_link,
-          data: { confirm: _("Are you sure?") },
+      - if policy([:backoffice, offer]).destroy?
+        = link_to "Delete Offer", polymorphic_path(offer_form_source_module),
+          data: { confirm: _("Are you sure? It cannot be undone") },
           method: :delete, class: "btn btn-danger pl-5 pr-5"
+      - if policy([:backoffice, offer]).draft?
+        = link_to "Draft offer", polymorphic_path(offer_form_source_module << :draft), method: :post,
+        class: "btn btn-info pl-5 pr-5 mobile-bottom-margin",
+        data: { confirm: _("Are you sure?") }
+      - if policy([:backoffice, offer]).publish?
+        = link_to "Publish offer", polymorphic_path(offer_form_source_module << :publish), method: :post,
+        class: "btn btn-success pl-5 pr-5",
+        data: { confirm: _("Do you want to publish your offer?") }
       = link_to _("cancel and back to previous page"), back_link,
       class: "btn btn-link text-uppercase mobile-bottom-margin"
 

@@ -8,34 +8,26 @@ class Offer::Destroy < ApplicationService
 
   def call
     @service = @offer.service
-    @bundle_offers = @offer.bundle_connected_offers.to_a
-    if @offer&.project_items.present?
-      if @offer.update(status: :deleted)
-        unbundle!
-        notify_unbundled!
-      end
-    elsif @offer.destroy
-      notify_unbundled!
-    end
+    @bundles = @offer.bundles.to_a
+    unbundle!
+    result = @offer&.project_items.present? ? @offer.update(status: :deleted) : @offer.destroy
+
     if @service.offers.published.size == 1
       Offer::Update.call(@service.offers.published.last, { order_type: @service&.order_type })
     end
     @service.reindex
-    true
+    result
   end
 
   private
 
   def unbundle!
-    @bundle_offers.each do |bundle_offer|
-      Offer::Update.call(
-        bundle_offer,
-        { bundled_connected_offers: bundle_offer.bundled_connected_offers.to_a.reject { |o| o == @offer } }
+    @bundles.each do |bundle|
+      Bundle::Update.call(
+        bundle,
+        { offer_ids: bundle.offers.to_a.reject { |o| o == @offer }.map(&:id) },
+        external_update: true
       )
     end
-  end
-
-  def notify_unbundled!
-    @bundle_offers.each { |bundle_offer| Offer::Mailer::Unbundled.call(bundle_offer, @offer) }
   end
 end

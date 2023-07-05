@@ -27,6 +27,14 @@ class OrderingConfiguration::OfferPolicy < ApplicationPolicy
     offer_editor?
   end
 
+  def draft?
+    offer_editor?
+  end
+
+  def publish?
+    offer_editor?
+  end
+
   def permitted_attributes
     [
       :id,

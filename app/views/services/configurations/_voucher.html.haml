@@ -1,4 +1,4 @@
-- if step.offer.voucherable
+- if step&.offer&.voucherable || step&.bundle&.main_offer&.voucherable || step&.bundle&.offers&.any?(&:voucherable)
   %h2.mb-3.font-weight-normal
     = _("Voucher")
   .btn-group.voucher-radio.btn-group-toggle.mb-4.col-12.col-lg-8.p-0
