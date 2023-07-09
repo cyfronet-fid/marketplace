@@ -12,6 +12,9 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Datasources as services subprofiles (@goreck888)
 - Receiving EOSC PIDs (@goreck888)
 
+### Fixed
+- User action connected to "Back to search" button (@wujuu)
+
 ## [3.51.1] 2023-10-31
 
 ### Fixed
