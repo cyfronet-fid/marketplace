@@ -13,7 +13,7 @@
       #{ @recommendation_previous.nil? ? "null" : sanitize(@recommendation_previous) };
 
     if (window.recommendationSourceId != null) {
-      sessionStorage.setItem('sourceId', window.recommendationSourceId);
+      sessionStorage.setItem('sourceId', window.sourceIdOverride ?? window.recommendationSourceId);
     }
 
     if (window.recommendationLastPageId != null) {
