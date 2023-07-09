@@ -30,7 +30,7 @@ async function popstate(event) {
   window.recommendationLastPageId = target.page_id;
   sessionStorage.setItem("sourceId", target.visit_id);
   sessionStorage.setItem("lastPageId", target.page_id);
-  _initProbes(true, true);
+  await _initProbes(true, true);
 }
 
 async function _initProbes(force, skipInitial) {
@@ -41,11 +41,11 @@ async function _initProbes(force, skipInitial) {
   window.probesInitialized = true;
 
   setCookies();
-  if (window.recommendationPrevious && !skipInitial) {
+  if (window.recommendationPrevious && !skipInitial && !window.sourceIdOverride) {
     await handleInitialNavigationEvent();
   }
   // Handle all internal open in new tab/window that was not handled by click event
-  else if (window.recommendationSourceId != null && !skipInitial) {
+  else if (window.recommendationSourceId != null && !skipInitial && !window.sourceIdOverride) {
     await handle_any_event();
   }
 
