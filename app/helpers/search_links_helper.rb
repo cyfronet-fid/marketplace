@@ -50,7 +50,7 @@ module SearchLinksHelper
         if highlighted.present? && highlighted.strip == target.name.strip
           link_to_unless target.deleted? || target.draft?,
                          highlights[:provider_names].html_safe,
-                         target.provider_search_link,
+                         service.provider_search_link(target),
                          preview_options
         else
           link_to_unless target.deleted? || target.draft?,
