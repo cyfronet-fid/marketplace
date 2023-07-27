@@ -68,7 +68,7 @@ RSpec.configure do |config|
 
   Capybara.register_driver :chrome do |app|
     caps = Selenium::WebDriver::Chrome::Options.new(args: %w[no-sandbox headless disable-gpu window-size=1000,1000])
-    Capybara::Selenium::Driver.new(app, browser: :chrome, capabilities: caps)
+    Capybara::Selenium::Driver.new(app, browser: :chrome, options: caps)
   end
 
   Capybara.javascript_driver = :chrome
