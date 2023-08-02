@@ -6,7 +6,7 @@
   .bundle-goals
     - bundle.bundle_goals.each do |goal|
       %span.goal= goal.name
-  %h4.card-title.pt-2= bundle.name
+  %h4.card-title.pt-2= link_to bundle.name, service_bundle_path(bundle.service, bundle)
 
   .bundle-description
     .card-text.mb-2{ "data-controller" => "paragraph" }

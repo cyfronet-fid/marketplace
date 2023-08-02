@@ -1,0 +1,4 @@
+%span.ordertype-label
+  %i{ class: "ordertype #{order_type(object)}" }
+  -# TODO: refactor dynamic translation
+  = t("offers.type.#{order_type(object)}")
