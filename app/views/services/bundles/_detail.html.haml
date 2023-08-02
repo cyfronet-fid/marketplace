@@ -1,0 +1,7 @@
+- collection = bundle.send(field)
+- if collection.present?
+  %h4= field.to_s.humanize
+  %ul.list-group
+    - collection.each do |item|
+      %li.list-group-item
+        %span= item.name
