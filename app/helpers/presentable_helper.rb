@@ -33,7 +33,7 @@ module PresentableHelper
     parents.to_h { |parent| [parent.name, (parent.children & record.send(field)).map(&:name)] }
   end
 
-  def presentable_logo(object, classes = "align-self-center mr-4 float-left img-responsive", resize = "100x67")
+  def presentable_logo(object, classes = "align-self-center img-responsive", resize = "100x67")
     if object.logo.attached? && object.logo.variable?
       image_tag object.logo.variant(resize: resize), class: classes
     else

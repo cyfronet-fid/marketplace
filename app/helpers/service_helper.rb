@@ -57,7 +57,7 @@ module ServiceHelper
   end
 
   def providers_text(service)
-    service.providers.reject(&:blank?).reject { |p| p == service.resource_organisation }.map(&:name)
+    service.providers.reject(&:blank?).reject { |p| p == service.resource_organisation }.map(&:name).join(", ")
   end
 
   def filtered_offers(offers)
@@ -69,7 +69,6 @@ module ServiceHelper
   end
 
   def order_type(orderable)
-    return orderable&.order_type if orderable.is_a?(Datasource)
     types = ([orderable&.order_type] + orderable&.offers&.published&.map(&:order_type)).compact.uniq
     types.size > 1 ? "various" : orderable&.order_type || "other"
   end

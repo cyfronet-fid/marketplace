@@ -12,6 +12,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Optional hiding offers dedicated for bundle (@goreck888)
 - Possibility to tag offers and bundles (@goreck888)
 - User suggestion input for bundle capabilities of goals values (@goreck888)
+- Bundle details view (@jarekzet, @goreck888)
 
 ### Changed
 - Bundle linking available for all types of offers (@goreck888)

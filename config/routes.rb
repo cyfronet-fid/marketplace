@@ -33,6 +33,7 @@ Rails.application.routes.draw do
       resources :opinions, only: :index
       resources :details, only: :index
       resources :guidelines, only: :index
+      resources :bundles, only: :show
       resource :ordering_configuration, only: :show do
         scope module: :ordering_configuration do
           resources :offers, only: [:new, :edit, :create, :update, :destroy] do

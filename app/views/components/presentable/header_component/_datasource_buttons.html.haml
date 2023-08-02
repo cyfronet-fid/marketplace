@@ -1,6 +1,3 @@
 - if user_signed_in? && show_manage_button?(datasource)
   = render "components/presentable/header_component/datasource_drop_down_menu", datasource: datasource
-%span.ordertype-label
-  %i{ class: "ordertype #{order_type(datasource)}" }
-  -# TODO: refactor dynamic translation
-  = t("offers.type.#{order_type(datasource)}")
+  = render "layouts/common_parts/services/order_type_label", object: datasource

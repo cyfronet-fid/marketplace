@@ -8,7 +8,4 @@
                   "data-preview-target": local_assigns[:preview] ? "link" : ""
   - if user_signed_in? && show_manage_button?(service)
     = render "components/presentable/header_component/service_drop_down_menu", service: service
-  %span.ordertype-label
-    %i{ class: "ordertype #{order_type(service)}" }
-    -# TODO: refactor dynamic translation
-    = t("offers.type.#{order_type(service)}")
+  = render "layouts/common_parts/services/order_type_label", object: service

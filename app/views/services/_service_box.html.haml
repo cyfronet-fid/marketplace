@@ -12,7 +12,7 @@
     .col.x-small
       %span
         = _("Organisation") + ":"
-      %strong{ "data-toggle" => "tooltip", "title" => "#{ providers_text(service).join(", ") }" }
+      %strong{ "data-toggle" => "tooltip", "title" => "#{ providers_text(service) }" }
         = resource_organisation_text(service).truncate(24)
     .col.x-small.no-gutters
       %span.text-right
