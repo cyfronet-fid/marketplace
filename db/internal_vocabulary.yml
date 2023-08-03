@@ -29,10 +29,10 @@ bundle_capabilities_of_goals:
     name: Big Data Storage
   long_term_storage:
     name: Long Term Storage
-  anonymisation:
-    name: Anonymisation
-  pseudonymisation:
-    name: Pseudonymisation
+  anonimisation:
+    name: Anonimisation
+  pseudonimisation:
+    name: Pseudonimisation
   metadata_removal_tool:
     name: Metadata Removal Tool
   data_discoverability:
