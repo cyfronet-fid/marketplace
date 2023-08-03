@@ -9,3 +9,11 @@
       class: "btn btn-primary pl-4 pr-4 mr-5  mb-3"
       = button_to _("Disable welcome modal"), admin_features_disable_modal_path,
       class: "btn btn-warning pl-4 pr-4 mr-5 mb-3"
+  .row.mt-4
+    .col-12
+      - if @suggestions.present?
+        %h3
+          #{_("Capabilities of goals suggestions")}:
+        %ul.simple-list
+          - @suggestions.each do |s|
+            %li= s

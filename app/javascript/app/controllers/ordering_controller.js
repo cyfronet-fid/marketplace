@@ -11,10 +11,27 @@ export default class extends Controller {
     "primaryOmsWrapper",
     "orderUrlWrapper",
     "omsParamsContainer",
+    "capabilities",
+    "suggestion",
   ];
 
   initialize() {
+    this.toggleSuggestion();
     this.updateVisibility();
+  }
+
+  toggleSuggestion(event) {
+    const target = this.capabilitiesTarget;
+
+    if (
+      Array.from(target.selectedOptions)
+        .map((x) => x.text)
+        .includes("Other")
+    ) {
+      this.suggestionTarget.classList.remove("d-none");
+    } else {
+      this.suggestionTarget.classList.add("d-none");
+    }
   }
 
   updateVisibility() {

@@ -53,6 +53,7 @@ class Backoffice::BundlePolicy < ApplicationPolicy
       :name,
       [bundle_goal_ids: []],
       [capability_of_goals_ids: []],
+      :capability_of_goal_suggestion,
       :description,
       :order_type,
       :resource_organisation_id,
