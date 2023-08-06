@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 module Importable
+  def object_status(active, suspended)
+    active && !suspended ? :published : :draft
+  end
+
   def map_target_users(target_users)
     TargetUser.where(eid: target_users)
   end

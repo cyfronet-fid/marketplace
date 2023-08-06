@@ -3,6 +3,8 @@
 require "mini_magick"
 
 class Import::Providers
+  include Importable
+
   def initialize(
     eosc_registry_base_url,
     dry_run: true,
@@ -35,14 +37,12 @@ class Import::Providers
       external_provider_data = external_data["provider"]
       eid = external_provider_data["id"]
       parsed_provider_data = Importers::Provider.new(external_provider_data, Time.now.to_i, "rest").call
-      parsed_provider_data["status"] = external_data["active"] ? :published : :draft
+      parsed_provider_data["status"] = object_status(external_data["active"], external_data["suspended"])
       eosc_registry_provider =
         Provider.joins(:sources).find_by("provider_sources.source_type": "eosc_registry", "provider_sources.eid": eid)
       current_provider = eosc_registry_provider || Provider.find_by(pid: parsed_provider_data[:pid])
 
       provider_source = ProviderSource.find_by(source_type: "eosc_registry", eid: eid)
-
-      # Bug fix for duplicated sources
 
       next if @dry_run
 

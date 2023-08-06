@@ -42,7 +42,7 @@ class Jms::ManageMessage < ApplicationService
         Service::PcCreateOrUpdateJob.perform_later(
           resource["serviceBundle"]["service"].merge(resource["serviceBundle"]["resourceExtras"] || {}),
           @eosc_registry_base_url,
-          resource["serviceBundle"]["active"],
+          resource["serviceBundle"]["active"] && !resource["serviceBundle"]["suspended"],
           modified_at,
           @token
         )
@@ -60,7 +60,7 @@ class Jms::ManageMessage < ApplicationService
       when "update", "create"
         Provider::PcCreateOrUpdateJob.perform_later(
           resource["providerBundle"]["provider"],
-          resource["providerBundle"]["active"],
+          resource["providerBundle"]["active"] && !resource["providerBundle"]["suspended"],
           modified_at
         )
       end
@@ -70,7 +70,7 @@ class Jms::ManageMessage < ApplicationService
       when "update", "create"
         Catalogue::PcCreateOrUpdateJob.perform_later(
           resource["catalogueBundle"]["catalogue"],
-          resource["catalogueBundle"]["active"],
+          resource["catalogueBundle"]["active"] && !resource["catalogueBundle"]["suspended"],
           modified_at
         )
       end
@@ -85,7 +85,7 @@ class Jms::ManageMessage < ApplicationService
       when "update", "create"
         Datasource::PcCreateOrUpdateJob.perform_later(
           resource["datasourceBundle"]["datasource"].merge(resource["datasourceBundle"]["resourceExtras"] || {}),
-          resource["datasourceBundle"]["active"],
+          resource["datasourceBundle"]["active"] && !resource["datasourceBundle"]["suspended"],
           @eosc_registry_base_url,
           @token,
           modified_at
