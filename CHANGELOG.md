@@ -12,6 +12,11 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Fixed
 - Feedback form (@michal-szostak)
 
+## [3.50.0-milestone]
+
+### Added
+- Receiving `suspended` resources status from the Provider's Component (@goreck888)
+
 ## [3.48.3] 2023-06-16
 
 ### Added

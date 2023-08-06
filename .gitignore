@@ -45,4 +45,4 @@ yarn-debug.log*
 # Ignore IDE configuration
 /.idea
 /.env
-/.run
+/.run/*
