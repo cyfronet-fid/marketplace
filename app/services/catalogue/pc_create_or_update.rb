@@ -37,7 +37,7 @@ class Catalogue::PcCreateOrUpdate
   end
 
   def self.update_catalogue(catalogue, catalogue_hash)
-    catalogue.update(catalogue_hash)
+    catalogue.assign_attributes(catalogue_hash)
     catalogue.save!
   end
 end
