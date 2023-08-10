@@ -27,7 +27,7 @@ describe("My project", () => {
      .should("contain", "/projects/");
    cy.contains("a", "Project details")
      .should("be.visible");
-   cy.contains("a", "Services")
+   cy.contains("a", "Resources")
      .click();
    cy.contains("a", "Add your first service")
      .click();

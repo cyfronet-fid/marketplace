@@ -1,0 +1,16 @@
+%li.projects-list
+  - if research_product.links.present?
+    %a.bundle-more.collapsed.dropdown{ href: "#collapse-example_#{research_product.id}",
+                    "data-toggle" => "collapse",
+                    "role" => "button",
+                    "aria-expanded" => "false",
+                    type: "button" }
+  = link_to research_product.title, project_research_product_path(project, research_product)
+  .float-right.status
+    %span.bundle-status.text-uppercase
+      = _(research_product.resource_type.humanize)
+
+- research_product.links.each do |link|
+  #collapse-example.bundle-box.padding.collapse{ id: "#{research_product.id}" }
+    %li.projects-list
+      = link_to link, link

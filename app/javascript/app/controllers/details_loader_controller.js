@@ -1,7 +1,7 @@
 import { Controller } from "stimulus";
 
 export default class extends Controller {
-  static targets = ["idSource", "details"];
+  static targets = ["idSource", "details", "empty", "projects"];
 
   connect() {
     this._fetchDetails(this.idSourceTarget.value);
@@ -9,6 +9,10 @@ export default class extends Controller {
 
   changed(event) {
     this._fetchDetails(event.target.value);
+    if (event.target.value) {
+      this.projectsTarget.classList.remove("d-none");
+      this.emptyTarget.classList.add("d-none");
+    }
   }
 
   _fetchDetails(id) {

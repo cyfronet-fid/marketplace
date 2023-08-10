@@ -65,6 +65,7 @@ Rails.application.routes.draw do
       resource :add, only: :create
       resource :archive, only: :create
       resources :about, only: :index
+      resources :research_products, only: %i[show index destroy]
       resources :services, only: [:show, :index] do
         scope module: :services do
           resource :opinion, only: [:new, :create]
@@ -85,6 +86,8 @@ Rails.application.routes.draw do
       resource :logo, only: :show
     end
   end
+
+  resources :research_products, only: %i[new create]
 
   resources :favourites, only: :index
   post "favourites/services", to: "favourites/services#update"

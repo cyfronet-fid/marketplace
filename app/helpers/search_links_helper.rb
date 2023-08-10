@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SearchLinksHelper
-  EXTERNAL_SEARCH_ENABLED = Rails.configuration.enable_external_search
+  EXTERNAL_SEARCH_ENABLED = Mp::Application.config.enable_external_search
 
   def external_search_enabled
     EXTERNAL_SEARCH_ENABLED
@@ -9,16 +9,21 @@ module SearchLinksHelper
 
   def services_tag_link(tag)
     search_base_url = Mp::Application.config.search_service_base_url
-    enable_external_search = Mp::Application.config.enable_external_search
-    return search_base_url + "/search/all?q=*&fq=tag_list:%22#{tag}%22" if enable_external_search
+    return search_base_url + "/search/all?q=*&fq=tag_list:%22#{tag}%22" if external_search_enabled
     services_path(tag: tag)
   end
 
   def project_add_link(project)
-    search_base_url = Mp::Application.config.search_service_base_url
-    enable_external_search = Mp::Application.config.enable_external_search
-    return search_base_url + "/search/service?q=*" if enable_external_search
-    project_add_path(project)
+    if external_search_enabled
+      link_to _("Add your first service"),
+              project_add_external_link,
+              class: "btn btn-primary mb-4 pl-5 pr-5 mt-3 text-center"
+    else
+      link_to _("Add your first service"),
+              project_add_path(project),
+              class: "btn btn-primary mb-4 pl-5 pr-5 mt-3 text-center",
+              method: :post
+    end
   end
 
   def project_add_external_link
@@ -85,8 +90,7 @@ module SearchLinksHelper
 
   def services_comparison_link(query_params)
     search_base_url = Mp::Application.config.search_service_base_url
-    enable_external_search = Mp::Application.config.enable_external_search
-    return search_base_url + "/search/service?q=*" if enable_external_search
+    return search_base_url + "/search/service?q=*" if external_search_enabled
     services_path(params: query_params)
   end
 
