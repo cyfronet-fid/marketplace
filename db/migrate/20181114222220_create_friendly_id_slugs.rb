@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-migration_class = ActiveRecord::VERSION::MAJOR >= 5 ? ActiveRecord::Migration[4.2] : ActiveRecord::Migration
+MIGRATION_CLASS = (ActiveRecord::VERSION::MAJOR >= 5 ? ActiveRecord::Migration[4.2] : ActiveRecord::Migration).freeze
 
-class CreateFriendlyIdSlugs < migration_class
+class CreateFriendlyIdSlugs < MIGRATION_CLASS
   def change
     create_table :friendly_id_slugs do |t|
       t.string :slug, null: false

@@ -1,0 +1,17 @@
+.card.offer-description.pin-service.mb-4
+  .card-body.p-4
+    .resource-row.row.mb-3
+      %span.title= attributes["title"]
+    .resource-row.row.mb-3
+      %span.pin-value.resource-type= attributes["resource_type"]
+    .resource-row.row
+      Author:
+      - attributes["authors"]&.each do |author|
+        %span.pin-value= author
+    .resource-row.row
+      - if attributes["links"].empty?
+        = _("Apologies, but it seems we couldn't find any relevant links at the moment")
+      - else
+        - attributes["links"]&.each do |link|
+          %span.link-row= link_to link, link
+

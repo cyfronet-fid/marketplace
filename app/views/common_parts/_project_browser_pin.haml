@@ -1,0 +1,30 @@
+%div{ "data-controller" => "details-loader", "data-details-loader-url" => projects_path }
+  %div{ class: ("d-none" unless current_user.projects.empty?), "data-details-loader-target": "empty" }
+    %p.empty-info
+      You don't have any projects yet.
+      %br
+      To pin this research object create a new project.
+    .text-center
+      = image_pack_tag "empty-projects.svg", alt: "Empty"
+    .text-center.mt-4
+      = link_to _("CREATE NEW PROJECT"), new_project_path,
+          class: "btn btn-primary pl-5 pr-5 mobile-bottom-margin", remote: true,
+          "data-e2e": "add-new-project-btn"
+  %div{ class: ("d-none" if current_user.projects.empty?), "data-details-loader-target": "projects" }
+    %h2 Select a Marketplace project to add the resource
+    = f.input :project do
+      .select-row
+        = f.input_field :project_id, collection: projects,
+            class: "form-control custom-select #{"is-invalid" unless step.errors[:project].empty?}",
+            "data-action" => "change->details-loader#changed",
+            "data-details-loader-target" => "idSource"
+        .mt-3.text-right
+          = link_to _("+ Create new"), new_project_path,
+              class: "text-uppercase font-weight-bolder", remote: true,
+              "data-e2e": "add-new-project-btn"
+
+    %div{ "data-details-loader-target" => "details" }
+
+    .text-center.mt-5
+      = f.button :submit, "PIN TO THE MARKETPLACE PROJECT ",
+            class: "btn btn-primary pl-5 pr-5 mobile-bottom-margin", "data-e2e": "create-offer-btn"

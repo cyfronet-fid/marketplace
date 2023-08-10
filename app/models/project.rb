@@ -28,6 +28,8 @@ class Project < ApplicationRecord
   attr_accessor :verified_recaptcha
 
   belongs_to :user
+  has_many :project_research_products, dependent: :destroy
+  has_many :research_products, through: :project_research_products
   has_many :project_items, dependent: :destroy
   has_many :project_scientific_domains, dependent: :destroy
   has_many :scientific_domains, through: :project_scientific_domains

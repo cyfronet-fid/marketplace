@@ -94,6 +94,11 @@ crumb :project_item do |project_item|
   end
 end
 
+crumb :research_product do |project, rp|
+  link "Research Product", project_research_product_path(project, rp)
+  parent :project, project
+end
+
 crumb :projects do
   link "My projects", projects_path
   parent :marketplace_root
