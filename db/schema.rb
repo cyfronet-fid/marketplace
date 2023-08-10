@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_05_132350) do
+ActiveRecord::Schema.define(version: 2023_08_08_155330) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -369,29 +369,6 @@ ActiveRecord::Schema.define(version: 2023_07_05_132350) do
     t.index ["type"], name: "index_omses_on_type"
   end
 
-  create_table "order_changes", force: :cascade do |t|
-    t.string "status"
-    t.text "message"
-    t.bigint "order_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "author_id"
-    t.index ["author_id"], name: "index_order_changes_on_author_id"
-    t.index ["order_id"], name: "index_order_changes_on_order_id"
-  end
-
-  create_table "orders", force: :cascade do |t|
-    t.string "status", null: false
-    t.bigint "service_id", null: false
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "issue_id"
-    t.integer "issue_status", default: 2, null: false
-    t.index ["service_id"], name: "index_orders_on_service_id"
-    t.index ["user_id"], name: "index_orders_on_user_id"
-  end
-
   create_table "persistent_identity_system_vocabularies", force: :cascade do |t|
     t.bigint "persistent_identity_system_id"
     t.bigint "vocabulary_id"
@@ -453,6 +430,14 @@ ActiveRecord::Schema.define(version: 2023_07_05_132350) do
     t.index ["ancestry"], name: "index_project_items_on_ancestry"
     t.index ["offer_id"], name: "index_project_items_on_offer_id"
     t.index ["project_id"], name: "index_project_items_on_project_id"
+  end
+
+  create_table "project_research_products", force: :cascade do |t|
+    t.bigint "project_id", null: false
+    t.bigint "research_product_id", null: false
+    t.index ["project_id", "research_product_id"], name: "index_on_project_id_and_rp_id", unique: true
+    t.index ["project_id"], name: "index_project_research_products_on_project_id"
+    t.index ["research_product_id"], name: "index_project_research_products_on_research_product_id"
   end
 
   create_table "project_scientific_domains", force: :cascade do |t|
@@ -567,6 +552,17 @@ ActiveRecord::Schema.define(version: 2023_07_05_132350) do
     t.integer "upstream_id"
     t.datetime "synchronized_at"
     t.string "status"
+  end
+
+  create_table "research_products", force: :cascade do |t|
+    t.string "resource_id", null: false
+    t.string "resource_type", null: false
+    t.string "title", null: false
+    t.string "authors", default: [], array: true
+    t.string "links", default: [], array: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["resource_id", "resource_type"], name: "index_research_products_on_resource_id_and_resource_type", unique: true
   end
 
   create_table "scientific_domains", force: :cascade do |t|

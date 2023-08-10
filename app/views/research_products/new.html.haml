@@ -1,0 +1,26 @@
+.container
+  %ul.nav.nav-fill.order-nav.mt-5.mb-5
+    %li.nav-item
+      = link_to "Browsing resources", external_search_url(include_query: true),
+            class: "nav-link "
+    %li.nav-item
+      %a.nav-link.active Select project to pin the resource
+    %li.nav-item
+      %a.nav-link Final details
+
+  .mt-5
+    = simple_form_for @project_research_product, url: research_products_path, method: :post do |f|
+      .row.project-pin
+        .col-12.col-lg-6
+          = f.hidden_field :research_product_id, value: @research_product&.id || @project_research_product&.project_id
+          = render "common_parts/research_product_table", research_product: @research_product,
+          attributes: @research_product.public_attributes
+          %span.text-left
+            %hr.bottom-hr.mt-5.mb-4
+            = link_to "BACK TO PREVIOUS STEP", external_search_url(include_query: true),
+            class: "text-uppercase "
+
+        .col-12.col-lg-6
+          = render "common_parts/project_browser_pin", step: @project_research_product, projects: @projects, f: f
+
+

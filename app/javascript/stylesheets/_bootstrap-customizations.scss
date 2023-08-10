@@ -4331,7 +4331,7 @@ abbr[title] {
     h3 {
       margin: 0;
       font-size: 22px;
-      font-weight: 500;
+      font-weight: 600;
     }
 
     .close {
@@ -5569,6 +5569,94 @@ abbr[title] {
   background: $alert-bg;
   border: none;
   border-radius: 0;
+}
+
+.project-pin {
+
+  .card {
+    border-radius: 8px;
+  }
+
+  .card-body {
+    table {
+      td {
+        min-width: 115px;
+        border: none;
+      }
+    }
+  }
+
+  h2 {
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-bottom: 20px;
+    margin-top: 15px;
+  }
+
+  label {
+    display: none;
+  }
+
+  select {
+    height: 55px;
+    border-radius: 8px;
+  }
+
+  dl {
+    dd {
+      color: $palette-gray-70;
+    }
+  }
+
+  .pin-service {
+
+    .resource-row {
+      margin: 0 0 15px;
+      line-height: 25px;
+
+      .title {
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+        color: $palette-blue;
+        margin: 0;
+      }
+
+      .link-row {
+        width: 100%;
+        display: inline-block;
+
+        a {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .pin-value {
+      color: $palette-blue;
+      background: rgba($tag-bg-1, 0.3490196078);
+      padding: 2px 7px 4px;
+      margin-left: 10px;
+
+      &.resource-type {
+        padding: 4px 7px 5px;
+        float: left;
+        margin: 0;
+      }
+    }
+  }
+}
+
+.empty-info {
+  text-align: center;
+  font-size: 24px;
+  line-height: 1.35;
+  margin: 15px 0 30px;
+  font-weight: 500;
+  color: $palette-solid-50;
 }
 
 // scss-lint:disable all

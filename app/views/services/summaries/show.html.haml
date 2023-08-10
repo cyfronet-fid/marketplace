@@ -30,7 +30,7 @@
                 = _("Voucher ID")
               %dd= @step.voucher_id
 
-        = render "services/summaries/project_browser", step: @step, projects: @projects, f: f
+        = render "common_parts/project_browser", step: @step, projects: @projects, f: f
     .card.offer-description.mb-4
       .card-body.pb-2.pt-4.pl-4.pr-4
         %h4

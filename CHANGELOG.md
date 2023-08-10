@@ -13,6 +13,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Possibility to tag offers and bundles (@goreck888)
 - User suggestion input for bundle capabilities of goals values (@goreck888)
 - Bundle details view (@jarekzet, @goreck888)
+- Pin Research Products to the Projects (@goreck888, @jarekzet)
 
 ### Changed
 - Bundle linking available for all types of offers (@goreck888)

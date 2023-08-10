@@ -1,5 +1,6 @@
 {
-  let projectSelect = document.getElementById("customizable_project_item_project_id");
+  let projectSelect = document.getElementById("customizable_project_item_project_id") ??
+                      document.getElementById("project_research_product_project_id");
   let child = document.createElement("option")
   child.text = "<%= @project.name %>"
   child.value = <%= @project.id %>
@@ -8,7 +9,7 @@
 
   projectSelect.value = "<%= @project.id %>";
   projectSelect.focus();
-  document.getElementById("customizable_project_item_project_id").dispatchEvent(new Event("change"));
+  projectSelect.dispatchEvent(new Event("change"));
 
   $("#ajax-modal").modal("hide");
 }

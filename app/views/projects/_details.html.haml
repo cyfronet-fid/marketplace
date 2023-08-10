@@ -1,98 +1,105 @@
 - content_for :title, project.name
-%h3
+%h3.border-bottom.mb-3
   = _("Project details")
-%dl
-  %dt
-    = _("Project name")
-  %dd= project.name
+.row.pin-details
+  .col-6.mt-2
+    %dl
+      %dt.font-bold.mb-2
+        = _("Project name")
+      %dd.mb-3= project.name
+    - if project.private_company?
+      %dt
+        = _("Company name")
+      %dd.mb-3= project.company_name
+  .col-6.mt-2
+    %dl
+      %dt.font-bold.mb-2
+        = _("Email")
+      %dd.mb-3= link_to project.email, "mailto:#{project.email}"
+    - if project.project_website_url?
+      %dt
+        = _("Project website url")
+      %dd.mb-3= project.project_website_url
 
-  %dt
-    = _("Email")
-  %dd= link_to project.email, "mailto:#{project.email}"
 
-  - if project.project_website_url?
-    %dt
-      = _("Project website url")
-    %dd= project.project_website_url
-
-  - if project.private_company?
-    %dt
-      = _("Company name")
-    %dd= project.company_name
-
-
-%h3
+%h3.border-bottom.mt-4.mb-3
   = _("Customer details")
-%dl
 
-  %dt
-    = _("Customer Typology")
-  %dd= t "projects.customer_typology.#{project.customer_typology || "none"}"
+.row.pin-details
+  .col-6.mt-2
+    %dl
+      %dt.font-bold.mb-2
+        = _("Customer Typology")
+      %dd.mb-3= t "projects.customer_typology.#{project.customer_typology || "none"}"
+      - if project.research?
+        %dt.font-bold.mb-2
+          = _("User group name")
+        %dd.mb-3= project.user_group_name
 
-  - if project.research?
-    %dt
-      = _("User group name")
-    %dd= project.user_group_name
+      - if project.single_user_or_community?
+        %dt.font-bold.mb-2
+          = _("Organization")
+        %dd.mb-3= project.organization
 
-  - if project.single_user_or_community?
-    %dt
-      = _("Organization")
-    %dd= project.organization
+      - if project.department?
+        %dt.font-bold.mb-2
+          = _("Department")
+        %dd.mb-3= project.department
 
-  - if project.department?
-    %dt
-      = _("Department")
-    %dd= project.department
+  .col-6.mt-2
+    %dl
+      - if project.single_user_or_private_company?
+        %dt.font-bold.mb-2
+          = _("Origin country")
+        %dd.mb-3= project.country_of_origin
 
-  - if project.single_user_or_private_company?
-    %dt
-      = _("Origin country")
-    %dd= project.country_of_origin
+      - if project.webpage?
+        %dt.font-bold.mb-2
+          = _("Webpage")
+        %dd.mb-3= project.webpage
 
-  - if project.webpage?
-    %dt
-      = _("Webpage")
-    %dd= project.webpage
+      - if project.scientific_domains .present?
+        %dt.font-bold.mb-2
+          = _("Scientific Domains")
+      - project.scientific_domains .each do |area|
+        %dd.mb-0= area.name
 
-  - if project.scientific_domains .present?
-    %dt
-      = _("Scientific Domains")
-  - project.scientific_domains .each do |area|
-    %dd= area.name
+      - if project.research?
+        %dt.font-bold.mb-2
+          = _("User group name")
+        %dd.mb-3= project.user_group_name
 
-  - if project.research?
-    %dt
-      = _("User group name")
-    %dd= project.user_group_name
+      - if project.project?
+        %dt.font-bold.mb-2
+          = _("Project name")
+        %dd.mb-3= project.project_name
 
-  - if project.project?
-    %dt
-      = _("Project name")
-    %dd= project.project_name
+      - if project.project_website_url?
+        %dt.font-bold.mb-2
+          = _("Project website url")
+        %dd.mb-3= project.project_website_url
 
-  - if project.project_website_url?
-    %dt
-      = _("Project website url")
-    %dd= project.project_website_url
+      - if project.company_website_url?
+        %dt.font-bold.mb-2
+          = _("Company website url")
+        %dd.mb-3= project.company_website_url
 
-  - if project.company_website_url?
-    %dt
-      = _("Company website url")
-    %dd= project.company_website_url
+      - unless project.single_user? || project.countries_of_partnership.blank?
+        %dt.font-bold.mb-2
+          = _("Collaboration countries")
+        %dd.mb-3= project.countries_of_partnership&.join(", ")
 
-  - unless project.single_user? || project.countries_of_partnership.blank?
-    %dt
-      = _("Collaboration countries")
-    %dd= project.countries_of_partnership&.join(", ")
-
-%h3
+%h3.border-bottom.mt-4.mb-3
   = _("Usage")
-%dl
-  %dt
-    = _("Reason to request access to the EOSC services")
-  %dd= project.reason_for_access
 
-  - if project.additional_information?
-    %dt
-      = _("Additional information")
-    %dd= project.additional_information
+.row.pin-details
+  .col.mt-2
+    %dl
+      %dt.mb-3
+        = _("Reason to request access to the EOSC services")
+      %dd= project.reason_for_access
+
+      - if project.additional_information?
+        %dt.mt-4.mb-2
+          = _("Additional information")
+        %dd= project.additional_information

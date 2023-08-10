@@ -2,9 +2,16 @@
 - breadcrumb :project, @project
 
 = render "projects/project_layout", project: @project, projects: @projects do
-  - if @project_items.empty?
+  - if @project_items.empty? && @research_products.empty?
     = render "projects/empty_project", project: @project
   - else
+    - if @research_products.any?
+      .other-resources
+        %h3.mt-5.mb-3= _("Research products")
+        %ul.list-group
+          = render(partial: "projects/services/research_product",
+            collection: @research_products,
+            locals: { project: @project })
     - if @order_required_items.any?
       .ordered-resources
         %h3.mt-5.mb-3= _("Ordered services")
