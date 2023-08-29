@@ -43,7 +43,7 @@ module Service::Recommendable
   end
 
   def fetch_similar(service_id, user_id, quantity = 6)
-    url = "#{Mp::Application.config.similar_services_host}/similar_services/recommendation"
+    url = "#{Mp::Application.config.similar_services_host}/v1/similar_services/recommendation"
     body = { user_id: user_id, service_id: service_id, num: quantity }.to_json
     headers = { "Content-Type": "application/json", Accept: "application/json" }
     response =
@@ -55,7 +55,8 @@ module Service::Recommendable
 
     raise StandardError if response.status != 200
 
-    ids = body.is_a?(Array) ? body.each.map { |e| e["service_id"].to_i } : []
+    ids = body["recommendations"] || []
+
     Service.where(id: ids, status: %i[published unverified])
   rescue StandardError
     Sentry.capture_message("Similar services recommendation, similar services endpoint response error")

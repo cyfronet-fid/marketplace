@@ -23,10 +23,13 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Ordering another bundle in the same service (@goreck888)
 - Linking one main offer with multiple bundles (@goreck888)
 
-## [3.50.0] 2023-08-28
+## [3.50.0] 2023-08-30
 
 ### Added
 - Receiving `suspended` resources status from the Provider's Component (@goreck888)
+
+### Fixed
+- Showing a similar services recommendation panel (@goreck888)
 
 ## [3.49.2] 2023-07-31
 
