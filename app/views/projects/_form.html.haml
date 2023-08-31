@@ -17,7 +17,7 @@
   %h4
     = _("Customer details")
   = f.input :customer_typology, collection: Project.customer_typologies.keys.map(&:to_sym),
-    input_html: { "data-target" => "project.customer",
+    input_html: { "data-project-target" => "customer",
                   "data-action" => "change->project#showSelectedSection", class: "col-lg-5 form-control-lg" }
   = render "customer_typology_fields", f: f
   - if show_recaptcha

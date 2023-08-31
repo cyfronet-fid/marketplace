@@ -26,7 +26,7 @@ module AttributesHelper
   end
 
   def hideable_options(index)
-    index > 3 ? { class: "d-none", "data-target": "parameter.hideableParameter" } : {}
+    index > 3 ? { class: "d-none", "data-parameter-target": "hideableParameter" } : {}
   end
 
   private

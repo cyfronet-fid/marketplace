@@ -37,7 +37,7 @@
                         disabled: !checked?(@object.slug) && @comparison_enabled,
                         "data-probe" => "",
                         "data-e2e": "comparison-checkbox",
-                        "data-target": "comparison.checkbox",
+                        "data-comparison-target": "checkbox",
                         "data-action": "click->comparison#update"
                       %span.smaller
                         = _("Add to comparison")
@@ -47,12 +47,12 @@
                       = check_box_tag "favourite", @object.slug, favourite?(Array(@favourite_services), @object.slug),
                         id: "favourite-#{@object.id}",
                             class: "form-check-input",
-                            "data-target": "favourite.checkbox",
+                            "data-favourite-target": "checkbox",
                             "data-e2e": "favourite-checkbox",
                             "data-action": "click->favourite#updateFromRes"
                       %span.smaller
                         = _("Add to favourites")
-                  #popup-modal.modal.show{ "data-target": "favourite.popup", tabindex: "-1",
+                  #popup-modal.modal.show{ "data-favourite-target": "popup", tabindex: "-1",
                                     role: "dialog", aria: { hidden: "true" } }
 
   .col-12.col-lg-3.text-center.vertical-center{ class: ("horizontal-space" if horizontal) }

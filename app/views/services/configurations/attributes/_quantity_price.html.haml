@@ -10,7 +10,7 @@
       min: 0, max: attr.max,
       as: :integer,
       "data-action": "change->quantity-price#calculate",
-      "data-target": "quantity-price.quantity"
+      "data-quantity-price-target": "quantity"
     .input-group-append
-      %span.input-group-text{ "data-target": "quantity-price.price" } 0
+      %span.input-group-text{ "data-quantity-price-target": "price" } 0
       %span.input-group-text= attr.currency

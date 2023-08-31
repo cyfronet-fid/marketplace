@@ -39,7 +39,7 @@
               input_html: { multiple: true, data: { choice: true } }
         = f.input :national_roadmaps, disabled: cant_edit([national_roadmaps: []]), multiple: true,
               input_html: { class: "form-control text optional" },
-              wrapper_html: { "data-target" => "form.national_roadmaps" }, as: :array
+              wrapper_html: { "data-form-target" => "national_roadmaps" }, as: :array
         = link_to_add_array_field("provider", "national_roadmaps")
     .row
       .col-12

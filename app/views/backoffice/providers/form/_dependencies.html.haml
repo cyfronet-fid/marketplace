@@ -24,7 +24,7 @@
     .row
       .col-12
         = f.input :affiliations, multiple: true, input_html: { class: "form-control text optional" },
-              wrapper_html: { "data-target" => "form.affiliations" },
+              wrapper_html: { "data-form-target" => "affiliations" },
               disabled: cant_edit([affiliations: []]), as: :array
         = link_to_add_array_field("provider", "affiliations")
         .mt-4

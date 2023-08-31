@@ -4,7 +4,7 @@
       - if messages.count.positive?
         - messages.each do |message|
           - if message == earliest_new_message
-            .new-message-separator{ "data-target": "conversation.separator" }= _("NEW")
+            .new-message-separator{ "data-conversation-target": "separator" }= _("NEW")
           = render "messages/message", message: message
       - else
         .contact-row.form-inline

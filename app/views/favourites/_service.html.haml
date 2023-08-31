@@ -1,4 +1,4 @@
-.row{ id: "box-#{service.id}", "data-target": "favourite.result", "data-e2e": "favourite-result" }
+.row{ id: "box-#{service.id}", "data-favourite-target": "result", "data-e2e": "favourite-result" }
   = render "service_details", service: service do
     = link_to service.name, service_path(service)
     .row
@@ -10,7 +10,7 @@
                   disabled: !checked?(service.slug) && comparison_enabled,
                   "data-probe": "",
                   "data-service-id": service.id,
-                  "data-target": "comparison.checkbox",
+                  "data-comparison-target": "checkbox",
                   "data-action": "click->comparison#update"
             %span
               = _("Add to comparison")
@@ -20,7 +20,7 @@
             = check_box_tag "favourite", service.slug, favourite?(Array(current_user.favourite_services), service.slug),
               id: "favourite-#{service.id}",
                   class: "form-check-input",
-                  "data-target": "favourite.checkbox",
+                  "data-favourite-target": "checkbox",
                   "data-e2e": "favourite-checkbox",
                   "data-action": "click->favourite#updateFromFav",
                   "data-value": "box-#{service.id}"

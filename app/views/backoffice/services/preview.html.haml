@@ -34,14 +34,14 @@
       = render "services/tabs", service: @service, preview: true
 
   .tab-content
-    #about{ "data-target": "preview.content" }
+    #about{ "data-preview-target": "content" }
       = render Presentable::DescriptionComponent.new(object: @service, preview: true) do |c|
         - c.description_panels do
           - if policy(@service).order? && (policy(@service).offers_show? || policy(@service).bundles_show?)
             = render "services/offers", offers: @offers, service: @service,
                                         bundles: @bundles, bundled: @bundled, preview: local_assigns[:preview]
       = render "taggable/details_section", taggable: @service, preview: true
-    #details.d-none{ "data-target": "preview.content" }
+    #details.d-none{ "data-preview-target": "content" }
       = render Presentable::DetailsComponent.new(@service, preview: true)
 
   .container.mt-4.pt-4.related-container

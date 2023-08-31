@@ -1,5 +1,5 @@
 %div{ data: { controller: "stars" } }
-  %ul.list-inline{ data: { action: "click->stars#fill", target: "stars.ratingStars",
+  %ul.list-inline{ data: { action: "click->stars#fill", "stars-target": "ratingStars",
     "rating-stars": field || "service_opinion_rating" } }
     - (1..5).each do |a|
       %li.list-inline-item

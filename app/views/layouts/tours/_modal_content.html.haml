@@ -1,7 +1,7 @@
 = form_tag "/tour_feedbacks/", remote: true,
   "data-action" => "ajax:success->tourfeedbackmodal#onPostSuccess ajax:error->tourfeedbackmodal#onPostError",
   "data-controller" => "tourfeedbackmodal",
-  "data-target" => "tourfeedbackmodal.form" do
+  "data-tourfeedbackmodal-target" => "form" do
   .row
     .col-12.col-sm-4.image-col
       = image_pack_tag "new-feature.png", class: "img-fluid"
@@ -24,11 +24,11 @@
             Select the checkbox to be a part of our validation team.
           .form-group.form-check
             = check_box_tag :share, "yes", form["share"], class: "form-check-input",
-            "data-target": "tourfeedbackmodal.share", "data-action": "change->tourfeedbackmodal#share"
+            "data-tourfeedbackmodal-target": "share", "data-action": "change->tourfeedbackmodal#share"
             = label_tag :share, "Yes, I want to take part in the EOSC Portal design verification/validation"
           #recaptcha= recaptcha_tags
           - unless current_user
-            .form-group.feedback-email{ "data-target" => "tourfeedbackmodal.email", class: ("show" if form["share"]) }
+            .form-group.feedback-email{ "data-tourfeedbackmodal-target" => "email", class: ("show" if form["share"]) }
               = label_tag :email, "Email address"
               = text_field_tag :email, form["email"], class: "form-control #{"is-invalid" if errors["email"]}",
               placeholder: "email@domain", "data-controller": "clearerrors", "data-action": "click->clearerrors#change"

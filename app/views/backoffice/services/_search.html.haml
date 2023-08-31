@@ -1,6 +1,7 @@
 
 = form_tag url_for, method: :get, role: "search",
-           "data-target": "autocomplete.form search.form",
+           "data-autocomplete-target": "form",
+           "data-search-target": "form",
            "data-controller": "autocomplete",
            "data-search-services-path": backoffice_services_path,
            "data-search-categories-path": "/backoffice/services/c",
@@ -10,20 +11,20 @@
     %label.sr-only{ for: "search" } Search
     = text_field_tag :q, params[:q],
                                      placeholder: _("Find service..."),
-                                     "data-target": "autocomplete.input",
+                                     "data-autocomplete-target": "input",
                                      "data-e2e": "searchbar-input",
                                      "data-toggle": "dropdown"
     - if params[:q].present? && params.permitted?
       %a.search-clear{ href: url_for(params.except(:q, :sort, :page)), title: _("Clear search"),
       "data-e2e": "search-clear-btn" }
         .fas.fa-times
-    = hidden_field_tag "object_id", nil, "data-target": "autocomplete.hidden"
-    = hidden_field_tag "type", nil, "data-target": "autocomplete.type"
+    = hidden_field_tag "object_id", nil, "data-autocomplete-target": "hidden"
+    = hidden_field_tag "type", nil, "data-autocomplete-target": "type"
     = hidden_field_tag "sort", "_score", id: nil
-    = hidden_field_tag "anchor", nil, "data-target": "autocomplete.anchor"
+    = hidden_field_tag "anchor", nil, "data-autocomplete-target": "anchor"
     - query_params.except(:q, :sort).each do |key, value|
       = render "layouts/hidden_fields", key: key, value: value
-    %ul.autocomplete-results{ "data-target": "autocomplete.results", "data-e2e": "autocomplete-results" }
+    %ul.autocomplete-results{ "data-autocomplete-target": "results", "data-e2e": "autocomplete-results" }
   .input-group-append
     %button#query-submit.input-group-text.bg-white
       %i.fas.fa-search
