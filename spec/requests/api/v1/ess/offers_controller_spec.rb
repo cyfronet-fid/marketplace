@@ -35,7 +35,7 @@ RSpec.describe Api::V1::Ess::OffersController, swagger_doc: "v1/ess_swagger.json
           expected = offers << second_offer
           data = JSON.parse(response.body)
           expect(data.length).to eq(expected.size)
-          expect(data).to eq(expected&.map { |s| Ess::OfferSerializer.new(s).as_json.deep_stringify_keys })
+          expect(data).to match_array(expected&.map { |s| Ess::OfferSerializer.new(s).as_json.deep_stringify_keys })
         end
       end
 

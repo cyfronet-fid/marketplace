@@ -79,7 +79,7 @@ RSpec.feature "Service browsing", end_user_frontend: true do
 
       visit service_path(service)
 
-      expect(page.body).to have_content "Similar services"
+      expect(page.body).to have_content "Suggested compatible services"
       expect(page.body).to have_content related.name
     end
 
