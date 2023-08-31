@@ -17,7 +17,7 @@
 
       = render "backoffice/datasources/tabs", datasource: @datasource, params: { from: "backoffice_datasource" }
   .tab-content
-    #about{ "data-target": "datasource.content" }
+    #about{ "data-datasource-target": "content" }
       = render Presentable::DescriptionComponent.new(object: @datasource, from: "backoffice_service") do |c|
         - c.sidebar_options do
           %h5
@@ -33,5 +33,5 @@
                 = _("Updated at") + ":"
               %strong.text-dark= l @datasource.updated_at, format: :short
       = render "taggable/details_section", taggable: @datasource
-    #details.d-none{ "data-target": "datasource.content" }
+    #details.d-none{ "data-datasource-target": "content" }
       = render Presentable::DetailsComponent.new(@datasource, preview: false)

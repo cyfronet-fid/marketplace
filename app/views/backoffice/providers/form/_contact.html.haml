@@ -32,17 +32,17 @@
             = main_contact_form.input :email, disabled: provider.upstream_id.present?
             = main_contact_form.input :phone, disabled: provider.upstream_id.present?
             = main_contact_form.input :position, disabled: provider.upstream_id.present?
-    .row.service-contact-emails{ "data-target": "service.publicContacts" }
+    .row.service-contact-emails{ "data-service-target": "publicContacts" }
       .col-12
         %h3
           = _("Public contacts")
         = f.error :public_contacts, class: "invalid-feedback d-block"
         = f.fields_for :public_contacts, disabled: provider.upstream_id.present?, multiple: true, as: :array,
-                wrapper_html: { "data-target" => "form.publicContact" } do |public_contact_form|
+                wrapper_html: { "data-form-target" => "publicContact" } do |public_contact_form|
           = render "backoffice/common_parts/form/public_contact_fields",
           public_contact_form: public_contact_form, object: provider, provider_form: true
         = link_to _("Add additional public contact"), "#", class: "btn btn-primary disablable",
-          data: { target: "form.addField",
+          data: { form: { target: "addField" },
           action: "click->form#addField",
           value: "publicContacts",
           fields: f.fields_for(:public_contacts, PublicContact.new,

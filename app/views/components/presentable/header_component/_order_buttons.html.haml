@@ -5,7 +5,7 @@
                   "data-e2e": "access-service-btn",
                   "data-probe": "",
                   "data-service-id": service.id,
-                  "data-target": local_assigns[:preview] ? "preview.link" : ""
+                  "data-preview-target": local_assigns[:preview] ? "link" : ""
   - if user_signed_in? && show_manage_button?(service)
     = render "components/presentable/header_component/service_drop_down_menu", service: service
   %span.ordertype-label

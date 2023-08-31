@@ -22,7 +22,7 @@
 
     = render "services/tabs", service: @service
     - dynamic_class = (session[:comparison]&.size || 0).positive? ? "d-block" : "d-none"
-    #comparison-bar.comparison-bar.fixed-bottom{ class: dynamic_class, "data-target": "comparison.bar" }
+    #comparison-bar.comparison-bar.fixed-bottom{ class: dynamic_class, "data-comparison-target": "bar" }
       = render "comparisons/bar", services: @compare_services, category: @category
 
 .tab-content

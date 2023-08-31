@@ -2,7 +2,7 @@
   .row
     .container
       .row
-        .col-lg-9.col-12.row.services-list{ "data-target": "comparison.box" }
+        .col-lg-9.col-12.row.services-list{ "data-comparison-target": "box" }
           - unless services.blank? || current_page?(backoffice_services_path)
             = render partial: "comparisons/service", collection: services
         .col-lg-3.col-12.text-right.action-box

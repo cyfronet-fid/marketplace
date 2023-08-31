@@ -1,4 +1,4 @@
-= form_tag url_for, method: :get, role: "search", "data-controller": "order", "data-target": "order.form" do
+= form_tag url_for, method: :get, role: "search", "data-controller": "order", "data-order-target": "form" do
   - query_params.except(:sort).each do |key, value|
     = render "layouts/hidden_fields", key: key, value: value
   .form-group.row.sort-box
@@ -6,7 +6,7 @@
       = _("Sort by") + ":"
     .col-sm-9.pl-0
       %select#sort.query-sort.form-control.form-control-sm{ name: "sort",
-                                                            "data-target": "order.select",
+                                                            "data-order-target": "select",
                                                             "data-e2e": "select-order",
                                                             "data-action": "change->order#reload" }
         = options_for_select(sort_options, params[:sort])

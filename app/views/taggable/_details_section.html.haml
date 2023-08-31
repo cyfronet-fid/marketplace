@@ -3,4 +3,4 @@
     = _("Tags") + ":"
     - taggable.tag_list.sort.each do |tag|
       = link_to tag, services_tag_link(tag), class: "badge badge-light", "data-e2e": "tag-btn",
-      "data-target": local_assigns[:preview] ? "preview.link" : ""
+      "data-preview-target": local_assigns[:preview] ? "link" : ""

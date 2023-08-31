@@ -28,7 +28,7 @@
       - else
         = f.input :related_platforms, label: _("Related platforms"), multiple: true,
                   input_html: { class: "form-control" },
-                  wrapper_html: { "data-target" => "service.relatedPlatforms" },
+                  wrapper_html: { "data-service-target" => "elatedPlatforms" },
                   disabled: cant_edit([related_platforms: []]), as: :array
         = link_to_add_array_field("service", "related_platforms")
       = f.input :catalogue_id, disabled: cant_edit(:catalogue_id),

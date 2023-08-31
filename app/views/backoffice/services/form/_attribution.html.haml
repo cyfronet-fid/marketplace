@@ -22,6 +22,6 @@
       .row
         .col-12
           = f.input :grant_project_names, input_html: { class: "form-control text optional" },
-                    wrapper_html: { "data-target" => "service.grantProjectNames" },
+                    wrapper_html: { "data-service-target" => "grantProjectNames" },
                     disabled: cant_edit([grant_project_names: []]), as: :array
           = link_to_add_array_field("service", "grant_project_names")

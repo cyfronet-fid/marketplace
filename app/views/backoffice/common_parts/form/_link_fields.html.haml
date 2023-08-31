@@ -1,9 +1,9 @@
-%div{ "data-target": "form.#{link_name}" }
+%div{ "data-form-target": "#{link_name}" }
   .contact
     = link_form.hidden_field :id, disabled: object.present? ? object&.upstream_id.present? : nil
     = link_form.input :url, disabled: object.present? ? object&.upstream_id.present? : nil
     = link_form.input :name, disabled: object.present? ? object&.upstream_id.present? : nil
-    = link_form.hidden_field :_destroy, "data-target": "form.destroy"
+    = link_form.hidden_field :_destroy, "data-form-target": "destroy"
     .text-right
       = link_to _("Delete #{link_name.underscore.humanize}"), "#", id: "#{link_name}-delete-#{link_form.index}",
       class: "btn-sm disablable btn-danger", "data-action": "click->form#removeField"

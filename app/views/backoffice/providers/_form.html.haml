@@ -1,5 +1,5 @@
 = simple_form_for [:backoffice, provider],
-  html: { "data-controller" => "form", "data-target": "form.form",
+  html: { "data-controller" => "form", "data-form-target": "form",
   "data-disabled": provider.upstream_id.present? } do |f|
   = f.error_notification
   .row

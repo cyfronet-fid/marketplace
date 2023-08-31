@@ -24,11 +24,11 @@
       %h3
         = _("Multimedia urls")
       = f.fields_for :link_multimedia_urls, disabled: service.upstream_id.present?, multiple: true, as: :array,
-                  wrapper_html: { "data-target" => "form.link" } do |link_form|
+                  wrapper_html: { "data-form-target" => "link" } do |link_form|
         = render "backoffice/common_parts/form/link_fields",
                 link_form: link_form, object: service, link_name: "multimedia"
       = link_to _("Add new multimedia"), "#", class: "btn btn-primary disablable",
-                data: { target: "form.addField",
+                data: { "form-target": "addField",
                 action: "click->form#addField",
                 value: "multimedia",
                 fields: f.fields_for(:link_multimedia_urls, Link::MultimediaUrl.new,
@@ -38,11 +38,11 @@
         %h3
           = _("Use cases urls")
         = f.fields_for :link_use_cases_urls, disabled: service.upstream_id.present?, multiple: true, as: :array,
-                  wrapper_html: { "data-target" => "form.link" } do |link_form|
+                  wrapper_html: { "data-form-target" => "link" } do |link_form|
           = render "backoffice/common_parts/form/link_fields",
                   link_form: link_form, object: service, link_name: "useCase"
         = link_to _("Add new use case"), "#", class: "btn btn-primary disablable",
-                  data: { target: "form.addField",
+                  data: { "form-target": "addField",
                   action: "click->form#addField",
                   value: "useCases",
                   fields: f.fields_for(:link_use_cases_urls, Link::UseCasesUrl.new,
