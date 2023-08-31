@@ -12,9 +12,9 @@
             %p.mb-1
               %i.fas.fa-check-circle
               Your token is active:
-            %p.active{ "data-target": "token.content", "data-token": "#{current_user&.authentication_token}" }
+            %p.active{ "data-token-target": "content", "data-token": "#{current_user&.authentication_token}" }
               = "*" * 20
-            %a#toggler.text-uppercase.underline-light.token-visibility{ "data-target": "token.button",
+            %a#toggler.text-uppercase.underline-light.token-visibility{ "data-token-target": "button",
               "data-action": "click->token#toggle" }
               Show token
           - elsif current_user.present?

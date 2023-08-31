@@ -1,14 +1,8 @@
-.tour-feedback{ "data-controller" => "tourfeedback", "data-target": "tourfeedback.input", value: value }
-
+.tour-feedback{ "data-controller" => "tourfeedback", "data-tourfeedback-target": "input", value: value }
   .feedback-rating
-    .feedback-point.no-events{ "data-target" => "tourfeedback.point", disabled: true }
-    .feedback-point.no-events{ "data-target" => "tourfeedback.point", disabled: true }
-    .feedback-point.no-events{ "data-target" => "tourfeedback.point", disabled: true }
-    .feedback-point.no-events{ "data-target" => "tourfeedback.point", disabled: true }
-    .feedback-point.no-events{ "data-target" => "tourfeedback.point", disabled: true }
+    - 5.times do
+      .feedback-point.no-events{ "data-tourfeedback-target" => "point", disabled: true }
 
     .feedback-lines
-      .feedback-line{ "data-target" => "tourfeedback.line" }
-      .feedback-line{ "data-target" => "tourfeedback.line" }
-      .feedback-line{ "data-target" => "tourfeedback.line" }
-      .feedback-line{ "data-target" => "tourfeedback.line" }
+      - 4.times do
+        .feedback-line{ "data-tourfeedback-target" => "line" }

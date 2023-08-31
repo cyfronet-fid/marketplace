@@ -17,7 +17,7 @@ module Backoffice::ParametersHelper
                type: "button",
                id: "attributes-list-button",
                disabled: true,
-               "data-target": "offer.button",
+               "data-offer-target": "button",
                "data-action": "click->offer#add"
              )
       concat content_tag(:span)
@@ -33,7 +33,7 @@ module Backoffice::ParametersHelper
                  class: "list-group-item",
                  "data-template": parameter_template(clazz.new(id: "js_template_id"), form),
                  "data-action": "click->offer#selectParameterType",
-                 "data-target": "offer.attributeType"
+                 "data-offer-target": "attributeType"
                )
       end
     end

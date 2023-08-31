@@ -21,7 +21,7 @@
               collection: sds,
               label_method: :first, value_method: :second
     = f.input :tag_list, multiple: true, input_html: { class: "form-control" },
-              wrapper_html: { "data-target" => "form.tag_list" },
+              wrapper_html: { "data-form-target" => "tag_list" },
               as: :array, disabled: cant_edit([tag_list: []])
     = link_to_add_array_field("provider", "tag_list")
     = f.association :structure_types, disabled: cant_edit([structure_type_ids: []]),

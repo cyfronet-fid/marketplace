@@ -23,5 +23,5 @@
     = f.input :certifications,
               disabled: cant_edit([certifications: []]), multiple: true,
               input_html: { class: "form-control text optional" },
-              wrapper_html: { "data-target" => "form.certifications" }, as: :array
+              wrapper_html: { "data-form-target" => "certifications" }, as: :array
     = link_to_add_array_field("provider", "certifications")

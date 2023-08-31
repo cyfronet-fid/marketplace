@@ -6,14 +6,14 @@
         %li.nav-item
           %a.nav-link.active.text-uppercase{ "data-probe": "",
                                              "data-service-id": service.id,
-                                             "data-target": "preview.tab",
+                                             "data-preview-target": "tab",
                                              "data-action": "click->preview#toggle",
                                              "data-value": "about" }
             = _("About")
         %li.nav-item
           %a.nav-link.text-uppercase{ "data-probe": "",
                                       "data-service-id": service.id,
-                                      "data-target": "preview.tab preview.details",
+                                      "data-preview-target": "tab details",
                                       "data-action": "click->preview#toggle",
                                       "data-value": "details" }
             = _("Details")

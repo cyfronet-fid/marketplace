@@ -25,11 +25,11 @@
       = _("Multimedia urls")
     = f.error :link_multimedia_urls, class: "invalid-feedback d-block"
     = f.fields_for :link_multimedia_urls, disabled: provider.upstream_id.present?, multiple: true, as: :array,
-                wrapper_html: { "data-target" => "form.link" } do |link_form|
+                wrapper_html: { "data-form-target" => "link" } do |link_form|
       = render "backoffice/common_parts/form/link_fields",
               link_form: link_form, object: provider, link_name: "multimedia"
     = link_to _("Add new multimedia"), "#", class: "btn btn-primary disablable",
-              data: { target: "form.addField",
+              data: { "form-target": "addField",
               action: "click->form#addField",
               value: "multimedia",
               fields: f.fields_for(:link_multimedia_urls, Link::MultimediaUrl.new,

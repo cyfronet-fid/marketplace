@@ -1,5 +1,5 @@
 .tour-feedback{ "data-controller" => "tourfeedback", class: ("is-invalid" if error) }
-  = hidden_field_tag "content[#{name}]", value.blank? ? "2" : value, "data-target": "tourfeedback.input"
+  = hidden_field_tag "content[#{name}]", value.blank? ? "2" : value, "data-tourfeedbackmodal-target": "input"
   .feedback-labels
     .feedback-label
       Not Useful
@@ -9,17 +9,12 @@
       Very Useful
 
   .feedback-rating
-    .feedback-point{ "data-action" => "click->tourfeedback#rate", "data-target" => "tourfeedback.point" }
-    .feedback-point{ "data-action" => "click->tourfeedback#rate", "data-target" => "tourfeedback.point" }
-    .feedback-point{ "data-action" => "click->tourfeedback#rate", "data-target" => "tourfeedback.point" }
-    .feedback-point{ "data-action" => "click->tourfeedback#rate", "data-target" => "tourfeedback.point" }
-    .feedback-point{ "data-action" => "click->tourfeedback#rate", "data-target" => "tourfeedback.point" }
+    - 5.times do
+      .feedback-point{ "data-action" => "click->tourfeedback#rate", "data-tourfeedback-target" => "point" }
 
     .feedback-lines
-      .feedback-line{ "data-target" => "tourfeedback.line" }
-      .feedback-line{ "data-target" => "tourfeedback.line" }
-      .feedback-line{ "data-target" => "tourfeedback.line" }
-      .feedback-line{ "data-target" => "tourfeedback.line" }
+      - 4.times do
+        .feedback-line{ "data-tourfeedback-target" => "line" }
 
 - if error
   .invalid-feedback.mb-4

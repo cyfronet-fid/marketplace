@@ -23,11 +23,11 @@
         = _("Persistent identity systems")
       = f.fields_for :persistent_identity_systems,
         disabled: datasource.upstream_id.present?, multiple: true, as: :array,
-        wrapper_html: { "data-target" => "form.persistentIdentitySystem" } do |id_form|
+        wrapper_html: { "data-form-target" => "persistentIdentitySystem" } do |id_form|
         = render "backoffice/common_parts/form/persistent_identity_system_fields",
               link_form: id_form, object: datasource, name: "persistentIdentitySystem"
       = link_to _("Add new Persistent identity system"), "#", class: "btn btn-primary disablable",
-        data: { target: "form.addField",
+        data: { "form-target": "addField",
         action: "click->form#addField",
         value: "persistentIdentitySystems",
         fields: f.fields_for(:persistent_identity_systems, PersistentIdentitySystem.new,

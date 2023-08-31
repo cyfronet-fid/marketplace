@@ -28,7 +28,7 @@ module SearchLinksHelper
 
   def resource_organisation(service, highlights = nil, preview: false)
     target = service.resource_organisation
-    preview_options = preview ? { "data-target": "preview.link" } : {}
+    preview_options = preview ? { "data-preview-target": "link" } : {}
     link_to_unless(
       target.deleted? || target.draft?,
       highlighted_for(:resource_organisation_name, service, highlights),
@@ -39,7 +39,7 @@ module SearchLinksHelper
 
   def providers(service, highlights = nil, preview: false)
     highlighted = highlights.present? ? sanitize(highlights[:provider_names])&.to_str : ""
-    preview_options = preview ? { "data-target": "preview.link" } : {}
+    preview_options = preview ? { "data-preview-target": "link" } : {}
     service
       .providers
       .reject(&:blank?)
