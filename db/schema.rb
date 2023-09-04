@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(version: 2023_09_18_141631) do
     t.bigint "offer_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["bundle_id", "offer_id"], name: "index_bundle_offers_on_bundle_id_and_offer_id", unique: true
     t.index ["bundle_id"], name: "index_bundle_offers_on_bundle_id"
     t.index ["offer_id"], name: "index_bundle_offers_on_offer_id"
   end

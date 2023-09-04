@@ -7,7 +7,9 @@ class Backoffice::Services::Bundles::DraftsController < Backoffice::ApplicationC
     if Bundle::Draft.call(@bundle)
       redirect_to backoffice_service_path(@service)
     else
-      flash[:alert] = "Bundle not drafted, errors: #{@bundle.errors.messages}"
+      flash[:alert] =
+        "Bundle not drafted, errors: " +
+          "#{@bundle.errors.messages.each.map { |k, v| "The field #{k} #{v.join(", ")}" }.join(", ")}"
       redirect_to edit_backoffice_service_offer_path(@service, @bundle)
     end
   end

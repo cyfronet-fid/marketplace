@@ -23,7 +23,7 @@ class Bundle::Update < ApplicationService
     @bundle.service.reindex
     @bundle.offers.reindex
     @bundle.reindex
-    result || @bundle.draft?
+    result
   end
 
   private
