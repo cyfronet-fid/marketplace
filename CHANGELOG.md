@@ -19,12 +19,13 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Bundle linking available for all types of offers (@goreck888)
 
 ### Fixed
-- Adding drafted offer to the bundle (@goreck888)
+- Blocked connecting drafted offers to the bundle (@goreck888)
 - Adding parameters to the bundled offer (@goreck888)
 - Handling errors on the offer's destroy (@goreck888)
 - Ordering another bundle in the same service (@goreck888)
 - Linking one main offer with multiple bundles (@goreck888)
 - Random failing tests (@goreck888)
+- Offer status validation when bundle is published (@goreck888)
 
 ## [3.50.0] 2023-08-30
 

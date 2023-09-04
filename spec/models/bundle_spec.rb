@@ -77,7 +77,7 @@ RSpec.describe Bundle, type: :model, backend: true do
       end
 
       context "bundled bundle offer" do
-        let(:offer) { build(:offer, bundles: [build(:bundle)]) }
+        let(:offer) { create(:offer, bundles: [build(:bundle)]) }
         let(:bundle) { offer.bundles.first }
 
         it "allows empty" do
@@ -87,7 +87,7 @@ RSpec.describe Bundle, type: :model, backend: true do
         it "rejects self" do
           bundle.offers = [bundle.main_offer]
 
-          expect_error_messages "cannot bundle self"
+          expect_error_messages "cannot bundle main offer"
         end
 
         it "removes duplicates" do
@@ -95,6 +95,7 @@ RSpec.describe Bundle, type: :model, backend: true do
           bundle.offers = [bundled_offer, bundled_offer]
 
           expect(bundle.valid?).to be_truthy
+          bundle.save
           expect(bundle.offers.size).to eq(1)
         end
 
@@ -116,7 +117,17 @@ RSpec.describe Bundle, type: :model, backend: true do
               bundled_offer = build(:offer, service: build(:service, status: rejected_status))
               bundle.offers = [bundled_offer]
 
-              expect_error_messages "all bundled offer's services must be public"
+              expect_error_messages "must have offers with public services selected"
+            end
+
+            it "rejects publishing bundle with a #{rejected_status} service" do
+              bundle.status = :draft
+              bundle.offers = [build(:offer, status: rejected_status)]
+
+              publisher = Bundle::Publish
+
+              expect(publisher.call(bundle)).to eq(false)
+              expect_error_messages "must have only published offers selected"
             end
           end
 
@@ -128,16 +139,16 @@ RSpec.describe Bundle, type: :model, backend: true do
               bundled_offer = build(:offer, status: status)
               bundle.offers = [bundled_offer]
 
-              expect_error_messages "all bundled offers must be published"
+              expect_error_messages "must have only published offers selected"
             end
           end
       end
 
       private
 
-      def expect_error_messages(*msg)
+      def expect_error_messages(*msg, field: :offers)
         expect(bundle.valid?).to be_falsey
-        expect(bundle.errors.messages_for(:offers)).to eq(msg)
+        expect(bundle.errors.messages_for(field)).to eq(msg)
       end
     end
   end
