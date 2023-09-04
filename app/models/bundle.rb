@@ -42,6 +42,7 @@ class Bundle < ApplicationRecord
   has_many :scientific_domains, through: :bundle_scientific_domains
 
   validate :set_iid, on: :create
+  validate :offers_correct
   validates :name, presence: true
   validates :description, presence: true
   validates :bundle_goals, presence: true, length: { minimum: 1, message: "are required. Please add at least one" }
@@ -71,6 +72,10 @@ class Bundle < ApplicationRecord
     self.iid = (service.bundles.maximum(:iid) || 0) + 1 if iid.blank?
   end
 
+  def offers=(value)
+    super(value.uniq)
+  end
+
   def to_param
     iid.to_s
   end
@@ -98,8 +103,10 @@ class Bundle < ApplicationRecord
   private
 
   def offers_correct
-    errors.add(:offers, "cannot bundle self") if offers.include?(main_offer)
-    errors.add(:offers, "all bundled offers must be published") unless offers.all?(&:published?)
-    errors.add(:offers, "all bundled offer's services must be public") unless offers.map(&:service).all?(&:public?)
+    if offers.includes(:service).present?
+      errors.add(:offers, "cannot bundle main offer") if offers.include?(main_offer)
+      errors.add(:offers, "must have only published offers selected") unless offers.all?(&:published?)
+      errors.add(:offers, "must have offers with public services selected") unless offers.map(&:service).all?(&:public?)
+    end
   end
 end

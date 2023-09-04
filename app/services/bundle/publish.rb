@@ -7,9 +7,13 @@ class Bundle::Publish < ApplicationService
   end
 
   def call
-    notify_bundled if @bundle.update(status: :published)
-    @bundle.service.reindex
-    @bundle.offers.reindex
+    if @bundle.update(status: :published)
+      notify_bundled
+      @bundle.service.reindex
+      @bundle.offers.reindex
+    else
+      return false
+    end
     @bundle
   end
 

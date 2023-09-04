@@ -5,8 +5,14 @@ module Services::OrderingConfiguration::Bundles
     before_action :find_and_authorize
 
     def create
-      Bundle::Draft.call(@bundle)
-      redirect_to backoffice_service_path(@service)
+      if Bundle::Draft.call(@bundle)
+        redirect_to backoffice_service_path(@service)
+      else
+        flash[:alert] =
+          "Bundle not drafted, errors: " +
+            "#{@bundle.errors.messages.each.map { |k, v| "The field #{k} #{v.join(", ")}" }.join(", ")}"
+        redirect_to edit_backoffice_service_offer_path(@service, @bundle)
+      end
     end
 
     private
