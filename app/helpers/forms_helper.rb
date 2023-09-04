@@ -40,9 +40,11 @@ module FormsHelper
   end
 
   def other_offers(service)
+    offer_ids = service.offers.map(&:id)
     Offer
+      .includes(:service)
       .accessible
-      .reject { |item| (item.in? service.offers) || item.service.nil? }
+      .reject { |item| item.id.in? offer_ids }
       .map { |item| ["#{item.service.name} > #{item.name}", item.id] }
   end
 end
