@@ -42,7 +42,7 @@ class Bundle < ApplicationRecord
   has_many :scientific_domains, through: :bundle_scientific_domains
 
   validate :set_iid, on: :create
-  validate :offers_correct
+  validate :offers_correct, :main_offer_published
   validates :name, presence: true
   validates :description, presence: true
   validates :bundle_goals, presence: true, length: { minimum: 1, message: "are required. Please add at least one" }
@@ -108,5 +108,9 @@ class Bundle < ApplicationRecord
       errors.add(:offers, "must have only published offers selected") unless offers.all?(&:published?)
       errors.add(:offers, "must have offers with public services selected") unless offers.map(&:service).all?(&:public?)
     end
+  end
+
+  def main_offer_published
+    errors.add(:main_offer, "must be published") if published? && main_offer && !main_offer&.published?
   end
 end

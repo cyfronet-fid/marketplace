@@ -2,6 +2,14 @@
 
 require "rails_helper"
 
+PRETTY_OFFER_TYPE = {
+  offer: "internal orderable",
+  open_access_offer: "open access",
+  fully_open_access_offer: "fully open access",
+  other_offer: "other",
+  external_offer: "external orderable"
+}.freeze
+
 RSpec.describe Bundle, type: :model, backend: true do
   describe "validations" do
     subject { build(:bundle) }
@@ -37,119 +45,133 @@ RSpec.describe Bundle, type: :model, backend: true do
   end
 
   context "#bundled_offers" do
-    context "#bundled_offers_correct" do
-      let(:offer) { build(:offer) }
-      let(:bundle) { build(:bundle, main_offer: offer) }
-
-      it "allows empty" do
-        expect(offer.valid?).to be_truthy
-      end
-
-      it "allows published internal offers" do
-        bundled_offer = build(:offer)
-        bundle = create(:bundle, main_offer: offer, offers: [bundled_offer])
-
-        expect(bundle.valid?).to be_truthy
-      end
-
-      Service::PUBLIC_STATUSES.each do |accepted_status|
-        it "allows offer from #{accepted_status} service" do
-          bundled_offer = build(:offer, service: build(:service, status: accepted_status))
-          bundle.offers = [bundled_offer]
-
-          expect(bundle.valid?).to be_truthy
-        end
-      end
-
-      context "non-internal bundle offer" do
-        let(:offer) { build(:offer, internal: false) }
+    %i[offer open_access_offer fully_open_access_offer other_offer external_offer].each do |type|
+      context "#correct main offer with #{PRETTY_OFFER_TYPE[type]} type" do
+        let(:offer) { build(type) }
+        let(:bundle) { build(:bundle, main_offer: offer) }
 
         it "allows empty" do
           expect(offer.valid?).to be_truthy
         end
 
-        it "allows non-internal bundle offer" do
+        it "allows published offers" do
           bundled_offer = build(:offer)
           bundle = create(:bundle, main_offer: offer, offers: [bundled_offer])
 
           expect(bundle.valid?).to be_truthy
         end
-      end
 
-      context "bundled bundle offer" do
-        let(:offer) { create(:offer, bundles: [build(:bundle)]) }
-        let(:bundle) { offer.bundles.first }
+        Service::PUBLIC_STATUSES.each do |accepted_status|
+          it "allows offer from #{accepted_status} service" do
+            bundled_offer = build(:offer, service: build(:service, status: accepted_status))
+            bundle.offers = [bundled_offer]
 
-        it "allows empty" do
-          expect(offer.valid?).to be_truthy
-        end
-
-        it "rejects self" do
-          bundle.offers = [bundle.main_offer]
-
-          expect_error_messages "cannot bundle main offer"
-        end
-
-        it "removes duplicates" do
-          bundled_offer = build(:offer)
-          bundle.offers = [bundled_offer, bundled_offer]
-
-          expect(bundle.valid?).to be_truthy
-          bundle.save
-          expect(bundle.offers.size).to eq(1)
-        end
-
-        it "allows bundled offers" do
-          bundled_offer = build(:offer)
-          bundle_offer = build(:offer)
-          build(:bundle, main_offer: bundle_offer, offers: [bundled_offer])
-          bundle = build(:bundle, offers: [bundle_offer])
-
-          expect(bundle.valid?).to be_truthy
-          expect(bundle.offers).to contain_exactly(bundle_offer)
-        end
-
-        Service::STATUSES
-          .values
-          .reject { |k| Service::PUBLIC_STATUSES.include?(k) }
-          .each do |rejected_status|
-            it "rejects offer from a #{rejected_status} service" do
-              bundled_offer = build(:offer, service: build(:service, status: rejected_status))
-              bundle.offers = [bundled_offer]
-
-              expect_error_messages "must have offers with public services selected"
-            end
-
-            it "rejects publishing bundle with a #{rejected_status} service" do
-              bundle.status = :draft
-              bundle.offers = [build(:offer, status: rejected_status)]
-
-              publisher = Bundle::Publish
-
-              expect(publisher.call(bundle)).to eq(false)
-              expect_error_messages "must have only published offers selected"
-            end
+            expect(bundle.valid?).to be_truthy
           end
+        end
 
         Offer::STATUSES
           .values
           .reject { |k| k == "published" }
           .each do |status|
-            it "rejects #{status} offers" do
-              bundled_offer = build(:offer, status: status)
-              bundle.offers = [bundled_offer]
+            it "rejects publishing bundle with a #{status} offer" do
+              bundle.status = :draft
+              bundle.main_offer.status = status
 
-              expect_error_messages "must have only published offers selected"
+              publisher = Bundle::Publish
+
+              expect(publisher.call(bundle)).to eq(false)
+              expect_error_messages "must be published", field: :main_offer
             end
           end
-      end
 
-      private
+        context "#{PRETTY_OFFER_TYPE[type]} type offer connected to bundle" do
+          let(:offer) { create(type, bundles: [build(:bundle)]) }
+          let(:bundle) { offer.bundles.first }
 
-      def expect_error_messages(*msg, field: :offers)
-        expect(bundle.valid?).to be_falsey
-        expect(bundle.errors.messages_for(field)).to eq(msg)
+          it "allows empty" do
+            expect(offer.valid?).to be_truthy
+          end
+
+          it "rejects self" do
+            bundle.offers = [bundle.main_offer]
+
+            expect_error_messages "cannot bundle main offer"
+          end
+
+          it "removes duplicates" do
+            bundled_offer = build(:offer)
+            bundle.offers = [bundled_offer, bundled_offer]
+
+            expect(bundle.valid?).to be_truthy
+            bundle.save
+            expect(bundle.offers.size).to eq(1)
+          end
+
+          it "allows bundled offers" do
+            bundled_offer = build(:offer)
+            bundle_offer = build(:offer)
+            build(:bundle, main_offer: bundle_offer, offers: [bundled_offer])
+            bundle = build(:bundle, offers: [bundle_offer])
+
+            expect(bundle.valid?).to be_truthy
+            expect(bundle.offers).to contain_exactly(bundle_offer)
+          end
+
+          Service::STATUSES
+            .values
+            .reject { |k| Service::PUBLIC_STATUSES.include?(k) }
+            .each do |rejected_status|
+              it "rejects #{PRETTY_OFFER_TYPE[type]} offer from a #{rejected_status} service" do
+                bundled_offer = build(type)
+                bundled_offer.service.status = rejected_status
+                bundle.offers = [bundled_offer]
+
+                expect_error_messages "must have offers with public services selected"
+              end
+
+              it "rejects publishing bundle with a #{rejected_status} service" do
+                bundle.status = :draft
+                bundle.offers = [build(:offer, status: rejected_status)]
+
+                publisher = Bundle::Publish
+
+                expect(publisher.call(bundle)).to eq(false)
+                expect_error_messages "must have only published offers selected"
+              end
+
+              it "rejects publishing bundle with a #{rejected_status} service" +
+                   " and #{PRETTY_OFFER_TYPE[type]} offer type" do
+                bundle.status = :draft
+                bundle.offers = [build(type, status: rejected_status)]
+
+                publisher = Bundle::Publish
+
+                expect(publisher.call(bundle)).to eq(false)
+                expect_error_messages "must have only published offers selected"
+              end
+            end
+
+          Offer::STATUSES
+            .values
+            .reject { |k| k == "published" }
+            .each do |status|
+              it "rejects #{status} offers" do
+                bundled_offer = build(:offer, status: status)
+                bundle.offers = [bundled_offer]
+
+                expect_error_messages "must have only published offers selected"
+              end
+            end
+        end
       end
     end
+  end
+
+  private
+
+  def expect_error_messages(*msg, field: :offers)
+    expect(bundle.valid?).to be_falsey
+    expect(bundle.errors.messages_for(field)).to eq(msg)
   end
 end
