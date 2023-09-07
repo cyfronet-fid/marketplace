@@ -37,7 +37,7 @@ module SearchLinksHelper
     link_to_unless(
       target.deleted? || target.draft?,
       highlighted_for(:resource_organisation_name, service, highlights),
-      service.organisation_search_link(target),
+      service.organisation_search_link(target.name, services_path(providers: target.id)),
       preview_options
     )
   end
@@ -55,12 +55,12 @@ module SearchLinksHelper
         if highlighted.present? && highlighted.strip == target.name.strip
           link_to_unless target.deleted? || target.draft?,
                          highlights[:provider_names].html_safe,
-                         service.provider_search_link(target),
+                         service.provider_search_link(target.name, services_path(providers: target.id)),
                          preview_options
         else
           link_to_unless target.deleted? || target.draft?,
                          target.name,
-                         service.provider_search_link(target),
+                         service.provider_search_link(target.name, services_path(providers: target.id)),
                          preview_options
         end
       end
