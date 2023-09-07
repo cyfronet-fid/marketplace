@@ -313,14 +313,13 @@ class Service < ApplicationRecord
 
   private
 
-  def _provider_search_link(target, filter_query, default_path = nil)
-    target_name = target.respond_to?(:name) ? target.name : target
+  def _provider_search_link(target_name, filter_query, default_path = nil)
     search_base_url = Mp::Application.config.search_service_base_url
     enable_external_search = Mp::Application.config.enable_external_search
     if enable_external_search
       search_base_url + "/search/service?q=*&fq=#{filter_query}:(%22#{target_name}%22)"
     else
-      default_path || provider_path(target)
+      default_path
     end
   end
 
