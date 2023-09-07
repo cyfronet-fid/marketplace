@@ -10,19 +10,33 @@ RSpec.describe Offer::Draft, backend: true do
       expect { described_class.call(drafted_offer) }.not_to change { ActionMailer::Base.deliveries.count }
     end
 
-    it "sends notification if offer unbundled" do
-      provider = build(:provider)
-      bundled_offer = create(:offer, service: build(:service, resource_organisation: provider))
-      bundle_offer = create(:offer, service: build(:service, resource_organisation: provider))
-      bundle = create(:bundle, service: bundle_offer.service, main_offer: bundle_offer, offer_ids: [bundled_offer.id])
+    context "Bundle mutations" do
+      let!(:provider) { build(:provider) }
+      let!(:bundled_offer) { create(:offer, service: build(:service, resource_organisation: provider)) }
+      let!(:bundle_offer) { create(:offer, service: build(:service, resource_organisation: provider)) }
+      let!(:bundle) do
+        create(:bundle, service: bundle_offer.service, main_offer: bundle_offer, offers: [bundled_offer])
+      end
 
-      expect { described_class.call(bundled_offer) }.to change { ActionMailer::Base.deliveries.count }.by(1)
+      it "sends notification if bundled offer drafted" do
+        expect { described_class.call(bundled_offer) }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
-      bundled_offer.reload
-      bundle.reload
+        bundled_offer.reload
+        bundle.reload
 
-      expect(bundle.valid?).to be_falsey
-      expect(bundle.status).to eq("draft")
+        expect(bundle.valid?).to be_falsey
+        expect(bundle.status).to eq("draft")
+      end
+
+      it "sends notification if main bundle drafted" do
+        expect { described_class.call(bundle_offer) }.to change { ActionMailer::Base.deliveries.count }.by(1)
+
+        bundle_offer.reload
+        bundle.reload
+
+        expect(bundle.valid?).to be_truthy
+        expect(bundle.status).to eq("draft")
+      end
     end
   end
 end
