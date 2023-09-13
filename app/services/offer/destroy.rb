@@ -1,14 +1,7 @@
 # frozen_string_literal: true
 
-class Offer::Destroy < ApplicationService
-  def initialize(offer)
-    super()
-    @offer = offer
-  end
-
+class Offer::Destroy < Offer::ApplicationService
   def call
-    @service = @offer.service
-    @bundles = @offer.bundles.to_a
     unbundle!
     result = @offer&.project_items.present? ? @offer.update(status: :deleted) : @offer.destroy
 
@@ -17,17 +10,5 @@ class Offer::Destroy < ApplicationService
     end
     @service.reindex
     result
-  end
-
-  private
-
-  def unbundle!
-    @bundles.each do |bundle|
-      Bundle::Update.call(
-        bundle,
-        { offer_ids: bundle.offers.to_a.reject { |o| o == @offer }.map(&:id) },
-        external_update: true
-      )
-    end
   end
 end

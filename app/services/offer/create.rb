@@ -1,14 +1,9 @@
 # frozen_string_literal: true
 
-class Offer::Create < ApplicationService
-  def initialize(offer)
-    super()
-    @offer = offer
-  end
-
+class Offer::Create < Offer::ApplicationService
   def call
     @offer.save
-    @offer.service.reindex
+    @service.reindex
     @offer.reindex
     @offer
   end
