@@ -4,6 +4,7 @@ class Offer < ApplicationRecord
   # TODO: validate parameter ids uniqueness - for now we are safe thanks to schema validation though
   include Offerable
   include Offer::Parameters
+  include ActionView::Helpers::TextHelper
 
   acts_as_taggable
 
@@ -63,6 +64,7 @@ class Offer < ApplicationRecord
   validate :proper_oms?, if: -> { primary_oms.present? }
   validates :oms_params, absence: true, if: -> { current_oms.blank? }
   validate :check_oms_params, if: -> { current_oms.present? }
+  validate :check_main_bundles, if: -> { draft? }
   validate :same_order_type_as_in_service,
            if: -> {
              service&.order_type.present? &&
@@ -139,7 +141,13 @@ class Offer < ApplicationRecord
   end
 
   def check_main_bundles
-    errors.add(:base, "Offer is connected to bundle as main offer.") unless main_bundles.empty?
+    unless main_bundles.empty?
+      errors.add(
+        :base,
+        "Offer is connected as main offer to #{pluralize(main_bundles.size, "bundle")}: " +
+          "#{main_bundles.map(&:name).join(", ")}. Firstly change main offer or delete mentioned bundles"
+      )
+    end
   end
 
   def check_oms_params

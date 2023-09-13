@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-class Offer::Update < ApplicationService
+class Offer::Update < Offer::ApplicationService
   def initialize(offer, params)
-    super()
-    @offer = offer
+    super(offer)
     @params = params
   end
 
@@ -18,11 +17,5 @@ class Offer::Update < ApplicationService
     unbundle! if !@offer.published? && public_before
     @offer.service.reindex
     @offer.valid?
-  end
-
-  def unbundle!
-    @offer.bundles.each do |b|
-      Bundle::Update.call(b, { offers: b.offers.reject { |o| o == @offer } }, external_update: true)
-    end
   end
 end
