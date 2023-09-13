@@ -8,7 +8,7 @@ class Backoffice::Services::Offers::DraftsController < Backoffice::ApplicationCo
       flash[:notice] = "Offer changed to draft successfully"
       redirect_to backoffice_service_path(@service)
     else
-      flash[:alert] = "Offer cannot be changed to draft"
+      flash[:alert] = "Offer cannot be changed to draft. Reason: #{@offer.errors.full_messages.join(", ")}"
       redirect_to edit_backoffice_service_offer_path(@service, @offer)
     end
   end

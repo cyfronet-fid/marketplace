@@ -28,14 +28,15 @@ RSpec.describe Offer::Draft, backend: true do
         expect(bundle.status).to eq("draft")
       end
 
-      it "sends notification if main bundle drafted" do
-        expect { described_class.call(bundle_offer) }.to change { ActionMailer::Base.deliveries.count }.by(1)
+      it "doesn't allow to change to draft for main offer" do
+        expect { described_class.call(bundle_offer) }.to_not change { ActionMailer::Base.deliveries.count }
 
         bundle_offer.reload
         bundle.reload
 
-        expect(bundle.valid?).to be_truthy
-        expect(bundle.status).to eq("draft")
+        expect(bundle_offer.valid?).to be_truthy
+        expect(bundle_offer.status).to eq("published")
+        expect(bundle.status).to eq("published")
       end
     end
   end
