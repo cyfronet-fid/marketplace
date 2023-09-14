@@ -4,6 +4,9 @@
     "id": {
       "type": "integer"
     },
+    "iid": {
+      "type": "integer"
+    },
     "name": {
       "type": "string"
     },
@@ -49,6 +52,18 @@
           { "$ref": "../../offer/offer_definitions.json#quantity_price_parameter" }
         ]
       }
+    },
+    "usage_counts_downloads": {
+      "type": "integer"
+    },
+    "usage_counts_views": {
+      "type": "integer"
+    },
+    "publication_date": {
+      "type": "string"
+    },
+    "updated_at": {
+      "type": "string"
     }
   },
   "additionalProperties": false,

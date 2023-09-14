@@ -19,7 +19,8 @@ class Service::Create < ApplicationService
         order_url: @service.order_url,
         internal: @service.order_url.blank?,
         status: "published",
-        service: @service
+        service: @service,
+        usage_counts_views: @service.usage_counts_views
       )
     Offer::Create.call(new_offer)
     @service

@@ -2,6 +2,7 @@
 
 class Ess::BundleSerializer < ApplicationSerializer
   attributes :id,
+             :iid,
              :name,
              :bundle_goals,
              :capabilities_of_goals,
@@ -17,7 +18,12 @@ class Ess::BundleSerializer < ApplicationSerializer
              :helpdesk_url,
              :service_id,
              :resource_organisation,
-             :providers
+             :providers,
+             :usage_counts_views,
+             :updated_at
+
+  attribute :created_at, key: :publication_date
+  attribute :project_items_count, key: :usage_counts_downloads
 
   def providers
     ([object.main_offer.service.providers.map(&:name)] + object&.offers&.map { |o| o.service.providers.map(&:name) })

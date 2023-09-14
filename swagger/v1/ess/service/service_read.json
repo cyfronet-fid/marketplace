@@ -237,7 +237,7 @@
       "type": "integer",
       "nullable": true
     },
-    "created_at": {
+    "publication_date": {
       "type": "string"
     },
     "updated_at": {
@@ -312,6 +312,12 @@
     "restrictions": {
       "type": "string",
       "nullable": true
+    },
+    "usage_counts_downloads": {
+      "type": "integer"
+    },
+    "usage_counts_views": {
+      "type": "integer"
     }
   },
   "additionalProperties": false,

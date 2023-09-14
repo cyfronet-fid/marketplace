@@ -377,7 +377,15 @@ To get the data you have to login
 or authenticate via the user's access_token
 with `service_portfolio_manager` role
 
-
+## Statistics update rake task 
+Usage statistics are now stored in the db, 
+and update everytime someone visit service/provider/bundle page.
+For get current state for all collections (necessary for ESS dump)
+run 
+```
+rake viewable:cache_views_count
+```
+All data is logged in the `log/cache_views_count.log`
 ## OpenAPI docs
 Marketplace is using OpenAPI documentation standard([swagger](https://swagger.io/)). To do this we are using `rswag` gem.
 To check API documentation go to `/api-docs`.

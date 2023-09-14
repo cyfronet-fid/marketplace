@@ -19,7 +19,6 @@ RSpec.feature "Services in ordering_configuration panel", end_user_frontend: tru
       service_source = create(:eosc_registry_service_source, service: service)
       service.update!(resource_organisation: provider, upstream: service_source)
       checkin_sign_in_as(user)
-      stub_external_data
     end
 
     scenario "I can see ordering_configuration panel" do
