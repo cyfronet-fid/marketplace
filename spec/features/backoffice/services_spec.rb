@@ -9,10 +9,7 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
   context "As a service portolio manager" do
     let(:user) { create(:user, roles: [:service_portfolio_manager]) }
 
-    before do
-      checkin_sign_in_as(user)
-      stub_external_data
-    end
+    before { checkin_sign_in_as(user) }
 
     scenario "I can see all services" do
       create(:service, name: "service1")

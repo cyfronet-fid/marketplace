@@ -47,6 +47,7 @@ namespace :dev do
 
   def create_providers(providers_hash)
     puts "Generating providers:"
+    Provider.skip_callback :validation, :before, :assign_analytics
     providers_hash.each do |_, hash|
       provider = Provider.find_or_initialize_by(name: hash["name"])
       provider.abbreviation = hash["abbreviation"]
@@ -78,6 +79,7 @@ namespace :dev do
 
       provider.save(validate: false)
       puts "  - #{hash["name"]} provider generated"
+      Provider.set_callback :validation, :before, :assign_analytics
     end
   end
 
@@ -137,6 +139,7 @@ namespace :dev do
   # rubocop:disable Metrics/AbcSize
   def create_services(services_hash)
     puts "Generating services:"
+    Service.skip_callback :validation, :before, :assign_analytics
     services_hash.each do |_, hash|
       prov = hash["providers"] || []
       categories = Category.where(name: hash["parents"])
@@ -193,6 +196,7 @@ namespace :dev do
       puts "  - #{hash["name"]} service generated"
 
       create_offers(service, hash["offers"])
+      Service.set_callback :validation, :before, :assign_analytics
     end
   end
 

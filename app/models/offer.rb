@@ -72,7 +72,7 @@ class Offer < ApplicationRecord
                )
            }
 
-  after_commit :propagate_to_ess
+  after_save :propagate_to_ess
   before_destroy :check_main_bundles
 
   def current_oms

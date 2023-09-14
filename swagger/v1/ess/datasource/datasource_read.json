@@ -230,7 +230,7 @@
       "type": "integer",
       "nullable": true
     },
-    "created_at": {
+    "publication_date": {
       "type": "string"
     },
     "updated_at": {
@@ -338,6 +338,12 @@
       "items": {
         "$ref": "../link_read.json"
       }
+    },
+    "usage_counts_downloads": {
+      "type": "integer"
+    },
+    "usage_counts_views": {
+      "type": "integer"
     }
   },
   "additionalProperties": false,

@@ -2,6 +2,7 @@
 
 class Bundle < ApplicationRecord
   include Offerable
+  include Viewable
 
   # include Offer::Parameters
 
@@ -65,7 +66,7 @@ class Bundle < ApplicationRecord
   validates :related_training_url, mp_url: true, if: :related_training?
   validates :helpdesk_url, mp_url: true, presence: true
 
-  after_commit :propagate_to_ess
+  after_save :propagate_to_ess
   def set_iid
     self.iid = (service.bundles.maximum(:iid) || 0) + 1 if iid.blank?
   end

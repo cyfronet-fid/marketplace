@@ -6,6 +6,7 @@ class Service < ApplicationRecord
   include LogoAttachable
   include Publishable
   include Presentable
+  include Viewable
 
   extend FriendlyId
   friendly_id :name, use: :slugged
@@ -14,7 +15,7 @@ class Service < ApplicationRecord
 
   before_save { self.catalogue = Catalogue.find(catalogue_id) if catalogue_id.present? }
 
-  attr_accessor :analytics, :catalogue_id, :monitoring_status, :bundle_id
+  attr_accessor :catalogue_id, :monitoring_status, :bundle_id
 
   PUBLIC_STATUSES = %w[published unverified errored].freeze
   SERVICE_TYPES = %w[Service Datasource].freeze
@@ -260,7 +261,7 @@ class Service < ApplicationRecord
 
   after_save :set_first_category_as_main!, if: :main_category_missing?
 
-  after_commit :propagate_to_ess
+  after_save :propagate_to_ess
 
   def self.popular(count)
     where(status: %i[published unverified]).includes(:providers).order(popularity_ratio: :desc, name: :asc).limit(count)

@@ -6,7 +6,7 @@ class Analytics::TotalServicesViews
     @analytics = analytics
   end
 
-  def call(start_date = Date.new(2018, 11, 1), end_date = Date.today)
+  def call(path, start_date = Date.new(2018, 11, 1), end_date = Date.today)
     date_range = Google::Apis::AnalyticsreportingV4::DateRange.new(start_date: start_date, end_date: end_date)
     dimension = Google::Apis::AnalyticsreportingV4::Dimension.new(name: "ga:pagePath")
     metrics = [Google::Apis::AnalyticsreportingV4::Metric.new(expression: "ga:pageviews")]
@@ -18,12 +18,12 @@ class Analytics::TotalServicesViews
             dimensions: [dimension],
             metrics: metrics,
             date_ranges: [date_range],
-            filters_expression: "ga:pagePath=~^/services/[^(c/)][^(service_id=)]"
+            filters_expression: "ga:pagePath=~^/#{path}/[^(c/)]"
           )
         ]
       )
     response = @analytics.service.batch_get_reports(request)
-    response.reports.first.data.totals.first.values.first
+    response.reports.first.data
   rescue StandardError => e
     print e
   end
