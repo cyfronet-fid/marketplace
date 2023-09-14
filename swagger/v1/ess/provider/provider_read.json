@@ -157,6 +157,18 @@
       "items": {
         "type": "string"
       }
+    },
+    "usage_counts_downloads": {
+      "type": "integer"
+    },
+    "usage_counts_views": {
+      "type": "integer"
+    },
+    "publication_date": {
+      "type": "string"
+    },
+    "updated_at": {
+      "type": "string"
     }
   },
   "additionalProperties": false,

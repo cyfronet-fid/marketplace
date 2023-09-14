@@ -50,15 +50,17 @@ class Ess::ServiceSerializer < ApplicationSerializer
              :grant_project_names,
              :last_update,
              :upstream_id,
-             :created_at,
              :updated_at,
              :synchronized_at,
              :geographical_availabilities,
              :resource_geographic_locations,
              :public_contacts
 
+  attribute :created_at, key: :publication_date
   attribute :trls, key: :trl
   attribute :life_cycle_statuses, key: :life_cycle_status
+  attribute :project_items_count, key: :usage_counts_downloads
+  attribute :usage_counts_views
 
   attribute :target_users, key: :dedicated_for
   attribute :research_steps, key: :unified_categories
@@ -72,7 +74,6 @@ class Ess::ServiceSerializer < ApplicationSerializer
   attribute :rating, unless: :datasource?
   attribute :activate_message, unless: :datasource?
   attribute :phase, unless: :datasource?
-  attribute :project_items_count, unless: :datasource?
 
   #TODO: to remove
   attribute :related_platforms, unless: :datasource?

@@ -63,7 +63,7 @@ module Mp
       else
         "https://beta.providers.eosc-portal.eu"
       end
-
+    config.google_api_key_path = ENV.fetch("GOOGLE_AUTH_KEY_FILEPATH", "config/google_api_key.json")
     config.monitoring_data_host = ENV.fetch("MONITORING_DATA_URL", "https://api.devel.argo.grnet.gr/api")
     config.monitoring_data_token = ENV.fetch("MONITORING_DATA_TOKEN",
                                              Rails.application.credentials.monitoring_data[:access_token])

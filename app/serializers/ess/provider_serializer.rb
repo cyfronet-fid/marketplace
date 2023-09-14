@@ -26,12 +26,18 @@ class Ess::ProviderSerializer < ApplicationSerializer
              :meril_scientific_domains,
              :areas_of_activity,
              :societal_grand_challenges,
-             :national_roadmaps
+             :national_roadmaps,
+             :updated_at
 
+  attribute :created_at, key: :publication_date
   attribute :hosting_legal_entities, key: :hosting_legal_entity
   attribute :provider_life_cycle_statuses, key: :provider_life_cycle_status
   attribute :esfri_types, key: :esfri_type
   attribute :legal_statuses, key: :legal_status
   attribute :website, key: :webpage_url
   attribute :pid, key: :slug
+  attribute :usage_counts_downloads do
+    0
+  end
+  attribute :usage_counts_views
 end

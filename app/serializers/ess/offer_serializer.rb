@@ -2,6 +2,7 @@
 
 class Ess::OfferSerializer < ApplicationSerializer
   attributes :id,
+             :iid,
              :name,
              :description,
              :service_id,
@@ -10,5 +11,11 @@ class Ess::OfferSerializer < ApplicationSerializer
              :order_type,
              :internal,
              :voucherable,
-             :parameters
+             :parameters,
+             :updated_at
+
+  attribute :created_at, key: :publication_date
+
+  attribute :project_items_count, key: :usage_counts_downloads
+  attribute :usage_counts_views
 end

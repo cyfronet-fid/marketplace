@@ -10,7 +10,6 @@ RSpec.feature "Service browsing", end_user_frontend: true do
     resources_selector = "body main div:nth-child(2).container div.container div.row div.col-lg-9"
     service_selector = "div.media.mb-3.service-box"
     @services_selector = resources_selector + " " + service_selector
-    stub_external_data
   end
 
   context "with JS:" do

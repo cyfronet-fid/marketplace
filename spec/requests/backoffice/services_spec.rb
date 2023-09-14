@@ -9,10 +9,7 @@ RSpec.describe "Backoffice service", backend: true do
   context "as a logged in service portfolio manager" do
     let(:user) { create(:user, roles: [:service_portfolio_manager]) }
 
-    before do
-      login_as(user)
-      stub_external_data
-    end
+    before { login_as(user) }
 
     it "I can delete service when there is no project_items yet" do
       service = create(:service, status: :draft)
