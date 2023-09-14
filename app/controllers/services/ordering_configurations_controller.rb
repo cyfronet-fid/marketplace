@@ -12,8 +12,6 @@ class Services::OrderingConfigurationsController < Services::OrderingConfigurati
     @offers = @service&.offers&.published&.order(:iid)
     @bundles = @service.bundles.published
     @related_services = @service.related_services
-    @client = @client&.credentials&.expires_at.blank? ? Google::Analytics.new : @client
-    @service.analytics = Analytics::PageViewsAndRedirects.new(@client).call(request.path)
     @service.monitoring_status = fetch_status(@service.pid)
   end
 

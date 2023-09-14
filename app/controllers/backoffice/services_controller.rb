@@ -49,8 +49,6 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     @offer = Offer.new(service: @service, status: :draft)
     @offers = policy_scope(@service.offers).order(:created_at)
     @bundles = policy_scope(@service.bundles).order(:created_at)
-    @client = @client&.credentials&.expires_at.blank? ? Google::Analytics.new : @client
-    @service.analytics = Analytics::PageViewsAndRedirects.new(@client).call(request.path)
     @similar_services = fetch_similar(@service.id, current_user&.id)
     @related_services = @service.target_relationships
   end
@@ -99,7 +97,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
       render :edit, status: :bad_request
       return
     end
-
+    @service.store_analytics
     remove_temp_data!
     redirect_to backoffice_service_path(@service), notice: "Service updated successfully"
   end
@@ -150,10 +148,8 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
     @offers = @service.offers.where(status: :published).order(:created_at).reject(&:bundle?)
     @related_services = @service.target_relationships
-    @client = @client&.credentials&.expires_at.blank? ? Google::Analytics.new : @client
     @bundles = policy_scope(@service.bundles.published)
     @bundled = @service.offers.select(&:bundled?) ? @service.offers.select(&:bundled?).map(&:bundles).flatten.uniq : []
-    @service.analytics = Analytics::PageViewsAndRedirects.new(@client).call(request.path)
     render :preview
   end
 

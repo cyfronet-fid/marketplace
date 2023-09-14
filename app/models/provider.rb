@@ -4,6 +4,7 @@ class Provider < ApplicationRecord
   include LogoAttachable
   include ImageHelper
   include Publishable
+  include Viewable
 
   extend FriendlyId
   friendly_id :pid
@@ -22,7 +23,7 @@ class Provider < ApplicationRecord
 
   before_save { self.catalogue = Catalogue.find(catalogue_id) if catalogue_id.present? }
 
-  after_commit :propagate_to_ess
+  after_save :propagate_to_ess
 
   scope :active, -> { where.not(status: %i[deleted draft]) }
 

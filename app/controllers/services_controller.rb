@@ -58,6 +58,7 @@ class ServicesController < ApplicationController
 
   def show
     @service = Service.includes(:offers).friendly.find(params[:id])
+    @service.store_analytics
     @service.monitoring_status = fetch_status(@service.pid)
 
     authorize(ServiceContext.new(@service, params.key?(:from) && params[:from] == "backoffice_service"))
@@ -71,9 +72,6 @@ class ServicesController < ApplicationController
     @question = Service::Question.new(service: @service)
     @favourite_services =
       current_user&.favourite_services || Service.where(slug: Array(cookies[:favourites]&.split("&") || []))
-    @client = @client&.credentials&.expires_at.blank? ? Google::Analytics.new : @client
-    @service.analytics = Analytics::PageViewsAndRedirects.new(@client).call(request.path)
-
     override_user_action_info
   end
 

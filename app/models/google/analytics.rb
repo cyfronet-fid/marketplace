@@ -12,15 +12,12 @@ class Google::Analytics
     @view_id = google_view_id
     login
   rescue StandardError => e
-    print e
+    print("[WARN] Cannot connect to GA API. Error: #{e}")
   end
 
   def login
-    @credentials.fetch_access_token!
+    @credentials&.fetch_access_token!
     @service.authorization = @credentials
-  rescue StandardError => e
-    print e
-    Rails.logger.warn("[WARN] Cannot connect to GA API")
   end
 
   private
@@ -35,7 +32,7 @@ class Google::Analytics
   end
 
   def key
-    path = ENV["GOOGLE_AUTH_KEY_FILEPATH"] || "config/google_api_key.json"
+    path = Rails.configuration.google_api_key_path
     File.open(path)
   rescue StandardError => e
     Rails.logger.warn("[WARN] Cannot load valid GA API key at path: #{path}: #{e}")

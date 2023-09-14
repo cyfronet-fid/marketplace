@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_08_155330) do
+ActiveRecord::Schema.define(version: 2023_09_18_141631) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -117,6 +117,8 @@ ActiveRecord::Schema.define(version: 2023_08_08_155330) do
     t.string "helpdesk_url", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "project_items_count", default: 0, null: false
+    t.integer "usage_counts_views", default: 0, null: false
     t.index ["iid"], name: "index_bundles_on_iid"
     t.index ["main_offer_id"], name: "index_bundles_on_main_offer_id"
     t.index ["resource_organisation_id"], name: "index_bundles_on_resource_organisation_id"
@@ -296,21 +298,21 @@ ActiveRecord::Schema.define(version: 2023_08_08_155330) do
     t.string "name"
     t.text "description"
     t.integer "iid", null: false
-    t.bigint "service_id"
+    t.bigint "service_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "parameters", default: [], null: false
     t.boolean "voucherable", default: false, null: false
-    t.string "order_type", null: false
     t.string "status"
+    t.string "order_type", null: false
     t.boolean "internal", default: false
     t.string "order_url", default: "", null: false
     t.boolean "default", default: false
     t.jsonb "oms_params"
     t.bigint "primary_oms_id"
-    t.boolean "limited", default: false
-    t.integer "available_count", default: 0, null: false
     t.boolean "bundle_exclusive", default: false
+    t.integer "project_items_count", default: 0, null: false
+    t.integer "usage_counts_views", default: 0, null: false
     t.index ["iid"], name: "index_offers_on_iid"
     t.index ["primary_oms_id"], name: "index_offers_on_primary_oms_id"
     t.index ["service_id", "iid"], name: "index_offers_on_service_id_and_iid", unique: true
@@ -552,6 +554,7 @@ ActiveRecord::Schema.define(version: 2023_08_08_155330) do
     t.integer "upstream_id"
     t.datetime "synchronized_at"
     t.string "status"
+    t.integer "usage_counts_views", default: 0, null: false
   end
 
   create_table "research_products", force: :cascade do |t|
@@ -742,6 +745,7 @@ ActiveRecord::Schema.define(version: 2023_08_08_155330) do
     t.boolean "thematic", default: false
     t.string "type", default: "Service"
     t.integer "bundles_count", default: 0, null: false
+    t.integer "usage_counts_views", default: 0, null: false
     t.index ["name"], name: "index_services_on_name"
     t.index ["pid"], name: "index_services_on_pid"
     t.index ["provider_id"], name: "index_services_on_provider_id"
