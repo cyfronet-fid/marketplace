@@ -4,36 +4,31 @@ require "rails_helper"
 
 RSpec.feature "Bundles in backoffice", manager_frontend: true do
   include OmniauthHelper
-  include ExternalServiceDataHelper
 
-  let(:service_portfolio_manager) { create(:user, roles: [:service_portfolio_manager]) }
-  let(:owner) { create(:user) }
-  let(:data_manager) { create(:user) }
-  let(:provider) { build(:provider, data_administrators: [build(:data_administrator, email: data_manager.email)]) }
-  let(:service) { create(:service_with_offers, owners: [owner], resource_organisation: provider) }
-  let(:offer) { create(:offer) }
-  let(:bundle) { build(:bundle, main_offer: service.offers.first, offers: [offer], service: service) }
-  let(:scientific_domain) { bundle.scientific_domains.first }
+  let!(:service_portfolio_manager) { create(:user, roles: [:service_portfolio_manager]) }
+  let!(:owner) { create(:user) }
+  let!(:data_manager) { create(:user) }
+  let!(:provider) { build(:provider, data_administrators: [build(:data_administrator, email: data_manager.email)]) }
+  let!(:service) { create(:service_with_offers, owners: [owner], resource_organisation: provider) }
+  let!(:offer) { create(:offer) }
+  let!(:bundle) { build(:bundle, main_offer: service.offers.first, offers: [offer], service: service) }
+  let!(:scientific_domain) { bundle.scientific_domains.first }
 
   %i[service_portfolio_manager owner].each do |user|
     context "As a #{user}" do
-      before do
-        checkin_sign_in_as(send(user))
-        stub_external_data
-      end
+      before { checkin_sign_in_as(send(user)) }
 
-      pending "I can create new bundle" do
+      scenario "I can create new bundle" do
         visit backoffice_service_path(service)
         click_on "Add new bundle", match: :first
 
         fill_in "Name", with: bundle.name
-
         select bundle.bundle_goals.first.name, from: "Bundle goals"
         select bundle.capabilities_of_goals.first.name, from: "Capabilities of goals"
         select bundle.main_offer.name, from: "Main offer"
         fill_in "Description", with: bundle.description
         select bundle.target_users.first.name, from: "Target users"
-        select "#{scientific_domain.parent.name} ⇒ #{scientific_domain.name}", from: "Scientific domains"
+        select "#{scientific_domain.parent.name} ⇒ #{scientific_domain.name}", from: "bundle_scientific_domain_ids"
         select bundle.research_steps.first.name, from: "Research steps"
         select "#{offer.service.name} > #{offer.name}", from: "Offers"
         fill_in "Helpdesk url", with: bundle.helpdesk_url

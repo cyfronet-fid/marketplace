@@ -21,7 +21,7 @@ shared_examples "publishable" do
 
     after(:each) { clear_enqueued_jobs }
 
-    it "should enqueue JMS job after create" do
+    it "should enqueue JMS job after create", retry: 5, retry_wait: 10 do
       perform_enqueued_jobs { create(described_class.name.underscore.to_sym) }
 
       # Sadly there's no way to synchronously wait for messages
@@ -31,7 +31,7 @@ shared_examples "publishable" do
       # Since the active MQ should be run on the same host as the test
       # I'm expecting the message to be able to be received during that time
       @client.join(2)
-      sleep(100) if %w[Category Platform].include?(described_class.name)
+      sleep(2)
       expect(@received).to include(
         hash_including(
           "record",
