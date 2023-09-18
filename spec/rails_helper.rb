@@ -3,7 +3,6 @@
 require "webmock/rspec"
 require "spec_helper"
 require "view_component/test_helpers"
-# require "capybara/rails"
 
 ENV["RAILS_ENV"] ||= "test"
 require File.expand_path("../config/environment", __dir__)
