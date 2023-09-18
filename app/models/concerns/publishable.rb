@@ -10,19 +10,10 @@ module Publishable
 
     private
 
-    def send_to_databus_create
-      payload = payload_for(:create)
-      publish(payload)
-    end
-
-    def send_to_databus_update
-      payload = payload_for(:update)
-      publish(payload)
-    end
-
-    def send_to_databus_destroy
-      payload = payload_for(:destroy)
-      publish(payload)
+    %i[create update destroy].each do |type|
+      define_method "send_to_databus_#{type}" do
+        publish(payload_for(type))
+      end
     end
 
     def publish(payload)

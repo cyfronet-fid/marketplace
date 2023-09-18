@@ -85,6 +85,7 @@ group :development, :test do
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
 
   gem "rspec-rails", "~> 3.8.2"
+  gem "rspec-retry"
   gem "rswag-specs"
   gem "pry"
   gem "pry-byebug", "~>3.10.0"
@@ -131,4 +132,4 @@ gem "auto_strip_attributes"
 
 # Fix for puma memory leak
 gem "puma_worker_killer"
-gem "timeout"
+gem "timeout", "~>0.3.2"
