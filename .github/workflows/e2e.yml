@@ -33,7 +33,8 @@ jobs:
           ./test/system/node_modules
         key: my-cache-${{ runner.os }}-${{ hashFiles('./test/system/package-lock.json') }}
     - name: Install e2e dependencies
-      run: npm i --prefix ./test/system
+      working-directory: ./test/system
+      run: yarn install
     - name: Setup and seed db
       env:
         RAILS_ENV: development
@@ -66,8 +67,8 @@ jobs:
         CYPRESS_PROVIDER_PORTAL_CLIENT_ID: ${{secrets.PROVIDER_PORTAL_CLIENT_ID}}
         CYPRESS_AAI_TOKEN_URL: ${{secrets.AAI_TOKEN_URL}}
       with:
-        project: ./test/system
-        command: npm run cy:run --prefix ./test/system
+        working-directory: ./test/system
+        command: yarn run cy:run
         wait-on: 'http://localhost:5000'
         browser: chrome
         headless: true
