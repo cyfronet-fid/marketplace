@@ -24,6 +24,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Handling errors on the offer's destroy (@goreck888)
 - Ordering another bundle in the same service (@goreck888)
 - Linking one main offer with multiple bundles (@goreck888)
+- Random failing tests (@goreck888)
 
 ## [3.50.0] 2023-08-30
 

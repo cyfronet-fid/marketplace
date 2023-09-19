@@ -70,11 +70,11 @@ e.g docker run -p 80:80 kennethreitz/httpbin
 ```
 - Run in preview mode
 ```bash
-npx cypress open
+yarn run cypress open
 ```
 - Run in headless mode
 ```bash
-npm run cy:run
+yarn run cy:run
 ```
 - Run only integration with JIRA test
 ```bash

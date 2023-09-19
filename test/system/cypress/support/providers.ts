@@ -94,7 +94,7 @@ Cypress.Commands.add("fillFormCreateProvider", (provider: IProvidersExtended, lo
   }
 
   if (provider.marketingMultimedia) {
-    cy.get("#provider_multimedia_0")
+    cy.get("#provider_link_multimedia_urls_attributes_0_url")
       .clear()
       .type(provider.marketingMultimedia);
   }

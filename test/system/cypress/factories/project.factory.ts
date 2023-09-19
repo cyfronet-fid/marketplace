@@ -15,7 +15,7 @@ export class IProject {
 
 export const ProjectFactory = {
     create: (args: {[field: string]: string} = {}): IProject => ({
-        name: Utilities.getUUID4(),
+        name: Utilities.getRandomString(),
         reason: Utilities.getRandomString(),
         scientificDomains: ["Agricultural Biotechnology", "Agricultural Sciences"],
         additionalInformation: Utilities.getRandomString(),

@@ -2,7 +2,7 @@ import { PlatformFactory } from "cypress/factories/platform.factory";
 import { UserFactory } from "../../../../factories/user.factory";
 import { PlatformMessages } from "../../../../fixtures/messages";
 
-describe("Category", () => {
+describe("Platform", () => {
   const user = UserFactory.create({roles: ["service_portfolio_manager"]});
   const [platform] = [...Array(1)].map(()=> PlatformFactory.create());
   const message = PlatformMessages;

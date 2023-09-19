@@ -3,40 +3,42 @@ import {IProject, ProjectFactory} from "../factories/project.factory";
 import {Utilities} from "../support/utilities";
 import {accessType, IResource} from "../support/project";
 import {IJiraResource} from "../support/jira";
+import { IResources } from "../factories/resource.factory";
 
-Cypress.Cookies.defaults({
-    preserve: ['user', 'project', 'resources', 'message']
-});
-describe.skip('Integration with JIRA', { tags: '@extended-test' }, () => {
+
+const user = JSON.stringify(UserFactory.create());
+const project = ProjectFactory.create();
+beforeEach(() => {
+  cy.session([user, project], () => {
+    cy.clearCookie('user');
+    cy.setCookie(
+      'user',
+      user,
+      {domain: Cypress.env('MP_JIRA_URL').replace(/(^\w+:|^)\/\//, '')}
+    );
+    cy.setCookie(
+      'user',
+      user,
+      {domain: Cypress.config().baseUrl.replace(/(^\w+:|^)\/\//, '')}
+    );
+    cy.clearCookie('project');
+    cy.setCookie(
+      'project',
+      JSON.stringify(project),
+      {domain: Cypress.env('MP_JIRA_URL').replace(/(^\w+:|^)\/\//, '')}
+    );
+    cy.setCookie(
+      'project',
+      JSON.stringify(project),
+      {domain: Cypress.config().baseUrl.replace(/(^\w+:|^)\/\//, '')}
+    );
+  });
+  cy.setCookie('resources', '[]');
+  cy.setCookie('message', 'SomeMessage');
+})
+describe('Integration with JIRA', { tags: '@extended-test' }, () => {
     // Hack: Before hook is running twice on baseUrl origin change
     // In that case "it" is used to run only once
-    it('Setup cookies data', () => {
-        const user = UserFactory.create();
-        cy.clearCookie('user');
-        cy.setCookie(
-            'user',
-            JSON.stringify(user),
-            {domain: Cypress.env('MP_JIRA_URL').replace(/(^\w+:|^)\/\//, '')}
-        );
-        cy.setCookie(
-            'user',
-            JSON.stringify(user),
-            {domain: Cypress.config().baseUrl.replace(/(^\w+:|^)\/\//, '')}
-        );
-
-        const project = ProjectFactory.create();
-        cy.clearCookie('project');
-        cy.setCookie(
-            'project',
-            JSON.stringify(project),
-            {domain: Cypress.env('MP_JIRA_URL').replace(/(^\w+:|^)\/\//, '')}
-        );
-        cy.setCookie(
-            'project',
-            JSON.stringify(project),
-            {domain: Cypress.config().baseUrl.replace(/(^\w+:|^)\/\//, '')}
-        );
-    });
     it('Should add project', () => {
         cy.visit("/");
         cy.getCookie('user')
@@ -60,12 +62,12 @@ describe.skip('Integration with JIRA', { tags: '@extended-test' }, () => {
         cy.getCookie('user')
             .then(user => JSON.parse(user.value) as IUser)
             .then(user => {
+                console.log(cy.getCookie('project'))
                 cy.getCookie('project')
                     .then(project => JSON.parse(project.value) as IProject)
                     .then(project => {
                         cy.loginAs(user, true);
                         cy.visit("/services");
-
                         cy.get('select[name="order_type"]')
                             .select("open_access");
                         cy.location('search')
@@ -78,7 +80,7 @@ describe.skip('Integration with JIRA', { tags: '@extended-test' }, () => {
                         cy.location('pathname')
                             .should("include", "/services/");
                         cy.get(".access-type")
-                            .contains("a", "Access the resource", {matchCase: false})
+                            .contains("a", "Access the service", {matchCase: false})
                             .click({force: true});
                         cy.contains("a", "Access instructions")
                           .should("be.visible")
@@ -116,7 +118,7 @@ describe.skip('Integration with JIRA', { tags: '@extended-test' }, () => {
             });
     });
 
-    // Run when fully open access will be available
+    // Run when fully open access will be availableMP_JIRA_URL
     xit('Add fully open access', () => {});
     xit('Add other', () => {});
     it('Add order required', () => {
@@ -142,7 +144,7 @@ describe.skip('Integration with JIRA', { tags: '@extended-test' }, () => {
                         cy.location('pathname')
                             .should("include", "/services/");
                         cy.get(".access-type")
-                            .contains("a", "Access the resource", {matchCase: false})
+                            .contains("a", "Access the service", {matchCase: false})
                             .click({force: true});
                         cy.contains("a", "Access instructions")
                           .should("be.visible")
@@ -277,7 +279,8 @@ describe.skip('Integration with JIRA', { tags: '@extended-test' }, () => {
     });
 });
 
-describe.skip('Offers messages', { tags: '@extended-test' }, () => {
+describe('Offers messages', { tags: '@extended-test' }, () => {
+    // tag: @extended-test
     it('Should setup cookies', () => {
         const user = UserFactory.create();
         cy.clearCookie('user');
@@ -314,7 +317,7 @@ describe.skip('Offers messages', { tags: '@extended-test' }, () => {
                     .then(project => JSON.parse(project.value) as IProject)
                     .then(project => {
                         cy.loginAs(user, true);
-
+                        project.name += "_second"
                         cy.visit('/projects/new');
                         cy.fillFormProject(project);
                         cy.contains("button", "Create new project")
