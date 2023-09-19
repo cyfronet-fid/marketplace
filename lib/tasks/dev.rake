@@ -99,6 +99,10 @@ namespace :dev do
     provider.scientific_domains = samples_of(ScientificDomain)
     provider.legal_status = Vocabulary::LegalStatus.all.sample.id
     provider.participating_countries = samples_of(Country)
+    provider.public_contacts = [PublicContact.new(email: "example#{provider.id}@mail.com")]
+    provider.data_administrators = [
+      DataAdministrator.new(first_name: "John#{provider.id}", last_name: "Doe", email: "example#{provider.id}@mail.com")
+    ]
 
     provider
   end

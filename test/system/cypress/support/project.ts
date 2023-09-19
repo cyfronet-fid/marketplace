@@ -136,12 +136,12 @@ Cypress.Commands.add("scrapResourceDetails", () => {
     cy.location('pathname').should('match', /\/projects\/[0-9]+\/services\/[0-9]+/);
 
     cy.get(".details")
-        .contains("dl", "Resource name:")
+        .contains("dl", "Service name:")
         .find("dd")
         .invoke("text")
         .as("name");
     cy.get(".details")
-        .contains("dl", "Resource access:")
+        .contains("dl", "Service access:")
         .find("dd")
         .invoke("text")
         .as("accessType");
