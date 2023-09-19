@@ -12,8 +12,8 @@ describe("Api page", () => {
   });
 
   it("should go as login user to api page", () => {
-    cy.loginAs(user);
     cy.visit("/api_docs")
+    cy.loginAs(user);
     cy.contains("h2", "EOSC Marketplace API Documentation")
       .should("be.visible");
     cy.contains("a","Regenerate token")
