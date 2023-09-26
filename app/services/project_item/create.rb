@@ -33,6 +33,8 @@ class ProjectItem::Create
               parent_id: @project_item.id,
               project_id: @project.id,
               offer_id: offer.id,
+              voucher_id: @project_item.voucher_id,
+              request_voucher: @project_item.request_voucher,
               bundle_id: @project_item.bundle.id,
               properties: bundled_parameters
             )
