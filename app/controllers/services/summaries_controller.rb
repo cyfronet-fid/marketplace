@@ -53,7 +53,7 @@ class Services::SummariesController < Services::ApplicationController
   end
 
   def summary_params
-    session[session_key].merge(params.require(:customizable_project_item).permit(:project_id))
+    session[session_key].merge(params.require(:customizable_project_item).permit(:project_id, :additional_comment))
   end
 
   def setup_show_variables!

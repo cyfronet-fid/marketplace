@@ -7,24 +7,21 @@
       - if @step.bundle.present?
         %h2.mb-2.mt-3.font-bold Bundle configuration
         %p.mb-4 Your service will be configured to work with following services:
-      - else
-        %p.mb-4= _("Please specify parameters. It is necessary to handle your request.")
-      - if @step.bundle.present?
-        .row.bundle-info
-          .col-12.col-md-2
-          .col-12.col-md-10
+        - if @step.bundle.all_offers.select(&:voucherable?).size > 1
           = render "services/configurations/voucher", step: @step, f: f
         .row.bundle-info
           .col-12.col-md-2
             = presentable_logo(@step.bundle.service, "align-self-center img-fluid", "180x120")
           .col-12.col-md-10
             %h3.bundle-configuration-title
-              = @step.bundle.name
+              = @step.bundle.main_offer.name
             %span.text-muted
               = _("Provided by #{ @step.bundle.service.resource_organisation.name}")
           = render "services/configurations/attributes", step: @step, service: @service, form: f
-      - else
-        = render "services/configurations/voucher", step: @step, f: f
-        = render "services/configurations/attributes", step: @step, service: @service, form: f
-      - if @step.bundle.present?
         = render "services/configurations/bundled_offers", step: @step, service: @service, f: f
+      - else
+        %p.mb-4= _("Please specify parameters. It is necessary to handle your request.")
+        = render "services/configurations/voucher", step: @step, f: f
+        .row.bundle-info
+          = render "services/configurations/attributes", step: @step, service: @service, form: f
+
