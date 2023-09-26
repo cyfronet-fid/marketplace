@@ -1,20 +1,24 @@
 - if step&.offer&.voucherable || step&.bundle&.main_offer&.voucherable || step&.bundle&.offers&.any?(&:voucherable)
-  %h2.mb-3.font-weight-normal
-    = _("Voucher")
-  .btn-group.voucher-radio.btn-group-toggle.mb-4.col-12.col-lg-8.p-0
-    %label#have.btn.btn-secondary.p-2.pl-5.pr-5{ "data-project-item-target" => "iHaveVoucher",
-                                            class: ("active" unless step.request_voucher) }
-      %input{ type: "radio", name: "customizable_project_item[request_voucher]",
-                   value: "false", "data-action" => "change->project-item#voucherChanged" }
-        %i.fas.fa-check
-        = _("I have a voucher, I want to use it")
-    %label#ask.btn.btn-secondary.p-2.pl-5.pr-5{ "data-project-item-target" => "iDontHaveVoucher",
-                                            class: ("active" if step.request_voucher) }
-      %input{ type: "radio", name: "customizable_project_item[request_voucher]",
-                  value: "true", "data-action" => "change->project-item#voucherChanged" }
-        %i.fas.fa-check
-        = _("I want to ask for vouchers")
+  .row.bundle-info
+    .col-12.col-md-2
+    .col-12.col-md-10
+    %h2.mb-3.font-weight-normal
+      = _("Voucher")
+    .col-12.col-md-10
+    .btn-group.voucher-radio.btn-group-toggle.mb-4.col-12.col-lg-8.p-0
+      %label#have.btn.btn-secondary.p-2.pl-5.pr-5{ "data-project-item-target" => "iHaveVoucher",
+                                              class: ("active" unless step.request_voucher) }
+        %input{ type: "radio", name: "customizable_project_item[request_voucher]",
+                     value: "false", "data-action" => "change->project-item#voucherChanged" }
+          %i.fas.fa-check
+          = _("I have a voucher, I want to use it")
+      %label#ask.btn.btn-secondary.p-2.pl-5.pr-5{ "data-project-item-target" => "iDontHaveVoucher",
+                                              class: ("active" if step.request_voucher) }
+        %input{ type: "radio", name: "customizable_project_item[request_voucher]",
+                    value: "true", "data-action" => "change->project-item#voucherChanged" }
+          %i.fas.fa-check
+          = _("I want to ask for vouchers")
 
-  .form-group.voucher_id.col-12.col-lg-7.pl-0.mb-5{ "data-project-item-target" => "hasVoucher",
-                                                    class: ("hidden-fields" if step.request_voucher) }
-    = f.input :voucher_id, label: _("Voucher ID"), input_html: { autocomplete: "new-password" }
+    .form-group.voucher_id.col-12.col-lg-7.pl-0.mb-5{ "data-project-item-target" => "hasVoucher",
+                                                      class: ("hidden-fields" if step.request_voucher) }
+      = f.input :voucher_id, label: _("Voucher ID"), input_html: { autocomplete: "new-password" }

@@ -36,7 +36,7 @@ class ProjectItem::Wizard
 
     delegate(*::ProjectItem.attribute_names.map { |a| [a, "#{a}="] }.flatten, to: :project_item)
 
-    delegate :offer, :bundle, :project, :parent, to: :project_item
+    delegate :offer, :bundle, :project, :parent, :voucher_id, :request_voucher, to: :project_item
 
     def initialize(service, project_item_attributes)
       @service = service
@@ -85,8 +85,11 @@ class ProjectItem::Wizard
 
   class SummaryStep < ConfigurationStep
     include ProjectItem::ProjectValidation
+    include ProjectItem::VoucherValidation
 
-    attr_accessor :additional_comment, :verified_recaptcha
+    delegate :additional_comment, to: :project_item
+
+    attr_accessor :verified_recaptcha
 
     def error
       "Please correct errors presented below"

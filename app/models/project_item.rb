@@ -26,6 +26,8 @@ class ProjectItem < ApplicationRecord
   enum status_type: STATUS_TYPES
   enum issue_status: ISSUE_STATUSES
 
+  attr_accessor :additional_comment
+
   belongs_to :offer
   belongs_to :bundle, optional: true
   belongs_to :service, inverse_of: :project_items
