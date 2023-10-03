@@ -1,4 +1,9 @@
 // scss-lint:disable all
+
+.status-default {
+  color: $alert-bg;
+}
+
 .status-created {
   color: $palette-yellow;
 }
@@ -25,6 +30,7 @@
 .status-bg-progress,
 .status-bg-created {
   background: $status-bg-registered;
+  color: $custom-4;
 }
 
 .status-bg-ready {
