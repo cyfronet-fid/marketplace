@@ -1,20 +1,20 @@
-.card.offer-description.pin-service.mb-4
-  .card-body.p-4
-    %table.table.table-bordered.mb-1
+%list-group.research-products.projects-content
+  %li.projects-list
+    %table.table.mb-1
       %tbody
         - attributes.each do |attr|
           %tr
-            %td.pl-0
             %td
-              = attr.first.humanize
-            %td
-              - if attr.first == "links"
-                - if attr.second.empty?
-                  = _("Apologies, but it seems we couldn't find any relevant links at the moment")
+              - if attr.first == "authors"
+                %span Authors:
+              %span{ class: "#{attr.first}" }
+                - if attr.first == "links"
+                  - if attr.second.empty?
+                    = _("Apologies, but it seems we couldn't find any relevant links at the moment")
+                  - else
+                    = attr.second.map{ |link| link_to link, link }.join("<br>").html_safe
+                - elsif attr.second.is_a?(Array)
+                  - attr.second.each do |el|
+                    %span.pin-value= el
                 - else
-                  = attr.second.map{ |link| link_to link, link }.join(", ").html_safe
-              - elsif attr.second.is_a?(Array)
-                - attr.second.each do |el|
-                  %span.pin-value= el
-              - else
-                %span= attr.second.upcase_first
+                  %span= attr.second.upcase_first
