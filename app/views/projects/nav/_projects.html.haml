@@ -1,15 +1,15 @@
 %hr.bottom-hr.mb-2
 .font-weight-normal.mb-2
   = link_to user_dashboard_url do
-    %div
+    .my-dashboard
       My Dashboard
-      %span.float-right
+      %span.float-right.arrow-box
         %i.fas.fa-arrow-right
 %hr.bottom-hr.mt-1.mb-2
 
-%h5.font-weight-bold.projects-title.text-uppercase My projects
+%h5.projects-title My Projects
 - if projects.active.any?
-  %ul.nav.flex-column.project-menu.pb-2
+  %ul.nav.flex-column.project-menu
     - projects.active.each do |project|
       %li.nav-item.text-break.project-listing-item
         = link_to project.name,
@@ -18,12 +18,12 @@
         - if project.user_has_new_messages? || project.items_have_new_messages?
           = image_pack_tag "ico_message.svg", class: "new-message-icon"
 
-= link_to "Create new project", new_project_path, class: "btn btn-sm btn-primary pl-5 pr-5 mt-3 text-center w-100",
+= link_to "Create new project", new_project_path, class: "btn btn-sm btn-primary pl-5 pr-5 mt-4 text-center w-100",
   "data-e2e" => "go-to-create-project-form-btn"
 
 - if projects.archived.any?
   %h5.mt-5.font-weight-bold.projects-title.text-uppercase My archived projects
-  %ul.nav.flex-column.project-menu.pb-2
+  %ul.nav.flex-column.project-menu
     - projects.archived.each do |project|
       %li.nav-item
         = link_to project.name, [project, :services],

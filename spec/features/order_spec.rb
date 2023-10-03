@@ -768,7 +768,7 @@ RSpec.feature "Service ordering", end_user_frontend: true do
 
         visit project_services_path(pi1.project)
 
-        expect(page).to have_content("BUNDLE")
+        expect(page).to have_content("Bundle")
         expect(page).to have_content(service.name)
         expect(page).to have_content(child1.service.name)
         expect(page).to have_content(child2.service.name)
