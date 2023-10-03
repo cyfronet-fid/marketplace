@@ -1771,13 +1771,6 @@ h5 {
   font-size: 1.05em;
 }
 
-.projects-title {
-  padding: 0 0 7px;
-  margin: 0;
-  border-bottom: 1px solid $image-border;
-  font-size: 0.9em;
-}
-
 .sub-text {
   font-size: 16px;
 }
@@ -3269,23 +3262,99 @@ label[data-multicheckbox].small {
   }
 }
 
+.projects-content {
+  margin-top: 45px;
+
+  .heading {
+    font-size: 18px;
+  }
+  // scss-lint:disable all
+  .resource_type {
+    font-weight: 500;
+    display: inline-block;
+    line-height: 1.3;
+    padding: 5px 10px;
+    background: $alert-bg;
+    color: $alert-color;
+  }
+
+  .resource_type {
+    margin-top: 6px;
+    display: inline-block;
+  }
+  // scss-lint:enable all
+}
+
+.project-resource-type {
+  font-weight: 500;
+  display: inline-block;
+  line-height: 1.3;
+  padding: 5px 10px;
+  background: $alert-bg;
+  color: $alert-color;
+}
+
 .projects-list {
-  border: none;
-  padding: 15px 25px 15px 37px;
-  margin-bottom: 4px;
-  border-radius: 2px;
-  background: $services-list-bg;
+  border: 1px solid $tabs-bg;
+  padding: 17px 20px;
+  margin-bottom: 17px;
+  border-radius: 4px;
+  border-left: 3px solid $custom-2;
+
+  table {
+    border: none;
+
+    td {
+      border: none;
+      padding: 0 0 0.55rem;
+
+      .title {
+        font-size: 18px;
+        font-weight: 600;
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      .pin-value {
+        color: $custom-5;
+      }
+
+      a {
+        color: $custom-5;
+        display: inline-block;
+        margin-bottom: 6px;
+      }
+    }
+  }
+
+  a {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    color: $custom-1;
+  }
+
+  .project-title {
+    font-weight: 600;
+  }
+
+  .projects-links {
+    color: $palette-blue;
+  }
+
+  .unpin-link {
+    border-left: 1px solid $palette-solid-20;
+
+  }
 
   .status {
-    font-size: 11px;
+    font-size: 14px;
 
     .status-box {
       font-weight: 500;
       display: inline-block;
-      text-transform: uppercase;
       line-height: 1.3;
-      padding: 4px 25px;
-      border-radius: 2px;
+      padding: 5px 20px;
     }
 
     .new-message {
@@ -3301,6 +3370,40 @@ label[data-multicheckbox].small {
       }
     }
 
+  }
+}
+
+.research-products {
+  .projects-list {
+    border-left: 3px solid $custom-3;
+
+    .links-list {
+      margin-top: 5px;
+
+      a {
+        text-decoration: underline;
+        color: $btn-primary-gradient-start;
+      }
+    }
+  }
+}
+
+.separator-line {
+  border-top: 1px solid $palette-solid-20;
+  margin: 15px 0;
+  height: 1px;
+  display: block;
+  width: 100%;
+}
+
+.projects-links {
+  &.dropdown {
+    margin-left: 0 !important;
+    font-size: 16px !important;
+  }
+
+  &::after {
+    padding-left: 6px !important;
   }
 }
 
@@ -3628,8 +3731,7 @@ label[data-multicheckbox].small {
   justify-content: center;
 
   .btn {
-    text-transform: uppercase;
-    font-weight: 600;
+    font-weight: 500;
     font-size: 12px;
     padding-bottom: 0.0625rem;
     color: $palette-gray-100;
@@ -3651,6 +3753,20 @@ label[data-multicheckbox].small {
   .btn-outline-secondary {
     border-style: solid;
     border-width: 1px;
+  }
+
+  .unpin-button {
+    padding-bottom: 0.1925rem;
+
+    &:hover {
+      background: $palette-solid-20;
+    }
+
+    .button-icon {
+      width: 14px;
+      height: auto;
+      margin-right: 6px;
+    }
   }
 
 }
@@ -3716,9 +3832,9 @@ label[data-multicheckbox].small {
 // scss-lint:enable all
 
 .project-menu {
-  border-bottom: 1px solid $image-border;
-  padding: 11px 0 0 12px;
-  background: $palette-lightblue2;
+  border-bottom: 2px solid $image-border;
+  padding: 10px 0 13px 12px;
+  background: $palette-lightblue4;
 
   .nav-item {
     position: relative;
@@ -3731,14 +3847,15 @@ label[data-multicheckbox].small {
     }
 
     .nav-link {
-      padding: 0.4rem 0;
+      padding: 0.3rem 0;
       font-size: 16px;
       float: left;
+      font-weight: 500;
     }
   }
 
   .active {
-    font-weight: 600;
+    font-weight: 400;
     color: $palette-gray-100;
   }
 
@@ -3822,6 +3939,14 @@ label[data-multicheckbox].small {
   h1 {
     font-size: 24px;
     font-weight: 600;
+    margin-bottom: 15px;
+  }
+
+  .buttons-panel {
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: flex-end;
   }
 }
 
@@ -3862,9 +3987,6 @@ label[data-multicheckbox].small {
 
 .empty-project {
   border: 1px solid $palette-gray-10;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
 
   h1 {
     font-weight: 300;
@@ -5648,6 +5770,27 @@ abbr[title] {
       }
     }
   }
+}
+
+.my-dashboard {
+  font-size: 16px;
+  color: $palette-black;
+  font-weight: 400;
+
+  .arrow-box {
+    svg {
+      color: $palette-new-blue;
+    }
+  }
+}
+
+.projects-title {
+  font-size: 16px;
+  color: $palette-black;
+  font-weight: 400;
+  padding: 4px 0 14px;
+  margin: 0;
+  border-bottom: 2px solid $image-border;
 }
 
 .empty-info {

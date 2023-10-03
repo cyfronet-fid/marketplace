@@ -1,16 +1,22 @@
 %li.projects-list
-  - if research_product.links.present?
-    %a.bundle-more.collapsed.dropdown{ href: "#collapse-example_#{research_product.id}",
-                    "data-toggle" => "collapse",
-                    "role" => "button",
-                    "aria-expanded" => "false",
-                    type: "button" }
-  = link_to research_product.title, project_research_product_path(project, research_product)
-  .float-right.status
-    %span.bundle-status.text-uppercase
+  = link_to research_product.title, project_research_product_path(project, research_product), class: "project-title"
+  .d-block
+    .project-resource-type.mt-3
       = _(research_product.resource_type.humanize)
-
-- research_product.links.each do |link|
-  #collapse-example.bundle-box.padding.collapse{ id: "#{research_product.id}" }
-    %li.projects-list
+  .separator-line
+  .bottom-action-links.d-block
+    - if research_product.links.present?
+      %a.bundle-more.collapsed.dropdown.projects-links.mb-2{ href: "#collapse-example_#{research_product.id}",
+                      "data-toggle" => "collapse",
+                      "role" => "button",
+                      "aria-expanded" => "false",
+                      type: "button" } Links
+    - if policy(research_product).destroy?
+      = link_to project_research_product_path(project, research_product), method: :delete,
+        class: "projects-links unpin-link mt-1 ml-3 pl-4",
+        type: "button", role: "button" do
+        = image_pack_tag "unpin.svg", alt: "Unpin"
+        %span Unpin
+  - research_product.links.each do |link|
+    #collapse-example.padding.collapse.links-list{ id: "#{research_product.id}" }
       = link_to link, link
