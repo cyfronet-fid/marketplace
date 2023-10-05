@@ -37,10 +37,10 @@ class Presentable::HeaderComponent < ApplicationComponent
   end
 
   def new_question_link
-    @object.instance_of?(Service) ? new_service_question_path(@object) : new_provider_question_path(@object)
+    @object.instance_of?(Provider) ? new_provider_question_path(@object) : new_service_question_path(@object)
   end
 
   def new_question_prompt
-    @object.instance_of?(Service) ? "Ask a question about this service?" : "Ask this provider a question"
+    @object.instance_of?(Provider) ? "Ask this provider a question" : "Ask a question about this service?"
   end
 end
