@@ -17,6 +17,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Changed
 - Bundle linking available for all types of offers (@goreck888)
+- Improvements for the UI in the Marketplace's projects (@jarekzet, @goreck888)
 
 ### Fixed
 - Blocked connecting drafted offers to the bundle (@goreck888)
@@ -26,6 +27,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Linking one main offer with multiple bundles (@goreck888)
 - Random failing tests (@goreck888)
 - Offer status validation when bundle is published (@goreck888)
+- Question link in the datasource page (@goreck888)
 
 ## [3.50.0] 2023-08-30
 
