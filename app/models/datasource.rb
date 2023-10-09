@@ -24,7 +24,7 @@ class Datasource < Service
     search_base_url = Mp::Application.config.search_service_base_url
     enable_external_search = Mp::Application.config.enable_external_search
     if enable_external_search
-      search_base_url + "/search/data-source?q=*&fq=#{filter_query}:(%22#{target_name}%22)"
+      search_base_url + "/search/data_source?q=*&fq=#{filter_query}:(%22#{target_name}%22)"
     else
       default_path || provider_path(self)
     end
