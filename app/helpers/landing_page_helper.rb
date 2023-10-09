@@ -7,7 +7,7 @@ module LandingPageHelper
     service: "Services",
     publication: "Publications",
     dataset: "Data",
-    "data-source": "Data Sources",
+    data_source: "Data Sources",
     bundle: "Service Bundles",
     training: "Training Materials",
     guideline: "Interoperability Guidelines"
