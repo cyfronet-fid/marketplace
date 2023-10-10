@@ -46,10 +46,13 @@ module Viewable
 
     def store_analytics
       transaction do
-        if analytics[:views].is_a?(Integer) && usage_counts_views != analytics[:views]
+        if analytics[:views].respond_to?(:to_i) && usage_counts_views != analytics[:views].to_i
           update_columns(usage_counts_views: analytics[:views])
           update_offers
           Rails.logger.info "#{usage_counts_views} usage_counts_views stored to #{self} #{name} (#{id_construct})"
+        elsif !analytics[:views].respond_to?(:to_i)
+          Rails.logger.warn "usage_counts_views for #{name} isn't updated. GA response: " +
+                              "#{analytics[:views].blank? ? analytics : analytics[:views]}"
         end
       end
     end
