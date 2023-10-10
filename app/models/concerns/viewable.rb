@@ -46,7 +46,7 @@ module Viewable
 
     def store_analytics
       transaction do
-        if usage_counts_views != analytics[:views]
+        if analytics[:views].is_a?(Integer) && usage_counts_views != analytics[:views]
           update_columns(usage_counts_views: analytics[:views])
           update_offers
           Rails.logger.info "#{usage_counts_views} usage_counts_views stored to #{self} #{name} (#{id_construct})"
