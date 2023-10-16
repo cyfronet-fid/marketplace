@@ -45,7 +45,6 @@ class Import::Datasources
     end
 
     updated = 0
-    created = 0
     not_modified = 0
     total_datasource_count = response.body["results"].length
     output = []
@@ -55,57 +54,22 @@ class Import::Datasources
     response.body["results"]
       .select { |res| @ids.empty? || @ids.include?(res["id"]) }
       .each do |datasource_data|
-        datasource = datasource_data&.[]("datasource")&.merge(datasource_data["resourceExtras"] || {})
+        datasource = datasource_data&.[]("datasource")
         datasource["status"] = object_status(datasource_data["active"], datasource_data["suspended"])
+        ppid =
+          datasource_data&.dig("identifiers", "alternativeIdentifiers")&.find { |id| id["type"] == "PID" }&.[]("value")
         output.append(datasource_data)
 
-        image_url = datasource["logo"]
         datasource = Importers::Datasource.call(datasource, Time.now, @eosc_registry_base_url, @token, "rest")
         if (datasource_source = ServiceSource.find_by(eid: eid(datasource_data), source_type: "eosc_registry")).nil?
-          log "Adding [NEW] datasource: #{datasource[:name]}, eid: #{datasource[:pid]}"
-          unless @dry_run
-            datasource = Datasource.new(datasource)
-            if datasource.valid?
-              Service::Create.call(datasource)
-              datasource_source =
-                ServiceSource.create!(
-                  service_id: datasource.id,
-                  eid: eid(datasource_data),
-                  source_type: "eosc_registry"
-                )
-              update_from_eosc_registry(datasource, datasource_source, true)
-
-              Importers::Logo.new(datasource, image_url).call
-              datasource.save!
-            else
-              datasource.save(validate: false)
-              datasource_source =
-                ServiceSource.create!(
-                  service_id: datasource.id,
-                  eid: "eosc.#{eid(datasource_data)}",
-                  source_type: "eosc_registry"
-                )
-              update_from_eosc_registry(datasource, datasource_source, false)
-              log "Datasource #{datasource.name}, eid: #{datasource.pid} " +
-                    "saved with errors: #{datasource.errors.full_messages}"
-
-              Importers::Logo.new(datasource, image_url).call
-              datasource.save(validate: false)
-            end
-          end
-          created += 1
+          log "[WARN] Service id #{eid(datasource_data)} (PID: #{ppid}) doesn't exist."
         else
-          existing_datasource = Datasource.find_by(id: datasource_source.service_id)
+          existing_datasource = Service.find_by(pid: eid(datasource_data))
           if existing_datasource.upstream_id == datasource_source.id
             updated += 1
-            log "Updating [EXISTING] datasource #{datasource[:name]}, " +
-                  "id: #{datasource_source["id"]}, eid: #{datasource[:pid]}"
-            unless @dry_run
-              Service::Update.new(existing_datasource, datasource).call
-
-              Importers::Logo.new(existing_datasource, image_url).call
-              existing_datasource.save!
-            end
+            log "Updating [EXISTING] datasource #{existing_datasource.name}, " +
+                  "id: #{datasource_source["id"]}, eid: #{eid(datasource_data)}"
+            Service::Update.new(existing_datasource, datasource).call unless @dry_run
           else
             log "Datasource upstream is not set to EOSC Registry," \
                   " not updating #{existing_datasource.name}, id: #{datasource_source.id}"
@@ -113,13 +77,12 @@ class Import::Datasources
           end
         end
       rescue ActiveRecord::RecordInvalid => e
-        log "ERROR - #{e}! #{name(datasource_data)} (eid: #{eid(datasource_data)}) " \
+        log "[ERROR] - #{e}! #{name(datasource_data)} (eid: #{eid(datasource_data)}) " \
               "will NOT be created (please contact catalog manager)"
       rescue StandardError => e
-        log "ERROR - Unexpected #{e}! #{name(datasource_data)} (eid: #{eid(datasource_data)}) will NOT be created!"
+        log "[ERROR] - Unexpected #{e}! #{name(datasource_data)} (eid: #{eid(datasource_data)}) will NOT be created!"
       end
-    log "PROCESSED: #{total_datasource_count}, CREATED: #{created}, " +
-          "UPDATED: #{updated}, NOT MODIFIED: #{not_modified}"
+    log "PROCESSED: #{total_datasource_count}, " + "UPDATED: #{updated}, NOT MODIFIED: #{not_modified}"
 
     Datasource.reindex
 
@@ -131,11 +94,11 @@ class Import::Datasources
   private
 
   def name(datasource_data)
-    datasource_data["name"]
+    datasource_data.dig("datasource", "name")
   end
 
   def eid(datasource_data)
-    datasource_data["id"]
+    datasource_data.dig("datasource", "serviceId")
   end
 
   def update_from_eosc_registry(datasource, datasource_source, validate)

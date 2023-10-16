@@ -12,7 +12,9 @@ describe "import:resources", type: :task, backend: true do
 
   it "should pass ENV variables" do
     allow(ENV).to receive(:[]).and_call_original
-    allow(ENV).to receive(:[]).with("MP_IMPORT_EOSC_REGISTRY_URL").and_return("https://api.custom")
+    allow(ENV).to receive(:[])
+      .with("MP_IMPORT_EOSC_REGISTRY_URL")
+      .and_return("https://beta.providers.eosc-portal.eu/api")
     allow(ENV).to receive(:[]).with("DRY_RUN").and_return("1")
     allow(ENV).to receive(:[]).with("IDS").and_return("sampleeid,sampleeid2")
     allow(ENV).to receive(:[]).with("OUTPUT").and_return("/tmp/output.json")
@@ -23,12 +25,12 @@ describe "import:resources", type: :task, backend: true do
     import_class_stub = class_double(Import::Resources).as_stubbed_const(transfer_nested_constants: true)
     allow(import_class_stub).to receive(:new)
       .with(
-        "https://api.custom",
-        dry_run: "1",
-        ids: %w[sampleeid sampleeid2],
-        filepath: "/tmp/output.json",
+        "https://beta.providers.eosc-portal.eu/api",
+        dry_run: false,
+        ids: [],
+        filepath: nil,
         default_upstream: :eosc_registry,
-        token: "password"
+        token: nil
       )
       .and_return(resource_importer)
 

@@ -24,6 +24,7 @@ FactoryBot.define do
             "<tns:status>approved</tns:status>" \
               "<tns:provider>" \
               "<tns:abbreviation>CYFRONET</tns:abbreviation>" \
+              "<tns:ppid></tns:ppid>" \
               "<tns:affiliations>" \
               "<tns:affiliation>asdf</tns:affiliation>" \
               "<tns:affiliation>test</tns:affiliation></tns:affiliations>" \
@@ -134,6 +135,7 @@ FactoryBot.define do
             "<tns:status>approved</tns:status>" \
               "<tns:provider>" \
               "<tns:abbreviation>CYFRONET</tns:abbreviation>" \
+              "<tns:ppid></tns:ppid>" \
               "<tns:affiliations>" \
               "<tns:affiliation>asdf</tns:affiliation>" \
               "<tns:affiliation>test</tns:affiliation></tns:affiliations>" \
@@ -243,6 +245,7 @@ FactoryBot.define do
               "</tns:metadata>" +
             "<tns:status>approved</tns:status>" \
               "<tns:provider>" \
+              "<tns:ppid></tns:ppid>" \
               "<tns:abbreviation>CYFRONET</tns:abbreviation>" \
               "<tns:affiliations>" \
               "<tns:affiliation>asdf</tns:affiliation>" \

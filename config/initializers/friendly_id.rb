@@ -15,9 +15,10 @@ module FriendlyIdExtensions
   FriendlyId::FinderMethods.module_eval do
     private
       def first_by_friendly_id(id)
-        field = (column_names & ["pid", "eid"]).first
-        if field.present?
-          find_by("#{friendly_id_config.query_field} = ? OR #{field} = ?", id, id)
+        fields = (column_names & ["ppid", "pid", "eid"])
+        dup_id = Array.new(fields.size + 1) { "#{id}" }
+        if fields.present?
+          find_by("#{friendly_id_config.query_field} = ? #{fields.map { |f| "OR #{f} = ?"}.join(" ")}", *dup_id)
         else
           find_by("#{friendly_id_config.query_field} = ?", id)
         end

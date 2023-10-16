@@ -70,11 +70,7 @@ class Import::Providers
     log "PROCESSED: #{@request_providers.length}, CREATED: #{@created_count}, " \
           "UPDATED: #{@updated_count}, NOT MODIFIED: #{not_modified}"
 
-    unless @filepath.nil?
-      File.open(@filepath, "w") do |file|
-        file << JSON.pretty_generate(@request_providers.map { |_, request_data| request_data })
-      end
-    end
+    File.open(@filepath, "w") { |file| file << JSON.pretty_generate(@request_providers) } unless @filepath.nil?
   end
 
   private

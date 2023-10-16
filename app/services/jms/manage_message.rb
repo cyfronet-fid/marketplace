@@ -21,7 +21,7 @@ class Jms::ManageMessage < ApplicationService
     @token = token
   end
 
-  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity:
+  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
   def call
     log @message
@@ -40,7 +40,7 @@ class Jms::ManageMessage < ApplicationService
       end
       if action != "delete" && resource["serviceBundle"]["service"]
         Service::PcCreateOrUpdateJob.perform_later(
-          resource["serviceBundle"]["service"].merge(resource["serviceBundle"]["resourceExtras"] || {}),
+          resource["serviceBundle"]["service"].merge(resource_extras(resource["serviceBundle"])),
           @eosc_registry_base_url,
           resource["serviceBundle"]["active"] && !resource["serviceBundle"]["suspended"],
           modified_at,
@@ -75,21 +75,14 @@ class Jms::ManageMessage < ApplicationService
         )
       end
     when "datasource"
+      hash = resource&.dig("datasourceBundle", "datasource")
       modified_at = modified_at(resource, "datasourceBundle")
-      if resource["datasourceBundle"]["datasource"]["id"].split(".").size != 3
-        raise WrongIdError, resource["datasourceBundle"]["datasource"]["id"]
-      end
-      case action
-      when "delete"
-        Service::DeleteJob.perform_later(resource["datasourceBundle"]["datasource"]["id"])
-      when "update", "create"
-        Datasource::PcCreateOrUpdateJob.perform_later(
-          resource["datasourceBundle"]["datasource"].merge(resource["datasourceBundle"]["resourceExtras"] || {}),
-          resource["datasourceBundle"]["active"] && !resource["datasourceBundle"]["suspended"],
-          @eosc_registry_base_url,
-          @token,
-          modified_at
-        )
+      raise WrongIdError, hash["id"] if hash["id"].split(".").size != 3
+
+      if action != "delete" && resource["datasourceBundle"]["datasource"]
+        Datasource::PcCreateOrUpdateJob.perform_later(hash, modified_at)
+      elsif action == "delete"
+        Datasource::DeleteJob.perform_later(hash["id"])
       end
     else
       raise WrongMessageError
@@ -108,6 +101,10 @@ class Jms::ManageMessage < ApplicationService
   def modified_at(resource, resource_type)
     metadata = resource[resource_type]["metadata"]
     Time.at(metadata["modifiedAt"].to_i&./ 1000)
+  end
+
+  def resource_extras(resource)
+    resource.key?("resourceExtras") ? resource["resourceExtras"] : {}
   end
 
   def log(msg)

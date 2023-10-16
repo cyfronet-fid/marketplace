@@ -3,58 +3,20 @@
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
-      "fingerprint": "32bfe85c62b38164429a0fe25e2414a08769e9a7fd40496bd66a28857ff44529",
+      "fingerprint": "4ee1dfaf6a90d36d68d7af44057d4e80f52d055cc48789c49e3dd9f87c639a25",
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "config/initializers/friendly_id.rb",
-      "line": 20,
+      "line": 21,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "find_by(\"#{friendly_id_config.query_field} = ? OR #{(column_names & [\"pid\", \"eid\"]).first} = ?\", id, id)",
+      "code": "find_by(\"#{friendly_id_config.query_field} = ? #{(column_names & [\"ppid\", \"pid\", \"eid\"]).map do\n \"OR #{f} = ?\"\n end.join(\" \")}\", *[((column_names & [\"ppid\", \"pid\", \"eid\"]).size + 1)] do\n \"#{id}\"\n end)",
       "render_path": null,
       "location": null,
       "user_input": "friendly_id_config.query_field",
       "confidence": "Medium",
-      "note": ""
-    },
-    {
-      "warning_type": "Cross-Site Scripting",
-      "warning_code": 2,
-      "fingerprint": "553ecfa626988b985eb2fbdf1848ca10457771e73e2205912fd99fa4ff19373a",
-      "check_name": "CrossSiteScripting",
-      "message": "Unescaped cookie value",
-      "file": "app/views/layouts/_recommendation.html.haml",
-      "line": 7,
-      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
-      "code": "((\"'\" + sanitize(cookies[:lastPageId])) + \"'\")",
-      "render_path": [
-        {
-          "type": "controller",
-          "class": "ApplicationController",
-          "method": "set_follow_context",
-          "line": null,
-          "file": "app/controllers/concerns/recommendation/followable.rb",
-          "rendered": {
-            "name": "layouts/application",
-            "file": "app/views/layouts/application.html.haml"
-          }
-        },
-        {
-          "type": "template",
-          "name": "layouts/application",
-          "line": 32,
-          "file": "app/views/layouts/application.html.haml",
-          "rendered": {
-            "name": "layouts/_recommendation",
-            "file": "app/views/layouts/_recommendation.html.haml"
-          }
-        }
+      "cwe_id": [
+        89
       ],
-      "location": {
-        "type": "template",
-        "template": "layouts/_recommendation"
-      },
-      "user_input": "cookies[:lastPageId]",
-      "confidence": "Weak",
       "note": ""
     },
     {
@@ -75,6 +37,9 @@
       },
       "user_input": "params.require(:file)",
       "confidence": "High",
+      "cwe_id": [
+        22
+      ],
       "note": ""
     },
     {
@@ -84,13 +49,16 @@
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "config/initializers/friendly_id.rb",
-      "line": 22,
+      "line": 23,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "find_by(\"#{friendly_id_config.query_field} = ?\", id)",
       "render_path": null,
       "location": null,
       "user_input": "friendly_id_config.query_field",
       "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
       "note": ""
     },
     {
@@ -108,7 +76,7 @@
           "type": "controller",
           "class": "Backoffice::ServicesController",
           "method": "index",
-          "line": 39,
+          "line": 45,
           "file": "app/controllers/backoffice/services_controller.rb",
           "rendered": {
             "name": "backoffice/services/index",
@@ -152,6 +120,9 @@
       },
       "user_input": null,
       "confidence": "Medium",
+      "cwe_id": [
+        915
+      ],
       "note": ""
     },
     {
@@ -172,6 +143,9 @@
       },
       "user_input": null,
       "confidence": "Medium",
+      "cwe_id": [
+        915
+      ],
       "note": ""
     },
     {
@@ -189,7 +163,7 @@
           "type": "controller",
           "class": "Backoffice::ServicesController",
           "method": "index",
-          "line": 39,
+          "line": 45,
           "file": "app/controllers/backoffice/services_controller.rb",
           "rendered": {
             "name": "backoffice/services/index",
@@ -233,47 +207,9 @@
       },
       "user_input": null,
       "confidence": "Medium",
-      "note": ""
-    },
-    {
-      "warning_type": "Cross-Site Scripting",
-      "warning_code": 2,
-      "fingerprint": "ea9e64e667e8d4b95163d5642554258eaa674de5f812ee863fa5f885fe843c6a",
-      "check_name": "CrossSiteScripting",
-      "message": "Unescaped cookie value",
-      "file": "app/views/layouts/_recommendation.html.haml",
-      "line": 4,
-      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
-      "code": "((\"'\" + sanitize(cookies[:targetId])) + \"'\")",
-      "render_path": [
-        {
-          "type": "controller",
-          "class": "ApplicationController",
-          "method": "set_follow_context",
-          "line": null,
-          "file": "app/controllers/concerns/recommendation/followable.rb",
-          "rendered": {
-            "name": "layouts/application",
-            "file": "app/views/layouts/application.html.haml"
-          }
-        },
-        {
-          "type": "template",
-          "name": "layouts/application",
-          "line": 32,
-          "file": "app/views/layouts/application.html.haml",
-          "rendered": {
-            "name": "layouts/_recommendation",
-            "file": "app/views/layouts/_recommendation.html.haml"
-          }
-        }
+      "cwe_id": [
+        915
       ],
-      "location": {
-        "type": "template",
-        "template": "layouts/_recommendation"
-      },
-      "user_input": "cookies[:targetId]",
-      "confidence": "Weak",
       "note": ""
     },
     {
@@ -291,7 +227,7 @@
           "type": "controller",
           "class": "Backoffice::ServicesController",
           "method": "index",
-          "line": 39,
+          "line": 45,
           "file": "app/controllers/backoffice/services_controller.rb",
           "rendered": {
             "name": "backoffice/services/index",
@@ -335,9 +271,12 @@
       },
       "user_input": null,
       "confidence": "Medium",
+      "cwe_id": [
+        915
+      ],
       "note": ""
     }
   ],
-  "updated": "2022-02-17 08:58:02 +0100",
-  "brakeman_version": "5.2.1"
+  "updated": "2023-10-16 17:05:17 +0200",
+  "brakeman_version": "6.0.1"
 }
