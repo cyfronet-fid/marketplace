@@ -28,7 +28,7 @@ class Import::Vocabularies
     PROVIDER_MERIL_SCIENTIFIC_SUBDOMAIN: Vocabulary::MerilScientificDomain,
     PROVIDER_HOSTING_LEGAL_ENTITY: Vocabulary::HostingLegalEntity,
     RELATED_PLATFORM: Platform,
-    RESEARCH_CATEGORY: Vocabulary::ResearchStep,
+    MARKETPLACE_LOCATION: Vocabulary::ResearchStep,
     DS_JURISDICTION: Vocabulary::Jurisdiction,
     DS_RESEARCH_ENTITY_TYPE: Vocabulary::EntityType,
     DS_PERSISTENT_IDENTITY_SCHEME: Vocabulary::EntityTypeScheme,

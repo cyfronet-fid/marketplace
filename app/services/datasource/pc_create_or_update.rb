@@ -9,26 +9,28 @@ class Datasource::PcCreateOrUpdate
   class NotUpdatedError < StandardError
   end
 
-  def initialize(eosc_registry_datasource, eosc_registry_base_url, is_active, modified_at, token)
+  def initialize(eosc_registry_datasource, modified_at)
     @error_message = "Datasource haven't been updated. Message #{eosc_registry_datasource}"
-    @logo = eosc_registry_datasource["logo"]
-    @is_active = is_active
     @source_type = "eosc_registry"
     @mp_datasource =
-      Datasource
+      Service
         .joins(:sources)
-        .find_by("service_sources.source_type": @source_type, "service_sources.eid": eosc_registry_datasource["id"])
-    @datasource_hash = Importers::Datasource.call(eosc_registry_datasource, modified_at, eosc_registry_base_url, token)
+        .find_by(
+          "service_sources.source_type": @source_type,
+          "service_sources.eid": eosc_registry_datasource["serviceId"]
+        )
+    @datasource_hash = Importers::Datasource.call(eosc_registry_datasource, modified_at)
+    @datasource_hash["status"] = @is_active ? "published" : "draft"
     @new_update_available = Datasource::PcCreateOrUpdate.new_update_available(@mp_datasource, modified_at)
   end
 
   def call
-    create_new = @mp_datasource.nil? && @is_active
-    return Datasource::PcCreateOrUpdate.create_datasource(@datasource_hash, @logo) if create_new
+    create_new = @mp_datasource.nil?
+    return Datasource::PcCreateOrUpdate.create_datasource(@datasource_hash) if create_new
     return @mp_datasource unless @new_update_available
 
     source_id = @mp_datasource&.sources&.find_by(source_type: @source_type)
-    can_update = @mp_datasource.present? && (@is_active || source_id.present?)
+    can_update = @mp_datasource.present? && source_id.present?
     unless can_update
       Datasource::PcCreateOrUpdate.handle_invalid_data(@mp_datasource, @datasource_hash, @error_message)
       return @mp_datasource
@@ -40,13 +42,11 @@ class Datasource::PcCreateOrUpdate
       return @mp_datasource
     end
 
-    Service::Draft.call(@mp_datasource) unless @is_active
     if source_id.present?
       @mp_datasource.update(upstream_id: source_id.id)
       @mp_datasource.sources.first.update(errored: nil)
     end
 
-    Importers::Logo.new(@mp_datasource, @logo).call
     @mp_datasource.save!
     @mp_datasource
   rescue Errno::ECONNREFUSED
@@ -65,17 +65,15 @@ class Datasource::PcCreateOrUpdate
     mp_datasource&.sources&.first&.update(errored: datasource_errors)
   end
 
-  def self.create_datasource(datasource_hash, logo)
-    datasource = Datasource.new(datasource_hash)
+  def self.create_datasource(datasource_hash)
+    datasource = Service.new(datasource_hash)
     if datasource.valid?
       Service::Create.call(datasource)
     else
       datasource.status = "errored"
       datasource.save(validate: false)
     end
-    ServiceSource::Create.call(datasource)
 
-    Importers::Logo.call(datasource, logo)
     datasource.save!(validate: false)
     datasource
   end

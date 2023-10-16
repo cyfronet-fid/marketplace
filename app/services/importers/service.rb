@@ -64,8 +64,8 @@ class Importers::Service < ApplicationService
       funding_programs = map_funding_programs(@data.dig("fundingPrograms", "fundingProgram"))
       grant_project_names = Array(@data.dig("grantProjectNames", "grantProjectName"))
       research_steps =
-        if @data.dig("researchCategories", "researchCategory").present?
-          Array(@data.dig("researchCategories", "researchCategory"))
+        if @data.dig("marketplaceLocations", "marketplaceLocation").present?
+          Array(@data.dig("marketplaceLocations", "marketplaceLocation"))
         else
           []
         end
@@ -95,14 +95,14 @@ class Importers::Service < ApplicationService
       funding_bodies = map_funding_bodies(Array(@data["fundingBody"]))
       funding_programs = map_funding_programs(Array(@data["fundingPrograms"]))
       grant_project_names = Array(@data["grantProjectNames"]) || []
-      research_steps = @data["researchCategories"] || []
+      research_steps = @data["marketplaceLocations"] || []
     end
-
-    status = ENV["RESOURCE_IMPORT_STATUS"] || "published"
 
     main_contact = @data["mainContact"].present? ? MainContact.new(map_contact(@data["mainContact"])) : nil
 
     {
+      ppid: fetch_ppid(@data, @source),
+      status: @data["status"],
       pid: @data["id"],
       # Basic
       name: @data["name"],
@@ -169,7 +169,6 @@ class Importers::Service < ApplicationService
       # Financial
       payment_model_url: @data["paymentModel"] || "",
       pricing_url: @data["pricing"] || "",
-      status: status,
       synchronized_at: @synchronized_at
     }
   end

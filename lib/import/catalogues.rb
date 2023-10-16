@@ -59,11 +59,7 @@ class Import::Catalogues
                 eid: #{eid(external_data)} cannot be updated"
     end
 
-    unless @filepath.nil?
-      File.open(@filepath, "w") do |file|
-        file << JSON.pretty_generate(@request_providers.map { |_, request_data| request_data })
-      end
-    end
+    File.open(@filepath, "w") { |file| file << JSON.pretty_generate(@request_catalogues) } unless @filepath.nil?
   end
 
   private

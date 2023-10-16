@@ -11,6 +11,9 @@ FactoryBot.define do
           "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>
           <tns:serviceBundle xmlns:tns=\"http://einfracentral.eu\">
             <tns:active>true</tns:active>
+            <tns:identifiers>
+              <tns:originalId>eubi_eric.biomedical_imaging</tns:originalId>
+            </tns:identifiers>
             <tns:latest>true</tns:latest>
             <tns:metadata>
               <tns:modifiedAt>1600863105818</tns:modifiedAt>
@@ -18,18 +21,17 @@ FactoryBot.define do
               <tns:registeredAt>1593444757069</tns:registeredAt>
               <tns:registeredBy>Marta Swiatkowska</tns:registeredBy>
             </tns:metadata>
-            <tns:resourceExtras>
-              <tns:horizontalService>true</tns:horizontalService>
-              <tns:researchCategories>
-                <tns:researchCategory>research_step-ari</tns:researchCategory>
-              </tns:researchCategories>
-            </tns:resourceExtras>
             <tns:service>
+              <tns:horizontalService>true</tns:horizontalService>
+              <tns:serviceCategories>
+                <tns:serviceCategory>research_step-ari</tns:serviceCategory>
+              </tns:serviceCategories>
               <tns:category>aggregator</tns:category>
               <tns:changeLog></tns:changeLog>
               <tns:description>&lt;p style=\"text-align: justify;\"&gt;A catalogue of corpora (datasets) made up of mainly Open Access scholarly publications.&lt;br /&gt; Users can view publicly available corpora that have been created with the OpenMinTeD Corpus Builder for Scholarly Works, or manually uploaded to the OpenMinTeD platform.&amp;nbsp;&lt;/p&gt; &lt;p style=\"text-align: justify;\"&gt;The catalogue can be browsed and searched via the faceted navigation facility or a google-like free text search query. All users can view the descriptions of the corpora (with administrative and technical information, such as language, domain, keywords, licence, resource creator, etc.), as well as the contents and, when available, the metadata descriptions of the individual files that compose them.&amp;nbsp;&lt;/p&gt; &lt;p style=\"text-align: justify;\"&gt;In addition, registered users can process them with the TDM applications offered by OpenMinTeD and download them in accordance with their licensing conditions.&lt;/p&gt;</tns:description>
               <tns:helpdeskPage>https://services.openminted.eu/support</tns:helpdeskPage>
               <tns:id>eosc.tp.openminted_catalogue_of_corpora_2</tns:id>
+              <tns:ppid></tns:ppid>
               <tns:languageAvailabilities>
                 <tns:languageAvailability>english</tns:languageAvailability>
               </tns:languageAvailabilities>

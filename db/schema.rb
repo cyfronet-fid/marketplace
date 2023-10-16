@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_09_18_141631) do
+ActiveRecord::Schema.define(version: 2023_10_12_152707) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -556,6 +556,7 @@ ActiveRecord::Schema.define(version: 2023_09_18_141631) do
     t.datetime "synchronized_at"
     t.string "status"
     t.integer "usage_counts_views", default: 0, null: false
+    t.string "ppid"
   end
 
   create_table "research_products", force: :cascade do |t|
@@ -747,6 +748,8 @@ ActiveRecord::Schema.define(version: 2023_09_18_141631) do
     t.string "type", default: "Service"
     t.integer "bundles_count", default: 0, null: false
     t.integer "usage_counts_views", default: 0, null: false
+    t.string "ppid"
+    t.string "datasource_id"
     t.index ["name"], name: "index_services_on_name"
     t.index ["pid"], name: "index_services_on_pid"
     t.index ["provider_id"], name: "index_services_on_provider_id"
