@@ -3,6 +3,7 @@
 module Presentable::SidebarHelper
   def service_sidebar_fields
     [
+      pid,
       scientific_categorisation,
       categorisation,
       monitoring_data,
@@ -13,11 +14,11 @@ module Presentable::SidebarHelper
   end
 
   def provider_sidebar_fields
-    [provider_scientific_categorisation, multimedia, address, provider_contacts]
+    [pid, provider_scientific_categorisation, multimedia, address, provider_contacts]
   end
 
   def datasource_sidebar_fields
-    [scientific_categorisation, categorisation, target_users, resource_availability_and_languages]
+    [pid, scientific_categorisation, categorisation, target_users, resource_availability_and_languages]
   end
 
   private
@@ -90,6 +91,10 @@ module Presentable::SidebarHelper
 
   def address
     { name: "address", template: "plain_text", fields: %w[address] }
+  end
+
+  def pid
+    { name: "EOSC PID", template: "plain_text", fields: %w[ppid] }
   end
 
   def provider_contacts

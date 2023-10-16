@@ -65,6 +65,7 @@ class Importers::Provider
     main_contact = MainContact.new(map_contact(@data["mainContact"])) if @data["mainContact"]
 
     {
+      ppid: fetch_ppid(@data, @source),
       pid: @data["id"],
       # Basic
       name: @data["name"],

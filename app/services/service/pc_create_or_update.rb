@@ -22,6 +22,7 @@ class Service::PcCreateOrUpdate
           "service_sources.source_type": @source_type,
           "service_sources.eid": [@original_id, eosc_registry_service["id"]]
         )
+    eosc_registry_service["status"] = @is_active ? "published" : "draft"
     @service_hash = Importers::Service.new(eosc_registry_service, modified_at, eosc_registry_base_url, token).call
     @new_update_available = Service::PcCreateOrUpdate.new_update_available(@mp_service, modified_at)
   end
@@ -37,7 +38,6 @@ class Service::PcCreateOrUpdate
       Service::PcCreateOrUpdate.handle_invalid_data(@mp_service, @service_hash, @error_message)
       return @mp_service
     end
-
     update_valid = Service::Update.call(@mp_service, @service_hash)
     source.update(eid: @service_hash["pid"])
     unless update_valid
@@ -45,7 +45,6 @@ class Service::PcCreateOrUpdate
       return @mp_service
     end
 
-    Service::Draft.call(@mp_service) unless @is_active
     if source.present?
       @mp_service.update(upstream_id: source.id)
       @mp_service.sources.first.update(errored: nil)

@@ -181,4 +181,21 @@ module Importable
           .find_by("provider_sources.source_type": "eosc_registry", "provider_sources.eid": prov_eid)
     end
   end
+
+  def fetch_ppid(resource, source = "jms")
+    candidate =
+      case source
+      when "jms"
+        if resource&.key?("alternativeIdentifiers") && resource["alternativeIdentifiers"]&.key?("alternativeIdentifier")
+          Array(resource&.dig("alternativeIdentifiers", "alternativeIdentifier"))
+        end
+      when "rest"
+        resource["alternativeIdentifiers"] if resource.key?("alternativeIdentifiers")
+      end
+    candidate = candidate.blank? ? nil : candidate&.find { |id| id["type"] == "EOSC PID" }
+    candidate.blank? ? "" : candidate&.[]("value")
+  rescue StandardError
+    Rails.logger.warn "Could not fetch Persistent Identifier EOSC PID. Return blank string"
+    ""
+  end
 end
