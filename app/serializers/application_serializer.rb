@@ -50,7 +50,6 @@ class ApplicationSerializer < ActiveModel::Serializer
   end
 
   %i[
-    catalogue
     resource_organisation
     jurisdiction
     trls
@@ -85,6 +84,12 @@ class ApplicationSerializer < ActiveModel::Serializer
   %i[public_contacts created_at updated_at synchronized_at last_update rating].each do |method|
     define_method method do
       object.send(method)&.as_json
+    end
+  end
+
+  %i[catalogue].each do |method|
+    define_method method do
+      object.send(method)&.pid
     end
   end
 end
