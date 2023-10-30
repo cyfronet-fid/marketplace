@@ -10,7 +10,7 @@ class Google::Analytics
     @credentials = auth
     @service = Google::Apis::AnalyticsreportingV4::AnalyticsReportingService.new
     @view_id = google_view_id
-    login
+    login if @credentials.present?
   rescue StandardError => e
     print("[WARN] Cannot connect to GA API. Error: #{e}")
   end
