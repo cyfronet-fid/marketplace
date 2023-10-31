@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [3.51.0-milestone]
+## [3.51.0] 2023-10-31
 
 ### Added
 - Optional hiding offers dedicated for bundle (@goreck888)
