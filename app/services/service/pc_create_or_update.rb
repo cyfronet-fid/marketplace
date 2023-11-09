@@ -15,6 +15,7 @@ class Service::PcCreateOrUpdate
     @is_active = is_active
     @source_type = "eosc_registry"
     @original_id = eosc_registry_service["originalId"]
+    @modified_at = modified_at
     @mp_service =
       Service
         .joins(:sources)
@@ -23,8 +24,8 @@ class Service::PcCreateOrUpdate
           "service_sources.eid": [@original_id, eosc_registry_service["id"]]
         )
     eosc_registry_service["status"] = @is_active ? "published" : "draft"
-    @service_hash = Importers::Service.new(eosc_registry_service, modified_at, eosc_registry_base_url, token).call
-    @new_update_available = Service::PcCreateOrUpdate.new_update_available(@mp_service, modified_at)
+    @service_hash = Importers::Service.new(eosc_registry_service, @modified_at, eosc_registry_base_url, token).call
+    @new_update_available = Service::PcCreateOrUpdate.new_update_available(@mp_service, @modified_at)
   end
 
   def call
@@ -58,7 +59,7 @@ class Service::PcCreateOrUpdate
   end
 
   def self.new_update_available(service, modified_at)
-    return true unless service&.synchronized_at.present?
+    return true if service&.synchronized_at.blank?
     modified_at >= service.synchronized_at
   end
 

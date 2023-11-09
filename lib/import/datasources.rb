@@ -55,12 +55,11 @@ class Import::Datasources
       .select { |res| @ids.empty? || @ids.include?(res["id"]) }
       .each do |datasource_data|
         datasource = datasource_data&.[]("datasource")
-        datasource["status"] = object_status(datasource_data["active"], datasource_data["suspended"])
         ppid =
           datasource_data&.dig("identifiers", "alternativeIdentifiers")&.find { |id| id["type"] == "PID" }&.[]("value")
         output.append(datasource_data)
 
-        datasource = Importers::Datasource.call(datasource, Time.now, @eosc_registry_base_url, @token, "rest")
+        datasource = Importers::Datasource.call(datasource, Time.now, "rest")
         if (datasource_source = ServiceSource.find_by(eid: eid(datasource_data), source_type: "eosc_registry")).nil?
           log "[WARN] Service id #{eid(datasource_data)} (PID: #{ppid}) doesn't exist."
         else
