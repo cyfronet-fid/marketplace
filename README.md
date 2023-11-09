@@ -106,6 +106,14 @@ Lastly, to remove the containers (with data) `$ docker-compose down -v` (remove 
 To run specific service `<serv>` in foreground `$ docker-compose up <serv>`.
 To stop it `$ docker-compose stop <serv>`, and to remove its state: `$ docker-compose rm <serv>`
 
+## FriendlyId
+
+Marketplace uses FriendlyId slugs made from a name of resource.
+In case of deleted resources, which block friendly-looking slug,
+if we want to have a published copy, its slug looks like this:
+`some-slug-51daddab-9a34-406e-b1c4-87acea5572cb`
+To unlock and assign friendly slugs for published resources run task:
+`rake friendly_id:heal`
 
 ## JIRA
 

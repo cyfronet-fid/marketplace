@@ -348,4 +348,10 @@ module Presentable::DetailsHelper
   def national_roadmaps
     { name: "national_roadmaps", template: "list", fields: %w[national_roadmaps] }
   end
+
+  def monitoring_link(object)
+    link_to _("Show more details"),
+            "#{Mp::Application.config.monitoring_data_ui_url}/#{Mp::Application.config.monitoring_data_path}" +
+              "#{object.pid.to_s.partition(".").last}/details"
+  end
 end
