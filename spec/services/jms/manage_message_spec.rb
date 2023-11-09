@@ -41,7 +41,7 @@ describe Jms::ManageMessage, backend: true do
     resource = parser.parse(service_resource["resource"])
 
     expect(Service::PcCreateOrUpdateJob).to receive(:perform_later).with(
-      resource["serviceBundle"]["service"].merge(resource["serviceBundle"]["resourceExtras"]),
+      resource["serviceBundle"]["service"],
       eosc_registry_base,
       true,
       Time.at(resource["serviceBundle"]["metadata"]["modifiedAt"].to_i&./ 1000),

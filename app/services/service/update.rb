@@ -20,8 +20,6 @@ class Service::Update < ApplicationService
       @service.update!(@params)
     end
 
-    handle_bundles!(public_before)
-
     if @service.offers.published.size == 1
       offer_partial = {
         service: @service,
@@ -42,6 +40,8 @@ class Service::Update < ApplicationService
         )
       Offer::Create.call(new_offer)
     end
+
+    handle_bundles!(public_before)
 
     true
   rescue ActiveRecord::RecordInvalid

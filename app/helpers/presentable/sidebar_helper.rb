@@ -92,6 +92,10 @@ module Presentable::SidebarHelper
     { name: "address", template: "plain_text", fields: %w[address] }
   end
 
+  def pid
+    { name: "EOSC PID", template: "plain_text", fields: %w[pid] }
+  end
+
   def provider_contacts
     {
       name: "contact",

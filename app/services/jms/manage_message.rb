@@ -40,7 +40,7 @@ class Jms::ManageMessage < ApplicationService
       end
       if action != "delete" && resource["serviceBundle"]["service"]
         Service::PcCreateOrUpdateJob.perform_later(
-          resource["serviceBundle"]["service"].merge(resource["serviceBundle"]["resourceExtras"] || {}),
+          resource["serviceBundle"]["service"],
           @eosc_registry_base_url,
           resource["serviceBundle"]["active"] && !resource["serviceBundle"]["suspended"],
           modified_at,
@@ -84,7 +84,7 @@ class Jms::ManageMessage < ApplicationService
         Service::DeleteJob.perform_later(resource["datasourceBundle"]["datasource"]["id"])
       when "update", "create"
         Datasource::PcCreateOrUpdateJob.perform_later(
-          resource["datasourceBundle"]["datasource"].merge(resource["datasourceBundle"]["resourceExtras"] || {}),
+          resource["datasourceBundle"]["datasource"],
           resource["datasourceBundle"]["active"] && !resource["datasourceBundle"]["suspended"],
           @eosc_registry_base_url,
           @token,
