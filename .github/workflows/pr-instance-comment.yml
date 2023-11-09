@@ -4,13 +4,7 @@ jobs:
   run:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Get branch name
-        id: branch-name
-        uses: tj-actions/branch-names@v4.5
-      - uses: bubkoo/auto-comment@v1
+      - uses: wow-actions/auto-comment@v1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           pullRequestOpened: >
