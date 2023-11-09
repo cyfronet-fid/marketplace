@@ -9,7 +9,7 @@ class Datasource::PcCreateOrUpdate
   class NotUpdatedError < StandardError
   end
 
-  def initialize(eosc_registry_datasource, modified_at)
+  def initialize(eosc_registry_datasource)
     @error_message = "Datasource haven't been updated. Message #{eosc_registry_datasource}"
     @source_type = "eosc_registry"
     @mp_datasource =
@@ -19,15 +19,12 @@ class Datasource::PcCreateOrUpdate
           "service_sources.source_type": @source_type,
           "service_sources.eid": eosc_registry_datasource["serviceId"]
         )
-    @datasource_hash = Importers::Datasource.call(eosc_registry_datasource, modified_at)
-    @datasource_hash["status"] = @is_active ? "published" : "draft"
-    @new_update_available = Datasource::PcCreateOrUpdate.new_update_available(@mp_datasource, modified_at)
+    @datasource_hash = Importers::Datasource.call(eosc_registry_datasource)
   end
 
   def call
     create_new = @mp_datasource.nil?
     return Datasource::PcCreateOrUpdate.create_datasource(@datasource_hash) if create_new
-    return @mp_datasource unless @new_update_available
 
     source_id = @mp_datasource&.sources&.find_by(source_type: @source_type)
     can_update = @mp_datasource.present? && source_id.present?
@@ -52,12 +49,6 @@ class Datasource::PcCreateOrUpdate
   rescue Errno::ECONNREFUSED
     raise ConnectionError, "[WARN] Connection refused."
   end
-
-  def self.new_update_available(datasource, modified_at)
-    return true unless datasource&.synchronized_at.present? && modified_at.present?
-    modified_at >= datasource.synchronized_at
-  end
-
   def self.handle_invalid_data(mp_datasource, datasource_hash, error_message)
     Rails.logger.warn error_message
     validatable_datasource = Datasource.new(datasource_hash)

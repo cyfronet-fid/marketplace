@@ -76,11 +76,10 @@ class Jms::ManageMessage < ApplicationService
       end
     when "datasource"
       hash = resource&.dig("datasourceBundle", "datasource")
-      modified_at = modified_at(resource, "datasourceBundle")
       raise WrongIdError, hash["id"] if hash["id"].split(".").size != 3
 
       if action != "delete" && resource["datasourceBundle"]["datasource"]
-        Datasource::PcCreateOrUpdateJob.perform_later(hash, modified_at)
+        Datasource::PcCreateOrUpdateJob.perform_later(hash)
       elsif action == "delete"
         Datasource::DeleteJob.perform_later(hash["id"])
       end

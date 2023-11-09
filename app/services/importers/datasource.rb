@@ -3,10 +3,9 @@
 class Importers::Datasource < ApplicationService
   include Importable
 
-  def initialize(data, synchronized_at, source = "jms")
+  def initialize(data, source = "jms")
     super()
     @data = data
-    @synchronized_at = synchronized_at
     @source = source
   end
 
@@ -76,8 +75,7 @@ class Importers::Datasource < ApplicationService
       link_research_product_metadata_license_urls:
         link_rpml_url&.map { |item| map_link(item, "research_product_metadata") }&.compact || [],
       research_product_metadata_access_policies:
-        map_metadata_access_policies(research_product_metadata_access_policies) || [],
-      synchronized_at: @synchronized_at
+        map_metadata_access_policies(research_product_metadata_access_policies) || []
     }
   end
 
