@@ -55,7 +55,6 @@ class Import::Datasources
       .select { |res| @ids.empty? || @ids.include?(res["id"]) }
       .each do |datasource_data|
         datasource = datasource_data&.[]("datasource")
-        datasource["status"] = object_status(datasource_data["active"], datasource_data["suspended"])
         ppid =
           datasource_data&.dig("identifiers", "alternativeIdentifiers")&.find { |id| id["type"] == "PID" }&.[]("value")
         output.append(datasource_data)

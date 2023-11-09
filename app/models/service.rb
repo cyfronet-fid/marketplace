@@ -14,6 +14,7 @@ class Service < ApplicationRecord
   acts_as_taggable
 
   before_save { self.catalogue = Catalogue.find(catalogue_id) if catalogue_id.present? }
+  before_save { self.pid = upstream.eid if upstream_id.present? }
 
   attr_accessor :catalogue_id, :monitoring_status, :bundle_id
 

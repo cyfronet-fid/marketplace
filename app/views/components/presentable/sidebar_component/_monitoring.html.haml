@@ -17,7 +17,5 @@
     %strong.status-info{ class: "#{monitoring_status_class(object.monitoring_status)}" }
       .big-dot &#8226;
       = t("components.presentable.sidebar_component.fields.monitoring_data.#{object.monitoring_status}")
-  = link_to _("Show more details"),
-    "https://monitoring.eosc-portal.eu/eosc/report-ar-group-details/Default/SERVICEGROUPS/" + |
-      "#{object.pid.to_s.partition(".").last}/details" |
+  = monitoring_link(object)
 
