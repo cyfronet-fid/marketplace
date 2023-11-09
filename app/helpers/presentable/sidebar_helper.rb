@@ -17,10 +17,6 @@ module Presentable::SidebarHelper
     [pid("Provider"), provider_scientific_categorisation, multimedia, address, provider_contacts]
   end
 
-  def datasource_sidebar_fields
-    [pid, scientific_categorisation, categorisation, target_users, resource_availability_and_languages]
-  end
-
   private
 
   def scientific_categorisation

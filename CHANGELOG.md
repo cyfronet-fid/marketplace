@@ -11,14 +11,15 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 - Access type to the research products (@goreck888)
 
-## [3.52.0-beta.0] 2023-11-08
+### Fixed
+- User action connected to "Back to search" button (@wujuu)
+- Displaying monitoring data in the datasources view (@goreck888)
+
+## [3.52.0] 2023-11-08
 
 ### Added
 - Datasources as services subprofiles (@goreck888)
 - Receiving EOSC PIDs (@goreck888)
-
-### Fixed
-- User action connected to "Back to search" button (@wujuu)
 
 ## [3.51.1] 2023-10-31
 

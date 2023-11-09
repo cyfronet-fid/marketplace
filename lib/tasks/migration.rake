@@ -79,4 +79,21 @@ namespace :migration do
       end
     end
   end
+
+  desc "Migrate datasources ids given by the list"
+  task datasource_ids: :environment do
+    file = File.read("datasource_ids.json")
+    migration_data = JSON.parse(file)
+    migration_data.each do |key, value|
+      puts "Update old datasource id from #{key} value #{value}"
+      source = ServiceSource.find_by(eid: key)
+      if source.blank?
+        puts "Datasource #{key} not found"
+        next
+      end
+      service = Service.find(source.service_id)
+      source.update(eid: value)
+      service.update(pid: value)
+    end
+  end
 end

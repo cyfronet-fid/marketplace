@@ -14,12 +14,10 @@ class Presentable::SidebarComponent < ApplicationComponent
 
   def sidebar_fields
     case @object
-    when Service
+    when Service, Datasource
       service_sidebar_fields
     when Provider
       provider_sidebar_fields
-    when Datasource
-      datasource_sidebar_fields
     end
   end
 end

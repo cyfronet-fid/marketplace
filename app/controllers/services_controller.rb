@@ -32,8 +32,6 @@ class ServicesController < ApplicationController
                       q: params["q"],
                       anchor: ("offer-#{params["anchor"]}" if params["anchor"].present?)
                     )
-      when "datasource"
-        redirect_to datasource_path(Datasource.friendly.find(params["object_id"]), q: params["q"])
       end
     end
     subgroup_quantity = 5
