@@ -28,7 +28,7 @@ module SearchLinksHelper
 
   def project_add_external_link
     search_base_url = Mp::Application.config.search_service_base_url
-    search_base_url + "/search/service?q=*"
+    search_base_url + "/search/all_collection?q=*"
   end
 
   def resource_organisation(service, highlights = nil, preview: false)

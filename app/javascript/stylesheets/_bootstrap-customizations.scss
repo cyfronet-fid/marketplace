@@ -3289,7 +3289,7 @@ label[data-multicheckbox].small {
   font-weight: 500;
   display: inline-block;
   line-height: 1.3;
-  padding: 5px 10px;
+  padding: 9px 10px 8px;
   background: $alert-bg;
   color: $alert-color;
 }
@@ -3400,6 +3400,15 @@ label[data-multicheckbox].small {
   &.dropdown {
     margin-left: 0 !important;
     font-size: 16px !important;
+  }
+
+  /*
+  &:not(.collapsed)::after {
+    content: 'Collapse';
+  } */
+
+  &.collapsed::after {
+    content: 'Expand';
   }
 
   &::after {
@@ -5758,16 +5767,92 @@ abbr[title] {
     }
 
     .pin-value {
-      color: $palette-blue;
       background: rgba($tag-bg-1, 0.3490196078);
       padding: 2px 7px 4px;
       margin-left: 10px;
 
-      &.resource-type {
+      &.resource-type,
+      &.access-type {
+        color: $palette-blue;
         padding: 4px 7px 5px;
         float: left;
         margin: 0;
+
+        &.open-access,
+        &.fully-open-access {
+          background-image: url('../images/catalog_icon.svg');
+        }
+
+        &.restricted {
+          color: $palette-salmon;
+          background-image: url('../images/internal_ordering_icon.svg');
+        }
+
+        &.other {
+          background-image: url('../images/external_ordering_icon.svg');
+        }
       }
+    }
+  }
+}
+
+.access-information-tag {
+  color: $custom-7;
+  padding: 4px 9px 5px 25px;
+  float: left;
+  margin: 0 0 0 12px;
+  font-weight: 700;
+  font-size: 10px;
+  text-transform: uppercase;
+  background-repeat: no-repeat;
+  background-position: 8px 8px;
+  background-color: $custom-6;
+
+  &.open-access {
+    background-image: url('../images/open-access.svg');
+
+    &::after {
+      content: 'Open Access';
+    }
+  }
+
+  &.restricted,
+  &.closed,
+  &.embargo,
+  &.order-required,
+  &.other {
+    color: $custom-9;
+    background-color: $custom-8;
+    background-image: url('../images/restricted.svg');
+  }
+
+  &.restricted {
+    &::after {
+      content: 'Restricted';
+    }
+  }
+
+  &.closed {
+    &::after {
+      content: 'Closed';
+    }
+  }
+
+  &.embargo {
+    &::after {
+      content: 'Embargo';
+    }
+  }
+
+  &.order-required {
+    &::after {
+      content: 'Order Required';
+    }
+  }
+
+  &.other {
+    &::after {
+      content: 'Other';
     }
   }
 }
