@@ -19,6 +19,6 @@ class ResearchProduct < ApplicationRecord
   end
 
   def public_attributes
-    attributes.slice("title", "authors", "links", "resource_type")
+    attributes.slice("title", "authors", "links", "resource_type", "best_access_right")
   end
 end

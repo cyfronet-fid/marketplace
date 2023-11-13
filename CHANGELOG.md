@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.53.0-milestone]
+
+### Added
+- Access type to the research products (@goreck888)
+
 ## [3.52.0-beta.0] 2023-11-08
 
 ### Added
