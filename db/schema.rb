@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_09_18_141631) do
+ActiveRecord::Schema.define(version: 2023_11_10_091337) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -299,18 +299,20 @@ ActiveRecord::Schema.define(version: 2023_09_18_141631) do
     t.string "name"
     t.text "description"
     t.integer "iid", null: false
-    t.bigint "service_id", null: false
+    t.bigint "service_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.jsonb "parameters", default: [], null: false
     t.boolean "voucherable", default: false, null: false
-    t.string "status"
     t.string "order_type", null: false
+    t.string "status"
     t.boolean "internal", default: false
     t.string "order_url", default: "", null: false
     t.boolean "default", default: false
     t.jsonb "oms_params"
     t.bigint "primary_oms_id"
+    t.boolean "limited", default: false
+    t.integer "available_count", default: 0, null: false
     t.boolean "bundle_exclusive", default: false
     t.integer "project_items_count", default: 0, null: false
     t.integer "usage_counts_views", default: 0, null: false
@@ -566,6 +568,7 @@ ActiveRecord::Schema.define(version: 2023_09_18_141631) do
     t.string "links", default: [], array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "best_access_right"
     t.index ["resource_id", "resource_type"], name: "index_research_products_on_resource_id_and_resource_type", unique: true
   end
 
