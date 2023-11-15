@@ -45,10 +45,13 @@ module MonitoringData
 
       results = response.body["results"].map { |r| r["groups"] }.flatten
 
+      File.open("monitoring.json", "w") { |file| file << JSON.pretty_generate(results) }
+
       Service
         .where(status: %i[published unverified])
         .find_each do |service|
           log "Trying to find monitoring data for the service #{service.pid}"
+          log "Looking under key #{service.pid.to_s.partition(".").last}"
 
           current_data = results.select { |r| r["name"] == service.pid.to_s.partition(".").last }.first
 

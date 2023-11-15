@@ -15,6 +15,7 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
   def new
     @provider = Provider.new
     @provider.sources.build source_type: "eosc_registry"
+    @provider.alternative_identifiers.build
     @provider.data_administrators <<
       DataAdministrator.new(
         first_name: current_user.first_name,
@@ -82,11 +83,10 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
   end
 
   def add_missing_nested_models
-    @provider.sources.build source_type: "eosc_registry" if @provider.sources.empty?
-    @provider.data_administrators.build if @provider.data_administrators.blank?
+    %i[alternative_identifiers sources data_administrators public_contacts link_multimedia_urls].each do |association|
+      @provider.send(association).build if @provider.send(association).empty?
+    end
     @provider.build_main_contact if @provider.main_contact.blank?
-    @provider.public_contacts.build if @provider.public_contacts.blank?
-    @provider.link_multimedia_urls.build if @provider.link_multimedia_urls.blank?
   end
 
   def valid_model_and_urls?

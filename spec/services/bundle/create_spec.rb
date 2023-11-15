@@ -9,7 +9,7 @@ RSpec.describe Bundle::Create, backend: true do
       provider2 = build(:provider)
       bundled_offer = build(:offer, service: build(:service, resource_organisation: provider1))
       bundle_offer = build(:open_access_offer, service: build(:open_access_service, resource_organisation: provider2))
-      bundle = build(:bundle, main_offer: bundle_offer, offers: [bundled_offer], research_steps: [])
+      bundle = build(:bundle, main_offer: bundle_offer, offers: [bundled_offer], marketplace_locations: [])
 
       expect { Bundle::Create.call(bundle) }.not_to change { ActionMailer::Base.deliveries.count }
     end

@@ -15,6 +15,12 @@ class Importers::Service < ApplicationService
   def call
     case @source
     when "jms"
+      alternative_identifiers =
+        if @data.dig("alternativeIdentifiers", "alternativeIdentifier").is_a?(Array)
+          Array(@data.dig("alternativeIdentifiers", "alternativeIdentifier")) || []
+        else
+          [@data.dig("alternativeIdentifiers", "alternativeIdentifier")] || []
+        end
       providers = Array(@data.dig("resourceProviders", "resourceProvider"))
       multimedia =
         if @data.dig("multimedia", "multimedia").is_a?(Array)
@@ -33,6 +39,12 @@ class Importers::Service < ApplicationService
           @data.dig("scientificDomains", "scientificDomain").map { |sd| sd["scientificSubdomain"] }
         else
           @data.dig("scientificDomains", "scientificDomain", "scientificSubdomain")
+        end
+      service_categories =
+        if @data.dig("serviceCategories", "serviceCategory").is_a?(Array)
+          @data.dig("serviceCategories", "serviceCategory") || []
+        else
+          [@data.dig("serviceCategories", "serviceCategory")] || []
         end
       categories =
         if @data.dig("categories", "category").is_a?(Array)
@@ -63,17 +75,19 @@ class Importers::Service < ApplicationService
       funding_bodies = map_funding_bodies(@data.dig("fundingBody", "fundingBody"))
       funding_programs = map_funding_programs(@data.dig("fundingPrograms", "fundingProgram"))
       grant_project_names = Array(@data.dig("grantProjectNames", "grantProjectName"))
-      research_steps =
+      marketplace_locations =
         if @data.dig("marketplaceLocations", "marketplaceLocation").present?
           Array(@data.dig("marketplaceLocations", "marketplaceLocation"))
         else
           []
         end
     when "rest"
+      alternative_identifiers = Array(@data["alternativeIdentifiers"]) || []
       providers = Array(@data["resourceProviders"]) || []
       multimedia = Array(@data["multimedia"]) || []
       use_cases_url = Array(@data["useCases"]) || []
       scientific_domains = @data["scientificDomains"]&.map { |sd| sd["scientificSubdomain"] } || []
+      service_categories = Array(@data["serviceCategories"]) || []
       categories = @data["categories"]&.map { |c| c["subcategory"] } || []
       target_users = @data["targetUsers"]
       access_types = Array(@data["accessTypes"])
@@ -95,13 +109,14 @@ class Importers::Service < ApplicationService
       funding_bodies = map_funding_bodies(Array(@data["fundingBody"]))
       funding_programs = map_funding_programs(Array(@data["fundingPrograms"]))
       grant_project_names = Array(@data["grantProjectNames"]) || []
-      research_steps = @data["marketplaceLocations"] || []
+      marketplace_locations = @data["marketplaceLocations"] || []
     end
 
     main_contact = @data["mainContact"].present? ? MainContact.new(map_contact(@data["mainContact"])) : nil
 
     {
-      ppid: fetch_ppid(@data, @source),
+      alternative_identifiers: alternative_identifiers.map { |aid| map_alternative_identifier(aid) }.compact,
+      ppid: fetch_ppid(alternative_identifiers),
       status: @data["status"],
       pid: @data["id"],
       # Basic
@@ -117,9 +132,10 @@ class Importers::Service < ApplicationService
       link_use_cases_urls: use_cases_url.map { |item| map_link(item, "use_cases") }.compact,
       # Classification
       scientific_domains: map_scientific_domains(scientific_domains),
+      service_categories: map_service_categories(service_categories),
       categories: map_categories(categories) || [],
       horizontal: @data["horizontalService"] || false,
-      research_step_ids: map_research_step_ids(research_steps),
+      marketplace_location_ids: map_marketplace_location_ids(marketplace_locations),
       target_users: map_target_users(target_users),
       access_types: map_access_types(access_types),
       access_modes: map_access_modes(access_modes),

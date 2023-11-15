@@ -56,7 +56,6 @@ class Importers::Datasource < ApplicationService
     end
 
     {
-      type: "Datasource",
       # Datasource policies
       submission_policy_url: @data["submissionPolicyURL"] || "",
       preservation_policy_url: @data["preservationPolicyURL"] || "",

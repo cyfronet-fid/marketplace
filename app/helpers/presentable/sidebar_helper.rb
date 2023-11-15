@@ -14,7 +14,7 @@ module Presentable::SidebarHelper
   end
 
   def provider_sidebar_fields
-    [pid, provider_scientific_categorisation, multimedia, address, provider_contacts]
+    [pid("Provider"), provider_scientific_categorisation, multimedia, address, provider_contacts]
   end
 
   def datasource_sidebar_fields
@@ -38,10 +38,11 @@ module Presentable::SidebarHelper
     {
       name: "categorisation",
       template: "array",
-      fields: ["categories"],
+      fields: %w[categories service_categories],
       type: "tree",
       nested: {
-        pc_categories: "name"
+        categories: "name",
+        service_categories: "name"
       }
     }
   end
@@ -66,7 +67,7 @@ module Presentable::SidebarHelper
     {
       name: "classification",
       template: "classification",
-      fields: ["scientific_domains"],
+      fields: %w[scientific_domains],
       nested: {
         scientific_domains: "name"
       }
@@ -93,8 +94,8 @@ module Presentable::SidebarHelper
     { name: "address", template: "plain_text", fields: %w[address] }
   end
 
-  def pid
-    { name: "EOSC PID", template: "plain_text", fields: %w[ppid] }
+  def pid(type = "Service")
+    { name: "#{type} Identifiers", template: "object", clazz: "alternative_identifiers", fields: %w[value] }
   end
 
   def provider_contacts

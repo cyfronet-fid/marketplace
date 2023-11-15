@@ -10,7 +10,7 @@ class Recommender::ServiceSerializer < ActiveModel::Serializer
   attribute :target_user_ids, key: :target_users
   attribute :access_mode_ids, key: :access_modes
   attribute :access_type_ids, key: :access_types
-  attribute :research_step_ids, key: :research_steps
+  attribute :marketplace_location_ids, key: :research_steps
   attribute :trl_ids, key: :trls
   attribute :life_cycle_status_ids, key: :life_cycle_statuses
   attribute :required_service_ids, key: :required_services

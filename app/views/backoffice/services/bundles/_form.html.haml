@@ -21,7 +21,7 @@
               input_html: { data: { choice: true } },
               collection: sds,
               label_method: :first, value_method: :second
-    = f.association :research_steps, multiple: true, input_html: { data: { choice: true } }
+    = f.association :marketplace_locations, multiple: true, input_html: { data: { choice: true } }
     = f.association :offers, collection: other_offers(service), input_html: { data: { choice: true } }
     = f.input :related_training,
       input_html: { "data-ordering-target": "training",

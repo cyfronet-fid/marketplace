@@ -30,7 +30,10 @@ class Bundle < ApplicationRecord
   has_many :bundle_target_users
   has_many :target_users, through: :bundle_target_users
   has_many :bundle_vocabularies
-  has_many :research_steps, through: :bundle_vocabularies, source: :vocabulary, source_type: "Vocabulary::ResearchStep"
+  has_many :marketplace_locations,
+           through: :bundle_vocabularies,
+           source: :vocabulary,
+           source_type: "Vocabulary::MarketplaceLocation"
   has_many :bundle_goals, through: :bundle_vocabularies, source: :vocabulary, source_type: "Vocabulary::BundleGoal"
   has_many :capabilities_of_goals,
            through: :bundle_vocabularies,
@@ -59,7 +62,12 @@ class Bundle < ApplicationRecord
               minimum: 1,
               message: "are required. Please add at least one"
             }
-  validates :research_steps, presence: true, length: { minimum: 1, message: "are required. Please add at least one" }
+  validates :marketplace_locations,
+            presence: true,
+            length: {
+              minimum: 1,
+              message: "are required. Please add at least one"
+            }
   validates :order_type, presence: true
   validates :main_offer, presence: true
   validates :offers, presence: true, length: { minimum: 1, message: "are required. Please add at least one" }

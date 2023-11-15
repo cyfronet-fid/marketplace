@@ -59,7 +59,7 @@ module Viewable
 
     def update_offers
       if self.class.in? [Service, Datasource]
-        offers.each { |o| o.update_column(:usage_counts_views, usage_counts_views) if o.valid? }
+        offers.each { |o| o.update_column(:usage_counts_views, usage_counts_views) if o.valid? && o.persisted? }
       end
     end
 

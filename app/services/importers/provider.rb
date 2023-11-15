@@ -12,6 +12,12 @@ class Importers::Provider
   def call
     case @source
     when "jms"
+      alternative_identifiers =
+        if @data.dig("alternativeIdentifiers", "alternativeIdentifier").is_a?(Array)
+          Array(@data.dig("alternativeIdentifiers", "alternativeIdentifier")) || []
+        else
+          [@data.dig("alternativeIdentifiers", "alternativeIdentifier")] || []
+        end
       multimedia =
         if @data.dig("multimedia", "multimedia").is_a?(Array)
           Array(@data.dig("multimedia", "multimedia")) || []
@@ -45,6 +51,7 @@ class Importers::Provider
       data_administrators =
         Array.wrap(@data.dig("users", "user")).map { |da| DataAdministrator.new(map_data_administrator(da)) } || []
     when "rest"
+      alternative_identifiers = Array(@data["alternativeIdentifiers"]) || []
       multimedia = Array(@data["multimedia"]) || []
       scientific_domains = @data["scientificDomains"]&.map { |sd| sd["scientificSubdomain"] } || []
       tag_list = Array(@data["tags"]) || []
@@ -65,7 +72,8 @@ class Importers::Provider
     main_contact = MainContact.new(map_contact(@data["mainContact"])) if @data["mainContact"]
 
     {
-      ppid: fetch_ppid(@data, @source),
+      alternative_identifiers: alternative_identifiers.map { |aid| map_alternative_identifier(aid) }.compact,
+      ppid: fetch_ppid(alternative_identifiers),
       pid: @data["id"],
       # Basic
       name: @data["name"],

@@ -1,0 +1,9 @@
+%div{ "data-form-target": "alternativeIdentifier" }
+  .contact
+    = identifier_form.hidden_field :id, disabled: object.present? ? object&.upstream_id.present? : nil
+    = identifier_form.input :identifier_type, disabled: object.present? ? object&.upstream_id.present? : nil
+    = identifier_form.input :value, disabled: object.present? ? object&.upstream_id.present? : nil
+    = identifier_form.hidden_field :_destroy, "data-form-target": "destroy"
+    .text-right
+      = link_to _("Delete Alternative Identifier"), "#", id: "alternative-identifier-delete-#{identifier_form.index}",
+      class: "btn-sm disablable btn-danger", "data-action": "click->form#removeField"

@@ -34,6 +34,9 @@ class Provider < ApplicationRecord
   serialize :participating_countries, Country::Array
   serialize :country, Country
 
+  has_many :provider_alternative_identifiers
+  has_many :alternative_identifiers, through: :provider_alternative_identifiers
+
   has_many :service_providers, dependent: :destroy
   has_many :services, through: :service_providers
   has_many :link_multimedia_urls, as: :linkable, dependent: :destroy, autosave: true, class_name: "Link::MultimediaUrl"
@@ -87,6 +90,8 @@ class Provider < ApplicationRecord
 
   has_one :provider_catalogue, dependent: :destroy
   has_one :catalogue, through: :provider_catalogue
+
+  accepts_nested_attributes_for :alternative_identifiers, allow_destroy: true
 
   accepts_nested_attributes_for :main_contact, allow_destroy: true
 
