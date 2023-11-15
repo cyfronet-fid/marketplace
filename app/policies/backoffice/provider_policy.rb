@@ -79,7 +79,8 @@ class Backoffice::ProviderPolicy < ApplicationPolicy
       [main_contact_attributes: %i[id first_name last_name email phone organisation position]],
       [public_contacts_attributes: %i[id first_name last_name email phone organisation position _destroy]],
       [data_administrators_attributes: %i[id first_name last_name email _destroy]],
-      [link_multimedia_urls_attributes: %i[id name url _destroy]]
+      [link_multimedia_urls_attributes: %i[id name url _destroy]],
+      [alternative_identifiers_attributes: %i[id identifier_type value _destroy]]
     ]
 
     !@record.is_a?(Provider) || @record.upstream_id.blank? ? attrs : attrs & MP_INTERNAL_FIELDS

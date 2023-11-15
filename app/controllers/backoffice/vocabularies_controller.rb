@@ -4,109 +4,6 @@ class Backoffice::VocabulariesController < Backoffice::ApplicationController
   before_action :find_and_authorize, only: %i[show edit update destroy]
   before_action :instantiate_type
 
-  VOCABULARY_TYPES = {
-    target_user: {
-      name: "Target User",
-      klass: TargetUser
-    },
-    access_mode: {
-      name: "Access Mode",
-      klass: Vocabulary::AccessMode
-    },
-    access_type: {
-      name: "Access Type",
-      klass: Vocabulary::AccessType
-    },
-    funding_body: {
-      name: "Funding Body",
-      klass: Vocabulary::FundingBody
-    },
-    funding_program: {
-      name: "Funding Program",
-      klass: Vocabulary::FundingProgram
-    },
-    trl: {
-      name: "TRL",
-      klass: Vocabulary::Trl
-    },
-    life_cycle_status: {
-      name: "Life Cycle Status",
-      klass: Vocabulary::LifeCycleStatus
-    },
-    provider_life_cycle_status: {
-      name: "Provider Life Cycle Status",
-      klass: Vocabulary::ProviderLifeCycleStatus
-    },
-    area_of_activity: {
-      name: "Area of Activity",
-      klass: Vocabulary::AreaOfActivity
-    },
-    hosting_legal_entity: {
-      name: "Hosting Legal Entity",
-      klass: Vocabulary::HostingLegalEntity
-    },
-    esfri_domain: {
-      name: "ESFRI Domain",
-      klass: Vocabulary::EsfriDomain
-    },
-    esfri_type: {
-      name: "ESFRI Type",
-      klass: Vocabulary::EsfriType
-    },
-    legal_status: {
-      name: "Legal Status",
-      klass: Vocabulary::LegalStatus
-    },
-    network: {
-      name: "Network",
-      klass: Vocabulary::Network
-    },
-    societal_grand_challenge: {
-      name: "Societal Grand Challenge",
-      klass: Vocabulary::SocietalGrandChallenge
-    },
-    structure_type: {
-      name: "Structure Type",
-      klass: Vocabulary::StructureType
-    },
-    meril_scientific_domain: {
-      name: "MERIL Scientific Domain",
-      klass: Vocabulary::MerilScientificDomain
-    },
-    research_step: {
-      name: "Research Step",
-      klass: Vocabulary::ResearchStep
-    },
-    jurisdiction: {
-      name: "Jurisdiction",
-      klass: Vocabulary::Jurisdiction
-    },
-    datasource_classification: {
-      name: "Datasource Classification",
-      klass: Vocabulary::DatasourceClassification
-    },
-    entity_type: {
-      name: "Entity Type",
-      klass: Vocabulary::EntityType
-    },
-    entity_type_scheme: {
-      name: "Entity Type Scheme",
-      klass: Vocabulary::EntityTypeScheme
-    },
-    product_access_policy: {
-      name: "Product Access Policy",
-      klass: Vocabulary::ResearchProductAccessPolicy
-    },
-    bundle_goal: {
-      name: "Bundle Goal",
-      klass: Vocabulary::BundleGoal
-    },
-    bundle_capability_of_goal: {
-      name: "Bundle Capability of Goal",
-      klass: Vocabulary::BundleCapabilityOfGoal
-    }
-  }.freeze
-
   def index
     authorize(vocabulary_type)
     @vocabularies = vocabulary_type.all.order(:name)
@@ -175,6 +72,6 @@ class Backoffice::VocabulariesController < Backoffice::ApplicationController
   end
 
   def vocabulary_type
-    VOCABULARY_TYPES[params[:type].to_sym][:klass]
+    VOCABULARY_TYPES[params[:type].to_sym][:klass].constantize
   end
 end

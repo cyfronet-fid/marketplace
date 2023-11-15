@@ -20,7 +20,7 @@ class Datasource::PcCreateOrUpdate
           "service_sources.eid": eosc_registry_datasource["serviceId"]
         )
     @datasource_hash = Importers::Datasource.call(eosc_registry_datasource, modified_at)
-    @datasource_hash["status"] = @is_active ? "published" : "draft"
+    @datasource_hash["type"] = @is_active ? "Datasource" : "Service"
     @new_update_available = Datasource::PcCreateOrUpdate.new_update_available(@mp_datasource, modified_at)
   end
 

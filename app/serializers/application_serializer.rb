@@ -10,7 +10,7 @@ class ApplicationSerializer < ActiveModel::Serializer
     result
   end
 
-  %i[categories scientific_domains].each do |method|
+  %i[categories scientific_domains meril_scientific_domains].each do |method|
     define_method method do
       object.send(method)&.map { |el| hierarchical_to_s(el) }&.flatten
     end
@@ -25,10 +25,9 @@ class ApplicationSerializer < ActiveModel::Serializer
     funding_bodies
     funding_programs
     target_users
-    research_steps
+    marketplace_locations
     networks
     esfri_domains
-    meril_scientific_domains
     areas_of_activity
     societal_grand_challenges
     bundle_goals

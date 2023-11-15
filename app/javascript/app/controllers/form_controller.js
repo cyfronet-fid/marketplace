@@ -6,13 +6,13 @@ export default class extends Controller {
     "array",
     "form",
     "input",
-    "publicContacts",
     "publicContact",
     "destroy",
     "multimedia",
     "useCase",
     "serviceType",
     "datasourceFields",
+    "alternativeIdentifier",
     "researchProductLicense",
     "researchProductMetadataLicense",
     "persistentIdentitySystem",
@@ -119,6 +119,7 @@ export default class extends Controller {
 
   addField(event) {
     event.preventDefault();
+    this.alternativeIdentifier = this.alternativeIdentifierTargets;
     this.useCases = this.useCaseTargets;
     this.multimedia = this.multimediaTargets;
     this.publicContacts = this.publicContactTargets;

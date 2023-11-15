@@ -20,7 +20,7 @@ class Backoffice::ServicePolicy < ApplicationPolicy
     :activate_message,
     :upstream_id,
     :horizontal,
-    [research_step_ids: []],
+    [marketplace_location_ids: []],
     [owner_ids: []],
     [sources_attributes: %i[id source_type eid _destroy]]
   ].freeze
@@ -114,6 +114,7 @@ class Backoffice::ServicePolicy < ApplicationPolicy
       :tag_list,
       [category_ids: []],
       [pc_category_ids: []],
+      [service_category_ids: []],
       [related_service_ids: []],
       [required_service_ids: []],
       [manual_related_service_ids: []],
@@ -139,14 +140,15 @@ class Backoffice::ServicePolicy < ApplicationPolicy
       [research_product_access_policy_ids: []],
       # Reseach Product Metadata
       [research_product_metadata_access_policy_ids: []],
-      [research_step_ids: []],
+      [marketplace_location_ids: []],
       [entity_type_scheme_ids: []],
       [persistent_identity_systems_attributes: %i[id entity_type_id entity_type_scheme_ids _destroy]],
       [link_research_product_license_urls_attributes: %i[id url name _destroy]],
       [link_research_product_metadata_license_urls_attributes: %i[id url name _destroy]],
       [main_contact_attributes: %i[id first_name last_name email phone organisation position]],
       [sources_attributes: %i[id source_type eid _destroy]],
-      [public_contacts_attributes: %i[id first_name last_name email phone organisation position _destroy]]
+      [public_contacts_attributes: %i[id first_name last_name email phone organisation position _destroy]],
+      [alternative_identifiers_attributes: %i[id identifier_type value _destroy]]
     ]
 
     !@record.is_a?(Service) || @record.upstream.nil? ? attrs : MP_INTERNAL_FIELDS

@@ -114,16 +114,17 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   private
 
   def add_missing_nested_models(service)
+    %i[
+      alternative_identifiers
+      public_contacts
+      link_multimedia_urls
+      link_use_cases_urls
+      link_research_product_license_urls
+      link_research_product_metadata_license_urls
+      persistent_identity_systems
+    ].each { |association| service.send(association).build if service.send(association).empty? }
     service.sources.build source_type: "eosc_registry" if service.sources.empty?
     service.build_main_contact if service.main_contact.blank?
-    service.public_contacts.build if service.public_contacts.empty?
-    service.link_multimedia_urls.build if service.link_multimedia_urls.blank?
-    service.link_use_cases_urls.build if service.link_use_cases_urls.blank?
-    service.link_research_product_license_urls.build if service.link_research_product_license_urls.blank?
-    if service.link_research_product_metadata_license_urls.blank?
-      service.link_research_product_metadata_license_urls.build
-    end
-    service.persistent_identity_systems.build if service.persistent_identity_systems.blank?
   end
 
   def perform_preview(error_view)

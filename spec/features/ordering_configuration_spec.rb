@@ -42,15 +42,19 @@ RSpec.feature "Services in ordering_configuration panel", end_user_frontend: tru
         other_service_with_pid.update!(upstream: other_source)
 
         visit service_ordering_configuration_path(notebook_service)
-        expect(page).to have_text("See #{tag.remove("EOSC::")} compatible with the #{notebook_service.name} service")
+        expect(page).to have_text(
+          "Explore Research Products compatible with the #{notebook_service.name} service (opens in a new window)"
+        )
 
         visit service_ordering_configuration_path(other_service_with_pid)
         expect(page).not_to have_text(
-          "See #{tag.remove("EOSC::")} compatible with the #{other_service_with_pid.name} service"
+          "Explore Research Products compatible with the #{other_service_with_pid.name} service (opens in a new window)"
         )
 
         visit service_ordering_configuration_path(service)
-        expect(page).not_to have_text("See #{tag.remove("EOSC::")} compatible with the #{service.name} service")
+        expect(page).not_to have_text(
+          "Explore Research Products compatible with the #{service.name} service (opens in a new window)"
+        )
       end
     end
 

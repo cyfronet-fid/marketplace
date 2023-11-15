@@ -20,7 +20,7 @@
           - vocabulary = record[1]
           %li.list-group-item{ class: "#{"subcategory" if vocabulary.ancestry_depth.positive?}",
                                style: style_indentation_variables(vocabulary) }
-            = link_to send("backoffice_#{snake_cased(@type)}_path", record.last), class:"xxx" do
+            = link_to send("backoffice_#{snake_cased(@type)}_path", record.last) do
               = record.first
             .buttons-box
               - if policy([:backoffice, Vocabulary]).destroy?

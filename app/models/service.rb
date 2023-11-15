@@ -52,6 +52,9 @@ class Service < ApplicationRecord
 
   enum status: STATUSES
 
+  has_many :service_alternative_identifiers
+  has_many :alternative_identifiers, through: :service_alternative_identifiers
+
   has_many :offers, dependent: :restrict_with_error
   has_many :bundles, dependent: :restrict_with_error
   has_many :project_items, through: :offers
@@ -67,7 +70,14 @@ class Service < ApplicationRecord
   has_many :link_use_cases_urls, as: :linkable, dependent: :destroy, autosave: true, class_name: "Link::UseCasesUrl"
   has_many :link_multimedia_urls, as: :linkable, dependent: :destroy, autosave: true, class_name: "Link::MultimediaUrl"
   has_many :service_vocabularies, dependent: :destroy
-  has_many :research_steps, through: :service_vocabularies, source: :vocabulary, source_type: "Vocabulary::ResearchStep"
+  has_many :service_categories,
+           through: :service_vocabularies,
+           source: :vocabulary,
+           source_type: "Vocabulary::ServiceCategory"
+  has_many :marketplace_locations,
+           through: :service_vocabularies,
+           source: :vocabulary,
+           source_type: "Vocabulary::MarketplaceLocation"
   has_many :funding_bodies, through: :service_vocabularies, source: :vocabulary, source_type: "Vocabulary::FundingBody"
   has_many :funding_programs,
            through: :service_vocabularies,
@@ -87,6 +97,7 @@ class Service < ApplicationRecord
   has_one :main_contact, as: :contactable, dependent: :destroy, autosave: true
   has_many :public_contacts, as: :contactable, dependent: :destroy, autosave: true
 
+  accepts_nested_attributes_for :alternative_identifiers, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :main_contact, allow_destroy: true
   accepts_nested_attributes_for :public_contacts, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :link_multimedia_urls, reject_if: :all_blank, allow_destroy: true

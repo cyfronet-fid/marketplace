@@ -29,7 +29,7 @@ RSpec.feature "Bundles in backoffice", manager_frontend: true do
         fill_in "Description", with: bundle.description
         select bundle.target_users.first.name, from: "Target users"
         select "#{scientific_domain.parent.name} ⇒ #{scientific_domain.name}", from: "bundle_scientific_domain_ids"
-        select bundle.research_steps.first.name, from: "Research steps"
+        select bundle.marketplace_locations.first.name, from: "Marketplace locations"
         select "#{offer.service.name} > #{offer.name}", from: "Offers"
         fill_in "Helpdesk url", with: bundle.helpdesk_url
 
