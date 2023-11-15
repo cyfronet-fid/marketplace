@@ -40,7 +40,7 @@ class Jms::ManageMessage < ApplicationService
       end
       if action != "delete" && resource["serviceBundle"]["service"]
         Service::PcCreateOrUpdateJob.perform_later(
-          resource["serviceBundle"]["service"].merge(resource_extras(resource["serviceBundle"])),
+          resource["serviceBundle"]["service"],
           @eosc_registry_base_url,
           resource["serviceBundle"]["active"] && !resource["serviceBundle"]["suspended"],
           modified_at,
