@@ -22,7 +22,9 @@ module RecommenderLib
         life_cycle_statuses:
           Vocabulary::LifeCycleStatus.all.map { |s| Recommender::Vocabulary::LifeCycleStatusSerializer.new(s).as_json },
         research_steps:
-          Vocabulary::ResearchStep.all.map { |s| Recommender::Vocabulary::ResearchStepSerializer.new(s).as_json }
+          Vocabulary::MarketplaceLocation.all.map do |s|
+            Recommender::Vocabulary::MarketplaceLocationSerializer.new(s).as_json
+          end
       }.as_json
     end
   end

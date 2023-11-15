@@ -63,8 +63,9 @@ class Backoffice::DatasourcePolicy < ApplicationPolicy
       :logo,
       # Classification
       [scientific_domain_ids: []],
+      [service_category_ids: []],
       [category_ids: []],
-      [research_step_ids: []],
+      [marketplace_location_ids: []],
       :horizontal,
       [target_user_ids: []],
       [access_type_ids: []],
@@ -142,7 +143,8 @@ class Backoffice::DatasourcePolicy < ApplicationPolicy
       [link_multimedia_urls_attributes: %i[id name url _destroy]],
       [link_use_cases_urls_attributes: %i[id name url _destroy]],
       [link_research_product_license_urls_attributes: %i[id name url _destroy]],
-      [link_research_product_metadata_license_urls_attributes: %i[id name url _destroy]]
+      [link_research_product_metadata_license_urls_attributes: %i[id name url _destroy]],
+      [alternative_identifiers_attributes: %i[id identifier_type value _destroy]]
     ]
 
     !@record.is_a?(Provider) || @record.upstream_id.blank? ? attrs : attrs & MP_INTERNAL_FIELDS

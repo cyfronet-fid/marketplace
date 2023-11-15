@@ -120,31 +120,9 @@ Rails.application.routes.draw do
     resources :platforms
     get "vocabularies", to: "vocabularies#index", type: "target_user", as: :vocabularies
     scope "/vocabularies" do
-      resources :target_users, controller: "vocabularies", type: "target_user"
-      resources :trls, controller: "vocabularies", type: "trl"
-      resources :access_types, controller: "vocabularies", type: "access_type"
-      resources :access_modes, controller: "vocabularies", type: "access_mode"
-      resources :funding_bodies, controller: "vocabularies", type: "funding_body"
-      resources :funding_programs, controller: "vocabularies", type: "funding_program"
-      resources :life_cycle_statuses, controller: "vocabularies", type: "life_cycle_status"
-      resources :provider_life_cycle_statuses, controller: "vocabularies", type: "provider_life_cycle_status"
-      resources :areas_of_activity, controller: "vocabularies", type: "area_of_activity"
-      resources :hosting_legal_entities, controller: "vocabularies", type: "hosting_legal_entity"
-      resources :esfri_types, controller: "vocabularies", type: "esfri_type"
-      resources :esfri_domains, controller: "vocabularies", type: "esfri_domain"
-      resources :legal_statuses, controller: "vocabularies", type: "legal_status"
-      resources :networks, controller: "vocabularies", type: "network"
-      resources :societal_grand_challenges, controller: "vocabularies", type: "societal_grand_challenge"
-      resources :structure_types, controller: "vocabularies", type: "structure_type"
-      resources :meril_scientific_domains, controller: "vocabularies", type: "meril_scientific_domain"
-      resources :research_steps, controller: "vocabularies", type: "research_step"
-      resources :jurisdictions, controller: "vocabularies", type: "jurisdiction"
-      resources :datasource_classifications, controller: "vocabularies", type: "datasource_classification"
-      resources :entity_types, controller: "vocabularies", type: "entity_type"
-      resources :entity_type_schemes, controller: "vocabularies", type: "entity_type_scheme"
-      resources :product_access_policies, controller: "vocabularies", type: "product_access_policy"
-      resources :bundle_goals, controller: "vocabularies", type: "bundle_goal"
-      resources :bundle_capabilities_of_goal, controller: "vocabularies", type: "bundle_capability_of_goal"
+      VOCABULARY_TYPES.each do |type, opts|
+        resources opts[:route], controller: "vocabularies", type: type.to_s
+      end
     end
   end
 

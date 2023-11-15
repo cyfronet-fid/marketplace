@@ -4,6 +4,7 @@ class Import::Vocabularies
   ACCEPTED_VOCABULARIES = {
     SUPERCATEGORY: Category,
     CATEGORY: Category,
+    SERVICE_CATEGORY: Vocabulary::ServiceCategory,
     SUBCATEGORY: Category,
     TRL: Vocabulary::Trl,
     SCIENTIFIC_DOMAIN: ScientificDomain,
@@ -28,7 +29,7 @@ class Import::Vocabularies
     PROVIDER_MERIL_SCIENTIFIC_SUBDOMAIN: Vocabulary::MerilScientificDomain,
     PROVIDER_HOSTING_LEGAL_ENTITY: Vocabulary::HostingLegalEntity,
     RELATED_PLATFORM: Platform,
-    MARKETPLACE_LOCATION: Vocabulary::ResearchStep,
+    MARKETPLACE_LOCATION: Vocabulary::MarketplaceLocation,
     DS_JURISDICTION: Vocabulary::Jurisdiction,
     DS_RESEARCH_ENTITY_TYPE: Vocabulary::EntityType,
     DS_PERSISTENT_IDENTITY_SCHEME: Vocabulary::EntityTypeScheme,

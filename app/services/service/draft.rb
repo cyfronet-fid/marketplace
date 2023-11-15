@@ -8,7 +8,7 @@ class Service::Draft < ApplicationService
 
   def call
     public_before = @service.public?
-    result = @service.update(status: :draft)
+    result = @service.update!(status: :draft)
     unbundle_and_notify! if result && public_before
     result
   end

@@ -18,6 +18,8 @@ class Datasource < Service
       persistent_identity_systems.reject { |p| p.entity_type.blank? && p.entity_type_schemes.blank? }
   end
 
+  accepts_nested_attributes_for :persistent_identity_systems, reject_if: :all_blank, allow_destroy: true
+
   private
 
   def _provider_search_link(target_name, filter_query, default_path = nil)

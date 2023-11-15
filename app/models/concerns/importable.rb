@@ -5,6 +5,14 @@ module Importable
     active && !suspended ? :published : :draft
   end
 
+  def map_alternative_identifier(identifier)
+    AlternativeIdentifier.new(identifier_type: identifier["type"], value: identifier["value"]) if identifier.present?
+  end
+
+  def map_service_categories(service_categories)
+    Vocabulary::ServiceCategory.where(eid: service_categories)
+  end
+
   def map_target_users(target_users)
     TargetUser.where(eid: target_users)
   end
@@ -13,8 +21,8 @@ module Importable
     Category.where(eid: categories)
   end
 
-  def map_research_step_ids(research_steps)
-    research_steps.present? ? Vocabulary::ResearchStep.where(eid: research_steps).map(&:id) : []
+  def map_marketplace_location_ids(marketplace_locations)
+    marketplace_locations.present? ? Vocabulary::MarketplaceLocation.where(eid: marketplace_locations).map(&:id) : []
   end
 
   def map_scientific_domains(domains)
@@ -182,16 +190,7 @@ module Importable
     end
   end
 
-  def fetch_ppid(resource, source = "jms")
-    candidate =
-      case source
-      when "jms"
-        if resource&.key?("alternativeIdentifiers") && resource["alternativeIdentifiers"]&.key?("alternativeIdentifier")
-          Array(resource&.dig("alternativeIdentifiers", "alternativeIdentifier"))
-        end
-      when "rest"
-        resource["alternativeIdentifiers"] if resource.key?("alternativeIdentifiers")
-      end
+  def fetch_ppid(candidate = [])
     candidate = candidate.blank? ? nil : candidate&.find { |id| id["type"] == "EOSC PID" }
     candidate.blank? ? "" : candidate&.[]("value")
   rescue StandardError

@@ -1,6 +1,50 @@
 {
   "ignored_warnings": [
     {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "0641bff0a5fad66fc8f3852fb96b08c2867d8667a431f5898558c96e09f264ce",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped parameter value",
+      "file": "app/views/layouts/_recommendation.html.haml",
+      "line": 4,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "((\"'\" + sanitize(params[:source_id])) + \"'\")",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "ServicesController",
+          "method": "override_user_action_info",
+          "line": 88,
+          "file": "app/controllers/services_controller.rb",
+          "rendered": {
+            "name": "layouts/application",
+            "file": "app/views/layouts/application.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "layouts/application",
+          "line": 30,
+          "file": "app/views/layouts/application.html.haml",
+          "rendered": {
+            "name": "layouts/_recommendation",
+            "file": "app/views/layouts/_recommendation.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "layouts/_recommendation"
+      },
+      "user_input": "params[:source_id]",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
+    },
+    {
       "warning_type": "SQL Injection",
       "warning_code": 0,
       "fingerprint": "4ee1dfaf6a90d36d68d7af44057d4e80f52d055cc48789c49e3dd9f87c639a25",
@@ -16,6 +60,50 @@
       "confidence": "Medium",
       "cwe_id": [
         89
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "553ecfa626988b985eb2fbdf1848ca10457771e73e2205912fd99fa4ff19373a",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped cookie value",
+      "file": "app/views/layouts/_recommendation.html.haml",
+      "line": 10,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "((\"'\" + sanitize(cookies[:lastPageId])) + \"'\")",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "ApplicationController",
+          "method": "set_follow_context",
+          "line": null,
+          "file": "app/controllers/concerns/recommendation/followable.rb",
+          "rendered": {
+            "name": "layouts/application",
+            "file": "app/views/layouts/application.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "layouts/application",
+          "line": 30,
+          "file": "app/views/layouts/application.html.haml",
+          "rendered": {
+            "name": "layouts/_recommendation",
+            "file": "app/views/layouts/_recommendation.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "layouts/_recommendation"
+      },
+      "user_input": "cookies[:lastPageId]",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
       ],
       "note": ""
     },
@@ -126,6 +214,29 @@
       "note": ""
     },
     {
+      "warning_type": "Remote Code Execution",
+      "warning_code": 24,
+      "fingerprint": "b0855b35b4c45571f42de3c41867016de1daac8295eed7bbeae8ba3f0c66034d",
+      "check_name": "UnsafeReflection",
+      "message": "Unsafe reflection method `constantize` called on parameter value",
+      "file": "app/controllers/backoffice/vocabularies_controller.rb",
+      "line": 75,
+      "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
+      "code": "VOCABULARY_TYPES[params[:type].to_sym][:klass].constantize",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Backoffice::VocabulariesController",
+        "method": "vocabulary_type"
+      },
+      "user_input": "params[:type].to_sym",
+      "confidence": "Medium",
+      "cwe_id": [
+        470
+      ],
+      "note": ""
+    },
+    {
       "warning_type": "Mass Assignment",
       "warning_code": 70,
       "fingerprint": "d06e1c85551aa02f3f8da3a7d5c309ed69783a1fa39928ea676b0bf9646f3d0c",
@@ -213,6 +324,50 @@
       "note": ""
     },
     {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "ea9e64e667e8d4b95163d5642554258eaa674de5f812ee863fa5f885fe843c6a",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped cookie value",
+      "file": "app/views/layouts/_recommendation.html.haml",
+      "line": 7,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "((\"'\" + sanitize(cookies[:targetId])) + \"'\")",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "ApplicationController",
+          "method": "set_follow_context",
+          "line": null,
+          "file": "app/controllers/concerns/recommendation/followable.rb",
+          "rendered": {
+            "name": "layouts/application",
+            "file": "app/views/layouts/application.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "layouts/application",
+          "line": 30,
+          "file": "app/views/layouts/application.html.haml",
+          "rendered": {
+            "name": "layouts/_recommendation",
+            "file": "app/views/layouts/_recommendation.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "layouts/_recommendation"
+      },
+      "user_input": "cookies[:targetId]",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
+    },
+    {
       "warning_type": "Mass Assignment",
       "warning_code": 70,
       "fingerprint": "f10a9795541747546183875bfc6b2d204202fd9a2f564d64ada38cf6f2ba886f",
@@ -277,6 +432,6 @@
       "note": ""
     }
   ],
-  "updated": "2023-10-16 17:05:17 +0200",
+  "updated": "2023-11-22 07:18:11 +0100",
   "brakeman_version": "6.0.1"
 }

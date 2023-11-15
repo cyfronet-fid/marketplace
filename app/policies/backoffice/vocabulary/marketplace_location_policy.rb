@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Backoffice::Vocabulary::ResearchStepPolicy < Backoffice::VocabularyPolicy
+class Backoffice::Vocabulary::MarketplaceLocationPolicy < Backoffice::VocabularyPolicy
   class Scope < Scope
     def resolve
       scope

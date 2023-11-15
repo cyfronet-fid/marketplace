@@ -11,7 +11,6 @@ class Ess::BundleSerializer < ApplicationSerializer
              :tag_list,
              :target_users,
              :scientific_domains,
-             :research_steps,
              :offer_ids,
              :related_training,
              :contact_email,
@@ -22,6 +21,7 @@ class Ess::BundleSerializer < ApplicationSerializer
              :usage_counts_views,
              :updated_at
 
+  attribute :marketplace_locations, key: :research_steps
   attribute :created_at, key: :publication_date
   attribute :project_items_count, key: :usage_counts_downloads
 

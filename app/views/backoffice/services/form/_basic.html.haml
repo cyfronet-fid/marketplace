@@ -25,3 +25,21 @@
                               disabled: cant_edit([provider_ids: []]),
                               collection: Provider.active.sort_by { |e| e.name.strip.downcase }
       = f.input :webpage_url, disabled: cant_edit(:webpage_url)
+      .row.service-contact-emails
+        .col-12
+          %h3= _("Alternative Identifiers")
+          = f.error :alternative_identifiers, class: "invalid-feedback d-block"
+          = f.fields_for :alternative_identifiers, disabled: service.upstream_id.present?, multiple: true, as: :array,
+                    wrapper_html: { "data-form-target" => "alternativeIdentifier" } do |identifier_form|
+            = render "backoffice/common_parts/form/alternative_identifier_fields",
+                  identifier_form: identifier_form, object: service
+          = link_to _("Add additional Alternative Identifier"), "#", class: "btn btn-primary disablable",
+                  data: { "form-target": "addField",
+                  action: "click->form#addField",
+                  value: "alternativeIdentifier",
+                  fields: f.fields_for(:alternative_identifiers, AlternativeIdentifier.new,
+                  child_index: "new_field") { |idf| render "backoffice/common_parts/form/alternative_identifier_fields",
+                  identifier_form: idf, object: service } }
+
+
+

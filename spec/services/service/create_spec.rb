@@ -14,6 +14,7 @@ RSpec.describe Service::Create, backend: true do
   it "saves valid offer in the db" do
     service = described_class.new(build(:service)).call
 
+    service.reload
     expect(service.offers.size).to eq(1)
 
     offer = service.offers.first
