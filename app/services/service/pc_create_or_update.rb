@@ -14,14 +14,10 @@ class Service::PcCreateOrUpdate
     @logo = eosc_registry_service["logo"]
     @is_active = is_active
     @source_type = "eosc_registry"
-    @original_id = eosc_registry_service["originalId"]
     @mp_service =
       Service
         .joins(:sources)
-        .find_by(
-          "service_sources.source_type": @source_type,
-          "service_sources.eid": [@original_id, eosc_registry_service["id"]]
-        )
+        .find_by("service_sources.source_type": @source_type, "service_sources.eid": [eosc_registry_service["id"]])
     eosc_registry_service["status"] = @is_active ? "published" : "draft"
     @service_hash = Importers::Service.new(eosc_registry_service, modified_at, eosc_registry_base_url, token).call
     @new_update_available = Service::PcCreateOrUpdate.new_update_available(@mp_service, modified_at)
