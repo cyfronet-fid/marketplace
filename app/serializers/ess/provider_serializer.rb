@@ -3,7 +3,7 @@
 class Ess::ProviderSerializer < ApplicationSerializer
   attributes :id,
              :pid,
-             :catalogue,
+             :catalogues,
              :name,
              :abbreviation,
              :legal_entity,
@@ -40,4 +40,8 @@ class Ess::ProviderSerializer < ApplicationSerializer
     0
   end
   attribute :usage_counts_views
+
+  def tag_list
+    object.tag_list
+  end
 end

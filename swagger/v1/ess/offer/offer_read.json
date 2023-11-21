@@ -13,6 +13,13 @@
     "description": {
       "type": "string"
     },
+    "eosc_if": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
     "tag_list": {
       "type": "array",
       "nullable": true,

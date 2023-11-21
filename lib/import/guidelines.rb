@@ -73,6 +73,7 @@ module Import
         eid = external_data["resourceId"]
         guideline_eids = external_data["interoperabilityRecordIds"]
         if (service_source = ServiceSource.find_by(eid: eid, source_type: "eosc_registry")).nil?
+          log "Service source #{eid} not found"
           next
         end
 
@@ -81,6 +82,7 @@ module Import
         next if @dry_run
 
         if (service = Service.find_by(id: service_source.service_id)).nil?
+          log "Service #{eid} not found but its source exists with id: #{service_source.id}"
           next
         end
         guidelines = Guideline.where(eid: [guideline_eids])

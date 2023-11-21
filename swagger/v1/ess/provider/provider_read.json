@@ -10,9 +10,12 @@
     "slug": {
       "type": "string"
     },
-    "catalogue": {
-      "type": "string",
-      "nullable": true
+    "catalogues": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
     },
     "abbreviation": {
       "type": "string"
