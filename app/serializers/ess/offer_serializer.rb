@@ -7,6 +7,7 @@ class Ess::OfferSerializer < ApplicationSerializer
              :description,
              :service_id,
              :tag_list,
+             :eosc_if,
              :status,
              :order_type,
              :internal,

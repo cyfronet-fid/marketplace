@@ -10,8 +10,12 @@
     "slug": {
       "type": "string"
     },
-    "catalogue": {
-      "type": "string"
+    "catalogues": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
     },
     "abbreviation": {
       "type": "string"
@@ -180,6 +184,20 @@
       "nullable": true
     },
     "changelog": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "guidelines": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "eosc_if": {
       "type": "array",
       "nullable": true,
       "items": {

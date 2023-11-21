@@ -9,7 +9,9 @@ class Ess::ServiceSerializer < ApplicationSerializer
 
   attributes :id,
              :pid,
-             :catalogue,
+             :catalogues,
+             :guidelines,
+             :eosc_if,
              :abbreviation,
              :name,
              :tagline,

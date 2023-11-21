@@ -10,6 +10,13 @@
     "name": {
       "type": "string"
     },
+    "catalogues": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
     "bundle_goals": {
       "type": "array",
       "items": {
@@ -27,6 +34,13 @@
     },
     "description": {
       "type": "string"
+    },
+    "eosc_if": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
     },
     "tag_list": {
       "type": "array",
