@@ -86,9 +86,21 @@ class ApplicationSerializer < ActiveModel::Serializer
     end
   end
 
-  %i[catalogue].each do |method|
+  %i[catalogue guidelines].each do |method|
     define_method method do
-      object.send(method)&.pid
+      method.name.pluralize == method.name ? object.send(method).map(&:eid) : object.send(method)&.pid
     end
+  end
+
+  def catalogues
+    [object&.catalogue&.pid].compact
+  end
+
+  def eosc_if
+    object.tag_list.select { |tag| tag.downcase.start_with?("eosc::") }
+  end
+
+  def tag_list
+    object.tag_list.reject { |tag| tag.downcase.start_with?("eosc::") }
   end
 end

@@ -7,8 +7,12 @@
     "pid": {
       "type": "string"
     },
-    "catalogue": {
-      "type": "string"
+    "catalogues": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
     },
     "abbreviation": {
       "type": "string"
@@ -31,6 +35,13 @@
       "enum": ["open_access", "fully_open_access", "order_required", "other"]
     },
     "categories": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "guidelines": {
       "type": "array",
       "nullable": true,
       "items": {
@@ -176,6 +187,13 @@
       }
     },
     "tag_list": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "eosc_if": {
       "type": "array",
       "nullable": true,
       "items": {
