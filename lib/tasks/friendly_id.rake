@@ -12,7 +12,10 @@ namespace :friendly_id do
       .where(status: "deleted")
       .each do |service|
         puts "Releasing slug #{service.slug} and eid: #{service.pid}"
-        service.update(slug: "#{service.slug}_deleted", pid: "#{service.pid}+invalidated", status: "deleted")
+        puts "Updating sources with #{service.pid}"
+        service.sources.each { |s| s.update!(eid: "#{service.pid}+invalidated") }
+        puts "Update Service's slug #{service.slug}_deleted"
+        service.update!(slug: "#{service.slug}_deleted", status: "deleted")
       end
     Service.visible.each do |service|
       service.slug = nil

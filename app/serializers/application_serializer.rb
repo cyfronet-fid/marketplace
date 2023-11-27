@@ -76,7 +76,7 @@ class ApplicationSerializer < ActiveModel::Serializer
     define_method method do
       object
         .send(method)
-        &.map { |p| { entity_type: p.entity_type.name, entity_type_schemes: p.entity_type_schemes&.map(&:name) } }
+        &.map { |p| { entity_type: p.entity_type&.name, entity_type_schemes: p.entity_type_schemes&.map(&:name) } }
     end
   end
 
@@ -88,7 +88,7 @@ class ApplicationSerializer < ActiveModel::Serializer
 
   %i[catalogue guidelines].each do |method|
     define_method method do
-      method.name.pluralize == method.name ? object.send(method).map(&:eid) : object.send(method)&.pid
+      method.name.pluralize == method.name ? object.send(method)&.map(&:eid) : object.send(method)&.pid
     end
   end
 
