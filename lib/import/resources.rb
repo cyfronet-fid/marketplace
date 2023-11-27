@@ -11,14 +11,15 @@ class Import::Resources
     faraday: Faraday,
     logger: ->(msg) { puts msg },
     default_upstream: :eosc_registry,
-    token: nil
+    token: nil,
+    rescue_mode: false
   )
     @eosc_registry_base_url = eosc_registry_base_url
     @dry_run = dry_run
     @faraday = faraday
     @default_upstream = default_upstream
     @token = token
-
+    @rescue_mode = rescue_mode
     @logger = logger
     @ids = ids || []
     @filepath = filepath
@@ -65,7 +66,7 @@ class Import::Resources
                 ServiceSource.create!(service_id: service.id, eid: service.pid, source_type: "eosc_registry")
               update_from_eosc_registry(service, service_source, true)
 
-              Importers::Logo.new(service, image_url).call
+              Importers::Logo.new(service, image_url).call unless @rescue_mode
               service.save!
             else
               service.status = service_data["active"] ? :errored : :draft
@@ -75,7 +76,7 @@ class Import::Resources
               update_from_eosc_registry(service, service_source, false)
               log "Service #{service.name}, eid: #{service.pid} saved with errors: #{service.errors.full_messages}"
 
-              Importers::Logo.new(service, image_url).call
+              Importers::Logo.new(service, image_url).call unless @rescue_mode
               service.save(validate: false)
             end
           end
@@ -87,7 +88,7 @@ class Import::Resources
             unless @dry_run
               Service::Update.call(existing_service, service)
 
-              Importers::Logo.new(existing_service, image_url).call
+              Importers::Logo.new(existing_service, image_url).call unless @rescue_mode
               existing_service.save!
             end
           else
@@ -97,7 +98,7 @@ class Import::Resources
               log "Updating [EXISTING] service #{service[:name]}, id: #{service_source.id}, eid: #{service[:pid]}"
               unless @dry_run
                 Service::Update.call(existing_service, service)
-                Importers::Logo.call(existing_service, image_url)
+                Importers::Logo.call(existing_service, image_url) unless @rescue_mode
                 existing_service.save!
               end
             else

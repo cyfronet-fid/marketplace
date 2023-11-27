@@ -5,6 +5,12 @@ require "sentry-ruby"
 namespace :import do
   desc "Imports services data from external providers"
 
+  task all: :environment do
+    %w[vocabularies catalogues providers resources datasources guidelines].each do |collection|
+      Rake::Task["import:#{collection}"].invoke
+    end
+  end
+
   task resources: :environment do
     Import::Resources.new(
       ENV.fetch("MP_IMPORT_EOSC_REGISTRY_URL", "https://beta.providers.eosc-portal.eu/api"),
@@ -12,7 +18,8 @@ namespace :import do
       default_upstream: ENV.fetch("UPSTREAM", "eosc_registry").to_sym,
       ids: ENV.fetch("IDS", "").split(","),
       filepath: ENV.fetch("OUTPUT", nil),
-      token: ENV.fetch("MP_IMPORT_TOKEN", nil)
+      token: ENV.fetch("MP_IMPORT_TOKEN", nil),
+      rescue_mode: ActiveModel::Type::Boolean.new.cast(ENV.fetch("MP_IMPORT_RESCUE_MODE", false))
     ).call
   end
 
@@ -23,7 +30,8 @@ namespace :import do
       default_upstream: ENV.fetch("UPSTREAM", "eosc_registry").to_sym,
       ids: ENV.fetch("IDS", "").split(","),
       filepath: ENV.fetch("OUTPUT", nil),
-      token: ENV.fetch("MP_IMPORT_TOKEN", nil)
+      token: ENV.fetch("MP_IMPORT_TOKEN", nil),
+      rescue_mode: ActiveModel::Type::Boolean.new.cast(ENV.fetch("MP_IMPORT_RESCUE_MODE", false))
     ).call
   end
 
@@ -38,7 +46,7 @@ namespace :import do
 
   task catalogues: :environment do
     Import::Catalogues.new(
-      ENV["MP_IMPORT_EOSC_REGISTRY_URL"] || "https://beta.providers.eosc-portal.eu/api",
+      ENV.fetch("MP_IMPORT_EOSC_REGISTRY_URL", "https://beta.providers.eosc-portal.eu/api"),
       dry_run: ActiveModel::Type::Boolean.new.cast(ENV.fetch("DRY_RUN", false)),
       ids: ENV.fetch("IDS", "").split(","),
       filepath: ENV.fetch("OUTPUT", nil),

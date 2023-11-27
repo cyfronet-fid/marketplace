@@ -9,10 +9,10 @@ namespace :friendly_id do
 
   task heal: :environment do
     Service
-      .where(status: :deleted)
+      .where(status: "deleted")
       .each do |service|
-        puts "Releasing slug #{service.slug}"
-        service.update(slug: "#{service.slug}_deleted")
+        puts "Releasing slug #{service.slug} and eid: #{service.pid}"
+        service.update(slug: "#{service.slug}_deleted", pid: "#{service.pid}+invalidated", status: "deleted")
       end
     Service.visible.each do |service|
       service.slug = nil
