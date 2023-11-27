@@ -13,13 +13,15 @@ class Import::Providers
     logger: ->(msg) { puts msg },
     ids: [],
     default_upstream: :eosc_registry,
-    token: nil
+    token: nil,
+    rescue_mode: false
   )
     @eosc_registry_base_url = eosc_registry_base_url
     @dry_run = dry_run
     @faraday = faraday
     @default_upstream = default_upstream
     @token = token
+    @rescue_mode = rescue_mode
     @ids = ids
 
     @logger = logger
@@ -112,7 +114,7 @@ class Import::Providers
               eid: #{parsed_provider_data[:pid]} saved with errors: #{current_provider.errors.full_messages}"
     end
 
-    Importers::Logo.new(current_provider, image_url).call
+    Importers::Logo.new(current_provider, image_url).call unless @rescue_mode
     current_provider.save(validate: false)
   end
 
@@ -121,7 +123,7 @@ class Import::Providers
     if current_provider.valid?
       current_provider.save!
 
-      Importers::Logo.new(current_provider, image_url).call
+      Importers::Logo.new(current_provider, image_url).call unless @rescue_mode
       current_provider.save!
     else
       current_provider.sources.first.update!(errored: current_provider.errors.to_hash)
