@@ -30,7 +30,8 @@ describe "import:resources", type: :task, backend: true do
         ids: [],
         filepath: nil,
         default_upstream: :eosc_registry,
-        token: nil
+        token: nil,
+        rescue_mode: false
       )
       .and_return(resource_importer)
 
@@ -43,11 +44,12 @@ describe "import:resources", type: :task, backend: true do
     allow(import_class_stub).to receive(:new)
       .with(
         "https://beta.providers.eosc-portal.eu/api",
-        default_upstream: :mp,
+        default_upstream: :eosc_registry,
         dry_run: false,
         filepath: nil,
         ids: [],
-        token: nil
+        token: nil,
+        rescue_mode: false
       )
       .and_return(resource_importer)
 
