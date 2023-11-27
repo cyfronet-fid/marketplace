@@ -66,6 +66,7 @@ If you need actual production data run:
 ```
 to seed the database with it.
 You can download only specific providers/resources by setting an `IDS` environment variable.
+You can omit images downloading by set variable `MP_IMPORT_RESCUE_MODE` to `true`
 
 ## Run
 To start web application in development mode (with auto refresh capability when
