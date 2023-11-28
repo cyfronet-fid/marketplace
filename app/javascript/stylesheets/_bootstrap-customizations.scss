@@ -2664,6 +2664,7 @@ label[data-multicheckbox].small {
   border: 1px solid $palette-solid-10;
   border-radius: 8px;
   padding: 0 30px;
+  margin-bottom: 30px;
 
   ul {
     list-style: none;
@@ -2682,9 +2683,59 @@ label[data-multicheckbox].small {
       a {
         color: $black;
         font-size: 16px;
+        display: flex;
+        align-items: center;
+
+        &::before {
+          content: '';
+          display: inline-block;
+          width: 20px;
+          height: 16px;
+          margin-right: 10px;
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-image: url('../images/icon-contact.svg');
+          background-position: left bottom;
+        }
+
+        &:hover {
+          color: $palette-blue;
+        }
 
         &:last-child {
           border: none;
+        }
+      }
+
+      &.webpage_url {
+        a {
+          &::before {
+            background-image: url('../images/icon-contact.svg');
+          }
+        }
+      }
+
+      &.helpdesk_url {
+        a {
+          &::before {
+            background-image: url('../images/icon-helpdesk.svg');
+          }
+        }
+      }
+
+      &.manual_url {
+        a {
+          &::before {
+            background-image: url('../images/icon-manual.svg');
+          }
+        }
+      }
+
+      &.training_information_url {
+        a {
+          &::before {
+            background-image: url('../images/icon-training.svg');
+          }
         }
       }
     }
@@ -2697,6 +2748,22 @@ label[data-multicheckbox].small {
     border-bottom: 1px solid $palette-solid-10;
     color: $black;
     font-size: 16px;
+
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 13px;
+      margin-right: 10px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-image: url('../images/icon-contact.svg');
+      background-position: left bottom;
+    }
+
+    &:hover {
+      color: $palette-blue;
+    }
   }
 }
 
@@ -2704,7 +2771,8 @@ label[data-multicheckbox].small {
   color: $tag-color-1;
   background: $tag-bg-1;
   display: block;
-  padding: 18px 40px;
+  padding: 18px 20px 17px 66px;
+  position: relative;
   border-radius: 8px;
   font-weight: 700;
   font-size: 14px;
@@ -2715,6 +2783,37 @@ label[data-multicheckbox].small {
   &:hover {
     border: 1px solid $dropdown-arrow;
   }
+
+  &.explore {
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: 35px;
+      width: 20px;
+      height: 20px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-image: url('../images/icon-explore.svg');
+    }
+  }
+
+  &.interoperability {
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: 35px;
+      width: 20px;
+      height: 20px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-image: url('../images/icon-interoperability.svg');
+    }
+  }
+
 }
 
 .service-box {
