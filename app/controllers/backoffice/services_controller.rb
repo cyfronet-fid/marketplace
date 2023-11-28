@@ -50,6 +50,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     @offers = policy_scope(@service.offers).order(:created_at)
     @bundles = policy_scope(@service.bundles).order(:created_at)
     @similar_services = fetch_similar(@service.id, current_user&.id)
+    @question = Service::Question.new(service: @service)
     @related_services = @service.target_relationships
   end
 

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Presentable::DescriptionComponent < ApplicationComponent
+  include Presentable::LinksHelper
   include MarkdownHelper
   include EoscExploreBannerHelper
 
@@ -8,10 +9,11 @@ class Presentable::DescriptionComponent < ApplicationComponent
   renders_one :sidebar_options
   renders_one :description_panels
 
-  def initialize(object:, preview: false, from: nil)
+  def initialize(object:, preview: false, question: nil, from: nil)
     super()
     @object = object
     @preview = preview
+    @question = question
     @from = from
   end
 

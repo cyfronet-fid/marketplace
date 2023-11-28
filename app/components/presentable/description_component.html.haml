@@ -9,6 +9,12 @@
       = description_panels
     %sidebar.col-12.col-xl-3{ "data-shepherd-tour-target": "service-classification" }
       = render Presentable::LinksComponent.new(object: @object, preview: @preview)
+      .col-12.question-col
+        - if !@object.public_contacts.empty? && (@question || @preview)
+          = render "components/presentable/header_component/ask_question", question_link: new_question_link,
+            question: @question,
+            prompt: new_question_prompt,
+            preview: @preview
       - if @object.respond_to?(:resource_organisation)
         = render Presentable::ProviderInfoComponent.new(object: @object.resource_organisation, preview: @preview)
       = render Presentable::SidebarComponent.new(@object)

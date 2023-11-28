@@ -57,10 +57,3 @@
   .col-12.col-lg-3.text-center{ class: ("horizontal-space" if horizontal) }
     .vertical-center-inner.access-type
       = buttons
-
-  .col-12.col-sm-3.question-col
-    - if !@object.public_contacts.empty? && (@question || @preview)
-      = render "components/presentable/header_component/ask_question", question_link: new_question_link,
-        question: @question,
-        prompt: new_question_prompt,
-        preview: @preview
