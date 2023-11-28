@@ -8,6 +8,9 @@
 
       = description_panels
     %sidebar.col-12.col-xl-3{ "data-shepherd-tour-target": "service-classification" }
+      = render Presentable::LinksComponent.new(object: @object, preview: @preview)
+      - if @object.respond_to?(:resource_organisation)
+        = render Presentable::ProviderInfoComponent.new(object: @object.resource_organisation, preview: @preview)
       = render Presentable::SidebarComponent.new(@object)
       -# TODO: refactor dynamic translation (above)
       = sidebar_options

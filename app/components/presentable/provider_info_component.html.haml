@@ -1,0 +1,14 @@
+= presentable_logo(@object, "align-self-center img-responsive", "80x80")
+= @object.name
+
+- object_fields.each do |field, opts|
+  - if @object.send(field).present?
+    .col-12
+      = field.to_s.humanize.singularize.upcase_first
+    .col-12
+      - if opts[:array]
+        %ul
+          - @object.send(field).each do |association|
+            %li= opts[:value] ? association.send(opts[:value]) : association
+      - elsif opts[:type] == "url"
+        = @object.send(field)
