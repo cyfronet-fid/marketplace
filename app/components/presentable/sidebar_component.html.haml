@@ -1,9 +1,17 @@
 - sidebar_fields.each do |group|
   - if display_detail?(group, @object)
-    %h5= t("components.presentable.sidebar_component.title.#{group[:name]}")
-    = render "components/presentable/sidebar_component/#{group[:template]}",
-                  object: @object,
-                  fields: group[:fields],
-                  type: group[:type] || "",
-                  clazz: group[:clazz] || "",
-                  nested: group[:nested] || ""
+    .details-box{
+      class: "#{group[:name]}"
+      }
+      .details-header
+        %h5= t("components.presentable.sidebar_component.title.#{group[:name]}")
+      .details-content
+        = render "components/presentable/sidebar_component/#{group[:template]}",
+                    object: @object,
+                    name: group[:name],
+                    fields: group[:fields],
+                    type: group[:type] || "",
+                    clazz: group[:clazz] || "",
+                    with_desc: group[:with_desc] || false,
+                    filter_query: group[:filter_query] || [],
+                    nested: group[:nested] || []

@@ -2,14 +2,13 @@
 - breadcrumb :resource_opinions, @service
 .container{ "data-controller": "comparison" }
   - dynamic_class = params[:from] == "backoffice_service" ? "backoffice" : nil
-  .border.pt-4.pl-3.pr-3.rounded.service-box.service-detail{ class: dynamic_class }
+  .pt-4.service-box-redesign.service-detail{ class: dynamic_class }
     = render Presentable::HeaderComponent.new(object: @service,
                           title: @service.name,
                           subtitle: @service.tagline,
                           comparison_enabled: @comparison_enabled,
                           preview: local_assigns[:preview],
                           show_checkboxes: params[:from].blank?,
-                          question: @question,
                           favourite_services: @favourite_services) do |c|
       - c.buttons do
         - case params[:from]
@@ -26,7 +25,15 @@
       = render "comparisons/bar", services: @compare_services, category: @category
 
 .tab-content
-  = render "services/opinions", service_opinions: @service_opinions
+  = render "services/opinions", service: @service, preview: @preview,
+  question: @question, service_opinions: @service_opinions
 
-.container.mt-4.pt-4.related-container
-  = render "services/related", related_services: @related_services, title: related_services_title
+  .related-container.container
+    .row
+      .col-12
+        = render "services/related", related_services: @similar_services, title: similar_services_title,
+            preview: @preview
+    .row
+      .col-12
+        = render "services/related", related_services: @related_services, title: related_services_title,
+            preview: @preview

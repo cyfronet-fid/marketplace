@@ -1,0 +1,7 @@
+- if show_banner?(object.tag_list)
+  %a.right-panel-button.explore{ href: eosc_explore_url(object.tag_list) }
+    Explore Compatible<br>
+    Research Products
+- if object.respond_to?(:guidelines) && object.guidelines.present?
+  %a.right-panel-button.interoperability{ href: services_array_filter_link(object.guidelines, :title) }
+    Interoperability guidelines

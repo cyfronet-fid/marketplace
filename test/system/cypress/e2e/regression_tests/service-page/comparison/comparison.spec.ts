@@ -98,7 +98,7 @@ describe("Comparison", () => {
   it("should add and remove services from comparison - toggle comparison via checkbox", ()=>{
     cy.get("[data-e2e='comparison-checkbox']")
       .next()
-      .contains('Add to comparison')
+      .contains('Compare')
       .eq(0)
       .click()
       .contains('Remove from comparison')
@@ -111,7 +111,7 @@ describe("Comparison", () => {
       .contains('Remove from comparison')
       .eq(0)
       .click()
-      .contains('Add to comparison')
+      .contains('Compare')
     cy.wait("@comparison");
     cy.get("[data-e2e='comparison-bar']")
       .should("not.be.visible");

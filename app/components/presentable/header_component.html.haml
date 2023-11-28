@@ -1,7 +1,5 @@
 - horizontal = !@object.instance_of?(Provider) && @object&.horizontal
-.row
-  - if horizontal
-    %span.horizontal-badge Horizontal service
+.row.space-between
   .col-12.col-lg-9.row
     .col-12.col-sm-3.d-flex.img-service-detail
       - if @preview
@@ -10,12 +8,15 @@
       - else
         = presentable_logo(@object)
     .col-12.col-sm-9.service-details-header
-      %h2.font-weight-bolder= @title
+      %h2.font-weight-bolder.mb-1= @title
       %p.abbreviation= @abbreviation.presence
-      %p.mb-1= @subtitle
+      = render "components/presentable/header_component/badges", object: @object
+
       - unless @object.instance_of?(Provider)
         = render "components/presentable/header_component/categorization",
-          service: @object, highlights: nil, preview: @preview
+              service: @object, highlights: nil, preview: @preview
+      %p.mb-3.subtitle-row= @subtitle
+
       - if @object.instance_of?(Service)
         .row.mt-2
           .col
@@ -23,7 +24,7 @@
               = print_rating_stars(@object.rating)
             .rating
               %span.ml-1.font-weight-bold
-                (#{@object.rating} /5)
+                #{@object.rating}/5
               - if @object.persisted?
                 = service_opinions_link(@object, @preview)
             - if @show_checkboxes
@@ -40,32 +41,19 @@
                         "data-comparison-target": "checkbox",
                         "data-action": "click->comparison#update"
                       %span.smaller
-                        = _("Add to comparison")
-                .comparison{ "data-controller": "favourite" }
-                  %span.compare
-                    %label
+                        = _("Compare")
+                    %label{ @preview ? {} : options(@object.slug, @comparison_enabled) }
                       = check_box_tag "favourite", @object.slug, favourite?(Array(@favourite_services), @object.slug),
                         id: "favourite-#{@object.id}",
                             class: "form-check-input",
                             "data-favourite-target": "checkbox",
                             "data-e2e": "favourite-checkbox",
-                            "data-action": "click->favourite#updateFromRes"
+                            "data-action": "click->favourite#updateFromRes",
+                            "data-value": "favourite-#{@object.id}"
                       %span.smaller
                         = _("Add to favourites")
-                  #popup-modal.modal.show{ "data-favourite-target": "popup", tabindex: "-1",
-                                    role: "dialog", aria: { hidden: "true" } }
 
-  .col-12.col-lg-3.text-center.vertical-center{ class: ("horizontal-space" if horizontal) }
+  .col-12.col-lg-3.text-center{ class: ("horizontal-space" if horizontal) }
     .vertical-center-inner.access-type
       = buttons
-.row.service-links
-  .col-12.col-lg-9.row
-    .col-12.col-sm-3
-    .col-12.col-sm-9
-      = render Presentable::HeaderLinksComponent.new(object: @object, preview: @preview)
-  .col-12.col-sm-3.question-col
-    - if !@object.public_contacts.empty? && (@question || @preview)
-      = render "components/presentable/header_component/ask_question", question_link: new_question_link,
-        question: @question,
-        prompt: new_question_prompt,
-        preview: @preview
+

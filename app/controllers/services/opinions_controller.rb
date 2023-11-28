@@ -2,6 +2,7 @@
 
 class Services::OpinionsController < ApplicationController
   include Service::Comparison
+  include Service::Recommendable
   layout :choose_layout
 
   def choose_layout
@@ -18,6 +19,7 @@ class Services::OpinionsController < ApplicationController
   def index
     @service = Service.friendly.find(params[:service_id])
     authorize(ServiceContext.new(@service, params.key?(:from) && params[:from] == "backoffice_service"), :show?)
+    @similar_services = fetch_similar(@service.id, current_user&.id)
     @related_services = @service.related_services
     @service_opinions =
       ServiceOpinion

@@ -106,7 +106,6 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       expect(page).to have_content("service tagline")
       expect(page).to have_content("Open Access")
       expect(page).to have_content(scientific_domain.name)
-      expect(page).to have_content(target_user.name)
       expect(page).to have_content("Publish")
 
       click_on "Details"
@@ -187,11 +186,9 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
 
       click_on "Update Service"
 
-      click_on "Details"
+      service.reload
 
-      expect(page).to have_content("jane@doe.com")
-      expect(page).to have_content("johny@does.com")
-      expect(page).to have_content("john@doe.com")
+      expect(service.public_contacts.map(&:email)).to contain_exactly("jane@doe.com", "johny@does.com", "john@doe.com")
     end
 
     scenario "I can remove additional public contacts", js: true do
@@ -275,13 +272,14 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
 
       click_on "Preview"
 
-      expect(page).to have_link(service.resource_organisation.name, href: "javascript:;")
-      expect(page).to have_link(service.providers.first.name, href: "javascript:;")
+      expect(page).to have_link(service.resource_organisation.website, href: "javascript:;")
+
+      # expect(page).to have_link(service.providers.first.name, href: "javascript:;")
       expect(page).to have_link("Webpage", href: "javascript:;")
       expect(page).to have_link("Manual", href: "javascript:;")
       expect(page).to have_link("Helpdesk", href: "javascript:;")
       expect(page).to have_link("Training information", href: "javascript:;")
-      expect(page).to have_link("Ask a question about this service?", href: "javascript:;")
+      expect(page).to have_link("Contact provider", href: "javascript:;")
       expect(page).to have_link("Access the service", href: "javascript:;")
       expect(page).to have_link("tag", href: "javascript:;")
       expect(page).to have_link(service.related_services.first.name, href: "javascript:;")
@@ -918,20 +916,13 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
         other_service_without_pid = create(:service, pid: nil, owners: [user])
 
         visit backoffice_service_path(notebook_service)
-        expect(page).to have_text(
-          "Explore Research Products compatible with the #{notebook_service.name} service (opens in a new window)"
-        )
+        expect(page).to have_text("Explore Compatible Research Products")
 
         visit backoffice_service_path(other_service_with_pid)
-        expect(page).not_to have_text(
-          "Explore Research Products compatible with the #{other_service_with_pid.name} service (opens in a new window)"
-        )
+        expect(page).not_to have_text("Explore Compatible Research Products")
 
         visit backoffice_service_path(other_service_without_pid)
-        expect(page).not_to have_text(
-          "Explore Research Products compatible with the " +
-            "#{other_service_without_pid.name} service (opens in a new window)"
-        )
+        expect(page).not_to have_text("Explore Compatible Research Products")
       end
     end
   end

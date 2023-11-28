@@ -36,6 +36,13 @@
 
 @media (max-width: 991px) {
 
+  .details-box-wrapper {
+    .details-box {
+      width: 100%;
+
+    }
+  }
+
   .buttons-row {
     .text-link {
       display: block;
@@ -503,10 +510,16 @@
     padding-right: 5px;
   }
 
+  header {
+    background-size: auto 100%;
+    background-position: 50% 50%;
+  }
+
   .header {
 
     .logo {
-      max-width: 190px;
+      max-width: 100%;
+      text-align: center;
     }
 
     .searchbar {
@@ -743,6 +756,10 @@
   .nav-tabs {
     .nav-link {
       padding: 0.6rem;
+
+      &.active {
+        padding: 0.8rem 0.6rem;
+      }
     }
   }
 
@@ -834,6 +851,10 @@
     margin-bottom: 30px;
   }
 
+  .service-details-header {
+    margin-bottom: 30px;
+  }
+
   .service-detail {
     fieldset {
       width: 100%;
@@ -843,6 +864,32 @@
       .comparison {
         margin-right: 20px;
       }
+    }
+  }
+
+  .service-box-redesign {
+    .nav-tabs {
+      .nav-link {
+        font-size: 13px;
+      }
+    }
+  }
+
+  .details-box-wrapper {
+    -moz-column-count: 1;
+    column-count: 1;
+  }
+
+  .service-boxes-container {
+    .description-box-column {
+      max-width: 100%;
+      margin-bottom: 25px;
+    }
+  }
+
+  .related-box {
+    .card-title a {
+      font-size: 14px;
     }
   }
 

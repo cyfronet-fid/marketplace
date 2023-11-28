@@ -5,14 +5,13 @@
 - breadcrumb :service, @service
 = render "services/errors", service: @service
 .container{ "data-controller": "comparison", "data-shepherd-tour-target": "overview_10" }
-  .pt-4.pl-3.pr-3.rounded.service-box.service-detail{ "data-shepherd-tour-target": "service-box" }
+  .pt-4.service-box-redesign.service-detail{ "data-shepherd-tour-target": "service-box" }
     = render Presentable::HeaderComponent.new(object: @service,
                           title: @service.name,
                           abbreviation: @service.abbreviation,
                           subtitle: @service.tagline,
                           comparison_enabled: @comparison_enabled,
                           preview: local_assigns[:preview],
-                          question: @question,
                           favourite_services: @favourite_services) do |c|
       - c.buttons do
         = render "components/presentable/header_component/order_buttons", service: @service
@@ -22,15 +21,11 @@
     "data-comparison-target": "bar", "data-e2e": "comparison-bar" }
     = render "comparisons/bar", services: @compare_services, category: @category
 .tab-content
-  = render Presentable::DescriptionComponent.new(object: @service) do |c|
+  = render Presentable::DescriptionComponent.new(object: @service,
+    similar_services: @similar_services, related_services: @related_services, question: @question) do |c|
     - c.description_panels do
       - if policy(@service).order? && (policy(@service).offers_show? || policy(@service).bundles_show?)
         = render "services/offers", offers: @offers, service: @service,
                                     bundles: @bundles, bundled: @bundled, preview: local_assigns[:preview]
 
-  = render "taggable/details_section", taggable: @service
 
-.container.mt-4.pt-4.related-container
-  = render "services/related", related_services: @similar_services, title: similar_services_title
-
-  = render "services/related", related_services: @related_services, title: related_services_title

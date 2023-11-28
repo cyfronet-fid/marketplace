@@ -1,6 +1,6 @@
 - about_active = ["services", "ordering_configurations"].include?(controller_name)
 .row
-  .col-12
+  .col-12.col-xl-9.pr-5
     %ul#my-tab.nav.nav-tabs.row.pl-3{ role: "tablist" }
       - if local_assigns[:preview]
         %li.nav-item
@@ -23,18 +23,19 @@
       - else
         %li.nav-item
           = link_to _("About"), about_link(service, go_to_search_query_params(params)),
-            class: "nav-link text-uppercase #{"active" if about_active }", role: "tab",
-            "data-probe": "", "data-service-id": service.id, "data-e2e": "service-about-btn"
+            class: "nav-link #{"active" if about_active }", role: "tab",
+            data: { probe: "", "service-id": service.id, e2e: "service-about-btn" }
         %li.nav-item{ "data-shepherd-tour-target": "service-details-tab" }
           = link_to _("Details"), service_details_path(service, go_to_search_query_params(params)),
-            class: "nav-link text-uppercase #{"active" if controller.controller_name == "details"}", role: "tab",
-            "data-probe": "", "data-service-id": service.id, "data-e2e": "service-details-btn"
+            class: "nav-link #{"active" if controller.controller_name == "details"}", role: "tab",
+            data: { probe: "", "service-id": service.id, e2e: "service-details-btn",
+            "shepherd-tour-target": "service-more-about" }
         %li.nav-item{ "data-shepherd-tour-target": "service-details-tab" }
           = link_to _("Guidelines"), service_guidelines_path(service, go_to_search_query_params(params)),
-            class: "nav-link text-uppercase #{"active" if controller.controller_name == "guidelines"}", role: "tab",
-            "data-probe": "", "data-service-id": service.id, "data-e2e": "service-guidelines-btn"
+            class: "nav-link #{"active" if controller.controller_name == "guidelines"}", role: "tab",
+            data: { probe: "", "service-id": service.id, e2e: "service-guidelines-btn" }
         %li.nav-item
           = link_to _("Reviews (%{ssoc})") % { ssoc: service.service_opinion_count },
             service_opinions_path(service, go_to_search_query_params(params)),
-            class: "nav-link text-uppercase #{"active" if controller.controller_name == "opinions"}", role: "tab",
-            "data-probe": "", "data-service-id": service.id, "data-e2e": "service-reviews-btn"
+            class: "nav-link #{"active" if controller.controller_name == "opinions"}", role: "tab",
+            data: { probe: "", "service-id": service.id, e2e: "service-reviews-btn" }

@@ -23,7 +23,7 @@ en:
         providers:
           title: Providers
           more_html: You can find <strong>%{count}</strong> more providers
-        target_users:
+        dedicated_for:
           title: Dedicated for
           more_html: And for <strong>%{count}</strong> more other target groups
     providers:

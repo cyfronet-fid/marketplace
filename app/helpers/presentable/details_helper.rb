@@ -3,11 +3,29 @@
 module Presentable::DetailsHelper
   include Backoffice::ServicesHelper
 
-  def service_details_columns
+  def service_details_columns(object)
     [
-      [classification, availability, marketing, dependencies, attribution, order],
-      [public_contacts, maturity_information, management, financial_information],
+      [classification, marketing, dependencies, attribution, order],
+      [public_contacts, maturity_information, financial_information(object)].compact,
       [changelog]
+    ]
+  end
+
+  def datasource_details_columns(object)
+    [
+      [classification, marketing, dependencies, attribution, order],
+      [public_contacts, maturity_information, management, financial_information(object)].compact,
+      [
+        version_control,
+        changelog,
+        datasource_policies,
+        persistent_identity_systems,
+        datasource_content,
+        research_product_licensing,
+        research_product_access_policies,
+        research_product_metadata_licensing,
+        research_product_metadata_access_policies
+      ]
     ]
   end
 
@@ -24,24 +42,6 @@ module Presentable::DetailsHelper
         structure_types,
         societal_grand_challenges,
         national_roadmaps
-      ]
-    ]
-  end
-
-  def datasource_details_columns
-    [
-      [classification, availability, marketing, dependencies, attribution, order],
-      [public_contacts, maturity_information, management, financial_information],
-      [
-        version_control,
-        changelog,
-        datasource_policies,
-        persistent_identity_systems,
-        datasource_content,
-        research_product_licensing,
-        research_product_access_policies,
-        research_product_metadata_licensing,
-        research_product_metadata_access_policies
       ]
     ]
   end
@@ -69,14 +69,13 @@ module Presentable::DetailsHelper
     {
       name: "classification",
       template: "array",
-      fields: %w[marketplace_locations target_users access_types access_modes tag_list],
+      fields: %w[marketplace_locations access_types access_modes],
       with_desc: true,
       nested: {
         marketplace_locations: "name",
         target_users: "name",
         access_types: "name",
-        access_modes: "name",
-        tag_list: "tag"
+        access_modes: "name"
       }
     }
   end
@@ -236,8 +235,12 @@ module Presentable::DetailsHelper
     }
   end
 
-  def financial_information
-    { name: "financial_information", template: "links", fields: %w[payment_model_url pricing_url] }
+  def financial_information(object)
+    if object.payment_model_url.present?
+      { name: "financial_information", template: "links", fields: %w[payment_model_url pricing_url] }
+    else
+      {}
+    end
   end
 
   def changelog
