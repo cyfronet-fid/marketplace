@@ -69,7 +69,6 @@ export class IResourcesExtended extends IResources {
   dependenciesRequiredResources: string[];
   dependenciesRelatedResources: string[];
   dependenciesPlatformsInternal: string[];
-  dependeciesPlatformPCdata: string;
   attributionFundingBodies: string[];
   attributionFundingPrograms: string[];
   attributionGrantProjectNames: string;
@@ -130,7 +129,6 @@ export const ResourcesFactoryExtended = {
       dependenciesRequiredResources: ["AMBER"],
       dependenciesRelatedResources: ["B2DROP"],
       dependenciesPlatformsInternal: ["CLARIN"],
-      dependeciesPlatformPCdata: Utilities.getRandomString(8).toLowerCase(),
       attributionFundingBodies: ["Academy of Finland (AKA)"],
       attributionFundingPrograms: ["Cohesion Fund (CF)"],
       attributionGrantProjectNames: Utilities.getRandomString(8).toLowerCase(),

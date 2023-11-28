@@ -1,0 +1,8 @@
+- type = object.respond_to?(:type) ? object.type : object.class.name
+.resource-row.row.mb-3
+  %span.pin-value.resource-type= type.upcase_first
+  %span.pin-value.resource-type= object.scientific_domains&.first&.name
+  - if object.respond_to?(:marketplace_locations) && object.marketplace_locations.present?
+    %span.pin-value.resource-type= object&.marketplace_locations&.first&.name
+  - if object.respond_to?(:horizontal) && object.horizontal
+    %span.pin-value.resource-type Horizontal service

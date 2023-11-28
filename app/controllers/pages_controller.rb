@@ -15,7 +15,7 @@ class PagesController < ApplicationController
   def target_users_link(target_user)
     target_link = @search_base_url + "/search/service?q=*&fq=dedicated_for:(%22#{target_user.name}%22)"
     return target_link if @enable_external_search
-    services_path(target_users: target_user.to_param)
+    services_path(dedicated_for: target_user.to_param)
   end
 
   def communities

@@ -1,21 +1,9 @@
 # frozen_string_literal: true
 
 module Presentable::HeaderHelper
-  def service_header_fields
-    [links]
-  end
-
-  def provider_header_fields
-    [provider_links, status]
-  end
-
-  def datasource_header_fields
-    [datasource_links]
-  end
-
   def service_opinions_link(service, preview)
     count = service.service_opinion_count
-    link_to n_("%{n} review", "%{n} reviews", count) % { n: count },
+    link_to n_("(%{n} review)", "(%{n} reviews)", count) % { n: count },
             service_opinions_path(service),
             class: "ml-1 default-color",
             "data-target": preview ? "preview.link" : ""
@@ -55,41 +43,7 @@ module Presentable::HeaderHelper
     if is_preview
       { disabled: true, tabindex: -1, class: "disabled", "data-tooltip": "Element disabled in the preview mode" }
     else
-      {}
+      { "data-controller": "favourite" }
     end
-  end
-
-  private
-
-  def links
-    {
-      name: "links",
-      template: "links",
-      fields: %w[webpage_url helpdesk_url helpdesk_email manual_url training_information_url]
-    }
-  end
-
-  def provider_links
-    { name: "links", template: "links", fields: %w[website] }
-  end
-
-  def datasource_links
-    {
-      name: "links",
-      template: "links",
-      fields: %w[webpage_url helpdesk_url helpdesk_email manual_url training_information_url]
-    }
-  end
-
-  def status
-    {
-      name: "statuses",
-      template: "list",
-      fields: %w[legal_statuses provider_life_cycle_statuses],
-      nested: {
-        legal_statuses: "name",
-        provider_life_cycle_statuses: "name"
-      }
-    }
   end
 end

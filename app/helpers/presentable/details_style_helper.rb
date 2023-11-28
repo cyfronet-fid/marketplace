@@ -38,7 +38,7 @@ module Presentable::DetailsStyleHelper
   end
 
   def monitoring_status_class(status)
-    MONITORING_STATUS_CLASS[status.to_sym]
+    MONITORING_STATUS_CLASS[status.to_sym] if status
   end
 
   def monitoring_tooltip(status)

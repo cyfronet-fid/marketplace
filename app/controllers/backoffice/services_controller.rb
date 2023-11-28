@@ -50,7 +50,8 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     @offers = policy_scope(@service.offers).order(:created_at)
     @bundles = policy_scope(@service.bundles).order(:created_at)
     @similar_services = fetch_similar(@service.id, current_user&.id)
-    @related_services = @service.target_relationships
+    @related_services = @service.related_services
+    @question = Service::Question.new(service: @service)
   end
 
   def new
@@ -151,6 +152,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     @related_services = @service.target_relationships
     @bundles = policy_scope(@service.bundles.published)
     @bundled = @service.offers.select(&:bundled?) ? @service.offers.select(&:bundled?).map(&:bundles).flatten.uniq : []
+    @service.monitoring_status = "OK"
     render :preview
   end
 

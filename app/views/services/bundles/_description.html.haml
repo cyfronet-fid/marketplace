@@ -9,12 +9,13 @@
   %h4.card-title.pt-2= link_to bundle.name, service_bundle_path(bundle.service, bundle)
 
   .bundle-description
-    .card-text.mb-2{ "data-controller" => "paragraph" }
+    .card-text.mb-2{ "data-controller" => "parameter" }
       - if bundle.description.size > 500
-        = markdown(bundle.description.truncate(500, separator: " "))
-        = link_to _("Show more"), "#", class: "show-more-#{bundle.id}",
-                                      data: { "target" => "paragraph.showMore",
-                                              "action" => "click->paragraph#showMore",
-                                              text: markdown(bundle.description) }
+        %div{ data: { "parameter-target": "hideableParameter", state: "visible" } }
+          = markdown(bundle.description.truncate(500, separator: " "))
+        .d-none{ data: { "parameter-target": "hideableParameter", state: "hidden" } }
+          = markdown(bundle.description)
+        = render "common_parts/show_more_link", id: bundle.id
+
       - else
         = markdown(bundle.description)

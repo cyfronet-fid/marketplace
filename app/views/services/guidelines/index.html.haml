@@ -2,14 +2,13 @@
 - breadcrumb :resource_details, @service
 .container{ "data-controller": "comparison" }
   - header_class = params[:from] == "backoffice_service" ? "backoffice" : nil
-  .border.pt-4.pl-3.pr-3.shadow-sm.rounded.service-box.service-detail{ class: header_class }
+  .pt-4.service-box-redesign.service-detail{ class: header_class }
     = render Presentable::HeaderComponent.new(object: @service,
                         title: @service.name,
                         subtitle: @service.tagline,
                         comparison_enabled: @comparison_enabled,
                         preview: local_assigns[:preview],
                         show_checkboxes: params[:from].blank?,
-                        question: @question,
                         favourite_services: @favourite_services) do |c|
       - c.buttons do
         - case params[:from]
@@ -27,12 +26,35 @@
 
 .tab-content
   - if @service.guidelines.blank?
-    #opinions.tab-pane.container.pt-2.active{ "aria-labelledby": "opinions-tab", role: "tabpanel",
+    #opinions.tab-pane.container.active{ "aria-labelledby": "opinions-tab", role: "tabpanel",
                                           "data-shepherd-tour-target": "service-details-content" }
-      .row.pt-3
-        This service has no Interoperability Guidelines
+      .row
+        %main.col-12.col-xl-9.pr-4.mb-4.pt-4
+          This service has no Interoperability Guidelines
+
+        %sidebar.col-12.col-xl-3{ "data-shepherd-tour-target": "service-classification" }
+          = render "components/presentable/explore_links", object: @service
+          .right-panel-links
+            - if !@service.public_contacts.empty? && (@question || @preview)
+              = render "components/presentable/header_component/ask_question",
+                question_link: new_question_link(@service),
+                question: @question,
+                prompt: new_question_prompt,
+                preview: @preview
+            = render Presentable::LinksComponent.new(object: @service, preview: @preview)
+          .provider-panel
+            - if @service.respond_to?(:resource_organisation)
+              = render Presentable::ProviderInfoComponent.new(base: @service, preview: @preview)
+
   - else
     = render Presentable::DetailsComponent.new(@service, guidelines: true)
 
-.container.mt-4.pt-4.related-container
-  = render "services/related", related_services: @related_services, title: related_services_title
+  .related-container.container
+    .row
+      .col-12
+        = render "services/related", related_services: @similar_services, title: similar_services_title,
+            preview: @preview
+    .row
+      .col-12
+        = render "services/related", related_services: @related_services, title: related_services_title,
+            preview: @preview

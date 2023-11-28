@@ -7,6 +7,7 @@ import initCookiesPolicy from "app/cookies_policy";
 import "bootstrap/dist/js/bootstrap";
 import "stylesheets/application";
 import "app/nav";
+import initMasonry from "app/masonry";
 
 require("@rails/ujs").start();
 require("turbolinks").start();
@@ -50,6 +51,7 @@ document.addEventListener("turbolinks:load", async function (event) {
   initChoices();
   initCookiesPolicy();
   initBadgeState();
+  initMasonry();
   await initProbes();
 });
 

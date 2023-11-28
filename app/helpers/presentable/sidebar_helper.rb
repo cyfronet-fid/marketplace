@@ -2,15 +2,7 @@
 
 module Presentable::SidebarHelper
   def service_sidebar_fields
-    [
-      pid,
-      scientific_categorisation,
-      categorisation,
-      monitoring_data,
-      analytics,
-      target_users,
-      resource_availability_and_languages
-    ]
+    [monitoring_data, analytics, pid, availability]
   end
 
   def provider_sidebar_fields
@@ -51,12 +43,13 @@ module Presentable::SidebarHelper
     { name: "Statistics", fields: %w[analytics], template: "analytics" }
   end
 
-  def target_users
-    { name: "target_users", template: "array", fields: ["target_users"], nested: { target_users: "name" } }
-  end
-
-  def resource_availability_and_languages
-    { name: "resource_availability_and_languages", template: "map", fields: %w[languages geographical_availabilities] }
+  def availability
+    {
+      name: "availability_and_language",
+      template: "map",
+      fields: %w[geographical_availabilities languages],
+      with_desc: true
+    }
   end
 
   def provider_scientific_categorisation

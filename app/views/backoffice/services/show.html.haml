@@ -42,7 +42,7 @@
 
 
 .container
-  .pt-4.pl-3.pr-3.shadow-sm.rounded.service-box.service-detail.backoffice{ "data-shepherd-tour-target": "service-box" }
+  .pt-4.pl-3.pr-3.service-box-redesign.service-detail.backoffice{ "data-shepherd-tour-target": "service-box" }
     = render Presentable::HeaderComponent.new(object: @service,
                           title: @service.name,
                           abbreviation: @service.abbreviation,
@@ -50,32 +50,17 @@
                           comparison_enabled: @comparison_enabled,
                           show_checkboxes: false,
                           preview: local_assigns[:preview],
-                          question: @question,
                           favourite_services: @favourite_services) do |c|
       - c.buttons do
         = render "components/presentable/header_component/backoffice_service_buttons", service: @service
 
     = render "services/tabs", service: @service, params: { from: "backoffice_service" }
 .tab-content
-  = render Presentable::DescriptionComponent.new(object: @service, from: "backoffice_service") do |c|
+  = render Presentable::DescriptionComponent.new(object: @service,
+    similar_services: @similar_services, related_services: @related_services,
+    question: @question, from: "backoffice_service") do |c|
     - c.description_panels do
       = render "layouts/common_parts/services/offers", offers: @offers, service: @service, bundles: @bundles
-    - c.sidebar_options do
-      %h5
-        = _("Updates")
-      %ul.list-group
-        - if @service.synchronized_at.present?
-          %li.list-group-item
-            %span
-              = _("Synchronized at") + ":"
-            %strong.text-dark= l @service.synchronized_at, format: :short
-        %li.list-group-item
-          %span
-            = _("Updated at") + ":"
-          %strong.text-dark= l @service.updated_at, format: :short
-  = render "taggable/details_section", taggable: @service
-
-.container.mt-4.pt-4.related-container
-  = render "services/related", related_services: @similar_services, title: similar_services_title
-
-  = render "services/related", related_services: @related_services, title: related_services_title
+    - c.additional_backoffice_info do
+      .right-panel-links
+        = render "components/presentable/updates", object: @service

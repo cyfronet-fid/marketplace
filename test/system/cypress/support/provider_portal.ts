@@ -169,7 +169,7 @@ Cypress.Commands.add("checkVisibilityOfResourceDetails", () => {
     "Free",
     "Tags",
     resourceJson.tags[0],
-    "Availability",
+    "Availability and language",
     "Andorra",
     "Geographical Availabilities",
     "Languages",

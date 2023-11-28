@@ -299,6 +299,14 @@ class Service < ApplicationRecord
     bundles_count.positive?
   end
 
+  def eosc_if
+    tag_list.select { |tag| tag.downcase.start_with?("eosc::") }
+  end
+
+  def sliced_tag_list
+    tag_list.reject { |tag| tag.downcase.start_with?("eosc::") }
+  end
+
   def languages
     language_availability.map { |l| I18nData.languages[l.upcase] || l }
   end

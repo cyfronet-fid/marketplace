@@ -90,13 +90,13 @@ Cypress.Commands.add("fillFormCreateResource", (resource: IResourcesExtended, lo
   }
 
   if (resource.marketingMultimedia) {
-    cy.get("#service_multimedia_0")
+    cy.get("#service_link_multimedia_urls_attributes_0_url")
       .clear()
       .type(resource.marketingMultimedia);
   }
 
   if (resource.marketingUseCasesUrl) {
-    cy.get("#service_use_cases_url_0")
+    cy.get("#service_link_use_cases_urls_attributes_0_url")
       .clear()
       .type(resource.marketingUseCasesUrl);
   }
@@ -127,9 +127,7 @@ Cypress.Commands.add("fillFormCreateResource", (resource: IResourcesExtended, lo
   }
 
   if (resource.classificationTagList) {
-    cy.get("#service_tag_list")
-      .clear()
-      .type(resource.classificationTagList);
+    selectItemsMultipleChoice(resource.classificationAccessMode,".service_tag_list");
   }
 
   if (resource.availabilityGeographicalAvailabilities){
@@ -249,7 +247,7 @@ Cypress.Commands.add("fillFormCreateResource", (resource: IResourcesExtended, lo
   }
   
   if (resource.maturityLifeCycleStatus){
-    selectItemsMultipleChoice(resource.maturityLifeCycleStatus,".service_life_cycle_status");
+    selectItemsMultipleChoice(resource.maturityLifeCycleStatus,".service_life_cycle_statuses");
   }
    
   if (resource.marturityCertyfication) {
@@ -297,12 +295,6 @@ Cypress.Commands.add("fillFormCreateResource", (resource: IResourcesExtended, lo
 
   if (resource.dependenciesPlatformsInternal){
     selectItemsMultipleChoice(resource.dependenciesPlatformsInternal, ".service_platforms");
-  }
-
-  if (resource.dependeciesPlatformPCdata) {
-    cy.get("#service_related_platforms_0")
-      .clear({ force: true })
-      .type(resource.dependeciesPlatformPCdata);
   }
 
   if (resource.attributionFundingBodies){
@@ -492,16 +484,16 @@ Cypress.Commands.add("hasResourceDetails", () => {
     "Access Types",
     "Access Modes",
     "Tags",
-    "Availability",
+    "Availability and language",
     "Geographical Availabilities",
     "Languages",
     "Marketing",
     "Multimedia",
     "Use Case",
     "Dependencies",
-    "Required Resources",
-    "Related Resources",
-    "Related Platforms",
+    "Required Services",
+    "Related Services",
+    "Platforms",
     "Attribution",
     "Funding Bodies",
     "Funding Programs",
@@ -538,11 +530,9 @@ Cypress.Commands.add("hasResourceDetails", () => {
 
 Cypress.Commands.add("hasResourceAbout", () => {
   const resourceAbout = [
-    "Scientific categorisation",
-    "Categorisation",
     "Target users",
-    "Resource availability and languages",
-   "Suggested compatible resources "
+    "Availability and language",
+    "Suggested compatible services"
   ]
 
   for (const value of resourceAbout) {

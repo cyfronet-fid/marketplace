@@ -6,11 +6,11 @@ describe("Filter decidated for", () => {
   it("should select filter", () => {
     cy.get("[data-e2e='filter-tag']")
       .should("not.exist")
-    cy.get("#collapse_target_users [data-e2e='filter-checkbox']")
+    cy.get("#collapse_dedicated_for [data-e2e='filter-checkbox']")
       .eq(0)
       .click();
     cy.location("href")
-      .should("include", "/services?target_users");
+      .should("include", "/services?dedicated_for");
     cy.get("[data-e2e='filter-tag']")
       .should("be.visible")
   });
