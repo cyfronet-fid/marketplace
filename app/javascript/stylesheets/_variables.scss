@@ -1,4 +1,6 @@
-$font-family-sans-serif: 'Inter', Roboto, 'Helvetica Neue', Arial, sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+$font-family-sans-serif: 'Inter', 'Helvetica Neue', Arial, sans-serif;
 
 $font-size-base: 1rem;
 
@@ -50,7 +52,7 @@ $palette-new-background: rgba(25, 117, 255, 0.08);
 $palette-new-darkblue: #1a2128;
 $palette-new-blue: #144b9e;
 $palette-new-lightblue: #919ba2;
-$palette-blue: #010f87;
+$palette-blue: #040f81;
 $palette-light-blue: #e6fafd;
 $palette-yellow: #ffcd00;
 $palette-yellow-opacity: rgba(255, 205, 0, 0.2);

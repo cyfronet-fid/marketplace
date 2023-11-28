@@ -148,9 +148,15 @@ a {
 .btn-primary {
   @include button-variant($btn-primary-hover, $white, $btn-primary-hover, $white, $btn-primary-hover, $white);
   background-color: $btn-primary-gradient-end;
+  border-radius: 8px;
+  padding: 0.5rem 2rem;
 
   @include hover-focus-active {
     background-image: unset;
+  }
+
+  &:hover {
+    background: $black;
   }
 }
 
@@ -2602,6 +2608,31 @@ label[data-multicheckbox].small {
 
   .img-service-detail {
     justify-content: center;
+  }
+
+  .vertical-center {
+    align-items: flex-end;
+  }
+
+  .nav-tabs {
+    background: none;
+    margin-top: 20px;
+    border-bottom: 1px solid $palette-solid-20;
+
+    .nav-link {
+      text-transform: none;
+      color: $black;
+
+      &.active {
+        border: none;
+        margin-bottom: 0;
+        border-bottom: 1px solid $palette-blue;
+      }
+    }
+  }
+
+  .ordertype-label {
+    text-transform: uppercase;
   }
 }
 
