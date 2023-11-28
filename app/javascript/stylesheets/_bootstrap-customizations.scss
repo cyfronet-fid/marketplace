@@ -2596,6 +2596,15 @@ label[data-multicheckbox].small {
   }
 }
 
+.service-box-redesign {
+  overflow: hidden;
+  position: relative;
+
+  .img-service-detail {
+    justify-content: center;
+  }
+}
+
 .service-box {
   border: 1px solid $palette-gray-10;
   -webkit-border-radius: 8px;
