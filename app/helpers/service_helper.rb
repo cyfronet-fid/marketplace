@@ -11,7 +11,7 @@ module ServiceHelper
     result += content_tag(:i, "", class: "fas fa-star-half-alt fa-lg") if rating % 1 != 0
 
     # empty stars
-    (0...(5 - rating.ceil)).each { result += content_tag(:i, "", class: "far fa-star fa-lg") }
+    (0...(5 - rating.ceil)).each { result += content_tag(:i, "", class: "fas fa-star empty-star fa-lg") }
 
     result.html_safe
   end

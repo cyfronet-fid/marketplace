@@ -59,7 +59,7 @@ header {
 }
 
 .container {
-  max-width: 1180px;
+  max-width: 1280px;
 }
 
 .font-bold {
@@ -525,6 +525,10 @@ textarea:-ms-input-placeholder { /* IE 10+ */
 .fa-star-half-alt,
 .fa-angle-right {
   color: $secondary;
+
+  &.empty-star {
+    color: $palette-solid-20;
+  }
 }
 
 .list-group-item {
@@ -2610,6 +2614,26 @@ label[data-multicheckbox].small {
     justify-content: center;
   }
 
+  .abbreviation {
+    color: $palette-solid-50;
+  }
+
+  .space-between {
+    justify-content: space-between;
+  }
+
+  .resource-row {
+    margin: 5px 0 10px 0;
+    display: flex;
+    column-gap: 10px;
+
+    .resource-type {
+      padding: 5px 9px 7px 10px;
+      background: $alert-bg;
+      color: $palette-blue;
+    }
+  }
+
   .vertical-center {
     align-items: flex-end;
   }
@@ -2999,7 +3023,7 @@ label[data-multicheckbox].small {
 
   .comparison {
     float: left;
-    margin: 2px 0 0 0;
+    margin: 2px 17px 0 0;
   }
 
   .research,

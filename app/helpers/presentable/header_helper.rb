@@ -3,7 +3,7 @@
 module Presentable::HeaderHelper
   def service_opinions_link(service, preview)
     count = service.service_opinion_count
-    link_to n_("%{n} review", "%{n} reviews", count) % { n: count },
+    link_to n_("(%{n} review)", "(%{n} reviews)", count) % { n: count },
             service_opinions_path(service),
             class: "ml-1 default-color",
             "data-target": preview ? "preview.link" : ""

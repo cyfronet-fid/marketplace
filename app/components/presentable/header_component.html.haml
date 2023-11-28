@@ -1,5 +1,5 @@
 - horizontal = !@object.instance_of?(Provider) && @object&.horizontal
-.row
+.row.space-between
   - if horizontal
     %span.horizontal-badge Horizontal service
   .col-12.col-lg-9.row
@@ -12,12 +12,9 @@
     .col-12.col-sm-9.service-details-header
       %h2.font-weight-bolder= @title
       %p.abbreviation= @abbreviation.presence
-      .col-12
-        = render "components/presentable/header_component/badges", object: @object
-      %p.mb-1= @subtitle
-      - unless @object.instance_of?(Provider)
-        = render "components/presentable/header_component/categorization",
-          service: @object, highlights: nil, preview: @preview
+      = render "components/presentable/header_component/badges", object: @object
+      %p.mb-3= @subtitle
+
       - if @object.instance_of?(Service)
         .row.mt-2
           .col
@@ -25,7 +22,7 @@
               = print_rating_stars(@object.rating)
             .rating
               %span.ml-1.font-weight-bold
-                (#{@object.rating} /5)
+                #{@object.rating}/5
               - if @object.persisted?
                 = service_opinions_link(@object, @preview)
             - if @show_checkboxes
@@ -57,13 +54,10 @@
                   #popup-modal.modal.show{ "data-favourite-target": "popup", tabindex: "-1",
                                     role: "dialog", aria: { hidden: "true" } }
 
-  .col-12.col-lg-3.text-center.vertical-center{ class: ("horizontal-space" if horizontal) }
+  .col-12.col-lg-3.text-center{ class: ("horizontal-space" if horizontal) }
     .vertical-center-inner.access-type
       = buttons
-.row.service-links
-  .col-12.col-lg-9.row
-    .col-12.col-sm-3
-    .col-12.col-sm-9
+
   .col-12.col-sm-3.question-col
     - if !@object.public_contacts.empty? && (@question || @preview)
       = render "components/presentable/header_component/ask_question", question_link: new_question_link,
