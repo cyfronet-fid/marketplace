@@ -1,37 +1,33 @@
-#desc.tab-pane.container.pt-2.active.desc{ "aria-labelledby" => "home-tab", role: "tabpanel" }
-  .row.pt-5.justify-content-between
-    %main.col-12.col-xl-9.pr-5.mb-4{ "data-shepherd-tour-target": "service-about" }
-
-      = markdown(@object.description)
-      - if show_banner?(@object.tag_list)
-        = render "services/notebook_eosc_explore", name: @object.name, tags: @object.tag_list
+#desc.tab-pane.container.active.desc{ "aria-labelledby" => "home-tab", role: "tabpanel" }
+  .row.justify-content-between
+    %main.col-12.col-xl-9.pr-4.pt-4{ "data-shepherd-tour-target": "service-about" }
+      .service-description-container
+        = markdown(@object.description)
+      .details-box-wrapper.mt-5
+        = render Presentable::SidebarComponent.new(@object)
 
       = description_panels
-    %sidebar.col-12.col-xl-3{ "data-shepherd-tour-target": "service-classification" }
-      = render Presentable::SidebarComponent.new(@object)
-      -# TODO: refactor dynamic translation (above)
-      = sidebar_options
+      .related-container
+        .row
+          .col-12
+            = render "services/related", related_services: @similar_services, title: similar_services_title,
+            preview: @preview
+        .row
+          .col-12
+            = render "services/related", related_services: @related_services, title: related_services_title,
+            preview: @preview
 
-      - if @preview
-        %a.more-details{ href: "javascript:;",
-                         "data-action": "click->preview#toggle",
-                         "data-value": "details",
-                         "data-probe" => "" }
-          = _("More about")
-          = @object.name
-          %i.fas.fa-long-arrow-alt-right
-      - elsif @object.is_a?(Datasource)
-        %a.more-details{ href: "javascript:;",
-                         "data-action": "click->datasource#toggle",
-                         "data-value": "details",
-                         "data-probe" => "" }
-          = _("More about")
-          = @object.name
-          %i.fas.fa-long-arrow-alt-right
-      - else
-        %a.more-details{ href: details_link,
-                         "data-shepherd-tour-target": "service-more-about",
-                         "data-probe" => "" }
-          = _("More about")
-          = @object.name
-          %i.fas.fa-long-arrow-alt-right
+    %sidebar.col-12.col-xl-3{ "data-shepherd-tour-target": "service-classification" }
+      = render "components/presentable/explore_links", object: @object
+      .right-panel-links
+        - if !@object.public_contacts.empty? && (@question || @preview)
+          = render "components/presentable/header_component/ask_question", question_link: new_question_link,
+            question: @question,
+            prompt: new_question_prompt,
+            preview: @preview
+        = render Presentable::LinksComponent.new(object: @object, preview: @preview)
+      = additional_backoffice_info
+      .provider-panel
+        - if @object.respond_to?(:resource_organisation)
+          = render Presentable::ProviderInfoComponent.new(base: @object, preview: @preview)
+

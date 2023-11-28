@@ -7,7 +7,7 @@ en:
           provider_life_cycle_statuses: Life cycle
       sidebar_component:
         title:
-          places_and_languages: Places and languages
+          availability_and_language: Availability and Language
           platforms: Related Infrastructures and Platforms
           support: Support
           documents: Documents
@@ -17,12 +17,12 @@ en:
           categorisation: Categorisation
           uptime_monitoring: Uptime monitoring
           target_users: Target users
-          resource_availability_and_languages: Service availability and languages
+          resource_availability_and_languages: Availability and language
         fields:
           link_multimedia_urls: Multimedia %{idx}
           webpage_url: Webpage
           helpdesk_url: Helpdesk
-          helpdesk_email: Helpdesk e-mail
+          helpdesk_email: Email provider
           manual_url: Manual
           privacy_policy_url: Privacy policy
           status_monitoring_url: Status Monitoring
@@ -52,6 +52,9 @@ en:
             CRITICAL: The service is not working.
             UNKNOWN:  The checks cannot reason about the status of the service.
             MISSING: There are no results about the service.
+        map:
+          geographical_availabilities: Regions
+          languages: Languages
       details_component:
         details:
           title:
@@ -68,7 +71,7 @@ en:
             hosting_legal_entity: Hosting Legal Entity
             national_roadmaps: National Roadmaps
             classification: Classification
-            availability: Availability
+            availability: Availability and language
             order: Order
             marketing: Marketing
             dependencies: Dependencies

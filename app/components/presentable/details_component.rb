@@ -4,12 +4,27 @@ class Presentable::DetailsComponent < ApplicationComponent
   include Presentable::DetailsHelper
   include Presentable::DetailsStyleHelper
   include PresentableHelper
+  include ServiceHelper
+  include Presentable::LinksHelper
+  include ServiceHelper
 
-  def initialize(object, preview: false, guidelines: false)
+  def initialize(
+    object,
+    similar_services: nil,
+    related_services: nil,
+    preview: false,
+    question: nil,
+    guidelines: false,
+    from: nil
+  )
     super()
     @object = object
     @guidelines = guidelines
     @preview = preview
+    @similar_services = similar_services
+    @related_services = related_services
+    @question = question
+    @from = from
   end
 
   def details_columns
@@ -20,7 +35,7 @@ class Presentable::DetailsComponent < ApplicationComponent
       when Provider
         provider_details_columns
       when Service
-        @object.type == "Datasource" ? datasource_details_columns : service_details_columns
+        @object.type == "Datasource" ? datasource_details_columns(@object) : service_details_columns(@object)
       end
     end
   end

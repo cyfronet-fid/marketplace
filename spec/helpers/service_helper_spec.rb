@@ -17,7 +17,7 @@ RSpec.describe ServiceHelper, type: :helper, backend: true do
 
   it "converts from decimal 0.0 value to html" do
     expect(print_rating_stars(0.0)).to match(
-      %r{<i class="far fa-star fa-lg"></i><i class="far fa-star fa-lg"></i><i class="far fa-star fa-lg"></i><i class="far fa-star fa-lg"></i><i class="far fa-star fa-lg"></i>}
+      %r{<i class="fas fa-star empty-star fa-lg"></i><i class="fas fa-star empty-star fa-lg"></i><i class="fas fa-star empty-star fa-lg"></i><i class="fas fa-star empty-star fa-lg"></i><i class="fas fa-star empty-star fa-lg"></i>}
     )
   end
 

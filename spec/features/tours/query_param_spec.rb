@@ -55,9 +55,12 @@ RSpec.feature "Query param tour", end_user_frontend: true do
     expect(page).to have_current_path(service_path(service))
   end
 
-  scenario "should take a full tour", js: true do
+  scenario "should take a full tour", skip: true, js: true do
+    # Test is skipped because currently we don't use shepherd for tours
     visit service_path(service, tour: "query_param_1")
     expect(page).to have_selector(".shepherd-content", visible: true)
+
+    page.save_page
 
     click_on "Let's take a tour"
     click_on "Next"

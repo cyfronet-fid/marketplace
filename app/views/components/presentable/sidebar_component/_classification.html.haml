@@ -1,15 +1,3 @@
-- object.scientific_domains.map(&:root).uniq.map.with_index do |scientific_domain, idx|
-  - if scientific_domain.present?
-    .category-box{ class: ("last" if idx == 2) }
-      .category-icon
-        %span.helper
-        - if scientific_domain.logo.attached?
-          = image_tag scientific_domain.logo.variant(resize: "35x35")
-        - else
-          = image_pack_tag("ico_ra_default.png", width: 35, alt: "#{scientific_domain.name}")
-      .category-name
-        = scientific_domain.name.truncate(35, separator: " ")
-
 %ul.list-group.domains.mt-3.mb-4
   - fields.map do |field|
     - if object.send(field).present?

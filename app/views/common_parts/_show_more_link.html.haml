@@ -1,0 +1,11 @@
+= link_to "#", id: "show-more-#{id}", class: "collapse collapsed show-more-link d-block",
+                                        data: { action: "click->parameter#toggleParameters",
+                                        toggle: "collapse",
+                                        "parameter-target": "switch",
+                                        target: "#",
+                                        state: "hidden" } do
+  %span
+    = _("Show more")
+  %span.collapse-icon
+    %i.fas.fa-chevron-down
+    %i.fas.fa-chevron-up

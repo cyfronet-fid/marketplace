@@ -4,19 +4,19 @@
       %i.fas.fa-ticket-alt
       %span
         = _("Voucher")
-  %span.text-sm-right.fa-pull-right.badge-right
+  %span.text-sm-right.fa-pull-right.badge-right{ class: "style_#{offer.order_type}" }
     %i{ class: "ordertype #{offer.order_type}" }
     = t("offers.type.#{offer.order_type}")
     -# TODO: refactor dynamic translation
   = yield_content!(:status) if content_for?(:status)
   %h4.card-title= offer.name
 
-  .card-text.mb-2{ "data-controller" => "paragraph" }
-    - if offer.description.size > 200
-      = markdown(offer.description.truncate(200, separator: " "))
-      = link_to _("Show more"), "#", class: "show-more-#{offer.id}",
-                                  data: { "target" => "paragraph.showMore",
-                                          "action" => "click->paragraph#showMore",
-                                          text: markdown(offer.description) }
+  .card-text.mb-2{ "data-controller" => "parameter" }
+    - if offer.description.squish.size > 200
+      %div{ data: { "parameter-target": "hideableParameter", state: "visible" } }
+        = markdown(offer.description.truncate(200, separator: " "))
+      .d-none{ data: { "parameter-target": "hideableParameter", state: "hidden" } }
+        = markdown(offer.description)
+      = render "common_parts/show_more_link", id: offer.id
     - else
       = markdown(offer.description)

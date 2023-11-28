@@ -13,7 +13,7 @@ jobs:
         sudo sysctl -w vm.max_map_count=262144
     - uses: actions/checkout@v2
     - name: Start containers
-      run: docker-compose -f docker-compose.yml -f docker-compose-e2e.yml up -d
+      run: docker-compose -f docker-compose-x64.yml -f docker-compose-e2e.yml up -d
     - uses: ruby/setup-ruby@v1
       with:
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically

@@ -113,7 +113,7 @@
           - @services.each do |service|
             %td
               - service.tag_list.sort.each do |tag|
-                = link_to tag, services_tag_link(tag), class: "badge badge-light"
+                = link_to tag, services_filter_link(tag, tag), class: "badge badge-light"
           - row_idx += 1
       - if @services.any? { |s| s.geographical_availabilities.present? }
         %tr{ class: row_class(row_idx) }

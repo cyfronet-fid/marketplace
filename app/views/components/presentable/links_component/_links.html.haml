@@ -1,8 +1,7 @@
 %ul
   - fields.each do |field|
     - if object.send(field).present?
-      %li
-        %i.fas.fa-arrow-right
+      %li{ class: "#{field}" }
         - if field.end_with? "_email"
           = mail_to(object.send(field), t("components.presentable.sidebar_component.fields.#{field}"), "data-probe": "",
             "data-preview-target": preview ? "link" : "")

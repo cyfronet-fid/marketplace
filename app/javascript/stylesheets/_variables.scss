@@ -1,4 +1,6 @@
-$font-family-sans-serif: 'Inter', Roboto, 'Helvetica Neue', Arial, sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+$font-family-sans-serif: 'Inter', 'Helvetica Neue', Arial, sans-serif;
 
 $font-size-base: 1rem;
 
@@ -50,7 +52,7 @@ $palette-new-background: rgba(25, 117, 255, 0.08);
 $palette-new-darkblue: #1a2128;
 $palette-new-blue: #144b9e;
 $palette-new-lightblue: #919ba2;
-$palette-blue: #010f87;
+$palette-blue: #040f81;
 $palette-light-blue: #e6fafd;
 $palette-yellow: #ffcd00;
 $palette-yellow-opacity: rgba(255, 205, 0, 0.2);
@@ -69,7 +71,7 @@ $palette-end-opacity: rgba(27, 48, 58, 0.85);
 $palette-box-shadow: rgba(0, 0, 0, 0.04);
 
 $primary: $palette-blue;
-$secondary: $palette-yellow;
+$secondary: #e6eef7;
 $info: $palette-gray-30;
 $error: $palette-salmon;
 $body-color: #233d4c;
@@ -106,7 +108,7 @@ $btn-padding-x-sm: 1.8rem;
 $navbar-light-active-color:  #233c4c;
 $navbar-light-color: #233d4c;
 
-$radius-common: 4px;
+$radius-common: 8px;
 $footer-color: #fff;
 $tag-bg-color: #fff5cc;
 $footer-header-color: #a6aeb1;
@@ -165,3 +167,9 @@ $custom-6: #fff3c8;
 $custom-7: #f68212;
 $custom-8: #f1f1f1;
 $custom-9: #848484;
+$custom-10: rgba(242, 242, 242, 0.47);
+$custom-11: #f8fbff;
+$custom-12: #010a56;
+$custom-13: #797777;
+$custom-14: #25792b;
+$custom-15: #060f7c;
