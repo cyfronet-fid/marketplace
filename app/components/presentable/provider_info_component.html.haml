@@ -15,7 +15,8 @@
           - @object.send(field).each do |association|
             %div= opts[:value] ? association.send(opts[:value]) : association
         - elsif opts[:type] == "url"
-          = @object.send(field)
+          %a{ href: @object.send(field), target: "_blank" }
+            = @object.send(field)
 
 %a.provider-more-link{ href: "#" }
   See all services provided by

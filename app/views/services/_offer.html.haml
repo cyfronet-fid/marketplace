@@ -8,5 +8,5 @@
         = link_to service_offers_path(offer.service, customizable_project_item: { offer_id: offer.iid }),
         "data-probe": "", "data-service-id": offer.service.id, "data-e2e": "select-offer-btn",
         "data-preview-target": local_assigns[:preview] ? "link" : "", method: :put do
-          %span.btn.btn-primary.font-weight-bold
+          %span.btn.btn-secondary.font-weight-bold
             = _("Select an offer")

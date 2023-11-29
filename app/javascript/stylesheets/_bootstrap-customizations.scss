@@ -1325,7 +1325,7 @@ Service detail
   }
 
   .card-button {
-    margin-bottom: -28px;
+    margin-bottom: 10px;
 
     input {
       display: none;
@@ -1477,6 +1477,19 @@ Service detail
     strong {
       display: block;
     }
+  }
+}
+
+.resource-offers {
+
+  .card-button {
+    width: 100%;
+    bottom: 0;
+    position: absolute;
+  }
+
+  .card {
+    padding-bottom: 2.5rem;
   }
 }
 
@@ -2647,10 +2660,13 @@ label[data-multicheckbox].small {
       text-transform: none;
       color: $black;
       font-size: 16px;
+      font-weight: 400;
 
       &.active {
         border: none;
         margin-bottom: 0;
+        font-weight: 500;
+        color: $palette-blue;
         border-bottom: 1px solid $palette-blue;
       }
 
@@ -2668,6 +2684,33 @@ label[data-multicheckbox].small {
 .service-description-container {
   font-size: 13px;
   line-height: 1.5;
+}
+
+.service-boxes-container {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 25px;
+
+  .description-box-column {
+    flex: 1 0 21%;
+    border-radius: 8px;
+    padding: 15px;
+    border: 1px solid $card-border;
+
+    h5 {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .list-group {
+      border: none;
+      padding: 0;
+
+      .list-group-item {
+        margin-left: 1rem;
+      }
+    }
+  }
 }
 
 .right-panel-links {
@@ -2848,6 +2891,7 @@ label[data-multicheckbox].small {
 .provider-panel {
   padding: 25px;
   display: flex;
+  border-radius: 8px;
   flex-direction: column;
   align-items: flex-start;
   gap: 25px;
@@ -5961,14 +6005,6 @@ abbr[title] {
 .resource-review {
   .invalid-feedback {
     font-size: 100%;
-  }
-}
-
-.resource-offers {
-  .card-button {
-    width: 100%;
-    bottom: 0;
-    position: absolute;
   }
 }
 

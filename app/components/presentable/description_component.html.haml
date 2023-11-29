@@ -6,34 +6,10 @@
       - if show_banner?(@object.tag_list)
         = render "services/notebook_eosc_explore", name: @object.name, tags: @object.tag_list
 
-      .service-description-container
-      = render Presentable::SidebarComponent.new(@object)
-      -# TODO: refactor dynamic translation (above)
-      = sidebar_options
-
-      - if @preview
-        %a.more-details{ href: "javascript:;",
-                         "data-action": "click->preview#toggle",
-                         "data-value": "details",
-                         "data-probe" => "" }
-          = _("More about")
-          = @object.name
-          %i.fas.fa-long-arrow-alt-right
-      - elsif @object.is_a?(Datasource)
-        %a.more-details{ href: "javascript:;",
-                         "data-action": "click->datasource#toggle",
-                         "data-value": "details",
-                         "data-probe" => "" }
-          = _("More about")
-          = @object.name
-          %i.fas.fa-long-arrow-alt-right
-      - else
-        %a.more-details{ href: details_link,
-                         "data-shepherd-tour-target": "service-more-about",
-                         "data-probe" => "" }
-          = _("More about")
-          = @object.name
-          %i.fas.fa-long-arrow-alt-right
+      .service-boxes-container
+        = render Presentable::SidebarComponent.new(@object)
+        -# TODO: refactor dynamic translation (above)
+        = sidebar_options
 
       = description_panels
     %sidebar.col-12.col-xl-3{ "data-shepherd-tour-target": "service-classification" }
