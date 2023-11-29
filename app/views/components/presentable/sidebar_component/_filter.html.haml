@@ -1,0 +1,13 @@
+%ul.list-group
+  - fields.each do |field|
+    - object.send(field).each do |element|
+      %li.list-group-item
+        - if nested.present? && nested[field.to_sym].present?
+          %span
+            = link_to element.send(nested[field.to_sym]), services_filter_link(field)
+        - else
+          %span
+            = element
+
+
+

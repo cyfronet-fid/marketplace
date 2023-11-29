@@ -7,10 +7,10 @@ module SearchLinksHelper
     EXTERNAL_SEARCH_ENABLED
   end
 
-  def services_tag_link(tag)
+  def services_filter_link(value, filter_name = "tag_list")
     search_base_url = Mp::Application.config.search_service_base_url
-    return search_base_url + "/search/all?q=*&fq=tag_list:%22#{tag}%22" if external_search_enabled
-    services_path(tag: tag)
+    return search_base_url + "/search/all?q=*&fq=#{filter_name}:%22#{value}%22" if external_search_enabled
+    services_path(tag: value)
   end
 
   def project_add_link(project)

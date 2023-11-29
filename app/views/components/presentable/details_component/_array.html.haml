@@ -34,7 +34,7 @@
                 "data-preview-target": local_assigns[:preview] ? "link" : "")
             - elsif nested[field.to_sym] == "tag"
               %span
-                = link_to element, services_tag_link(element), class: "badge badge-light",
+                = link_to element, services_filter_link(element), class: "badge badge-light",
                 "data-probe": "", "data-preview-target": local_assigns[:preview] ? "link" : ""
             - elsif nested[field.to_sym] == "label"
               %span
