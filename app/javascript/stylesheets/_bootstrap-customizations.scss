@@ -162,6 +162,13 @@ a {
 
 .btn-secondary {
   @include button-variant($btn-secondary, $white, $btn-secondary-hover, $white, $btn-secondary-hover, $white);
+  color: $palette-blue;
+  border-radius: 8px;
+  font-size: 0.86rem;
+
+  &:hover {
+    background: $palette-blue;
+  }
 }
 
 .btn-error {
@@ -175,7 +182,6 @@ a {
 .btn-primary,
 .btn-secondary,
 .btn-error {
-  color: $white !important;
 
   @include hover-focus-active {
     color: $white !important;
@@ -894,10 +900,6 @@ textarea {
 Service detail
 -------------------------*/
 
-.related-container {
-  border-top: 10px solid $palette-gray-5;
-}
-
 .desc {
 
   sidebar {
@@ -953,8 +955,7 @@ Service detail
 
     .geographical-availabilities-map {
       border: none;
-      border-top: 1px solid $palette-solid-10;
-      margin-top: 5px;
+      margin-top: 8px;
     }
 
     &.domains {
@@ -1325,7 +1326,6 @@ Service detail
   }
 
   .card-button {
-    margin-bottom: 10px;
 
     input {
       display: none;
@@ -1337,6 +1337,8 @@ Service detail
     // scss-lint:disable all
     span {
       cursor: pointer;
+      display: block;
+
       .unchecked {
         display: inline-block;
       }
@@ -1376,6 +1378,11 @@ Service detail
 
   .card-body {
     padding: 0.8rem 1rem;
+    font-size: 13px;
+
+    .show-more-link {
+      float: right;
+    }
 
     .badge-left {
       font-size: 0.8em;
@@ -1400,19 +1407,27 @@ Service detail
     }
 
     .badge-right {
-      font-size: 0.8em;
-      padding: 7px 14px;
+      font-size: 0.7em;
+      padding: 9px 8px;
       text-transform: uppercase;
       position: absolute;
-      border-left: 1px solid $palette-solid-10;
-      border-bottom: 1px solid $palette-solid-10;
-      top: 0;
-      color: $palette-solid-50;
-      font-weight: 400;
-      right: 0;
+      display: flex;
+      background: $custom-8;
+      top: 15px;
+      color: $custom-9;
+      font-weight: 700;
+      align-items: center;
+      right: 15px;
       -webkit-border-radius: 0;
       -moz-border-radius: 0;
       border-radius: 0;
+
+      // scss-lint:disable all
+      &.style_open_access {
+        background: $custom-6;
+        color: $custom-7;
+      }
+      // scss-lint:enable all
 
       &.badge-success,
       &.badge-warning,
@@ -1425,6 +1440,12 @@ Service detail
     .card-title {
       border: none;
       padding-top: 0.8rem;
+    }
+
+    .card-text {
+      p {
+        margin-bottom: 10px;
+      }
     }
 
     .card-description {
@@ -1485,6 +1506,7 @@ Service detail
   .card-button {
     width: 100%;
     bottom: 0;
+    padding: 0.8rem 1rem;
     position: absolute;
   }
 
@@ -1780,11 +1802,12 @@ h5 {
 }
 
 .parameters-title {
-  font-size: 1.05em;
+  font-size: 1em;
+  font-weight: 400;
 
   svg {
     margin-right: 5px;
-    color: $palette-yellow;
+    color: $palette-blue;
   }
 }
 
@@ -2600,22 +2623,22 @@ label[data-multicheckbox].small {
 
 // scss-lint:disable all
 .ordertype {
-  width: 11px;
-  height: 11px;
+  width: 10px;
+  height: 17px;
   display: inline-block;
-  background-size: 11px auto;
+  background-size: 10px auto;
   margin-right: 5px;
 
   &.open_access, &.fully_open_access, &.various {
-    background-image: url('../images/catalog_icon.svg');
+    background-image: url('../images/open-access.svg');
   }
 
   &.order_required {
-    background-image: url('../images/internal_ordering_icon.svg');
+    background-image: url('../images/restricted.svg');
   }
 
   &.other {
-    background-image: url('../images/external_ordering_icon.svg');
+    background-image: url('../images/restricted.svg');
   }
 }
 
@@ -2689,6 +2712,7 @@ label[data-multicheckbox].small {
 .service-boxes-container {
   display: flex;
   flex-wrap: wrap;
+  margin-top: 30px;
   column-gap: 25px;
 
   .description-box-column {
@@ -2772,8 +2796,8 @@ label[data-multicheckbox].small {
       &.webpage_url {
         a {
           &::before {
-            mask-image: url('../images/icon-contact.svg');
-            -webkit-mask-image: url('../images/icon-contact.svg');
+            mask-image: url('../images/icon-website.svg');
+            -webkit-mask-image: url('../images/icon-website.svg');
           }
         }
       }

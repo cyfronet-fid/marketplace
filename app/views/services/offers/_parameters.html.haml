@@ -1,6 +1,6 @@
 - if technical_parameters.present?
   .card-body.pt-0.collapse-group{ "data-controller": "parameter" }
-    %h5.text-uppercase.parameters-title.mb-0.mt-4
+    %h5.text-uppercase.parameters-title.mb-2.mt-4
       %i.fas.fa-tachometer-alt
       = _("Technical Parameters")
     %table.offer-params.table.table-hover
@@ -11,4 +11,4 @@
             %td.text-right.font-weight-bold= parse_offer_parameter_value(parameter)
     - if technical_parameters.size > 4
       = link_to "Show more", "#", { data: { "action" => "click->parameter#toggleParameters",
-                                             state: "hidden" }, class: "mb-3 d-block"  }
+                                             state: "hidden" }, class: "mb-3 d-block float-right"  }

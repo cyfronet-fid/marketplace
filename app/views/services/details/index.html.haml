@@ -27,5 +27,5 @@
 .tab-content
   = render Presentable::DetailsComponent.new(@service)
 
-.container.mt-4.pt-4.related-container
+.container.related-container
   = render "services/related", related_services: @related_services, title: related_services_title
