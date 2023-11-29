@@ -1,23 +1,41 @@
 #opinions.tab-pane.container.pt-2.active{ "aria-labelledby": "opinions-tab", role: "tabpanel",
                                           "data-shepherd-tour-target": "service-details-content" }
-  .row.pt-3
-    - details_columns.each do |column|
-      %span{ class: ["col-#{details_column_width_sm(details_columns)}",
-                     "col-sm#{details_column_width_sm(details_columns)}",
-                     "col-md#{details_column_width_md(details_columns)}",
-                     "col-lg-#{details_column_width_lg(details_columns)}"] }
-        - column.map do |group|
-          - if display_detail?(group, @object)
-            .details-box{ class: ("special-box" if group[:name] == "dependencies") }
-              .details-header
-                %h5= t("components.presentable.details_component.details.title.#{group[:name]}")
-              .details-content
-                %ul.list-group
-                  = render "components/presentable/details_component/#{group[:template]}",
-                              object: @object,
-                              fields: group[:fields],
-                              type: group[:type] || "single",
-                              clazz: group[:clazz] || "",
-                              nested: group[:nested] || "",
-                              with_desc: group[:with_desc] || false,
-                              preview: @preview
+  .row.pt-3.justify-content-between
+    %main.col-12.col-xl-9.pr-5.mb-4
+      - details_columns.each do |column|
+        %span{ class: ["col-#{details_column_width_sm(details_columns)}",
+                       "col-sm#{details_column_width_sm(details_columns)}",
+                       "col-md#{details_column_width_md(details_columns)}",
+                       "col-lg-#{details_column_width_lg(details_columns)}"] }
+          - column.map do |group|
+            - if display_detail?(group, @object)
+              .details-box{ class: ("special-box" if group[:name] == "dependencies") }
+                .details-header
+                  %h5= t("components.presentable.details_component.details.title.#{group[:name]}")
+                .details-content
+                  %ul.list-group
+                    = render "components/presentable/details_component/#{group[:template]}",
+                                object: @object,
+                                fields: group[:fields],
+                                type: group[:type] || "single",
+                                clazz: group[:clazz] || "",
+                                nested: group[:nested] || "",
+                                with_desc: group[:with_desc] || false,
+                                preview: @preview
+
+    %sidebar.col-12.col-xl-3{ "data-shepherd-tour-target": "service-classification" }
+      %a.right-panel-button.explore{ href: "#" }
+        Explore Compatible<br>
+        Reseach Products
+      %a.right-panel-button.interoperability{ href: "#" }
+        Interoperability guidelines
+      .right-panel-links
+        - if !@object.public_contacts.empty? && (@question || @preview)
+          = render "components/presentable/header_component/ask_question", question_link: new_question_link,
+            question: @question,
+            prompt: new_question_prompt,
+            preview: @preview
+        = render Presentable::LinksComponent.new(object: @object, preview: @preview)
+      .provider-panel
+        - if @object.respond_to?(:resource_organisation)
+          = render Presentable::ProviderInfoComponent.new(object: @object.resource_organisation, preview: @preview)

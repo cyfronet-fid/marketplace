@@ -1,14 +1,22 @@
-= presentable_logo(@object, "align-self-center img-responsive", "80x80")
-= @object.name
+.provider-head
+  .provider-logo
+    = presentable_logo(@object, "align-self-center img-responsive", "80x80")
+  .provider-name
+    = @object.name
 
 - object_fields.each do |field, opts|
   - if @object.send(field).present?
-    .col-12
-      = field.to_s.humanize.singularize.upcase_first
-    .col-12
-      - if opts[:array]
-        %ul
+    .provider-row
+      %strong
+        = field.to_s.humanize.singularize.upcase_first
+        %br
+      %span
+        - if opts[:array]
           - @object.send(field).each do |association|
-            %li= opts[:value] ? association.send(opts[:value]) : association
-      - elsif opts[:type] == "url"
-        = @object.send(field)
+            %div= opts[:value] ? association.send(opts[:value]) : association
+        - elsif opts[:type] == "url"
+          = @object.send(field)
+
+%a.provider-more-link{ href: "#" }
+  See all services provided by
+  = @object.name

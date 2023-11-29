@@ -1,29 +1,12 @@
 #desc.tab-pane.container.pt-2.active.desc{ "aria-labelledby" => "home-tab", role: "tabpanel" }
-  .row.pt-4.justify-content-between
+  .row.pt-3.justify-content-between
     %main.col-12.col-xl-9.pr-5.mb-4{ "data-shepherd-tour-target": "service-about" }
-
-      = markdown(@object.description)
+      .service-description-container
+        = markdown(@object.description)
       - if show_banner?(@object.tag_list)
         = render "services/notebook_eosc_explore", name: @object.name, tags: @object.tag_list
 
-      = description_panels
-    %sidebar.col-12.col-xl-3{ "data-shepherd-tour-target": "service-classification" }
-      %a.right-panel-button.explore{ href: "#" }
-        Explore Compatible<br>
-        Reseach Products
-      %a.right-panel-button.interoperability{ href: "#" }
-        Interoperability guidelines
-      .right-panel-links
-        - if !@object.public_contacts.empty? && (@question || @preview)
-          = render "components/presentable/header_component/ask_question", question_link: new_question_link,
-            question: @question,
-            prompt: new_question_prompt,
-            preview: @preview
-        = render Presentable::LinksComponent.new(object: @object, preview: @preview)
-      .col-12.question-col
-
-      - if @object.respond_to?(:resource_organisation)
-        = render Presentable::ProviderInfoComponent.new(object: @object.resource_organisation, preview: @preview)
+      .service-description-container
       = render Presentable::SidebarComponent.new(@object)
       -# TODO: refactor dynamic translation (above)
       = sidebar_options
@@ -51,3 +34,22 @@
           = _("More about")
           = @object.name
           %i.fas.fa-long-arrow-alt-right
+
+      = description_panels
+    %sidebar.col-12.col-xl-3{ "data-shepherd-tour-target": "service-classification" }
+      %a.right-panel-button.explore{ href: "#" }
+        Explore Compatible<br>
+        Reseach Products
+      %a.right-panel-button.interoperability{ href: "#" }
+        Interoperability guidelines
+      .right-panel-links
+        - if !@object.public_contacts.empty? && (@question || @preview)
+          = render "components/presentable/header_component/ask_question", question_link: new_question_link,
+            question: @question,
+            prompt: new_question_prompt,
+            preview: @preview
+        = render Presentable::LinksComponent.new(object: @object, preview: @preview)
+      .provider-panel
+        - if @object.respond_to?(:resource_organisation)
+          = render Presentable::ProviderInfoComponent.new(object: @object.resource_organisation, preview: @preview)
+

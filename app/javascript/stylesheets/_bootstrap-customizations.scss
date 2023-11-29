@@ -2640,17 +2640,22 @@ label[data-multicheckbox].small {
 
   .nav-tabs {
     background: none;
-    margin-top: 20px;
+    margin-top: 35px;
     border-bottom: 1px solid $palette-solid-10;
 
     .nav-link {
       text-transform: none;
       color: $black;
+      font-size: 16px;
 
       &.active {
         border: none;
         margin-bottom: 0;
         border-bottom: 1px solid $palette-blue;
+      }
+
+      &:focus {
+        border: none;
       }
     }
   }
@@ -2658,6 +2663,11 @@ label[data-multicheckbox].small {
   .ordertype-label {
     text-transform: uppercase;
   }
+}
+
+.service-description-container {
+  font-size: 13px;
+  line-height: 1.5;
 }
 
 .right-panel-links {
@@ -2680,6 +2690,10 @@ label[data-multicheckbox].small {
       width: 100%;
       border-bottom: 1px solid $palette-solid-10;
 
+      &:last-child {
+        border: none;
+      }
+
       a {
         color: $black;
         font-size: 16px;
@@ -2689,28 +2703,34 @@ label[data-multicheckbox].small {
         &::before {
           content: '';
           display: inline-block;
-          width: 20px;
+          width: 17px;
           height: 16px;
           margin-right: 10px;
-          background-size: contain;
-          background-repeat: no-repeat;
-          background-image: url('../images/icon-contact.svg');
-          background-position: left bottom;
+          background-color: #000;
+          mask-image: url('../images/icon-contact.svg');
+          -webkit-mask-image: url('../images/icon-contact.svg');
+          mask-image-size: 18px auto;
+          -webkit-mask-image-size: 18px auto;
+          -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+          -webkit-mask-position: 50% 50%;
+          mask-position: 50% 50%;
         }
 
         &:hover {
           color: $palette-blue;
-        }
 
-        &:last-child {
-          border: none;
+          &::before {
+            background-color: $palette-blue;
+          }
         }
       }
 
       &.webpage_url {
         a {
           &::before {
-            background-image: url('../images/icon-contact.svg');
+            mask-image: url('../images/icon-contact.svg');
+            -webkit-mask-image: url('../images/icon-contact.svg');
           }
         }
       }
@@ -2718,7 +2738,8 @@ label[data-multicheckbox].small {
       &.helpdesk_url {
         a {
           &::before {
-            background-image: url('../images/icon-helpdesk.svg');
+            mask-image: url('../images/icon-helpdesk.svg');
+            -webkit-mask-image: url('../images/icon-helpdesk.svg');
           }
         }
       }
@@ -2726,7 +2747,8 @@ label[data-multicheckbox].small {
       &.manual_url {
         a {
           &::before {
-            background-image: url('../images/icon-manual.svg');
+            mask-image: url('../images/icon-manual.svg');
+            -webkit-mask-image: url('../images/icon-manual.svg');
           }
         }
       }
@@ -2734,7 +2756,8 @@ label[data-multicheckbox].small {
       &.training_information_url {
         a {
           &::before {
-            background-image: url('../images/icon-training.svg');
+            mask-image: url('../images/icon-training.svg');
+            -webkit-mask-image: url('../images/icon-training.svg');
           }
         }
       }
@@ -2752,17 +2775,24 @@ label[data-multicheckbox].small {
     &::before {
       content: '';
       display: inline-block;
-      width: 20px;
+      width: 17px;
       height: 13px;
       margin-right: 10px;
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-image: url('../images/icon-contact.svg');
-      background-position: left bottom;
+      background-color: #000;
+      mask-image: url('../images/icon-contact.svg');
+      -webkit-mask-image: url('../images/icon-contact.svg');
+      mask-image-size: 18px auto;
+      -webkit-mask-image-size: 18px auto;
     }
 
     &:hover {
       color: $palette-blue;
+
+      &::before {
+        background-color: $palette-blue;
+        mask-image: url('../images/icon-contact.svg');
+        -webkit-mask-image: url('../images/icon-contact.svg');
+      }
     }
   }
 }
@@ -2813,7 +2843,34 @@ label[data-multicheckbox].small {
       background-image: url('../images/icon-interoperability.svg');
     }
   }
+}
 
+.provider-panel {
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 25px;
+  background: $custom-10;
+
+  .provider-head {
+    display: flex;
+    gap: 15px;
+    font-size: 15px;
+    font-weight: bold;
+    align-items: center;
+  }
+
+  .provider-more-link {
+    font-weight: bold;
+    position: relative;
+
+    &::after {
+      font-family: 'Font Awesome 5 Free';
+      content: '\f061';
+      display: inline-block;
+    }
+  }
 }
 
 .service-box {
