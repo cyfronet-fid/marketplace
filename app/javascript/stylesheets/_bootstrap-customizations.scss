@@ -23,6 +23,16 @@ body {
   border-radius: 8px !important;
 }
 
+.table-hover {
+  tbody {
+    tr {
+      &:hover {
+        background-color: $tag-bg-1;
+      }
+    }
+  }
+}
+
 header {
   position: relative;
   z-index: 10;
@@ -1310,6 +1320,8 @@ Service detail
 .offer-params {
   td {
     width: 50%;
+    font-size: 12px;
+    padding: 0.25rem;
   }
 }
 
@@ -1512,6 +1524,14 @@ Service detail
 
   .card {
     padding-bottom: 2.5rem;
+
+    .card-body {
+      overflow: hidden;
+
+      table {
+        margin-bottom: 5px;
+      }
+    }
   }
 }
 
@@ -1824,10 +1844,6 @@ h5 {
 
 .card-body table tr:first-child td {
   border-top: none;
-}
-
-.card-body table td {
-  padding-left: 0;
 }
 
 .top-row a {
