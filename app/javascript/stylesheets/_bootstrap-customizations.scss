@@ -1513,6 +1513,74 @@ Service detail
   }
 }
 
+.related-box {
+  cursor: pointer;
+
+  &:hover {
+    background: $custom-11;
+  }
+
+  .card-logo {
+    padding: 0 1rem;
+    margin-top: 1rem;
+    display: flex;
+    height: 55px;
+    justify-content: space-between;
+
+    img {
+      max-height: 55px;
+      width: auto;
+    }
+  }
+
+  .card-title {
+    padding-top: 0.5rem !important;
+
+    a {
+      color: $body-color;
+      font-size: 18px;
+      font-weight: 600;
+
+      &:hover {
+        color: $palette-blue;
+      }
+    }
+  }
+
+  .card-provider {
+    color: $palette-solid-50;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 18px;
+    border-bottom: 1px solid $palette-solid-10;
+    padding-bottom: 14px;
+    margin-bottom: 14px;
+  }
+
+  .card-description {
+    color: $palette-solid-50;
+    font-size: 12px;
+    font-weight: 400;
+    height: auto !important;
+    border-bottom: 1px solid $palette-solid-10;
+    padding-bottom: 14px;
+    margin-bottom: 14px;
+  }
+
+  .card-tagline {
+    display: block;
+
+    .tag {
+      padding: 2px 5px;
+      background: $alert-bg;
+      font-size: 12px;
+      color: $palette-blue;
+      display: inline-block;
+      margin: 0 6px 6px;
+    }
+  }
+}
+
 .resource-offers {
 
   .card-button {

@@ -30,6 +30,9 @@
   = render "taggable/details_section", taggable: @service
 
 .container.related-container
-  = render "services/related", related_services: @similar_services, title: similar_services_title
-
-  = render "services/related", related_services: @related_services, title: related_services_title
+  .row
+    .col-12.col-xl-9.pr-5
+      = render "services/related", related_services: @similar_services, title: similar_services_title
+  .row
+    .col-12.col-xl-9.pr-5.mt-4
+      = render "services/related", related_services: @related_services, title: related_services_title

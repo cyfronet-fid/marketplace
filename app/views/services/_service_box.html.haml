@@ -1,22 +1,15 @@
-.card.bg-gray-5.border-0
-  .card-body
-    %h3.card-title= link_to service.name.truncate(35, separator: " "), service, name: service.name,
-    "data-preview-target": local_assigns[:preview] ? "link" : ""
-    .row.card-description
-      .col-4
-        = presentable_logo(service)
-      .col
-        = service.tagline.truncate(105, separator: " ")
-    .clearfix
-  .card-footer.no-gutters.row.mb-2
-    .col.x-small
-      %span
-        = _("Organisation") + ":"
-      %strong{ "data-toggle" => "tooltip", "title" => "#{ providers_text(service) }" }
-        = resource_organisation_text(service).truncate(24)
-    .col.x-small.no-gutters
-      %span.text-right
-        = _("Dedicated for") + ":"
-      %strong.text-right{ "data-toggle" => "tooltip",
-                          "title" => "#{ service.target_users.map(&:name).join(", ")}" }
-        #{service.target_users.map(&:name).join(", ").truncate(26, separator: " ")}
+.col-md-4.d-flex.align-items-stretch
+  .card.related-box.mb-3
+    .card-logo.d-flex
+      = presentable_logo(service)
+    .card-body
+      %h3.card-title= link_to service.name, service, name: service.name,
+      "data-preview-target": local_assigns[:preview] ? "link" : ""
+      .card-provider
+        = resource_organisation_text(service)
+      .card-description
+        = service.tagline
+      .card-tagline
+        .tag
+          #{service.target_users.map(&:name)}
+      .clearfix
