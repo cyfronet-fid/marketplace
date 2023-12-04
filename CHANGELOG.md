@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.54.0-milestone]
+
+### Fixed
+- Serialize guidelines as their names instead of pids (@goreck888)
+
 ## [3.53.1] 2023-11-30
 
 ### Fixed
