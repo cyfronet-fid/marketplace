@@ -45,7 +45,7 @@ module MonitoringData
 
       results = response.body["results"].map { |r| r["groups"] }.flatten
 
-      File.open("monitoring.json", "w") { |file| file << JSON.pretty_generate(results) }
+      File.open("log/monitoring.json", "w") { |file| file << JSON.pretty_generate(results) }
 
       Service
         .where(status: %i[published unverified])
