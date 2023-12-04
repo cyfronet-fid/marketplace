@@ -1,12 +1,9 @@
 #opinions.tab-pane.container.pt-2.active{ "aria-labelledby": "opinions-tab", role: "tabpanel",
                                           "data-shepherd-tour-target": "service-details-content" }
   .row.pt-3.justify-content-between
-    %main.col-12.col-xl-9.pr-5.mb-4
-      - details_columns.each do |column|
-        %span{ class: ["col-#{details_column_width_sm(details_columns)}",
-                       "col-sm#{details_column_width_sm(details_columns)}",
-                       "col-md#{details_column_width_md(details_columns)}",
-                       "col-lg-#{details_column_width_lg(details_columns)}"] }
+    %main.col-12.col-xl-9.pr-4.mb-4
+      .details-box-wrapper
+        - details_columns.each do |column|
           - column.map do |group|
             - if display_detail?(group, @object)
               .details-box{ class: ("special-box" if group[:name] == "dependencies") }
@@ -15,13 +12,13 @@
                 .details-content
                   %ul.list-group
                     = render "components/presentable/details_component/#{group[:template]}",
-                                object: @object,
-                                fields: group[:fields],
-                                type: group[:type] || "single",
-                                clazz: group[:clazz] || "",
-                                nested: group[:nested] || "",
-                                with_desc: group[:with_desc] || false,
-                                preview: @preview
+                                  object: @object,
+                                  fields: group[:fields],
+                                  type: group[:type] || "single",
+                                  clazz: group[:clazz] || "",
+                                  nested: group[:nested] || "",
+                                  with_desc: group[:with_desc] || false,
+                                  preview: @preview
 
     %sidebar.col-12.col-xl-3{ "data-shepherd-tour-target": "service-classification" }
       %a.right-panel-button.explore{ href: "#" }

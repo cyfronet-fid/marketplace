@@ -2,7 +2,7 @@
 - breadcrumb :resource_details, @service
 .container{ "data-controller": "comparison" }
   - header_class = params[:from] == "backoffice_service" ? "backoffice" : nil
-  .border.pt-4.pl-3.pr-3.shadow-sm.rounded.service-box.service-detail{ class: header_class }
+  .pt-4.service-box-redesign.service-detail{ class: header_class }
     = render Presentable::HeaderComponent.new(object: @service,
                         title: @service.name,
                         subtitle: @service.tagline,
@@ -29,7 +29,8 @@
     #opinions.tab-pane.container.pt-2.active{ "aria-labelledby": "opinions-tab", role: "tabpanel",
                                           "data-shepherd-tour-target": "service-details-content" }
       .row.pt-3
-        This service has no Interoperability Guidelines
+        .col-12
+          This service has no Interoperability Guidelines
   - else
     = render Presentable::DetailsComponent.new(@service, guidelines: true)
 
