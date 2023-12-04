@@ -86,9 +86,9 @@ class ApplicationSerializer < ActiveModel::Serializer
     end
   end
 
-  %i[catalogue guidelines].each do |method|
+  %i[guidelines].each do |method|
     define_method method do
-      method.name.pluralize == method.name ? object.send(method)&.map(&:eid) : object.send(method)&.pid
+      method.name.pluralize == method.name ? object.send(method)&.map(&:title) : object.send(method)&.title
     end
   end
 
