@@ -4,10 +4,10 @@ class Filter::TargetUser < Filter::Multiselect
   def initialize(params = {})
     super(
       params: params.fetch(:params, {}),
-      field_name: "target_users",
+      field_name: "dedicated_for",
       title: "Dedicated for",
       model: ::TargetUser,
-      index: "target_users"
+      index: "dedicated_for"
     )
   end
 end

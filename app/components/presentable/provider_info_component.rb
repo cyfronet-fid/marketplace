@@ -2,9 +2,10 @@
 
 class Presentable::ProviderInfoComponent < ApplicationComponent
   include PresentableHelper
-  def initialize(object:, preview: false)
+  def initialize(base:, preview: false)
     super()
-    @object = object
+    @base = base
+    @object = base.resource_organisation
     @preview = preview
   end
 

@@ -18,6 +18,6 @@
           %a{ href: @object.send(field), target: "_blank" }
             = @object.send(field)
 
-%a.provider-more-link{ href: "#" }
+%a.provider-more-link{ href: @base.organisation_search_link(@object.name, services_path(providers: @object.id)) }
   See all services provided by
   = @object.name

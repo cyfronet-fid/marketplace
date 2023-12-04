@@ -38,4 +38,4 @@
         = render Presentable::LinksComponent.new(object: @object, preview: @preview)
       .provider-panel
         - if @object.respond_to?(:resource_organisation)
-          = render Presentable::ProviderInfoComponent.new(object: @object.resource_organisation, preview: @preview)
+          = render Presentable::ProviderInfoComponent.new(base: @object, preview: @preview)

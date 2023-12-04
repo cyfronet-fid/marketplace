@@ -44,11 +44,21 @@ module Presentable::SidebarHelper
   end
 
   def target_users
-    { name: "target_users", template: "array", fields: ["target_users"], nested: { target_users: "name" } }
+    {
+      name: "target_users",
+      template: "filter",
+      fields: ["target_users"],
+      filter_query: {
+        target_users: "dedicated_for"
+      },
+      nested: {
+        target_users: "name"
+      }
+    }
   end
 
   def tag_list
-    { name: "tags", template: "filter", fields: ["tag_list"] }
+    { name: "tags", template: "filter", fields: ["tag_list"], filter_query: { tag_list: "tag_list" } }
   end
 
   def resource_availability_and_languages

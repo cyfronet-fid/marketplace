@@ -9,7 +9,6 @@
                           comparison_enabled: @comparison_enabled,
                           preview: local_assigns[:preview],
                           show_checkboxes: params[:from].blank?,
-                          question: @question,
                           favourite_services: @favourite_services) do |c|
       - c.buttons do
         - case params[:from]
