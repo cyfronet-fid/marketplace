@@ -6,8 +6,7 @@
                           title: @provider.abbreviation,
                           subtitle: @provider.name,
                           comparison_enabled: @comparison_enabled,
-                          preview: local_assigns[:preview],
-                          question: @question) do |c|
+                          preview: local_assigns[:preview]) do |c|
       - c.buttons do
         = render "components/presentable/header_component/provider_buttons", provider: @provider
     = render "providers/tabs", provider: @provider
