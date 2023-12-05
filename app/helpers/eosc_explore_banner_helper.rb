@@ -5,17 +5,20 @@ require "uri"
 module EoscExploreBannerHelper
   CONFIG = Mp::Application.config_for(:eosc_explore_banner).freeze
 
-  def first_matching_tag(tags)
+  def matching_tags(tags)
     tags = tags.map(&:downcase)
     permitted = CONFIG[:tags]
-    permitted.select { |tag| tags.include?(tag.downcase) }.first
+    permitted.select { |tag| tags.include?(tag.downcase) }
   end
 
   def eosc_explore_url(tags)
-    URI.parse(CONFIG[:base_url] + CONFIG[:search_url] + ERB::Util.url_encode("\"#{first_matching_tag(tags)}\""))
+    URI.parse(
+      CONFIG[:base_url] + CONFIG[:search_url] +
+        ERB::Util.url_encode("(\"#{matching_tags(tags)&.map { |tag| tag.split("::").last }&.join("\" OR \"")}\")")
+    )
   end
 
   def show_banner?(tags)
-    first_matching_tag(tags).present?
+    matching_tags(tags).present?
   end
 end
