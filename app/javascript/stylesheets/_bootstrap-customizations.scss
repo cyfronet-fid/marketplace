@@ -2800,6 +2800,7 @@ label[data-multicheckbox].small {
 
   .description-box-column {
     flex: 1 0 21%;
+    max-width: 25%;
     border-radius: 8px;
     padding: 15px;
     border: 1px solid $card-border;
@@ -2807,11 +2808,13 @@ label[data-multicheckbox].small {
     h5 {
       font-size: 14px;
       font-weight: 500;
+      margin-bottom: 15px;
     }
 
     .list-group {
       border: none;
       padding: 0;
+      margin: 0;
 
       .list-group-item {
         margin-left: 1rem;
