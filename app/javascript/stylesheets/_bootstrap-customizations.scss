@@ -2853,14 +2853,14 @@ label[data-multicheckbox].small {
         &::before {
           content: '';
           display: inline-block;
-          width: 17px;
-          height: 16px;
+          width: 18px;
+          height: 18px;
           margin-right: 10px;
           background-color: #000;
           mask-image: url('../images/icon-contact.svg');
           -webkit-mask-image: url('../images/icon-contact.svg');
-          mask-image-size: 18px auto;
-          -webkit-mask-image-size: 18px auto;
+          mask-size: 18px auto;
+          -webkit-mask-size: 18px auto;
           -webkit-mask-repeat: no-repeat;
           mask-repeat: no-repeat;
           -webkit-mask-position: 50% 50%;
@@ -5479,18 +5479,17 @@ abbr[title] {
 }
 
 .details-box-wrapper {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  column-gap: 2%;
-  width: 100%;
-  justify-content: space-between;
+  column-count: 4;
+  column-gap: 20px;
 
   .details-box {
-    width: 23%;
     border: 1px solid $palette-solid-10;
-    border-radius: 3px;
-    margin-bottom: 20px;
+    border-radius: 8px;
+    margin: 0 0 20px;
+    display: grid;
+    overflow: hidden;
+    grid-template-rows: 1fr auto;
+    break-inside: avoid;
 
     &.special-box {
       .details-content {
@@ -5531,11 +5530,11 @@ abbr[title] {
         padding-left: 0;
 
         li {
-          margin: 0 0 10px 1rem;
+          margin: 0 0 14px 0.7rem;
           padding: 0;
-          color: $palette-yellow;
+          color: $palette-blue;
           line-height: 1.15;
-          font-size: 1rem;
+          font-size: 0.8rem;
           list-style-type: disc !important;
           display: list-item;
 
@@ -5548,7 +5547,7 @@ abbr[title] {
 
               span {
                 color: $palette-blue;
-                font-size: 0.875rem;
+                font-size: 0.775rem;
                 word-break: break-all;
               }
 
@@ -5562,7 +5561,7 @@ abbr[title] {
             svg {
               font-size: 9px;
               margin-right: 7px;
-              margin-top: 2px;
+              margin-top: -2px;
               vertical-align: middle;
             }
           }
@@ -5570,7 +5569,7 @@ abbr[title] {
           span {
             color: $body-color;
             word-break: break-all;
-            font-size: 0.875rem;
+            font-size: 0.775rem;
 
             .badge-light {
               white-space: normal;
