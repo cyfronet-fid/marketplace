@@ -12,7 +12,13 @@
         = sidebar_options
 
       = description_panels
-
+      .container.related-container
+        .row
+          .col-12.col-xl-9.pr-5
+            = render "services/related", related_services: @similar_services, title: similar_services_title
+        .row
+          .col-12.col-xl-9.pr-5.mt-4
+            = render "services/related", related_services: @related_services, title: related_services_title
     %sidebar.col-12.col-xl-3{ "data-shepherd-tour-target": "service-classification" }
       %a.right-panel-button.explore{ href: "#" }
         Explore Compatible<br>
