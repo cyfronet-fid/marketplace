@@ -8,8 +8,12 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ## [3.54.0-milestone]
 
+### Added
+- Task for healing case of tags (@goreck888)
+
 ### Fixed
 - Serialize guidelines as their names instead of pids (@goreck888)
+- Serialize Interoperability patterns without `EOSC::` prefix (@goreck888)
 
 ## [3.53.1] 2023-11-30
 

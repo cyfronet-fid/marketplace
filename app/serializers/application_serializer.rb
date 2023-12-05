@@ -97,7 +97,7 @@ class ApplicationSerializer < ActiveModel::Serializer
   end
 
   def eosc_if
-    object.tag_list.select { |tag| tag.downcase.start_with?("eosc::") }
+    object.tag_list&.select { |tag| tag.downcase.start_with?("eosc::") }&.map { |tag| tag.split("::").last }
   end
 
   def tag_list

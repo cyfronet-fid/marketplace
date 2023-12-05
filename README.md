@@ -340,6 +340,14 @@ You can customize it by using environment variables:
   * `MP_DATABASE_USERNAME` - PostgreSQL database username
   * `MP_DATABASE_PASSWORD` - PostgreSQL database password
 
+## Tag healing
+There's created task for healing case of tags.
+Fill `HEAL_TAG_LIST` environment variable like below:
+
+`HEAL_TAG_LIST="EOSC::Jupyter Notebook,EOSC::Galaxy Workflow,EOSC::Twitter Data"`
+
+and run `rake viewable:heal_tags` to change case of letters to input.
+If you don't fill this variable, the task runs on the default discovered defective tags.
 
 ## SOLR dumps
 You can use a rake task `ess:dump[#{collections}]` to get data in 
