@@ -21,7 +21,8 @@
     "data-comparison-target": "bar", "data-e2e": "comparison-bar" }
     = render "comparisons/bar", services: @compare_services, category: @category
 .tab-content
-  = render Presentable::DescriptionComponent.new(object: @service, question: @question) do |c|
+  = render Presentable::DescriptionComponent.new(object: @service,
+    similar_services: @similar_services, related_services: @related_services, question: @question) do |c|
     - c.description_panels do
       - if policy(@service).order? && (policy(@service).offers_show? || policy(@service).bundles_show?)
         = render "services/offers", offers: @offers, service: @service,

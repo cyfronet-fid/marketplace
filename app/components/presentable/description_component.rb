@@ -10,10 +10,12 @@ class Presentable::DescriptionComponent < ApplicationComponent
   renders_one :sidebar_options
   renders_one :description_panels
 
-  def initialize(object:, preview: false, question: nil, from: nil)
+  def initialize(object:, similar_services: nil, related_services: nil, preview: false, question: nil, from: nil)
     super()
     @object = object
     @preview = preview
+    @similar_services = similar_services
+    @related_services = related_services
     @question = question
     @from = from
   end

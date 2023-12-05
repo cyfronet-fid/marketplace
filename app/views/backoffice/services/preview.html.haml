@@ -35,7 +35,8 @@
 
   .tab-content
     #about{ "data-preview-target": "content" }
-      = render Presentable::DescriptionComponent.new(object: @service, preview: true) do |c|
+      = render Presentable::DescriptionComponent.new(object: @service,
+      similar_services: @similar_services, related_services: @related_services, preview: true) do |c|
         - c.description_panels do
           - if policy(@service).order? && (policy(@service).offers_show? || policy(@service).bundles_show?)
             = render "services/offers", offers: @offers, service: @service,
@@ -43,6 +44,3 @@
       = render "taggable/details_section", taggable: @service, preview: true
     #details.d-none{ "data-preview-target": "content" }
       = render Presentable::DetailsComponent.new(@service, preview: true)
-
-  .container.mt-4.pt-4.related-container
-    = render "services/related", related_services: @related_services, title: related_services_title, preview: true

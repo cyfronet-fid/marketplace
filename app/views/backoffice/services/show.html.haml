@@ -57,6 +57,7 @@
     = render "services/tabs", service: @service, params: { from: "backoffice_service" }
 .tab-content
   = render Presentable::DescriptionComponent.new(object: @service,
+    similar_services: @similar_services, related_services: @related_services,
     question: @question, from: "backoffice_service") do |c|
     - c.description_panels do
       = render "layouts/common_parts/services/offers", offers: @offers, service: @service, bundles: @bundles
@@ -74,8 +75,3 @@
             = _("Updated at") + ":"
           %strong.text-dark= l @service.updated_at, format: :short
   = render "taggable/details_section", taggable: @service
-
-.container.mt-4.pt-4.related-container
-  = render "services/related", related_services: @similar_services, title: similar_services_title
-
-  = render "services/related", related_services: @related_services, title: related_services_title
