@@ -3,8 +3,8 @@
     .resource-row.row.mb-3
       %span.title= attributes["title"]
     .resource-row.row.mb-3
-      %span.pin-value.resource-type= attributes["resource_type"].upcase_first
-      %span.access-information-tag{ class: "#{attributes["best_access_right"].parameterize}" }
+      %span.pin-value.resource-type= attributes["resource_type"]&.upcase_first
+      %span.access-information-tag{ class: "#{attributes["best_access_right"]&.parameterize}" }
     .resource-row.row
       Author:
       - attributes["authors"]&.each do |author|
