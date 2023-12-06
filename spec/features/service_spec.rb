@@ -286,20 +286,13 @@ RSpec.feature "Service browsing", end_user_frontend: true do
         other_service_without_pid = create(:service, pid: nil)
 
         visit service_path(notebook_service)
-        expect(page).to have_text(
-          "Explore Research Products compatible with the #{notebook_service.name} service (opens in a new window)"
-        )
+        expect(page).to have_text("Explore Compatible Research Products")
 
         visit service_path(other_service_with_pid)
-        expect(page).not_to have_text(
-          "Explore Research Products compatible with the #{other_service_with_pid.name} service (opens in a new window)"
-        )
+        expect(page).not_to have_text("Explore Compatible Research Products")
 
         visit service_path(other_service_without_pid)
-        expect(page).not_to have_text(
-          "Explore Research Products compatible with the " +
-            "#{other_service_without_pid.name} service (opens in a new window)"
-        )
+        expect(page).not_to have_text("Explore Compatible Research Products")
       end
     end
   end
