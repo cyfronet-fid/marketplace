@@ -4,4 +4,5 @@
   %span.pin-value.resource-type= object.scientific_domains&.first&.name
   - if object.respond_to?(:marketplace_locations) && object.marketplace_locations.present?
     %span.pin-value.resource-type= object&.marketplace_locations&.first&.name
-
+  - if object.horizontal
+    %span.pin-value.resource-type Horizontal service

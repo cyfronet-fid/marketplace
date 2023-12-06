@@ -2730,22 +2730,6 @@ label[data-multicheckbox].small {
   overflow: hidden;
   position: relative;
 
-  .horizontal-badge {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: auto;
-    background: $alert-bg;
-    color: $palette-blue;
-    font-size: 0.8em;
-    text-transform: uppercase;
-    line-height: 12px;
-    padding: 9px 17px;
-    text-align: center;
-    border-radius: 5px;
-    font-weight: 400;
-  }
-
   .img-service-detail {
     justify-content: center;
   }
