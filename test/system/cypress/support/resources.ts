@@ -115,7 +115,7 @@ Cypress.Commands.add("fillFormCreateResource", (resource: IResourcesExtended, lo
   }
 
   if (resource.classificationDedicatedFor){
-    selectItemsMultipleChoice(resource.classificationDedicatedFor,".service_target_users");
+    selectItemsMultipleChoice(resource.classificationDedicatedFor,".service_dedicated_for");
   }
 
   if (resource.classificationAccessType){

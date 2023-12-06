@@ -3,28 +3,27 @@
     %main.col-12.col-xl-9.pr-4{ "data-shepherd-tour-target": "service-about" }
       .service-description-container
         = markdown(@object.description)
-      - if show_banner?(@object.tag_list)
-        = render "services/notebook_eosc_explore", name: @object.name, tags: @object.tag_list
-
       .service-boxes-container
         = render Presentable::SidebarComponent.new(@object)
-        -# TODO: refactor dynamic translation (above)
-        = sidebar_options
 
       = description_panels
       .related-container.mt-4
         .row
           .col-12
-            = render "services/related", related_services: @similar_services, title: similar_services_title
+            = render "services/related", related_services: @similar_services, title: similar_services_title,
+            preview: @preview
         .row
           .col-12
-            = render "services/related", related_services: @related_services, title: related_services_title
+            = render "services/related", related_services: @related_services, title: related_services_title,
+            preview: @preview
     %sidebar.col-12.col-xl-3{ "data-shepherd-tour-target": "service-classification" }
-      %a.right-panel-button.explore{ href: "#" }
-        Explore Compatible<br>
-        Reseach Products
-      %a.right-panel-button.interoperability{ href: "#" }
-        Interoperability guidelines
+      - if show_banner?(@object.tag_list)
+        %a.right-panel-button.explore{ href: eosc_explore_url(@object.tag_list) }
+          Explore Compatible<br>
+          Reseach Products
+      - if @object.respond_to?(:guidelines) && @object.guidelines.present?
+        %a.right-panel-button.interoperability{ href: services_array_filter_link(@object&.guidelines, :title) }
+          Interoperability guidelines
       .right-panel-links
         - if !@object.public_contacts.empty? && (@question || @preview)
           = render "components/presentable/header_component/ask_question", question_link: new_question_link,
@@ -32,6 +31,7 @@
             prompt: new_question_prompt,
             preview: @preview
         = render Presentable::LinksComponent.new(object: @object, preview: @preview)
+      = additional_backoffice_info
       .provider-panel
         - if @object.respond_to?(:resource_organisation)
           = render Presentable::ProviderInfoComponent.new(base: @object, preview: @preview)

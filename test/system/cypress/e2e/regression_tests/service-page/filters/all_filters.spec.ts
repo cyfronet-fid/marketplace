@@ -8,7 +8,7 @@ describe("All filters", () => {
       .should('eq', "/services");
     cy.get("[data-e2e='filter-tag']")
       .should("not.exist");
-    cy.get("#collapse_target_users [data-e2e='filter-checkbox']")
+    cy.get("#collapse_dedicated_for [data-e2e='filter-checkbox']")
       .eq(0)
       .click();
     cy.get("#collapse_related_platforms [data-e2e='filter-checkbox']")

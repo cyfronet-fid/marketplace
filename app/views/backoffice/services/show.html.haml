@@ -61,17 +61,6 @@
     question: @question, from: "backoffice_service") do |c|
     - c.description_panels do
       = render "layouts/common_parts/services/offers", offers: @offers, service: @service, bundles: @bundles
-    - c.sidebar_options do
-      %h5
-        = _("Updates")
-      %ul.list-group
-        - if @service.synchronized_at.present?
-          %li.list-group-item
-            %span
-              = _("Synchronized at") + ":"
-            %strong.text-dark= l @service.synchronized_at, format: :short
-        %li.list-group-item
-          %span
-            = _("Updated at") + ":"
-          %strong.text-dark= l @service.updated_at, format: :short
-  = render "taggable/details_section", taggable: @service
+    - c.additional_backoffice_info do
+      .right-panel-links
+        = render "components/presentable/updates", object: @service

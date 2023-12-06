@@ -27,7 +27,6 @@
                             subtitle: @service.tagline,
                             comparison_enabled: @comparison_enabled,
                             preview: true,
-                            question: @question,
                             favourite_services: @favourite_services) do |c|
         - c.buttons do
           = render "components/presentable/header_component/order_buttons", service: @service, preview: true

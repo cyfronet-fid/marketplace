@@ -3,11 +3,11 @@
 class Presentable::DescriptionComponent < ApplicationComponent
   include Presentable::LinksHelper
   include MarkdownHelper
-  include EoscExploreBannerHelper
+  include SearchLinksHelper
   include ServiceHelper
 
   renders_one :main_options
-  renders_one :sidebar_options
+  renders_one :additional_backoffice_info
   renders_one :description_panels
 
   def initialize(object:, similar_services: nil, related_services: nil, preview: false, question: nil, from: nil)

@@ -15,9 +15,10 @@
           - @object.send(field).each do |association|
             %div= opts[:value] ? association.send(opts[:value]) : association
         - elsif opts[:type] == "url"
-          %a{ href: @object.send(field), target: "_blank" }
+          %a{ href: @object.send(field), target: "_blank", "data-preview-target": @preview ? "link" : "" }
             = @object.send(field)
 
-%a.provider-more-link{ href: @base.organisation_search_link(@object.name, services_path(providers: @object.id)) }
+%a.provider-more-link{ href: @base.organisation_search_link(@object.name, services_path(providers: @object.id)),
+"data-preview-target": @preview ? "link" : "" }
   See all services provided by
   = @object.name

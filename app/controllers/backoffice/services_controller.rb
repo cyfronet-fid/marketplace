@@ -152,6 +152,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     @related_services = @service.target_relationships
     @bundles = policy_scope(@service.bundles.published)
     @bundled = @service.offers.select(&:bundled?) ? @service.offers.select(&:bundled?).map(&:bundles).flatten.uniq : []
+    @service.monitoring_status = "OK"
     render :preview
   end
 
