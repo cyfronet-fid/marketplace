@@ -1,6 +1,6 @@
 - if taggable.tag_list.present?
   .container
     = _("Tags") + ":"
-    - taggable.tag_list.sort.each do |tag|
+    - taggable.tag_list.reject { |tag| tag.downcase.start_with?("eosc::") }.sort.each do |tag|
       = link_to tag, services_tag_link(tag), class: "badge badge-light", "data-e2e": "tag-btn",
       "data-preview-target": local_assigns[:preview] ? "link" : ""
