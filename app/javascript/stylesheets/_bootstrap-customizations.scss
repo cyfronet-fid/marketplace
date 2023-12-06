@@ -1514,6 +1514,7 @@ Service detail
 
 .related-box {
   cursor: pointer;
+  height: 95%;
 
   &:hover {
     background: $custom-11;
@@ -2729,6 +2730,22 @@ label[data-multicheckbox].small {
   overflow: hidden;
   position: relative;
 
+  .horizontal-badge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: auto;
+    background: $alert-bg;
+    color: $palette-blue;
+    font-size: 0.8em;
+    text-transform: uppercase;
+    line-height: 12px;
+    padding: 9px 17px;
+    text-align: center;
+    border-radius: 5px;
+    font-weight: 400;
+  }
+
   .img-service-detail {
     justify-content: center;
   }
@@ -2745,6 +2762,7 @@ label[data-multicheckbox].small {
     margin: 5px 0 10px 0;
     display: flex;
     column-gap: 10px;
+    row-gap: 9px;
 
     .resource-type {
       padding: 5px 9px 7px 10px;
