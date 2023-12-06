@@ -2,7 +2,7 @@
 
 module LandingPageHelper
   SEARCH_ITEMS = {
-    all: "All catalogs",
+    all_collection: "All resources",
     software: "Software",
     service: "Services",
     publication: "Publications",
