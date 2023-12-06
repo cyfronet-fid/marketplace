@@ -40,7 +40,8 @@ class ResearchProductsController < ApplicationController
     base_url = Mp::Application.config.search_service_base_url
     endpoint = Mp::Application.config.search_service_research_product_endpoint
     path = "#{params[:resource_type]}/#{CGI.escape(params[:resource_id])}"
-    response = Faraday.get(base_url + endpoint + path)
+    faraday = Faraday.new { |config| config.response :raise_error }
+    response = faraday.get(base_url + endpoint + path)
     if response.status == 200
       body = JSON.parse(response.body)
       if body["type"] == @research_product&.resource_type
@@ -49,10 +50,8 @@ class ResearchProductsController < ApplicationController
         @research_product.assign_attributes(body)
         @research_product.save!
       end
-    else
-      raise response.error
     end
-  rescue StandardError
-    flash[:alert] = "Could not import research product. Try again later."
+  rescue StandardError => e
+    flash[:alert] = "Could not import research product. Try again later. Error: #{e}"
   end
 end
