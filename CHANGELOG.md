@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.53.2] 2023-12-06
+
+### Removed
+- Interoperability patterns from the tag list (@goreck888)
+
 ## [3.53.1] 2023-11-30
 
 ### Fixed
