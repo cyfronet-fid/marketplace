@@ -11,6 +11,7 @@
       %h2.font-weight-bolder= @title
       %p.abbreviation= @abbreviation.presence
       = render "components/presentable/header_component/badges", object: @object
+
       %p.mb-3= @subtitle
 
       - if @object.instance_of?(Service)
