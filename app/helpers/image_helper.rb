@@ -6,7 +6,8 @@ module ImageHelper
   PERMITTED_EXT_MESSAGE =
     "format you're trying to attach is not supported.
            Supported formats: png, gif, jpg, jpeg, pjpeg, tiff, vnd.adobe.photoshop or vnd.microsoft.icon."
-  DEFAULT_LOGO_PATH = Webpacker.manifest.lookup("media/images/eosc-img.png")
+  DEFAULT_LOGO_PATH = Webpacker.manifest.lookup("media/images/service_logo.svg")
+  DEFAULT_PROVIDER_LOGO_PATH = Webpacker.manifest.lookup("media/images/provider_logo.svg")
 
   def self.to_temp_file(logo, ext)
     tmp_logo = Tempfile.new(["logo_temp", ext])

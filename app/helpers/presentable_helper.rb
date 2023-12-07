@@ -36,8 +36,10 @@ module PresentableHelper
   def presentable_logo(object, classes = "align-self-center img-responsive", resize = "100x67")
     if object.logo.attached? && object.logo.variable?
       image_tag object.logo.variant(resize: resize), class: classes
+    elsif object.is_a?(Service)
+      image_pack_tag("service_logo.svg", resize: resize, class: classes)
     else
-      image_pack_tag("eosc-img.png", size: resize, class: classes)
+      image_pack_tag("provider_logo.svg", resize: resize, class: classes)
     end
   end
 
