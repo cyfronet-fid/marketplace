@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.54.1] 2023-12-07
+
+### Added
+- Displaying default logo for services without imported logo (@goreck888)
+
 ## [3.54.0] 2023-12-07
 
 ### Added
