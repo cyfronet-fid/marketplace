@@ -12,4 +12,20 @@ module LogoAttachable
     path = ImageHelper.to_temp_file(blob, ext)
     self.logo.attach(io: File.open(path), filename: logo["filename"])
   end
+
+  def convert_to_png(logo, extension)
+    img = MiniMagick::Image.read(logo, extension)
+    img.format "png" do |convert|
+      convert.args.unshift "800x800"
+      convert.args.unshift "-resize"
+      convert.args.unshift "1200"
+      convert.args.unshift "-density"
+      convert.args.unshift "none"
+      convert.args.unshift "-background"
+    end
+    logo = StringIO.new
+    logo.write(img.to_blob)
+    logo.seek(0)
+    logo
+  end
 end
