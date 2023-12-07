@@ -18,7 +18,7 @@ describe("All filters", () => {
       .eq(0)
       .click();
     cy.location("href")
-      .should("match", /(?=.*target_user)(?=.*related_platforms)(?=.*providers)/);
+      .should("match", /(?=.*dedicated_for)(?=.*related_platforms)(?=.*providers)/);
     cy.get("[data-e2e='filter-tag']")
       .should("be.visible").and("have.length", 3);
     cy.get("[data-e2e='select-order'] > option")
@@ -29,19 +29,19 @@ describe("All filters", () => {
           .select(value)
       })
     cy.location("href")
-      .should("match", /(?=.*target_user)(?=.*related_platforms)(?=.*providers)(?=.*sort=-sort_name)/);
+      .should("match", /(?=.*dedicated_for)(?=.*related_platforms)(?=.*providers)(?=.*sort=-sort_name)/);
     cy.get("[data-e2e='searchbar-input']")
       .type("EGI")
       .type('{enter}');
     cy.location("href")
-      .should("match", /(?=.*related_platforms)(?=.*target_user)(?=.*providers)(?=.*q=EGI)(?=.*sort=_score)/);
+      .should("match", /(?=.*related_platforms)(?=.*dedicated_for)(?=.*providers)(?=.*q=EGI)(?=.*sort=_score)/);
     cy.get("[data-e2e='filter-tag']")
       .should("be.visible").and("have.length", 3);
     cy.get("#collapse_scientific_domains [data-e2e='filter-checkbox']")
       .eq(0)
       .click();
     cy.location("href")
-      .should("match", /(?=.*related_platforms)(?=.*target_user)(?=.*providers)(?=.*q=EGI)(?=.*sort=_score)(?=.*scientific_domains)/);
+      .should("match", /(?=.*related_platforms)(?=.*dedicated_for)(?=.*providers)(?=.*q=EGI)(?=.*sort=_score)(?=.*scientific_domains)/);
     cy.get("[data-e2e='filter-tag']")
       .should("be.visible").and("have.length", 5);
     cy.get("[data-e2e='filter-tag'] a")
@@ -50,7 +50,7 @@ describe("All filters", () => {
     cy.get("[data-e2e='filter-tag']")
       .should("be.visible").and("have.length", 3);
     cy.location("href")
-      .should("match", /(?=.*related_platforms)(?=.*target_user)(?=.*providers)(?=.*q=EGI)(?=.*sort=_score)/);
+      .should("match", /(?=.*related_platforms)(?=.*dedicated_for)(?=.*providers)(?=.*q=EGI)(?=.*sort=_score)/);
     cy.get("span").contains("Clear all filters").click()
     cy.get("[data-e2e='filter-tag']")
       .should("not.exist");

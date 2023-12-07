@@ -114,8 +114,6 @@ en:
         resource_level_url: *url_hint
         access_policies_url: *url_hint
         terms_of_use_url: *url_hint
-        tag_list: |
-          Use "," to separate tags
         logo: |
           Supported logo formats: png, gif, jpg, jpeg, pjpeg, tiff,
           vnd.adobe.photoshop and vnd.microsoft.icon

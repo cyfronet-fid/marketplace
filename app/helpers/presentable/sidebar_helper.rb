@@ -58,7 +58,7 @@ module Presentable::SidebarHelper
   end
 
   def tag_list
-    { name: "tags", template: "filter", fields: ["sliced_tag_list"], filter_query: { tag_list: "tag_list" } }
+    { name: "tags", template: "filter", fields: ["sliced_tag_list"], filter_query: { sliced_tag_list: "tag_list" } }
   end
 
   def resource_availability_and_languages

@@ -4,6 +4,7 @@
       %h5= t("components.presentable.sidebar_component.title.#{group[:name]}")
       = render "components/presentable/sidebar_component/#{group[:template]}",
                     object: @object,
+                    name: group[:name],
                     fields: group[:fields],
                     type: group[:type] || "",
                     clazz: group[:clazz] || "",
