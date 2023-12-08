@@ -9,7 +9,7 @@ module Viewable
     def id_construct(obj = self)
       %i[id pid slug]
         .select { |id| obj.respond_to?(id) && obj.send(id).present? }
-        .map { |mtd| obj.send(mtd) }
+        .map { |mtd| obj.send(mtd).truncate(40) }
         .join("|")
         .downcase
     end
@@ -18,6 +18,8 @@ module Viewable
       case self
       when Bundle
         "#{id_construct(service)}\/bundles\/" + "#{iid}[$|\??|]"
+      when Service, Datasource
+        "services\/#{id_construct}"
       else
         "#{self.class.name.pluralize.downcase}\/#{id_construct}"
       end
