@@ -66,6 +66,7 @@ class Importers::Datasource < ApplicationService
       datasource_classification: map_datasource_classification(@data["datasourceClassification"]) || nil,
       research_entity_types: entity_types,
       thematic: @data["thematic"],
+      harvestable: @data["harvestable"],
       # Research product policies
       link_research_product_license_urls:
         link_rpl_url&.map { |item| map_link(item, "research_product") }&.compact || [],
