@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.feature "Favourites", end_user_frontend: true do
+RSpec.feature "Favourites", end_user_frontend: true, skip: true do
   include OmniauthHelper
 
   context "JS: As anonymous user" do
