@@ -22,3 +22,4 @@
     = f.association :research_entity_types, input_html: { data: { choice: true } },
                               disabled: cant_edit([research_entity_type_ids: []])
     = f.input :thematic, as: :boolean, include_hidden: true
+    = f.input :harvestable, as: :boolean, include_hidden: true

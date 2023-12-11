@@ -79,6 +79,7 @@ RSpec.describe Backoffice::ServicePolicy, backend: true do
           :datasource_classification_id,
           [research_entity_type_ids: []],
           :thematic,
+          :harvestable,
           # Research Product Policies
           [research_product_access_policy_ids: []],
           # Reseach Product Metadata
