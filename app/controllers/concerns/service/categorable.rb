@@ -53,8 +53,7 @@ module Service::Categorable
 
   def count_services(category)
     services = search_for_categories(scope, all_filters).map { |s| s.id.to_i }
-    (counters[category.id] || 0) +
-      category.descendants.map { |c| c.services.to_a.map(&:id) & services }.flatten.uniq.size
+    (counters[category.id] || 0) + category.descendants.map { |c| c.service_ids.to_a & services }.flatten.uniq.size
   end
 
   def counters
