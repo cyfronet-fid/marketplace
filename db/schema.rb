@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_11_14_151931) do
+ActiveRecord::Schema.define(version: 2023_12_11_000114) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -583,6 +583,7 @@ ActiveRecord::Schema.define(version: 2023_11_14_151931) do
     t.string "links", default: [], array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "best_access_right"
     t.index ["resource_id", "resource_type"], name: "index_research_products_on_resource_id_and_resource_type", unique: true
   end
 
@@ -775,6 +776,7 @@ ActiveRecord::Schema.define(version: 2023_11_14_151931) do
     t.integer "usage_counts_views", default: 0, null: false
     t.string "ppid"
     t.string "datasource_id"
+    t.boolean "harvestable", default: false
     t.index ["name"], name: "index_services_on_name"
     t.index ["pid"], name: "index_services_on_pid"
     t.index ["provider_id"], name: "index_services_on_provider_id"
