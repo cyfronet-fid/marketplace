@@ -12,9 +12,9 @@
         = _("Provided by") + ":"
     %dd
       .providers-list{ "data-controller": "parameter" }
-        - if active_providers.size > 5
+        - if active_providers.size > 4
           .abbreviate{ data: { "parameter-target": "hideableParameter", state: "visible" } }
-            = markdown(safe_join(active_providers.first(5), ", "))
+            = markdown(safe_join(active_providers.first(4), ", "))
           .d-none{ data: { "parameter-target": "hideableParameter", state: "hidden" } }
             = markdown(safe_join(active_providers, ", "))
           = render "common_parts/show_more_link", id: "providers"
