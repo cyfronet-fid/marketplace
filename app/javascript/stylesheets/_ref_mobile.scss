@@ -755,7 +755,7 @@
 
   .nav-tabs {
     .nav-link {
-      padding: 0.6rem;
+      padding: 0.6rem 1.2rem;
 
       &.active {
         padding: 0.8rem 0.6rem;
@@ -868,10 +868,9 @@
   }
 
   .service-box-redesign {
-    .nav-tabs {
-      .nav-link {
-        font-size: 13px;
-      }
+
+    .show-more-link {
+      margin-top: 10px;
     }
   }
 

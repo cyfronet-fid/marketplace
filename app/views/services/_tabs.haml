@@ -30,10 +30,6 @@
             class: "nav-link #{"active" if controller.controller_name == "details"}", role: "tab",
             data: { probe: "", "service-id": service.id, e2e: "service-details-btn",
             "shepherd-tour-target": "service-more-about" }
-        %li.nav-item{ "data-shepherd-tour-target": "service-details-tab" }
-          = link_to _("Guidelines"), service_guidelines_path(service, go_to_search_query_params(params)),
-            class: "nav-link #{"active" if controller.controller_name == "guidelines"}", role: "tab",
-            data: { probe: "", "service-id": service.id, e2e: "service-guidelines-btn" }
         %li.nav-item
           = link_to _("Reviews (%{ssoc})") % { ssoc: service.service_opinion_count },
             service_opinions_path(service, go_to_search_query_params(params)),

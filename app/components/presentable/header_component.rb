@@ -15,6 +15,7 @@ class Presentable::HeaderComponent < ApplicationComponent
     subtitle:,
     comparison_enabled:,
     preview:,
+    favourites_enabled: Rails.application.config.whitelabel,
     favourite_services: [],
     abbreviation: nil,
     show_checkboxes: true
@@ -26,6 +27,7 @@ class Presentable::HeaderComponent < ApplicationComponent
     @subtitle = subtitle
     @comparison_enabled = comparison_enabled
     @preview = preview
+    @favourites_enabled = favourites_enabled
     @favourite_services = favourite_services
     @show_checkboxes = show_checkboxes
   end
