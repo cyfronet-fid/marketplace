@@ -49,7 +49,7 @@ export default class extends Controller {
       if (element.checked) {
         element.nextElementSibling.innerText = "Remove from comparison";
       } else {
-        element.nextElementSibling.innerText = "Add to comparison";
+        element.nextElementSibling.innerText = "Compare";
       }
     }
   }

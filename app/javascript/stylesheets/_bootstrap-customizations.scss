@@ -166,7 +166,7 @@ a {
   }
 
   &:hover {
-    background: $black;
+    background: $custom-12;
   }
 }
 
@@ -2738,6 +2738,11 @@ label[data-multicheckbox].small {
     color: $palette-solid-50;
   }
 
+  .subtitle-row {
+    line-height: 1.2;
+    font-weight: 500;
+  }
+
   .space-between {
     justify-content: space-between;
   }
@@ -2745,11 +2750,13 @@ label[data-multicheckbox].small {
   .resource-row {
     margin: 5px 0 10px 0;
     display: flex;
-    column-gap: 10px;
-    row-gap: 9px;
+    font-weight: 500;
+    column-gap: 8px;
+    row-gap: 8px;
 
     .resource-type {
-      padding: 5px 9px 7px 10px;
+      padding: 6px 12px 6px 12px;
+      line-height: 1.2;
       background: $alert-bg;
       color: $palette-blue;
     }
@@ -2785,13 +2792,22 @@ label[data-multicheckbox].small {
   }
 
   .ordertype-label {
+    color: $custom-9;
+    text-align: right;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 120%;
+    display: flex;
     text-transform: uppercase;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
   }
 }
 
 .service-description-container {
-  font-size: 13px;
-  line-height: 1.5;
+  font-size: 12px;
+  line-height: 1.2;
 }
 
 .service-boxes-container {
@@ -5051,13 +5067,16 @@ abbr[title] {
   input[type=checkbox] + span {
     position: relative;
     cursor: pointer;
-    padding-left: 23px;
+    padding-left: 47px;
     color: $link-color;
     padding-top: 1px;
     margin-right: 6px;
+    background: url('../images/icon-compare.svg') no-repeat 24px 2px;
 
     &.smaller {
-      font-size: 12px;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 120%;
     }
   }
 
@@ -5068,7 +5087,7 @@ abbr[title] {
     margin-right: 5px;
     width: 16px;
     height: 16px;
-    top: 0;
+    top: 1px;
     left: 0;
     border: 1px solid $palette-solid-20;
     border-radius: 3px;
