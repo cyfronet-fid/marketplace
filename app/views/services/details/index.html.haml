@@ -6,6 +6,7 @@
     = render Presentable::HeaderComponent.new(object: @service,
                         title: @service.name,
                         subtitle: @service.tagline,
+                        abbreviation: @service.abbreviation,
                         comparison_enabled: @comparison_enabled,
                         preview: local_assigns[:preview],
                         show_checkboxes: params[:from].blank?,
