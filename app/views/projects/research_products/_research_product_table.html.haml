@@ -25,4 +25,4 @@
                 - attr.second.each do |el|
                   %span.pin-value= el
               - else
-                %span= attr.second.upcase_first
+                %span= attr.second&.upcase_first
