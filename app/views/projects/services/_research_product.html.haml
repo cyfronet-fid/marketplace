@@ -4,7 +4,8 @@
     .container
       .project-resource-type.mt-3.float-left
         = _(research_product.resource_type.humanize)
-      .access-information-tag.mt-3{ class: research_product.best_access_right.parameterize }
+      - if research_product&.best_access_right.present?
+        .access-information-tag.mt-3{ class: research_product.best_access_right.parameterize }
   .separator-line
   .bottom-action-links.d-block
     - if research_product.links.present?
