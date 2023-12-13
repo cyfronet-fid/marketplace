@@ -7,8 +7,7 @@
           - column.map do |group|
             - if display_detail?(group, @object)
               .details-box{
-                class: "#{"special-box" if group[:name] == "dependencies"}
-                #{t("components.presentable.details_component.details.title.#{group[:name]}")}"
+                class: "#{group[:name]}"
                 }
                 .details-header
                   %h5= t("components.presentable.details_component.details.title.#{group[:name]}")
