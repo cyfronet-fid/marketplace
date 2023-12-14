@@ -2,7 +2,7 @@
   - if object.send(field).present?
     %li{ class: ("links" if nested.present? && nested[field.to_sym] == "link") }
       - if with_desc && (nested.blank? || nested[field.to_sym] != "link")
-        %span
+        %span.list-title
           -# TODO: refactor dynamic translation
           = t(".#{field}") + ":"
         %br

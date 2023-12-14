@@ -3,7 +3,7 @@
     %main.col-12.col-xl-9.pr-4{ "data-shepherd-tour-target": "service-about" }
       .service-description-container
         = markdown(@object.description)
-      .service-boxes-container
+      .details-box-wrapper.mt-5
         = render Presentable::SidebarComponent.new(@object)
 
       = description_panels

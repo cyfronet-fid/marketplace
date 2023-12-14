@@ -531,7 +531,7 @@ Cypress.Commands.add("hasResourceDetails", () => {
 Cypress.Commands.add("hasResourceAbout", () => {
   const resourceAbout = [
     "Target users",
-    "Service availability and languages",
+    "Availability and language",
     "Suggested compatible services"
   ]
 

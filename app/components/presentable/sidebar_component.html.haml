@@ -1,10 +1,12 @@
 - sidebar_fields.each do |group|
   - if display_detail?(group, @object)
-    .description-box-column{
+    .details-box{
       class: "#{group[:name]}"
       }
-      %h5= t("components.presentable.sidebar_component.title.#{group[:name]}")
-      = render "components/presentable/sidebar_component/#{group[:template]}",
+      .details-header
+        %h5= t("components.presentable.sidebar_component.title.#{group[:name]}")
+      .details-content
+        = render "components/presentable/sidebar_component/#{group[:template]}",
                     object: @object,
                     name: group[:name],
                     fields: group[:fields],

@@ -17,7 +17,7 @@ en:
           categorisation: Categorisation
           uptime_monitoring: Uptime monitoring
           target_users: Target users
-          resource_availability_and_languages: Service availability and languages
+          resource_availability_and_languages: Availability and language
         fields:
           link_multimedia_urls: Multimedia %{idx}
           webpage_url: Webpage

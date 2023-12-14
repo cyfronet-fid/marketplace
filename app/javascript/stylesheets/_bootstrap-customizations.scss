@@ -2808,6 +2808,10 @@ label[data-multicheckbox].small {
 .service-description-container {
   font-size: 12px;
   line-height: 1.2;
+
+  h3 {
+    font-size: 14px;
+  }
 }
 
 .service-boxes-container {
@@ -5504,12 +5508,12 @@ abbr[title] {
 
 .details-box-wrapper {
   column-count: 4;
-  column-gap: 20px;
+  column-gap: 24px;
 
   .details-box {
     border: 1px solid $palette-solid-10;
     border-radius: 8px;
-    margin: 0 0 20px;
+    margin: 0 0 16px;
     display: grid;
     overflow: hidden;
     grid-template-rows: 1fr auto;
@@ -5530,19 +5534,23 @@ abbr[title] {
     .details-header {
       border-bottom: none;
       background-color: $footer-color;
-      padding: 16px 16px 10px;
+      padding: 16px 16px 3px 10px;
 
       h5 {
         color: $palette-gray-100;
-        font-size: 16px;
-        font-weight: 400;
+        font-size: 15px;
+        font-weight: 500;
         line-height: 16px;
         margin: 0;
+        background-repeat: no-repeat;
+        background-image: url('../images/icon-uptime.svg');
+        background-position: 0 50%;
+        padding-left: 21px;
       }
     }
 
     .details-content {
-      padding: 15px 20px;
+      padding: 15px 20px 5px 32px;
 
       h6 {
         font-weight: 300;
@@ -5551,15 +5559,18 @@ abbr[title] {
 
       ul {
         margin-bottom: 0;
-        padding-left: 0;
+        padding: 0;
+        border: none;
+
 
         li {
-          margin: 0 0 14px 0.7rem;
+          margin: 0 0 14px;
           padding: 0;
           color: $palette-blue;
           line-height: 1.15;
+          border: none;
           font-size: 0.8rem;
-          list-style-type: disc !important;
+          list-style-type: none !important;
           display: list-item;
 
           &.links {
@@ -5591,9 +5602,16 @@ abbr[title] {
           }
 
           span {
-            color: $body-color;
-            word-break: break-all;
-            font-size: 0.775rem;
+            color: $custom-13;
+            font-size: 10.5px;
+            font-weight: 400;
+
+            &.list-title {
+              font-size: 14px;
+              color: $body-color;
+              display: inline-block;
+              margin-bottom: 3px;
+            }
 
             .badge-light {
               white-space: normal;
@@ -5611,15 +5629,56 @@ abbr[title] {
         }
       }
     }
+    // scss-lint:disable all
+    &.resource_availability_and_languages {
+      .details-header {
+        h5 {
+          background-image: url('../images/icon-availability.svg');
+        }
+      }
+
+      .details-content {
+        padding: 0 0 20px;
+      }
+    }
+
+    &.target_users {
+      .details-header {
+        h5 {
+          background-image: url('../images/icon-target.svg');
+        }
+      }
+    }
+
+    &.classification {
+      .details-header {
+        h5 {
+          background-image: url('../images/icon-uptime.svg');
+        }
+      }
+    }
+
+    &.availability {
+      .details-header {
+        h5 {
+          background-image: url('../images/icon-availability.svg');
+        }
+      }
+    }
+
+    &.maturity_information {
+      .details-header {
+        h5 {
+          background-image: url('../images/icon-maturity.svg');
+        }
+      }
+    }
+    // scss-lint:enable all
   }
 }
 
 .geographical-availabilities-map {
-  border: 1px solid $palette-solid-10;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .geographical-availabilities-map-provider {

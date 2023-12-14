@@ -2,9 +2,9 @@
                                           "data-shepherd-tour-target": "service-details-content" }
   .row.pt-3.justify-content-between
     %main.col-12.col-xl-9.pr-4.mb-4
-      .service-boxes-container
-        = render Presentable::SidebarComponent.new(@object)
+
       .details-box-wrapper
+        = render Presentable::SidebarComponent.new(@object)
         - details_columns.each do |column|
           - column.map do |group|
             - if display_detail?(group, @object)
