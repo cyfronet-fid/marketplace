@@ -2,7 +2,7 @@
 
 module Presentable::SidebarHelper
   def service_sidebar_fields
-    [monitoring_data, target_users, tag_list, resource_availability_and_languages]
+    [monitoring_data, target_users, tag_list, availability]
   end
 
   def provider_sidebar_fields
@@ -61,8 +61,8 @@ module Presentable::SidebarHelper
     { name: "tags", template: "filter", fields: ["sliced_tag_list"], filter_query: { sliced_tag_list: "tag_list" } }
   end
 
-  def resource_availability_and_languages
-    { name: "resource_availability_and_languages", template: "map", fields: %w[languages geographical_availabilities] }
+  def availability
+    { name: "availability", template: "map", fields: %w[geographical_availabilities languages], with_desc: true }
   end
 
   def provider_scientific_categorisation

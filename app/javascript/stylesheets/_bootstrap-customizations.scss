@@ -148,8 +148,12 @@ a {
   }
 }
 
-.btn svg {
-  margin-right: 9px;
+.btn {
+  border-radius: 8px;
+
+  svg {
+    margin-right: 9px;
+  }
 }
 
 // Redefine these .btn-#{variant} forcibly because there is no way to control hover-focus-active
@@ -179,6 +183,11 @@ a {
   &:hover {
     background: $palette-blue;
   }
+}
+
+.btn-outline-secondary {
+  background: $alert-bg;
+  color: $tag-color-1;
 }
 
 .btn-error {
@@ -1456,6 +1465,9 @@ Service detail
     .card-text {
       p {
         margin-bottom: 10px;
+        font-size: 12px;
+        line-height: 1.2;
+        color: $body-color;
       }
     }
 
@@ -1597,9 +1609,24 @@ Service detail
       overflow: hidden;
 
       table {
-        margin-bottom: 5px;
+        margin-bottom: 8px;
       }
     }
+  }
+}
+
+.show-more-link {
+  font-size: 12px;
+  font-weight: 400;
+
+  &::after {
+    content: '';
+    margin-left: 5px;
+    display: inline-block;
+    background: url('../images/icon-arrow-down.svg') no-repeat 0 65%;
+    width: 12px;
+    float: right;
+    height: 15px;
   }
 }
 
@@ -1890,11 +1917,14 @@ h5 {
 }
 
 .parameters-title {
-  font-size: 1em;
-  font-weight: 400;
+  font-size: 14px;
+  font-weight: 600;
+  color: $palette-blue;
 
   svg {
     margin-right: 5px;
+    width: 17px !important;
+    height: auto;
     color: $palette-blue;
   }
 }
@@ -2882,8 +2912,8 @@ label[data-multicheckbox].small {
           height: 18px;
           margin-right: 10px;
           background-color: #000;
-          mask-image: url('../images/icon-contact.svg');
-          -webkit-mask-image: url('../images/icon-contact.svg');
+          mask-image: url('../images/icon-helpdesk.svg');
+          -webkit-mask-image: url('../images/icon-helpdesk.svg');
           mask-size: 18px auto;
           -webkit-mask-size: 18px auto;
           -webkit-mask-repeat: no-repeat;
@@ -2919,6 +2949,15 @@ label[data-multicheckbox].small {
         }
       }
 
+      &.helpdesk_email {
+        a {
+          &::before {
+            mask-image: url('../images/icon-contact.svg');
+            -webkit-mask-image: url('../images/icon-contact.svg');
+          }
+        }
+      }
+
       &.manual_url {
         a {
           &::before {
@@ -2928,11 +2967,38 @@ label[data-multicheckbox].small {
         }
       }
 
+      &.pricing_url {
+        a {
+          &::before {
+            mask-image: url('../images/icon-pricing.svg');
+            -webkit-mask-image: url('../images/icon-pricing.svg');
+          }
+        }
+      }
+
       &.training_information_url {
         a {
           &::before {
             mask-image: url('../images/icon-training.svg');
             -webkit-mask-image: url('../images/icon-training.svg');
+          }
+        }
+      }
+
+      &.privacy_policy_url {
+        a {
+          &::before {
+            mask-image: url('../images/icon-privacy.svg');
+            -webkit-mask-image: url('../images/icon-privacy.svg');
+          }
+        }
+      }
+
+      &.terms_of_use_url {
+        a {
+          &::before {
+            mask-image: url('../images/icon-terms.svg');
+            -webkit-mask-image: url('../images/icon-terms.svg');
           }
         }
       }
@@ -5534,24 +5600,46 @@ abbr[title] {
     .details-header {
       border-bottom: none;
       background-color: $footer-color;
-      padding: 16px 16px 3px 10px;
+      padding: 16px 10px 3px;
 
       h5 {
         color: $palette-gray-100;
-        font-size: 15px;
+        font-size: 14px;
         font-weight: 500;
         line-height: 16px;
         margin: 0;
         background-repeat: no-repeat;
         background-image: url('../images/icon-uptime.svg');
-        background-position: 0 50%;
+        background-position: 0 41%;
+        background-size: 16px auto;
         padding-left: 21px;
       }
     }
 
     .details-content {
-      padding: 15px 20px 5px 32px;
+      padding: 15px 10px 5px 32px;
 
+      // scss-lint:disable all
+      .taglist-holder {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 15px;
+        font-weight: 400;
+        grid-column-gap: 8px;
+        -moz-column-gap: 8px;
+        column-gap: 6px;
+        grid-row-gap: 6px;
+        row-gap: 6px;
+
+        .tag-item {
+          padding: 4px 8px 3px;
+          line-height: 1.2;
+          background: $alert-bg;
+          font-size: 10.5px;
+          color: $palette-blue;
+        }
+      }
+      // scss-lint:enable all
       h6 {
         font-weight: 300;
         margin-bottom: 3px;
@@ -5564,7 +5652,7 @@ abbr[title] {
 
 
         li {
-          margin: 0 0 14px;
+          margin: 0 0 17px;
           padding: 0;
           color: $palette-blue;
           line-height: 1.15;
@@ -5575,10 +5663,11 @@ abbr[title] {
 
           &.links {
             list-style: none !important;
-            margin-left: -4px;
+            margin-bottom: 10px;
 
             a {
               font-size: 0.875rem;
+              color: $palette-gray-100;
 
               span {
                 color: $palette-blue;
@@ -5603,14 +5692,14 @@ abbr[title] {
 
           span {
             color: $custom-13;
-            font-size: 10.5px;
+            font-size: 12px;
             font-weight: 400;
 
             &.list-title {
               font-size: 14px;
               color: $body-color;
               display: inline-block;
-              margin-bottom: 3px;
+              margin-bottom: 7px;
             }
 
             .badge-light {
@@ -5650,10 +5739,46 @@ abbr[title] {
       }
     }
 
+    &.tags {
+      .details-header {
+        h5 {
+          background-image: url('../images/icon-tag.svg');
+        }
+      }
+    }
+
     &.classification {
       .details-header {
         h5 {
-          background-image: url('../images/icon-uptime.svg');
+          background-image: url('../images/icon-classification.svg');
+        }
+      }
+    }
+
+    &.marketing {
+      .details-content {
+        padding-bottom: 10px;
+      }
+
+      .details-header {
+        h5 {
+          background-image: url('../images/icon-marketing.svg');
+        }
+      }
+    }
+
+    &.attribution {
+      .details-header {
+        h5 {
+          background-image: url('../images/icon-attribution.svg');
+        }
+      }
+    }
+
+    &.dependencies {
+      .details-header {
+        h5 {
+          background-image: url('../images/icon-dependencies.svg');
         }
       }
     }
@@ -5666,10 +5791,49 @@ abbr[title] {
       }
     }
 
+    &.order {
+      .details-header {
+        h5 {
+          background-image: url('../images/icon-order.svg');
+        }
+      }
+    }
+
+    &.public_contacts {
+      .details-content {
+        padding-bottom: 17px;
+      }
+
+      .details-header {
+        h5 {
+          background-image: url('../images/icon-contact.svg');
+        }
+      }
+
+      .details-content {
+        line-height: 1.85;
+        font-size: 13px;
+      }
+    }
+
     &.maturity_information {
       .details-header {
         h5 {
           background-image: url('../images/icon-maturity.svg');
+        }
+      }
+    }
+
+    &.changelog {
+      .details-content {
+        padding-bottom: 17px;
+      }
+    }
+
+    &.financial_information {
+      .details-header {
+        h5 {
+          background-image: url('../images/icon-pricing.svg');
         }
       }
     }

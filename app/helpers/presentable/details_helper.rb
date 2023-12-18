@@ -6,7 +6,7 @@ module Presentable::DetailsHelper
   def service_details_columns
     [
       [classification, availability, marketing, dependencies, attribution, order],
-      [public_contacts, maturity_information, management, financial_information],
+      [public_contacts, maturity_information, financial_information],
       [changelog]
     ]
   end
@@ -69,14 +69,13 @@ module Presentable::DetailsHelper
     {
       name: "classification",
       template: "array",
-      fields: %w[marketplace_locations target_users access_types access_modes tag_list],
+      fields: %w[marketplace_locations target_users access_types access_modes],
       with_desc: true,
       nested: {
         marketplace_locations: "name",
         target_users: "name",
         access_types: "name",
-        access_modes: "name",
-        tag_list: "tag"
+        access_modes: "name"
       }
     }
   end

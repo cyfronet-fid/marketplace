@@ -22,7 +22,7 @@ en:
           link_multimedia_urls: Multimedia %{idx}
           webpage_url: Webpage
           helpdesk_url: Helpdesk
-          helpdesk_email: Helpdesk e-mail
+          helpdesk_email: Contact provider
           manual_url: Manual
           privacy_policy_url: Privacy policy
           status_monitoring_url: Status Monitoring
@@ -68,7 +68,7 @@ en:
             hosting_legal_entity: Hosting Legal Entity
             national_roadmaps: National Roadmaps
             classification: Classification
-            availability: Availability
+            availability: Availability and language
             order: Order
             marketing: Marketing
             dependencies: Dependencies
