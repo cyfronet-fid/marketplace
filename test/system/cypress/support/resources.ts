@@ -484,7 +484,7 @@ Cypress.Commands.add("hasResourceDetails", () => {
     "Access Types",
     "Access Modes",
     "Tags",
-    "Availability",
+    "Availability and language",
     "Geographical Availabilities",
     "Languages",
     "Marketing",

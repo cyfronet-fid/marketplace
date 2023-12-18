@@ -5,7 +5,7 @@ module Presentable::DetailsHelper
 
   def service_details_columns
     [
-      [classification, availability, marketing, dependencies, attribution, order],
+      [classification, marketing, dependencies, attribution, order],
       [public_contacts, maturity_information, financial_information],
       [changelog]
     ]
@@ -30,7 +30,7 @@ module Presentable::DetailsHelper
 
   def datasource_details_columns
     [
-      [classification, availability, marketing, dependencies, attribution, order],
+      [classification, marketing, dependencies, attribution, order],
       [public_contacts, maturity_information, management, financial_information],
       [
         version_control,

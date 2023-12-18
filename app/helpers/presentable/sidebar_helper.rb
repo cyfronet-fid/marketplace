@@ -62,7 +62,12 @@ module Presentable::SidebarHelper
   end
 
   def availability
-    { name: "availability", template: "map", fields: %w[geographical_availabilities languages], with_desc: true }
+    {
+      name: "availability_and_language",
+      template: "map",
+      fields: %w[geographical_availabilities languages],
+      with_desc: true
+    }
   end
 
   def provider_scientific_categorisation
