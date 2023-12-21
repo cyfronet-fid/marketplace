@@ -5,31 +5,33 @@
         - if with_desc && (nested.blank? || nested[field.to_sym] != "link")
           %span.list-title
             -# TODO: refactor dynamic translation
-            = t("#{field}") + ":"
+            = t(".#{field}") + ":"
         - if object.send(field).is_a?(ActiveSupport::TimeWithZone)
           %span
             = object.send(field).to_date
         - elsif field == "geographical_availabilities"
-          %span
-            = safe_join(get_only_regions(object.send(field)).map { |c| link_to c,
-              services_geographical_availabilities_link(object, c),
-              "data-preview-target": local_assigns[:preview] ? "link" : "" }.sort, ", ")
-          - if get_only_countries(object.send(field)).present?
-            %span.geographical
-              = safe_join(get_only_countries(object.send(field)).map { |c| link_to c,
-              services_geographical_availabilities_link(object, c),
-              "data-preview-target": local_assigns[:preview] ? "link" : "" }.sort)
-        - else
-          - Array(object.send(field)).map.with_index do |element, idx|
-            - if nested.present? && nested[field.to_sym].present?
-              - if nested[field.to_sym] == "link"
-                %li.links
-                  = link_to field.humanize, element, "data-probe": "",
+          %ul
+            - get_only_regions(object.send(field)).each do |c|
+              %li
+                = link_to c, services_geographical_availabilities_link(object, c),
+                "data-preview-target": local_assigns[:preview] ? "link" : ""
+            - if get_only_countries(object.send(field)).present?
+              - get_only_countries(object.send(field)).each do |c|
+                %li.geographical
+                  = link_to c, services_geographical_availabilities_link(object, c),
                   "data-preview-target": local_assigns[:preview] ? "link" : ""
-                  %i.fas.fa-arrow-right
+        - else
+          %ul
+            - Array(object.send(field)).map.with_index do |element, idx|
+              - if nested.present? && nested[field.to_sym].present?
+                - if nested[field.to_sym] == "link"
+                  %li.links
+                    = link_to field.humanize, element, "data-probe": "",
+                    "data-preview-target": local_assigns[:preview] ? "link" : ""
+                    %i.fas.fa-arrow-right
+                - else
+                  %li
+                    #{element.send(nested[field.to_sym])}#{idx == Array(object.send(field)).size - 1 ? nil : ", "}
               - else
-                %span
-                  #{element.send(nested[field.to_sym])}#{idx == Array(object.send(field)).size - 1 ? nil : ", "}
-            - else
-              %span.geographical
-                #{element}#{idx == Array(object.send(field))}
+                %li.geographical
+                  #{element}#{idx == Array(object.send(field))}
