@@ -6,7 +6,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.55.0-milestone]
+
+### Changed
+- Requesting similar services recommendations through RS Facade (@goreck888)
+
 ## [3.54.2] 2023-12-27
+
+### Changed
+- Interoperability patterns serialized as a separated field (@goreck888)
+- Renamed `all catalogs` to `all resources` (@goreck888)
+
+### Fixed
+- JMS import status flow (@goreck888)
 
 ## [3.54.1] 2023-12-07
 
