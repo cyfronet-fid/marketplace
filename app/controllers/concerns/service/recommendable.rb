@@ -43,8 +43,8 @@ module Service::Recommendable
   end
 
   def fetch_similar(service_id, user_id, quantity = 6)
-    url = "#{Mp::Application.config.similar_services_host}/v1/similar_services/recommendation"
-    body = { user_id: user_id, service_id: service_id, num: quantity }.to_json
+    url = "#{Mp::Application.config.similar_services_host}/similar_services/recommendation"
+    body = similar_services_state(service_id, user_id, quantity).to_json
     headers = { "Content-Type": "application/json", Accept: "application/json" }
     response =
       Faraday.post(url, body, headers) do |req|
@@ -96,9 +96,10 @@ module Service::Recommendable
   end
 
   def service_search_state(available_services)
-    state = {
+    {
       timestamp: Time.now.strftime("%Y-%m-%dT%H:%M:%S.%L%z"),
       unique_id: cookies[:client_uid],
+      user_id: current_user.nil? ? "" : current_user.id,
       visit_id: cookies[:targetId],
       client_id: "marketplace",
       page_id: "/service",
@@ -107,10 +108,17 @@ module Service::Recommendable
       candidates: available_services,
       search_data: get_filters_by(@params)
     }
+  end
 
-    state[:user_id] = current_user.id unless current_user.nil?
-
-    state
+  def similar_services_state(service_id, user_id, num = 6)
+    {
+      timestamp: Time.now.strftime("%Y-%m-%dT%H:%M:%S.%L%z"),
+      unique_id: cookies[:client_uid],
+      aai_uid: current_user.nil? ? "" : current_user.uid,
+      user_id: user_id,
+      service_id: service_id,
+      num: num
+    }
   end
 
   def get_filters_by(params)

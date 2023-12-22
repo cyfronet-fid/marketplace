@@ -70,7 +70,7 @@ module Mp
     config.monitoring_data_ui_url = ENV.fetch("MONITORING_DATA_UI_URL", "https://eosc.ui.devel.argo.grnet.gr")
     config.monitoring_data_path = ENV.fetch("MONITORING_DATA_UI_PATH",
                                             "eosc/report-ar-group-details/Default/SERVICEGROUPS/")
-    config.similar_services_host = ENV["SIMILAR_SERVICES_HOST"] || "http://149.156.10.234:4559"
+    config.similar_services_host = ENV["SIMILAR_SERVICES_HOST"] || "http://149.156.182.238:8081"
     config.recommender_host = ENV["RECOMMENDER_HOST"]
     config.recommendation_engine = ENV["RECOMMENDATION_ENGINE"] || "RL"
     config.auth_mock = ENV["AUTH_MOCK"]
