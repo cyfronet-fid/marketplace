@@ -330,7 +330,7 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       visit backoffice_service_path(service)
       expect { click_on "Stop showing in the MP" }.to have_enqueued_job(Ess::UpdateJob)
 
-      expect(page).to have_content("Status: draft")
+      expect(page).to have_content("Status: unpublished")
     end
 
     scenario "I can edit any service" do

@@ -38,12 +38,12 @@ Rails.application.routes.draw do
       resource :ordering_configuration, only: :show do
         scope module: :ordering_configuration do
           resources :offers, only: %i[new edit create update destroy] do
-            resource :publish, controller: "offers/publish", only: :create
-            resource :draft, controller: "offers/draft", only: :create
+            resource :publish, controller: "offers/publishes", only: :create
+            resource :draft, controller: "offers/drafts", only: :create
           end
-          resources :bundles, only: %i[edit update] do
-            resource :publish, controller: "bundles/publish", only: :create
-            resource :draft, controller: "bundles/draft", only: :create
+          resources :bundles, only: %i[new edit create update destroy] do
+            resource :publish, controller: "bundles/publishes", only: :create
+            resource :draft, controller: "bundles/drafts", only: :create
           end
         end
       end

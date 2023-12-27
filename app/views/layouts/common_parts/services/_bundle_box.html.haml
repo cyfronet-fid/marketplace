@@ -6,7 +6,7 @@
     = render "services/bundle", bundled_offers: bundle.all_offers, parent: bundle.main_offer
     = render "services/offers/bundle_links",
        contact_email: bundle.contact_email || "",
-       related_training: bundle.related_training_url || "",
+       related_training: bundle.related_training ? bundle.related_training_url : "",
        helpdesk_url: bundle.helpdesk_url || ""
     .card-button.text-center.backoffice-button
       %label

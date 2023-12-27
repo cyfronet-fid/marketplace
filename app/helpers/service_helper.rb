@@ -90,7 +90,7 @@ module ServiceHelper
   end
 
   def new_bundle_link(service, controller_name)
-    if controller_name == "ordering_configuration"
+    if controller_name == "ordering_configurations"
       new_service_ordering_configuration_bundle_path(service)
     else
       new_backoffice_service_bundle_path(service)

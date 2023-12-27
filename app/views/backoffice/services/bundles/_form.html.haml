@@ -35,19 +35,20 @@
   %hr.bottom-hr.mb-5
   .row
     .col-12
-      = f.button :submit, class: "btn btn-primary pl-5 pr-5 mobile-bottom-margin", "data-e2e": "create-offer-btn"
+      = f.button :submit, bundle.new_record? ? _("Publish Bundle") : _("Update Bundle"),
+      class: "btn btn-primary pl-5 pr-5 mobile-bottom-margin", "data-e2e": "create-offer-btn"
       - if policy([:backoffice, bundle]).delete?
         = link_to "Delete Bundle", polymorphic_path(bundle_form_source_module),
-          data: { confirm: _("Are you sure? It cannot be undone") },
+          data: { confirm: _("This action cannot be undone. Confirm to delete the Bundle.") },
           method: :delete, class: "btn btn-danger pl-5 pr-5"
       - if policy([:backoffice, bundle]).draft?
-        = link_to "Draft Bundle", polymorphic_path(bundle_form_source_module << :draft), method: :post,
+        = link_to "Unpublish Bundle", polymorphic_path(bundle_form_source_module << :draft), method: :post,
         class: "btn btn-info pl-5 pr-5 mobile-bottom-margin",
-        data: { confirm: _("Are you sure?") }
+        data: { confirm: _("Confirm and unpublish the Bundle. It will no longer be visible on the website.") }
       - if policy([:backoffice, bundle]).publish?
         = link_to "Publish Bundle", polymorphic_path(bundle_form_source_module << :publish), method: :post,
         class: "btn btn-success pl-5 pr-5",
-        data: { confirm: _("Do you want to publish your bundle?") }
+        data: { confirm: _("Confirm and publish the Bundle. It will be accessible on the website.") }
       = link_to _("cancel and back to previous page"), back_link,
       class: "btn btn-link text-uppercase mobile-bottom-margin"
 
