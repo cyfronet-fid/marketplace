@@ -4,34 +4,37 @@
       %li{ class: ("links" if nested.present? && nested[field.to_sym] == "link") }
         - if with_desc && (nested.blank? || nested[field.to_sym] != "link")
           %span.list-title
-            -# TODO: refactor dynamic translation
-            = t(".#{field}") + ":"
+            %a{ href: "#" + t(".#{field}") , "data-toggle": "collapse" }
+              -# TODO: refactor dynamic translation
+              = t(".#{field}") + ":"
         - if object.send(field).is_a?(ActiveSupport::TimeWithZone)
           %span
             = object.send(field).to_date
         - elsif field == "geographical_availabilities"
-          %ul
-            - get_only_regions(object.send(field)).each do |c|
-              %li
-                = link_to c, services_geographical_availabilities_link(object, c),
-                "data-preview-target": local_assigns[:preview] ? "link" : ""
-            - if get_only_countries(object.send(field)).present?
-              - get_only_countries(object.send(field)).each do |c|
-                %li.geographical
+          .collapse{ id: t(".#{field}") }
+            %ul
+              - get_only_regions(object.send(field)).each do |c|
+                %li
                   = link_to c, services_geographical_availabilities_link(object, c),
                   "data-preview-target": local_assigns[:preview] ? "link" : ""
-        - else
-          %ul
-            - Array(object.send(field)).map.with_index do |element, idx|
-              - if nested.present? && nested[field.to_sym].present?
-                - if nested[field.to_sym] == "link"
-                  %li.links
-                    = link_to field.humanize, element, "data-probe": "",
+              - if get_only_countries(object.send(field)).present?
+                - get_only_countries(object.send(field)).each do |c|
+                  %li.geographical
+                    = link_to c, services_geographical_availabilities_link(object, c),
                     "data-preview-target": local_assigns[:preview] ? "link" : ""
-                    %i.fas.fa-arrow-right
+        - else
+          .collapse{ id: t(".#{field}") }
+            %ul
+              - Array(object.send(field)).map.with_index do |element, idx|
+                - if nested.present? && nested[field.to_sym].present?
+                  - if nested[field.to_sym] == "link"
+                    %li.links
+                      = link_to field.humanize, element, "data-probe": "",
+                      "data-preview-target": local_assigns[:preview] ? "link" : ""
+                      %i.fas.fa-arrow-right
+                  - else
+                    %li
+                      #{element.send(nested[field.to_sym])}#{idx == Array(object.send(field)).size - 1 ? nil : ", "}
                 - else
-                  %li
-                    #{element.send(nested[field.to_sym])}#{idx == Array(object.send(field)).size - 1 ? nil : ", "}
-              - else
-                %li.geographical
-                  #{element}#{idx == Array(object.send(field))}
+                  %li.geographical
+                    #{element}#{idx == Array(object.send(field))}

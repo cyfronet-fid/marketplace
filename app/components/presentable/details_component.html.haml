@@ -22,6 +22,13 @@
                                   nested: group[:nested] || "",
                                   with_desc: group[:with_desc] || false,
                                   preview: @preview
+      .related-container
+        .row
+          .col-12
+            xxxx
+        .row
+          .col-12
+            xxxx
 
     %sidebar.col-12.col-xl-3{ "data-shepherd-tour-target": "service-classification" }
       = render "components/presentable/explore_links", object: @object
@@ -35,3 +42,4 @@
       .provider-panel
         - if @object.respond_to?(:resource_organisation)
           = render Presentable::ProviderInfoComponent.new(base: @object, preview: @preview)
+

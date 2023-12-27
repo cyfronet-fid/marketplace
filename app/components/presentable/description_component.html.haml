@@ -7,7 +7,7 @@
         = render Presentable::SidebarComponent.new(@object)
 
       = description_panels
-      .related-container.mt-4
+      .related-container
         .row
           .col-12
             = render "services/related", related_services: @similar_services, title: similar_services_title,
