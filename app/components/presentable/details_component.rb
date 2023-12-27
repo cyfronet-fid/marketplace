@@ -6,11 +6,13 @@ class Presentable::DetailsComponent < ApplicationComponent
   include PresentableHelper
   include Presentable::LinksHelper
 
-  def initialize(object, preview: false, guidelines: false)
+  def initialize(object, similar_services: nil, related_services: nil, preview: false, guidelines: false)
     super()
     @object = object
     @guidelines = guidelines
     @preview = preview
+    @similar_services = similar_services
+    @related_services = related_services
   end
 
   def details_columns
