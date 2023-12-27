@@ -18,6 +18,8 @@ class Bundle < ApplicationRecord
                     ["bundles.status = ?", "published"] => "bundles_count"
                   }
 
+  before_save :clear_training
+
   enum status: STATUSES
 
   belongs_to :service, optional: false
@@ -109,6 +111,10 @@ class Bundle < ApplicationRecord
   end
 
   private
+
+  def clear_training
+    self.related_training_url = "" unless related_training
+  end
 
   def offers_correct
     if offers.includes(:service).present?

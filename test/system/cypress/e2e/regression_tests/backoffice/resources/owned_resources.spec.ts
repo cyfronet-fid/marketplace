@@ -52,7 +52,7 @@ describe("Owned services", () => {
       .should("be.visible") 
     cy.contains("a","Set parameters and offers")
       .should("be.visible")  
-    cy.contains("span", "draft")
+    cy.contains("span", "unpublished")
       .should("be.visible") 
     cy.get("[data-e2e='publish-btn']")
       .click();
@@ -252,7 +252,7 @@ describe("Owned services", () => {
       .should("be.visible") 
     cy.contains("a","Set parameters and offers")
       .should("be.visible")  
-    cy.contains("span", "draft")
+    cy.contains("span", "unpublished")
       .should("be.visible") 
     cy.get("[data-e2e='publish-btn']")
       .click();

@@ -5,7 +5,7 @@
 .status-row
   %span Status:
   %span.font-weight-bold
-    = @provider.status
+    = Backoffice::ServicesHelper::STATUSES[@provider.status]
 
 .service-box.p-4.mt-3.backoffice-form
   .logo-wrapper
