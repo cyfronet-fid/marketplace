@@ -282,7 +282,7 @@ describe("Providers", () => {
     cy.get("[data-e2e='filter-tag']")
       .should("be.visible");
     cy.get("[data-e2e='service-id'] span")
-      .should("have.text", "draft")
+      .should("have.text", "unpublished")
     cy.get("[data-e2e='searchbar-input']")
       .type(providerStatusDraft);
     cy.get("[data-e2e='autocomplete-results'] li")

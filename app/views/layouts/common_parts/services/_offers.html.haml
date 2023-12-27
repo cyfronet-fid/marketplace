@@ -34,5 +34,4 @@
   -# haml-lint:enable MultilinePipe
 .row
   = render partial: "layouts/common_parts/services/bundle_box", collection: bundles, as: :bundle
-  - unless controller_name == "ordering_configurations"
-    = render "layouts/common_parts/services/new_bundle", service: service
+  = render "layouts/common_parts/services/new_bundle", service: service

@@ -45,6 +45,9 @@ class OrderingConfiguration::OfferPolicy < ApplicationPolicy
       :default,
       :internal,
       :primary_oms_id,
+      :from,
+      :tag_list,
+      :bundle_exclusive,
       oms_params: {},
       parameters_attributes: %i[
         type

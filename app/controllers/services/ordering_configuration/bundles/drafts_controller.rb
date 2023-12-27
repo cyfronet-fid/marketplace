@@ -6,12 +6,12 @@ module Services::OrderingConfiguration::Bundles
 
     def create
       if Bundle::Draft.call(@bundle)
-        redirect_to backoffice_service_path(@service)
+        redirect_to service_ordering_configuration_path(@service)
       else
         flash[:alert] =
           "Bundle not drafted, errors: " +
             "#{@bundle.errors.messages.each.map { |k, v| "The field #{k} #{v.join(", ")}" }.join(", ")}"
-        redirect_to edit_backoffice_service_offer_path(@service, @bundle)
+        redirect_to edit_service_ordering_configuration_bundle_path(@service, @bundle)
       end
     end
 
@@ -19,7 +19,7 @@ module Services::OrderingConfiguration::Bundles
 
     def find_and_authorize
       @service = Service.friendly.find(params[:service_id])
-      @bundle = Bundle.find_by(iid: params[:bundle_id])
+      @bundle = @service.bundles.find_by(iid: params[:bundle_id])
       authorize(@bundle, :draft?)
     end
   end

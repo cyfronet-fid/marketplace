@@ -63,7 +63,7 @@ class Services::OrderingConfiguration::OffersController < Services::OrderingConf
   def transform_attributes(template)
     template["parameters_attributes"] = [] if template["parameters_attributes"].blank?
     template["oms_params"] = {} if template["primary_oms_id"].present? && template["oms_params"].nil?
-    template
+    template.except(:from)
   end
 
   def find_service

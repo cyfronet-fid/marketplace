@@ -42,16 +42,16 @@
       = f.button :submit, class: "btn btn-primary pl-5 pr-5 mobile-bottom-margin", "data-e2e": "create-offer-btn"
       - if policy([:backoffice, offer]).destroy?
         = link_to "Delete Offer", polymorphic_path(offer_form_source_module),
-          data: { confirm: _("Are you sure? It cannot be undone") },
+          data: { confirm: _("This action cannot be undone. Confirm to delete the Offer.") },
           method: :delete, class: "btn btn-danger pl-5 pr-5"
       - if policy([:backoffice, offer]).draft?
-        = link_to "Draft offer", polymorphic_path(offer_form_source_module << :draft), method: :post,
+        = link_to "Unpublish Offer", polymorphic_path(offer_form_source_module << :draft), method: :post,
         class: "btn btn-info pl-5 pr-5 mobile-bottom-margin",
-        data: { confirm: _("Are you sure?") }
+        data: { confirm: _("Confirm and unpublish the Offer. It will no longer be visible on the website.") }
       - if policy([:backoffice, offer]).publish?
-        = link_to "Publish offer", polymorphic_path(offer_form_source_module << :publish), method: :post,
+        = link_to "Publish Offer", polymorphic_path(offer_form_source_module << :publish), method: :post,
         class: "btn btn-success pl-5 pr-5",
-        data: { confirm: _("Do you want to publish your offer?") }
+        data: { confirm: _("Confirm and publish the Offer. It will be accessible on the website.") }
       = link_to _("cancel and back to previous page"), back_link,
       class: "btn btn-link text-uppercase mobile-bottom-margin"
 

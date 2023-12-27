@@ -33,7 +33,7 @@ RSpec.feature "Bundles in backoffice", manager_frontend: true do
         select "#{offer.service.name} > #{offer.name}", from: "Offers"
         fill_in "Helpdesk url", with: bundle.helpdesk_url
 
-        expect { click_on "Create Bundle" }.to change { Bundle.count }.by(1)
+        expect { click_on "Publish Bundle" }.to change { Bundle.count }.by(1)
         expect(page).to have_content("New bundle created successfully")
       end
 

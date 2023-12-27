@@ -18,7 +18,7 @@
       .col-12.col-lg-4
         %span
           = _("Status") + ":"
-        %span.font-weight-bold= @service.status
+        %span.font-weight-bold= Backoffice::ServicesHelper::STATUSES[@service.status]
       .col-12.col-lg-8.service-buttons
         .btn-group.float-right
           - if policy([:backoffice, @service]).publish?
