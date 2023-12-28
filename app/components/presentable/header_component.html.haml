@@ -39,20 +39,19 @@
                         "data-action": "click->comparison#update"
                       %span.smaller
                         = _("Compare")
-                -#
-                  .comparison{ "data-controller": "favourite" }
-                    %span.compare
-                      %label
-                        = check_box_tag "favourite", @object.slug, favourite?(Array(@favourite_services), @object.slug),
-                          id: "favourite-#{@object.id}",
-                              class: "form-check-input",
-                              "data-favourite-target": "checkbox",
-                              "data-e2e": "favourite-checkbox",
-                              "data-action": "click->favourite#updateFromRes"
-                        %span.smaller
-                          = _("Add to favourites")
-                    #popup-modal.modal.show{ "data-favourite-target": "popup", tabindex: "-1",
-                                      role: "dialog", aria: { hidden: "true" } }
+                .comparison{ "data-controller": "favourite" }
+                  %span.compare
+                    %label
+                      = check_box_tag "favourite", @object.slug, favourite?(Array(@favourite_services), @object.slug),
+                        id: "favourite-#{@object.id}",
+                            class: "form-check-input",
+                            "data-favourite-target": "checkbox",
+                            "data-e2e": "favourite-checkbox",
+                            "data-action": "click->favourite#updateFromRes"
+                      %span.smaller
+                        = _("Add to favourites")
+                  #popup-modal.modal.show{ "data-favourite-target": "popup", tabindex: "-1",
+                                    role: "dialog", aria: { hidden: "true" } }
 
   .col-12.col-lg-3.text-center{ class: ("horizontal-space" if horizontal) }
     .vertical-center-inner.access-type
