@@ -1,6 +1,6 @@
-#desc.tab-pane.container.pt-2.active.desc{ "aria-labelledby" => "home-tab", role: "tabpanel" }
-  .row.pt-3.justify-content-between
-    %main.col-12.col-xl-9.pr-4{ "data-shepherd-tour-target": "service-about" }
+#desc.tab-pane.container.active.desc{ "aria-labelledby" => "home-tab", role: "tabpanel" }
+  .row.justify-content-between
+    %main.col-12.col-xl-9.pr-4.pt-4{ "data-shepherd-tour-target": "service-about" }
       .service-description-container
         = markdown(@object.description)
       .details-box-wrapper.mt-5

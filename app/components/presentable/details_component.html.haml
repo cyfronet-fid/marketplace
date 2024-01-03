@@ -1,7 +1,7 @@
-#opinions.tab-pane.container.pt-2.active{ "aria-labelledby": "opinions-tab", role: "tabpanel",
+#opinions.tab-pane.container.active{ "aria-labelledby": "opinions-tab", role: "tabpanel",
                                           "data-shepherd-tour-target": "service-details-content" }
-  .row.pt-3.justify-content-between
-    %main.col-12.col-xl-9.pr-4.mb-4
+  .row.justify-content-between
+    %main.col-12.col-xl-9.pr-4.mb-4.pt-4
 
       .details-box-wrapper
         = render Presentable::SidebarComponent.new(@object)

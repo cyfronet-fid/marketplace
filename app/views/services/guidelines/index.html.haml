@@ -26,9 +26,9 @@
 
 .tab-content
   - if @service.guidelines.blank?
-    #opinions.tab-pane.container.pt-2.active{ "aria-labelledby": "opinions-tab", role: "tabpanel",
+    #opinions.tab-pane.container.active{ "aria-labelledby": "opinions-tab", role: "tabpanel",
                                           "data-shepherd-tour-target": "service-details-content" }
-      .row.pt-3
+      .row.pt-4
         .col-12
           This service has no Interoperability Guidelines
   - else

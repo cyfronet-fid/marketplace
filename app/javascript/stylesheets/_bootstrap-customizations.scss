@@ -993,14 +993,6 @@ Service detail
         margin: 5px 0;
         line-height: 19px;
 
-        &::before {
-          content: '-';
-          font-size: 20px;
-          position: absolute;
-          top: 0;
-          left: 0;
-        }
-
         &:last-child {
           margin-bottom: 0;
         }
@@ -1046,6 +1038,7 @@ Service detail
 
       .status-info {
         cursor: help;
+        color: $custom-14 !important;
       }
     }
 
