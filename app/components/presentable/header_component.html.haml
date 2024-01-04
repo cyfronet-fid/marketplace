@@ -40,7 +40,7 @@
                       %span.smaller
                         = _("Compare")
                 .comparison{ "data-controller": "favourite" }
-                  %span.compare
+                  %span.compare.favourite
                     %label
                       = check_box_tag "favourite", @object.slug, favourite?(Array(@favourite_services), @object.slug),
                         id: "favourite-#{@object.id}",

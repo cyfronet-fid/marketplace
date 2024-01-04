@@ -2769,6 +2769,7 @@ label[data-multicheckbox].small {
 
   .space-between {
     justify-content: space-between;
+    align-items: center;
   }
 
   .resource-row {
@@ -5144,6 +5145,12 @@ abbr[title] {
     }
   }
 
+  &.favourite {
+    input[type=checkbox] + span {
+      background: url('../images/icon-heart.svg') no-repeat 24px 2px;
+    }
+  }
+
   input[type=checkbox] + span::before {
     content: '';
     display: block;
@@ -5623,7 +5630,7 @@ abbr[title] {
         row-gap: 6px;
 
         .tag-item {
-          padding: 4px 8px 3px;
+          padding: 4px 8px 4px;
           line-height: 1.2;
           background: $alert-bg;
           font-size: 10.5px;
@@ -5636,6 +5643,10 @@ abbr[title] {
         margin-bottom: 3px;
       }
 
+      a {
+        color: $custom-15;
+      }
+
       ul {
         margin-bottom: 0;
         padding: 0;
@@ -5645,7 +5656,7 @@ abbr[title] {
         li {
           margin: 0 0 17px;
           padding: 0;
-          color: $palette-blue;
+          color: $body-color;
           line-height: 1.15;
           border: none;
           font-size: 0.8rem;
@@ -5658,10 +5669,10 @@ abbr[title] {
 
             a {
               font-size: 12px;
-              color: $palette-gray-100;
+              color: $custom-15;
 
               span {
-                color: $palette-blue;
+                color: $custom-15;
                 font-size: 0.775rem;
                 word-break: break-all;
               }
@@ -5789,6 +5800,8 @@ abbr[title] {
       }
 
       .details-content {
+        padding-bottom: 15px;
+
         .list-group {
           li {
             margin: 15px 0 4px;
@@ -5825,10 +5838,14 @@ abbr[title] {
           li {
             margin-bottom: 7px;
 
+            &.geographical {
+              margin: 5px 0 7px;
+            }
+
             span {
               &.list-title {
                 font-size: 13px;
-                margin-bottom: 12px;
+                margin-bottom: 5px;
                 color: $palette-black;
 
                 a {
