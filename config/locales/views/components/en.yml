@@ -22,7 +22,7 @@ en:
           link_multimedia_urls: Multimedia %{idx}
           webpage_url: Webpage
           helpdesk_url: Helpdesk
-          helpdesk_email: Contact provider
+          helpdesk_email: Email provider
           manual_url: Manual
           privacy_policy_url: Privacy policy
           status_monitoring_url: Status Monitoring
