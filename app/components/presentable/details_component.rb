@@ -23,7 +23,7 @@ class Presentable::DetailsComponent < ApplicationComponent
       when Provider
         provider_details_columns
       when Service
-        @object.type == "Datasource" ? datasource_details_columns : service_details_columns
+        @object.type == "Datasource" ? datasource_details_columns(@object) : service_details_columns(@object)
       end
     end
   end
