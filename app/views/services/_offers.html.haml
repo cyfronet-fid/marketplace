@@ -20,7 +20,7 @@
   .row
     = render partial: "services/offer", collection: offers, as: :offer, locals: { preview: local_assigns[:preview] }
 - if policy(service).bundles_show?
-  %h2.mb-4.mt-5.font-weight-normal
+  %h2.mb-3.mt-4.font-weight-bolder
     = _("Bundles")
   %p.mb-5
     -# haml-lint:disable MultilinePipe

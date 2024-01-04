@@ -1013,53 +1013,6 @@ Service detail
     }
   }
 
-  .uptime-list {
-    list-style: none;
-    margin-left: 0;
-    padding: 1.1rem 0 0;
-
-    .list-group-item {
-      border: none;
-      margin: 0 0 0.55rem 1rem;
-      padding: 0;
-      list-style-type: none !important;
-      display: list-item;
-
-      span {
-        width: 80px;
-        display: inline-block;
-      }
-
-      .big-dot {
-        font-size: 22px;
-        line-height: 22px;
-        display: inline-block;
-      }
-
-      .status-info {
-        cursor: help;
-        color: $custom-14 !important;
-      }
-    }
-
-    a {
-      font-size: 12px;
-      color: $palette-gray-70;
-      margin: 0.35rem 0 0.85rem 1rem;
-
-      &:hover {
-        color: $link-color;
-      }
-
-      &::after {
-        content: '>';
-        display: inline-block;
-        margin: -10px 0 0 5px;
-
-      }
-    }
-  }
-
   .arrows {
     list-style: none;
 
@@ -1071,6 +1024,46 @@ Service detail
         margin-right: 9px;
         font-size: 10px;
       }
+    }
+  }
+}
+
+.uptime-list {
+  list-style: none;
+  margin-left: 0;
+  padding: 1.1rem 0 0;
+
+  .list-group-item {
+    border: none;
+    margin: 0 0 0.55rem 1rem;
+    padding: 0;
+    list-style-type: none !important;
+    display: list-item;
+
+    span {
+      width: 80px;
+      display: inline-block;
+    }
+
+    .big-dot {
+      font-size: 22px;
+      line-height: 22px;
+      display: inline-block;
+    }
+
+    .status-info {
+      cursor: help;
+      color: $custom-14 !important;
+    }
+  }
+
+  a {
+    font-size: 12px;
+    color: $palette-gray-70;
+    margin: 0.35rem 0 0.85rem 1rem;
+
+    &:hover {
+      color: $link-color;
     }
   }
 }
@@ -1405,18 +1398,46 @@ Service detail
     -moz-border-radius: 0;
     border-radius: 0;
 
+    .ordertype {
+      width: 10px;
+      height: 17px;
+      display: inline-block;
+      background-size: 10px auto;
+      margin-right: 5px;
+    }
+
     // scss-lint:disable all
-    &.style_open_access {
+    &.style_open_access,
+    &.open_access,
+    &.fully_open_access,
+    &.various {
       background: $custom-6;
       color: $custom-7;
+
+      .ordertype {
+        background-image: url('../images/open-access.svg');
+      }
     }
-    // scss-lint:enable all
+
+    &.order_required {
+      .ordertype {
+        background-image: url('../images/restricted.svg');
+      }
+    }
 
     &.badge-success,
     &.badge-warning,
     &.badge-error {
       color: $white;
     }
+
+    &.other {
+      .ordertype {
+        background-image: url('../images/restricted.svg');
+      }
+    }
+
+    // scss-lint:enable all
 
   }
 
@@ -1601,6 +1622,7 @@ Service detail
     .card-body {
       overflow: hidden;
       padding-bottom: 8px;
+      min-height: 150px;
 
       table {
         margin-bottom: 8px;
@@ -2730,25 +2752,6 @@ label[data-multicheckbox].small {
 }
 
 // scss-lint:disable all
-.ordertype {
-  width: 10px;
-  height: 17px;
-  display: inline-block;
-  background-size: 10px auto;
-  margin-right: 5px;
-
-  &.open_access, &.fully_open_access, &.various {
-    background-image: url('../images/open-access.svg');
-  }
-
-  &.order_required {
-    background-image: url('../images/restricted.svg');
-  }
-
-  &.other {
-    background-image: url('../images/restricted.svg');
-  }
-}
 
 .service-box-redesign {
   overflow: hidden;
@@ -5148,6 +5151,7 @@ abbr[title] {
   &.favourite {
     input[type=checkbox] + span {
       background: url('../images/icon-heart.svg') no-repeat 24px 2px;
+      background-size: auto 90%;
     }
   }
 
@@ -5819,6 +5823,18 @@ abbr[title] {
 
     }
 
+    &.uptime_monitoring {
+      padding-bottom: 14px;
+
+      .details-content {
+        ul {
+          li {
+            margin-bottom: 8px;
+          }
+        }
+      }
+    }
+
     &.availability_and_language {
       z-index: 1000;
       background: $palette-white;
@@ -5847,6 +5863,7 @@ abbr[title] {
                 font-size: 13px;
                 margin-bottom: 5px;
                 color: $palette-black;
+                width: 100%;
 
                 a {
                   &::after {
@@ -5857,7 +5874,8 @@ abbr[title] {
                     background-position: 50% 50%;
                     width: 12px;
                     height: 10px;
-                    margin-left: 3px;
+                    float: right;
+                    margin: 3px 10px 0 0;
                   }
 
                   &[aria-expanded="true"] {

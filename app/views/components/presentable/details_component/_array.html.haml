@@ -25,14 +25,14 @@
             - if nested.present? && nested[field.to_sym].present?
               - if nested[field.to_sym] == "link"
                 %li.links
+                  %i.arrow-right
                   = link_to field.humanize, element, "data-probe": "",
                   "data-preview-target": local_assigns[:preview] ? "link" : ""
-                  %i.arrow-right
               - elsif nested[field.to_sym] == "service"
                 %li.links
+                  %i.arrow-right
                   = link_to(element.name, service_path(element), "data-probe": "",
                   "data-preview-target": local_assigns[:preview] ? "link" : "")
-                  %i.arrow-right
               - elsif nested[field.to_sym] == "tag"
                 %span
                   = link_to element, services_filter_link(element, element), class: "badge badge-light",
