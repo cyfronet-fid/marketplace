@@ -10,5 +10,4 @@
             %td= parameter["label"]
             %td.text-right.font-weight-bold= parse_offer_parameter_value(parameter)
     - if technical_parameters.size > 4
-      = link_to "Show more", "#", { data: { "action" => "click->parameter#toggleParameters",
-                                             state: "hidden" }, class: "show-more-link mb-3 d-block float-right"  }
+      = render "common_parts/show_more_link", id: id

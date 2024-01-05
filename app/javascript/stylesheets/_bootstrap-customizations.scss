@@ -1635,15 +1635,6 @@ Service detail
   font-size: 12px;
   font-weight: 400;
 
-  &::after {
-    content: '';
-    margin-left: 5px;
-    display: inline-block;
-    background: url('../images/icon-arrow-down.svg') no-repeat 0 65%;
-    width: 12px;
-    float: right;
-    height: 15px;
-  }
 }
 
 .full-width {

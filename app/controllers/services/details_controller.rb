@@ -2,6 +2,7 @@
 
 class Services::DetailsController < ApplicationController
   include Service::Comparison
+  include Service::Monitorable
   layout :choose_layout
 
   def index
@@ -11,5 +12,6 @@ class Services::DetailsController < ApplicationController
     @question = Service::Question.new(service: @service)
     @favourite_services =
       current_user&.favourite_services || Service.where(slug: Array(cookies[:favourites]&.split("&") || []))
+    @service.monitoring_status = fetch_status(@service.pid)
   end
 end

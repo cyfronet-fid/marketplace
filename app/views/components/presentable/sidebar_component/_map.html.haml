@@ -37,4 +37,4 @@
                       #{element.send(nested[field.to_sym])}#{idx == Array(object.send(field)).size - 1 ? nil : ", "}
                 - else
                   %li.geographical
-                    #{element}#{idx == Array(object.send(field))}
+                    #{element}
