@@ -1312,6 +1312,12 @@ Service detail
   }
 }
 
+.parameters-wrapper {
+  .show-more-link {
+    margin-bottom: 20px;
+  }
+}
+
 .offer-params {
   td {
     width: 50%;
@@ -1419,7 +1425,8 @@ Service detail
       }
     }
 
-    &.order_required {
+    &.order_required,
+    &.style_order_required {
       .ordertype {
         background-image: url('../images/restricted.svg');
       }
