@@ -2,7 +2,7 @@
 
 module Presentable::SidebarHelper
   def service_sidebar_fields
-    [monitoring_data, target_users, tag_list, availability]
+    [pid, monitoring_data, analytics, target_users, tag_list, availability]
   end
 
   def provider_sidebar_fields
