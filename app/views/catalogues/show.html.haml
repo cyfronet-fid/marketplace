@@ -1,0 +1,83 @@
+-# haml-lint:disable InlineStyles
+.container
+  .row.border.rounded.py-3.px-2.mb-3
+    .col-md-1
+    - if @catalogue.logo.attached? && @catalogue.logo.variable?
+      = image_tag @catalogue.logo.variant(resize: "100x100")
+    .col-md-7
+      %h3= @catalogue.name
+      %p= @catalogue.abbreviation || "-"
+      %p= link_to @catalogue.website, @catalogue.website, target: "_blank"
+    .col-md-4.text-md-right
+      = link_to "Open website", @catalogue.website, target: "_blank", class: "btn btn-primary text-white rounded-pill"
+
+  .row.mt-3
+    .col-md-8
+      .border.rounded.py-3.px-2.mr-2
+        = image_pack_tag "catalogue/about.svg", alt: "About icon"
+        %h3{ style: "display: inline-block;" } About
+        %p= @catalogue.description || "-"
+        .row
+          .col-md-6
+            .font-bold Legal Entity
+            %p= @catalogue.legal_entity || "-"
+            .font-bold Legal Status
+            %p= @catalogue.legal_statuses.blank? ? "-" : @catalogue.legal_statuses.join(", ")
+            .font-bold Hosting Legal Entities
+            %p= @catalogue.hosting_legal_entities.blank? ? "-" : @catalogue.hosting_legal_entities.join(", ")
+          .col-md-6
+            .font-bold Inclusion Criteria
+            %p= format_basic_link(@catalogue.inclusion_criteria)
+            .font-bold Validation Process
+            %p= format_basic_link(@catalogue.validation_process)
+            .font-bold End of Life
+            %p= @catalogue.end_of_life || "-"
+    .col-md-4
+      .border.rounded.py-3.px-2
+        = image_pack_tag "catalogue/classification.svg", alt: "Classification icon"
+        %h3{ style: "display: inline-block;" } Classification
+        .font-bold Scientific Domain
+        %p= format_scientific_domains(@catalogue)
+        .font-bold Structure Type
+        %p= @catalogue.structure_type.blank? ? "-" : @catalogue.structure_type.join(", ")
+  .row.mt-3
+    .col-md-8
+      .border.rounded.py-3.px-2
+        = image_pack_tag "catalogue/deps_info.svg", alt: "Dependencies information icon"
+        %h3{ style: "display: inline-block;" } Dependencies Information
+        .font-bold Participating Countries
+        %p= @catalogue.participating_countries&.join(", ") || "-"
+        .font-bold Affiliations
+        %p= @catalogue.affiliations&.join(", ") || "-"
+        .font-bold Networks
+        %p= @catalogue.networks&.join(", ") || "-"
+    .col-md-4
+      .border.rounded.py-3.px-2
+        = image_pack_tag "catalogue/deps_info.svg", alt: "Location and contact icon"
+        %h3{ style: "display: inline-block;" } Location and Contact
+        .font-bold Name
+        %p= format_main_contact_name(@catalogue)
+        .font-bold Email
+        %p= @catalogue.main_contact&.email || "-"
+        .font-bold Phone
+        %p= @catalogue.main_contact&.phone || "-"
+        .font-bold Position
+        %p= @catalogue.main_contact&.position || "-"
+        %hr
+        .font-bold Street Name and Number
+        %p= @catalogue.street_name_and_number || "-"
+        .font-bold Code
+        %p= @catalogue.postal_code || "-"
+        .font-bold City, Region
+        %p= format_city_region(@catalogue)
+        .font-bold Country
+        %p= @catalogue.country || "-"
+
+  .row.mt-3
+    .col-md-4.offset-md-8
+      .font-bold Tags
+      = @catalogue.tags&.join(", ") || "-"
+  .row
+    .col-md-8
+      = link_to "See resources provided by #{@catalogue.name}", "#"
+-# haml-lint:enable InlineStyles

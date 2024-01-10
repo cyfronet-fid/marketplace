@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Import::Catalogues
+  include Importable
+
   def initialize(
     eosc_registry_base_url,
     dry_run: true,
@@ -35,6 +37,7 @@ class Import::Catalogues
     @request_catalogues.each do |external_data|
       external_catalogue_data = external_data["catalogue"]
       parsed_catalogue_data = Importers::Catalogue.new(external_catalogue_data, Time.now.to_i, "rest").call
+      parsed_catalogue_data["status"] = object_status(external_data["active"], external_data["suspended"])
       current_catalogue = Catalogue.find_by(pid: parsed_catalogue_data[:pid])
 
       next if @dry_run

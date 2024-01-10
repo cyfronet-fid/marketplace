@@ -17,6 +17,9 @@ class ScientificDomain < ApplicationRecord
   has_many :user_scientific_domains, autosave: true, dependent: :destroy
   has_many :users, through: :user_scientific_domains
 
+  has_many :catalogue_scientific_domains, autosave: true, dependent: :destroy
+  has_many :catalogues, through: :catalogue_scientific_domains
+
   validates :name, presence: true, uniqueness: { scope: :ancestry }
   validates :logo, blob: { content_type: :image }
   validate :logo_variable, on: %i[create update]

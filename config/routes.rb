@@ -59,6 +59,8 @@ Rails.application.routes.draw do
   get "services/c/:category_id" => "services#index", :as => :category_services
   resources :categories, only: :show
 
+  resources :catalogues, only: :show
+
   resource :reports, only: %i[new create], constraints: lambda { |req| req.format == :js }
 
   resources :projects do
@@ -155,6 +157,7 @@ Rails.application.routes.draw do
         resources :services, only: %i[index show], constraints: { id: %r{[^/]+} }
         resources :datasources, only: %i[index show], constraints: { id: %r{[^/]+} }
         resources :providers, only: %i[index show]
+        resources :catalogues, only: %i[index show]
         resources :offers, only: %i[index show]
         resources :bundles, only: %i[index show]
       end
