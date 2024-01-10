@@ -11,6 +11,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Changed
 - Service page design (@jarekzet, @goreck888)
 - Requesting similar services recommendations through RS Facade (@goreck888)
+- Catalogue page and importers (@wujuu)
 
 ### Fixed
 - Typo in the landing page (@goreck888)

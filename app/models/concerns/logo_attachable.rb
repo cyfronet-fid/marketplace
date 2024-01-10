@@ -13,6 +13,14 @@ module LogoAttachable
     self.logo.attach(io: File.open(path), filename: logo["filename"])
   end
 
+  def set_default_logo
+    assets_path = File.join(File.dirname(__FILE__), "../../javascript/images")
+    default_logo_name = "eosc-img.png"
+    extension = ".png"
+    io = ImageHelper.binary_to_blob_stream(assets_path + "/" + default_logo_name)
+    logo.attach(io: io, filename: SecureRandom.uuid + extension, content_type: "image/#{extension.delete(".", "")}")
+  end
+
   def convert_to_png(logo, extension)
     img = MiniMagick::Image.read(logo, extension)
     img.format "png" do |convert|

@@ -103,6 +103,103 @@
         }
       }
     },
+    "/api/v1/ess/catalogues": {
+      "get": {
+        "summary": "lists catalogues",
+        "tags": ["catalogues"],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "catalogues found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ess/catalogue/catalogue_index.json"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ess/catalogues/{catalogue_id}": {
+      "parameters": [
+        {
+          "name": "catalogue_id",
+          "in": "path",
+          "description": "Catalogue identifier (id or pid)",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "retrieves a catalogue by id",
+        "tags": ["catalogues"],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "catalogue found by pid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ess/catalogue/catalogue_read.json"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "draft catalogue not found by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "catalogue not found by unpermitted user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/ess/datasources": {
       "get": {
         "summary": "lists datasources",

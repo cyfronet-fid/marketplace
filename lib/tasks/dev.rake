@@ -246,14 +246,45 @@ namespace :dev do
     Rake::Task["rdt:add_vocabularies"].invoke
   end
 
+  # rubocop:disable Metrics/AbcSize
   def create_catalogues(catalogue_hash)
     puts "Generating catalogue:"
     catalogue_hash.each do |_, hash|
       catalogue = Catalogue.find_or_initialize_by(name: hash["name"])
       catalogue.pid = hash["pid"]
+      catalogue.abbreviation = hash["abbreviation"]
+      catalogue.description = hash["description"]
+      catalogue.website = hash["website"]
+      catalogue.legal_entity = hash["legal_entity"]
+      catalogue.scientific_domains = ScientificDomain.where(name: hash["domains"])
+      catalogue.participating_countries = hash["participating_countries"]&.map { |c| Country.for(c) }
+      catalogue.affiliations = hash["affiliations"]
+      catalogue.networks = Vocabulary::Network.where(eid: hash["networks"])
+      catalogue.legal_statuses = Vocabulary::LegalStatus.where(eid: hash["legal_statuses"])
+      catalogue.hosting_legal_entities = Vocabulary::HostingLegalEntity.where(eid: hash["hosting_legal_entities"])
+      catalogue.tags = hash["tags"]
+      catalogue.street_name_and_number = hash["street"]
+      catalogue.postal_code = hash["postal_code"]
+      catalogue.city = hash["city"]
+      catalogue.region = hash["region"]
+      catalogue.country = Country.for(hash["country_alpha2"])
+      catalogue.main_contact = MainContact.new(first_name: "John", last_name: "Doe", email: "john@example.org")
+      catalogue.public_contacts = [PublicContact.new(email: "example#{catalogue.id}@mail.com")]
+      catalogue.link_multimedia_urls = hash["multimedia"].map { |h| Link::MultimediaUrl.new(url: h) }
+      catalogue.end_of_life = hash["end_of_life"]
+      catalogue.validation_process = hash["validation_process"]
+      catalogue.inclusion_criteria = hash["inclusion_criteria"]
+
+      io, extension = ImageHelper.base_64_to_blob_stream(hash["image_base_64"])
+      catalogue.logo.attach(
+        io: io,
+        filename: catalogue.pid + extension,
+        content_type: "image/#{extension.delete!(".", "")}"
+      )
 
       catalogue.save(validate: false)
       puts "  - #{hash["name"]} catalogue generated"
     end
   end
+  # rubocop:enable Metrics/AbcSize
 end

@@ -5,6 +5,8 @@ class Vocabulary < ApplicationRecord
 
   has_many :service_vocabularies, dependent: :destroy
   has_many :services, through: :service_vocabularies
+  has_many :catalogue_vocabularies, dependent: :destroy
+  has_many :catalogues, through: :catalogue_vocabularies
   has_many :provider_vocabularies, dependent: :destroy
   has_many :providers, through: :provider_vocabularies
   has_many :persistent_identity_system_vocabularies, dependent: :destroy

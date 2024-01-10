@@ -44,7 +44,9 @@ FactoryBot.define do
               "<tns:multimedia/>" \
               "<tns:name>test dev km</tns:name>" \
               "<tns:networks/>" \
-              "<tns:participatingCountries/>" \
+              "<tns:participatingCountries>" \
+              " <tns:participatingCountry>PL</tns:participatingCountry>" \
+              "</tns:participatingCountries>" \
               "<tns:publicContacts>" \
               "<tns:publicContact>" \
               " <tns:email>ymmarsza@cyf-kr.edu.pl</tns:email>" \

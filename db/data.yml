@@ -92,13 +92,168 @@ categories:
 #        name: &scienceGateway Science gateway
 #        parent: *processingAndAnalysisParent
 
+domain:
+  Humanities:
+    name: &humanities "Humanities"
+  OtherHumanities:
+    name: &otherHumanities "Other Humanities"
+    parent: *humanities
+  Philosophy:
+    name: &philosophy "Philosophy, Ethics & Religion"
+    parent: *humanities
+  Arts:
+    name: &arts "Arts"
+    parent: *humanities
+  SocialScience:
+    name: &socialSciences "Social Sciences"
+  OtherSocialScienes:
+    name: &otherSocialSciences "Other Social Sciences"
+    parent: *socialSciences
+  Political:
+    name: &political "Political Sciences"
+    parent: *socialSciences
+  Psychology:
+    name: &psychology "Psychology"
+    parent: *socialSciences
+  engineering:
+    name: &engineering "Engineering & Technology"
+  electrical:
+    name: &electrical "Electrical, Electronic & Information Engineering"
+    parent: *engineering
+  environmental:
+    name: &environmental "Environmental Engineering"
+    parent: *engineering
+  agricultural:
+    name: &agricultural "Agricultural Sciences"
+  medical:
+    name: &medical "Medical & Health Sciences"
+  natural:
+    name: &natural "Natural Sciences"
+  EnvironmentalScience:
+    name: &earthAndEnvironmentalScience "Earth & Related Environmental Sciences"
+    parent: *natural
+  BiologicalSciences:
+    name: &biologicalSciences "Biological Sciences"
+    parent: *natural
+  PhysicalSciences:
+    name: &physicalSciences "Physical Sciences"
+    parent: *engineering
+  Other:
+    name: &other "Other"
+  OtherOther:
+    name: &otherOther "Other"
+    parent: *other
+
 catalogues:
   EOSC:
     name: &eosc "EOSC"
     pid: "eosc-catalogue"
+    image_base_64: &catalogue_default_logo |
+      data:image/png;base64,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
+
+    multimedia: &default_multimedia
+      - https://google.com
+    abbreviation: "European Open Science Cloud"
+    description: "Something something open science, but european"
+    legal_entity: true
+    hosting_legal_entities: ["provider_hosting_legal_entity-100pit"]
+    legal_statuses: ["provider_legal_status-private_company"]
+    website: "https://eosc.eu/"
+    domains: [*natural]
+    structure_type: ["Single-sited"]
+    participating_countries: ["FR"]
+    affiliations: ["EOSC"]
+    networks: ["provider_network-fao"]
+    tags: ["open data"]
+    street: "Easy Street"
+    postal_code: "FR12345"
+    city: "Paris"
+    region: "Paris Region"
+    country_alpha2: "FR"
+    end_of_life: "EOM"
+    inclusion_criteria: "https://example.com"
+    validation_process: "https://example.com"
   CatRIS:
     name: &catris "CatRIS"
     pid: "catris-catalogue"
+    image_base_64: *catalogue_default_logo
+    multimedia: *default_multimedia
+    abbreviation: "CatRIS"
+    description: "Something something open science"
+    legal_entity: false
+    hosting_legal_entities: ["provider_hosting_legal_entity-100pit"]
+    legal_statuses: ["provider_legal_status-private_company"]
+    website: "https://catris.eu/"
+    domains: [*natural]
+    structure_type: ["Single-sited"]
+    participating_countries: ["PL", "US"]
+    affiliations: ["EOSC"]
+    networks: ["provider_network-fao"]
+    tags: ["open data"]
+    street: "Street 10"
+    postal_code: "GR12345"
+    city: "Thessaloniki"
+    region: "Central Macedonia"
+    country_alpha2: "US"
+    end_of_life: "EOW"
+    inclusion_criteria: "https://example.com"
+    validation_process: "https://example.com"
+  NI4OS:
+    name: "NI4OS"
+    pid: "ni4os-catalogue"
+    abbreviation: "National Initiatives for Open Science in Europe"
+    description: "National Initiatives for Open Science in Europe – NI4OS Europe, aims to be a core contributor to the European Open Science Cloud (EOSC) service portfolio, commit to EOSC governance and ensure inclusiveness on the European level for enabling global Open Science."
+    legal_entity: true
+    hosting_legal_entities: ["provider_hosting_legal_entity-100pit"]
+    legal_statuses: ["provider_legal_status-private_company"]
+    website: "https://ni4os.eu/"
+    domains: [*engineering]
+    structure_type: ["Single-sited"]
+    participating_countries: ["PL", "US"]
+    affiliations: ["EOSC", "CatRIS"]
+    networks: ["provider_network-fao"]
+    tags: ["open data", "open science", "publications", "research papers"]
+    street: "Street 10"
+    postal_code: "GR12345"
+    city: "Athens"
+    region: "Attica"
+    country_alpha2: "US"
+    image_base_64: *catalogue_default_logo
+    multimedia: *default_multimedia
+    end_of_life: "EOU"
+    inclusion_criteria: "https://example.com"
+    validation_process: "https://example.com"
 
 providers:
   EGI Federation:
@@ -1125,58 +1280,6 @@ providers:
     city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
-
-domain:
-  Humanities:
-    name: &humanities "Humanities"
-  OtherHumanities:
-    name: &otherHumanities "Other Humanities"
-    parent: *humanities
-  Philosophy:
-    name: &philosophy "Philosophy, Ethics & Religion"
-    parent: *humanities
-  Arts:
-    name: &arts "Arts"
-    parent: *humanities
-  SocialScience:
-    name: &socialSciences "Social Sciences"
-  OtherSocialScienes:
-    name: &otherSocialSciences "Other Social Sciences"
-    parent: *socialSciences
-  Political:
-    name: &political "Political Sciences"
-    parent: *socialSciences
-  Psychology:
-    name: &psychology "Psychology"
-    parent: *socialSciences
-  engineering:
-    name: &engineering "Engineering & Technology"
-  electrical:
-    name: &electrical "Electrical, Electronic & Information Engineering"
-    parent: *engineering
-  environmental:
-    name: &environmental "Environmental Engineering"
-    parent: *engineering
-  agricultural:
-    name: &agricultural "Agricultural Sciences"
-  medical:
-    name: &medical "Medical & Health Sciences"
-  natural:
-    name: &natural "Natural Sciences"
-  EnvironmentalScience:
-    name: &earthAndEnvironmentalScience "Earth & Related Environmental Sciences"
-    parent: *natural
-  BiologicalSciences:
-    name: &biologicalSciences "Biological Sciences"
-    parent: *natural
-  PhysicalSciences:
-    name: &physicalSciences "Physical Sciences"
-    parent: *engineering
-  Other:
-    name: &other "Other"
-  OtherOther:
-    name: &otherOther "Other"
-    parent: *other
 
 target_users:
   Researchers:

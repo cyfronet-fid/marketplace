@@ -68,7 +68,8 @@ namespace :rdt do
       meril_scientific_domain: Vocabulary::MerilScientificDomain,
       network: Vocabulary::Network,
       societal_grand_challenge: Vocabulary::SocietalGrandChallenge,
-      structure_type: Vocabulary::StructureType
+      structure_type: Vocabulary::StructureType,
+      hosting_legal_entity: Vocabulary::HostingLegalEntity
     }.freeze
 
     vocabularies.each do |key, klass|

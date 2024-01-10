@@ -17,6 +17,7 @@ RSpec.describe Catalogue::PcCreateOrUpdate, backend: true do
 
     expect(catalogue.name).to eq("Test Catalogue tp")
     expect(catalogue.pid).to eq("tp")
+    expect(catalogue.logo.attached?).to eq(true)
 
     $stdout = original_stdout
   end
@@ -36,6 +37,22 @@ RSpec.describe Catalogue::PcCreateOrUpdate, backend: true do
     updated_catalogue = Catalogue.find(catalogue.id)
 
     expect(updated_catalogue.name).to eq("Test Update Catalogue")
+    expect(updated_catalogue.logo.attached?).to eq(true)
+
+    $stdout = original_stdout
+  end
+
+  it "adds default logo if not present" do
+    logoless_response = published_catalogue_response.clone
+    logoless_response.delete(:logo)
+
+    original_stdout = $stdout
+    $stdout = StringIO.new
+    expect { described_class.new(logoless_response, true, Time.now).call }.to change { Catalogue.count }.by(1)
+
+    catalogue = Catalogue.last
+
+    expect(catalogue.logo.attached?).to eq(true)
 
     $stdout = original_stdout
   end

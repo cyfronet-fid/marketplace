@@ -15,7 +15,7 @@
           "type": "controller",
           "class": "ServicesController",
           "method": "override_user_action_info",
-          "line": 88,
+          "line": 86,
           "file": "app/controllers/services_controller.rb",
           "rendered": {
             "name": "layouts/application",
@@ -101,6 +101,40 @@
         "template": "layouts/_recommendation"
       },
       "user_input": "cookies[:lastPageId]",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 4,
+      "fingerprint": "5b3cb3cbe7983c26543e3ecd5c2f9cdb0d8a574009b81ecacae1d448b51a9245",
+      "check_name": "LinkToHref",
+      "message": "Potentially unsafe model attribute in `link_to` href",
+      "file": "app/views/catalogues/show.html.haml",
+      "line": 10,
+      "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
+      "code": "link_to(Catalogue.friendly.find(params[:id]).website, Catalogue.friendly.find(params[:id]).website, :target => \"_blank\")",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "CataloguesController",
+          "method": "show",
+          "line": 6,
+          "file": "app/controllers/catalogues_controller.rb",
+          "rendered": {
+            "name": "catalogues/show",
+            "file": "app/views/catalogues/show.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "catalogues/show"
+      },
+      "user_input": "Catalogue.friendly.find(params[:id]).website",
       "confidence": "Weak",
       "cwe_id": [
         79
@@ -430,8 +464,42 @@
         915
       ],
       "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 4,
+      "fingerprint": "fef1a486634fa350b87d5fd952cc7995d49fcb43c4db0faef8a2791a8012b515",
+      "check_name": "LinkToHref",
+      "message": "Potentially unsafe model attribute in `link_to` href",
+      "file": "app/views/catalogues/show.html.haml",
+      "line": 12,
+      "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
+      "code": "link_to(\"Open website\", Catalogue.friendly.find(params[:id]).website, :target => \"_blank\", :class => \"btn btn-primary text-white rounded-pill\")",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "CataloguesController",
+          "method": "show",
+          "line": 6,
+          "file": "app/controllers/catalogues_controller.rb",
+          "rendered": {
+            "name": "catalogues/show",
+            "file": "app/views/catalogues/show.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "catalogues/show"
+      },
+      "user_input": "Catalogue.friendly.find(params[:id]).website",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
     }
   ],
-  "updated": "2023-11-22 07:18:11 +0100",
-  "brakeman_version": "6.0.1"
+  "updated": "2024-01-21 13:43:48 +0100",
+  "brakeman_version": "6.1.1"
 }
