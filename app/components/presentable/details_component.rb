@@ -7,13 +7,23 @@ class Presentable::DetailsComponent < ApplicationComponent
   include PresentableHelper
   include ServiceHelper
 
-  def initialize(object, similar_services: nil, related_services: nil, preview: false, guidelines: false)
+  def initialize(
+    object,
+    similar_services: nil,
+    related_services: nil,
+    preview: false,
+    question: nil,
+    guidelines: false,
+    from: nil
+  )
     super()
     @object = object
     @guidelines = guidelines
     @preview = preview
     @similar_services = similar_services
     @related_services = related_services
+    @question = question
+    @from = from
   end
 
   def details_columns

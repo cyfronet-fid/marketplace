@@ -1,21 +1,21 @@
-%dl.mb-0
-  %dt.x-small
+%dl.mb-0.d-flex
+  %dt
     %span
       = _("Organisation") + ":"
-  %dd.x-small
+  %dd
     %mr-4= resource_organisation(service, highlights, preview: local_assigns[:preview])
 - active_providers = safe_join(providers(service, highlights, preview: local_assigns[:preview]), ", ")
 - if active_providers.present?
-  %dl.mb-0
-    %dt.x-small
+  %dl.mb-0.d-flex
+    %dt
       %span
         = _("Provided by") + ":"
-    %dd.x-small
+    %dd
       %mr-4= active_providers
 %dl.mb-0.research
-  %dt.x-small
+  %dt
     %span
       = _("Scientific domain") + ":"
-  %dd.x-small
+  %dd
     %mr-4= safe_join(scientific_domains_text(service), ", ")
 %span.clearfix

@@ -2764,8 +2764,8 @@ label[data-multicheckbox].small {
   }
 
   .subtitle-row {
-    line-height: 1.2;
-    font-weight: 500;
+    line-height: 1.5;
+    font-weight: 400;
   }
 
   .space-between {
@@ -5134,7 +5134,7 @@ abbr[title] {
     position: relative;
     cursor: pointer;
     padding-left: 47px;
-    color: $link-color;
+    color: $palette-blue;
     padding-top: 1px;
     margin-right: 6px;
     background: url('../images/icon-compare.svg') no-repeat 24px 2px;
@@ -5938,6 +5938,27 @@ abbr[title] {
         }
       }
     }
+
+    &.Identifiers {
+      .details-header {
+        h5 {
+          background-image: url('../images/icon-identifiers.svg');
+        }
+      }
+    }
+
+    &.Statistics {
+      .details-header {
+        h5 {
+          background-image: url('../images/icon-statistics.svg');
+        }
+      }
+
+      .details-content {
+        padding: 12px 6px 17px 30px;
+      }
+    }
+
     // scss-lint:enable all
   }
 }

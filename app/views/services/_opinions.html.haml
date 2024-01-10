@@ -1,6 +1,5 @@
 #opinions.tab-pane.container.active{ "aria-labelledby" => "opinions-tab", role: "tabpanel" }
   .row.pt-4
-    .col-12
-      %dl
-        = render(partial: "service_opinions/service_opinion",
-           collection: service_opinions) || _("There are no reviews available.")
+    .col-12.mb-4
+      = render(partial: "service_opinions/service_opinion",
+          collection: service_opinions) || _("There are no reviews available.")

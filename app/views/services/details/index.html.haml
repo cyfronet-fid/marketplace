@@ -26,6 +26,6 @@
       = render "comparisons/bar", services: @compare_services, category: @category
 
 .tab-content
-  = render Presentable::DetailsComponent.new(@service, similar_services: @similar_services,
+  = render Presentable::DetailsComponent.new(@service, similar_services: @similar_services, question: @question,
   related_services: @related_services)
 

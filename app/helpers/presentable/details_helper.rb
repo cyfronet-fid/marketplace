@@ -69,7 +69,7 @@ module Presentable::DetailsHelper
     {
       name: "classification",
       template: "array",
-      fields: %w[marketplace_locations target_users access_types access_modes],
+      fields: %w[marketplace_locations access_types access_modes],
       with_desc: true,
       nested: {
         marketplace_locations: "name",
