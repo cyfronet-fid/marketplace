@@ -3,9 +3,9 @@
 class Presentable::DetailsComponent < ApplicationComponent
   include Presentable::DetailsHelper
   include Presentable::DetailsStyleHelper
+  include Presentable::LinksHelper
   include PresentableHelper
   include ServiceHelper
-  include Presentable::LinksHelper
 
   def initialize(object, similar_services: nil, related_services: nil, preview: false, guidelines: false)
     super()

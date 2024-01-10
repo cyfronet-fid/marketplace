@@ -3,6 +3,7 @@
 class Services::DetailsController < ApplicationController
   include Service::Comparison
   include Service::Monitorable
+  include Service::Recommendable
   layout :choose_layout
 
   def index

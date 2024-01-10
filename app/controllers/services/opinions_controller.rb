@@ -2,6 +2,7 @@
 
 class Services::OpinionsController < ApplicationController
   include Service::Comparison
+  include Service::Recommendable
   layout :choose_layout
 
   def choose_layout
