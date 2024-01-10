@@ -64,7 +64,7 @@ class ServicesController < ApplicationController
     @bundles = policy_scope(@service.bundles.published).order(:iid)
     @bundled = bundled
     @similar_services = fetch_similar(@service.id, current_user&.id)
-    @related_services = @service.target_relationships
+    @related_services = @service.related_services
 
     @service_opinions = ServiceOpinion.joins(project_item: :offer).where(offers: { service_id: @service })
     @question = Service::Question.new(service: @service)
