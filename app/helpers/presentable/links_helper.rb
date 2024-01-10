@@ -38,7 +38,6 @@ module Presentable::LinksHelper
         terms_of_use_url
         access_policies_url
         maintenance_url
-        payment_model_url
       ]
     }
   end

@@ -5928,6 +5928,10 @@ abbr[title] {
     &.changelog {
       .details-content {
         padding-bottom: 17px;
+
+        span {
+          word-break: break-all;
+        }
       }
     }
 
@@ -7094,6 +7098,7 @@ abbr[title] {
 }
 
 @media (max-width: 768px) {
+
   .landing_page {
 
     .landing-header {

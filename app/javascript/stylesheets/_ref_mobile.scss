@@ -36,6 +36,13 @@
 
 @media (max-width: 991px) {
 
+  .details-box-wrapper {
+    .details-box {
+      width: 100%;
+
+    }
+  }
+
   .buttons-row {
     .text-link {
       display: block;
