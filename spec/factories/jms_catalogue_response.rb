@@ -13,6 +13,7 @@ FactoryBot.define do
         "name" => name,
         "pid" => eid,
         "active" => true,
+        "logo" => "https://www.cyfronet.pl/zalacznik/8437",
         "users" => {
           "user" => {
             "email" => "test@mail.pl",

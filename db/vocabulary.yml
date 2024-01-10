@@ -4251,3 +4251,9 @@ structure_type:
       The Provider is changing its physical location on a regular basis (e.g.,
       satellites, research vessels)
     type: PROVIDER_STRUCTURE_TYPE
+
+hosting_legal_entity:
+  - eid: provider_hosting_legal_entity-100pit
+    name: 100 Percent IT
+    description: test
+    type: HOSTING_LEGAL_ENTITY

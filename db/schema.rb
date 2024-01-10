@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_12_11_000114) do
+ActiveRecord::Schema.define(version: 2024_01_09_162434) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -134,12 +134,50 @@ ActiveRecord::Schema.define(version: 2023_12_11_000114) do
     t.index ["service_id"], name: "index_bundles_on_service_id"
   end
 
+  create_table "catalogue_scientific_domains", force: :cascade do |t|
+    t.integer "catalogue_id"
+    t.integer "scientific_domain_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["catalogue_id", "scientific_domain_id"], name: "index_cat_sds_on_catalogue_id_and_scientific_domain_id", unique: true
+    t.index ["catalogue_id"], name: "index_catalogue_scientific_domains_on_catalogue_id"
+    t.index ["scientific_domain_id"], name: "index_catalogue_scientific_domains_on_scientific_domain_id"
+  end
+
+  create_table "catalogue_vocabularies", force: :cascade do |t|
+    t.bigint "catalogue_id"
+    t.bigint "vocabulary_id"
+    t.string "vocabulary_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["catalogue_id", "vocabulary_id"], name: "index_catalogue_vocabularies_on_catalogue_id_and_vocabulary_id", unique: true
+    t.index ["catalogue_id"], name: "index_catalogue_vocabularies_on_catalogue_id"
+    t.index ["vocabulary_id"], name: "index_catalogue_vocabularies_on_vocabulary_id"
+  end
+
   create_table "catalogues", force: :cascade do |t|
     t.string "name", null: false
     t.string "pid"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "synchronized_at"
+    t.string "abbreviation", default: ""
+    t.string "website", default: ""
+    t.boolean "legal_entity", default: false
+    t.string "inclusion_criteria", default: ""
+    t.string "validation_process", default: ""
+    t.string "end_of_life", default: ""
+    t.string "status", default: "published"
+    t.string "description", default: ""
+    t.string "tags", default: [], array: true
+    t.string "structure_type", default: [], array: true
+    t.string "street_name_and_number", default: ""
+    t.string "postal_code", default: ""
+    t.string "city", default: ""
+    t.string "region", default: ""
+    t.string "country", default: ""
+    t.string "participating_countries", default: [], array: true
+    t.string "affiliations", default: [], array: true
   end
 
   create_table "categories", force: :cascade do |t|
@@ -928,6 +966,10 @@ ActiveRecord::Schema.define(version: 2023_12_11_000114) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "catalogue_scientific_domains", "catalogues"
+  add_foreign_key "catalogue_scientific_domains", "scientific_domains"
+  add_foreign_key "catalogue_vocabularies", "catalogues"
+  add_foreign_key "catalogue_vocabularies", "vocabularies"
   add_foreign_key "offer_links", "offers", column: "source_id"
   add_foreign_key "offer_links", "offers", column: "target_id"
   add_foreign_key "offers", "omses", column: "primary_oms_id"
