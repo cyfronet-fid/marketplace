@@ -11,6 +11,9 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Changed
 - Requesting similar services recommendations through RS Facade (@goreck888)
 
+### Fixed
+- Typo in the landing page (@goreck888)
+
 ## [3.54.2] 2023-12-27
 
 ### Changed
