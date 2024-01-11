@@ -4,14 +4,17 @@
       %li{ class: ("links" if nested.present? && nested[field.to_sym] == "link") }
         - if with_desc && (nested.blank? || nested[field.to_sym] != "link")
           %span.list-title
-            %a{ href: "#" + t(".#{field}") , "data-toggle": "collapse" }
-              -# TODO: refactor dynamic translation
+            - if object.send(field).size > 1
+              %a{ href: "#" + t(".#{field}") , "data-toggle": "collapse" }
+                -# TODO: refactor dynamic translation
+                = t(".#{field}") + ":"
+            - else
               = t(".#{field}") + ":"
         - if object.send(field).is_a?(ActiveSupport::TimeWithZone)
           %span
             = object.send(field).to_date
         - elsif field == "geographical_availabilities"
-          .collapse{ id: t(".#{field}") }
+          %div{ id: t(".#{field}"), class: object.send(field).size > 1 ? "collapse" : nil }
             %ul
               - get_only_regions(object.send(field)).each do |c|
                 %li
@@ -23,7 +26,7 @@
                     = link_to c, services_geographical_availabilities_link(object, c),
                     "data-preview-target": local_assigns[:preview] ? "link" : ""
         - else
-          .collapse{ id: t(".#{field}") }
+          %div{ id: t(".#{field}"), class: object.send(field).size > 1 ? "collapse" : nil }
             %ul
               - Array(object.send(field)).map.with_index do |element, idx|
                 - if nested.present? && nested[field.to_sym].present?
