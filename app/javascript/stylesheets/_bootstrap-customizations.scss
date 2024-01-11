@@ -5714,6 +5714,11 @@ abbr[title] {
               color: $body-color;
               display: inline-block;
               margin-bottom: 7px;
+
+              span {
+                font-size: 14px;
+                color: $body-color;
+              }
             }
 
             .badge-light {
