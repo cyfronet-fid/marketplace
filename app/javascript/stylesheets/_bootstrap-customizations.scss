@@ -5610,7 +5610,7 @@ abbr[title] {
         margin: 0;
         background-repeat: no-repeat;
         background-image: url('../images/icon-uptime.svg');
-        background-position: 0 41%;
+        background-position: 0 1px;
         background-size: 16px auto;
         padding-left: 21px;
       }
@@ -5964,7 +5964,15 @@ abbr[title] {
       }
 
       .details-content {
-        padding: 12px 6px 17px 30px;
+        padding: 12px 6px 0 30px;
+      }
+    }
+
+    &.persistent_identity_systems,
+    &.research_product_access_policies,
+    &.research_product_metadata_access_policies {
+      .details-content {
+        padding: 15px 10px 15px 30px;
       }
     }
 
