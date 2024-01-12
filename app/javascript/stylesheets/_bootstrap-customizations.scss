@@ -2828,12 +2828,28 @@ label[data-multicheckbox].small {
     flex-direction: row;
     justify-content: center;
     align-items: flex-end;
+
+    .ordertype {
+      width: 10px;
+      height: 17px;
+      display: inline-block;
+      background-size: 10px auto;
+      margin-right: 5px;
+
+      &.order_required {
+        background-image: url('../images/restricted.svg');
+      }
+
+      &.open_access {
+        background-image: url('../images/open-access.svg');
+      }
+    }
   }
 }
 
 .service-description-container {
   font-size: 12px;
-  line-height: 1.2;
+  line-height: 1.55;
 
   h3 {
     font-size: 14px;
@@ -3486,6 +3502,7 @@ label[data-multicheckbox].small {
     dt {
       width: auto;
       padding-right: 5px;
+      flex: 0 0 95px;
     }
 
     dd {

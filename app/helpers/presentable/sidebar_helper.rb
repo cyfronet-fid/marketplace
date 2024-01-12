@@ -2,7 +2,7 @@
 
 module Presentable::SidebarHelper
   def service_sidebar_fields
-    [pid, monitoring_data, analytics, target_users, tag_list, availability]
+    [monitoring_data, analytics, pid, availability]
   end
 
   def provider_sidebar_fields
@@ -41,24 +41,6 @@ module Presentable::SidebarHelper
 
   def analytics
     { name: "Statistics", fields: %w[analytics], template: "analytics" }
-  end
-
-  def target_users
-    {
-      name: "target_users",
-      template: "filter",
-      fields: ["target_users"],
-      filter_query: {
-        target_users: "dedicated_for"
-      },
-      nested: {
-        target_users: "name"
-      }
-    }
-  end
-
-  def tag_list
-    { name: "tags", template: "filter", fields: ["sliced_tag_list"], filter_query: { sliced_tag_list: "tag_list" } }
   end
 
   def availability
