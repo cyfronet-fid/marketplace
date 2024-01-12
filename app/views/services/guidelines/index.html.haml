@@ -28,10 +28,10 @@
   - if @service.guidelines.blank?
     #opinions.tab-pane.container.active{ "aria-labelledby": "opinions-tab", role: "tabpanel",
                                           "data-shepherd-tour-target": "service-details-content" }
-      .row.pt-4
-        .col-12.mb-4
-          This service has no Interoperability Guidelines
       .row
+        %main.col-12.col-xl-9.pr-4.mb-4.pt-4
+          This service has no Interoperability Guidelines
+
         %sidebar.col-12.col-xl-3{ "data-shepherd-tour-target": "service-classification" }
           = render "components/presentable/explore_links", object: @service
           .right-panel-links
