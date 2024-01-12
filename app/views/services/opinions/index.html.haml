@@ -25,7 +25,8 @@
       = render "comparisons/bar", services: @compare_services, category: @category
 
 .tab-content
-  = render "services/opinions", service_opinions: @service_opinions
+  = render "services/opinions", service: @service, preview: @preview,
+  question: @question, service_opinions: @service_opinions
 
   .related-container.container
     .row

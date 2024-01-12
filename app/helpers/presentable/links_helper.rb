@@ -13,12 +13,12 @@ module Presentable::LinksHelper
     [datasource_links]
   end
 
-  def new_question_link
-    @object.instance_of?(Provider) ? new_provider_question_path(@object) : new_service_question_path(@object)
+  def new_question_link(object = @object)
+    object.instance_of?(Provider) ? new_provider_question_path(object) : new_service_question_path(object)
   end
 
-  def new_question_prompt
-    @object.instance_of?(Provider) ? "Ask this provider a question" : "Contact provider"
+  def new_question_prompt(object = @object)
+    object.instance_of?(Provider) ? "Ask this provider a question" : "Contact provider"
   end
 
   private

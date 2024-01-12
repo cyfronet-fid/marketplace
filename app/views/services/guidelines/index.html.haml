@@ -31,6 +31,21 @@
       .row.pt-4
         .col-12.mb-4
           This service has no Interoperability Guidelines
+      .row
+        %sidebar.col-12.col-xl-3{ "data-shepherd-tour-target": "service-classification" }
+          = render "components/presentable/explore_links", object: @service
+          .right-panel-links
+            - if !@service.public_contacts.empty? && (@question || @preview)
+              = render "components/presentable/header_component/ask_question",
+                question_link: new_question_link(@service),
+                question: @question,
+                prompt: new_question_prompt,
+                preview: @preview
+            = render Presentable::LinksComponent.new(object: @service, preview: @preview)
+          .provider-panel
+            - if @service.respond_to?(:resource_organisation)
+              = render Presentable::ProviderInfoComponent.new(base: @service, preview: @preview)
+
   - else
     = render Presentable::DetailsComponent.new(@service, guidelines: true)
 
