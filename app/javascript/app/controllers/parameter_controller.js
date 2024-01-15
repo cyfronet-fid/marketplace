@@ -10,7 +10,6 @@ export default class extends Controller {
     const element = this.switchTarget;
     const hidden = this.hideableParameterTargets;
     const state = element.dataset.state;
-    console.log(element);
     element.firstChild.innerText = state === "hidden" ? "Show less" : "Show more";
     element.classList.toggle("collapsed");
     this.toggleState(element);

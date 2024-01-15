@@ -55,7 +55,7 @@ module SearchLinksHelper
     preview_options = preview ? { "data-preview-target": "link" } : {}
     service
       .providers
-      .reject(&:blank?)
+      .compact
       .reject(&:deleted?)
       .reject { |p| p == service.resource_organisation }
       .uniq

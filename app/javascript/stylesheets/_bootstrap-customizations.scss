@@ -707,6 +707,14 @@ textarea {
   font-size: $font-size-xs;
 }
 
+.abbreviate {
+  overflow: hidden;
+  max-width: 600px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
 .step-progress {
   position: relative;
 

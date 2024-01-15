@@ -4,22 +4,22 @@
       = _("Organisation") + ":"
   %dd
     .categorization-content= resource_organisation(service, highlights, preview: local_assigns[:preview])
-- active_providers = safe_join(providers(service, highlights, preview: local_assigns[:preview]), ", ")
+- active_providers = providers(service, highlights, preview: local_assigns[:preview])
 - if active_providers.present?
   %dl.mb-0.d-flex
     %dt
       %span
         = _("Provided by") + ":"
     %dd
-      .providers-list
-        - if active_providers.size > 100
-          %div{ data: { "parameter-target": "hideableParameter", state: "visible" } }
-            = markdown(active_providers.truncate(200, separator: " "))
+      .providers-list{ "data-controller": "parameter" }
+        - if active_providers.size > 5
+          .abbreviate{ data: { "parameter-target": "hideableParameter", state: "visible" } }
+            = markdown(safe_join(active_providers.first(5), ", "))
           .d-none{ data: { "parameter-target": "hideableParameter", state: "hidden" } }
-            = markdown(active_providers)
-          = render "common_parts/show_more_link", id: 1
+            = markdown(safe_join(active_providers, ", "))
+          = render "common_parts/show_more_link", id: "providers"
         - else
-          = markdown(active_providers)
+          = markdown(safe_join(active_providers, ", "))
 %dl.mb-0.research
   %dt
     %span
