@@ -1,15 +1,15 @@
 %ul.list-group
   %li.list-group-item
     %span.text-sm-left
-      = _("Service catalog entry views") + ":"
+      = _("Catalog views") + ":"
     %strong.text-dark= object.analytics[:views]
   %li.list-group-item
     %span.text-sm-left
-      = _("Service visits from the Service catalog") + ":"
+      = _("Catalog service visits") + ":"
     %strong.text-dark= object.analytics[:redirects]
   %li.list-group-item
     %span.text-sm-left
-      = _("Total numbers of appearances in the project") + ":"
+      = _("Project appearance total") + ":"
     %strong.text-dark= object.project_items_count
   - if object.offers.any?(&:orderable?)
     %li.list-group-item
