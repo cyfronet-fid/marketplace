@@ -18,7 +18,7 @@
       .col-12.col-lg-4
         %span
           = _("Status") + ":"
-        %span.font-weight-bold= Backoffice::ServicesHelper::STATUSES[@service.status]
+        %span.font-weight-bold= @service.status
       .col-12.col-lg-8.service-buttons
         .btn-group.float-right
           - if policy([:backoffice, @service]).publish?
@@ -33,7 +33,13 @@
                       method: :post,
                       data: { confirm: _("Are you sure you want to publish this service as unverified service?") },
                       class: "btn btn-warning btn-sm"
-          - if policy([:backoffice, @service]).draft?
+          - if policy([:backoffice, @service]).suspend?
+            = link_to _("Suspend #{@service.type.downcase}"),
+                      backoffice_service_draft_path(@service, suspend: true),
+                      method: :post,
+                      data: { confirm: _("Are you sure you want to publish this service as unverified service?") },
+                      class: "btn btn-info btn-sm"
+          - if policy([:backoffice, @service]).unpublish?
             = link_to _("Stop showing in the MP"),
                       backoffice_service_draft_path(@service),
                       method: :post,

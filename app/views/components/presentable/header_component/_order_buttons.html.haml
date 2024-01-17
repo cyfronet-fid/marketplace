@@ -1,4 +1,5 @@
-- if policy(service).order? || local_assigns[:preview]
+- if local_assigns[:preview] || policy(ServiceContext.new(service,
+  params.key?(:from) && params[:from] == "backoffice_service")).order?
   = link_to _("Access the service"),
                   service_offers_path(service),
                   class: "btn btn-primary d-block mb-3 py-3",

@@ -9,7 +9,7 @@ module Services::OrderingConfiguration::Bundles
         redirect_to service_ordering_configuration_path(@service)
       else
         flash[:alert] =
-          "Bundle not published, errors: " +
+          "Bundle cannot be published. Please ensure your form is properly completed. " +
             "#{@bundle.errors.messages.each.map { |k, v| "The field #{k} #{v.join(", ")}" }.join(", ")}"
         redirect_to edit_service_ordering_configuration_bundle_path(@service, @bundle)
       end

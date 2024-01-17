@@ -1,4 +1,4 @@
-%ul.list-group.uptime-list
+%ul.list-group.uptime-list{ class: "#{"suspended" if inactive}" }
   %li.list-group-item{ title: "The percentage of time that the service was working
   (with or without warnings) over a month (#{1.month.before.strftime("%B %Y")})" }
     %span
@@ -17,4 +17,4 @@
     %strong.status-info{ class: "#{monitoring_status_class(object&.monitoring_status)}" }
       .big-dot &#8226;
       = t("components.presentable.sidebar_component.fields.monitoring_data.#{object.monitoring_status}")
-  = monitoring_link(object)
+  = monitoring_link(object, inactive)

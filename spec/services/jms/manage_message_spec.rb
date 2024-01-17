@@ -43,7 +43,7 @@ describe Jms::ManageMessage, backend: true do
     expect(Service::PcCreateOrUpdateJob).to receive(:perform_later).with(
       resource["serviceBundle"]["service"],
       eosc_registry_base,
-      true,
+      :published,
       Time.at(resource["serviceBundle"]["metadata"]["modifiedAt"].to_i&./ 1000),
       nil
     )
@@ -59,7 +59,7 @@ describe Jms::ManageMessage, backend: true do
 
     expect(Provider::PcCreateOrUpdateJob).to receive(:perform_later).with(
       resource["providerBundle"]["provider"],
-      resource["providerBundle"]["active"],
+      :published,
       Time.at(resource["providerBundle"]["metadata"]["modifiedAt"].to_i&./ 1000)
     )
 
@@ -73,7 +73,7 @@ describe Jms::ManageMessage, backend: true do
     resource = parser.parse(provider_resource["resource"])
     expect(Provider::PcCreateOrUpdateJob).to receive(:perform_later).with(
       resource["providerBundle"]["provider"],
-      resource["providerBundle"]["active"],
+      :published,
       Time.at(resource["providerBundle"]["metadata"]["modifiedAt"].to_i&./ 1000)
     )
 
@@ -82,7 +82,7 @@ describe Jms::ManageMessage, backend: true do
     resource = parser.parse(draft_provider_resource["resource"])
     expect(Provider::PcCreateOrUpdateJob).to receive(:perform_later).with(
       resource["providerBundle"]["provider"],
-      resource["providerBundle"]["active"],
+      :unpublished,
       Time.at(resource["providerBundle"]["metadata"]["modifiedAt"].to_i&./ 1000)
     )
 
@@ -96,7 +96,7 @@ describe Jms::ManageMessage, backend: true do
     resource = parser.parse(rejected_provider_resource["resource"])
     expect(Provider::PcCreateOrUpdateJob).to receive(:perform_later).with(
       resource["providerBundle"]["provider"],
-      resource["providerBundle"]["active"],
+      :unpublished,
       Time.at(resource["providerBundle"]["metadata"]["modifiedAt"].to_i&./ 1000)
     )
 
@@ -146,7 +146,7 @@ describe Jms::ManageMessage, backend: true do
     resource = parser.parse(catalogue_resource["resource"])
     expect(Catalogue::PcCreateOrUpdateJob).to receive(:perform_later).with(
       resource["catalogueBundle"]["catalogue"],
-      resource["catalogueBundle"]["active"],
+      :published,
       Time.at(resource["catalogueBundle"]["metadata"]["modifiedAt"].to_i&./ 1000)
     )
 
@@ -160,7 +160,7 @@ describe Jms::ManageMessage, backend: true do
     resource = parser.parse(catalogue_resource["resource"])
     expect(Catalogue::PcCreateOrUpdateJob).to receive(:perform_later).with(
       resource["catalogueBundle"]["catalogue"],
-      resource["catalogueBundle"]["active"],
+      :published,
       Time.at(resource["catalogueBundle"]["metadata"]["modifiedAt"].to_i&./ 1000)
     )
 

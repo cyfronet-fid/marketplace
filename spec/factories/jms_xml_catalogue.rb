@@ -11,6 +11,7 @@ FactoryBot.define do
           "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" \
             "<tns:catalogueBundle xmlns:tns=\"http://einfracentral.eu\">" \
             "<tns:active>true</tns:active>" \
+            "<tns:suspended>false</tns:suspended>" \
             "<tns:metadata>" \
             "<tns:modifiedAt>1613193818577</tns:modifiedAt>" \
             "<tns:modifiedBy>Gaweł Porczyca</tns:modifiedBy>" \

@@ -1,4 +1,4 @@
-.taglist-holder
+.taglist-holder{ class: "#{"suspended" if inactive}" }
   - fields.each do |field|
     - object.send(field).each do |element|
       .tag-item

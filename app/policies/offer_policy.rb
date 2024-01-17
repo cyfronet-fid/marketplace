@@ -3,7 +3,9 @@
 class OfferPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.joins(:service).where("offers.status = ? AND services.status IN (?)", "published", %w[published unverified])
+      scope
+        .joins(:service)
+        .where("offers.status = ? AND services.status IN (?)", "published", Statusable::VISIBLE_STATUSES)
     end
   end
 

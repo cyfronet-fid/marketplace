@@ -4,7 +4,7 @@ class Services::OrderingConfiguration::Offers::DraftsController < Services::Orde
   before_action :find_and_authorize
 
   def create
-    Offer::Draft.call(@offer)
+    Offer::Unpublish.call(@offer)
     redirect_to backoffice_service_path(@service)
   end
 

@@ -12,6 +12,8 @@ FactoryBot.define do
 
     initialize_with do
       next {
+        "active" => true,
+        "suspended" => false,
         "category" => "aggregator",
         "changeLog" => {
           "changeLog" => ["fixed bug"]

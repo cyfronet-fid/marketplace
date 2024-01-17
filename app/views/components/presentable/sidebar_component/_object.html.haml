@@ -1,4 +1,4 @@
-%ul.list-group
+%ul.list-group{ class: "#{"suspended" if inactive}" }
   - Array(object.send(clazz)).map do |record|
     %li.list-group-item
       - fields.map do |field|

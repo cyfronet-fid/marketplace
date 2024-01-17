@@ -8,6 +8,9 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ## [3.55.0-milestone]
 
+### Added
+- View of the suspended services and datasources (@goreck888)
+
 ### Changed
 - Service page design (@jarekzet, @goreck888)
 - Requesting similar services recommendations through RS Facade (@goreck888)

@@ -4,28 +4,31 @@
   _paq.push(['trackEvent', 'Service', 'Visit', '#{id}']);
 - breadcrumb :service, @service
 = render "services/errors", service: @service
-.container{ "data-controller": "comparison", "data-shepherd-tour-target": "overview_10" }
-  .pt-4.service-box-redesign.service-detail{ "data-shepherd-tour-target": "service-box" }
-    = render Presentable::HeaderComponent.new(object: @service,
-                          title: @service.name,
-                          abbreviation: @service.abbreviation,
-                          subtitle: @service.tagline,
-                          comparison_enabled: @comparison_enabled,
-                          preview: local_assigns[:preview],
-                          favourite_services: @favourite_services) do |c|
-      - c.buttons do
-        = render "components/presentable/header_component/order_buttons", service: @service
-    = render "services/tabs", service: @service
-  - dynamic_class = (session[:comparison]&.size || 0).positive? ? "d-block" : "d-none"
-  #comparison-bar.comparison-bar.fixed-bottom{ class: dynamic_class,
-    "data-comparison-target": "bar", "data-e2e": "comparison-bar" }
-    = render "comparisons/bar", services: @compare_services, category: @category
-.tab-content
-  = render Presentable::DescriptionComponent.new(object: @service,
-    similar_services: @similar_services, related_services: @related_services, question: @question) do |c|
-    - c.description_panels do
-      - if policy(@service).order? && (policy(@service).offers_show? || policy(@service).bundles_show?)
-        = render "services/offers", offers: @offers, service: @service,
-                                    bundles: @bundles, bundled: @bundled, preview: local_assigns[:preview]
+%div
+  .container{ class: "#{"suspended" if @service.suspended?}", "data-controller": "comparison",
+    "data-shepherd-tour-target": "overview_10" }
+    .pt-4.service-box-redesign.service-detail{ "data-shepherd-tour-target": "service-box" }
+      = render Presentable::HeaderComponent.new(object: @service,
+                            title: @service.name,
+                            abbreviation: @service.abbreviation,
+                            subtitle: @service.tagline,
+                            comparison_enabled: @comparison_enabled,
+                            preview: local_assigns[:preview] || @service.suspended?,
+                            favourite_services: @favourite_services) do |c|
+        - c.buttons do
+          = render "components/presentable/header_component/order_buttons", service: @service
+      = render "services/tabs", service: @service
+    - dynamic_class = (session[:comparison]&.size || 0).positive? ? "d-block" : "d-none"
+    #comparison-bar.comparison-bar.fixed-bottom{ class: dynamic_class,
+      "data-comparison-target": "bar", "data-e2e": "comparison-bar" }
+      = render "comparisons/bar", services: @compare_services, category: @category
+  .tab-content
+    = render Presentable::DescriptionComponent.new(object: @service,
+      similar_services: @similar_services, related_services: @related_services, question: @question) do |c|
+      - c.description_panels do
+        - if policy(@service).offers_show? || policy(@service).bundles_show?
+          = render "services/offers", offers: @offers, service: @service,
+                                      bundles: @bundles, bundled: @bundled,
+                                      preview: local_assigns[:preview] || @service.suspended?
 
 

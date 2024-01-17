@@ -36,11 +36,16 @@ module Presentable::SidebarHelper
   end
 
   def monitoring_data
-    { name: "uptime_monitoring", fields: %w[availability_cache reliability_cache], template: "monitoring" }
+    {
+      name: "uptime_monitoring",
+      fields: %w[availability_cache reliability_cache],
+      template: "monitoring",
+      active_when_suspended: false
+    }
   end
 
   def analytics
-    { name: "Statistics", fields: %w[analytics], template: "analytics" }
+    { name: "Statistics", fields: %w[analytics], template: "analytics", active_when_suspended: false }
   end
 
   def availability
@@ -48,7 +53,8 @@ module Presentable::SidebarHelper
       name: "availability_and_language",
       template: "map",
       fields: %w[geographical_availabilities languages],
-      with_desc: true
+      with_desc: true,
+      active_when_suspended: false
     }
   end
 

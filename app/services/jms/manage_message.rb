@@ -3,6 +3,8 @@
 require "nori"
 
 class Jms::ManageMessage < ApplicationService
+  include Importable
+
   class ResourceParseError < StandardError
   end
 
@@ -42,7 +44,7 @@ class Jms::ManageMessage < ApplicationService
         Service::PcCreateOrUpdateJob.perform_later(
           resource["serviceBundle"]["service"],
           @eosc_registry_base_url,
-          resource["serviceBundle"]["active"] && !resource["serviceBundle"]["suspended"],
+          object_status(resource["serviceBundle"]["active"], resource["serviceBundle"]["suspended"]),
           modified_at,
           @token
         )
@@ -60,7 +62,7 @@ class Jms::ManageMessage < ApplicationService
       when "update", "create"
         Provider::PcCreateOrUpdateJob.perform_later(
           resource["providerBundle"]["provider"],
-          resource["providerBundle"]["active"] && !resource["providerBundle"]["suspended"],
+          object_status(resource["providerBundle"]["active"], resource["providerBundle"]["suspended"]),
           modified_at
         )
       end
@@ -70,7 +72,7 @@ class Jms::ManageMessage < ApplicationService
       when "update", "create"
         Catalogue::PcCreateOrUpdateJob.perform_later(
           resource["catalogueBundle"]["catalogue"],
-          resource["catalogueBundle"]["active"] && !resource["catalogueBundle"]["suspended"],
+          object_status(resource["catalogueBundle"]["active"], resource["catalogueBundle"]["suspended"]),
           modified_at
         )
       end
@@ -81,7 +83,7 @@ class Jms::ManageMessage < ApplicationService
       if action != "delete" && resource["datasourceBundle"]["datasource"]
         Datasource::PcCreateOrUpdateJob.perform_later(
           hash,
-          resource["datasourceBundle"]["active"] && !resource["datasourceBundle"]["suspended"]
+          object_status(resource["datasourceBundle"]["active"], resource["datasourceBundle"]["suspended"])
         )
       elsif action == "delete"
         Datasource::DeleteJob.perform_later(hash["id"])

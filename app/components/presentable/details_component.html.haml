@@ -20,6 +20,7 @@
                                   type: group[:type] || "single",
                                   clazz: group[:clazz] || "",
                                   nested: group[:nested] || "",
+                                  inactive: @object.suspended? && !group[:active_when_suspended],
                                   with_desc: group[:with_desc] || false,
                                   preview: @preview
       .related-container

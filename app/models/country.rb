@@ -17,6 +17,8 @@ class Country
 
   ISO3166::Data.register(alpha2: "N/E", iso_short_name: "Non-European", translations: { "en" => "Non-European" })
 
+  ISO3166::Data.register(alpha2: "OT", iso_short_name: "Other", translations: { "en" => "Other" })
+
   ISO3166::Data.unregister("GB")
   ISO3166::Data.unregister("GR")
 

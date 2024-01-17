@@ -44,7 +44,7 @@ class Backoffice::BundlePolicy < ApplicationPolicy
   end
 
   def publish?
-    managed? && record.status == "draft"
+    managed? && (record.unpublished? || record.draft?)
   end
 
   def permitted_attributes

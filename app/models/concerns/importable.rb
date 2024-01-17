@@ -2,7 +2,8 @@
 
 module Importable
   def object_status(active, suspended)
-    active && !suspended ? :published : :draft
+    current = active ? :published : :unpublished
+    suspended && active ? :suspended : current
   end
 
   def map_alternative_identifier(identifier)

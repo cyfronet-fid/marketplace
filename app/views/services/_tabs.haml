@@ -31,7 +31,9 @@
             data: { probe: "", "service-id": service.id, e2e: "service-details-btn",
             "shepherd-tour-target": "service-more-about" }
         %li.nav-item
-          = link_to _("Reviews (%{ssoc})") % { ssoc: service.service_opinion_count },
+          = link_to_unless service.suspended?, _("Reviews (%{ssoc})") % { ssoc: service.service_opinion_count },
             service_opinions_path(service, go_to_search_query_params(params)),
-            class: "nav-link #{"active" if controller.controller_name == "opinions"}", role: "tab",
-            data: { probe: "", "service-id": service.id, e2e: "service-reviews-btn" }
+            class: "nav-link #{"active" if controller.controller_name == "opinions"}",
+            role: "tab", data: { probe: "", "service-id": service.id, e2e: "service-reviews-btn" } do
+            %a.nav-link{ class: "#{"suspended" if service.suspended?}" }
+              = _("Reviews (%{ssoc})") % { ssoc: service.service_opinion_count }

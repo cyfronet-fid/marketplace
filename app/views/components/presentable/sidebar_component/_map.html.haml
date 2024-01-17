@@ -1,4 +1,4 @@
-%ul.list-group
+%ul.list-group{ class: "#{"suspended" if inactive}" }
   - fields.map do |field|
     - if object.send(field).present?
       %li{ class: ("links" if nested.present? && nested[field.to_sym] == "link") }
@@ -18,12 +18,12 @@
             %ul
               - get_only_regions(object.send(field)).each do |c|
                 %li
-                  = link_to c, services_geographical_availabilities_link(object, c),
+                  = link_to c, inactive ? "#" : services_geographical_availabilities_link(object, c),
                   "data-preview-target": local_assigns[:preview] ? "link" : ""
               - if get_only_countries(object.send(field)).present?
                 - get_only_countries(object.send(field)).each do |c|
                   %li.geographical
-                    = link_to c, services_geographical_availabilities_link(object, c),
+                    = link_to c, inactive ? "#" : services_geographical_availabilities_link(object, c),
                     "data-preview-target": local_assigns[:preview] ? "link" : ""
         - else
           %div{ id: t(".#{field}"), class: object.send(field).size > 1 ? "collapse" : nil }
@@ -32,7 +32,7 @@
                 - if nested.present? && nested[field.to_sym].present?
                   - if nested[field.to_sym] == "link"
                     %li.links
-                      = link_to field.humanize, element, "data-probe": "",
+                      = link_to field.humanize, inactive ? "#" : element, "data-probe": "",
                       "data-preview-target": local_assigns[:preview] ? "link" : ""
                       %i.fas.fa-arrow-right
                   - else

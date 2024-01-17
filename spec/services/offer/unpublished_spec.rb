@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Offer::Draft, backend: true do
+RSpec.describe Offer::Unpublish, backend: true do
   context "#bundled_offers" do
     it "doesn't send notification if no bundle offers" do
       drafted_offer = create(:offer)
@@ -28,15 +28,15 @@ RSpec.describe Offer::Draft, backend: true do
         expect(bundle.status).to eq("draft")
       end
 
-      it "doesn't allow to change to draft for main offer" do
-        expect { described_class.call(bundle_offer) }.to_not change { ActionMailer::Base.deliveries.count }
+      it "change to draft for main offer" do
+        expect { described_class.call(bundle_offer) }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
         bundle_offer.reload
         bundle.reload
 
         expect(bundle_offer.valid?).to be_truthy
-        expect(bundle_offer.status).to eq("published")
-        expect(bundle.status).to eq("published")
+        expect(bundle_offer.status).to eq("unpublished")
+        expect(bundle.status).to eq("unpublished")
       end
     end
   end

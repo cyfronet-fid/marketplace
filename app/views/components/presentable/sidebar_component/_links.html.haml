@@ -1,4 +1,4 @@
-%ul.list-group
+%ul.list-group{ class: "#{"suspended" if inactive}" }
   - fields.each do |field|
     - if object.send(field).present?
       - object.send(field).each_with_index do |link, idx|

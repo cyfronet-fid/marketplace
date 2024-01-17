@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-class Service::Delete
+class Service::Delete < ApplicationService
   def initialize(service_eid, source: "eosc_registry")
+    super()
     @service =
       Service.joins(:sources).find_by("service_sources.source_type": source, "service_sources.eid": service_eid)
   end

@@ -7,6 +7,7 @@ class Service < ApplicationRecord
   include Publishable
   include Presentable
   include Viewable
+  include Statusable
 
   extend FriendlyId
   friendly_id :name, use: :slugged
@@ -18,11 +19,10 @@ class Service < ApplicationRecord
 
   attr_accessor :catalogue_id, :monitoring_status, :bundle_id
 
-  PUBLIC_STATUSES = %w[published unverified errored].freeze
   SERVICE_TYPES = %w[Service Datasource].freeze
 
   scope :horizontal, -> { where(horizontal: true) }
-  scope :visible, -> { where(status: %i[published unverified]) }
+  scope :visible, -> { where(status: %i[published unverified suspended]) }
   scope :datasources, -> { where(type: "Datasource") }
 
   has_one_attached :logo
@@ -42,16 +42,6 @@ class Service < ApplicationRecord
          production: "production",
          retired: "retired"
        }
-
-  STATUSES = {
-    published: "published",
-    unverified: "unverified",
-    draft: "draft",
-    errored: "errored",
-    deleted: "deleted"
-  }.freeze
-
-  enum status: STATUSES
 
   has_many :service_alternative_identifiers
   has_many :alternative_identifiers, through: :service_alternative_identifiers
@@ -259,7 +249,6 @@ class Service < ApplicationRecord
               minimum: 1,
               message: "are required. Please add at least one"
             }
-  validates :status, presence: true
   validates :trls, length: { maximum: 1 }
   validates :life_cycle_statuses, length: { maximum: 1 }
   validates :geographical_availabilities,

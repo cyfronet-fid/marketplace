@@ -3,7 +3,7 @@
 class ServicePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.where(status: %i[published unverified errored])
+      scope.where(status: Statusable::VISIBLE_STATUSES)
     end
   end
 

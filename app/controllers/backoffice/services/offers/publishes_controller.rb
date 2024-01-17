@@ -5,9 +5,12 @@ class Backoffice::Services::Offers::PublishesController < Backoffice::Applicatio
 
   def create
     if Offer::Publish.call(@offer)
+      flash[:notice] = "Offer published successfully"
       redirect_to backoffice_service_path(@service)
     else
-      flash[:alert] = "Offer not published, errors: #{@offer.errors.messages}"
+      flash[:alert] =
+        "Offer cannot be published. Please ensure your form is properly completed. " +
+          "#{@offer.errors.messages.each.map { |k, v| "The field #{k} #{v.join(", ")}" }.join(", ")}"
       redirect_to edit_backoffice_service_offer_path(@service, @offer)
     end
   end

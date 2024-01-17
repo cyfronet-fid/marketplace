@@ -3,14 +3,13 @@
 class Bundle < ApplicationRecord
   include Offerable
   include Viewable
+  include Statusable
 
   # include Offer::Parameters
 
   acts_as_taggable
 
   searchkick word_middle: %i[offer_name description], highlight: %i[offer_name description]
-
-  STATUSES = { published: "published", draft: "draft", deleted: "deleted" }.freeze
 
   counter_culture :service,
                   column_name: proc { |model| model.published? ? "bundles_count" : nil },
@@ -19,8 +18,6 @@ class Bundle < ApplicationRecord
                   }
 
   before_save :clear_training
-
-  enum status: STATUSES
 
   belongs_to :service, optional: false
   belongs_to :main_offer, class_name: "Offer", optional: false
