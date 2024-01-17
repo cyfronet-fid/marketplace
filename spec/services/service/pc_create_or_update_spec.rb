@@ -103,8 +103,8 @@ RSpec.describe Service::PcCreateOrUpdate, backend: true do
 
   private
 
-  def stub_described_class(jms_service, is_active: true, modified_at: Time.now)
-    described_service = Service::PcCreateOrUpdate.new(jms_service, test_url, is_active, modified_at, nil)
+  def stub_described_class(jms_service, status: :published, modified_at: Time.now)
+    described_service = Service::PcCreateOrUpdate.new(jms_service, test_url, status, modified_at, nil)
 
     stub_http_file(
       described_service,

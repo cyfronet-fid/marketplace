@@ -6,11 +6,13 @@ class Offer::ApplicationService < ApplicationService
     @offer = offer
     @service = @offer.service
     @bundles = @offer.bundles.to_a
+    @main_bundles = @offer.main_bundles.to_a
   end
 
   private
 
   def unbundle!
+    @main_bundles.each { |bundle| Bundle::Unpublish.call(bundle) }
     @bundles.each do |bundle|
       Bundle::Update.call(
         bundle,

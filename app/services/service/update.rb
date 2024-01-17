@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-class Service::Update < ApplicationService
+class Service::Update < Service::ApplicationService
   def initialize(service, params, logo = nil)
-    super()
-    @service = service
+    super(service)
     @params = params
     @logo = logo
   end

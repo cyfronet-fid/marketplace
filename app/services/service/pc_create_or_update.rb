@@ -9,16 +9,17 @@ class Service::PcCreateOrUpdate
   class NotUpdatedError < StandardError
   end
 
-  def initialize(eosc_registry_service, eosc_registry_base_url, is_active, modified_at, token)
+  def initialize(eosc_registry_service, eosc_registry_base_url, status, modified_at, token)
     @error_message = "Service haven't been updated. Message #{eosc_registry_service}"
     @logo = eosc_registry_service["logo"]
-    @is_active = is_active
+    @status = status
+    @is_active = status == :published
     @source_type = "eosc_registry"
     @mp_service =
       Service
         .joins(:sources)
         .find_by("service_sources.source_type": @source_type, "service_sources.eid": [eosc_registry_service["id"]])
-    eosc_registry_service["status"] = @is_active ? "published" : "draft"
+    eosc_registry_service["status"] = @status
     @service_hash = Importers::Service.new(eosc_registry_service, modified_at, eosc_registry_base_url, token).call
     @new_update_available = Service::PcCreateOrUpdate.new_update_available(@mp_service, modified_at)
   end

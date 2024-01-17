@@ -17,6 +17,8 @@ FactoryBot.define do
         "results" => [
           {
             "service" => {
+              "active" => true,
+              "suspended" => false,
               "id" => "phenomenal.phenomenal",
               "webpage" => "https://portal.phenomenal-h2020.eu/home",
               "name" => "PhenoMeNal",

@@ -7,18 +7,19 @@ class Catalogue::PcCreateOrUpdate
   class NotUpdatedError < StandardError
   end
 
-  def initialize(eosc_registry_catalogue, is_active, modified_at)
+  def initialize(eosc_registry_catalogue, status, modified_at)
     @error_message = "Catalogue haven't been updated. Message #{eosc_registry_catalogue}"
-    @is_active = is_active
+    @status = status
     @source_type = "eosc_registry"
     @mp_catalogue = Catalogue.find_by(pid: eosc_registry_catalogue["id"])
     @catalogue_hash = Importers::Catalogue.new(eosc_registry_catalogue, modified_at).call
+    @catalogue_hash[:status] = @status
     @new_update_available = Catalogue::PcCreateOrUpdate.new_update_available(@mp_catalogue, modified_at)
     @logo = eosc_registry_catalogue["logo"]
   end
 
   def call
-    create_new = @mp_catalogue.nil? && @is_active
+    create_new = @mp_catalogue.nil? && @status == :published
     return Catalogue::PcCreateOrUpdate.create_catalogue(@catalogue_hash, @logo) if create_new
     return @mp_catalogue unless @new_update_available
 

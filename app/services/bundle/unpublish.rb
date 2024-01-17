@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-class Bundle::Publish < Bundle::ApplicationService
+class Bundle::Unpublish < Bundle::ApplicationService
   def call
-    if @bundle.update(status: :published)
-      notify_bundled!
+    if @bundle.update(status: :unpublished)
+      notify_unbundled!
       @bundle.service.reindex
       @bundle.offers.reindex
     else

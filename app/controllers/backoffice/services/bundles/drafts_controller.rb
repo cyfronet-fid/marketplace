@@ -4,13 +4,14 @@ class Backoffice::Services::Bundles::DraftsController < Backoffice::ApplicationC
   before_action :find_and_authorize
 
   def create
-    if Bundle::Draft.call(@bundle)
+    if Bundle::Unpublish.call(@bundle)
+      flash[:notice] = "Bundle unpublished successfully"
       redirect_to backoffice_service_path(@service)
     else
       flash[:alert] =
-        "Bundle not drafted, errors: " +
+        "Bundle cannot be unpublished. Please ensure your form is properly completed. " +
           "#{@bundle.errors.messages.each.map { |k, v| "The field #{k} #{v.join(", ")}" }.join(", ")}"
-      redirect_to edit_backoffice_service_offer_path(@service, @bundle)
+      redirect_to edit_backoffice_service_bundle_path(@service, @bundle)
     end
   end
 

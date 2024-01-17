@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-class Bundle::Update < ApplicationService
+class Bundle::Update < Bundle::ApplicationService
   def initialize(bundle, params, external_update: false)
-    super()
-    @bundle = bundle
+    super(bundle)
     @params = params
     @external_update = external_update
     @current_offer_ids = @params["offer_ids"] || @params["offers"]&.map(&:id) || []
@@ -15,7 +14,8 @@ class Bundle::Update < ApplicationService
     result = @bundle.update(@params)
     if @external_update
       notify_own_offer!
-      @bundle = Bundle::Draft.call(@bundle, empty_offers: @current_offer_ids.empty?)
+      @bundle =
+        @current_offer_ids.empty? ? Bundle::Draft.call(@bundle, empty_offers: true) : Bundle::Unpublish.call(@bundle)
     else
       public_before = @bundle.published?
       notify_bundled_offers! if result && public_before

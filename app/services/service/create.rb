@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-class Service::Create < ApplicationService
+class Service::Create < Service::ApplicationService
   def initialize(service, logo = nil)
-    super()
-    @service = service
+    super(service)
     @logo = logo
   end
 

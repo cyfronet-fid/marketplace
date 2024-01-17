@@ -3,3 +3,7 @@
   .container
     .alert.alert-danger.mb-0.text-center
       = _("This datasource is not up to date because of invalid import data. Reason: #{error_reason}")
+- if service.suspended?
+  .container
+    .alert.alert-info.mb-0.text-left
+      = _("Service currently unavailable; some links may not be operational.")

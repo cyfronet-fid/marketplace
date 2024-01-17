@@ -12,7 +12,8 @@ RSpec.describe Provider::PcCreateOrUpdate, backend: true do
   it "should create provider with source and upstream is true" do
     original_stdout = $stdout
     $stdout = StringIO.new
-    expect { described_class.new(published_provider_response, true, Time.now).call }.to change { Provider.count }.by(1)
+    expect { described_class.new(published_provider_response, :published, Time.now).call }.to change { Provider.count }
+      .by(1)
 
     provider = Provider.last
 
@@ -24,7 +25,7 @@ RSpec.describe Provider::PcCreateOrUpdate, backend: true do
     $stdout = original_stdout
   end
 
-  it "should update provider when is_active is true" do
+  it "should update provider when it is active" do
     original_stdout = $stdout
     $stdout = StringIO.new
     provider =
@@ -37,7 +38,7 @@ RSpec.describe Provider::PcCreateOrUpdate, backend: true do
     expect do
       described_class.new(
         create(:jms_published_provider_response, eid: "new.provider", name: "Supper new name for updated  provider"),
-        true,
+        :published,
         Time.now.to_i
       ).call
     end.to change { Provider.count }.by(0)
@@ -52,7 +53,7 @@ RSpec.describe Provider::PcCreateOrUpdate, backend: true do
     $stdout = original_stdout
   end
 
-  it "should update provider when is_active is false" do
+  it "should update provider when it isn't active" do
     original_stdout = $stdout
     $stdout = StringIO.new
     provider =
@@ -65,7 +66,7 @@ RSpec.describe Provider::PcCreateOrUpdate, backend: true do
     expect do
       described_class.new(
         create(:jms_draft_provider_response, eid: "new.provider", name: "Supper new name for updated  provider"),
-        false,
+        :unpublished,
         Time.now.to_i
       ).call
     end.to change { Provider.count }.by(0)
@@ -76,14 +77,15 @@ RSpec.describe Provider::PcCreateOrUpdate, backend: true do
     expect(updated_provider.sources.length).to eq(1)
     expect(updated_provider.sources[0].eid).to eq("new.provider")
     expect(updated_provider.upstream_id).to eq(updated_provider.sources[0].id)
-    expect(updated_provider.draft?).to be_truthy
+    expect(updated_provider.unpublished?).to be_truthy
     $stdout = original_stdout
   end
 
-  it "should create provider with source and upstream and is_active is false" do
+  it "should create provider with source and upstream and it isn't active" do
     original_stdout = $stdout
     $stdout = StringIO.new
-    expect { described_class.new(draft_provider_response, false, Time.now).call }.to change { Provider.count }.by(1)
+    expect { described_class.new(draft_provider_response, :unpublished, Time.now).call }.to change { Provider.count }
+      .by(1)
 
     provider = Provider.last
 
@@ -91,7 +93,7 @@ RSpec.describe Provider::PcCreateOrUpdate, backend: true do
     expect(provider.sources.length).to eq(1)
     expect(provider.sources[0].eid).to eq("tp")
     expect(provider.upstream_id).to eq(provider.sources[0].id)
-    expect(provider.draft?).to be_truthy
+    expect(provider.unpublished?).to be_truthy
     $stdout = original_stdout
   end
 end

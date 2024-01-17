@@ -3,7 +3,7 @@
 class ServiceContextPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.where(status: %i[published unverified errored])
+      scope.where(status: %i[published unverified suspended errored])
     end
   end
 
@@ -12,7 +12,8 @@ class ServiceContextPolicy < ApplicationPolicy
   end
 
   def order?
-    permitted? && record.service.offers? && record.service.offers.any?(&:published?)
+    permitted? && record.service.status.in?(Statusable::PUBLIC_STATUSES) && record.service.offers? &&
+      record.service.offers.any?(&:published?)
   end
 
   private
@@ -21,7 +22,8 @@ class ServiceContextPolicy < ApplicationPolicy
     service = record.service
     from_backoffice = record.from_backoffice || false
 
-    has_permission = public_access? || (service.draft? && additional_access? && from_backoffice)
+    has_permission =
+      public_access? || ((service.draft? || service.unpublished?) && additional_access? && from_backoffice)
     raise ActiveRecord::RecordNotFound unless has_permission
     true
   end
@@ -29,7 +31,7 @@ class ServiceContextPolicy < ApplicationPolicy
   def public_access?
     service = record.service
 
-    service.published? || service.unverified? || service.errored?
+    !(service.draft? || service.unpublished? || service.deleted?)
   end
 
   def additional_access?

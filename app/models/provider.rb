@@ -5,6 +5,7 @@ class Provider < ApplicationRecord
   include ImageHelper
   include Publishable
   include Viewable
+  include Statusable
 
   extend FriendlyId
   friendly_id :pid
@@ -13,26 +14,21 @@ class Provider < ApplicationRecord
 
   searchkick word_middle: [:provider_name]
 
-  STATUSES = { published: "published", deleted: "deleted", draft: "draft" }.freeze
-
-  enum status: STATUSES
-
   def search_data
     { provider_id: id, provider_name: name, service_ids: service_ids }
   end
 
   before_save { self.catalogue = Catalogue.find(catalogue_id) if catalogue_id.present? }
-
   after_save :propagate_to_ess
 
   scope :active, -> { where.not(status: %i[deleted draft]) }
 
   attr_accessor :catalogue_id
 
-  has_one_attached :logo
-
   serialize :participating_countries, Country::Array
   serialize :country, Country
+
+  has_one_attached :logo
 
   has_many :provider_alternative_identifiers
   has_many :alternative_identifiers, through: :provider_alternative_identifiers
@@ -86,19 +82,14 @@ class Provider < ApplicationRecord
 
   belongs_to :upstream, foreign_key: "upstream_id", class_name: "ProviderSource", optional: true
 
-  accepts_nested_attributes_for :link_multimedia_urls, reject_if: :all_blank, allow_destroy: true
-
   has_one :provider_catalogue, dependent: :destroy
   has_one :catalogue, through: :provider_catalogue
 
+  accepts_nested_attributes_for :link_multimedia_urls, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :alternative_identifiers, allow_destroy: true
-
   accepts_nested_attributes_for :main_contact, allow_destroy: true
-
   accepts_nested_attributes_for :public_contacts, allow_destroy: true
-
   accepts_nested_attributes_for :sources, allow_destroy: true
-
   accepts_nested_attributes_for :data_administrators, allow_destroy: true
 
   auto_strip_attributes :name, nullify: false
@@ -140,7 +131,6 @@ class Provider < ApplicationRecord
               minimum: 1,
               message: "are required. Please add at least one"
             }
-  validates :status, presence: true
   validate :logo_variable, on: %i[create update]
   validate :validate_array_values_uniqueness
 

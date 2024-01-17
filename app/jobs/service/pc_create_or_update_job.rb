@@ -5,7 +5,7 @@ class Service::PcCreateOrUpdateJob < ApplicationJob
 
   rescue_from(Errno::ECONNREFUSED) { |exception| raise exception }
 
-  def perform(infra_service, eosc_registry_base_url, is_active, modified_at, token = nil)
-    Service::PcCreateOrUpdate.new(infra_service, eosc_registry_base_url, is_active, modified_at, token).call
+  def perform(infra_service, eosc_registry_base_url, status, modified_at, token = nil)
+    Service::PcCreateOrUpdate.new(infra_service, eosc_registry_base_url, status, modified_at, token).call
   end
 end

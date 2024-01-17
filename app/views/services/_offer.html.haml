@@ -2,11 +2,12 @@
   .card.m-0.mb-5.w-100.d-block
     = render "services/offers/description", offer: offer
     = render "services/offers/parameters", id: offer.id,
-      technical_parameters: offer.attributes.map(&:to_json)
-    .card-button.text-center
-      %label.d-block
-        = link_to service_offers_path(offer.service, customizable_project_item: { offer_id: offer.iid }),
-        "data-probe": "", "data-service-id": offer.service.id, "data-e2e": "select-offer-btn",
-        "data-preview-target": local_assigns[:preview] ? "link" : "", method: :put do
-          %span.btn.btn-secondary.font-weight-bolder
-            = _("Select an offer")
+      technical_parameters: offer.attributes.map(&:to_json), service: offer.service
+    - if policy(ServiceContext.new(offer.service, params.key?(:from) && params[:from] == "backoffice_service")).order?
+      .card-button.text-center
+        %label.d-block
+          = link_to service_offers_path(offer.service, customizable_project_item: { offer_id: offer.iid }),
+          "data-probe": "", "data-service-id": offer.service.id, "data-e2e": "select-offer-btn",
+          "data-preview-target": local_assigns[:preview] ? "link" : "", method: :put do
+            %span.btn.btn-secondary.font-weight-bolder
+              = _("Select an offer")

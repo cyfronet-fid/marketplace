@@ -1,6 +1,7 @@
 - content_for :title, @service.name
 - breadcrumb :resource_details, @service
-.container{ "data-controller": "comparison" }
+= render "services/errors", service: @service
+.container{ class: "#{"suspended" if @service.suspended?}", "data-controller": "comparison" }
   - dynamic_class = params[:from] == "backoffice_service" ? "backoffice" : nil
   .pt-4.service-box-redesign.service-detail{ class: dynamic_class }
     = render Presentable::HeaderComponent.new(object: @service,
@@ -8,7 +9,7 @@
                         subtitle: @service.tagline,
                         abbreviation: @service.abbreviation,
                         comparison_enabled: @comparison_enabled,
-                        preview: local_assigns[:preview],
+                        preview: local_assigns[:preview] || @service.suspended?,
                         show_checkboxes: params[:from].blank?,
                         favourite_services: @favourite_services) do |c|
       - c.buttons do

@@ -13,5 +13,6 @@
                     type: group[:type] || "",
                     clazz: group[:clazz] || "",
                     with_desc: group[:with_desc] || false,
+                    inactive: @object.suspended? && !group[:active_when_suspended],
                     filter_query: group[:filter_query] || [],
                     nested: group[:nested] || []
