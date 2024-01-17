@@ -6,10 +6,11 @@
        contact_email: bundle.contact_email || "",
        related_training: bundle.related_training_url || "",
        helpdesk_url: bundle.helpdesk_url || ""
-    .card-button.text-center
-      %label
-        = link_to service_offers_path(bundle.service,
-              customizable_project_item: { offer_id: bundle.main_offer.iid, bundle_id: bundle.iid }),
-              "data-probe": "", "data-service-id": bundle.service.id, method: :put do
-          %span.btn.btn-primary
-            = _("Select bundle")
+    - if policy(ServiceContext.new(bundle.service, params.key?(:from) && params[:from] == "backoffice_service")).order?
+      .card-button.text-center
+        %label
+          = link_to service_offers_path(bundle.service,
+                customizable_project_item: { offer_id: bundle.main_offer.iid, bundle_id: bundle.iid }),
+                "data-probe": "", "data-service-id": bundle.service.id, method: :put do
+            %span.btn.btn-primary
+              = _("Select bundle")

@@ -12,10 +12,11 @@
           .col-12
             = render "services/related", related_services: @similar_services, title: similar_services_title,
             preview: @preview
-        .row
-          .col-12
-            = render "services/related", related_services: @related_services, title: related_services_title,
-            preview: @preview
+        - unless @object.suspended?
+          .row
+            .col-12
+              = render "services/related", related_services: @related_services, title: related_services_title,
+              preview: @preview
 
     %sidebar.col-12.col-xl-3{ "data-shepherd-tour-target": "service-classification" }
       = render "components/presentable/explore_links", object: @object

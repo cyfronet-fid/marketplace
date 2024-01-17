@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
-class Service::Publish < ApplicationService
+class Service::Publish < Service::ApplicationService
   def initialize(service, verified: true)
-    super()
-    @service = service
-    @status = verified ? :published : :unverified
+    super(service)
+    @status = verified ? "published" : "unverified"
   end
 
   def call

@@ -36,7 +36,7 @@ class Backoffice::OfferPolicy < ApplicationPolicy
   end
 
   def publish?
-    managed? && record.persisted? && record.draft?
+    managed? && record.persisted? && (record.unpublished? || record.draft?)
   end
 
   def draft?

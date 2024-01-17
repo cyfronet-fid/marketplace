@@ -4,11 +4,13 @@ class Backoffice::Services::Offers::DraftsController < Backoffice::ApplicationCo
   before_action :find_and_authorize
 
   def create
-    if Offer::Draft.call(@offer)
-      flash[:notice] = "Offer changed to draft successfully"
+    if Offer::Unpublish.call(@offer)
+      flash[:notice] = "Offer unpublished successfully"
       redirect_to backoffice_service_path(@service)
     else
-      flash[:alert] = "Offer cannot be changed to draft. Reason: #{@offer.errors.full_messages.join(", ")}"
+      flash[:alert] =
+        "Offer cannot be unpublished. Please ensure your form is properly completed. " +
+          "#{@offer.errors.messages.each.map { |k, v| "The field #{k} #{v.join(", ")}" }.join(", ")}"
       redirect_to edit_backoffice_service_offer_path(@service, @offer)
     end
   end

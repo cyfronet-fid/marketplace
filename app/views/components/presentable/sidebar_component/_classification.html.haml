@@ -1,4 +1,4 @@
-%ul.list-group.domains.mt-3.mb-4
+%ul.list-group.domains.mt-3.mb-4{ class: "#{"suspended" if inactive}" }
   - fields.map do |field|
     - if object.send(field).present?
       - field_tree(object, field).each do |parent, children|

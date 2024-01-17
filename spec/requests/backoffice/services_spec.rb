@@ -26,13 +26,13 @@ RSpec.describe "Backoffice service", backend: true do
       expect(service).to be_published
     end
 
-    it "I can change service status to draft" do
+    it "I can change service status to unpublished" do
       service = create(:service, owners: [user])
 
       post backoffice_service_draft_path(service)
       service.reload
 
-      expect(service).to be_draft
+      expect(service).to be_unpublished
     end
 
     it "I can't publish a service with deleted status" do

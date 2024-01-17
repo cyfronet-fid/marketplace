@@ -5,19 +5,18 @@ class Offer < ApplicationRecord
   include Offerable
   include Offer::Parameters
   include ActionView::Helpers::TextHelper
+  include Statusable
 
   acts_as_taggable
 
   searchkick word_middle: %i[offer_name description], highlight: %i[offer_name description]
-
-  STATUSES = { published: "published", draft: "draft", deleted: "deleted" }.freeze
 
   def search_data
     { offer_name: name, description: description, service_id: service_id, order_type: order_type }
   end
 
   def should_index?
-    status == STATUSES[:published] && offers_count > 1
+    status == "published" && offers_count > 1
   end
 
   scope :bundle_exclusive, -> { where(bundle_exclusive: true, status: :published) }
@@ -27,7 +26,7 @@ class Offer < ApplicationRecord
             bundle_exclusive: false,
             status: :published,
             services: {
-              status: %i[published unverified]
+              status: %i[published unverified suspended errored]
             }
           )
         }
@@ -39,8 +38,6 @@ class Offer < ApplicationRecord
                   column_names: {
                     ["offers.status = ?", "published"] => "offers_count"
                   }
-
-  enum status: STATUSES
 
   belongs_to :service
   belongs_to :primary_oms, class_name: "OMS", optional: true
@@ -57,7 +54,6 @@ class Offer < ApplicationRecord
   validate :set_iid, on: :create
   validates :service, presence: true
   validates :iid, presence: true, numericality: true
-  validates :status, presence: true
   validates :order_url, mp_url: true, if: :order_url?
 
   validate :primary_oms_exists?, if: -> { primary_oms_id.present? }

@@ -5,7 +5,7 @@ class Catalogue::PcCreateOrUpdateJob < ApplicationJob
 
   rescue_from(Errno::ECONNREFUSED) { |exception| raise exception }
 
-  def perform(catalogue, is_active, modified_at)
-    Catalogue::PcCreateOrUpdate.new(catalogue, is_active, modified_at).call
+  def perform(catalogue, status, modified_at)
+    Catalogue::PcCreateOrUpdate.new(catalogue, status, modified_at).call
   end
 end

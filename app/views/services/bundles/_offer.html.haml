@@ -20,10 +20,9 @@
           %article.mt-3
             %p
               = truncate(service.tagline, length: 1000, escape: false)
-          -# jeśli chcesz zmienić style w środku, to patrz jak się to zachowa w backoffice i na stronie serwisu
           .bundle-parameters-list
             = render "services/offers/parameters",
-              technical_parameters: offer.attributes.map(&:to_json)
+              technical_parameters: offer.attributes.map(&:to_json), service: offer.service
 
       .row.service-links
         .col-12.col-lg-12.row

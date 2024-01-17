@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class Provider::PcCreateOrUpdate < ApplicationService
-  def initialize(eosc_registry_provider, is_active, modified_at)
+  def initialize(eosc_registry_provider, status, modified_at)
     super()
     @eosc_registry_provider = eosc_registry_provider
     @eid = eosc_registry_provider["id"]
-    @is_active = is_active
+    @status = status
     @modified_at = modified_at
   end
 
@@ -16,7 +16,7 @@ class Provider::PcCreateOrUpdate < ApplicationService
     if mapped_provider.nil?
       mapped_provider = Provider.new(provider_hash)
       mapped_provider.set_default_logo
-      mapped_provider.status = @is_active ? "published" : "draft"
+      mapped_provider.status = @status
       if mapped_provider.save!
         provider_source =
           ProviderSource.create!(provider_id: mapped_provider.id, source_type: "eosc_registry", eid: @eid)
@@ -24,7 +24,7 @@ class Provider::PcCreateOrUpdate < ApplicationService
     else
       mapped_provider.update(provider_hash)
       provider_source = mapped_provider.sources.find_by(source_type: "eosc_registry")
-      mapped_provider.status = @is_active ? "published" : "draft"
+      mapped_provider.status = @status
     end
     mapped_provider.update(upstream_id: provider_source.id) if provider_source.present?
 

@@ -55,7 +55,8 @@ module Presentable::DetailsHelper
       clazz: "public_contacts",
       nested: {
         email: "email"
-      }
+      },
+      active_when_suspended: true
     }
   end
 
@@ -76,16 +77,29 @@ module Presentable::DetailsHelper
         target_users: "name",
         access_types: "name",
         access_modes: "name"
-      }
+      },
+      active_when_suspended: false
     }
   end
 
   def availability
-    { name: "availability", template: "array", fields: %w[geographical_availabilities languages], with_desc: true }
+    {
+      name: "availability",
+      template: "array",
+      fields: %w[geographical_availabilities languages],
+      with_desc: true,
+      active_when_suspended: false
+    }
   end
 
   def marketing
-    { name: "marketing", template: "links", fields: %w[link_multimedia_urls link_use_cases_urls], type: "array" }
+    {
+      name: "marketing",
+      template: "links",
+      fields: %w[link_multimedia_urls link_use_cases_urls],
+      type: "array",
+      active_when_suspended: false
+    }
   end
 
   def dependencies
@@ -99,7 +113,8 @@ module Presentable::DetailsHelper
         related_services: "service",
         catalogue: "name",
         platforms: "name"
-      }
+      },
+      active_when_suspended: true
     }
   end
 
@@ -117,7 +132,8 @@ module Presentable::DetailsHelper
       nested: {
         funding_bodies: "name",
         funding_programs: "name"
-      }
+      },
+      active_when_suspended: false
     }
   end
 
@@ -130,7 +146,8 @@ module Presentable::DetailsHelper
         order_type: "label",
         order_url: "link"
       },
-      with_desc: true
+      with_desc: true,
+      active_when_suspended: true
     }
   end
 
@@ -143,7 +160,8 @@ module Presentable::DetailsHelper
       nested: {
         trls: "name",
         life_cycle_statuses: "name"
-      }
+      },
+      active_when_suspended: false
     }
   end
 
@@ -161,7 +179,8 @@ module Presentable::DetailsHelper
         status_monitoring_url
         maintenance_url
       ],
-      with_desc: true
+      with_desc: true,
+      active_when_suspended: false
     }
   end
 
@@ -212,7 +231,8 @@ module Presentable::DetailsHelper
       fields: %w[research_product_access_policies],
       nested: {
         research_product_access_policies: "name"
-      }
+      },
+      active_when_suspended: true
     }
   end
 
@@ -221,7 +241,8 @@ module Presentable::DetailsHelper
       name: "research_product_metadata_licensing",
       template: "links",
       fields: %w[link_research_product_metadata_license_urls],
-      type: "array"
+      type: "array",
+      active_when_suspended: true
     }
   end
   def research_product_metadata_access_policies
@@ -231,7 +252,8 @@ module Presentable::DetailsHelper
       fields: %w[research_product_metadata_access_policies],
       nested: {
         research_product_metadata_access_policies: "name"
-      }
+      },
+      active_when_suspended: false
     }
   end
 
@@ -352,9 +374,13 @@ module Presentable::DetailsHelper
     { name: "national_roadmaps", template: "list", fields: %w[national_roadmaps] }
   end
 
-  def monitoring_link(object)
-    link_to _("Show more details"),
-            "#{Mp::Application.config.monitoring_data_ui_url}/#{Mp::Application.config.monitoring_data_path}" +
-              "#{object.pid.to_s.partition(".").last}/details"
+  def monitoring_link(object, inactive)
+    if inactive
+      link_to _("Show more details")
+    else
+      link_to _("Show more details"),
+              "#{Mp::Application.config.monitoring_data_ui_url}/#{Mp::Application.config.monitoring_data_path}" +
+                "#{object.pid.to_s.partition(".").last}/details"
+    end
   end
 end

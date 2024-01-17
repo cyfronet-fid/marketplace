@@ -230,6 +230,7 @@ FactoryBot.define do
           "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" \
             "<tns:providerBundle xmlns:tns=\"http://einfracentral.eu\">" \
             "<tns:active>false</tns:active>" \
+            "<tns:suspended>false</tns:suspended>" \
             "<tns:latestOnboardingInfo>" \
             "<tns:actionType>rejected</tns:actionType>" \
             "</tns:latestOnboardingInfo>" \

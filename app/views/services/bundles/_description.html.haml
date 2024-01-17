@@ -1,4 +1,4 @@
-.card-body
+.card-body{ class: "#{"suspended" if bundle.service.suspended?}" }
   %span.text-sm-right.fa-pull-right.badge-right
     %i{ class: "ordertype #{order_type(bundle)}" }
     = t("offers.type.#{order_type(bundle)}")

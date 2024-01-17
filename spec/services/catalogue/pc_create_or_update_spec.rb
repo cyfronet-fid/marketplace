@@ -9,9 +9,9 @@ RSpec.describe Catalogue::PcCreateOrUpdate, backend: true do
   it "should create catalogue" do
     original_stdout = $stdout
     $stdout = StringIO.new
-    expect { described_class.new(published_catalogue_response, true, Time.now).call }.to change { Catalogue.count }.by(
-      1
-    )
+    expect { described_class.new(published_catalogue_response, :published, Time.now).call }.to change {
+      Catalogue.count
+    }.by(1)
 
     catalogue = Catalogue.last
 
@@ -30,7 +30,7 @@ RSpec.describe Catalogue::PcCreateOrUpdate, backend: true do
     expect do
       described_class.new(
         create(:jms_catalogue_response, eid: "tp", name: "Test Update Catalogue"),
-        true,
+        :published,
         Time.now.to_i
       ).call
     end.to change { Catalogue.count }.by(0)
@@ -48,7 +48,7 @@ RSpec.describe Catalogue::PcCreateOrUpdate, backend: true do
 
     original_stdout = $stdout
     $stdout = StringIO.new
-    expect { described_class.new(logoless_response, true, Time.now).call }.to change { Catalogue.count }.by(1)
+    expect { described_class.new(logoless_response, :published, Time.now).call }.to change { Catalogue.count }.by(1)
 
     catalogue = Catalogue.last
 
