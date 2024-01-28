@@ -46,4 +46,10 @@ module Presentable::HeaderHelper
       { "data-controller": "favourite" }
     end
   end
+
+  def ess_providers_resources_link(provider)
+    query = "/search/all_collection?q=*&fq=providers:\"#{provider.name}\"&fq=resource_organisation:\"#{provider.name}\""
+
+    Rails.configuration.search_service_base_url + query
+  end
 end
