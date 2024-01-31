@@ -8,7 +8,7 @@ Rswag::Ui.configure do |c|
   # then the list below should correspond to the relative paths for those endpoints
 
   Dir["swagger/**/*_swagger.json"].each do |file|
-    c.swagger_endpoint "/api_docs/#{file}", JSON.parse(File.read(file)).dig("info", "title")
+    c.openapi_endpoint "/api_docs/#{file}", JSON.parse(File.read(file)).dig("info", "title")
   end
 
   # Add Basic Auth in case your API is private

@@ -75,6 +75,10 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Fixed
 - Typo in the landing page (@goreck888)
 
+### Security
+- Update ruby to 3.3.0 (@goreck888)
+- Update rails to 6.1.7.6 (@goreck888)
+
 ## [3.54.2] 2023-12-27
 
 ### Changed

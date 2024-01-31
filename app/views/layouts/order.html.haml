@@ -2,8 +2,7 @@
 %html{ lang: "en" }
   = render "layouts/head"
   %body
-    - if ENV["MP_INSTANCE"]
-      = render "layouts/badge"
+    = render "layouts/badge" if ENV["MP_INSTANCE"]
     %header.container.white-bg
       %nav.navbar.navbar-expand-lg
         = link_to root_path, class: "navbar-brand col-7 col-lg-3 pl-0" do
@@ -22,8 +21,8 @@
       %hr.bottom-hr.mt-5.mb-4
       .navbar.pr-0.pl-0.order-bottom-nav
         .text-left.flex-grow-1
-          - if prev_visible_step_key
-            = link_to prev_title, url_for([@service, prev_visible_step_key]), class: "text-uppercase", "data-probe": ""
+          = link_to prev_title, url_for([@service, prev_visible_step_key]),
+          class: "text-uppercase", "data-probe": "" if prev_visible_step_key
         .ml-3.d-inline
           %button.btn.btn-primary{ form: "order-form", type: "submit",
             "data-probe": "summary", "data-service-id": @service.id }= next_title

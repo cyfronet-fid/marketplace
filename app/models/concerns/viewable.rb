@@ -17,9 +17,9 @@ module Viewable
     def path_pattern
       case self
       when Bundle
-        "#{id_construct(service)}\/bundles\/" + "#{iid}[$|\??|]"
+        "#{id_construct(service)}/bundles/" + "#{iid}[$|??|]"
       else
-        "#{self.class.name.pluralize.downcase}\/#{id_construct}"
+        "#{self.class.name.pluralize.downcase}/#{id_construct}"
       end
     end
 

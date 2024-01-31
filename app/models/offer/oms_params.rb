@@ -15,11 +15,11 @@ class Offer::OMSParams
     @object.key?(method) || @object.respond_to?(method)
   end
 
-  def method_missing(method, *args, &block)
+  def method_missing(method, *, &)
     if @object.key?(method)
       @object[method]
     elsif @object.respond_to?(method)
-      @object.send(method, *args, &block)
+      @object.send(method, *, &)
     end
   end
 

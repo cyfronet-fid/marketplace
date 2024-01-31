@@ -1,16 +1,16 @@
 :javascript
   if (!window.popstateHandler) {
     window.sourceIdOverride =
-      #{ @source_id_override.nil? ? "null" : ("'" + sanitize(@source_id_override) + "'").html_safe };
+      #{ @source_id_override.nil? ? "null" : ("'" + sanitize(h(@source_id_override)) + "'").html_safe };
 
     window.recommendationSourceId =
-      #{ @recommendation_source_id.nil? ? "null" : ("'" + sanitize(@recommendation_source_id) + "'").html_safe };
+      #{ @recommendation_source_id.nil? ? "null" : ("'" + sanitize(h(@recommendation_source_id)) + "'").html_safe };
 
     window.recommendationLastPageId =
-      #{ @last_page_id.nil? ? "null" : ("'" + sanitize(@last_page_id) + "'").html_safe };
+      #{ @last_page_id.nil? ? "null" : ("'" + sanitize(h(@last_page_id)) + "'").html_safe };
 
     window.recommendationPrevious =
-      #{ @recommendation_previous.nil? ? "null" : sanitize(@recommendation_previous) };
+      #{ @recommendation_previous.nil? ? "null" : sanitize(h(@recommendation_previous)) };
 
     if (window.recommendationSourceId != null) {
       sessionStorage.setItem('sourceId', window.sourceIdOverride ?? window.recommendationSourceId);

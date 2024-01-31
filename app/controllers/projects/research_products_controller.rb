@@ -5,7 +5,8 @@ class Projects::ResearchProductsController < Projects::ServicesController
 
   before_action :find_research_product
 
-  def show; end
+  def show
+  end
 
   def destroy
     @project_research_product =

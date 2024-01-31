@@ -54,8 +54,10 @@ class Importers::Catalogue < ApplicationService
     @data["hostingLegalEntity"] = Array(@data["hostingLegalEntity"]) || []
     @data["participatingCountries"] = Array(@data.dig("participatingCountries", "participatingCountry")) || []
     @data["tags"] = Array(@data.dig("tags", "tag")) || []
-    @data["publicContacts"] = Array.wrap(@data.dig("publicContacts", "publicContact")) || []
-    @data["scientificDomains"] = Array.wrap(@data.dig("scientificDomains", "scientificDomain")) || []
+    @data["publicContacts"] = Array.wrap(@data.dig("publicContacts", "publicContact"))
+    @data["scientificDomains"] = Array
+      .wrap(@data.dig("scientificDomains", "scientificDomain"))
+      .map { |sd| sd["scientificSubdomain"] } || []
     @data["users"] = Array.wrap(@data.dig("users", "user")) || []
   end
   # rubocop:enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity

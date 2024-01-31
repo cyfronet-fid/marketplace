@@ -22,7 +22,7 @@ class Offer < ApplicationRecord
 
   scope :bundle_exclusive, -> { where(bundle_exclusive: true, status: :published) }
   scope :inclusive,
-        -> {
+        -> do
           joins(:service).where(
             bundle_exclusive: false,
             status: :published,
@@ -30,7 +30,7 @@ class Offer < ApplicationRecord
               status: %i[published unverified suspended errored]
             }
           )
-        }
+        end
   scope :accessible, -> { joins(:service).where(status: :published, services: { status: Statusable::PUBLIC_STATUSES }) }
   scope :manageable, -> { where(status: Statusable::MANAGEABLE_STATUSES) }
 
@@ -67,13 +67,13 @@ class Offer < ApplicationRecord
   validate :check_oms_params, if: -> { current_oms.present? }
   validate :check_main_bundles, if: -> { draft? }
   validate :same_order_type_as_in_service,
-           if: -> {
+           if: -> do
              service&.order_type.present? &&
                (
                  (new_record? && service.offers.published.empty?) ||
-                   (persisted? && service.offers.published.select { |o| o.order_type == service&.order_type }.empty?)
+                   (persisted? && service.offers.published.none? { |o| o.order_type == service&.order_type })
                )
-           }
+           end
 
   before_destroy :check_main_bundles
 
@@ -121,11 +121,11 @@ class Offer < ApplicationRecord
   def oms_params_match?
     unless (Set.new(oms_params.keys) - Set.new(current_oms.custom_params.keys)).empty?
       errors.add(:oms_params, "additional unspecified keys added")
-      return
+      return false
     end
 
     missing_keys = Set.new(current_oms.custom_params.keys) - Set.new(oms_params.keys)
-    unless (missing_keys & Set.new(current_oms.mandatory_defaults.keys)).empty?
+    if missing_keys.intersect?(Set.new(current_oms.mandatory_defaults.keys))
       errors.add(:oms_params, "missing mandatory keys")
     end
   end

@@ -271,6 +271,10 @@ class Service < ApplicationRecord
     @main_category ||= categories.joins(:categorizations).find_by(categorizations: { main: true })
   end
 
+  def main_source
+    sources.first
+  end
+
   def set_first_category_as_main!
     categorizations.first&.update(main: true)
   end

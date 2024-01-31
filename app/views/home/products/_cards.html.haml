@@ -1,19 +1,19 @@
 - cards.each do |card|
-  - if card.present?
-    .col-6.col-lg-4
-      .branch-box
-        = link_to url.call(card), "data-e2e": "branch-link" do
-          -# this if should be removed after moving Marketplace locations into cms
-          - if card.is_a?(Hash)
-            .branch-icon
-              = image_pack_tag(card[:logo], alt: "#{card[:name]}")
-            .branch-name
-              = card[:name]
-          - else
-            .branch-icon
-              - if card.logo.attached? && card.logo.variable?
-                = image_tag card.logo.variant(resize: "84x84"), alt: card.name
-              - else
-                = image_pack_tag(default_logo, alt: "#{card.name}")
-            .branch-name
-              = card.name
+  - next unless card.present?
+  .col-6.col-lg-4
+    .branch-box
+      = link_to url.call(card), "data-e2e": "branch-link" do
+        -# this if should be removed after moving Marketplace locations into cms
+        - if card.is_a?(Hash)
+          .branch-icon
+            = image_pack_tag(card[:logo], alt: "#{card[:name]}")
+          .branch-name
+            = card[:name]
+        - else
+          .branch-icon
+            - if card.logo.attached? && card.logo.variable?
+              = image_tag card.logo.variant(resize: "84x84"), alt: card.name
+            - else
+              = image_pack_tag(default_logo, alt: "#{card.name}")
+          .branch-name
+            = card.name

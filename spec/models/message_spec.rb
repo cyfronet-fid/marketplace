@@ -185,8 +185,9 @@ RSpec.describe Message, backend: true do
 
             context ":internal_scope?" do
               it "doesn't send email" do
-                expect { create(:message, scope: :internal, author_role: author_role, messageable: project_item) }
-                  .not_to(change { ActionMailer::Base.deliveries.count })
+                expect do
+                  create(:message, scope: :internal, author_role: author_role, messageable: project_item)
+                end.not_to(change { ActionMailer::Base.deliveries.count })
               end
             end
           end

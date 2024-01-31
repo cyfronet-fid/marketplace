@@ -27,27 +27,25 @@ class TourFeedbacksController < ApplicationController
     if @errors.present? || !verify_recaptcha
       @form["share"] = tour_params["share"]
       @form["email"] = tour_params["email"]
-      return(
-        [
-          respond_to do |format|
-            format.js do
-              render "layouts/show_tour_feedback",
-                     status: :bad_request,
-                     locals: {
-                       feedback_form: "layouts/tours/modal_content",
-                       feedback_locals: {
-                         feedback: @feedback,
-                         errors: @errors,
-                         form: @form,
-                         tour_controller_name: @tour_controller_name,
-                         tour_controller_action: @tour_controller_action,
-                         tour_name: @tour_name
-                       }
+      return [
+        respond_to do |format|
+          format.js do
+            render "layouts/show_tour_feedback",
+                   status: :bad_request,
+                   locals: {
+                     feedback_form: "layouts/tours/modal_content",
+                     feedback_locals: {
+                       feedback: @feedback,
+                       errors: @errors,
+                       form: @form,
+                       tour_controller_name: @tour_controller_name,
+                       tour_controller_action: @tour_controller_action,
+                       tour_name: @tour_name
                      }
-            end
+                   }
           end
-        ]
-      )
+        end
+      ]
     end
 
     TourFeedback.new(
