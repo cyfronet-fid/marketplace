@@ -5,149 +5,151 @@ FactoryBot.define do
     skip_create
     initialize_with do
       # noinspection RubyStringKeysInHashInspection
-      next {
-        "total" => 2,
-        "from" => 0,
-        "to" => 2,
-        "results" => [
-          {
-            "metadata" => {
-              "registeredBy" => "John Doe",
-              "registeredAt" => "1549033448415",
-              "modifiedBy" => "John Doe",
-              "modifiedAt" => "1549624107536",
-              "source" => "EOSC",
-              "originalId" => nil
-            },
-            "active" => true,
-            "provider" => {
-              "id" => "bluebridge",
-              "name" => "BlueBRIDGE",
-              "website" => "https://www.bluebridge-vres.eu/",
-              "catalogueOfResources" => nil,
-              "publicDescOfResources" => nil,
-              "logo" => "https://about.west-life.eu/network/west-life/about/templates/westlife/images/west-life.png",
-              "additionalInfo" => "-",
-              "contactInformation" => nil,
+      next(
+        {
+          "total" => 2,
+          "from" => 0,
+          "to" => 2,
+          "results" => [
+            {
+              "metadata" => {
+                "registeredBy" => "John Doe",
+                "registeredAt" => "1549033448415",
+                "modifiedBy" => "John Doe",
+                "modifiedAt" => "1549624107536",
+                "source" => "EOSC",
+                "originalId" => nil
+              },
               "active" => true,
-              "status" => "approved",
-              "abbreviation" => "BlueBRIDGE",
-              "description" => "test",
-              "location" => {
-                "streetNameAndNumber" => "street",
-                "postalCode" => "00-000",
-                "city" => "test",
-                "region" => "WW",
-                "country" => "N/E"
+              "provider" => {
+                "id" => "bluebridge",
+                "name" => "BlueBRIDGE",
+                "website" => "https://www.bluebridge-vres.eu/",
+                "catalogueOfResources" => nil,
+                "publicDescOfResources" => nil,
+                "logo" => "https://about.west-life.eu/network/west-life/about/templates/westlife/images/west-life.png",
+                "additionalInfo" => "-",
+                "contactInformation" => nil,
+                "active" => true,
+                "status" => "approved",
+                "abbreviation" => "BlueBRIDGE",
+                "description" => "test",
+                "location" => {
+                  "streetNameAndNumber" => "street",
+                  "postalCode" => "00-000",
+                  "city" => "test",
+                  "region" => "WW",
+                  "country" => "N/E"
+                }
+              }
+            },
+            {
+              "metadata" => {
+                "registeredBy" => "John Doe",
+                "registeredAt" => "1549033448415",
+                "modifiedBy" => "John Doe",
+                "modifiedAt" => "1549624107536",
+                "source" => "EOSC",
+                "originalId" => nil
+              },
+              "active" => true,
+              "provider" => {
+                "id" => "phenomenal",
+                "name" => "Phenomenal",
+                "website" => "http://phenomenal-h2020.eu/home/",
+                "catalogueOfResources" => nil,
+                "publicDescOfResources" => nil,
+                "logo" => "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png",
+                "additionalInfo" => "-",
+                "contactInformation" => "",
+                "active" => true,
+                "status" => "approved",
+                "abbreviation" => "Phenomenal",
+                "description" => "test",
+                "location" => {
+                  "streetNameAndNumber" => "street",
+                  "postalCode" => "00-000",
+                  "city" => "test",
+                  "region" => "WW",
+                  "country" => "N/E"
+                }
+              }
+            },
+            {
+              "metadata" => {
+                "registeredBy" => "John Doe",
+                "registeredAt" => "1549033448415",
+                "modifiedBy" => "John Doe",
+                "modifiedAt" => "1549624107536",
+                "source" => "EOSC",
+                "originalId" => nil
+              },
+              "active" => true,
+              "provider" => {
+                "id" => "West-Life",
+                "name" => "World-wide E-infrastructure for structural biology",
+                "website" => "https://west-life.eu",
+                "catalogueOfResources" => "https://bio.tools/",
+                "publicDescOfResources" => "https://about.west-life.eu/network/west-life/services",
+                "logo" => "https://about.west-life.eu/network/west-life/about/templates/westlife/images/west-life.png",
+                "additionalInfo" =>
+                  "https://about.west-life.eu/network/west-life/about/project. For more information contact chris.morris@stfc.ac.uk",
+                "contactInformation" => "+44 1925 603689",
+                "active" => true,
+                "status" => "approved",
+                "abbreviation" => "West-Life",
+                "description" => "test",
+                "location" => {
+                  "streetNameAndNumber" => "street",
+                  "postalCode" => "00-000",
+                  "city" => "test",
+                  "region" => "WW",
+                  "country" => "N/E"
+                }
+              }
+            },
+            {
+              "metadata" => {
+                "registeredBy" => "John Doe",
+                "registeredAt" => "1549033448415",
+                "modifiedBy" => "John Doe",
+                "modifiedAt" => "1549624107536",
+                "source" => "EOSC",
+                "originalId" => nil
+              },
+              "active" => true,
+              "provider" => {
+                "id" => "awesome",
+                "name" => "Awesome provider",
+                "website" => "https://www.osom-prov.eu/",
+                "catalogueOfResources" => nil,
+                "publicDescOfResources" => nil,
+                "logo" => "https://about.west-life.eu/network/west-life/about/templates/westlife/images/west-life.png",
+                "additionalInfo" => "Nothing, cause I'm avesome",
+                "contactInformation" => nil,
+                "active" => true,
+                "status" => "approved",
+                "abbreviation" => "Awesome provider",
+                "description" => "test",
+                "location" => {
+                  "streetNameAndNumber" => "street",
+                  "postalCode" => "00-000",
+                  "city" => "test",
+                  "region" => "WW",
+                  "country" => "N/E"
+                }
               }
             }
-          },
-          {
-            "metadata" => {
-              "registeredBy" => "John Doe",
-              "registeredAt" => "1549033448415",
-              "modifiedBy" => "John Doe",
-              "modifiedAt" => "1549624107536",
-              "source" => "EOSC",
-              "originalId" => nil
-            },
-            "active" => true,
-            "provider" => {
-              "id" => "phenomenal",
-              "name" => "Phenomenal",
-              "website" => "http://phenomenal-h2020.eu/home/",
-              "catalogueOfResources" => nil,
-              "publicDescOfResources" => nil,
-              "logo" => "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png",
-              "additionalInfo" => "-",
-              "contactInformation" => "",
-              "active" => true,
-              "status" => "approved",
-              "abbreviation" => "Phenomenal",
-              "description" => "test",
-              "location" => {
-                "streetNameAndNumber" => "street",
-                "postalCode" => "00-000",
-                "city" => "test",
-                "region" => "WW",
-                "country" => "N/E"
-              }
+          ],
+          "facets" => [
+            {
+              "field" => "resourceType",
+              "label" => "Resource Type",
+              "values" => [{ "value" => "provider", "label" => nil, "count" => 21 }]
             }
-          },
-          {
-            "metadata" => {
-              "registeredBy" => "John Doe",
-              "registeredAt" => "1549033448415",
-              "modifiedBy" => "John Doe",
-              "modifiedAt" => "1549624107536",
-              "source" => "EOSC",
-              "originalId" => nil
-            },
-            "active" => true,
-            "provider" => {
-              "id" => "West-Life",
-              "name" => "World-wide E-infrastructure for structural biology",
-              "website" => "https://west-life.eu",
-              "catalogueOfResources" => "https://bio.tools/",
-              "publicDescOfResources" => "https://about.west-life.eu/network/west-life/services",
-              "logo" => "https://about.west-life.eu/network/west-life/about/templates/westlife/images/west-life.png",
-              "additionalInfo" =>
-                "https://about.west-life.eu/network/west-life/about/project. For more information contact chris.morris@stfc.ac.uk",
-              "contactInformation" => "+44 1925 603689",
-              "active" => true,
-              "status" => "approved",
-              "abbreviation" => "West-Life",
-              "description" => "test",
-              "location" => {
-                "streetNameAndNumber" => "street",
-                "postalCode" => "00-000",
-                "city" => "test",
-                "region" => "WW",
-                "country" => "N/E"
-              }
-            }
-          },
-          {
-            "metadata" => {
-              "registeredBy" => "John Doe",
-              "registeredAt" => "1549033448415",
-              "modifiedBy" => "John Doe",
-              "modifiedAt" => "1549624107536",
-              "source" => "EOSC",
-              "originalId" => nil
-            },
-            "active" => true,
-            "provider" => {
-              "id" => "awesome",
-              "name" => "Awesome provider",
-              "website" => "https://www.osom-prov.eu/",
-              "catalogueOfResources" => nil,
-              "publicDescOfResources" => nil,
-              "logo" => "https://about.west-life.eu/network/west-life/about/templates/westlife/images/west-life.png",
-              "additionalInfo" => "Nothing, cause I'm avesome",
-              "contactInformation" => nil,
-              "active" => true,
-              "status" => "approved",
-              "abbreviation" => "Awesome provider",
-              "description" => "test",
-              "location" => {
-                "streetNameAndNumber" => "street",
-                "postalCode" => "00-000",
-                "city" => "test",
-                "region" => "WW",
-                "country" => "N/E"
-              }
-            }
-          }
-        ],
-        "facets" => [
-          {
-            "field" => "resourceType",
-            "label" => "Resource Type",
-            "values" => [{ "value" => "provider", "label" => nil, "count" => 21 }]
-          }
-        ]
-      }
+          ]
+        }
+      )
     end
   end
   factory :eosc_registry_provider_response, class: Hash do

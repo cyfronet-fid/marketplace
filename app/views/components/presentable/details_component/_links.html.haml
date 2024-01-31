@@ -1,29 +1,29 @@
 %ul.links-list
   - fields.map do |field|
-    - if object.send(field).present?
-      - case type
-      - when "guideline"
-        - object.send(field).each do |guideline|
-          %li.links
-            %i.arrow-right
-            = link_to(guideline.title, guideline_link(guideline), "data-probe": "",
-                    "data-preview-target": local_assigns[:preview] ? "link" : "")
-      - when "array"
-        - object.send(field).each_with_index do |link, idx|
-          %li.links
-            %i.arrow-right
-            -# TODO: refactor dynamic translation
-            = link_to(link.name? ? link.name : t(".#{field}", idx: idx + 1), link.url, "data-probe": "",
-            "data-preview-target": local_assigns[:preview] ? "link" : "")
-      - when "service"
-        - object.send(field).map do |element|
-          %li.links
-            %i.arrow-right
-            = link_to(element.name, service_path(element), "data-probe": "",
-            "data-preview-target": local_assigns[:preview] ? "link" : "")
-      - else
+    - next unless object.send(field).present?
+    - case type
+    - when "guideline"
+      - object.send(field).each do |guideline|
+        %li.links
+          %i.arrow-right
+          = link_to(guideline.title, guideline_link(guideline), "data-probe": "",
+                  "data-preview-target": local_assigns[:preview] ? "link" : "")
+    - when "array"
+      - object.send(field).each_with_index do |link, idx|
         %li.links
           %i.arrow-right
           -# TODO: refactor dynamic translation
-          = link_to(t("components.presentable.sidebar_component.fields.#{field}"), object.send(field), "data-probe": "",
+          = link_to(link.name? ? link.name : t(".#{field}", idx: idx + 1), link.url, "data-probe": "",
+            "data-preview-target": local_assigns[:preview] ? "link" : "")
+    - when "service"
+      - object.send(field).map do |element|
+        %li.links
+          %i.arrow-right
+          = link_to(element.name, service_path(element), "data-probe": "",
+            "data-preview-target": local_assigns[:preview] ? "link" : "")
+    - else
+      %li.links
+        %i.arrow-right
+        -# TODO: refactor dynamic translation
+        = link_to(t("components.presentable.sidebar_component.fields.#{field}"), object.send(field), "data-probe": "",
           "data-preview-target": local_assigns[:preview] ? "link" : "")

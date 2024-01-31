@@ -70,8 +70,9 @@ RSpec.describe Service::Update, backend: true do
 
       service.reload
 
-      expect { described_class.call(service, { status: "draft" }) }.to change { ActionMailer::Base.deliveries.count }
-        .by(1)
+      expect { described_class.call(service, { status: "draft" }) }.to change {
+        ActionMailer::Base.deliveries.count
+      }.by(1)
 
       bundle.reload
       expect(bundle.status).to eq("draft")

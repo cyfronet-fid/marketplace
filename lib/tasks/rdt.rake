@@ -42,10 +42,10 @@ namespace :rdt do
     # puts "Creating service subcategories"
 
     puts "Creating bundle goals"
-    yaml_hash["bundle_goals"].each { |_, hash| Vocabulary::BundleGoal.find_or_create_by(name: hash["name"]) }
+    yaml_hash["bundle_goals"].each_value { |hash| Vocabulary::BundleGoal.find_or_create_by(name: hash["name"]) }
 
     puts "Creating bundle capabilities of goals"
-    yaml_hash["bundle_capabilities_of_goals"].each do |_, hash|
+    yaml_hash["bundle_capabilities_of_goals"].each_value do |hash|
       Vocabulary::BundleCapabilityOfGoal.find_or_create_by(name: hash["name"])
     end
 

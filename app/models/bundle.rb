@@ -100,7 +100,7 @@ class Bundle < ApplicationRecord
   end
 
   def active?
-    all_offers.select { |o| (o.limited && o.available_count.zero?) }.empty?
+    all_offers.none? { |o| o.limited && o.available_count.zero? }
   end
 
   private

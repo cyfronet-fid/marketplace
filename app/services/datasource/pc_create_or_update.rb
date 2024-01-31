@@ -14,9 +14,10 @@ class Datasource::PcCreateOrUpdate
     @source_type = "eosc_registry"
     @is_active = is_active
     @mp_datasource =
-      Service
-        .joins(:sources)
-        .find_by("service_sources.source_type": @source_type, "service_sources.eid": eosc_registry_datasource["id"])
+      Service.joins(:sources).find_by(
+        "service_sources.source_type": @source_type,
+        "service_sources.eid": eosc_registry_datasource["id"]
+      )
     @datasource_hash = Importers::Datasource.call(eosc_registry_datasource)
     @datasource_hash["status"] = @is_active ? "published" : "draft"
     @datasource_hash["type"] = "Datasource"

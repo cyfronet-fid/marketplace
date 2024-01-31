@@ -42,8 +42,8 @@
                 prompt: new_question_prompt,
                 preview: @preview
             = render Presentable::LinksComponent.new(object: @service, preview: @preview)
-          .provider-panel
-            - if @service.respond_to?(:resource_organisation)
+          - if @service.respond_to?(:resource_organisation)
+            .provider-panel
               = render Presentable::ProviderInfoComponent.new(base: @service, preview: @preview)
 
   - else

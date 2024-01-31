@@ -4,8 +4,7 @@
   %table.service-table
     %tr
       %td{ width: "125" }
-        - if attachments["logo.png"].present?
-          = image_tag attachments["logo.png"].url
+        = image_tag attachments["logo.png"].url if attachments["logo.png"].present?
       %td
         %h5
           = @service.name
@@ -21,4 +20,3 @@
     - if @common_scientific_domains.present?
       %strong scientific domain:
       = @common_scientific_domains.map(&:name).join(", ")
-
