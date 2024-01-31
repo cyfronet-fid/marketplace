@@ -30,9 +30,13 @@ describe Jms::Subscriber, backend: true do
   let(:manage_message_service) { instance_double(Jms::ManageMessage) }
 
   def mock_subscriber
-    allow_any_instance_of(Jms::Subscriber).to receive(:conf_hash)
-      .with("dummy_login", "dummy_pass", "dummy_host", "MPClientTest", false)
-      .and_return(config_hash)
+    allow_any_instance_of(Jms::Subscriber).to receive(:conf_hash).with(
+      "dummy_login",
+      "dummy_pass",
+      "dummy_host",
+      "MPClientTest",
+      false
+    ).and_return(config_hash)
 
     allow(client_stub).to receive(:new).and_return(client)
     Jms::Subscriber.new(
@@ -50,14 +54,15 @@ describe Jms::Subscriber, backend: true do
   end
 
   def stub_good_message
-    allow(client).to receive(:subscribe)
-      .with("/topic/dummy_topic.>", { ack: "client-individual", "activemq.subscriptionName": "mpSubscription" })
-      .and_yield(json_service)
+    allow(client).to receive(:subscribe).with(
+      "/topic/dummy_topic.>",
+      { ack: "client-individual", "activemq.subscriptionName": "mpSubscription" }
+    ).and_yield(json_service)
 
     allow(client).to receive(:ack).with(json_service)
-    allow(Jms::ManageMessage).to receive(:new)
-      .with(json_service, eosc_registry_base, logger, nil)
-      .and_return(manage_message_service)
+    allow(Jms::ManageMessage).to receive(:new).with(json_service, eosc_registry_base, logger, nil).and_return(
+      manage_message_service
+    )
     allow(manage_message_service).to receive(:call).and_return(true)
   end
 
@@ -92,13 +97,14 @@ describe Jms::Subscriber, backend: true do
     original_stderr = $stderr
     $stdout = StringIO.new
     $stderr = StringIO.new
-    allow(client).to receive(:subscribe)
-      .with("/topic/dummy_topic.>", { ack: "client-individual", "activemq.subscriptionName": "mpSubscription" })
-      .and_yield({})
+    allow(client).to receive(:subscribe).with(
+      "/topic/dummy_topic.>",
+      { ack: "client-individual", "activemq.subscriptionName": "mpSubscription" }
+    ).and_yield({})
 
-    allow(Jms::ManageMessage).to receive(:new)
-      .with({}, eosc_registry_base, logger, nil)
-      .and_return(manage_message_service)
+    allow(Jms::ManageMessage).to receive(:new).with({}, eosc_registry_base, logger, nil).and_return(
+      manage_message_service
+    )
     allow(manage_message_service).to receive(:call).and_raise(StandardError)
     subscriber = mock_subscriber
 

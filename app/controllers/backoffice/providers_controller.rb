@@ -10,18 +10,18 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
     @pagy, @providers = pagy(policy_scope(Provider).order(:name))
   end
 
-  def show; end
+  def show
+  end
 
   def new
     @provider = Provider.new
     @provider.sources.build source_type: "eosc_registry"
     @provider.alternative_identifiers.build
-    @provider.data_administrators <<
-      DataAdministrator.new(
-        first_name: current_user.first_name,
-        last_name: current_user.last_name,
-        email: current_user.email
-      )
+    @provider.data_administrators << DataAdministrator.new(
+      first_name: current_user.first_name,
+      last_name: current_user.last_name,
+      email: current_user.email
+    )
     @provider.build_main_contact
     @provider.public_contacts.build
     @provider.link_multimedia_urls.build

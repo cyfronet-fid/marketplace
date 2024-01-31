@@ -1,12 +1,12 @@
 %ul
   - fields.each do |field|
-    - if object.send(field).present?
-      %li{ class: "#{field}" }
-        - if field.end_with? "_email"
-          = mail_to(object.send(field), t("components.presentable.sidebar_component.fields.#{field}"), "data-probe": "",
-            "data-preview-target": preview ? "link" : "")
-        - else
-          = link_to(t("components.presentable.sidebar_component.fields.#{field}"),
-            object.suspended? && !field.in?(active_when_suspended) ? nil : object.send(field), "data-probe": "",
-            "data-preview-target": preview ? "link" : "")
-          -# TODO: refactor dynamic translation (above)
+    - next unless object.send(field).present?
+    %li{ class: "#{field}" }
+      - if field.end_with? "_email"
+        = mail_to(object.send(field), t("components.presentable.sidebar_component.fields.#{field}"), "data-probe": "",
+          "data-preview-target": preview ? "link" : "")
+      - else
+        = link_to(t("components.presentable.sidebar_component.fields.#{field}"),
+          object.suspended? && !field.in?(active_when_suspended) ? nil : object.send(field), "data-probe": "",
+          "data-preview-target": preview ? "link" : "")
+        -# TODO: refactor dynamic translation (above)

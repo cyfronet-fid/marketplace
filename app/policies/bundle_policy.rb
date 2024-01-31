@@ -3,13 +3,11 @@
 class BundlePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope
-        .joins(:service)
-        .where(
-          "bundles.status IN (?) AND services.status IN (?)",
-          Statusable::PUBLIC_STATUSES,
-          Statusable::VISIBLE_STATUSES
-        )
+      scope.joins(:service).where(
+        "bundles.status IN (?) AND services.status IN (?)",
+        Statusable::PUBLIC_STATUSES,
+        Statusable::VISIBLE_STATUSES
+      )
     end
   end
 

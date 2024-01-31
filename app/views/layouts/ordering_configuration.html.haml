@@ -3,8 +3,7 @@
   = render "layouts/head"
   %body
     %header.pb-2
-      - if ENV["MP_INSTANCE"]
-        = render "layouts/badge"
+      = render "layouts/badge" if ENV["MP_INSTANCE"]
       = render "layouts/flash"
       = render "layouts/ordering_configuration/navbar"
     %main
@@ -17,4 +16,3 @@
   - file_base = Mp::Application.config.eosc_commons_base_url + "index." + Mp::Application.config.eosc_commons_env
   %script{ src: file_base + ".min.js" }
   %link{ rel: "stylesheet", href: file_base + ".min.css" }
-

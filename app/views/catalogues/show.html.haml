@@ -159,6 +159,5 @@
                     %span= @catalogue.participating_countries&.join(", ")
 
       %sidebar.col-12.col-xl-3
-        - if @catalogue.website
-          = link_to "Website", @catalogue.website, target: "_blank", class: "right-panel-button website"
+        = link_to "Website", @catalogue.website, target: "_blank", class: "right-panel-button website" if @catalogue.website
 -# haml-lint:enable InlineStyles

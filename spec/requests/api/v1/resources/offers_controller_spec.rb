@@ -343,7 +343,10 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
 
           run_test! do |response|
             data = JSON.parse(response.body)
-            expect(data["error"]).to eq("The property '#/' of type object did not match all of the required schemas")
+            expect(data["error"]).to eq(
+                                       "The property '#/order_type' value \"lol\" did not match one of the following " +
+                                         "values: open_access, fully_open_access, order_required, other"
+                                     )
           end
         end
 
@@ -405,7 +408,9 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
 
           run_test! do |response|
             data = JSON.parse(response.body)
-            expect(data["error"]).to eq("The property '#/' of type object did not match all of the required schemas")
+            expect(data["error"]).to eq(
+              "The property '#/parameters/0' of type object did not match any of the required schemas"
+            )
           end
         end
 
@@ -439,7 +444,9 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
 
           run_test! do |response|
             data = JSON.parse(response.body)
-            expect(data["error"]).to eq("The property '#/' of type object did not match all of the required schemas")
+            expect(data["error"]).to eq(
+              "The property '#/parameters/0' of type object did not match any of the required schemas"
+             )
           end
         end
 
@@ -478,7 +485,9 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
 
           run_test! do |response|
             data = JSON.parse(response.body)
-            expect(data["error"]).to eq("The property '#/' of type object did not match all of the required schemas")
+            expect(data["error"]).to eq(
+              "The property '#/parameters/0' of type object did not match any of the required schemas"
+            )
           end
         end
 
@@ -521,7 +530,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
 
           run_test! do |response|
             data = JSON.parse(response.body)
-            expect(data["error"]).to eq("The property '#/' of type object did not match all of the required schemas")
+            expect(data["error"]).to eq("The property '#/parameters' contained duplicated array values")
           end
         end
 
@@ -582,7 +591,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
 
           run_test! do |response|
             data = JSON.parse(response.body)
-            expect(data["error"]).to eq("The property '#/' of type object did not match all of the required schemas")
+            expect(data["error"]).to eq("The property '#/' of type object matched the disallowed schema")
           end
         end
 
@@ -1103,7 +1112,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
 
           run_test! do |response|
             data = JSON.parse(response.body)
-            expect(data["error"]).to eq("The property '#/' of type object did not match all of the required schemas")
+            expect(data["error"]).to eq("The property '#/' of type object matched the disallowed schema")
 
             expect(service.offers.first.status).to eq("published")
           end
@@ -1129,7 +1138,9 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
 
           run_test! do |response|
             data = JSON.parse(response.body)
-            expect(data["error"]).to eq("The property '#/' of type object did not match all of the required schemas")
+            expect(data["error"]).to eq(
+              "The property '#/bundled_offers/0' of type string did not match any of the required schemas"
+            )
           end
         end
 

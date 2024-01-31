@@ -30,8 +30,8 @@ class Parameter::Multiselect < Parameter
       description: hint,
       config: {
         values: cast(values),
-        minItems: (min || 1),
-        maxItems: (max || values.length)
+        minItems: min || 1,
+        maxItems: max || values.length
       },
       value_type: value_type,
       unit: unit

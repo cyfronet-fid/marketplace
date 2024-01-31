@@ -33,14 +33,14 @@ RSpec.describe Api::V1::OMSes::EventsController, swagger_doc: "v1/ordering_swagg
 
         let!(:project) { create(:project) }
         let!(:other_project) { create(:project) }
-        let!(:project_item) { create(:project_item, project: project, offer: build(:offer, primary_oms: oms)) }
+        let!(:project_item) { create(:project_item, project: project, offer: create(:offer, primary_oms: oms)) }
         let!(:message1) { create(:message, messageable: project) }
         let!(:message2) { create(:message, messageable: project_item) }
         let!(:message3) { create(:message, messageable: project_item) }
 
         let(:oms_id) { oms.id }
         let(:"X-User-Token") { oms_admin.authentication_token }
-        let(:from_timestamp) { CGI.escape("2000-04-07T15:31:46.09Z") }
+        let(:from_timestamp) { "2000-04-07T15:31:46.30Z" }
         let(:limit) { 4 }
 
         run_test! do |response|
@@ -76,7 +76,7 @@ RSpec.describe Api::V1::OMSes::EventsController, swagger_doc: "v1/ordering_swagg
 
         let(:oms_id) { oms.id }
         let(:"X-User-Token") { oms_admin.authentication_token }
-        let(:from_timestamp) { CGI.escape("2000-04-07T15:31:46.30Z") }
+        let(:from_timestamp) { "2000-04-07T15:31:46.30Z" }
 
         run_test! do |response|
           data = JSON.parse(response.body)

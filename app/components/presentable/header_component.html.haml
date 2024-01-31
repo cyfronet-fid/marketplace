@@ -25,8 +25,7 @@
             .rating
               %span.ml-1.font-weight-bold
                 #{@object.rating}/5
-              - if @object.persisted?
-                = service_opinions_link(@object, @preview)
+              = service_opinions_link(@object, @preview) if @object.persisted?
             - if @show_checkboxes
               %fieldset{ preview_link_parameters(@preview) }
                 .comparison

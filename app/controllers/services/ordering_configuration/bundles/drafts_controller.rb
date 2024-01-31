@@ -8,9 +8,8 @@ module Services::OrderingConfiguration::Bundles
       if Bundle::Unpublish.call(@bundle)
         redirect_to service_ordering_configuration_path(@service)
       else
-        flash[:alert] =
-          "Bundle cannot be set to draft. Please ensure your form is properly completed. " +
-            "#{@bundle.errors.messages.each.map { |k, v| "The field #{k} #{v.join(", ")}" }.join(", ")}"
+        flash[:alert] = "Bundle cannot be set to draft. Please ensure your form is properly completed. " +
+          "#{@bundle.errors.messages.each.map { |k, v| "The field #{k} #{v.join(", ")}" }.join(", ")}"
         redirect_to edit_service_ordering_configuration_bundle_path(@service, @bundle)
       end
     end

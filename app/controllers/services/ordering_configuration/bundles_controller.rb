@@ -23,7 +23,8 @@ class Services::OrderingConfiguration::BundlesController < Services::OrderingCon
     end
   end
 
-  def edit; end
+  def edit
+  end
 
   def update
     template = permitted_attributes(Bundle.new)

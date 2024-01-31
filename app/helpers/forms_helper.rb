@@ -47,4 +47,26 @@ module FormsHelper
       .reject { |item| item.id.in? offer_ids }
       .map { |item| ["#{item.service.name} > #{item.name}", item.id] }
   end
+
+  def render_data_administrator(form, object)
+    render "backoffice/providers/data_administrator_fields", data_administrator_form: form, provider: object
+  end
+
+  def render_link(form, object, link_name)
+    render "backoffice/common_parts/form/link_fields", link_form: form, object: object, link_name: link_name
+  end
+
+  def render_persistent_identity_system(form, object)
+    render "backoffice/common_parts/form/persistent_identity_system_fields",
+           link_form: form,
+           object: object,
+           name: "persistentIdentitySystem"
+  end
+
+  def render_public_contact(public_contact_form, object)
+    render "backoffice/common_parts/form/public_contact_fields",
+           public_contact_form: public_contact_form,
+           object: object,
+           provider_form: object.is_a?(Provider)
+  end
 end

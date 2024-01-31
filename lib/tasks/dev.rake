@@ -18,7 +18,7 @@ namespace :dev do
   end
 
   def create_all_from_path(path)
-    yaml_hash = YAML.load_file(path)
+    yaml_hash = YAML.load_file(path, aliases: true)
 
     create_vocabularies
     create_categories(yaml_hash["categories"])
@@ -35,7 +35,7 @@ namespace :dev do
 
   def create_categories(categories_hash)
     puts "Generating categories:"
-    categories_hash.each do |_, hash|
+    categories_hash.each_value do |hash|
       Category.find_or_initialize_by(name: hash["name"]) do |category|
         category.update!(description: hash["description"], parent: Category.find_by(name: hash["parent"]))
         puts "  - #{hash["name"]} category generated"
@@ -48,7 +48,7 @@ namespace :dev do
   def create_providers(providers_hash)
     puts "Generating providers:"
     Provider.skip_callback :validation, :before, :assign_analytics
-    providers_hash.each do |_, hash|
+    providers_hash.each_value do |hash|
       provider = Provider.find_or_initialize_by(name: hash["name"])
       provider.abbreviation = hash["abbreviation"]
       provider.catalogue = Catalogue.find_by(name: hash["catalogue"])
@@ -111,7 +111,7 @@ namespace :dev do
 
   def create_scientific_domains(scientific_domains_hash)
     puts "Generating scientific domains:"
-    scientific_domains_hash.each do |_, hash|
+    scientific_domains_hash.each_value do |hash|
       # !!! Warning: parent need to be defined before child in yaml !!!
       parent = ScientificDomain.find_by(name: hash["parent"])
       ScientificDomain.find_or_initialize_by(name: hash["name"]) { |sd| sd.update!(parent: parent) }
@@ -121,7 +121,7 @@ namespace :dev do
 
   def create_platforms(platforms_hash)
     puts "Generating platforms:"
-    platforms_hash.each do |_, hash|
+    platforms_hash.each_value do |hash|
       Platform.find_or_create_by(name: hash["name"])
       puts "  - #{hash["name"]} platforms generated"
     end
@@ -129,7 +129,7 @@ namespace :dev do
 
   def create_target_users(target_users_hash)
     puts "Generating target groups:"
-    target_users_hash.each do |_, hash|
+    target_users_hash.each_value do |hash|
       parent = TargetUser.find_by(name: hash["parent"])
       TargetUser.find_or_initialize_by(name: hash["name"]) { |sd| sd.update!(parent: parent) }
       puts "  - #{hash["name"]} target group generated"
@@ -140,7 +140,7 @@ namespace :dev do
   def create_services(services_hash)
     puts "Generating services:"
     Service.skip_callback :validation, :before, :assign_analytics
-    services_hash.each do |_, hash|
+    services_hash.each_value do |hash|
       prov = hash["providers"] || []
       categories = Category.where(name: hash["parents"])
       resource_organisation = Provider.find_by(name: hash["resource_organisation"] || prov.shift)
@@ -211,7 +211,7 @@ namespace :dev do
   end
 
   def create_offers(service, offers_hash)
-    offers_hash&.each do |_, h|
+    offers_hash&.each_value do |h|
       effective_order_url = h["order_url"] || service.order_url
       service.offers.create!(
         name: h["name"],
@@ -232,7 +232,7 @@ namespace :dev do
     puts "Generating service relations from yaml (remove all relations and crating new one):"
     ServiceRelationship.delete_all
 
-    relations_hash&.each do |_, hash|
+    relations_hash&.each_value do |hash|
       source = Service.find_by(name: hash["source"])
       target = Service.find_by(name: hash["target"])
       ManualServiceRelationship.create!(source: source, target: target)
@@ -252,7 +252,7 @@ namespace :dev do
   # rubocop:disable Metrics/AbcSize
   def create_catalogues(catalogue_hash)
     puts "Generating catalogue:"
-    catalogue_hash.each do |_, hash|
+    catalogue_hash.each_value do |hash|
       catalogue = Catalogue.find_or_initialize_by(name: hash["name"])
       catalogue.pid = hash["pid"]
       catalogue.abbreviation = hash["abbreviation"]

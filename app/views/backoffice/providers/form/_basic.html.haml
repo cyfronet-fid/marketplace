@@ -32,6 +32,7 @@
       .col-12
         = hosting_legal_entity_input(f)
     .row.service-contact-emails
+      -# rubocop:disable Style/BlockDelimiters
       .col-12
         %h3= _("Alternative Identifiers")
         = f.error :alternative_identifiers, class: "invalid-feedback d-block"
@@ -46,4 +47,4 @@
                   fields: f.fields_for(:alternative_identifiers, AlternativeIdentifier.new,
                   child_index: "new_field") { |idf| render "backoffice/common_parts/form/alternative_identifier_fields",
                   identifier_form: idf, object: provider } }
-
+      -# rubocop:enable Style/BlockDelimiters:

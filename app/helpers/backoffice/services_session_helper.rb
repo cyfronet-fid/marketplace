@@ -30,7 +30,7 @@ module Backoffice::ServicesSessionHelper
   end
 
   def store_attrs!(attrs)
-    attrs = attrs.each { |_, value| value.reject!(&:blank?) if value.instance_of?(Array) }
+    attrs = attrs.each_value { |value| value.reject!(&:blank?) if value.instance_of?(Array) }
     attrs = attrs.reject { |key, value| value.blank? if ApplicationRecordHelper.required_attr?(Service, key) }
     session[session_key] = { ATTR_FIELD_NAME => attrs }
     store_logo!(attrs)

@@ -7,8 +7,7 @@
   %h2 eID:
   %p= @category.eid
   %h2= @category.parent ? _("Parent: %{cpn}") % { cpn: @category.parent.name } : _("Root element")
-  - if @category.logo.attached? && @category.logo.variable?
-    = image_tag @category.logo.variant(resize: "200x200")
+  = image_tag @category.logo.variant(resize: "200x200") if @category.logo.attached? && @category.logo.variable?
 
   %hr.bottom-hr.mt-5.mb-4
   .btn-group

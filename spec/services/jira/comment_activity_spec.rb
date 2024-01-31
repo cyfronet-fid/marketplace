@@ -92,8 +92,9 @@ RSpec.describe Jira::CommentActivity, backend: true do
         # Than jira webhood with new comment is triggered.
         project_item.messages.create(message: "question", author_role: :user, scope: :public)
 
-        expect { described_class.new(project_item, comment(message: "question", id: "321", name: jira_username)).call }
-          .to_not(change { project_item.messages.count })
+        expect do
+          described_class.new(project_item, comment(message: "question", id: "321", name: jira_username)).call
+        end.to_not(change { project_item.messages.count })
       end
 
       it "register messages for all and for User" do
@@ -104,8 +105,9 @@ RSpec.describe Jira::CommentActivity, backend: true do
       end
 
       it "does not register internal messages" do
-        expect { described_class.new(project_item, comment(message: "question", id: "321", visibility: "Admin")).call }
-          .to_not(change { project_item.messages.count })
+        expect do
+          described_class.new(project_item, comment(message: "question", id: "321", visibility: "Admin")).call
+        end.to_not(change { project_item.messages.count })
       end
     end
 
@@ -131,8 +133,9 @@ RSpec.describe Jira::CommentActivity, backend: true do
         # Than jira webhood with new comment is triggered.
         project.messages.create(message: "question", author_role: :user, scope: :public)
 
-        expect { described_class.new(project, comment(message: "question", id: "321", name: jira_username)).call }
-          .to_not(change { project.messages.count })
+        expect do
+          described_class.new(project, comment(message: "question", id: "321", name: jira_username)).call
+        end.to_not(change { project.messages.count })
       end
 
       it "register messages for all and for User" do
@@ -143,8 +146,9 @@ RSpec.describe Jira::CommentActivity, backend: true do
       end
 
       it "does not register internal messages" do
-        expect { described_class.new(project, comment(message: "question", id: "321", visibility: "Admin")).call }
-          .to_not(change { project.messages.count })
+        expect do
+          described_class.new(project, comment(message: "question", id: "321", visibility: "Admin")).call
+        end.to_not(change { project.messages.count })
       end
     end
   end

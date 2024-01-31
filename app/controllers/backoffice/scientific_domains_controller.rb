@@ -8,7 +8,8 @@ class Backoffice::ScientificDomainsController < Backoffice::ApplicationControlle
     @scientific_domains = policy_scope(ScientificDomain).with_attached_logo
   end
 
-  def show; end
+  def show
+  end
 
   def new
     @scientific_domain = ScientificDomain.new
@@ -27,7 +28,8 @@ class Backoffice::ScientificDomainsController < Backoffice::ApplicationControlle
     end
   end
 
-  def edit; end
+  def edit
+  end
 
   def update
     if @scientific_domain.update(permitted_attributes(@scientific_domain))

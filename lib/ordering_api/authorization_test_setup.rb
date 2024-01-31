@@ -2,8 +2,6 @@
 
 module OrderingApi
   class AuthorizationTestSetup
-    def initialize; end
-
     def call
       oms_admin1 =
         User.create!(uid: "oms2_admin", first_name: "oms2_admin", last_name: "oms2_admin", email: "email1@email.com")

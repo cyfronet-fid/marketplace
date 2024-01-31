@@ -3,9 +3,11 @@
 class PagesController < ApplicationController
   helper_method :community_link
   helper_method :target_users_link
-  def about; end
+  def about
+  end
 
-  def about_projects; end
+  def about_projects
+  end
 
   def community_link(platform)
     return @search_base_url + "/search/service?q=*&fq=platforms:(%22#{platform.name}%22)" if @enable_external_search

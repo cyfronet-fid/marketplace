@@ -2,18 +2,18 @@
 
 #all-services-link{ class: "d-flex justify-content-between mb-4 align-items-center #{active}" }
   = link_to _("EOSC Services & Datasources"),
-  content_for(:all_services) || services_path(category_query_params.merge(page: nil).permit!),
-  "data-probe": ""
+    content_for(:all_services) || services_path(category_query_params.merge(page: nil).permit!),
+    "data-probe": ""
   %span= services_count
 
 %h5.text-uppercase.underline-light.mb-2.pb-2 Categories
 %ul.categories-list{ "data-shepherd-tour-target": "overview_6", "data-e2e": "categories-list" }
   - view = content_for(:category_view) || "services/nav/category"
-  - categories.each do |_cid, category|
+  - categories.to_h.each_value do |category|
     = render view, category: category[:category], current: current, counter: category[:counter]
-    - if current == category[:category] && subcategories.present?
-      %ul.ml-3{ "data-e2e": "sub-categories-list" }
-        - subcategories.each do |_sid, subcategory|
-          = render view, category: subcategory[:category], current: current, counter: subcategory[:counter]
+    - next unless current == category[:category] && subcategories.present?
+    %ul.ml-3{ "data-e2e": "sub-categories-list" }
+      - subcategories.to_h.each_value do |subcategory|
+        = render view, category: subcategory[:category], current: current, counter: subcategory[:counter]
 
 = yield :test
