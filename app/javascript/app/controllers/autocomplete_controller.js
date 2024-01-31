@@ -138,7 +138,7 @@ export default class extends Controller {
       new CustomEvent("autocomplete.change", {
         bubbles: true,
         detail: { value: value, textValue: textValue },
-      })
+      }),
     );
 
     this.resultsTarget.hidden = true;

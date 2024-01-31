@@ -37,6 +37,6 @@ class Api::V1::ProjectItemSerializer < ActiveModel::Serializer
 
   def user_secrets
     non_obfuscated = instance_options[:non_obfuscated_user_secrets] || []
-    object.user_secrets&.map { |k, v| non_obfuscated.include?(k) ? [k, v] : [k, "<OBFUSCATED>"] }.to_h
+    object.user_secrets.to_h { |k, v| non_obfuscated.include?(k) ? [k, v] : [k, "<OBFUSCATED>"] }
   end
 end

@@ -7,22 +7,22 @@
         = render Presentable::SidebarComponent.new(@object)
         - details_columns.each do |column|
           - column.map do |group|
-            - if display_detail?(group, @object)
-              .details-box{
-                class: "#{group[:name]}"
-                }
-                .details-header
-                  %h5= t("components.presentable.details_component.details.title.#{group[:name]}")
-                .details-content
-                  = render "components/presentable/details_component/#{group[:template]}",
-                                  object: @object,
-                                  fields: group[:fields],
-                                  type: group[:type] || "single",
-                                  clazz: group[:clazz] || "",
-                                  nested: group[:nested] || {},
-                                  inactive: @object.suspended? && !group[:active_when_suspended],
-                                  with_desc: group[:with_desc] || false,
-                                  preview: @preview
+            - next unless display_detail?(group, @object)
+            .details-box{
+              class: "#{group[:name]}"
+              }
+              .details-header
+                %h5= t("components.presentable.details_component.details.title.#{group[:name]}")
+              .details-content
+                = render "components/presentable/details_component/#{group[:template]}",
+                                object: @object,
+                                fields: group[:fields],
+                                type: group[:type] || "single",
+                                clazz: group[:clazz] || "",
+                                nested: group[:nested] || {},
+                                inactive: @object.suspended? && !group[:active_when_suspended],
+                                with_desc: group[:with_desc] || false,
+                                preview: @preview
       .related-container
         .row
           .col-12
@@ -42,6 +42,4 @@
             prompt: new_question_prompt,
             preview: @preview
         = render Presentable::LinksComponent.new(object: @object, preview: @preview)
-      - if @object.respond_to?(:resource_organisation)
-        = render Presentable::ProviderInfoComponent.new(base: @object, preview: @preview)
-
+      = render Presentable::ProviderInfoComponent.new(base: @object, preview: @preview) if @object.respond_to?(:resource_organisation)

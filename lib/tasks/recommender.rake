@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "recommender/serialize_db"
-require "pp"
 
 namespace :recommender do
   desc "serialize database for recommender system"

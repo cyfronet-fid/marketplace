@@ -59,7 +59,8 @@ class Backoffice::OfferPolicy < ApplicationPolicy
       :restrictions,
       :primary_oms_id,
       :tag_list,
-      oms_params: {},
+      oms_params: {
+      },
       parameters_attributes: %i[
         type
         name

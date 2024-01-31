@@ -8,9 +8,8 @@ class Backoffice::Services::Bundles::PublishesController < Backoffice::Applicati
       flash[:notice] = "Bundle published successfully"
       redirect_to backoffice_service_path(@service)
     else
-      flash[:alert] =
-        "Bundle cannot be published. Please ensure your form is properly completed. " +
-          "#{@bundle.errors.messages.each.map { |k, v| "The field #{k} #{v.join(", ")}" }.join(", ")}"
+      flash[:alert] = "Bundle cannot be published. Please ensure your form is properly completed. " +
+        "#{@bundle.errors.messages.each.map { |k, v| "The field #{k} #{v.join(", ")}" }.join(", ")}"
       redirect_to edit_backoffice_service_bundle_path(@service, @bundle)
     end
   end

@@ -10,8 +10,7 @@
     = _("eID") + ":"
   %p= @scientific_domain.eid
   %h2= @scientific_domain.parent ? _("Parent: %{sdpn}") % { sdpn: @scientific_domain.parent.name } : "Root element"
-  - if @scientific_domain.logo.attached? && @scientific_domain.logo.variable?
-    = image_tag @scientific_domain.logo.variant(resize: "200x200")
+  = image_tag @scientific_domain.logo.variant(resize: "200x200") if @scientific_domain.logo.attached? && @scientific_domain.logo.variable?
 
   %hr.bottom-hr.mt-5.mb-4
   .btn-group
@@ -25,4 +24,3 @@
                 method: :delete,
                 data: { confirm: _("Are you sure you want to remove this scientific domain?") },
                 class: "btn btn-danger"
-

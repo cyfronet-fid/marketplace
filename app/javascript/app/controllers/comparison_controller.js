@@ -107,7 +107,7 @@ export default class extends Controller {
           element.parentNode.setAttribute("tabindex", "0");
           element.parentNode.setAttribute(
             "data-original-title",
-            "You have reached the maximum number of items you can compare"
+            "You have reached the maximum number of items you can compare",
           );
           $('label[data-toggle="tooltip"]').tooltip("enable");
         }

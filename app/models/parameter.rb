@@ -62,7 +62,7 @@ class Parameter
       end
 
       def dump(list)
-        list&.map { |parameter| parameter.dump }
+        list&.map(&:dump)
       end
     end
   end

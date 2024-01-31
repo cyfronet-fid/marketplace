@@ -2,8 +2,6 @@
 
 module RecommenderLib
   class SerializeDb
-    def initialize; end
-
     def call
       {
         services: Service.all.map { |s| Recommender::ServiceSerializer.new(s).as_json },

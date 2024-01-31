@@ -1,9 +1,9 @@
 - fields.map do |field|
-  - if object.send(field).present?
-    - Array(object.send(field)).map do |entry|
-      - if nested.present? && nested[field.to_sym].present?
-        %li
-          %span= entry.send(nested[field.to_sym])
-      - else
-        %li
-          %span= entry
+  - next unless object.send(field).present?
+  - Array(object.send(field)).map do |entry|
+    - if nested.present? && nested[field.to_sym].present?
+      %li
+        %span= entry.send(nested[field.to_sym])
+    - else
+      %li
+        %span= entry

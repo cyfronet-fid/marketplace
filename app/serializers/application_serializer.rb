@@ -65,8 +65,12 @@ class ApplicationSerializer < ActiveModel::Serializer
     end
   end
 
-  %i[multimedia_urls use_cases_urls research_product_license_urls research_product_metadata_license_urls]
-    .each do |method|
+  %i[
+    multimedia_urls
+    use_cases_urls
+    research_product_license_urls
+    research_product_metadata_license_urls
+  ].each do |method|
     define_method method do
       object.send("link_#{method}")&.map { |link| { name: link.name, url: link.url } }
     end

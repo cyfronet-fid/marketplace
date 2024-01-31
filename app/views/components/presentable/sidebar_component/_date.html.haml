@@ -1,5 +1,5 @@
 %ul.list-group{ class: "#{"suspended" if inactive}" }
   - fields.each do |field|
-    - if object.send(field).present?
-      %li.list-group-item
-        %span= l object.send(field), format: :short
+    - next unless object.send(field).present?
+    %li.list-group-item
+      %span= l object.send(field), format: :short

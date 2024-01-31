@@ -28,8 +28,9 @@ class Ess::BundleSerializer < ApplicationSerializer
   attribute :project_items_count, key: :usage_counts_downloads
 
   def providers
-    ([object.main_offer.service.providers.map(&:name)] + object&.offers&.map { |o| o.service.providers.map(&:name) })
-      .flatten.uniq
+    (
+      [object.main_offer.service.providers.map(&:name)] + object&.offers&.map { |o| o.service.providers.map(&:name) }
+    ).flatten.uniq
   end
 
   def catalogues

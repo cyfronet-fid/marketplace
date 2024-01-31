@@ -8,7 +8,8 @@ class Backoffice::CategoriesController < Backoffice::ApplicationController
     @categories = policy_scope(Category).with_attached_logo
   end
 
-  def show; end
+  def show
+  end
 
   def new
     @category = Category.new
@@ -26,7 +27,8 @@ class Backoffice::CategoriesController < Backoffice::ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+  end
 
   def update
     if @category.update(permitted_attributes(@category))

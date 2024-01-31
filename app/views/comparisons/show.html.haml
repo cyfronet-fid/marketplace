@@ -18,22 +18,21 @@
           %th.title-col
             .logo-wrapper
               %span.helper
-              - if service.logo.attached? && service.logo.variable?
-                = image_tag service.logo.variant(resize: "100x100")
+              = image_tag service.logo.variant(resize: "100x100") if service.logo.attached? && service.logo.variable?
             = link_to comparisons_services_path(slug: service.slug, fromc: params[:fromc], params: @query_params),
-            method: :delete,
+              method: :delete,
               "data-e2e": "delete-service-btn", "data-probe": "", "data-service-id": service.id do
               %i.far.fa-trash-alt
             .service-title
               = link_to service.name.truncate(30, separator: " "),
-              service_path(service, fromc: params[:fromc], comp_link: true),
-              "data-probe": "", "data-service-id": service.id
+                service_path(service, fromc: params[:fromc], comp_link: true),
+                "data-probe": "", "data-service-id": service.id
             .service-description
               = service.description.truncate(80, separator: " ")
         - i.times do
           %td.title-col.empty.text-uppercase
             = link_to _("Add next service"), services_comparison_link(@query_params),
-            "data-e2e": "add-next-resource-btn", "data-probe": ""
+              "data-e2e": "add-next-resource-btn", "data-probe": ""
       %tr{ class: row_class(row_idx) }
         %th{ "data-toggle": "tooltip",
         title: "The name(s) (or abbreviation(s)) of Provider that manage the Service in |
@@ -146,8 +145,8 @@
           %th{ "data-toggle": "tooltip", title: "Phase of the Service life-cycle." }
             = _("Service Life Cycle Status")
           - @services.each do |service|
-            - if service.life_cycle_statuses.present?
-              %td= service.life_cycle_statuses.first.name
+            - next unless service.life_cycle_statuses.present?
+            %td= service.life_cycle_statuses.first.name
           - row_idx += 1
       %tr{ class: row_class(row_idx) }
         %th{ "data-toggle": "tooltip",

@@ -109,40 +109,42 @@ FactoryBot.define do
     end
 
     initialize_with do
-      next {
-        id: id,
-        timestamp: timestamp,
-        issue: {
-          id: issue_id,
-          self: "https://jira.atlassian.com/rest/api/2/issue/99291",
-          key: "JRA-20002",
-          fields: {
-            summary: "I feel the need for speed",
-            created: "2009-12-16T23:46:10.612-0600",
-            description: "Make the issue nav load 10x faster",
-            labels: %w[UI dialogue move],
-            priority: "Minor"
-          }
-        },
-        user: {
-          self: "https://jira.atlassian.com/rest/api/2/user?username=brollins",
-          name: "brollins",
-          key: "brollins",
-          emailAddress: "bryansemail at atlassian dot com",
-          avatarUrls: {
-            "16x16": "https://jira.atlassian.com/secure/useravatar?size=small&avatarId=10605",
-            "48x48": "https://jira.atlassian.com/secure/useravatar?avatarId=10605"
+      next(
+        {
+          id: id,
+          timestamp: timestamp,
+          issue: {
+            id: issue_id,
+            self: "https://jira.atlassian.com/rest/api/2/issue/99291",
+            key: "JRA-20002",
+            fields: {
+              summary: "I feel the need for speed",
+              created: "2009-12-16T23:46:10.612-0600",
+              description: "Make the issue nav load 10x faster",
+              labels: %w[UI dialogue move],
+              priority: "Minor"
+            }
           },
-          displayName: "Bryan Rollins [Atlassian]",
-          active: "true"
-        },
-        changelog: {
-          items: [changelog],
-          id: 10_124
-        },
-        comment: comment,
-        webhookEvent: request_type
-      }
+          user: {
+            self: "https://jira.atlassian.com/rest/api/2/user?username=brollins",
+            name: "brollins",
+            key: "brollins",
+            emailAddress: "bryansemail at atlassian dot com",
+            avatarUrls: {
+              "16x16": "https://jira.atlassian.com/secure/useravatar?size=small&avatarId=10605",
+              "48x48": "https://jira.atlassian.com/secure/useravatar?avatarId=10605"
+            },
+            displayName: "Bryan Rollins [Atlassian]",
+            active: "true"
+          },
+          changelog: {
+            items: [changelog],
+            id: 10_124
+          },
+          comment: comment,
+          webhookEvent: request_type
+        }
+      )
     end
   end
 end

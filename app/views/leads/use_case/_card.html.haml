@@ -1,6 +1,5 @@
 .col-12.col-sm-12.col-md-12.col-lg-6
-  - if content_for(:item_bar)
-    = yield :item_bar
+  = yield :item_bar if content_for(:item_bar)
   .simple-intro
     .icon
       - if card.picture.attached? && card.picture.variable?

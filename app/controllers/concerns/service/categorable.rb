@@ -45,10 +45,7 @@ module Service::Categorable
   end
 
   def subcategories_with_counters
-    subcategories&.inject({}) do |h, cat|
-      h[cat.id] = { category: cat, counter: count_services(cat) }
-      h
-    end
+    subcategories&.each_with_object({}) { |cat, h| h[cat.id] = { category: cat, counter: count_services(cat) } }
   end
 
   def count_services(category)

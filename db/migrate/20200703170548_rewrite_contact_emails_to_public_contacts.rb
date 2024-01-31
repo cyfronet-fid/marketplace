@@ -2,7 +2,7 @@
 
 class RewriteContactEmailsToPublicContacts < ActiveRecord::Migration[6.0]
   def up
-    services = execute(("SELECT * FROM services"))
+    services = execute("SELECT * FROM services")
     services.each do |service|
       emails = service["contact_emails"].tr("{}", "").split(",").map
       emails.each { |email| execute(<<~SQL) }

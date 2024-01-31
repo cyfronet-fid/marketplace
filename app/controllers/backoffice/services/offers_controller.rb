@@ -30,7 +30,8 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
     render partial: "backoffice/services/offers/steps/summary", locals: { offer: template }
   end
 
-  def edit; end
+  def edit
+  end
 
   def update
     template = permitted_attributes(Offer)

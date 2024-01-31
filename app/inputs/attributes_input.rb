@@ -7,25 +7,23 @@ class AttributesInput < SimpleForm::Inputs::TextInput
     merged_input_options = merge_wrapper_options(input_html_options, wrapper_options)
 
     existing_value =
-      Array(object.public_send(attribute_name))
-        .map
-        .with_index do |array_el, index|
-          merged_options =
-            merged_input_options.merge(
-              value: array_el,
-              name: "#{object_name}[#{attribute_name}][]",
-              id: "#{object_name}_#{attribute_name}_#{index}",
-              class: "form-control "
-            )
+      Array(object.public_send(attribute_name)).map.with_index do |array_el, index|
+        merged_options =
+          merged_input_options.merge(
+            value: array_el,
+            name: "#{object_name}[#{attribute_name}][]",
+            id: "#{object_name}_#{attribute_name}_#{index}",
+            class: "form-control "
+          )
 
-          if input_has_errors?(index)
-            error = @builder.full_error("#{attribute_name}_#{index}", class: "invalid-feedback d-block")
-            merged_options = merged_options.merge(class: "is-invalid form-control text")
-          end
-
-          input = @builder.text_area(nil, merged_options)
-          input + error
+        if input_has_errors?(index)
+          error = @builder.full_error("#{attribute_name}_#{index}", class: "invalid-feedback d-block")
+          merged_options = merged_options.merge(class: "is-invalid form-control text")
         end
+
+        input = @builder.text_area(nil, merged_options)
+        input + error
+      end
 
     unless object.errors.present?
       number = Array(object.public_send(attribute_name)).length

@@ -13,22 +13,21 @@
   -# haml-lint:disable InlineStyles
   %ul.list-group.backoffice-list.indent-list.mt-3.mb-3{ "data-e2e": "backoffice-scientific-domains-list" }
     - ancestry_tree(@scientific_domains).each do |record|
-      - scientific_domain = record[1]
-      %li.list-group-item{ class: "#{"subcategory" if scientific_domain.ancestry_depth.positive?}",
-      style: style_indentation_variables(scientific_domain) }
+      - sd = record[1]
+      %li.list-group-item{ class: "#{"subcategory" if sd.ancestry_depth.positive?}",
+      style: style_indentation_variables(sd) }
         = link_to backoffice_scientific_domain_path(record.last) do
-          - if scientific_domain.logo.attached? && scientific_domain.logo.variable?
-            = image_tag scientific_domain.logo.variant(resize: "32x32")
+          = image_tag sd.logo.variant(resize: "32x32") if sd.logo.attached? && sd.logo.variable?
           = record.first
         .buttons-box
-          - if policy([:backoffice, scientific_domain]).destroy?
-            = link_to backoffice_scientific_domain_path(scientific_domain),
+          - if policy([:backoffice, sd]).destroy?
+            = link_to backoffice_scientific_domain_path(sd),
                   method: :delete,
                   data: { confirm: _("Are you sure you want to remove this scientific domain?") },
                   class: "delete-icon float-right" do
               %i.far.fa-trash-alt
-          - if policy([:backoffice, scientific_domain]).edit?
+          - if policy([:backoffice, sd]).edit?
             = link_to _("Edit"),
-                      edit_backoffice_scientific_domain_path(scientific_domain),
+                      edit_backoffice_scientific_domain_path(sd),
                       class: "btn-sm btn-warning float-right mr-4"
   -# haml-lint:enable InlineStyles

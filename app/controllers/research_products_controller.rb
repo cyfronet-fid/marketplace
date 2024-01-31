@@ -4,7 +4,8 @@ class ResearchProductsController < ApplicationController
   before_action :authenticate_user!, :project_research_product
   before_action :find_research_product, :load_projects, only: :new
 
-  def new; end
+  def new
+  end
 
   def create
     template = permitted_attributes(ProjectResearchProduct)
@@ -52,8 +53,7 @@ class ResearchProductsController < ApplicationController
       end
     end
   rescue StandardError => e
-    flash[:alert] =
-      "Due to a poor metadata of the research product it cannot be added to the Marketplace Project. " +
-        "Server response: #{e}"
+    flash[:alert] = "Due to a poor metadata of the research product it cannot be added to the Marketplace Project. " +
+      "Server response: #{e}"
   end
 end

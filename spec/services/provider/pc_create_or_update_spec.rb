@@ -12,8 +12,9 @@ RSpec.describe Provider::PcCreateOrUpdate, backend: true do
   it "should create provider with source and upstream is true" do
     original_stdout = $stdout
     $stdout = StringIO.new
-    expect { described_class.new(published_provider_response, :published, Time.now).call }.to change { Provider.count }
-      .by(1)
+    expect { described_class.new(published_provider_response, :published, Time.now).call }.to change {
+      Provider.count
+    }.by(1)
 
     provider = Provider.last
 
@@ -84,8 +85,9 @@ RSpec.describe Provider::PcCreateOrUpdate, backend: true do
   it "should create provider with source and upstream and it isn't active" do
     original_stdout = $stdout
     $stdout = StringIO.new
-    expect { described_class.new(draft_provider_response, :unpublished, Time.now).call }.to change { Provider.count }
-      .by(1)
+    expect { described_class.new(draft_provider_response, :unpublished, Time.now).call }.to change {
+      Provider.count
+    }.by(1)
 
     provider = Provider.last
 

@@ -20,12 +20,11 @@ class Services::OrderingConfigurationsController < Services::OrderingConfigurati
     @service = Service.friendly.find(params[:service_id])
     authorize(ServiceContext.new(@service, params.key?(:from) && params[:from] == "backoffice_service"), :show?)
   rescue Pundit::NotAuthorizedError => e
-    flash[:alert] =
-      if @service.suspended?
-        "Configuration's panel is not available for the suspended #{@service.type}"
-      else
-        not_authorized_message(e)
-      end
+    flash[:alert] = if @service.suspended?
+      "Configuration's panel is not available for the suspended #{@service.type}"
+    else
+      not_authorized_message(e)
+    end
     redirect_to service_path(@service)
   end
 end

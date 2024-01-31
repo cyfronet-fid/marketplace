@@ -5,7 +5,7 @@ class Class
     attrs.each do |method_name|
       define_method(method_name[0...-1]) do |*args, &error_handler|
         send(method_name, *args)
-        return true
+        true
       rescue StandardError => e
         error_handler&.call(e)
       end

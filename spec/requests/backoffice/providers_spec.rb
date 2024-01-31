@@ -12,16 +12,18 @@ RSpec.describe "Backoffice: manage providers", backend: true do
       it "without any service" do
         provider = create(:provider)
 
-        expect { delete backoffice_provider_path(provider) }.to change { Provider.where.not(status: :deleted).count }
-          .by(-1)
+        expect { delete backoffice_provider_path(provider) }.to change {
+          Provider.where.not(status: :deleted).count
+        }.by(-1)
       end
 
       it "with all deleted services" do
         provider = create(:provider)
         create(:service, resource_organisation: provider, status: :deleted)
 
-        expect { delete backoffice_provider_path(provider) }.to change { Provider.where.not(status: :deleted).count }
-          .by(-1)
+        expect { delete backoffice_provider_path(provider) }.to change {
+          Provider.where.not(status: :deleted).count
+        }.by(-1)
       end
     end
 

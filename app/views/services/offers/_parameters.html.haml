@@ -9,5 +9,4 @@
           %tr{ hideable_options(idx) }
             %td= parameter["label"]
             %td.text-right.font-weight-bold= parse_offer_parameter_value(parameter)
-    - if technical_parameters.size > 4
-      = render "common_parts/show_more_link", id: id
+    = render "common_parts/show_more_link", id: id if technical_parameters.size > 4

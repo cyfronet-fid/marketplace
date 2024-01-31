@@ -7,7 +7,7 @@ export default class extends Controller {
     event.preventDefault();
     event.target.insertAdjacentHTML(
       "beforebegin",
-      event.target.dataset.fields.replace(/new_field/g, this.dataAdministratorTargets.length)
+      event.target.dataset.fields.replace(/new_field/g, this.dataAdministratorTargets.length),
     );
   }
 

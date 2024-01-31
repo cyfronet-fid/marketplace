@@ -2,7 +2,7 @@ inherit_gem:
   prettier: rubocop.yml
 
 AllCops:
-  TargetRubyVersion: 3.0.3
+  TargetRubyVersion: 3.3.0
   NewCops: enable
   SuggestExtensions: true
   Exclude:
@@ -150,6 +150,10 @@ Style/FormatStringToken:
 # Many changes, not much added value
 Style/GuardClause:
   Enabled: false
+
+
+Style/HashSyntax:
+  EnforcedShorthandSyntax: either
 
 Metrics/ParameterLists:
   Enabled: true

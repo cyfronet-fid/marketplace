@@ -3,16 +3,16 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.0.3"
+ruby "3.3.0"
 
-gem "rails", "~> 6.1.5"
+gem "rails", "~> 6.1.7.6"
 gem "pg", ">= 0.18", "< 2.0"
 gem "puma"
 gem "nori"
 
 gem "uglifier", ">= 1.3.0"
 gem "webpacker", "~> 5.4.4"
-gem "view_component"
+gem "view_component", "~> 2.83.0"
 gem "haml-rails"
 gem "turbolinks", "~> 5", require: false
 gem "render_async"
@@ -27,6 +27,7 @@ gem "simple_form"
 gem "friendly_id", "~> 5.2.0"
 gem "acts-as-taggable-on"
 gem "countries"
+gem "i18n_data"
 
 gem "activestorage-validator"
 gem "image_processing"
@@ -75,7 +76,7 @@ gem "google-apis-analyticsreporting_v4", "~> 0.5"
 
 gem "redis-rails"
 gem "sidekiq"
-gem "sidekiq-limit_fetch", "~>4.2.0"
+gem "sidekiq-limit_fetch", "~>4.4"
 
 gem "stomp"
 
@@ -94,6 +95,7 @@ group :development, :test do
 
   gem "dotenv-rails"
   gem "webmock"
+  gem "foreman"
 end
 
 group :development do

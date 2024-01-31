@@ -3,14 +3,12 @@
 class Api::V1::OfferPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope
-        .joins(service: [resource_organisation: [provider_data_administrators: [:data_administrator]]])
-        .where(
-          "data_administrators.email = ? AND offers.status = ? AND services.status != ?",
-          user.email,
-          "published",
-          "deleted"
-        )
+      scope.joins(service: [resource_organisation: [provider_data_administrators: [:data_administrator]]]).where(
+        "data_administrators.email = ? AND offers.status = ? AND services.status != ?",
+        user.email,
+        "published",
+        "deleted"
+      )
     end
   end
 
@@ -39,7 +37,8 @@ class Api::V1::OfferPolicy < ApplicationPolicy
       :offer_category,
       :primary_oms_id,
       :internal,
-      oms_params: {},
+      oms_params: {
+      },
       parameters: [
         :id,
         :type,

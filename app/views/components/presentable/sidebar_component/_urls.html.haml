@@ -1,10 +1,10 @@
 %ul.list-group{ class: "#{"suspended" if inactive}" }
   - fields.each do |field|
-    - if object.send(field).present?
-      %li.list-group-item
-        %span
-          - if field.end_with? "_email"
-            = mail_to(object.send(field), t("components.presentable.sidebar_component.fields.#{field}"))
-          - else
-            = link_to(t("components.presentable.sidebar_component.fields.#{field}"), object.send(field))
-          -# TODO: refactor dynamic translation (above)
+    - next unless object.send(field).present?
+    %li.list-group-item
+      %span
+        - if field.end_with? "_email"
+          = mail_to(object.send(field), t("components.presentable.sidebar_component.fields.#{field}"))
+        - else
+          = link_to(t("components.presentable.sidebar_component.fields.#{field}"), object.send(field))
+        -# TODO: refactor dynamic translation (above)

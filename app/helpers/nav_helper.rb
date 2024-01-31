@@ -44,10 +44,10 @@ module NavHelper
   #   # => '<li class="home active">Hello</li>'
   #
   # Returns a list item element String
-  def nav_link(options = {}, &block)
+  def nav_link(options = {}, &)
     o = html_options(options)
 
-    block_given? ? content_tag(:li, capture(&block), o) : content_tag(:li, nil, o)
+    block_given? ? content_tag(:li, capture(&), o) : content_tag(:li, nil, o)
   end
 
   def active_for_current(options = {})
@@ -55,11 +55,11 @@ module NavHelper
     { class: "#{clazz} #{html_options(options)[:class]}".strip }
   end
 
-  def nav_tab(key, value, options = {}, &block)
+  def nav_tab(key, value, options = {}, &)
     active_class = options.fetch(:active_class, "active")
     o = { class: params[key] == value ? " #{active_class}" : "" }
 
-    block_given? ? content_tag(:li, capture(&block), o) : content_tag(:li, nil, o)
+    block_given? ? content_tag(:li, capture(&), o) : content_tag(:li, nil, o)
   end
 
   private
