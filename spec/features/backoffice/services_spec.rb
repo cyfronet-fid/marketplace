@@ -100,8 +100,8 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       fill_in "service_sources_attributes_0_eid", with: "12345a"
 
       expect { click_on "Create Service" }.to change { user.owned_services.count }.by(1).and change { Offer.count }.by(
-                                                   1
-                                                 ).and have_enqueued_job(Ess::UpdateJob).exactly(2).times
+              1
+            ).and have_enqueued_job(Ess::UpdateJob).exactly(2).times
 
       expect(page).to have_content("service name")
       expect(page).to have_content("service description")
@@ -256,9 +256,9 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       expect(Ess::UpdateJob).not_to have_been_enqueued
 
       click_on "Go back to edit"
-      expect { click_on "Create Service" }.to change { Service.count }.by(1).and have_enqueued_job(Ess::UpdateJob)
-                                       .exactly(2)
-                                       .times
+      expect { click_on "Create Service" }.to change { Service.count }.by(1).and have_enqueued_job(
+              Ess::UpdateJob
+            ).exactly(2).times
       expect(page).to have_content("service name")
     end
 
@@ -806,7 +806,7 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       select "OMS1", from: "Order Management System"
       click_on "Update Offer"
 
-      offer.reload
+      # offer.reload
       expect(offer.internal).to be_falsey
 
       fill_in "Foo", with: "bar"

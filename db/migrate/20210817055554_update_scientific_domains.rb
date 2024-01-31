@@ -135,9 +135,9 @@ class UpdateScientificDomains < ActiveRecord::Migration[6.0]
       return
     end
 
-    domains_group
-      .where(id_field_name => source_relation_ids_to_update, :scientific_domain_id => source_id)
-      .update_all(scientific_domain_id: target_id)
+    domains_group.where(id_field_name => source_relation_ids_to_update, :scientific_domain_id => source_id).update_all(
+      scientific_domain_id: target_id
+    )
     all_target_records = domains_group.where(scientific_domain_id: target_id).map { |sd| sd[id_field_name.to_sym] }.uniq
     unless all_target_records.length == (target_relation_ids + source_relation_ids).uniq.length
       raise StandardError("Not all sources have been casted")

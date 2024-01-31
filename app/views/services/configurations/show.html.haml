@@ -7,8 +7,7 @@
       - if @step.bundle.present?
         %h2.mb-2.mt-3.font-bold Bundle configuration
         %p.mb-4 Your service will be configured to work with following services:
-        - if @step.bundle.all_offers.select(&:voucherable?).size > 1
-          = render "services/configurations/voucher", step: @step, f: f
+        = render "services/configurations/voucher", step: @step, f: f
         .row.bundle-info
           .col-12.col-md-2
             = presentable_logo(@step.bundle.service, "align-self-center img-fluid", "180x120")
@@ -24,4 +23,3 @@
         = render "services/configurations/voucher", step: @step, f: f
         .row.bundle-info
           = render "services/configurations/attributes", step: @step, service: @service, form: f
-

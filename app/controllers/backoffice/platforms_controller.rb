@@ -8,7 +8,8 @@ class Backoffice::PlatformsController < Backoffice::ApplicationController
     @pagy, @platforms = pagy(policy_scope(Platform).order(:name))
   end
 
-  def show; end
+  def show
+  end
 
   def new
     @platform = Platform.new
@@ -26,7 +27,8 @@ class Backoffice::PlatformsController < Backoffice::ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+  end
 
   def update
     if @platform.update(permitted_attributes(@platform))

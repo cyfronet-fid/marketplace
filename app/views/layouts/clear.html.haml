@@ -10,8 +10,7 @@
       %div
       %div
   %body{ class: "#{action_name}" }
-    - if ENV["MP_INSTANCE"]
-      = render "layouts/badge"
+    = render "layouts/badge" if ENV["MP_INSTANCE"]
     = render "layouts/flash"
     %header
       = render "layouts/sections"
@@ -23,8 +22,7 @@
   = render "layouts/modal"
   = render "layouts/eosc_commons_footer"
   = render "layouts/jira_collector"
-  - unless controller.tour_disabled
-    = tour @tour, @show_welcome_modal
+  = tour @tour, @show_welcome_modal unless controller.tour_disabled
   = render "layouts/recommendation"
 
   - file_base = Mp::Application.config.eosc_commons_base_url + "index." + Mp::Application.config.eosc_commons_env

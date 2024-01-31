@@ -1,13 +1,11 @@
 %ul.list-group.domains{ class: "#{"suspended" if inactive}" }
   - fields.map do |field|
-    - if object.send(field).present?
-      - field_tree(object, field).each do |parent, children|
-        %li.list-group-item
-          %span
-            = parent
-          %ul
-            - children.each do |child|
-              %li
-                %span= child
-
-
+    - next unless object.send(field).present?
+    - field_tree(object, field).each do |parent, children|
+      %li.list-group-item
+        %span
+          = parent
+        %ul
+          - children.each do |child|
+            %li
+              %span= child

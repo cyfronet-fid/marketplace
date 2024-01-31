@@ -5,8 +5,7 @@
     .spinner
   %body
     %header.pb-2.white-bg
-      - if ENV["MP_INSTANCE"]
-        = render "layouts/badge"
+      = render "layouts/badge" if ENV["MP_INSTANCE"]
       = render "layouts/flash"
       = render "layouts/backoffice/navbar"
     %main

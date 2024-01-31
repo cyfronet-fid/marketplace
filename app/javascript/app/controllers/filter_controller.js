@@ -51,7 +51,7 @@ export default class extends Controller {
     const anyChildHasDifferentState =
       otherChildren.length === 0 ? false : otherChildren.some((e) => e.checked !== state);
     const parent = document.querySelector(
-      `[type='checkbox'][name='${element.name}'][value='${element.dataset.parent}']`
+      `[type='checkbox'][name='${element.name}'][value='${element.dataset.parent}']`,
     );
 
     if (!parent) {

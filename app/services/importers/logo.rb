@@ -29,13 +29,12 @@ class Importers::Logo < ApplicationService
         @object.logo.attach(io: logo, filename: filename + extension, content_type: logo_content_type)
       end
     rescue OpenURI::HTTPError, Errno::EHOSTUNREACH, LogoNotAvailableError, SocketError => e
-      Rails.logger.error "ERROR - there was a problem processing image for #{@object.name} #{@image_url}: #{e}"
+      log "ERROR - there was a problem processing image for #{@object.name} #{@image_url}: #{e}"
     rescue StandardError => e
-      Rails
-        .logger.error "ERROR - there was a unexpected problem processing image for #{@object.name} #{@image_url}: #{e}"
+      log "ERROR - there was a unexpected problem processing image for #{@object.name} #{@image_url}: #{e}"
     end
   rescue Timeout::Error => e
-    Rails.logger.error "ERROR - there was a problem with image loading from #{@image_url}: #{e}"
+    log "ERROR - there was a problem with image loading from #{@image_url}: #{e}"
   end
 
   private
@@ -68,5 +67,9 @@ class Importers::Logo < ApplicationService
       .gsub(/\A[_.]+|[_.]+\z/, "")
       .gsub(/-+/, "-")
       .gsub(/-$/, "")
+  end
+
+  def log(msg)
+    Rails.logger.error msg
   end
 end

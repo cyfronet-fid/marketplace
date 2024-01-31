@@ -23,7 +23,8 @@ class Backoffice::Services::BundlesController < Backoffice::ApplicationControlle
     end
   end
 
-  def edit; end
+  def edit
+  end
 
   def update
     template = permitted_attributes(Bundle.new)

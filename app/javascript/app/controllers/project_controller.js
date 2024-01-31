@@ -37,14 +37,14 @@ export default class extends Controller {
       this._showFields(this.researchTargets);
       this._createHint(
         this.partnershipCountriesTarget,
-        "Which countries are involved in this community? Please select those you are aware of"
+        "Which countries are involved in this community? Please select those you are aware of",
       );
     }
     if (customer === this.CUSTOMER_TYPOLOGIES.project) {
       this._showFields(this.projectTargets);
       this._createHint(
         this.partnershipCountriesTarget,
-        "Which countries are involved in these projects? Please select those you are aware of"
+        "Which countries are involved in these projects? Please select those you are aware of",
       );
     }
     if (customer === this.CUSTOMER_TYPOLOGIES.private_company) {

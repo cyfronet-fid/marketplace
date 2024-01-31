@@ -10,7 +10,7 @@ describe Import::Vocabularies, backend: true do
   def make_and_stub_eosc_registry(dry_run: false, filepath: nil, log: false)
     options = { dry_run: dry_run, filepath: filepath, faraday: faraday }
 
-    options[:logger] = ->(_msg) {  } unless log
+    options[:logger] = ->(_msg) {} unless log
 
     Import::Vocabularies.new(test_url, **options)
   end
@@ -20,9 +20,9 @@ describe Import::Vocabularies, backend: true do
 
   def expect_responses(test_url, vocabularies_response = nil)
     unless vocabularies_response.nil?
-      allow_any_instance_of(Faraday::Connection).to receive(:get)
-        .with("#{test_url}/vocabulary/byType/")
-        .and_return(vocabularies_response)
+      allow_any_instance_of(Faraday::Connection).to receive(:get).with("#{test_url}/vocabulary/byType/").and_return(
+        vocabularies_response
+      )
     end
   end
 
@@ -45,17 +45,13 @@ describe Import::Vocabularies, backend: true do
     it "should create and update vocabularies" do
       eosc_registry = make_and_stub_eosc_registry(log: true)
 
-      expect { eosc_registry.call }.to output(/TOTAL: 26, CREATED: 21, UPDATED: 1, UNPROCESSED: 4$/)
-        .to_stdout
-        .and(
-          change { Vocabulary.count }
-            .by(15)
-            .and(
-              change { Category.count }
-                .by(3)
-                .and(change { ScientificDomain.count }.by(2).and(change { TargetUser.count }.by(1)))
-            )
+      expect { eosc_registry.call }.to output(/TOTAL: 26, CREATED: 21, UPDATED: 1, UNPROCESSED: 4$/).to_stdout.and(
+        change { Vocabulary.count }.by(15).and(
+          change { Category.count }.by(3).and(
+            change { ScientificDomain.count }.by(2).and(change { TargetUser.count }.by(1))
+          )
         )
+      )
 
       esfri_type.reload
 
@@ -64,17 +60,13 @@ describe Import::Vocabularies, backend: true do
 
     it "should not change db if dry_run is set to true" do
       eosc_registry = make_and_stub_eosc_registry(dry_run: true, log: true)
-      expect { eosc_registry.call }.to output(/TOTAL: 26, CREATED: 21, UPDATED: 1, UNPROCESSED: 4$/)
-        .to_stdout
-        .and(
-          change { Vocabulary.count }
-            .by(0)
-            .and(
-              change { Category.count }
-                .by(0)
-                .and(change { ScientificDomain.count }.by(0).and(change { TargetUser.count }.by(0)))
-            )
+      expect { eosc_registry.call }.to output(/TOTAL: 26, CREATED: 21, UPDATED: 1, UNPROCESSED: 4$/).to_stdout.and(
+        change { Vocabulary.count }.by(0).and(
+          change { Category.count }.by(0).and(
+            change { ScientificDomain.count }.by(0).and(change { TargetUser.count }.by(0))
+          )
         )
+      )
     end
   end
 end
