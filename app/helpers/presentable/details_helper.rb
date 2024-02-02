@@ -35,7 +35,7 @@ module Presentable::DetailsHelper
 
   def provider_details_columns
     [
-      [provider_classification, esfri_types, esfri_domains, meril_scientific_domains],
+      [provider_maturity_information, provider_classification, esfri_types, esfri_domains, meril_scientific_domains],
       [networks, areas_of_activity, affiliations, certifications, catalogue],
       [
         resource_profile_4? ? hosting_legal_entity : hosting_legal_entity_string,
@@ -148,6 +148,18 @@ module Presentable::DetailsHelper
       },
       with_desc: true,
       active_when_suspended: true
+    }
+  end
+  def provider_maturity_information
+    {
+      name: "maturity_information",
+      template: "array",
+      fields: %w[legal_statuses provider_life_cycle_statuses],
+      with_desc: true,
+      nested: {
+        legal_statuses: "name",
+        provider_life_cycle_statuses: "name"
+      }
     }
   end
 

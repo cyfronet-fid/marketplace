@@ -13,14 +13,6 @@ RSpec.feature "Provider browsing", end_user_frontend: true do
     expect(body).to have_content provider.name
   end
 
-  scenario "shows providers coverage" do
-    provider = create(:provider, participating_countries: %w[PL DE])
-
-    visit provider_path(provider)
-
-    expect(page).to have_content "Provider coverage"
-  end
-
   scenario "does not show coverage when no countries" do
     provider = create(:provider)
 

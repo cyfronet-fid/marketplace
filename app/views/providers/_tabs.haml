@@ -1,7 +1,7 @@
 - from = params[:from]
 - about_active = ["providers"].include?(controller_name)
 .row
-  .col-12
+  .col-12.col-xl-9.pr-5
     %ul#my-tab.nav.nav-tabs.row.pl-3{ role: "tablist" }
       %li.nav-item
         = link_to _("About"), provider_path(provider),
