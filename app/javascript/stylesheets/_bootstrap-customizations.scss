@@ -20,7 +20,7 @@ body {
 
   > main {
     padding: 0 15px;
-    margin-bottom: 6.5rem;
+    margin-bottom: 5.5rem;
   }
 }
 
@@ -6735,6 +6735,39 @@ abbr[title] {
   margin: 15px 0 30px;
   font-weight: 500;
   color: $palette-solid-50;
+}
+
+.provider-view {
+  .details-box-wrapper {
+    .details-box {
+      .details-content {
+        padding: 10px 10px 15px 30px;
+
+        ul {
+          li {
+            margin-bottom: 12px;
+
+            span {
+              font-size: 14px;
+            }
+
+            ul {
+              padding-left: 10px;
+
+              li {
+                margin-top: 9px;
+                margin: 8px 0 0;
+
+                span {
+                  font-size: 12px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 // scss-lint:disable all

@@ -1,7 +1,7 @@
 - content_for :title, @provider.name
 - breadcrumb :provider, @provider
 .container
-  .pt-4.pl-3.pr-3.shadow-sm.rounded.service-box.service-detail
+  .pt-4.service-box-redesign.service-detail
     = render Presentable::HeaderComponent.new(object: @provider,
                           title: @provider.abbreviation,
                           subtitle: @provider.name,
@@ -9,12 +9,12 @@
                           preview: local_assigns[:preview]) do |c|
       - c.buttons do
         = render "components/presentable/header_component/provider_buttons", provider: @provider
+
     = render "providers/tabs", provider: @provider
 
-.tab-content
+.tab-content.provider-view
   = render Presentable::DescriptionComponent.new(object: @provider, question: @question) do |c|
     - c.description_panels do
-      = render "providers/coverage", provider: @provider
       = render "providers/related", provider: @provider, related_services: @related_services
   -# = render "providers/about", provider: @provider, related_services: @related_services
   = render "taggable/details_section", taggable: @provider
