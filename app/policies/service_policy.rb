@@ -34,7 +34,17 @@ class ServicePolicy < ApplicationPolicy
   end
 
   def any_published_bundled_offers?
-    record.bundles.published.size.positive? || record.offers.select(&:bundled?).size.positive?
+    record.bundles.published.size.positive? ||
+      (
+        record.offers.select(&:bundled?).size.positive? &&
+          record
+            .offers
+            .select(&:bundled?)
+            .map(&:bundles)
+            .flatten
+            .map { |bundle| bundle.service.status }
+            .any? { |status| status.in?(Statusable::PUBLIC_STATUSES) }
+      )
   end
 
   def any_published_offers?
