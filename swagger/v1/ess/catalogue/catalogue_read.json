@@ -93,6 +93,16 @@
     },
     "updated_at": {
       "type": "string"
+    },
+    "created_at": {
+      "type": "string"
+    },
+    "tag_list": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
     }
   },
   "additionalProperties": false,
