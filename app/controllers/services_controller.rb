@@ -127,7 +127,13 @@ class ServicesController < ApplicationController
 
   def bundled
     if @service.offers.published.select(&:bundled?).present?
-      @service.offers.published.select(&:bundled?).map { |o| policy_scope(o.bundles) }.flatten.uniq
+      @service
+        .offers
+        .published
+        .select(&:bundled?)
+        .map { |o| policy_scope(o.bundles).reject { |b| b.service.status.in?(Statusable::HIDEABLE_STATUSES) } }
+        .flatten
+        .uniq
     else
       []
     end
