@@ -171,7 +171,7 @@ RSpec.feature "Services in ordering_configuration panel", end_user_frontend: tru
     scenario "I can edit offer OMS", js: true do
       oms1 = create(:oms, name: "OMS1", custom_params: { foo: { mandatory: true, default: "baz" } })
       oms2 = create(:oms, name: "OMS2", custom_params: {})
-      service = create(:service, name: "my service", resource_organisation: provider, status: :draft)
+      service = create(:service, name: "my service", resource_organisation: provider, status: :unpublished)
       service_source = create(:eosc_registry_service_source, service: service)
       service.update!(upstream: service_source)
       offer = create(:offer, name: "offer1", description: "desc", service: service, internal: false)
@@ -180,6 +180,7 @@ RSpec.feature "Services in ordering_configuration panel", end_user_frontend: tru
       service.reload
 
       visit service_ordering_configuration_path(service, from: "backoffice_service")
+      page.save_page
       first(".btn.btn-outline-secondary.font-weight-bold").click
 
       check "Use EOSC Portal as the order management platform"
