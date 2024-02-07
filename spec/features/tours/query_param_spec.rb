@@ -60,8 +60,6 @@ RSpec.feature "Query param tour", end_user_frontend: true do
     visit service_path(service, tour: "query_param_1")
     expect(page).to have_selector(".shepherd-content", visible: true)
 
-    page.save_page
-
     click_on "Let's take a tour"
     click_on "Next"
 

@@ -21,7 +21,6 @@ RSpec.feature "Favourites", end_user_frontend: true, skip: true do
 
       visit service_path(service)
 
-      page.save_page
       expect(page).to have_text(service.name)
       expect(page.find("#favourite-#{service.id}", visible: false)).to be_checked
     end
