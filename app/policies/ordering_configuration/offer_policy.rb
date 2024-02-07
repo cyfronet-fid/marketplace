@@ -1,12 +1,6 @@
 # frozen_string_literal: true
 
-class OrderingConfiguration::OfferPolicy < ApplicationPolicy
-  class Scope < Scope
-    def resolve
-      scope.where(status: :published)
-    end
-  end
-
+class OrderingConfiguration::OfferPolicy < Backoffice::OfferPolicy
   def new?
     offer_editor?
   end
