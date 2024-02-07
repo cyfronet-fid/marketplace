@@ -3,12 +3,8 @@
 class Backoffice::OfferPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      if user.service_portfolio_manager?
-        scope.where.not(status: :deleted)
-      elsif user.service_owner?
-        scope
-          .joins(service: :service_user_relationships)
-          .where(status: %i[published draft], service: { service_user_relationships: { user: user } })
+      if user.service_portfolio_manager? || user.service_owner? || user.data_administrator?
+        scope.where.not(status: Statusable::INVISIBLE_STATUSES)
       else
         Offer.none
       end

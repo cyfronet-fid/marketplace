@@ -5,7 +5,11 @@ class OfferPolicy < ApplicationPolicy
     def resolve
       scope
         .joins(:service)
-        .where("offers.status = ? AND services.status IN (?)", "published", Statusable::VISIBLE_STATUSES)
+        .where(
+          "offers.status IN (?) AND services.status IN (?)",
+          Statusable::PUBLIC_STATUSES,
+          Statusable::VISIBLE_STATUSES
+        )
     end
   end
 

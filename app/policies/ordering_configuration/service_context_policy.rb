@@ -2,6 +2,8 @@
 
 class OrderingConfiguration::ServiceContextPolicy < ServiceContextPolicy
   def show?
-    super && record.service.administered_by?(user) && record.service.upstream&.eosc_registry?
+    service = record.service
+    super && !service.status.in?(Statusable::HIDEABLE_STATUSES) && service.administered_by?(user) &&
+      service.upstream&.eosc_registry?
   end
 end
