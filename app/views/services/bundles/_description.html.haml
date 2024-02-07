@@ -6,7 +6,8 @@
   .bundle-goals
     - bundle.bundle_goals.each do |goal|
       %span.goal= goal.name
-  %h4.card-title.pt-2= link_to bundle.name, service_bundle_path(bundle.service, bundle)
+  %h4.card-title.pt-2
+    = link_to bundle.name, bundle.service.suspended? ? nil : service_bundle_path(bundle.service, bundle)
 
   .bundle-description
     .card-text.mb-2{ "data-controller" => "parameter" }
@@ -16,6 +17,5 @@
         .d-none{ data: { "parameter-target": "hideableParameter", state: "hidden" } }
           = markdown(bundle.description)
         = render "common_parts/show_more_link", id: bundle.id
-
       - else
         = markdown(bundle.description)

@@ -5,11 +5,19 @@ class BundlePolicy < ApplicationPolicy
     def resolve
       scope
         .joins(:service)
-        .where("bundles.status = ? AND services.status IN (?)", "published", Statusable::VISIBLE_STATUSES)
+        .where(
+          "bundles.status IN (?) AND services.status IN (?)",
+          Statusable::PUBLIC_STATUSES,
+          Statusable::VISIBLE_STATUSES
+        )
     end
   end
 
   def index?
     true
+  end
+
+  def show?
+    record.service.in?(Statusable::PUBLIC_STATUSES) && record.status.in?(Statusable::PUBLIC_STATUSES)
   end
 end

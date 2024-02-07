@@ -3,5 +3,5 @@
            object: @object,
            fields: group[:fields],
            nested: group[:nested],
-           active_when_suspended: group[:active_when_suspended],
+           active_when_suspended: group[:active_when_suspended] || [],
            preview: @preview

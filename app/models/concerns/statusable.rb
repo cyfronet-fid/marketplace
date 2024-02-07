@@ -21,4 +21,7 @@ module Statusable
 
   PUBLIC_STATUSES = %w[published unverified errored].freeze
   VISIBLE_STATUSES = %w[published unverified suspended errored].freeze
+  INVISIBLE_STATUSES = %w[deleted].freeze
+  HIDEABLE_STATUSES = %w[suspended deleted].freeze
+  MANAGEABLE_STATUSES = (STATUSES.values - INVISIBLE_STATUSES).freeze
 end

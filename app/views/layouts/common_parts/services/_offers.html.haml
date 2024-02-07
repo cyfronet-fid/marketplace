@@ -21,7 +21,7 @@
 .row.parameters
   - if offers.present?
     = render partial: "layouts/common_parts/services/default_parameters", locals: { offer: offers.manageable.first }
-  - if offers.size > 1
+  - if offers.manageable.size > 1
     = render partial: "layouts/common_parts/services/offer", collection: offers[1..], as: :offer
   = render "layouts/common_parts/services/new_offer", service: service
 .row.parameters
