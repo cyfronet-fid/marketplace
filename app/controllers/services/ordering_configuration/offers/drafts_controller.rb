@@ -5,7 +5,7 @@ class Services::OrderingConfiguration::Offers::DraftsController < Services::Orde
 
   def create
     Offer::Unpublish.call(@offer)
-    redirect_to backoffice_service_path(@service)
+    redirect_to service_ordering_configuration_path(@service)
   end
 
   private

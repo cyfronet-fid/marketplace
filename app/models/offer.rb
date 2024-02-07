@@ -30,8 +30,8 @@ class Offer < ApplicationRecord
             }
           )
         }
-  scope :accessible, -> { joins(:service).where(status: :published, services: { status: %i[published unverified] }) }
-  scope :manageable, -> { where(status: %i[published draft]) }
+  scope :accessible, -> { joins(:service).where(status: :published, services: { status: Statusable::PUBLIC_STATUSES }) }
+  scope :manageable, -> { where(status: Statusable::MANAGEABLE_STATUSES) }
 
   counter_culture :service,
                   column_name: proc { |model| model.published? ? "offers_count" : nil },
