@@ -6,7 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [3.55.0-milestone]
+## [3.55.1] 2024-02-08
+
+## [3.55.0] 2024-02-06
 
 ### Added
 - View of the suspended services and datasources (@goreck888)
