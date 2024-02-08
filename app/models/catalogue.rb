@@ -3,9 +3,7 @@
 class Catalogue < ApplicationRecord
   extend FriendlyId
   include LogoAttachable
-
-  STATUSES = { published: "published", deleted: "deleted", draft: "draft" }.freeze
-  enum status: STATUSES
+  include Statusable
 
   friendly_id :pid
 
