@@ -1,4 +1,9 @@
 - href_explore = object.suspended? ? { class: "suspended" } : { href: eosc_explore_url(object.tag_list) }
+- href_datasource = object.suspended? ? href_explore : { href: eosc_explore_datasource_url(object) }
+- if object.is_a?(Datasource)
+  %a.right-panel-button.explore{ href_datasource }
+    Explore Stored and Published<br>
+    Research Data
 - if show_banner?(object.tag_list)
   %a.right-panel-button.explore{ href_explore }
     Explore Compatible<br>

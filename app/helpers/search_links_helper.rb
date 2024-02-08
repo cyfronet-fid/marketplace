@@ -128,6 +128,10 @@ module SearchLinksHelper
     )
   end
 
+  def eosc_explore_datasource_url(datasource)
+    URI.parse(CONFIG[:base_url] + CONFIG[:datasource_search_url] + ERB::Util.url_encode("(\"#{datasource.pid}\")"))
+  end
+
   def show_banner?(tags)
     matching_tags(tags).present?
   end
