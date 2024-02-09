@@ -26,7 +26,7 @@ class Importers::Catalogue < ApplicationService
       networks: map_networks(Array(@data["networks"])),
       hosting_legal_entities: map_hosting_legal_entity(@data["hostingLegalEntity"]),
       participating_countries: @data["participatingCountries"] || [],
-      tags: @data["tags"] || [],
+      tags: Array(@data["tags"]) || [],
       scientific_domains: map_scientific_domains(@data["scientificDomains"].map { |sd| sd["scientificSubdomain"] }),
       public_contacts: Array(@data["publicContacts"]).map { |c| PublicContact.new(map_contact(c)) },
       main_contact: @data["mainContact"] ? MainContact.new(map_contact(@data["mainContact"])) : nil,
