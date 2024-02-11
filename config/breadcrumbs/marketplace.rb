@@ -135,6 +135,17 @@ crumb :provider do |provider|
   parent :providers
 end
 
+crumb :catalogues do
+  link "Catalogues", catalogues_path
+  parent :marketplace_root
+end
+
+crumb :catalogue do |catalogue|
+  link catalogue.name, catalogue_path(catalogue)
+  parent :catalogues
+end
+
+
 crumb :communities do
   link "Communities and infrastructures", communities_path
   parent :marketplace_root
