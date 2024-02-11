@@ -3086,6 +3086,31 @@ label[data-multicheckbox].small {
     border: 1px solid $dropdown-arrow;
   }
 
+  &.website {
+    background: $palette-white;
+    border: 1px solid $palette-gray-100;
+    color: $palette-gray-100;
+    font-weight: 500;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 18px;
+      left: 35px;
+      width: 17px;
+      height: 17px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-image: url('../images/icon-website.svg');
+    }
+
+    &:hover {
+      background: $alert-bg;
+      color: $tag-color-1;
+      border: 1px solid $tag-color-1;
+    }
+  }
+
   &.explore {
 
     &::before {
@@ -3115,6 +3140,22 @@ label[data-multicheckbox].small {
       background-image: url('../images/icon-interoperability.svg');
     }
   }
+
+
+  &.contact {
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: 35px;
+      width: 20px;
+      height: 20px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-image: url('../images/icon-contact-navy.svg');
+    }
+  }
 }
 
 .provider-panel {
@@ -3132,6 +3173,16 @@ label[data-multicheckbox].small {
     font-size: 15px;
     font-weight: bold;
     align-items: center;
+
+    .provider-name {
+      .subtitle-name {
+        font-size: 12px;
+        color: $palette-gray-70;
+        font-weight: 400;
+        margin-top: 4px;
+        line-height: 1.3;
+      }
+    }
   }
 
   .provider-more-link {
@@ -5962,6 +6013,22 @@ abbr[title] {
       .details-header {
         h5 {
           background-image: url('../images/icon-maturity.svg');
+        }
+      }
+    }
+
+    &.participating_countries {
+      .details-header {
+        h5 {
+          background-image: url('../images/icon-availability.svg');
+        }
+      }
+    }
+
+    &.location {
+      .details-header {
+        h5 {
+          background-image: url('../images/icon-availability.svg');
         }
       }
     }

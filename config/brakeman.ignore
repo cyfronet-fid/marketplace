@@ -45,6 +45,40 @@
       "note": ""
     },
     {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 4,
+      "fingerprint": "1e0a357058fa7b3fdf06421bba24c8bd2851d14c66edc905e313f82121577272",
+      "check_name": "LinkToHref",
+      "message": "Potentially unsafe model attribute in `link_to` href",
+      "file": "app/views/catalogues/show.html.haml",
+      "line": 161,
+      "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
+      "code": "link_to(\"Website\", Catalogue.with_attached_logo.friendly.find(params[:id]).website, :target => \"_blank\", :class => \"right-panel-button website\")",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "CataloguesController",
+          "method": "show",
+          "line": 11,
+          "file": "app/controllers/catalogues_controller.rb",
+          "rendered": {
+            "name": "catalogues/show",
+            "file": "app/views/catalogues/show.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "catalogues/show"
+      },
+      "user_input": "Catalogue.with_attached_logo.friendly.find(params[:id]).website",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
+    },
+    {
       "warning_type": "SQL Injection",
       "warning_code": 0,
       "fingerprint": "4ee1dfaf6a90d36d68d7af44057d4e80f52d055cc48789c49e3dd9f87c639a25",
@@ -519,6 +553,6 @@
       "note": ""
     }
   ],
-  "updated": "2024-02-02 13:24:56 +0100",
-  "brakeman_version": "6.1.2"
+  "updated": "2024-02-15 15:29:15 +0100",
+  "brakeman_version": "6.1.1"
 }
