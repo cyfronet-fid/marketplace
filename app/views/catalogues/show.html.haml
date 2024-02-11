@@ -1,83 +1,164 @@
 -# haml-lint:disable InlineStyles
+- breadcrumb :catalogue, @catalogue
+
 .container
-  .row.border.rounded.py-3.px-2.mb-3
-    .col-md-1
-    - if @catalogue.logo.attached? && @catalogue.logo.variable?
-      = image_tag @catalogue.logo.variant(resize: "100x100")
-    .col-md-7
-      %h3= @catalogue.name
-      %p= @catalogue.abbreviation || "-"
-      %p= link_to @catalogue.website, @catalogue.website, target: "_blank"
-    .col-md-4.text-md-right
-      = link_to "Open website", @catalogue.website, target: "_blank", class: "btn btn-primary text-white rounded-pill"
+  .pt-4.service-box-redesign.service-detail
+    .row.space-between
+      .col-12.col-lg-9.row
+        .col-12.col-sm-3.d-flex.img-service-detail
+          - if @catalogue.logo.attached? && @catalogue.logo.variable?
+            = image_tag @catalogue.logo.variant(resize: "100x100")
+        .col-12.col-sm-9.service-details-header
+          %h2.font-weight-bolder.mb-1= @catalogue.name
+          %p= @catalogue.abbreviation || "-"
+          .resource-row.row.mb-3
+            %span.pin-value.resource-type Catalogue
+      .col-12.col-lg-3.text-center
+        = link_to "Show all resources", get_ess_link(@catalogue), target: "_blank",
+          class: "btn btn-primary d-block mb-3 py-3"
 
-  .row.mt-3
-    .col-md-8
-      .border.rounded.py-3.px-2.mr-2
-        = image_pack_tag "catalogue/about.svg", alt: "About icon"
-        %h3{ style: "display: inline-block;" } About
-        %p= @catalogue.description || "-"
-        .row
-          .col-md-6
-            .font-bold Legal Entity
-            %p= @catalogue.legal_entity || "-"
-            .font-bold Legal Status
-            %p= @catalogue.legal_statuses.blank? ? "-" : @catalogue.legal_statuses.join(", ")
-            .font-bold Hosting Legal Entities
-            %p= @catalogue.hosting_legal_entities.blank? ? "-" : @catalogue.hosting_legal_entities.join(", ")
-          .col-md-6
-            .font-bold Inclusion Criteria
-            %p= format_basic_link(@catalogue.inclusion_criteria)
-            .font-bold Validation Process
-            %p= format_basic_link(@catalogue.validation_process)
-            .font-bold End of Life
-            %p= @catalogue.end_of_life || "-"
-    .col-md-4
-      .border.rounded.py-3.px-2
-        = image_pack_tag "catalogue/classification.svg", alt: "Classification icon"
-        %h3{ style: "display: inline-block;" } Classification
-        .font-bold Scientific Domain
-        %p= format_scientific_domains(@catalogue)
-        .font-bold Structure Type
-        %p= @catalogue.structure_type.blank? ? "-" : @catalogue.structure_type.join(", ")
-  .row.mt-3
-    .col-md-8
-      .border.rounded.py-3.px-2
-        = image_pack_tag "catalogue/deps_info.svg", alt: "Dependencies information icon"
-        %h3{ style: "display: inline-block;" } Dependencies Information
-        .font-bold Participating Countries
-        %p= @catalogue.participating_countries&.join(", ") || "-"
-        .font-bold Affiliations
-        %p= @catalogue.affiliations&.join(", ") || "-"
-        .font-bold Networks
-        %p= @catalogue.networks&.join(", ") || "-"
-    .col-md-4
-      .border.rounded.py-3.px-2
-        = image_pack_tag "catalogue/deps_info.svg", alt: "Location and contact icon"
-        %h3{ style: "display: inline-block;" } Location and Contact
-        .font-bold Name
-        %p= format_main_contact_name(@catalogue)
-        .font-bold Email
-        %p= @catalogue.main_contact&.email || "-"
-        .font-bold Phone
-        %p= @catalogue.main_contact&.phone || "-"
-        .font-bold Position
-        %p= @catalogue.main_contact&.position || "-"
-        %hr
-        .font-bold Street Name and Number
-        %p= @catalogue.street_name_and_number || "-"
-        .font-bold Code
-        %p= @catalogue.postal_code || "-"
-        .font-bold City, Region
-        %p= format_city_region(@catalogue)
-        .font-bold Country
-        %p= @catalogue.country || "-"
+    .row
+      .col-12.col-xl-9.pr-5
+        %ul.nav.nav-tabs.row.pl-3.mt-3
+          %li.nav-item
+            .nav-link.text-uppercase.active About
 
-  .row.mt-3
-    .col-md-4.offset-md-8
-      .font-bold Tags
-      = @catalogue.tags&.join(", ") || "-"
-  .row
-    .col-md-8
-      = link_to "See resources provided by #{@catalogue.name}", "#"
+.tab-content
+  .tab-pane.container.active.desc
+    .row.justify-content-between
+      %main.col-12.col-xl-9.pr-4.pt-4
+        .service-description-container
+          %p= @catalogue.description || "-"
+        .details-box-wrapper.mt-5
+          .details-box.maturity_information
+            .details-header
+              %h5 Maturity information
+            .details-content
+              %ul.list-group
+                %li
+                  %span.list-title Legal Entity
+                  %br
+                  %span= @catalogue.legal_entity
+                %li
+                  %span.list-title Legal Status
+                  %br
+                  %span= @catalogue.legal_statuses.blank? ? "-" : @catalogue.legal_statuses.join(", ")
+                %li
+                  %span.list-title Hosting Legal Entities
+                  %br
+                  %span= @catalogue.hosting_legal_entities.blank? ? "-" : @catalogue.hosting_legal_entities.join(", ")
+                %li
+                  %span.list-title Inclusion Criteria
+                  %br
+                  %span= format_basic_link(@catalogue.inclusion_criteria)
+                %li
+                  %span.list-title Validation Process
+                  %br
+                  %span= format_basic_link(@catalogue.validation_process)
+                %li
+                  %span.list-title End of Life
+                  %br
+                  %span= @catalogue.end_of_life
+
+          .details-box.location
+            .details-header
+              %h5 Location
+            .details-content
+              %ul.list-group
+                %li
+                  %span.list-title Name
+                  %br
+                  %span= format_main_contact_name(@catalogue)
+                - if @catalogue.main_contact&.email
+                  %li
+                    %span.list-title Email
+                    %br
+                    %span= @catalogue.main_contact&.email
+                - if @catalogue.main_contact&.phone
+                  %li
+                    %span.list-title Phone
+                    %br
+                    %span= @catalogue.main_contact&.phone
+                - if @catalogue.main_contact&.position
+                  %li
+                    %span.list-title Position
+                    %br
+                    %span= @catalogue.main_contact&.position
+                - if @catalogue.street_name_and_number
+                  %li
+                    %span.list-title Street Name and Number
+                    %br
+                    %span= @catalogue.street_name_and_number
+                - if @catalogue.postal_code
+                  %li
+                    %span.list-title Code
+                    %br
+                    %span= @catalogue.postal_code
+                - if format_city_region(@catalogue)
+                  %li
+                    %span.list-title City, Region
+                    %br
+                    %span= format_city_region(@catalogue)
+                - if @catalogue.country
+                  %li
+                    %span.list-title Country
+                    %br
+                    %span= @catalogue.country
+
+          .details-box.classification
+            .details-header
+              %h5 Classification
+            .details-content
+              %ul.list-group
+                - if format_scientific_domains(@catalogue)
+                  %li
+                    %span.list-title Scientific Domain
+                    %br
+                    %span= format_scientific_domains(@catalogue)
+                - if @catalogue.structure_type
+                  %li
+                    %span.list-title Structure Type
+                    %br
+                    %span= @catalogue.structure_type.blank? ? "-" : @catalogue.structure_type.join(", ")
+
+          .details-box.dependencies
+            .details-header
+              %h5 Dependencies Information
+            .details-content
+              %ul.list-group
+                - if @catalogue.affiliations
+                  %li
+                    %span.list-title Affiliations
+                    %br
+                    %span= @catalogue.affiliations&.join(", ")
+                - if @catalogue.networks
+                  %li
+                    %span.list-title Networks
+                    %br
+                    %span= @catalogue.networks&.join(", ")
+
+          - if @catalogue.tags
+            .details-box.tags
+              .details-header
+                %h5 Tags
+              .details-content
+                .taglist-holder
+                  - @catalogue.tags&.map do |tag|
+                    .tag-item
+                      = tag
+
+          - if @catalogue.participating_countries
+            .details-box.participating_countries
+              .details-header
+                %h5 Participating Countries
+              .details-content
+                %ul.list-group
+                  %li
+                    %span= @catalogue.participating_countries&.join(", ")
+
+      %sidebar.col-12.col-xl-3
+        - if @catalogue.website
+          = link_to "Website", @catalogue.website, target: "_blank", class: "right-panel-button website"
+
+
 -# haml-lint:enable InlineStyles

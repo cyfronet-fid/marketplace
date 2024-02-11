@@ -1,0 +1,11 @@
+- breadcrumb(:catalogues)
+%main.pages
+  .container
+    %h1{ "data-e2e": "catalogue-list" }
+      = _("Catalogues")
+    .media.border-0
+      .media-body
+        %ul.special-list
+          - @catalogues.each do |catalogue|
+            %li.special-list-item
+              = link_to catalogue.name, catalogue_path(catalogue)
