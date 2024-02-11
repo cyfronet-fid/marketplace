@@ -10,4 +10,12 @@ module CategoriesHelper
     "--pl-level: #{(20 * level) + 20}px;
      --bg-level: #{(26 * level) + 8}px;"
   end
+
+  def get_ess_link(catalogue)
+    base_url = Rails.configuration.search_service_base_url
+
+    # TODO: Workaround - Find out why ESS doesn't use pid for filtering
+    pid = catalogue.pid.end_with?("-catalogue") ? catalogue.pid.split("-catalogue")[0] : catalogue.pid
+    base_url + "/search/all_collection?q=*&fq=catalogue:\"#{pid}\""
+  end
 end
