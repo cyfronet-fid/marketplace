@@ -9,10 +9,6 @@ module Presentable::LinksHelper
     [provider_links]
   end
 
-  def datasource_fields
-    [datasource_links]
-  end
-
   def new_question_link(object = @object)
     object.instance_of?(Provider) ? new_provider_question_path(object) : new_service_question_path(object)
   end
@@ -55,13 +51,5 @@ module Presentable::LinksHelper
 
   def provider_links
     { name: "links", template: "links", fields: %w[website] }
-  end
-
-  def datasource_links
-    {
-      name: "links",
-      template: "links",
-      fields: %w[webpage_url helpdesk_url helpdesk_email manual_url training_information_url]
-    }
   end
 end
