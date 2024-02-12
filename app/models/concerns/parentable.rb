@@ -15,7 +15,7 @@ module Parentable
     current = self
     loop do
       if current.parent.present?
-        object_array << current.parent unless current.parent.blank?
+        object_array.unshift(current.parent) unless current.parent.blank?
         current = current.parent
       end
       i += 1
