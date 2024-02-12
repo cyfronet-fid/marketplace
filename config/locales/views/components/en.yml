@@ -55,6 +55,7 @@ en:
         map:
           geographical_availabilities: Regions
           languages: Languages
+          resource_geographic_locations: Geographic Locations
       details_component:
         details:
           title:
