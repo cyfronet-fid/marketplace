@@ -6117,6 +6117,24 @@ abbr[title] {
   }
 }
 
+.info-row-redesign {
+  margin-bottom: 20px;
+  background: $palette-light-blue;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  padding: 15px 0;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+
+  .icon-pencil {
+    width: auto;
+    float: left;
+    margin: 10px 20px;
+    height: 41px;
+  }
+}
+
 .parameters {
 
   .card {
