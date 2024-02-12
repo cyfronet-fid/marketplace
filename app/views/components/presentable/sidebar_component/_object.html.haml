@@ -6,9 +6,6 @@
           - if nested.present? && nested&.[](field.to_sym).present? && nested&.[](field.to_sym) == "email"
             %span= mail_to record.send(field), record.send(field)
             %br
-          - elsif clazz == "alternative_identifiers"
-            %span
-              #{record.identifier_type}: #{record.send(field)}
           - else
             %span= record.send(field)
             %br

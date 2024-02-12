@@ -14,7 +14,7 @@ class Presentable::LinksComponent < ApplicationComponent
     when Provider
       provider_fields
     when Service
-      @object.type == "Datasource" ? datasource_fields : service_fields
+      service_fields
     end
   end
 end
