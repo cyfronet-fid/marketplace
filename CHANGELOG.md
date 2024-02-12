@@ -6,7 +6,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.55.2-milestone]
+
+### Fixed
+- Minor style and design fixes (@jarekzet, @goreck888)
+- Catalogue serializer (@wujuu)
+- Catalogue importer (@wujuu)
+
 ## [3.55.1] 2024-02-08
+
+### Added
+- Link to research products related to the datasource (@goreck888)
 
 ## [3.55.0] 2024-02-06
 
