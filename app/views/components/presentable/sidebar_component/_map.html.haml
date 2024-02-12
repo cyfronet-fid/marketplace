@@ -14,7 +14,7 @@
           %span
             = object.send(field).to_date
         - elsif field == "geographical_availabilities"
-          %div{ id: t(".#{field}"), class: object.send(field).size > 1 ? "collapse" : nil }
+          %div{ id: "#{field}", class: object.send(field).size > 1 ? "collapse" : nil }
             %ul
               - get_only_regions(object.send(field)).each do |c|
                 %li
@@ -26,7 +26,7 @@
                     = link_to c, inactive ? "#" : services_geographical_availabilities_link(object, c),
                     "data-preview-target": local_assigns[:preview] ? "link" : ""
         - else
-          %div{ id: t(".#{field}"), class: object.send(field).size > 1 ? "collapse" : nil }
+          %div{ id: "#{field}", class: object.send(field).size > 1 ? "collapse" : nil }
             %ul
               - Array(object.send(field)).map.with_index do |element, idx|
                 - if nested.present? && nested[field.to_sym].present?
