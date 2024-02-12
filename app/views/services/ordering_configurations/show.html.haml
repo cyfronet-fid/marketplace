@@ -2,7 +2,24 @@
 - breadcrumb :ordering_configuration, @service
 = render "services/errors", service: @service
 .container{ "data-controller": "comparison" }
-  .pt-4.pl-3.pr-3.shadow-sm.rounded.service-box.service-detail.backoffice{ "data-shepherd-tour-target": "service-box" }
+- unless ["edit", "new"].include?(action_name)
+  .row
+    .col-12
+      %h1.mb-4.font-weight-bolder
+        = _("Ordering configuration")
+      .info-row-redesign
+        .image-wrapper
+          = image_pack_tag "icon-pencil.png", class: "icon-pencil"
+        .text-wrapper
+          -# haml-lint:disable MultilinePipe
+          = _("This is the place where you can manage your service offers. " + |
+              "Please, scroll down to navigate to \"Parameters and offers\" section, " + |
+              "to specify your service offers along with their ordering parameters. " + |
+              "Please note, this site also reflects how your service and its " + |
+              "offers will be presented to the users in the EOSC Catalogue & Marketplace.") |
+          -# haml-lint:enable MultilinePipe
+
+  .pt-4.service-box-redesign.service-detail.backoffice{ "data-shepherd-tour-target": "service-box" }
     = render Presentable::HeaderComponent.new(object: @service,
                           title: @service.name,
                           subtitle: @service.tagline,
