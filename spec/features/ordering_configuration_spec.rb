@@ -180,7 +180,7 @@ RSpec.feature "Services in ordering_configuration panel", end_user_frontend: tru
       service.reload
 
       visit service_ordering_configuration_path(service, from: "backoffice_service")
-      page.save_page
+
       first(".btn.btn-outline-secondary.font-weight-bold").click
 
       check "Use EOSC Portal as the order management platform"

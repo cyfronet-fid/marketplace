@@ -1,15 +1,17 @@
 - content_for :title, @provider.name
 - breadcrumb :provider, @provider
-.container
+.container{ class: "#{"suspended" if @provider.suspended?}" }
   .pt-4.service-box-redesign.service-detail
     = render Presentable::HeaderComponent.new(object: @provider,
                           title: @provider.abbreviation,
                           subtitle: @provider.name,
                           comparison_enabled: @comparison_enabled,
-                          preview: local_assigns[:preview]) do |c|
+                          preview: @provider.suspended? || local_assigns[:preview]) do |c|
       - c.buttons do
         = render "components/presentable/header_component/provider_buttons", provider: @provider
     = render "providers/tabs", provider: @provider
 
-.tab-content.provider-view
-  = render Presentable::DetailsComponent.new(@provider, question: @question)
+.tab-content.provider-view{ class: "#{"suspended" if @provider.suspended?}" }
+  = render Presentable::DetailsComponent.new(@provider,
+           question: @question,
+           preview: @provider.suspended? || local_assigns[:preview])
