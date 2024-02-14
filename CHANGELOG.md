@@ -6,7 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [3.55.2-milestone]
+## [3.55.2] 2024-02-19
+
+### Added
+- Suspended view for providers and catalogues (@goreck888)
 
 ### Fixed
 - Minor style and design fixes (@jarekzet, @goreck888)
