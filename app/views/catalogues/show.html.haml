@@ -1,7 +1,7 @@
 -# haml-lint:disable InlineStyles
 - breadcrumb :catalogue, @catalogue
 
-.container
+.container{ class: "#{"suspended" if @catalogue.suspended?}" }
   .pt-4.service-box-redesign.service-detail
     .row.space-between
       .col-12.col-lg-9.row
@@ -159,6 +159,4 @@
       %sidebar.col-12.col-xl-3
         - if @catalogue.website
           = link_to "Website", @catalogue.website, target: "_blank", class: "right-panel-button website"
-
-
 -# haml-lint:enable InlineStyles
