@@ -320,7 +320,9 @@ class Jira::Client < JIRA::Client
     when "CP-INeedAVoucher"
       {
         "id" =>
-          @jira_config[:custom_fields][:select_values][:"CP-INeedAVoucher"][project_item.request_voucher ? :yes : :no]
+          @jira_config[:custom_fields][:select_values][:"CP-INeedAVoucher"][
+            project_item.request_voucher ? :need : :no_need
+          ]
       }
     when "CP-VoucherID"
       project_item.voucher_id || nil

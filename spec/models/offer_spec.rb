@@ -173,11 +173,11 @@ RSpec.describe Offer, backend: true do
       create(:offer, iid: 3, service: build(:service, slug: "test-slug"))
       expect { Offer.find_by_slug_iid!("no-slug/1") }.to raise_error(
         ActiveRecord::RecordNotFound,
-        "Couldn't find Service"
+        "Couldn't find Service with [WHERE \"services\".\"slug\" = $1]"
       )
       expect { Offer.find_by_slug_iid!("test-slug/2") }.to raise_error(
         ActiveRecord::RecordNotFound,
-        "Couldn't find Offer"
+        "Couldn't find Offer with [WHERE \"offers\".\"service_id\" = $1 AND \"offers\".\"iid\" = $2]"
       )
     end
   end

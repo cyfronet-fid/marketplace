@@ -3,7 +3,7 @@
   .simple-intro
     .icon
       - if card.picture.attached? && card.picture.variable?
-        = image_tag card.picture.variant(resize: "86x111")
+        = image_tag card.picture.variant(crop: [0,0, 86, 111])
       - else
         = image_pack_tag "learn-more-box-default.png"
     = link_to card.header.truncate(60), card.url, "data-toggle": "tooltip",
