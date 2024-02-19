@@ -31,7 +31,7 @@ class Backoffice::Services::LogoPreviewsController < Backoffice::ApplicationCont
       resized_logo = ImageProcessing::MiniMagick.source(path).resize_to_limit!(180, 120)
       send_file resized_logo.path, type: ext
     elsif has_service_logo
-      redirect_to url_for(@service.logo.variant(resize: "180x120"))
+      redirect_to url_for(@service.logo.variant(crop: [0, 0, 180, 120]))
     else
       redirect_to ImageHelper::DEFAULT_LOGO_PATH
     end
