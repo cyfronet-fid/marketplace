@@ -35,30 +35,36 @@
               %h5 Maturity information
             .details-content
               %ul.list-group
-                %li
-                  %span.list-title Legal Entity
-                  %br
-                  %span= @catalogue.legal_entity
-                %li
-                  %span.list-title Legal Status
-                  %br
-                  %span= @catalogue.legal_statuses.blank? ? "-" : @catalogue.legal_statuses.join(", ")
-                %li
-                  %span.list-title Hosting Legal Entities
-                  %br
-                  %span= @catalogue.hosting_legal_entities.blank? ? "-" : @catalogue.hosting_legal_entities.join(", ")
-                %li
-                  %span.list-title Inclusion Criteria
-                  %br
-                  %span= format_basic_link(@catalogue.inclusion_criteria)
-                %li
-                  %span.list-title Validation Process
-                  %br
-                  %span= format_basic_link(@catalogue.validation_process)
-                %li
-                  %span.list-title End of Life
-                  %br
-                  %span= @catalogue.end_of_life
+                - if @catalogue.legal_entity.present?
+                  %li
+                    %span.list-title Legal Entity
+                    %br
+                    %span= @catalogue.legal_entity
+                - if @catalogue.legal_statuses.present?
+                  %li
+                    %span.list-title Legal Status
+                    %br
+                    %span= @catalogue.legal_statuses.join(", ")
+                - if @catalogue.hosting_legal_entities.present?
+                  %li
+                    %span.list-title Hosting Legal Entities
+                    %br
+                    %span= @catalogue.hosting_legal_entities.join(", ")
+                - if @catalogue.inclusion_criteria.present?
+                  %li
+                    %span.list-title Inclusion Criteria
+                    %br
+                    %span= format_basic_link(@catalogue.inclusion_criteria)
+                - if @catalogue.validation_process.present?
+                  %li
+                    %span.list-title Validation Process
+                    %br
+                    %span= format_basic_link(@catalogue.validation_process)
+                - if @catalogue.end_of_life.present?
+                  %li
+                    %span.list-title End of Life
+                    %br
+                    %span= @catalogue.end_of_life
 
           .details-box.location
             .details-header
@@ -69,75 +75,71 @@
                   %span.list-title Name
                   %br
                   %span= format_main_contact_name(@catalogue)
-                - if @catalogue.main_contact&.email
+                - if @catalogue.main_contact&.email.present?
                   %li
                     %span.list-title Email
                     %br
                     %span= @catalogue.main_contact&.email
-                - if @catalogue.main_contact&.phone
+                - if @catalogue.main_contact&.phone.present?
                   %li
                     %span.list-title Phone
                     %br
                     %span= @catalogue.main_contact&.phone
-                - if @catalogue.main_contact&.position
+                - if @catalogue.main_contact&.position.present?
                   %li
                     %span.list-title Position
                     %br
                     %span= @catalogue.main_contact&.position
-                - if @catalogue.street_name_and_number
+                - if @catalogue.street_name_and_number.present?
                   %li
                     %span.list-title Street Name and Number
                     %br
                     %span= @catalogue.street_name_and_number
-                - if @catalogue.postal_code
+                - if @catalogue.postal_code.present?
                   %li
                     %span.list-title Code
                     %br
                     %span= @catalogue.postal_code
-                - if format_city_region(@catalogue)
+                - if format_city_region(@catalogue).present?
                   %li
                     %span.list-title City, Region
                     %br
                     %span= format_city_region(@catalogue)
-                - if @catalogue.country
+                - if @catalogue.country.present?
                   %li
                     %span.list-title Country
                     %br
                     %span= @catalogue.country
 
-          .details-box.classification
-            .details-header
-              %h5 Classification
-            .details-content
-              %ul.list-group
-                - if format_scientific_domains(@catalogue)
+          - if @catalogue.scientific_domains.present?
+            .details-box.classification
+              .details-header
+                %h5 Classification
+              .details-content
+                %ul.list-group
                   %li
                     %span.list-title Scientific Domain
                     %br
                     %span= format_scientific_domains(@catalogue)
-                - if @catalogue.structure_type
-                  %li
-                    %span.list-title Structure Type
-                    %br
-                    %span= @catalogue.structure_type.blank? ? "-" : @catalogue.structure_type.join(", ")
 
-          .details-box.dependencies
-            .details-header
-              %h5 Dependencies Information
-            .details-content
-              %ul.list-group
-                - if @catalogue.affiliations
-                  %li
-                    %span.list-title Affiliations
-                    %br
-                    %span= @catalogue.affiliations&.join(", ")
-                - if @catalogue.networks
-                  %li
-                    %span.list-title Networks
-                    %br
-                    %span= @catalogue.networks&.join(", ")
+          - if @catalogue.affiliations.present? || @catalogue.networks.present?
+            .details-box.dependencies
+              .details-header
+                %h5 Dependencies Information
+              .details-content
+                %ul.list-group
+                  - if @catalogue.affiliations.present?
+                    %li
+                      %span.list-title Affiliations
+                      %br
+                      %span= @catalogue.affiliations&.join(", ")
+                  - if @catalogue.networks.present?
+                    %li
+                      %span.list-title Networks
+                      %br
+                      %span= @catalogue.networks&.join(", ")
 
-          - if @catalogue.tags
+          - if @catalogue.tags.present?
             .details-box.tags
               .details-header
                 %h5 Tags
@@ -147,7 +149,7 @@
                     .tag-item
                       = tag
 
-          - if @catalogue.participating_countries
+          - if @catalogue.participating_countries.present?
             .details-box.participating_countries
               .details-header
                 %h5 Participating Countries
