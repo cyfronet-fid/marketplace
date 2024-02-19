@@ -21,7 +21,7 @@ FileUtils.chdir APP_ROOT do
   puts '== Installing dependencies =='
   system! "gem install bundler --conservative"
   system! "gem install foreman --conservative"
-  system('bundle check') || system!('bundle install')
+  system("bundle check") || system!("bundle install")
 
   puts "== Installing git-hooks =="
   system! "overcommit --install"
@@ -31,8 +31,8 @@ FileUtils.chdir APP_ROOT do
   system! "bin/yarn"
 
   # puts "\n== Copying sample files =="
-  # unless File.exist?('config/database.yml')
-  #   FileUtils.cp 'config/database.yml.sample', 'config/database.yml'
+  # unless File.exist?("config/database.yml")
+  #   FileUtils.cp "config/database.yml.sample", "config/database.yml"
   # end
 
   puts "\n== Preparing database =="

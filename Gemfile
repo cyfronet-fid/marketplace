@@ -5,12 +5,13 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.3.0"
 
-gem "rails", "~> 6.1.7.6"
+gem "rails", "~> 7.0.8"
 gem "pg", ">= 0.18", "< 2.0"
 gem "puma"
 gem "nori"
 
 gem "uglifier", ">= 1.3.0"
+gem "sprockets-rails"
 gem "webpacker", "~> 5.4.4"
 gem "view_component", "~> 2.83.0"
 gem "haml-rails"
@@ -30,7 +31,7 @@ gem "countries"
 gem "i18n_data"
 
 gem "activestorage-validator"
-gem "image_processing"
+gem "image_processing", ">= 1.2"
 
 # translations
 gem "fast_gettext"
