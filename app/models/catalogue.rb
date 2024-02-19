@@ -41,11 +41,40 @@ class Catalogue < ApplicationRecord
            source: :vocabulary,
            source_type: "Vocabulary::HostingLegalEntity"
 
+  has_many :sources, class_name: "CatalogueSource", dependent: :destroy
+  belongs_to :upstream, foreign_key: "upstream_id", class_name: "CatalogueSource", optional: true
+
+  has_many :catalogue_data_administrators
+  has_many :data_administrators, through: :catalogue_data_administrators, dependent: :destroy, autosave: true
+  accepts_nested_attributes_for :data_administrators, allow_destroy: true
+
   scope :active, -> { where.not(status: %i[deleted draft]) }
 
   accepts_nested_attributes_for :main_contact, allow_destroy: true
   accepts_nested_attributes_for :public_contacts, allow_destroy: true
   accepts_nested_attributes_for :link_multimedia_urls, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :sources, allow_destroy: true
+
+  validates :name, presence: true
+  validates :abbreviation, presence: true
+  validates :website, presence: true
+  validates :inclusion_criteria, presence: true
+  validates :end_of_life, presence: true
+  validates :validation_process, presence: true
+  validates :scope, presence: true
+  validates :description, presence: true
+  validates :street_name_and_number, presence: true
+  validates :postal_code, presence: true
+  validates :city, presence: true
+  validates :country, presence: true
+  validates :public_contacts, presence: true, length: { minimum: 1, message: "are required. Please add at least one" }
+  validate :logo_variable, on: %i[create update]
+  validates :data_administrators,
+            presence: true,
+            length: {
+              minimum: 1,
+              message: "are required. Please add at least one"
+            }
 
   def participating_countries=(value)
     super(value&.map { |v| Country.for(v) })
@@ -53,5 +82,33 @@ class Catalogue < ApplicationRecord
 
   def country=(value)
     super(Country.for(value))
+  end
+
+  def tags=(value)
+    super(value.compact_blank)
+  end
+
+  def affiliations=(value)
+    super(value.compact_blank)
+  end
+
+  def hosting_legal_entity
+    return nil if hosting_legal_entities.blank?
+
+    hosting_legal_entities[0].id
+  end
+
+  def hosting_legal_entity=(entity_id)
+    self.hosting_legal_entities = entity_id.blank? ? [] : [Vocabulary.find(entity_id)]
+  end
+
+  def legal_status
+    return nil if legal_statuses.blank?
+
+    legal_statuses[0].id
+  end
+
+  def legal_status=(status_id)
+    self.legal_statuses = status_id.blank? ? [] : [Vocabulary.find(status_id)]
   end
 end

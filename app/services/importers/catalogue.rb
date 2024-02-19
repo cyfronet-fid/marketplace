@@ -38,6 +38,8 @@ class Importers::Catalogue < ApplicationService
       inclusion_criteria: @data["inclusionCriteria"] || "",
       validation_process: @data["validationProcess"] || "",
       end_of_life: @data["endOfLife"] || "",
+      scope: @data["scope"],
+      data_administrators: @data["users"]&.map { |da| DataAdministrator.new(map_data_administrator(da)) },
       status: :published,
       synchronized_at: @synchronized_at
     }
@@ -52,9 +54,9 @@ class Importers::Catalogue < ApplicationService
     @data["hostingLegalEntity"] = Array(@data["hostingLegalEntity"]) || []
     @data["participatingCountries"] = Array(@data.dig("participatingCountries", "participatingCountry")) || []
     @data["tags"] = Array(@data.dig("tags", "tag")) || []
-    @data["publicContacts"] = Array.wrap(@data.dig("publicContacts", "publicContact"))
-    @data["scientificDomains"] =
-      Array.wrap(@data.dig("scientificDomains", "scientificDomain")).map { |sd| sd["scientificSubdomain"] }
+    @data["publicContacts"] = Array.wrap(@data.dig("publicContacts", "publicContact")) || []
+    @data["scientificDomains"] = Array.wrap(@data.dig("scientificDomains", "scientificDomain")) || []
+    @data["users"] = Array.wrap(@data.dig("users", "user")) || []
   end
   # rubocop:enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
 end
