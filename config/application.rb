@@ -15,10 +15,10 @@ module Mp
     # This flag will influence all threads in the application
     Thread.abort_on_exception = true
 
-    config.assets.enabled = false
+    # config.assets.enabled = false
 
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 6.1
+    config.load_defaults 7.0
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
@@ -28,7 +28,13 @@ module Mp
     # Don't generate system test files.
     config.generators.system_tests = nil
 
+    config.action_dispatch.return_only_request_media_type_on_content_type = false
+    config.active_storage.multiple_file_field_include_hidden = true
+    config.active_support.disable_to_s_conversion = true
+
     config.autoload_paths << Rails.root.join("lib")
+    # config.autoload_lib(ignore: %w(assets tasks))
+
 
     default_redis_url = Rails.env == "test" ? "redis://localhost:6379/1" : "redis://localhost:6379/0"
 
@@ -65,8 +71,7 @@ module Mp
       end
     config.google_api_key_path = ENV.fetch("GOOGLE_AUTH_KEY_FILEPATH", "config/google_api_key.json")
     config.monitoring_data_host = ENV.fetch("MONITORING_DATA_URL", "https://api.devel.argo.grnet.gr/api")
-    config.monitoring_data_token = ENV.fetch("MONITORING_DATA_TOKEN",
-                                             Rails.application.credentials.monitoring_data[:access_token])
+    config.monitoring_data_token = "dupa"
     config.monitoring_data_ui_url = ENV.fetch("MONITORING_DATA_UI_URL", "https://eosc.ui.devel.argo.grnet.gr")
     config.monitoring_data_path = ENV.fetch("MONITORING_DATA_UI_PATH",
                                             "eosc/report-ar-group-details/Default/SERVICEGROUPS/")

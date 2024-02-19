@@ -32,7 +32,7 @@ class Presentable::HeaderComponent < ApplicationComponent
     @show_checkboxes = show_checkboxes
   end
 
-  def presentable_logo(object, classes = "align-self-center img-fluid", resize = "180x120")
+  def presentable_logo(object, classes = "align-self-center img-fluid", resize = [0, 0, 180, 120])
     super
   end
 end
