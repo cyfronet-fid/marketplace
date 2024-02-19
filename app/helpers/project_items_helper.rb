@@ -2,7 +2,7 @@
 
 module ProjectItemsHelper
   def label_message(message)
-    date = message.created_at.to_s(:db)
+    date = message.created_at.to_fs(:db)
 
     case message.author_role
     when "user"
