@@ -119,6 +119,7 @@ Rails.application.routes.draw do
     resources :scientific_domains
     resources :categories
     resources :providers, constraints: { id: %r{[^/]+} }
+    resources :catalogues
     resources :platforms
     get "vocabularies", to: "vocabularies#index", type: "target_user", as: :vocabularies
     scope "/vocabularies" do
