@@ -1,0 +1,25 @@
+= simple_form_for [:backoffice, catalogue],
+  html: { "data-controller" => "form", "data-form-target": "form",
+  "data-disabled": catalogue.upstream_id.present?} do |f|
+  = f.error_notification
+  .row
+    .col-12.col-md-2
+      = render "backoffice/catalogues/form/menu_panel"
+    .col-12.col-md-10
+      #accordion-form.accordion
+        = render "backoffice/catalogues/form/basic", f: f, catalogue: catalogue
+        = render "backoffice/catalogues/form/marketing", f: f, catalogue: catalogue
+        = render "backoffice/catalogues/form/classification", f: f, catalogue: catalogue
+        = render "backoffice/catalogues/form/location", f: f, catalogue: catalogue
+        = render "backoffice/catalogues/form/contact", f: f, catalogue: catalogue
+        = render "backoffice/catalogues/form/dependencies", f: f, catalogue: catalogue
+        = render "backoffice/catalogues/form/other", f: f, catalogue: catalogue
+        = render "backoffice/catalogues/form/admins", f: f, catalogue: catalogue
+
+      %hr.bottom-hr.mt-5.mb-4
+      .row.mt-5
+        .col-12
+          = f.button :submit, class: "btn btn-primary pl-5 pr-5 mr-5 mobile-bottom-margin",
+          "data-e2e": "create-provider-btn"
+          %a.text-left.flex-grow-1.text-uppercase.mobile-bottom-margin{ href: "/backoffice/catalogues/#{catalogue.id}" }
+            = _("Cancel and back to previous page")

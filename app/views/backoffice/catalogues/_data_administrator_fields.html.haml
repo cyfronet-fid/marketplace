@@ -1,0 +1,10 @@
+%div{ "data-catalogue-target": "dataAdministrator" }
+  .contact
+    = data_administrator_form.hidden_field :id, disabled: catalogue.upstream_id.present?
+    = data_administrator_form.input :first_name, disabled: catalogue.upstream_id.present?
+    = data_administrator_form.input :last_name, disabled: catalogue.upstream_id.present?
+    = data_administrator_form.input :email, disabled: catalogue.upstream_id.present?
+    = data_administrator_form.hidden_field :_destroy, "data-catalogue-target": "destroy"
+    .text-right
+      = link_to _("Delete administrator"), "#", id: "data-administrator-delete-#{data_administrator_form.index}",
+      class: "btn-sm disablable btn-danger", "data-action": "click->catalogue#removeAdmin"

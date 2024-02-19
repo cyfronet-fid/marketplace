@@ -140,6 +140,26 @@ crumb :backoffice_provider_edit do |provider|
   parent :backoffice_provider, provider
 end
 
+crumb :backoffice_catalogues do
+  link "Catalogues", backoffice_catalogues_path(page: params[:page])
+  parent :backoffice_root
+end
+
+crumb :backoffice_catalogue do |catalogue|
+  link catalogue.name, backoffice_catalogue_path(catalogue)
+  parent :backoffice_catalogues
+end
+
+crumb :backoffice_catalogue_new do |catalogue|
+  link "New", new_backoffice_catalogue_path(catalogue)
+  parent :backoffice_catalogues
+end
+
+crumb :backoffice_catalogue_edit do |catalogue|
+  link "Edit", edit_backoffice_catalogue_path(catalogue)
+  parent :backoffice_catalogue, catalogue
+end
+
 crumb :backoffice_platforms do
   link "Platforms", backoffice_platforms_path
   parent :backoffice_root

@@ -1,0 +1,27 @@
+.card.shadow-sm.rounded
+  %button.btn.btn-link{ type: "button",
+              data: { toggle: "collapse", target: "#classification" },
+              class: ("collapsed" if collapsed?(catalogue, [:scientific_domains, :tags])),
+              aria: { expanded: true, controls: "classification" } }
+    .card-header.text-left{ id: "classification-header" }
+      .row
+        .col-10
+          = _("Classification")
+        .col-2.text-right
+          .collapse-icon
+            %i.fas.fa-chevron-down
+            %i.fas.fa-chevron-up
+- sds = ScientificDomain.child_names.filter_map { |name, sd| [name, sd.id] if sd.parent.present? }
+.collapse{ id: "classification", "aria-labelledby": "classification-header",
+          "data-parent": "#accordion-form",
+          class: ("show" unless collapsed?(catalogue, [:scientific_domains, :tags])) }
+  .card-body
+    = f.association :scientific_domains, disabled: cant_edit_catalogue([scientific_domain_ids: []]),
+              input_html: { data: { choice: true } },
+              collection: sds,
+              label_method: :first, value_method: :second
+    = f.input :tags, multiple: true, input_html: { class: "form-control" },
+              wrapper_html: { "data-form-target" => "tag_list" },
+              as: :array, disabled: cant_edit_catalogue([tags: []])
+    = link_to_add_array_field("catalogue", "tags")
+

@@ -20,6 +20,9 @@
         - if policy([:backoffice, Provider]).index?
           = nav_link controller: :providers, html_options: { class: "nav-item" } do
             = link_to _("Providers"), backoffice_providers_path, class: "nav-link py-1"
+        - if policy([:backoffice, Catalogue]).index?
+          = nav_link controller: :catalogues, html_options: { class: "nav-item" } do
+            = link_to _("Catalogues"), backoffice_catalogues_path, class: "nav-link py-1"
         - if policy([:backoffice, ScientificDomain]).index?
           = nav_link controller: :scientific_domains, html_options: { class: "nav-item" } do
             = link_to _("Scientific domains"), backoffice_scientific_domains_path, class: "nav-link py-1"
