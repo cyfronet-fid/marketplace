@@ -1,0 +1,42 @@
+.card.shadow-sm.rounded
+  %button.btn.btn-link{ type: "button",
+              data: { toggle: "collapse", target: "#basic" },
+              class: ("collapsed" if collapsed?(catalogue, [:name, :abbreviation, :website,
+                  :legal_entity])),
+              aria: { expanded: true, controls: "basic" } }
+    .card-header.text-left{ id: "basic-header" }
+      .row
+        .col-10
+          = _("Basic")
+        .col-2.text-right
+          .collapse-icon
+            %i.fas.fa-chevron-down
+            %i.fas.fa-chevron-up
+.collapse{ id: "basic", "aria-labelledby": "basic-header",
+          "data-parent": "#accordion-form",
+          class: ("show" unless collapsed?(catalogue, [:name, :abbreviation, :website,
+          :legal_entity, :legal_status, :hosting_legal_entity,
+          :inclusion_criteria, :validation_process, :end_of_life, :scope]))
+          }
+  .card-body
+    = f.input :name, disabled: cant_edit_catalogue(:name)
+    = f.input :abbreviation, disabled: cant_edit_catalogue(:abbreviation)
+    = f.input :website, disabled: cant_edit_catalogue(:website)
+    = f.input :legal_entity, as: :boolean, include_hidden: true,
+                disabled: cant_edit_catalogue(:legal_entity),
+                boolean_style: :inline,
+                input_html: {  data: { action: "change->form#refreshRelatedFields", "child-field": "legal_status" } }
+    = f.input :legal_status,
+      collection: Vocabulary.where(type: "Vocabulary::LegalStatus"),
+      label_method: :name, value_method: :id,
+      input_html: { multiple: false, data: { choice: true } }
+    = f.input :hosting_legal_entity,
+               collection: Vocabulary.where(type: "Vocabulary::HostingLegalEntity"),
+               disabled: cant_edit_catalogue(:hosting_legal_entity),
+               label_method: :name,
+               value_method: :id,
+               input_html: { multiple: false, data: { choice: true } }
+    = f.input :inclusion_criteria, disabled: cant_edit_catalogue(:inclusion_criteria)
+    = f.input :validation_process, disabled: cant_edit_catalogue(:validation_process)
+    = f.input :end_of_life, disabled: cant_edit_catalogue(:end_of_life)
+    = f.input :scope, disabled: cant_edit_catalogue(:scope)

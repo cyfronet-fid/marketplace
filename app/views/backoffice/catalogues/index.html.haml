@@ -1,0 +1,35 @@
+- content_for :title, _("Catalogues")
+- breadcrumb :backoffice_catalogues, params[:page].presence
+.container
+  %h1
+    = _("Catalogues")
+    - if policy([:backoffice, Catalogue]).new?
+      .float-right
+        = link_to _("Add new Catalogue"),
+                  new_backoffice_catalogue_path,
+                  class: "btn btn-primary",
+                  "data-e2e": "add-new-catalogue"
+      .clearfix
+  %ul.list-group.backoffice-list.mt-3.mb-3{ "data-e2e": "backoffice-catalogues-list" }
+    - @catalogues.each do |catalogue|
+      %li.list-group-item.providers
+        .row
+          .col-12.col-md-7
+            = link_to catalogue.name, backoffice_catalogue_path(catalogue,
+            params: { page: params[:page] } || {}), class: "catalogue-name"
+          .col-12.col-md-5
+            .actions
+              - if policy([:backoffice, catalogue]).destroy?
+                = link_to backoffice_catalogue_path(catalogue),
+                      method: :delete,
+                      data: { confirm: _("Are you sure you want to remove this catalogue") },
+                      class: "delete-icon float-right" do
+                  %i.far.fa-trash-alt
+
+                - if policy([:backoffice, catalogue]).edit?
+                  = link_to _("Edit"),
+                      edit_backoffice_catalogue_path(catalogue),
+                      class: "btn-sm btn-warning float-right mr-4"
+
+            %span.status{ class: catalogue.status }
+              = catalogue.status
