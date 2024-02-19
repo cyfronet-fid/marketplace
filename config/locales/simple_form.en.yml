@@ -16,6 +16,9 @@ en:
         affiliations: affiliation
         certifications: certification
         national_roadmaps: National roadmap
+      catalogue:
+        tags: tag
+        affiliations: affiliation
       datasource:
         multimedia: multimedia
         tag_list: tag

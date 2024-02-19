@@ -54,9 +54,10 @@ class Import::Catalogues
         log "[INFO] Catalogue: #{parsed_catalogue_data[:name]}, " +
               "eid: #{parsed_catalogue_data[:pid]} updated successfully"
       end
-    rescue ActiveRecord::RecordInvalid
+    rescue ActiveRecord::RecordInvalid => e
       log "[WARN] Catalogue #{name(external_data)},
-                eid: #{eid(external_data)} cannot be updated."
+            eid: #{eid(external_data)} cannot be updated.
+            Errors: #{e.errors.full_messages.join(", ")}"
     rescue StandardError => e
       log "[WARN] Unexpected #{e}! Catalogue #{name(external_data)},
                 eid: #{eid(external_data)} cannot be updated"
