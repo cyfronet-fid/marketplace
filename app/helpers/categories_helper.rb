@@ -12,10 +12,14 @@ module CategoriesHelper
   end
 
   def get_ess_link(catalogue)
-    base_url = Rails.configuration.search_service_base_url
+    if catalogue.pid.present?
+      base_url = Rails.configuration.search_service_base_url
 
-    # TODO: Workaround - Find out why ESS doesn't use pid for filtering
-    pid = catalogue.pid.end_with?("-catalogue") ? catalogue.pid.split("-catalogue")[0] : catalogue.pid
-    base_url + "/search/all_collection?q=*&fq=catalogue:\"#{pid}\""
+      # TODO: Workaround - Find out why ESS doesn't use pid for filtering
+      pid = catalogue.pid.end_with?("-catalogue") ? catalogue.pid.split("-catalogue")[0] : catalogue.pid
+      base_url + "/search/all_collection?q=*&fq=catalogue:\"#{pid}\""
+    else
+      catalogue.website
+    end
   end
 end

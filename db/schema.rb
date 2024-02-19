@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_09_162434) do
+ActiveRecord::Schema.define(version: 2024_02_15_125231) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -134,6 +134,15 @@ ActiveRecord::Schema.define(version: 2024_01_09_162434) do
     t.index ["service_id"], name: "index_bundles_on_service_id"
   end
 
+  create_table "catalogue_data_administrators", force: :cascade do |t|
+    t.bigint "data_administrator_id"
+    t.bigint "catalogue_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["catalogue_id"], name: "index_catalogue_data_administrators_on_catalogue_id"
+    t.index ["data_administrator_id"], name: "index_catalogue_data_administrators_on_data_administrator_id"
+  end
+
   create_table "catalogue_scientific_domains", force: :cascade do |t|
     t.integer "catalogue_id"
     t.integer "scientific_domain_id"
@@ -142,6 +151,16 @@ ActiveRecord::Schema.define(version: 2024_01_09_162434) do
     t.index ["catalogue_id", "scientific_domain_id"], name: "index_cat_sds_on_catalogue_id_and_scientific_domain_id", unique: true
     t.index ["catalogue_id"], name: "index_catalogue_scientific_domains_on_catalogue_id"
     t.index ["scientific_domain_id"], name: "index_catalogue_scientific_domains_on_scientific_domain_id"
+  end
+
+  create_table "catalogue_sources", force: :cascade do |t|
+    t.string "eid", null: false
+    t.string "source_type", null: false
+    t.bigint "catalogue_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["catalogue_id"], name: "index_catalogue_sources_on_catalogue_id"
+    t.index ["eid", "source_type", "catalogue_id"], name: "index_catalogue_sources_on_eid_and_source_type_and_catalogue_id", unique: true
   end
 
   create_table "catalogue_vocabularies", force: :cascade do |t|
@@ -168,7 +187,7 @@ ActiveRecord::Schema.define(version: 2024_01_09_162434) do
     t.string "validation_process", default: ""
     t.string "end_of_life", default: ""
     t.string "status", default: "published"
-    t.string "description", default: ""
+    t.text "description", default: ""
     t.string "tags", default: [], array: true
     t.string "structure_type", default: [], array: true
     t.string "street_name_and_number", default: ""
@@ -178,6 +197,8 @@ ActiveRecord::Schema.define(version: 2024_01_09_162434) do
     t.string "country", default: ""
     t.string "participating_countries", default: [], array: true
     t.string "affiliations", default: [], array: true
+    t.integer "upstream_id"
+    t.text "scope", default: ""
   end
 
   create_table "categories", force: :cascade do |t|
@@ -970,6 +991,7 @@ ActiveRecord::Schema.define(version: 2024_01_09_162434) do
   add_foreign_key "catalogue_scientific_domains", "scientific_domains"
   add_foreign_key "catalogue_vocabularies", "catalogues"
   add_foreign_key "catalogue_vocabularies", "vocabularies"
+  add_foreign_key "catalogues", "catalogue_sources", column: "upstream_id", on_delete: :nullify
   add_foreign_key "offer_links", "offers", column: "source_id"
   add_foreign_key "offer_links", "offers", column: "target_id"
   add_foreign_key "offers", "omses", column: "primary_oms_id"
