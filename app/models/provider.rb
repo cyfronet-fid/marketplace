@@ -25,8 +25,8 @@ class Provider < ApplicationRecord
 
   attr_accessor :catalogue_id
 
-  serialize :participating_countries, Country::Array
-  serialize :country, Country
+  serialize :participating_countries, coder: Country::Array
+  serialize :country, coder: Country
 
   has_one_attached :logo
 

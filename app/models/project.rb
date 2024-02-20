@@ -34,8 +34,8 @@ class Project < ApplicationRecord
   has_many :project_scientific_domains, dependent: :destroy
   has_many :scientific_domains, through: :project_scientific_domains
 
-  serialize :country_of_origin, Country
-  serialize :countries_of_partnership, Country::Array
+  serialize :country_of_origin, coder: Country
+  serialize :countries_of_partnership, coder: Country::Array
 
   validates :name,
             presence: true,
