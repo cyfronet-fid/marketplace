@@ -35,15 +35,6 @@ class Service < ApplicationRecord
          other: "other"
        }
 
-  enum phase: {
-         discovery: "discovery",
-         planned: "planned",
-         alpha: "alpha",
-         beta: "beta",
-         production: "production",
-         retired: "retired"
-       }
-
   has_many :service_alternative_identifiers
   has_many :alternative_identifiers, through: :service_alternative_identifiers
 
@@ -187,8 +178,8 @@ class Service < ApplicationRecord
   accepts_nested_attributes_for :link_research_product_license_urls, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :link_research_product_metadata_license_urls, reject_if: :all_blank, allow_destroy: true
 
-  serialize :geographical_availabilities, Country::Array
-  serialize :resource_geographic_locations, Country::Array
+  serialize :geographical_availabilities, coder: Country::Array
+  serialize :resource_geographic_locations, coder: Country::Array
 
   auto_strip_attributes :name, nullify: false
   auto_strip_attributes :description, nullify: false
