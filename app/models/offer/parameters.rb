@@ -5,7 +5,7 @@ module Offer::Parameters
 
   included do
     validates_associated :parameters
-    serialize :parameters, Parameter::Array
+    serialize :parameters, coder: Parameter::Array
   end
 
   def attributes

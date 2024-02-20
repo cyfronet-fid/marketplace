@@ -22,6 +22,7 @@ namespace :encrypt_cookies do
       secret = key_generator.generate_key(salt, key_len)
 
       cookies.rotate :encrypted, secret
+      cookies.rotate :signed, secret
     end
   end
 end
