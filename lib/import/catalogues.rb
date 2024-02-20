@@ -45,11 +45,13 @@ class Import::Catalogues
       if current_catalogue.blank?
         log "[INFO] Adding [NEW] catalogue: #{parsed_catalogue_data[:name]}, eid: #{parsed_catalogue_data[:pid]}"
         catalogue = Catalogue.new(parsed_catalogue_data)
+        set_logo(catalogue, external_catalogue_data["logo"])
         catalogue.save!
         log "[INFO] Catalogue: #{parsed_catalogue_data[:name]}, eid: #{parsed_catalogue_data[:pid]} added successfully"
       else
         log "[INFO] Updating [EXISTING] catalogue: #{parsed_catalogue_data[:name]}, eid: #{parsed_catalogue_data[:pid]}"
         current_catalogue.update(parsed_catalogue_data)
+        set_logo(current_catalogue, external_catalogue_data["logo"])
         current_catalogue.save!
         log "[INFO] Catalogue: #{parsed_catalogue_data[:name]}, " +
               "eid: #{parsed_catalogue_data[:pid]} updated successfully"
@@ -88,5 +90,10 @@ class Import::Catalogues
       abort("import exited with errors - could not connect to #{@eosc_registry_base_url} \n #{e.message}")
     end
     rp.body["results"]
+  end
+
+  def set_logo(catalogue, logo)
+    catalogue.set_default_logo
+    Importers::Logo.new(catalogue, logo).call
   end
 end
