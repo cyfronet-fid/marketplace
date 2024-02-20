@@ -7,7 +7,7 @@
       .col-12.col-lg-9.row
         .col-12.col-sm-3.d-flex.img-service-detail
           - if @catalogue.logo.attached? && @catalogue.logo.variable?
-            = image_tag @catalogue.logo.variant(resize: "100x100")
+            = image_tag @catalogue.logo.variant(resize: "200x200")
         .col-12.col-sm-9.service-details-header
           %h2.font-weight-bolder.mb-1= @catalogue.name
           %p= @catalogue.abbreviation || "-"
