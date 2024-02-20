@@ -10,8 +10,8 @@ class Catalogue < ApplicationRecord
 
   has_one_attached :logo
 
-  serialize :participating_countries, Country::Array
-  serialize :country, Country
+  serialize :participating_countries, coder: Country::Array
+  serialize :country, coder: Country
 
   has_many :service_catalogues, dependent: :destroy
   has_many :services, through: :service_catalogues
