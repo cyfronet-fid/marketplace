@@ -5,8 +5,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
+## [3.55.3] 2024-02-21
+
+### Added
+- Logos endpoint for catalogues (@goreck888)
+
 ## [3.55.2] 2024-02-19
-- Add Catalogues to Backoffice (@wujuu)
+
+### Added
+- Catalogues to the Backoffice (@wujuu)
 
 ## [3.55.2] 2024-02-19
 
