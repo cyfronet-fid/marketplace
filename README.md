@@ -433,6 +433,13 @@ This variable should point to the directory with the following structure:
 **Warning**: when new SCSS / image / asset is added to customization directory rails application
 needs to be restarted.
 
+## OG meta_tags
+
+There are set default OG tags but you can use 
+following environmental variables to customize them:
+- `MP_META_TITLE` - for custom `og:title`
+- `MP_META_DESCRIPTION`- for custom `og:description`
+
 ## Recommender app integration
 
 Marketplace is connected to an [external app](https://github.com/cyfronet-fid/recommender-system) 
