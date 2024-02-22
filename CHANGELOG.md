@@ -9,6 +9,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - Logos endpoint for catalogues (@goreck888)
+- Share metatags in application header (@goreck888)
 
 ## [3.55.2] 2024-02-19
 
