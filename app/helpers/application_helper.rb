@@ -69,6 +69,22 @@ module ApplicationHelper
     links.to_json
   end
 
+  def meta_og_title_content
+    ENV.fetch(
+      "MP_META_TITLE",
+      "I've come across the interesting EOSC resource. Please have a look when you get a chance!"
+    )
+  end
+
+  def meta_og_description_content
+    ENV.fetch(
+      "MP_META_DESCRIPTION",
+      "This scientific record comes from the EOSC Catalogue & Marketplace,
+    a platform where you can browse, save, and order a wide variety of scientific resources.
+    You can choose from publications, data, software, services, data sources, training materials and other.
+    Explore this huge European database of science."
+    )
+  end
   def external_search_url(include_query: false)
     if Rails.configuration.enable_external_search && Rails.configuration.search_service_base_url.present?
       query = ""
