@@ -15,6 +15,7 @@
   = yield :custom_scripts if content_for?(:custom_scripts)
   = render "layouts/version"
   - if Rails.env.production?
+    = yield :meta_tags if content_for?(:meta_tags)
     = render "layouts/matomo"
     = render "layouts/google_analytics"
     = render "layouts/hotjar_trackingcode"
