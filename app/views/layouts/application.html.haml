@@ -1,5 +1,7 @@
 !!!
 %html{ lang: "en", class: "#{Rails.env}" }
+  = content_for :meta_tags do
+    = render "layouts/meta_tags"
   = render "layouts/head"
   .spinner-background
     .spinner
