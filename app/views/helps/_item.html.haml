@@ -1,7 +1,7 @@
 - id = "#{parent}-#{item_counter}"
-.card.shadow-sm.rounded
+.card.rounded
   .card-header{ id: "#{id}-header" }
-    %button.btn.btn-link{ type: "button",
+    %button.btn.btn-link.accordion-button.collapsed{ type: "button",
         data: { toggle: "collapse", target: "##{id}" },
         aria: { expanded: true, controls: id } }
       = item.title
