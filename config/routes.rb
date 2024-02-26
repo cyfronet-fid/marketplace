@@ -99,7 +99,7 @@ Rails.application.routes.draw do
   resources :favourites, only: :index
   post "favourites/services", to: "favourites/services#update"
 
-  resource :help, only: :show
+  resource :help, only: :show, path: "user_documentation"
 
   resource :backoffice, only: :show
   namespace :backoffice do
