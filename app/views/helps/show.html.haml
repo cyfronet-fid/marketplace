@@ -1,10 +1,11 @@
 - content_for :title, _("FAQ")
 - breadcrumb :help
 .container
-  %h1
-    = _("Frequently Asked Questions")
-
-  %ul.list-group
-    = render partial: "toc", collection: @sections, as: :section
-
-  = render partial: "section", collection: @sections
+  %h1.font-bold.mb-5.subpage-title
+    = _("User Documentation")
+  .row
+    .col-3
+      %ul.simple-links
+        = render partial: "toc", collection: @sections, as: :section
+    .col-9
+      = render partial: "section", collection: @sections

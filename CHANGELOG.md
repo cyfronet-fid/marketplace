@@ -5,11 +5,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
-## [3.55.3] 2024-02-21
+## [3.55.3] 2024-02-29
 
 ### Added
 - Logos endpoint for catalogues (@goreck888)
-- Share metatags in application header (@goreck888)
+- Share metatags in the application header (@goreck888)
+- New design in the Help Section (@jarekzet)
+
+### Changed
+- Help section available under `/user_documentation` instead of `/help` (@wujuu)
 
 ## [3.55.2] 2024-02-19
 
