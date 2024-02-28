@@ -9,6 +9,7 @@ FactoryBot.define do
     sequence(:service) { |_n| create(:service, offers_count: 1, order_type: order_type) }
     sequence(:status) { :published }
     sequence(:internal) { true }
+    sequence(:offer_category) { |_n| create(:service_category) }
 
     factory :offer_with_parameters do
       sequence(:parameters) { [build(:input_parameter)] }

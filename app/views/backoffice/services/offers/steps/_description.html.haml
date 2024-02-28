@@ -1,0 +1,16 @@
+-# Add description
+.row
+  .col-lg-7.pl-0
+    %h4 Offer Description
+    .offer-section-wrapper
+      = f.input :name, input_html: { class: "form-control-lg" }
+      = f.input :description, input_html: { rows: 10 }
+      = f.input :tag_list, input_html: { value: offer&.tag_list&.to_s, data: { choice: true } }
+    .bottom-tip
+      * Fields marked with an asterisk are mandatory to fill in.
+  .col-lg-5.right-tips
+    .right-tip
+      %p
+        The offer description is the space where you can showcase your advantages. Describe aspects that set your
+        offer apart from the competition. You can highlight technological advantages as well as customer service
+        or a personalised approach.

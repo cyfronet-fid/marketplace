@@ -57,3 +57,73 @@ bundle_capabilities_of_goals:
     name: Publishing
   other:
     name: Other
+
+service_types:
+  compute:
+    name: Compute
+    eid: service_category-compute
+    children:
+      cloud_compute:
+        name: Cloud Compute
+        eid: service_subcategory-compute-cloud_compute
+      cloud_container_compute:
+        name: Cloud Container Compute
+        eid: service_subcategory-compute-cloud_container_compute
+      high_troughput_compute:
+        name: High-troughput Compute
+        eid: service_subcategory-compute-high_troughput_compute
+      gpu_instances:
+        name: GPU Instances
+        eid: service_subcategory-compute-gpu_instances
+  data_source:
+    name: Data Source
+    eid: service_category-data_source
+    children:
+      data_transfer:
+        name: Data Transfer
+        eid: service_subcategory-data_source-data_transfer
+  storage:
+    name: Storage
+    eid: service_category-storage
+    children:
+      online_storage:
+        name: Online Storage
+        eid: service_subcategory-storage-online_storage
+        children:
+          block_storage:
+            name: Block Storage
+            eid: service_subsubcategory-storage-online_storage-block_storage
+          object_storage:
+            name: Object Storage
+            eid: service_subsubcategory-storage-online_storage-object_storage
+          file_storage:
+            name: File Storage
+            eid: service_subsubcategory-storage-online_storage-file_storage
+      archive_storage:
+        name: Archive Storage
+        eid: service_subcategory-storage-archive_storage
+  training:
+    eid: service_category-training
+    name: Training
+    children:
+      training_infrastructure:
+        name: Training Infrastructure
+        eid: service_subcategory-training-training_infrastructure
+        children:
+          general:
+            name: General
+            eid: service_subsubcategory-training-training_infrastructure-general
+          fitsm:
+            name: FitSM
+            eid: service_subsubcategory-training-training_infrastructure-fitsm
+  other:
+    name: Other
+    eid: service_category-other
+    children:
+      other_other:
+        name: Other
+        eid: service_subcategory-other-other
+        children:
+          other_other_other:
+            name: Other
+            eid: service_subsubcategory-other-other-other

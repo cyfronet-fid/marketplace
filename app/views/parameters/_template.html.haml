@@ -4,23 +4,31 @@
       -# TODO: refactor dynamic translation
       = t("parameters.#{parameter.type}.title")
       .card-controls
-        %a{ "data-action": "offer#remove" }
-          %i.icon-remove
         %a.multi-collapse{ "data-toggle": "collapse", "data-target": ".parameter-#{index}-collapse",
         "aria-expanded": "true" }
+          -# Add show more/show less to the collapse
           %i.icon-collapse
-        %a{ "data-action": "offer#down" }
-          %i.icon-down
-        %a{ "data-action": "offer#up" }
-          %i.icon-up
 
     .card-text.show{ class: "parameter-#{parameter.id}-collapse" }
+      .grey-tip
+        %p
+          Due to the selected offer type, we recommend filling in included parameters. It's not mandatory; you can
+          remove the box by clicking the delete button.
+        %p
+          Additionally, you can add other parameters from the left-side panel.
       = form.simple_fields_for :parameters, parameter, child_index: index do |f|
         = f.hidden_field :type
         .row
           .col-6
             = f.input :name
           .col-6
-            = f.input :hint, as: :text
+            = f.input :hint
         = render "parameters/template/#{parameter.type}", parameter: parameter, f: f
+
+      %a.float-right.remove-button{ "data-action": "offer#remove" }
+        -# TODO: Add so that the icon appears before the delete button
+        .icon-remove Delete
+
+  .bottom-tip
+    * Fields marked with an asterisk are mandatory to fill in.
   .card-separator

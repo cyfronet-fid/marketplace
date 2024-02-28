@@ -21,6 +21,7 @@ RSpec.describe Api::V1::OfferSerializer, backend: true do
       id: offer.iid,
       name: offer.name,
       description: offer.description,
+      offer_category: offer.offer_category.eid,
       parameters: [
         {
           id: offer.parameters.first.id,
@@ -50,6 +51,7 @@ RSpec.describe Api::V1::OfferSerializer, backend: true do
       id: offer.iid,
       name: offer.name,
       description: offer.description,
+      offer_category: offer.offer_category.eid,
       parameters: [
         {
           id: offer.parameters.first.id,
@@ -78,6 +80,7 @@ RSpec.describe Api::V1::OfferSerializer, backend: true do
       name: offer.name,
       description: offer.description,
       order_type: offer.order_type,
+      offer_category: offer.offer_category.eid,
       parameters: [],
       order_url: offer.order_url
     }
@@ -98,6 +101,7 @@ RSpec.describe Api::V1::OfferSerializer, backend: true do
       id: bundle_offer.iid,
       name: bundle_offer.name,
       description: bundle_offer.description,
+      offer_category: bundle_offer.offer_category.eid,
       parameters: [],
       order_type: bundle_offer.order_type,
       order_url: bundle_offer.order_url,

@@ -36,6 +36,7 @@ class Api::V1::OfferPolicy < ApplicationPolicy
       :description,
       :order_type,
       :order_url,
+      :offer_category,
       :primary_oms_id,
       :internal,
       oms_params: {},

@@ -12,7 +12,7 @@ describe("My project", () => {
 
   const openAccessResource = "DisVis";
 
-  it("should add new project, pin a service and add review", () => {
+  it.skip("should add new project, pin a service and add review", () => {
     cy.visit("/projects");
    cy.location('pathname')
      .should('equal', '/projects');

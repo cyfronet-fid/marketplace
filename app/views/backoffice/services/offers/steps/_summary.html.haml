@@ -1,0 +1,82 @@
+.row
+  .col-lg-7.pl-0
+    %h4 Offer Description
+    .offer-section-wrapper
+      .offer-info-box
+        %h6 Offer Visibility
+        .offer-info-data
+          .row
+            .col-6
+              Offer Visibility
+            .col-6
+              = offer.bundle_exclusive ? "Offer to Bundle" : "Standard Offer"
+      .offer-info-box
+        %h6 Basic informations
+        .offer-info-data
+          .row.mb-1
+            .col-6
+              Offer Category
+            .col-6
+              = offer.offer_category&.name || "-"
+          .row.mb-1
+            .col-6
+              Offer Type
+            .col-6
+              = offer.offer_type&.name || "-"
+      .offer-info-box
+        %h6 Offer parameters
+        .offer-info-data
+          - offer.parameters.each do |p|
+            .row.mb-1
+              .col-6
+                = p.name
+              .col-6
+                = p.hint
+      .offer-info-box
+        %h6 Order information
+        .offer-info-data
+          .row.mb-1
+            .col-6
+              Order Type
+            .col-6
+              = offer.order_type.titleize
+      - if offer.order_type == "order_required"
+        .offer-info-box
+          %h6 Order management
+          .offer-info-data
+            .row.mb-1
+              .col-6
+                Offer Management System
+              .col-6
+                = offer.internal ? "EOSC OMS" : "Your own OMS"
+            .row.mb-1
+              .col-6
+                Restrictions to Access the Service
+              .col-6
+                = offer.restrictions
+      .offer-info-box.mb-0
+        %h6 Order description
+        .offer-info-data
+          .row.mb-1
+            .col-6
+              Name
+            .col-6
+              = offer.name
+          .row.mb-1
+            .col-6
+              Description
+            .col-6
+              = offer.description
+          .row.mb-1
+            .col-6
+              Tags
+            .col-6
+              = offer.tag_list.join(",")
+  .col-lg-5.right-tips.pt-0
+    %h4 Offer preview
+
+    %h4.mt-5 What NEXT
+    .tip-box
+      %p
+        The offer you create can be a standard one, but remember that you can also combine it with one or multiple
+        other offers, creating a bundle.
