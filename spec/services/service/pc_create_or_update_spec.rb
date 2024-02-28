@@ -16,6 +16,7 @@ RSpec.describe Service::PcCreateOrUpdate, backend: true do
   let!(:scientific_domain_other) { create(:scientific_domain, name: "Other", eid: "scientific_subdomain-other-other") }
   let!(:funding_body) { create(:funding_body, name: "FundingBody", eid: "funding_body-fb") }
   let!(:funding_program) { create(:funding_program, name: "FundingProgram", eid: "funding_program-fp") }
+  let!(:other_category) { create(:service_category, name: "Other") }
   let!(:related_service) do
     create(:service, name: "Super Service", sources: [build(:service_source, eid: "super-service")])
   end

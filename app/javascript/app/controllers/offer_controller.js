@@ -1,13 +1,46 @@
 import { Controller } from "stimulus";
+import Rails from "@rails/ujs";
 import initChoices from "../choices";
+import Choices from "choices.js";
+
+const offerFormSections = ["offer-type", "order-parameters", "offer-parameters", "description", "summary"];
 
 export default class extends Controller {
-  static targets = ["parameters", "external", "attributes", "button", "attributeType"];
+  static targets = [
+    "attributes",
+    "attributeType",
+    "button",
+    "external",
+    "form",
+    "nextButton",
+    "parameters",
+    "prevButton",
+    "radioButton",
+    "section",
+    "sectionButton",
+    "submitRow",
+    "subtype",
+    "type",
+  ];
 
   initialize() {
     this.indexCounter = 0;
     if (this.attributesTarget.firstElementChild) {
       this.attributesTarget.classList.add("active");
+    }
+    const choicesConfig = {
+      removeItems: true,
+      allowHTML: true,
+      duplicateItemsAllowed: false,
+      placeholder: true,
+      placeholderValue: "+ start typing to add",
+    };
+    this.setRadioButtonsStates();
+    if (this.hasTypeTarget) {
+      this.typeChoices = new Choices(this.typeTarget, choicesConfig);
+    }
+    if (this.hasSubtypeTarget) {
+      this.subtypeChoices = new Choices(this.subtypeTarget, choicesConfig);
     }
   }
 
@@ -22,6 +55,26 @@ export default class extends Controller {
     this.fromArrayRemoveSelect();
     this.attributesTarget.classList.add("active");
     this.buttonTarget.classList.remove("active");
+  }
+
+  generateAttribute(attr) {
+    const currentId = this.generateId();
+    const template = this.attributeTypeTargets
+      .find((t) => t.id === attr.type)
+      .dataset.template.replace(/js_template_id/g, currentId);
+    const newElement = document.createRange().createContextualFragment(template).firstChild;
+
+    console.log(attr);
+
+    console.log(newElement);
+    this.attributesTarget.appendChild(newElement);
+    Object.keys(attr).forEach((key, index) => {
+      const param = document.getElementById(`offer_parameters_attributes_${currentId}_${key}`);
+      if (param) {
+        param.value = attr[key];
+      }
+    });
+    initChoices(newElement);
   }
 
   generateId() {
@@ -72,5 +125,196 @@ export default class extends Controller {
     if (next != undefined) {
       current.parentNode.insertBefore(next, current);
     }
+  }
+
+  showSection(event) {
+    const section = event.currentTarget.dataset.section;
+
+    if (section === "summary") {
+      this._submitSummary();
+      return;
+    }
+
+    this._toggleSection(section);
+  }
+
+  nextSection() {
+    const currentSection = this.sectionButtonTargets.findLast((e) => e.classList.contains("active-button")).dataset
+      .section;
+
+    const nextSection = offerFormSections[offerFormSections.indexOf(currentSection) + 1];
+
+    if (nextSection === "summary") {
+      this._submitSummary();
+      return;
+    }
+
+    this._toggleSection(nextSection);
+  }
+
+  prevSection() {
+    const currentSection = this.sectionButtonTargets.findLast((e) => e.classList.contains("active-button")).dataset
+      .section;
+
+    const prevSection = offerFormSections[offerFormSections.indexOf(currentSection) - 1];
+    this._toggleSection(prevSection);
+  }
+
+  _submitSummary() {
+    const formData = new FormData(this.formTarget);
+    const serviceId = this.formTarget.dataset.serviceId;
+    const offerId = this.formTarget.dataset.offerId;
+    const url = `/backoffice/services/${serviceId}/offers/${offerId}/submit`;
+
+    fetch(url, {
+      method: "POST",
+      body: formData,
+      headers: {
+        "X-CSRF-Token": document.querySelector('[name="csrf-token"]').content,
+      },
+      credentials: "include",
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.text();
+        } else {
+          throw response;
+        }
+      })
+      .then((html) => {
+        const summarySection = this.element.querySelector('[data-offer-target="section"][data-section="summary"]');
+        summarySection.innerHTML = html;
+        this._toggleSection("summary");
+      })
+      .catch((error) => {
+        error.json().then((err) => {
+          console.error("Error submitting form:", err.errors);
+        });
+      });
+  }
+
+  setRadioButtonsStates() {
+    const targets = this.radioButtonTargets;
+    targets.forEach((element) => {
+      if (element.checked) {
+        element.parentNode.classList.add("active");
+      }
+    });
+  }
+
+  toggleRadioButton(event) {
+    const currentTarget = event.target;
+    const scoped = this.radioButtonTargets.filter((e) => e.name === currentTarget.name);
+
+    scoped.forEach((element) => {
+      element.parentNode.classList.remove("active");
+    });
+    currentTarget.parentNode.classList.add("active");
+  }
+
+  async updateChildren(event) {}
+
+  async updateParameters(event) {
+    const value = event.target.value;
+    const serviceId = this.formTarget.dataset.serviceId;
+    const offerId = this.formTarget.dataset.offerId;
+    const response = await this.getSubtypes(value, serviceId, offerId);
+    const json = await response.json();
+
+    console.log(json);
+    if (json.hasOwnProperty("types")) {
+      this.typeChoices.clearChoices();
+      this.typeChoices.removeActiveItems();
+      await this.typeChoices.setChoices(json.types);
+    }
+    if (json.hasOwnProperty("subtypes")) {
+      this.subtypeChoices.clearChoices();
+      this.subtypeChoices.removeActiveItems();
+      await this.subtypeChoices.setChoices(json.subtypes);
+    }
+    if (json.hasOwnProperty("parameters")) {
+      await this.setParameters(json.parameters);
+    }
+  }
+
+  setParameters(json) {
+    console.log(json);
+    this.attributesTarget.innerHTML = "";
+    Array.from(json).forEach((attr) => this.generateAttribute(attr));
+  }
+
+  async getSubtypes(value, serviceId, offerId) {
+    const data = `service_category=${value}&offer_id=${offerId}`;
+    const rawResponse = await fetch(`/backoffice/services/${serviceId}/offers/fetch_subtypes`, {
+      method: "POST",
+      headers: {
+        "X-Requested-With": "XMLHttpRequest",
+        "X-CSRF-Token": Rails.csrfToken(),
+        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+      },
+      body: data,
+    });
+    return rawResponse;
+  }
+
+  _toggleSection(section) {
+    const sectionIndex = offerFormSections.indexOf(section);
+
+    this.sectionButtonTargets.forEach((element) => {
+      const elementIndex = offerFormSections.indexOf(element.dataset.section);
+      if (elementIndex <= sectionIndex) {
+        element.classList.add("active-button");
+      } else {
+        element.classList.remove("active-button");
+      }
+    });
+
+    this.sectionTargets.forEach((element) => {
+      if (element.dataset.section === section) {
+        element.classList.remove("d-none");
+      } else {
+        element.classList.add("d-none");
+      }
+    });
+
+    this._displaySubmitRow();
+    this._displayPrevButton();
+    this._displayNextButton();
+
+    if (section === "offer-type") {
+      this._hidePrevButton();
+    }
+
+    if (section === "summary") {
+      this._hideNextButton();
+    }
+
+    if (section !== "summary") {
+      this._hideSubmitRow();
+    }
+  }
+
+  _displaySubmitRow() {
+    this.submitRowTarget.classList.remove("d-none");
+  }
+
+  _hideSubmitRow() {
+    this.submitRowTarget.classList.add("d-none");
+  }
+
+  _displayNextButton() {
+    this.nextButtonTarget.classList.remove("d-none");
+  }
+
+  _hideNextButton() {
+    this.nextButtonTarget.classList.add("d-none");
+  }
+
+  _displayPrevButton() {
+    this.prevButtonTarget.classList.remove("d-none");
+  }
+
+  _hidePrevButton() {
+    this.prevButtonTarget.classList.add("d-none");
   }
 }

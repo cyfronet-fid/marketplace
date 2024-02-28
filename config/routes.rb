@@ -133,6 +133,11 @@ Rails.application.routes.draw do
     end
   end
 
+  post "/backoffice/services/:service_id/offers/fetch_subtypes", to: "backoffice/services/offers#fetch_subtypes"
+
+  post "/backoffice/services/:service_id/offers/:offer_id/submit", to: "backoffice/services/offers#submit_summary"
+  patch "/backoffice/services/:service_id/offers/:offer_id/submit", to: "backoffice/services/offers#submit_summary"
+
   resource :executive, only: :show
   namespace :executive do
     resources :statistics, only: :index

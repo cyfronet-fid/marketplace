@@ -15,6 +15,7 @@ class Service::Create < Service::ApplicationService
         name: "Offer",
         description: "#{@service.name} Offer",
         order_type: @service.order_type,
+        offer_category: @service.service_categories.first || Vocabulary::ServiceCategory.find_by(name: "Other"),
         order_url: @service.order_url,
         internal: @service.order_url.blank?,
         status: "published",

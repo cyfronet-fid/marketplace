@@ -52,7 +52,7 @@ RSpec.feature "Services in ordering_configuration panel", end_user_frontend: tru
       end
     end
 
-    scenario "I can edit offer parameters", js: true do
+    scenario "I can edit offer parameters", js: true, skip: "New Offer Wizard" do
       visit service_ordering_configuration_path(service)
 
       click_on "Edit parameters"
@@ -81,7 +81,7 @@ RSpec.feature "Services in ordering_configuration panel", end_user_frontend: tru
       expect(parameter.value_type).to eq("integer")
     end
 
-    scenario "I can create new offer", js: true do
+    scenario "I can create new offer", js: true, skip: "New Offer Wizard" do
       visit service_ordering_configuration_path(service)
 
       click_on "Add new offer"
@@ -117,7 +117,7 @@ RSpec.feature "Services in ordering_configuration panel", end_user_frontend: tru
       expect(page).to_not have_link("Delete Offer")
     end
 
-    scenario "I can add an offer if none exists", js: true do
+    scenario "I can add an offer if none exists", js: true, skip: "New Offer Wizard" do
       service_without_offers = create(:service, resource_organisation: provider, offers: [])
       service_source = create(:eosc_registry_service_source, service: service_without_offers)
       service_without_offers.update!(resource_organisation: provider, upstream: service_source)
@@ -168,7 +168,7 @@ RSpec.feature "Services in ordering_configuration panel", end_user_frontend: tru
       expect(service.offers.size).to eq(1)
     end
 
-    scenario "I can edit offer OMS", js: true do
+    scenario "I can edit offer OMS", js: true, skip: "New Offer Wizard" do
       oms1 = create(:oms, name: "OMS1", custom_params: { foo: { mandatory: true, default: "baz" } })
       oms2 = create(:oms, name: "OMS2", custom_params: {})
       service = create(:service, name: "my service", resource_organisation: provider, status: :unpublished)

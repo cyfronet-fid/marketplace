@@ -35,6 +35,7 @@ class Service::Update < Service::ApplicationService
           name: "Offer",
           description: "#{@service.name} Offer",
           service: @service,
+          offer_category: @service.service_categories.first || Vocabulary::ServiceCategory.find_by(name: "Other"),
           order_type: @service.order_type.presence,
           order_url: @service.order_url,
           status: "published"

@@ -1,0 +1,29 @@
+-# Here we only need to implement new styles and add the parameters description according to figma
+
+%h4.mt-5.mb-0.text-uppercase
+  = _("Offer parameters")
+.row.parameters-section
+  .col-12
+    .float-left.parameter-list
+      = parameter_templates(f)
+
+    .float-right.parameter-cards
+      .tip-box.mb-5
+        %p
+          To add a new type of data:
+          %br
+          1. Locate the list of available input types on the left side of the screen.
+          %br
+          2. Choose the type you're interested in from that list.
+          %br
+          3. After making your selection, click the "Add" button next to the chosen input type.
+          %br
+          4. As a result, a new box will appear on the right side of the screen, allowing you to input data.
+
+        %p
+          %strong
+            %a{ href: "#" } Learn More about Offer Parameters ->
+
+      .offer-attributes{ "data-offer-target": "attributes" }
+        - offer.parameters.each_with_index do |p, idx|
+          = render "parameters/template", parameter: p, form: f, index: idx

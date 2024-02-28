@@ -37,12 +37,29 @@ namespace :rdt do
     Vocabulary::BundleGoal.destroy_all
     Vocabulary::BundleCapabilityOfGoal.destroy_all
 
+    # Vocabulary::ServiceCategory.where.not(parent: nil).destroy_all
+    #
+    # puts "Creating service subcategories"
+
     puts "Creating bundle goals"
     yaml_hash["bundle_goals"].each { |_, hash| Vocabulary::BundleGoal.find_or_create_by(name: hash["name"]) }
 
     puts "Creating bundle capabilities of goals"
     yaml_hash["bundle_capabilities_of_goals"].each do |_, hash|
       Vocabulary::BundleCapabilityOfGoal.find_or_create_by(name: hash["name"])
+    end
+
+    puts "Creating subcategories for service type"
+    yaml_hash["service_types"].each { |_, hash| create_category_with_children(hash) }
+  end
+
+  def create_category_with_children(hash, parent = nil, ancestry_level = 0)
+    puts "Create #{hash["name"]} ServiceCategory. #{parent&.name ? "Parent: #{parent.name}, " : ""}" +
+           "ancestry_level: #{ancestry_level}, eid: #{hash["eid"]}"
+    current = Vocabulary::ServiceCategory.find_or_initialize_by(eid: hash["eid"])
+    current.update(name: hash["name"], parent: parent)
+    if hash.key?("children")
+      hash["children"].each { |_c, c_hash| create_category_with_children(c_hash, current, ancestry_level + 1) }
     end
   end
 
