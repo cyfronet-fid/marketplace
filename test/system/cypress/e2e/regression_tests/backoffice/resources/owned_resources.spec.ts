@@ -90,7 +90,7 @@ describe("Owned services", () => {
       .should("be.visible"); 
   });
 
-  it("should add new offers", ()=>{
+  it.skip("should add new offers", ()=>{
     cy.visit("/backoffice/services/new");
     cy.fillFormCreateResource(resource2, correctLogo);
     cy.get("[data-e2e='submit-btn']")

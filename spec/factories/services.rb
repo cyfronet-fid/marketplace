@@ -48,6 +48,7 @@ FactoryBot.define do
     sequence(:main_contact) { build(:main_contact) }
     sequence(:public_contacts) { [build(:public_contact)] }
     sequence(:catalogue) { create(:catalogue) }
+    sequence(:service_categories) { create_list(:service_category, 2) }
     sequence(:pid) { |_n| "#{catalogue.pid}.#{resource_organisation.pid}.#{abbreviation}" }
 
     upstream { nil }

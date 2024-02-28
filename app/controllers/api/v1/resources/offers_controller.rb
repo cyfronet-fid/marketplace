@@ -114,6 +114,9 @@ class Api::V1::Resources::OffersController < Api::V1::ApplicationController
 
   def transform(attributes)
     attributes[:parameters] = Parameter::Array.load(attributes[:parameters]) if attributes[:parameters].present?
+    attributes[:offer_category] = Vocabulary::ServiceCategory.find_by(eid: params[:offer_category]) if params[
+      :offer_category
+    ].present?
     attributes.merge(mapped_bundled_offers)
   end
 

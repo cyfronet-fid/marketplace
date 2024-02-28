@@ -12,7 +12,7 @@ module Backoffice::ParametersHelper
              )
       concat content_tag(
                :button,
-               content_tag(:i, "", class: "fas fa-chevron-right"),
+               content_tag(:i, "", class: "plus-icon"),
                class: "float-right add-button",
                type: "button",
                id: "attributes-list-button",
@@ -30,6 +30,7 @@ module Backoffice::ParametersHelper
         concat content_tag(
                  :li,
                  I18n.t("parameters.#{clazz.type}.add"),
+                 id: clazz.type,
                  class: "list-group-item",
                  "data-template": parameter_template(clazz.new(id: "js_template_id"), form),
                  "data-action": "click->offer#selectParameterType",

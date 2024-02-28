@@ -1,0 +1,140 @@
+service_subcategory-compute-cloud_compute: &default_compute
+  - id: "id1"
+    <<: &cores
+      name: "Number of CPU Cores"
+      hint: "Select number of cores you want"
+      type: "select"
+      value_type: "integer"
+      mode: "buttons"
+      values: [1, 2, 4, 8]
+  - id: "id2"
+    <<: &ram
+      name: "Amount of RAM per CPU core"
+      hint: "Select amount of RAM per core"
+      type: "select"
+      value_type: "integer"
+      unit: "GB"
+      mode: "buttons"
+      values: [1, 2, 4]
+  - id: "id3"
+    <<: &disk
+      name: "Local disk"
+      hint: "Amount of local disk space"
+      type: "select"
+      value_type: "integer"
+      unit: "GB"
+      mode: "buttons"
+      values: [ 10, 20, 40 ]
+service_subcategory-compute-cloud_container_compute:
+  - *default_compute
+  - id: "id4"
+    <<: &other
+      name: "Other technical requirements"
+      type: "input"
+      value_type: "string"
+service_subcategory-compute-high_troughput_compute:
+  - *default_compute
+  - id: "id4"
+    name: "Parallelism"
+    type: "input"
+    value_type: "integer"
+    unit: "Threads"
+  - id: "id5"
+    <<: *other
+service_subcategory-compute-gpu_instances:
+  - id: "id1"
+    <<: *cores
+  - id: "id2"
+    name: "Number of CPU cores per GPU core"
+    type: "select"
+    value_type: "integer"
+    unit: "GB"
+    mode: "buttons"
+    values: [1, 2, 4]
+  - id: "id3"
+    <<: *ram
+  - id: "id4"
+    <<: *disk
+  - id: "id5"
+    <<: *other
+
+service_category-data_source: &datasource
+  - id: "id1"
+    name: "Tool"
+    type: "multiselect"
+    value_type: "string"
+    values: ["FTS3", "Globus Online"]
+service_subcategory-data_source-data_transfer:
+  - *datasource
+
+service_subcategory-storage-online_storage: &default_online_storage
+  - id: "id1"
+    <<: &capacity
+      name: "Storage capacity"
+      type: "input"
+      value_type: "integer"
+      unit: "TB"
+  - id: "id2"
+    <<: &special
+      name: "Special requirements"
+      type: "input"
+      value_type: "string"
+service_subsubcategory-storage-online_storage-block_storage:
+  - *default_online_storage
+service_subsubcategory-storage-online_storage-object_storage:
+  - id: "id1"
+    <<: *capacity
+  - id: "id2"
+    name: "Interfaces"
+    type: "multiselect"
+    value_type: "string"
+    values: ["CDMI", "POSIX", "SWIFT"]
+  - id: "id3"
+    <<: *special
+service_subcategory-storage-archive_storage:
+  - id: "id1"
+    name: "Amount of data"
+    type: "input"
+    value_type: "integer"
+    unit: "TB"
+
+service_category-training: &training
+  - id: "id1"
+    name: "Location"
+    type: "input"
+    value_type: "string"
+  - id: "id2"
+    name: "Aim of the training event"
+    type: "input"
+    value_type: "string"
+  - id: "id3"
+    name: "Number of concurrent trainees"
+    type: "input"
+    value_type: "integer"
+  - id: "id4"
+    <<: *cores
+  - id: "id5"
+    <<: *ram
+  - id: "id6"
+    name: "Online storage size (total)"
+    type: "input"
+    value_type: "integer"
+    unit: "TB"
+  - id: "id7"
+    <<: *special
+
+service_subcategory-training-training_infrastructure:
+  - *training
+
+service_subsubcategory-training-training_infrastructure-general:
+  - *training
+
+service_subsubcategory-training-training_infrastructure-fitsm:
+  - id: "id1"
+    name: "Number of students"
+    type: "input"
+    value_type: "integer"
+  - id: "id2"
+    name: "Location"
+    type: "input"
+    value_type: "string"

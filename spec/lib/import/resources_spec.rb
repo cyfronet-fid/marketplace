@@ -51,6 +51,7 @@ describe Import::Resources, backend: true do
   let!(:analytics) { create(:category, name: "Processing & Analysis") }
   let!(:data) { create(:category, name: "Data management", eid: "category-data") }
   let!(:data_subcategory) { create(:category, name: "Access", eid: "data-applications-software") }
+  let!(:other_category) { create(:service_category, name: "Other", eid: "service-category_other") }
 
   let!(:compute) { create(:category, name: "Compute") }
   let!(:networking) { create(:category, name: "Networking") }

@@ -315,6 +315,16 @@
         "type": "string",
         "enum": ["open_access", "fully_open_access", "order_required", "other"]
       },
+      "offer_category": {
+        "type": "string",
+        "enum": [
+          "service_category-compute",
+          "service_category-data_source",
+          "service_category-storage",
+          "service_category-training",
+          "service_category-other"
+        ]
+      },
       "primary_oms_id": {
         "type": "integer"
       },

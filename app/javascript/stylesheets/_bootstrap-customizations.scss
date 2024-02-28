@@ -1104,7 +1104,7 @@ Service detail
   -------------------------*/
 
 .parameters-section {
-  padding: 2rem 0;
+  padding: 1rem 0;
 
   .parameter-list {
     width: 25%;
@@ -1115,26 +1115,42 @@ Service detail
     ul {
 
       li {
-        margin-bottom: 5px;
-        border-color: $yellow;
+        margin-bottom: 10px;
+        border: 1px solid $custom-16;
         cursor: pointer;
-        border-radius: 0;
+        color: $custom-16;
+        font-weight: 600;
+        border-radius: 8px;
+        font-size: 16px;
+        padding: 16px 0 16px 24px;
         width: 100%;
 
-        &.selected {
-          background: $yellow;
+        &:hover {
+          background: $alert-bg;
         }
+
+        &.selected {
+          background: $custom-16;
+          color: $palette-white;
+
+          &:hover {
+            background: $custom-16;
+          }
+        }
+
+
       }
     }
 
     button {
       position: absolute;
       top: 43%;
-      right: 25px;
+      right: 22px;
       overflow: visible;
+      padding-left: 6px;
 
       &.active {
-        border: 2px solid $palette-yellow;
+        border: 2px solid $custom-16;
 
         svg {
           color: $palette-solid-100;
@@ -1152,14 +1168,14 @@ Service detail
         display: block;
         background: $palette-solid-5;
         height: 100%;
-        right: 47px;
+        right: 60px;
         top: 0;
       }
 
       .list-group {
-        width: -webkit-calc(100% - 100px);
-        width: -moz-calc(100% - 100px);
-        width: calc(100% - 100px);
+        width: -webkit-calc(100% - 120px);
+        width: -moz-calc(100% - 120px);
+        width: calc(100% - 120px);
         }
       }
 
@@ -1173,32 +1189,6 @@ Service detail
     .offer-attributes {
       width: 100%;
       height: 100%;
-      background: url('../images/no_paramters_image.svg') 50% 38% no-repeat;
-
-      &::before {
-        content: 'You have no parameters yet. \A Choose any from the left column and add.';
-        white-space: pre;
-        position: absolute;
-        top: 55%;
-        left: 0;
-        width: 100%;
-        font-size: 18px;
-        font-style: italic;
-        letter-spacing: 0;
-        color: $palette-solid-80;
-        line-height: 26px;
-        text-align: center;
-      }
-
-      &::after {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        height: 100%;
-        width: 100%;
-        border: 2px dashed $palette-solid-5;
-      }
 
       &.active {
         background: none;
@@ -1212,7 +1202,7 @@ Service detail
   }
 
   .card-separator {
-    height: 10px;
+    height: 24px;
     background: $white;
     width: 100%;
   }
@@ -1232,15 +1222,15 @@ Service detail
     .card-body {
       padding: 0;
       border: 1px solid $palette-solid-20;
-      -webkit-border-radius: 2px;
-      -moz-border-radius: 2px;
-      border-radius: 2px;
+      -webkit-border-radius: 8px;
+      -moz-border-radius: 8px;
+      border-radius: 8px;
 
       .card-title {
         margin: 0;
         padding: 0.8rem;
         font-size: 1rem;
-        border-bottom: 1px solid $palette-solid-20;
+        font-weight: 500;
 
         .card-controls {
           position: absolute;
@@ -1299,12 +1289,45 @@ Service detail
       }
 
       .card-text {
-        padding: 0.8rem;
-        background-color: $home-card-bg;
+        padding: 0.8rem 24px;
+
+        label {
+          font-size: 16px;
+          font-weight: 600;
+        }
+
+        .grey-tip {
+          border-radius: 8px;
+          background: $custom-18;
+          padding: 24px 24px 10px;
+          margin-bottom: 45px;
+
+          p {
+            color: $custom-19;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 150%;
+          }
+
+          &::before {
+            content: '';
+            display: block;
+            width: 16px;
+            height: 16px;
+            background: url('../images/icon-alert-circle.svg') no-repeat;
+            margin-bottom: 8px;
+          }
+        }
 
         input,
+        .choices__inner,
         select {
           height: 50px;
+          border-radius: 8px;
+        }
+
+        .choices__inner {
+          padding-top: 0;
         }
 
         .form-check-input {
@@ -1314,11 +1337,22 @@ Service detail
         textarea {
           height: 50px;
           line-height: 35px;
+          border-radius: 8px;
         }
 
         .is-invalid {
           background-position: right 15px center !important;
         }
+      }
+
+      .remove-button {
+        color: $custom-16;
+        font-weight: 600;
+        margin: 50px 0 35px;
+        line-height: 18px;
+        font-size: 14px;
+        background: url('../images/icon-trash.svg') no-repeat;
+        padding-left: 22px;
       }
     }
 
@@ -5485,24 +5519,44 @@ abbr[title] {
 }
 
 .add-button {
-  border: 2px solid $palette-solid-5;
-  border-radius: 100%;
-  background: $white;
-  width: 46px;
+  width: 77px;
+  height: 60px;
+  padding: 12px 0;
+  border-radius: 8px;
+  background: $custom-20;
   z-index: 100;
-  height: 46px;
-  line-height: 46px;
+  line-height: 60px;
+  color: $palette-white;
   text-align: center;
 
   &.active:hover {
-    border: 2px solid $palette-yellow;
-    background: $palette-yellow;
+    border: 2px solid $custom-16;
+    background: $custom-16;
   }
 
-  svg {
-    color: $palette-solid-5;
+  &:hover {
+    background: $custom-16;
+  }
+
+  &::after {
+    content: 'Add';
+    display: block;
+    float: left;
+    font-weight: 600;
+    line-height: 24px;
+    font-size: 16px;
+    color: $palette-white;
+  }
+
+  .plus-icon {
+    width: 24px;
     font-size: 21px;
-    margin: 10px 0 0 4px;
+    margin: 0 5px 0 0;
+    float: left;
+    display: block;
+    height: 24px;
+    background-image: url('../images/icon-add.svg');
+    background-repeat: no-repeat;
   }
 }
 
@@ -7248,6 +7302,260 @@ abbr[title] {
       &:hover {
         color: $palette-navy;
       }
+    }
+  }
+}
+
+.steps-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 56px;
+  position: relative;
+
+  &:before {
+    position: absolute;
+    content: '';
+    z-index: 1;
+    top: 20px;
+    left: 50px;
+    width: calc(100% - 90px);
+    height: 1px;
+    background: #eee;
+  }
+
+  .offer-step {
+    cursor: pointer;
+    z-index: 100;
+
+      &:before {
+        content: '1';
+        width: 40px;
+        height: 40px;
+        background: $custom-8;
+        border-radius: 100%;
+        text-align: center;
+        line-height: 40px;
+        font-size: 16px;
+        font-weight: 500;
+        display: block;
+        margin: 0 auto 8px;
+      }
+
+    &.active-button {
+      &:before {
+        background: $custom-16;
+        color: $palette-white;
+      }
+    }
+
+    &#order-parameters-button {
+      &:before {
+        content: '2';
+      }
+    }
+
+    &#offer-parameters-button {
+      &:before {
+        content: '3';
+      }
+    }
+
+    &#offer-description-button {
+      &:before {
+        content: '4';
+      }
+    }
+
+    &#summary-button {
+      &:before {
+        content: '5';
+      }
+    }
+  }
+}
+
+.new-offer-form {
+
+  h4 {
+    color: $custom-16;
+    border: none;
+    padding: 0;
+    margin: 0 0 13px;
+  }
+
+  .offer-section-wrapper {
+    border: 1px solid $custom-17;
+    border-radius: 8px;
+    padding: 24px;
+
+    .offer-info-box {
+      margin-bottom: 40px;
+
+      h6 {
+        color: $custom-21;
+        font-size: 14px;
+        font-weight: 500;
+        text-transform: uppercase;
+        border-bottom: 1px solid $custom-22;
+        padding-bottom: 16px;
+        margin-bottom: 0;
+      }
+
+      .offer-info-data {
+
+        .row {
+          font-size: 12px;
+          margin: 0;
+          border-bottom: 1px solid $custom-22;
+          padding: 5px 0;
+
+          .col-6 {
+            padding-left: 0;
+          }
+        }
+      }
+    }
+
+    &.bottom-margin {
+      margin-bottom: 52px;
+    }
+
+    .buttons-selector {
+
+      &.bottom-margin {
+        margin-bottom: 40px;
+      }
+
+      fieldset {
+        display: flex;
+        row-gap: 20px;
+        margin: 0;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        legend {
+          width: 100%;
+          padding-bottom: 14px;
+        }
+
+        .form-check {
+          border-radius: 8px;
+          padding: 0;
+          border: 1px solid $custom-17;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          flex: 0 0 48.5%;
+
+          input {
+            display: none;
+          }
+
+          label {
+            margin: 0;
+            height: 62px;
+            text-align: center;
+            cursor: pointer;
+            color: $custom-16;
+            line-height: 62px;
+            font-size: 16px;
+            width: 100%
+          }
+
+          &.active {
+            border: 1px solid $custom-12;
+            background: $secondary;
+          }
+        }
+      }
+    }
+
+    label,
+    legend {
+      font-weight: 600;
+    }
+
+    .choices__inner,
+    .form-control {
+      border-radius: 8px;
+      min-height: 53px;
+      background: #fff;
+    }
+
+    .form-control {
+      &.text {
+        padding-top: 10px
+      }
+    }
+  }
+}
+
+.tip-box {
+  border-radius: 8px;
+  background: #EDF4FF;
+  padding: 24px 24px 12px;
+  font-size: 16px;
+  color: $palette-black;
+}
+
+.bottom-tip {
+  margin-top: 15px;
+  color: $palette-solid-80;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.new-offer-form-controls {
+  margin-top: 90px;
+
+  .btn-primary {
+    padding: 16px 62px;
+    font-size: 18px;
+
+    &.btn-danger {
+      background: $danger;
+    }
+
+    &.btn-info {
+      background: $custom-9;
+    }
+  }
+
+  .btn-back {
+    padding: 16px 0;
+    color: $custom-16;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 28px;
+  }
+}
+
+.right-tips {
+  padding-top: 29px;
+
+  .right-tip {
+    border-radius: 8px;
+    background: $custom-18;
+    padding: 24px 24px 10px;
+    color: $custom-19;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 150%;
+    margin-bottom: 16px;
+
+    &.mt-130 {
+      margin-top: 126px;
+    }
+
+    &:before {
+      content: '';
+      display: block;
+      width: 16px;
+      height: 16px;
+      background: url('../images/icon-alert-circle.svg') no-repeat;
+      margin-bottom: 8px;
     }
   }
 }

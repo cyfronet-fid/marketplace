@@ -39,8 +39,15 @@ class Backoffice::OfferPolicy < ApplicationPolicy
     managed? && record.persisted? && record.published? && other_offers_with_service_order_type?
   end
 
+  def submit_summary?
+    managed? && !service_deleted?
+  end
+
   def permitted_attributes
     [
+      :offer_category_id,
+      :offer_type_id,
+      :offer_subtype_id,
       :id,
       :name,
       :description,
@@ -49,6 +56,7 @@ class Backoffice::OfferPolicy < ApplicationPolicy
       :order_url,
       :internal,
       :from,
+      :restrictions,
       :primary_oms_id,
       :tag_list,
       oms_params: {},

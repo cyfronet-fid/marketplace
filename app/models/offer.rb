@@ -50,6 +50,10 @@ class Offer < ApplicationRecord
   has_many :bundle_offers
   has_many :bundles, through: :bundle_offers, dependent: :destroy
   has_many :main_bundles, class_name: "Bundle", foreign_key: "main_offer_id", dependent: :restrict_with_error
+  has_many :offer_vocabularies
+  belongs_to :offer_category, class_name: "Vocabulary::ServiceCategory"
+  belongs_to :offer_type, class_name: "Vocabulary::ServiceCategory", optional: true
+  belongs_to :offer_subtype, class_name: "Vocabulary::ServiceCategory", optional: true
 
   validate :set_iid, on: :create
   validates :service, presence: true
@@ -79,10 +83,6 @@ class Offer < ApplicationRecord
 
   def to_param
     iid.to_s
-  end
-
-  def offer_type
-    super || service.order_type
   end
 
   def bundle?

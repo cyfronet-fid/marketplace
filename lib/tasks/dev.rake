@@ -220,6 +220,8 @@ namespace :dev do
         order_type: h["order_type"].blank? ? service.order_type : h["order_type"],
         order_url: effective_order_url.present? ? effective_order_url : "",
         internal: effective_order_url.blank?,
+        offer_category:
+          service.service_categories.first || Vocabulary::ServiceCategory.find_by(eid: "service_category-other"),
         status: :published
       )
       puts "    - #{h["name"]} offer generated"
@@ -244,6 +246,7 @@ namespace :dev do
 
   def create_vocabularies
     Rake::Task["rdt:add_vocabularies"].invoke
+    Rake::Task["rdt:add_internal_vocabularies"].invoke
   end
 
   # rubocop:disable Metrics/AbcSize

@@ -29,6 +29,10 @@ module AttributesHelper
     index > 3 ? { class: "d-none", data: { "parameter-target": "hideableParameter", state: "hidden" } } : {}
   end
 
+  def render_default_parameters(form, parameters)
+    parameters.each_with_index { |p, idx| render "parameters/template", parameter: p, form: form, index: idx }
+  end
+
   private
 
   def from_to(from, to)

@@ -1,0 +1,53 @@
+.row
+  .col-lg-7.pl-0
+    %h4 Offer visibility
+    .offer-section-wrapper.bottom-margin
+      -# change this to custom radio buttons (you can compare to vouchers in order wizard)
+      .buttons-selector.bottom-margin
+        = f.input :bundle_exclusive, as: :radio_buttons, collection: [["Standard Offer", false],
+        ["Offer to Bundle", true]], label: "Offer Visibility *",
+        input_html: { "data-offer-target": "radioButton", "data-action": "offer#toggleRadioButton" }
+
+      .tip-box
+        %p.frame
+          %strong Standard Offer
+          \- it is visible by default on your service page, you can still combine it with another offer to create
+          a service bundle.
+        %p.frame
+          %strong Offer to bundle
+          \- this offer becomes visible on your service page only after creating a bundle based on it.
+
+    %h4 Basic informations
+    .offer-section-wrapper.mb-0
+      = f.association :offer_category, collection: Vocabulary::ServiceCategory.where(ancestry_depth: 0),
+      input_html: { data: { action: "offer#updateParameters", choice: true }, "data-e2e": "categories-select" }
+      -# pin Vocabulary::ServiceType in this field
+      = f.association :offer_type,
+        collection: Vocabulary::ServiceCategory.where(ancestry: offer&.offer_category, ancestry_depth: 1),
+        input_html: { data: { "offer-target": "type", action: "offer#updateParameters",
+        choice: true, render: false } }
+      - type = offer&.offer_type
+      = f.association :offer_subtype,
+        collection: Vocabulary::ServiceCategory.where(ancestry: "#{type&.ancestry}/#{type&.id}"),
+        input_html: { data: { "offer-target": "subtype", action: "offer#updateParameters", include_hidden: true,
+        choice: true, render: false } }
+
+    .bottom-tip
+      * Fields marked with an asterisk are mandatory to fill in.
+
+  .col-lg-5.right-tips
+    .right-tip
+      %p
+        For more information, refer to the
+        %a{ href: "#" }Provider's Guide
+        or contact our
+        %a{ href: "#" }Helpdesk.
+    .right-tip
+      %p
+        In the EOSC Marketplace, you can combine one or more offers to create a bundle. Bundle offers
+        can include only your offers or a combination of offers from both you and other providers.
+    .right-tip.mt-130
+      %p
+        In the EOSC Marketplace, you can select from four offer types:
+        %strong computing, storage, data, or training.
+        If your offer doesn't align with any of these categories, please choose the 'Other' category.
