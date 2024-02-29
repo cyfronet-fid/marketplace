@@ -11,7 +11,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       @user = User::Checkin.from_omniauth(auth)
 
       if @user.persisted?
-        sign_in_and_redirect @user, event: :authentication
+        sign_in_and_redirect @user, event: :authentication, allow_other_host: true
         if cookies[:favourites].present?
           Array(cookies[:favourites].split("&")).each do |favourite|
             if UserService.find_by(user: @user, service: Service.find_by(slug: favourite)).blank?

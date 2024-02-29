@@ -1,0 +1,143 @@
+.header {
+  position: relative;
+  z-index: 2;
+  padding: 25px 0;
+}
+
+.main {
+  background: url("home-bg.png") no-repeat;
+  background-position: 50% -120px;
+  z-index: 3;
+  position: relative;
+
+  > main {
+    overflow: hidden;
+  }
+
+  .contentbox {
+    display: block;
+    margin-bottom: 30px;
+
+    > div {
+      width: 58%;
+    }
+
+    aside {
+      background: transparent;
+      position: absolute;
+      top: -25px;
+      right: -100px;
+      width: 68%;
+    }
+
+    &__lead {
+      font-size: 1.1rem;
+    }
+  }
+}
+
+// scss-lint:disable QualifyingElement
+
+img.provider-header {
+  max-width: 180px;
+  max-height: 120px;
+}
+
+// scss-lint:enable QualifyingElement
+
+/* ===============================
+Mobile version only for customization.
+=============================== */
+
+@media (max-width: 1120px) {
+  .main {
+    .contentbox {
+      > div {
+        width: 100%;
+      }
+
+      &__title,
+      &__lead {
+        width: 50%;
+      }
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .main {
+    .contentbox {
+      &__title {
+        font-size: 3rem;
+      }
+
+      .intro-box {
+        max-width: 45%;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .main {
+    .contentbox {
+      &__title {
+        font-size: 2rem;
+      }
+
+      &__lead {
+        font-size: 1rem;
+      }
+
+      .intro-box {
+        max-width: 45%;
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .main {
+    .contentbox {
+      display: flex;
+      flex-direction: column-reverse;
+
+      &__title,
+      &__lead {
+        width: 100%;
+      }
+
+      aside {
+        position: relative;
+        width: 100%;
+        right: auto;
+      }
+
+      .intro-box {
+        max-width: 100%;
+      }
+    }
+  }
+}
+
+@media (max-width: 376px) {
+  .main {
+    .home-tabs {
+      margin-top: 20px;
+
+      .tabs {
+        position: absolute;
+        left: 0;
+        right: 0;
+
+        .tab-link {
+          border-radius: 0;
+        }
+      }
+
+      .tab-content-home {
+        padding-top: 80px;
+      }
+    }
+  }
+}

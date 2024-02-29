@@ -198,7 +198,7 @@ class Provider < ApplicationRecord
   end
 
   def set_default_logo
-    assets_path = File.join(File.dirname(__FILE__), "../javascript/images")
+    assets_path = File.join(File.dirname(__FILE__), "../assets/images")
     default_logo_name = "provider_logo.svg"
     extension = ".svg"
     io = File.open(assets_path + "/" + default_logo_name)

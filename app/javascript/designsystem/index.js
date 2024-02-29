@@ -3,7 +3,7 @@ require("turbolinks").start();
 require("@rails/activestorage").start();
 
 import "bootstrap/dist/js/bootstrap";
-import "stylesheets/designsystem";
+// import "stylesheets/designsystem";
 
 import { Application } from "stimulus";
 import { definitionsFromContext } from "stimulus/webpack-helpers";

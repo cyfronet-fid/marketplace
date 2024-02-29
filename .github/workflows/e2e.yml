@@ -11,7 +11,7 @@ jobs:
         sudo sysctl -w vm.swappiness=1
         sudo sysctl -w fs.file-max=262144
         sudo sysctl -w vm.max_map_count=262144
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Start containers
       run: docker-compose -f docker-compose-x64.yml -f docker-compose-e2e.yml up -d
     - name: Install VIPS
@@ -19,16 +19,16 @@ jobs:
     - uses: ruby/setup-ruby@v1
       with:
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-    - uses: actions/setup-node@v2
+    - uses: actions/setup-node@v4
       with:
-        node-version: '16.13.0'
+        node-version: '20.11.1'
         check-latest: true
         cache: yarn
-    - run: yarn
+    - run: yarn install
     - name: Install foreman
       run: |
         gem install foreman
-    - uses: actions/cache@v2
+    - uses: actions/cache@v4
       with:
         path: |
           ~/.cache/Cypress
@@ -44,20 +44,8 @@ jobs:
       run: |
         bundle exec rake db:drop db:create db:migrate searchkick:reindex:all
         bundle exec rails dev:prime_e2e
-    - name: Run App
-      env:
-        PORT: 5000
-        RAILS_ENV: development
-        RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-        AUTH_MOCK: true
-        # MP_JIRA_USERNAME: ${{ secrets.JIRA_TEST_USER }}
-        # MP_JIRA_PASSWORD: ${{ secrets.JIRA_TEST_USER_PWD }}
-        # MP_JIRA_URL: ${{ secrets.MP_JIRA_URL }}
-        # MP_JIRA_PROJECT: ${{ secrets.MP_JIRA_PROJECT }}
-      run: |
-        ./bin/server &
-    - name: Run cypress
-      uses: cypress-io/github-action@v2
+    - name: Run App and Cypress
+      uses: cypress-io/github-action@v6
       env:
         CYPRESS_JIRA_TEST_USER: ${{ secrets.JIRA_TEST_USER }}
         CYPRESS_JIRA_TEST_USER_PWD: ${{ secrets.JIRA_TEST_USER_PWD }}
@@ -68,16 +56,25 @@ jobs:
         CYPRESS_MARKETPLACE_URL: ${{secrets.MARKETPLACE_URL}}
         CYPRESS_PROVIDER_PORTAL_CLIENT_ID: ${{secrets.PROVIDER_PORTAL_CLIENT_ID}}
         CYPRESS_AAI_TOKEN_URL: ${{secrets.AAI_TOKEN_URL}}
+        PORT: 5000
+        RAILS_ENV: development
+        RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+        AUTH_MOCK: true
+        # MP_JIRA_USERNAME: ${{ secrets.JIRA_TEST_USER }}
+        # MP_JIRA_PASSWORD: ${{ secrets.JIRA_TEST_USER_PWD }}
+        # MP_JIRA_URL: ${{ secrets.MP_JIRA_URL }}
+        # MP_JIRA_PROJECT: ${{ secrets.MP_JIRA_PROJECT }}
       with:
+        build: bundle exec rake assets:precompile
+        start: bundle exec rails server -e development -p 5000 -d
         working-directory: ./test/system
         command: yarn run cy:run
         wait-on: 'http://localhost:5000'
         browser: chrome
-        headless: true
         quiet: true
         record: false
         install: false
-    - uses: actions/upload-artifact@v1
+    - uses: actions/upload-artifact@v4
       if: failure()
       with:
         name: cypress-screenshots

@@ -57,9 +57,9 @@ describe("My project", () => {
    cy.contains("a", "Details")
      .click();
    cy.refreshUntilVisible('[data-e2e="review-service-btn"]')
-   cy.get('[data-e2e="review-service-btn"]')
-     .should("be.visible")
-     .click();
+   cy.get('[data-e2e="review-service-btn"]').as("review-btn")
+     .should("be.visible");
+   cy.get("@review-btn").click();
    cy.location("href")
      .should("contain", "/opinion/new");
    cy.get("[data-rating-stars='service_opinion_service_rating']")

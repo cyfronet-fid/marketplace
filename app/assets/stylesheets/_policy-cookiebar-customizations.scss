@@ -1,0 +1,24 @@
+@import "variables";
+
+.cc-btn {
+  background-color: transparent !important;
+  border-radius: $btn-border-radius !important;
+  border: none;
+
+  &:hover {
+    background-color: $btn-primary-hover !important;
+  }
+}
+
+.cc-link {
+  text-decoration: none;
+  color: $palette-gradient-start !important;
+}
+
+.cc-compliance {
+  margin-left: 40px;
+}
+
+.cc-window {
+  background-color: $palette-end-opacity !important;
+}

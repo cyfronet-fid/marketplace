@@ -13,7 +13,8 @@ class ProjectItem::Create
     bundled_project_items = []
 
     ProjectItem.transaction do
-      unless @project_item.update(status: "created", status_type: :created)
+      status = @project_item.offer.orderable? ? "created" : "ready"
+      unless @project_item.update(status: status, status_type: status)
         rolled_back = true
         raise ActiveRecord::Rollback
       end

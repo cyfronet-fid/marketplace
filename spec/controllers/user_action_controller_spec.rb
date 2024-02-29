@@ -29,8 +29,8 @@ RSpec.describe UserActionController, type: :controller, end_user_backend: true d
     post :create, params: user_action_params
   end
 
-  it "sends a Probes (recommender) job only if user_actions_target is set to recommender" do
-    allow(Mp::Application.config).to receive(:user_actions_target).and_return("recommender")
+  it "sends a Probes (recommender_lib) job only if user_actions_target is set to recommender_lib" do
+    allow(Mp::Application.config).to receive(:user_actions_target).and_return("recommender_lib")
 
     expect(Jms::PublishJob).not_to receive(:perform_later)
     expect(Probes::ProbesJob).to receive(:perform_later)

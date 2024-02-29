@@ -33,13 +33,13 @@ module PresentableHelper
     parents.to_h { |parent| [parent.name, (parent.children & record.send(field)).map(&:name)] }
   end
 
-  def presentable_logo(object, classes = "align-self-center img-responsive", crop = [0, 0, 100, 67])
+  def presentable_logo(object, classes = "align-self-center img-responsive", resize = "100x67")
     if object.logo.attached? && object.logo.variable?
-      image_tag object.logo.variant(crop: crop), class: classes
+      image_tag object.logo.variant(resize: resize), class: classes
     elsif object.is_a?(Service)
-      image_pack_tag("service_logo.svg", crop: crop, class: classes)
+      image_tag("service_logo.svg", resize: resize, class: classes)
     else
-      image_pack_tag("provider_logo.svg", crop: crop, class: classes)
+      image_tag("provider_logo.svg", resize: resize, class: classes)
     end
   end
 

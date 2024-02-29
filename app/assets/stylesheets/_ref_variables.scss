@@ -1,0 +1,38 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+
+$font-family-sans-serif: "Inter", "Helvetica Neue", Arial, sans-serif;
+
+$font-size-base: 1rem;
+
+$font-weight-light: 100; // Ubuntu light
+$font-weight-normal: 300; // Ubuntu regular
+$font-weight-bold: 400; // Ubuntu medium
+$font-weight-bolder: 600; // Ubuntu bold
+
+$font-size-base: 1rem;
+
+$border-radius-default: 2px;
+
+$color-primary: #3540b6;
+$color-secondary: #3d4db6;
+$color-text: #233d4c;
+$color-1: #f9fcfe;
+$color-2: #1c313a;
+$color-3: #f8f9fa;
+$color-4: #52636a;
+$color-5: #f8f9fa;
+$color-6: #a6aeb1;
+$color-7: #666fd4;
+$color-8: #ced4da;
+$color-link: #3540b6;
+$color-white: #fff;
+
+$box-shadow-default: 0 2px 6px rgba(0, 0, 0, 0.13);
+
+$palette-gray-100: $color-text;
+$palette-gray-5: rgba($palette-gray-100, 0.05);
+$palette-gray-10: rgba($palette-gray-100, 0.1);
+$palette-gray-30: rgba($palette-gray-100, 0.3);
+$palette-gray-50: rgba($palette-gray-100, 0.5);
+$palette-gray-70: rgba($palette-gray-100, 0.7);
+$palette-gray-80: rgba($palette-gray-100, 0.8);

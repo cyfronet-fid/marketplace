@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "rails_helper"
-require "recommender/serialize_db"
+require "recommender_lib/serialize_db"
 
 describe RecommenderLib::SerializeDb, backend: true do
   it "properly serializes the database" do

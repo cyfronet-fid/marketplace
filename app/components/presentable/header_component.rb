@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class Presentable::HeaderComponent < ApplicationComponent
+  include ComparisonsHelper
+  include FavouriteHelper
   include PresentableHelper
   include Presentable::HeaderHelper
   include ServiceHelper
-  include ComparisonsHelper
-  include FavouriteHelper
 
   renders_one :buttons
 
@@ -32,7 +32,7 @@ class Presentable::HeaderComponent < ApplicationComponent
     @show_checkboxes = show_checkboxes
   end
 
-  def presentable_logo(object, classes = "align-self-center img-fluid", resize = [0, 0, 180, 120])
+  def presentable_logo(object, classes = "align-self-center img-fluid", resize = "180x120")
     super
   end
 end

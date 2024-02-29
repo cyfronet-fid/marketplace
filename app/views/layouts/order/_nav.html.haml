@@ -1,10 +1,10 @@
 %ul.nav.nav-fill.order-nav.mt-3
   - state = :back
   - wizard.step_names.each do |step_name|
-    - if step_for(step_name).visible?
-      :ruby
-        state = :disabled if state == :next
-        state = :next if state == :active
-        state = :active if step_name == step_key
+    - next unless step_for(step_name).visible?
+    :ruby
+      state = :disabled if state == :next
+      state = :next if state == :active
+      state = :active if step_name == step_key
 
     = order_nav_link(step_title(step_name), url_for([service, step_name]), state)

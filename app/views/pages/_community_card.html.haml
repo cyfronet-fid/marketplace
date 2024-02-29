@@ -2,7 +2,7 @@
   .carousel-box
     .row
       .col-4.text-center.pt-3
-        %a{ href: "#{item[:path]}", target: "_blank" }= image_pack_tag "#{item[:image]}"
+        %a{ href: "#{item[:path]}", target: "_blank" }= image_tag "#{item[:image]}"
       .col-8
         .pt-3
           %span.widget-header-theme= item[:title]

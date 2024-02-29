@@ -11,7 +11,7 @@ jobs:
           sudo sysctl -w vm.swappiness=1
           sudo sysctl -w fs.file-max=262144
           sudo sysctl -w vm.max_map_count=262144
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Start containers
         run: docker-compose -f docker-compose-x64.yml up -d
       - name: Install VIPS
@@ -19,9 +19,9 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v4
         with:
-          node-version: '16.13.0'
+          node-version: '20.11.1'
           check-latest: true
           cache: yarn
       - run: yarn
@@ -31,6 +31,7 @@ jobs:
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
         run: |
           bundle exec rake db:drop db:create db:migrate RAILS_ENV=test
+          bundle exec rake test:prepare
           bundle exec rspec -t manager_frontend
       - name: Containers logs
         if: failure()
