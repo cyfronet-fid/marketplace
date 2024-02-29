@@ -15,6 +15,9 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Changed
 - Help section available under `/user_documentation` instead of `/help` (@wujuu)
 
+### Fixed
+- Bundle view (@goreck888)
+
 ## [3.55.2] 2024-02-19
 
 ### Added
