@@ -8,7 +8,8 @@ class Backoffice::CataloguesController < Backoffice::ApplicationController
     @catalogues = policy_scope(Catalogue).with_attached_logo
   end
 
-  def show; end
+  def show
+  end
 
   def new
     @catalogue = Catalogue.new

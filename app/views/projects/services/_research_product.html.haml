@@ -18,7 +18,7 @@
       = link_to project_research_product_path(project, research_product), method: :delete,
         class: "projects-links unpin-link mt-1 ml-3 pl-4",
         type: "button", role: "button" do
-        = image_pack_tag "unpin.svg", alt: "Unpin"
+        = image_tag "unpin.svg", alt: "Unpin"
         %span Unpin
   - research_product.links.each do |link|
     #collapse-example.padding.collapse.links-list{ id: "#{research_product.id}" }

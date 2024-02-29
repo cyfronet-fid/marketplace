@@ -24,6 +24,7 @@ class Services::QuestionsController < ApplicationController
       if @question.valid? && verify_recaptcha(model: @question, attribute: :verified_recaptcha)
         Service::Question::Deliver.new(@question).call
         format.html { redirect_to service_path(@service) }
+        format.js { render js: "location.reload();" }
         flash[:notice] = "Your message was successfully sent"
       else
         format.js { render_modal_form }

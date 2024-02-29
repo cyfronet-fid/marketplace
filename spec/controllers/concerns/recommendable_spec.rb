@@ -82,7 +82,7 @@ RSpec.describe ApplicationController, type: :controller, backend: true do
     expect(transformer.call(category.slug)).to match_array([category.id])
   end
 
-  it "Should use simple recommender on unknown recommender host" do
+  it "Should use simple recommender_lib on unknown recommender_lib host" do
     allow(Mp::Application.config).to(receive(:recommender_host).and_return(nil))
     expect(Recommender::SimpleRecommender).to receive(:new).and_call_original
 

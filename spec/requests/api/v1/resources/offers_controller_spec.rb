@@ -344,9 +344,9 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
           run_test! do |response|
             data = JSON.parse(response.body)
             expect(data["error"]).to eq(
-                                       "The property '#/order_type' value \"lol\" did not match one of the following " +
-                                         "values: open_access, fully_open_access, order_required, other"
-                                     )
+              "The property '#/order_type' value \"lol\" did not match one of the following " +
+                "values: open_access, fully_open_access, order_required, other"
+            )
           end
         end
 
@@ -446,7 +446,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
             data = JSON.parse(response.body)
             expect(data["error"]).to eq(
               "The property '#/parameters/0' of type object did not match any of the required schemas"
-             )
+            )
           end
         end
 
