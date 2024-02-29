@@ -102,7 +102,7 @@ RSpec.feature "Providers in backoffice", manager_frontend: true do
       click_on "Marketing", match: :first
       expect(page).to have_content("Description")
       fill_in "Description", with: provider.description
-      page.attach_file("provider_logo", "#{Rails.root}/app/javascript/images/eosc-img.png")
+      page.attach_file("provider_logo", "#{Rails.root}/app/assets/images/eosc-img.png")
 
       click_on "Location", match: :first
       expect(page).to have_content("Street name and number")
@@ -167,7 +167,7 @@ RSpec.feature "Providers in backoffice", manager_frontend: true do
 
       visit edit_backoffice_provider_path(provider)
 
-      page.attach_file("provider_logo", "#{Rails.root}/app/javascript/images/eosc-img.png")
+      page.attach_file("provider_logo", "#{Rails.root}/app/assets/images/eosc-img.png")
 
       fill_in "provider_data_administrators_attributes_0_first_name", with: "John"
       fill_in "provider_data_administrators_attributes_0_last_name", with: "Doe"
@@ -194,7 +194,7 @@ RSpec.feature "Providers in backoffice", manager_frontend: true do
       stub_website_check(provider)
       fill_in "Website", with: provider.website
       fill_in "Description", with: provider.description
-      page.attach_file("provider_logo", "#{Rails.root}/app/javascript/images/eosc-img.png")
+      page.attach_file("provider_logo", "#{Rails.root}/app/assets/images/eosc-img.png")
       fill_in "Street name and number", with: provider.street_name_and_number
       fill_in "Postal code", with: provider.postal_code
       fill_in "City", with: provider.city
@@ -219,7 +219,7 @@ RSpec.feature "Providers in backoffice", manager_frontend: true do
       visit edit_backoffice_provider_path(provider)
 
       expect(page).to have_selector("input[value='777abc']")
-      page.attach_file("provider_logo", "#{Rails.root}/app/javascript/images/eosc-img.png")
+      page.attach_file("provider_logo", "#{Rails.root}/app/assets/images/eosc-img.png")
       fill_in "provider_sources_attributes_0_eid", with: "abc777"
       click_on "Update Provider"
       expect(page).to have_content("eosc_registry: abc777")

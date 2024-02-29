@@ -26,6 +26,7 @@ describe("Resources", () => {
       .should("contain", "/services/");
     cy.get('[data-e2e="access-service-btn"]')
       .click();
+    cy.reload();
     cy.location("href")
       .should("contain", `/services/${openAccessResource.toLocaleLowerCase()}/information`);
     cy.contains("a", "Pin to a project")

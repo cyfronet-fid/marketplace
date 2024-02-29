@@ -22,10 +22,10 @@ class Services::OffersController < Services::ApplicationController
 
     if @step.valid?
       save_in_session(@step)
-      redirect_to [@service, next_step_key]
+      redirect_to url_for([@service, next_step_key])
     else
       init_step_data
-      flash.now[:alert] = @step.error
+      flash[:alert] = @step.error
       render :show
     end
   end

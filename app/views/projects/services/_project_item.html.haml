@@ -3,7 +3,7 @@
   .float-right.status
     - if project_item.user_has_new_messages?
       %span.new-message
-        = image_pack_tag "ico_message.svg", class: "new-message-icon"
+        = image_tag "ico_message.svg", class: "new-message-icon"
         = _("You have a new message")
     - if project_item.closed?
       -# TODO: refactor dynamic translation
@@ -36,7 +36,7 @@
       .float-right.status
         - if child.user_has_new_messages?
           %span.new-message
-            = image_pack_tag "ico_message.svg", class: "new-message-icon"
+            = image_tag "ico_message.svg", class: "new-message-icon"
             = _("You have a new message")
         - if child.closed?
           -# TODO: refactor dynamic translation

@@ -50,7 +50,7 @@ namespace :rdt do
     end
 
     puts "Creating subcategories for service type"
-    yaml_hash["service_types"].each { |_, hash| create_category_with_children(hash) }
+    yaml_hash["service_types"].each_value { |hash| create_category_with_children(hash) }
   end
 
   def create_category_with_children(hash, parent = nil, ancestry_level = 0)
@@ -59,7 +59,7 @@ namespace :rdt do
     current = Vocabulary::ServiceCategory.find_or_initialize_by(eid: hash["eid"])
     current.update(name: hash["name"], parent: parent)
     if hash.key?("children")
-      hash["children"].each { |_c, c_hash| create_category_with_children(c_hash, current, ancestry_level + 1) }
+      hash["children"].each_value { |c_hash| create_category_with_children(c_hash, current, ancestry_level + 1) }
     end
   end
 

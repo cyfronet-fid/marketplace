@@ -4,12 +4,12 @@
   "description": "Integration tests",
   "main": "",
   "scripts": {
-    "cy:run": "TZ=Europe/Warsaw cypress run --browser chrome --headless --quiet --env grepUntagged=true",
-    "cy:run-jira-integration": "TZ=Europe/Warsaw cypress run --browser chrome --headless --quiet --env grepTags='@extended-test'",
-    "cy:run-provider-portal-integration": "TZ=Europe/Warsaw cypress run --config baseUrl=https://beta.marketplace.eosc-portal.eu/ --browser chrome --headless --quiet --env grepTags='@integration-PC-tests'",
-    "cy:run-debug": "DEBUG=cypress:* TZ=Europe/Warsaw cypress run --browser chrome --headless --quiet",
+    "cy:run": "TZ=Europe/Warsaw cypress run --browser chrome --quiet --env grepUntagged=true",
+    "cy:run-jira-integration": "TZ=Europe/Warsaw cypress run --browser chrome --quiet --env grepTags='@extended-test'",
+    "cy:run-provider-portal-integration": "TZ=Europe/Warsaw cypress run --config baseUrl=https://beta.marketplace.eosc-portal.eu/ --browser chrome --quiet --env grepTags='@integration-PC-tests'",
+    "cy:run-debug": "DEBUG=cypress:* TZ=Europe/Warsaw cypress run --browser chrome --quiet",
     "cy:run-browser": "TZ=Europe/Warsaw cypress run --browser chrome --quiet",
-    "cy:run-all-regression-tests": "TZ=Europe/Warsaw cypress run --browser chrome --headless --quiet"
+    "cy:run-all-regression-tests": "TZ=Europe/Warsaw cypress run --browser chrome --quiet"
   },
   "author": "",
   "license": "ISC",

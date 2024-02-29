@@ -45,5 +45,4 @@
           action: "click->form#addField",
           value: "publicContacts",
           fields: f.fields_for(:public_contacts, PublicContact.new,
-          child_index: "new_field") { |public_contact_form| render "backoffice/common_parts/form/public_contact_fields",
-          public_contact_form: public_contact_form, object: catalogue, provider_form: false } }
+          child_index: "new_field")  { |pcf| render_public_contact(pcf, catalogue) } }

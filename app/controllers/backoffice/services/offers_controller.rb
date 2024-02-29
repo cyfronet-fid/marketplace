@@ -99,7 +99,7 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
   end
 
   def default_parameters(category)
-    config = YAML.load_file("config/offer_parameters.yml")
+    config = YAML.load_file("config/offer_parameters.yml", aliases: true)
     category && config&.key?(category) ? config[category].flatten : {}
   end
 

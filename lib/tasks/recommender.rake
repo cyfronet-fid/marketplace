@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "recommender/serialize_db"
+require "recommender_lib/serialize_db"
 
 namespace :recommender do
-  desc "serialize database for recommender system"
+  desc "serialize database for recommender_lib system"
   task serialize_db: :environment do
     puts "Generating database dump..."
     serialized_db = RecommenderLib::SerializeDb.new.call.to_json

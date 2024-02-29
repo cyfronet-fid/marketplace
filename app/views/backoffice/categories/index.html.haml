@@ -17,7 +17,7 @@
       %li.list-group-item{ class: "#{"subcategory" if category.ancestry_depth.positive?}",
       style: style_indentation_variables(category) }
         = link_to backoffice_category_path(record.last) do
-          = image_tag category.logo.variant(crop: [0,0, 32, 32]) if category.logo.attached? && category.logo.variable?
+          = image_tag category.logo.variant(resize: "32x32") if category.logo.attached? && category.logo.variable?
           = record.first
         .buttons-box
           - if policy([:backoffice, category]).destroy?

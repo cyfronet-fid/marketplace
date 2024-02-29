@@ -12,10 +12,12 @@ gem "nori"
 
 gem "uglifier", ">= 1.3.0"
 gem "sprockets-rails"
-gem "webpacker", "~> 5.4.4"
+gem "jsbundling-rails"
+gem "cssbundling-rails"
 gem "view_component", "~> 2.83"
 gem "haml-rails"
 gem "turbo-rails"
+gem "stimulus-rails"
 gem "render_async"
 
 gem "bootsnap", ">= 1.4.2", require: false
@@ -54,6 +56,7 @@ gem "devise"
 gem "omniauth"
 gem "omniauth_openid_connect"
 gem "omniauth-rails_csrf_protection"
+gem "rack-cors"
 gem "pundit", "~> 2.0"
 gem "role_model"
 gem "recaptcha", require: "recaptcha/rails"
@@ -75,7 +78,6 @@ gem "savon", "~> 2.15"
 
 gem "google-apis-analyticsreporting_v4", "~> 0.5"
 
-gem "redis-rails"
 gem "sidekiq"
 gem "sidekiq-limit_fetch", "~>4.4"
 
@@ -103,7 +105,7 @@ group :development do
   gem "web-console", "~> 4.2"
   gem "listen"
   gem "spring"
-  gem "spring-watcher-listen", "~> 2.0.0"
+  gem "spring-watcher-listen", "~> 2.1"
   gem "spring-commands-rspec"
   gem "prettier", require: false
   gem "overcommit", require: false
@@ -138,4 +140,5 @@ gem "puma_worker_killer"
 gem "timeout", "~>0.4"
 
 # Use Redis for Action Cable
-gem "redis", "~> 4.0"
+gem "redis", "~> 5.0"
+gem "redis-actionpack", "~> 5.3"
