@@ -5,9 +5,8 @@ require "active_support/core_ext/integer/time"
 Rails.application.configure do
   # Allows to receive messages from other host (JIRA)
   config.hosts = []
-  
-  # Verifies that versions and hashed value of the package contents in the project's package.json
-  config.webpacker.check_yarn_integrity = true
+
+  config.assets.compile = true
 
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -22,26 +21,25 @@ Rails.application.configure do
   # Show full error reports.
   config.consider_all_requests_local = true
 
+  config.public_file_server.enabled = true
+  config.public_file_server.headers = {
+    "Cache-Control" => "public, max-age=#{2.days.to_i}"
+  }
+  config.cache_store = :memory_store
+
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
   if Rails.root.join("tmp", "caching-dev.txt").exist?
     config.action_controller.perform_caching = true
     config.cache_classes = true
     config.action_controller.enable_fragment_cache_logging = true
-
-    config.cache_store = :memory_store
-    config.public_file_server.headers = {
-      "Cache-Control" => "public, max-age=#{2.days.to_i}"
-    }
   else
     config.action_controller.perform_caching = false
     config.cache_classes = false
-    config.cache_store = :memory_store
   end
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
-  config.active_storage.service = :local
-  config.active_storage.service = :s3 if ENV["S3_STORAGE"] == "true"
+  config.active_storage.service = ENV["S3_STORAGE"] == "true" ? :s3 : :local
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false

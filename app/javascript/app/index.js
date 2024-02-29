@@ -1,13 +1,13 @@
-import "app/sort_filter";
-import initBadgeState from "app/badge";
-import initSorting from "app/sort_filter";
-import initFlash from "app/flash";
-import initChoices from "app/choices";
-import initCookiesPolicy from "app/cookies_policy";
+import "./sort_filter";
+import initBadgeState from "./badge";
+import initSorting from "./sort_filter";
+import initFlash from "./flash";
+import initChoices from "./choices";
+import initCookiesPolicy from "./cookies_policy";
 import "bootstrap/dist/js/bootstrap";
-import "stylesheets/application";
-import "app/nav";
-import initMasonry from "app/masonry";
+import "./nav";
+
+import jQuery from "jquery";
 
 require("@rails/ujs").start();
 require("turbolinks").start();
@@ -20,24 +20,22 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-free/js/all";
 import "@fortawesome/fontawesome-free/css/all.css";
 import "bootstrap-datepicker";
+import Cookies from "js-cookie/src/js.cookie";
 import Shepherd from "shepherd.js";
+
 window.Shepherd = Shepherd;
 
-import Cookies from "js-cookie/src/js.cookie";
+window.$ = window.jQuery = jQuery;
+
 window.Cookies = Cookies;
 
 // :TODO: for now import all fonts, so ux people can work without problems, optimize later
 library.add(fas, far);
 
-import { Application } from "stimulus";
-import { definitionsFromContext } from "stimulus/webpack-helpers";
 import initProbes from "./user_action";
 import assignTabIdToWindow from "./tabs";
 import { handleTourFor } from "./tours";
-
-const application = Application.start();
-const context = require.context("./controllers", true, /.js$/);
-application.load(definitionsFromContext(context));
+import initMasonry from "./masonry";
 
 document.addEventListener("turbolinks:before-render", function (event) {
   dom.i2svg({
@@ -45,6 +43,7 @@ document.addEventListener("turbolinks:before-render", function (event) {
   });
   initSorting(event.data.newBody);
   dom.watch();
+  console.log("ELUWINKA");
 });
 
 document.addEventListener("turbolinks:load", async function (event) {
@@ -82,14 +81,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
 window.addEventListener("beforeunload", () => {
   window.sessionStorage.tabId = window.tabId;
   return null;
-});
-
-window.addEventListener("pageshow", (event) => {
-  application.controllers.forEach((controller) => {
-    if (typeof controller.pageShow === "function") {
-      controller.pageShow(event.persisted);
-    }
-  });
 });
 
 require("trix");

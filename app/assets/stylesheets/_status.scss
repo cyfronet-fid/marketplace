@@ -1,0 +1,48 @@
+// scss-lint:disable all
+
+.status-default {
+  color: $alert-bg;
+}
+
+.status-created {
+  color: $palette-yellow;
+}
+
+.status-registered,
+.status-approved {
+  color: $palette-orange;
+}
+
+.status-waiting_for_response {
+  color: $palette-yellow;
+}
+
+.status-ready {
+  color: $green;
+}
+
+.status-rejected {
+  color: $red;
+}
+
+.status-bg-registered,
+.status-bg-approved,
+.status-bg-waiting_for_response,
+.status-bg-progress,
+.status-bg-created {
+  background: $status-bg-registered;
+  color: $custom-4;
+}
+
+.status-bg-ready {
+  background: $status-bg-ready;
+}
+
+.status-bg-rejected {
+  background: $status-bg-rejected;
+}
+
+.status-bg-closed {
+  background: $white;
+}
+// scss-lint:enable all

@@ -1,0 +1,57 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap");
+
+@font-face {
+  font-family: "Ubuntu";
+  src: url("ubuntu-light-webfont.ttf") format("truetype");
+  font-weight: $font-weight-light;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Ubuntu";
+  src: url("ubuntu-lightitalic-webfont.ttf") format("truetype");
+  font-weight: $font-weight-light;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Ubuntu";
+  src: url("ubuntu-regular-webfont.ttf") format("truetype");
+  font-weight: $font-weight-normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Ubuntu";
+  src: url("ubuntu-italic-webfont.ttf") format("truetype");
+  font-weight: $font-weight-normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Ubuntu";
+  src: url("ubuntu-medium-webfont.ttf") format("truetype");
+  font-weight: $font-weight-bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Ubuntu";
+  src: url("ubuntu-mediumitalic-webfont.ttf") format("truetype");
+  font-weight: $font-weight-bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Ubuntu";
+  src: url("ubuntu-bold-webfont.ttf") format("truetype");
+  font-weight: $font-weight-bolder;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Ubuntu";
+  src: url("ubuntu-bolditalic-webfont.ttf") format("truetype");
+  font-weight: $font-weight-bolder;
+  font-style: italic;
+}

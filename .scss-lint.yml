@@ -3,6 +3,12 @@ scss_files: 'app/**/*.scss'
 exclude: 'app/assets/stylesheets/plugins/**'
 
 linters:
+  StringQuotes:
+    enabled: false
+
+  SpaceAfterPropertyColon:
+    enabled: false
+
   BorderZero:
     enabled: false
 

@@ -93,7 +93,7 @@ class Services::SummariesController < Services::ApplicationController
       client_id: "marketplace"
     }
 
-    if %w[all recommender].include? Mp::Application.config.user_actions_target
+    if %w[all recommender_lib].include? Mp::Application.config.user_actions_target
       Probes::ProbesJob.perform_later(request_body.to_json)
     end
 

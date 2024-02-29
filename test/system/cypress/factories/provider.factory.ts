@@ -41,8 +41,10 @@ export const ProvidersFactory = {
 };
 
 export class IProvidersExtended extends IProviders {
+  basicHostingLegalEntity:string;
   marketingMultimedia: string;
   classificationScientificDomains: string[];
+  classificationStructureTypes:string[];
   locationRegion:string;
   contactPhone:string;
   contactPosition:string;
@@ -52,11 +54,9 @@ export class IProvidersExtended extends IProviders {
   publicContactsPosition:string;
   maturityProviderLifeCycleStatus:string;
   maturityCertifications:string;
-  otherHostingLegalEntity:string;
-  otherParticipatingCountries:string[];
-  otherAffiliations:string;
-  otherNetworks:string[];
-  otherStructureTypes:string[];
+  dependenciesParticipatingCountries:string[];
+  dependenciesAffiliations:string;
+  dependenciesNetworks:string[];
   otherESFRIDomains:string[];
   otherESFRIType:string;
   otherMerilScientificDomains:string[];
@@ -67,6 +67,7 @@ export class IProvidersExtended extends IProviders {
 
 export const ProvidersFactoryExtended = {
   create: (args: {[field: string]: string} = {}): IProvidersExtended => ({
+      basicHostingLegalEntity:"100 Percent IT",
       basicName: Utilities.getUUID4(),
       basicAbbreviation: Utilities.getUUID4(),
       basicWebpage_url: 'http://example.org/',
@@ -74,34 +75,33 @@ export const ProvidersFactoryExtended = {
       marketingMultimedia: 'http://example.org/',
       classificationScientificDomains: ["Agricultural Sciences ⇒ Agricultural Biotechnology"],
       classificationTag: Utilities.getRandomString(8).toLowerCase(),
-      locationStreet:Utilities.getRandomString(8).toLowerCase(),
-      locationPostCode:Utilities.getRandomString(8).toLowerCase(),
-      locationCity:Utilities.getRandomString(8).toLowerCase(),
-      locationRegion:Utilities.getRandomString(8).toLowerCase(),
-      locationCountry:"Poland",
-      contactFirstname:Utilities.getRandomString(8).toLowerCase(),
-      contactLastname:Utilities.getRandomString(8).toLowerCase(),
-      contactEmail:Utilities.getRandomEmail(),
+      classificationStructureTypes: ["Distributed"],
+      locationStreet: Utilities.getRandomString(8).toLowerCase(),
+      locationPostCode: Utilities.getRandomString(8).toLowerCase(),
+      locationCity: Utilities.getRandomString(8).toLowerCase(),
+      locationRegion: Utilities.getRandomString(8).toLowerCase(),
+      locationCountry: "Poland",
+      contactFirstname: Utilities.getRandomString(8).toLowerCase(),
+      contactLastname: Utilities.getRandomString(8).toLowerCase(),
+      contactEmail: Utilities.getRandomEmail(),
       contactPhone: Utilities.getRandomString(),
       contactPosition: Utilities.getRandomString(),
-      publicContactsFirstName:Utilities.getRandomString(8).toLowerCase(),
-      publicContactsLastName:Utilities.getRandomString(8).toLowerCase(),
-      publicContactsEmail:Utilities.getRandomEmail(),
+      publicContactsFirstName: Utilities.getRandomString(8).toLowerCase(),
+      publicContactsLastName: Utilities.getRandomString(8).toLowerCase(),
+      publicContactsEmail: Utilities.getRandomEmail(),
       publicContactsPhone: Utilities.getRandomString(),
       publicContactsPosition: Utilities.getRandomString(),
       maturityProviderLifeCycleStatus: "Operational",
-      maturityCertifications:Utilities.getRandomString(),
-      otherHostingLegalEntity:Utilities.getRandomString(),
-      otherParticipatingCountries: ["Poland"],
-      otherAffiliations: Utilities.getRandomString(),
-      otherNetworks:["AErosol Robotic NETwork (AERONET)"],
-      otherStructureTypes:["Distributed"],
+      maturityCertifications: Utilities.getRandomString(),
+      dependenciesParticipatingCountries: ["Poland"],
+      dependenciesAffiliations: Utilities.getRandomString(),
+      dependenciesNetworks: ["AErosol Robotic NETwork (AERONET)"],
       otherESFRIDomains: ["Energy"],
       otherESFRIType: "Landmark",
-      otherMerilScientificDomains:["Biological & Medical Sciences ⇒ Animal Facilities"],
+      otherMerilScientificDomains: ["Biological & Medical Sciences ⇒ Animal Facilities"],
       otherAreasOfActivity: ["Basic Research"],
-      otherSocietalGrandChallenges:["Transport"],
-      otherNationalRoadmaps:Utilities.getRandomString(),
+      otherSocietalGrandChallenges: ["Transport"],
+      otherNationalRoadmaps: Utilities.getRandomString(),
       ...args
   })
 };
