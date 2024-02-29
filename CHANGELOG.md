@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
+## [3.57.0-milestone]
+
+### Security
+- Update ruby to 3.3.0 and rails to 7.3.1.4 (@goreck888)
+- Update ruby gems (@goreck888)
+
 ## [3.56.2]
 
 ### Fixed
@@ -27,7 +33,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Changed
 - New project form fields validations (@maria-j-k)
-
 
 ## [3.55.3] 2024-02-21
 

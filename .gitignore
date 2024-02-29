@@ -46,3 +46,5 @@ yarn-debug.log*
 /.idea
 /.env
 /.run/*
+/app/assets/builds/*
+!/app/assets/builds/.keep

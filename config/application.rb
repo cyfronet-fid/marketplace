@@ -30,6 +30,8 @@ module Mp
 
     config.action_dispatch.return_only_request_media_type_on_content_type = false
     config.active_storage.multiple_file_field_include_hidden = true
+    config.active_storage.variant_processor = :mini_magick
+    config.active_support.cache_format_version = 7.0
     config.active_support.disable_to_s_conversion = true
 
     config.autoload_lib(ignore: %w[assets tasks])

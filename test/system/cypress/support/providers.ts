@@ -71,6 +71,10 @@ Cypress.Commands.add("fillFormCreateProvider", (provider: IProvidersExtended, lo
       .type(provider.basicName);
   }
 
+  if (provider.basicHostingLegalEntity) {
+    selectItemSingleChoice(provider.basicHostingLegalEntity, ".provider_hosting_legal_entity");
+  }
+
   if (provider.basicWebpage_url) {
     cy.get("#provider_website")
       .clear({ force: true })
@@ -101,9 +105,6 @@ Cypress.Commands.add("fillFormCreateProvider", (provider: IProvidersExtended, lo
 
   if (provider.classificationScientificDomains) {
     cy.get("#classification-header").click();
-  }
-
-  if (provider.classificationScientificDomains) {
     selectItemsMultipleChoice(provider.classificationScientificDomains, ".provider_scientific_domains");
   }
 
@@ -111,6 +112,10 @@ Cypress.Commands.add("fillFormCreateProvider", (provider: IProvidersExtended, lo
     cy.get("#provider_tag_list_0")
       .clear()
       .type(provider.classificationTag);
+  }
+
+  if (provider.classificationStructureTypes) {
+    selectItemsMultipleChoice(provider.classificationStructureTypes, ".provider_structure_types");
   }
 
   if (provider.locationStreet) {
@@ -214,10 +219,7 @@ Cypress.Commands.add("fillFormCreateProvider", (provider: IProvidersExtended, lo
 
   if (provider.maturityProviderLifeCycleStatus) {
     cy.get("#maturity-header")
-    .click();
-  }
-
-  if (provider.maturityProviderLifeCycleStatus) {
+      .click();
     selectItemSingleChoice(provider.maturityProviderLifeCycleStatus, ".provider_provider_life_cycle_status");
   }
 
@@ -227,36 +229,25 @@ Cypress.Commands.add("fillFormCreateProvider", (provider: IProvidersExtended, lo
       .type(provider.maturityCertifications);
   }
 
-  if (provider.otherHostingLegalEntity) {
-    cy.get("#other-header")
-    .click();
+  if (provider.dependenciesParticipatingCountries) {
+    cy.get("#dependencies-header")
+      .click();
+    selectItemsMultipleChoice(provider.dependenciesParticipatingCountries, ".provider_participating_countries");
   }
 
-  if (provider.otherHostingLegalEntity) {
-    cy.get("#provider_hosting_legal_entity")
-      .clear({ force: true })
-      .type(provider.otherHostingLegalEntity);
-  }
-
-  if (provider.otherParticipatingCountries) {
-    selectItemsMultipleChoice(provider.otherParticipatingCountries, ".provider_participating_countries");
-  }
-
-  if (provider.otherAffiliations) {
+  if (provider.dependenciesAffiliations) {
     cy.get("#provider_affiliations_0")
       .clear({ force: true })
-      .type(provider.otherAffiliations);
+      .type(provider.dependenciesAffiliations);
   }
 
-  if (provider.otherNetworks) {
-    selectItemsMultipleChoice(provider.otherNetworks, ".provider_networks");
-  }
-
-  if (provider.otherStructureTypes) {
-    selectItemsMultipleChoice(provider.otherStructureTypes, ".provider_structure_types");
+  if (provider.dependenciesNetworks) {
+    selectItemsMultipleChoice(provider.dependenciesNetworks, ".provider_networks");
   }
 
   if (provider.otherESFRIDomains) {
+    cy.get("#other-header")
+      .click();
     selectItemsMultipleChoice(provider.otherESFRIDomains, ".provider_esfri_domains");
   }
 
@@ -330,7 +321,6 @@ Cypress.Commands.add("hasProviderDetails", () => {
 
 Cypress.Commands.add("hasProviderAbout", () => {
   const providerAbout = [
-   "Provider coverage",
    "Classification",
    "Multimedia",
    "Address",

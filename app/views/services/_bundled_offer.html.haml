@@ -3,10 +3,10 @@
     .card-body.d-flex.flex-row
       - if offer.service.logo.attached? && offer.service.logo.variable?
         .bundle-offer-pic.p-2
-          = image_tag offer.service.logo.variant(crop: [0, 0, 84, 84])
+          = image_tag offer.service.logo.variant(resize: "84x84")
       - else
         .bundle-offer-pic.p-2
-          = image_pack_tag("eosc-img.png")
+          = image_tag("eosc-img.png")
       .bundle-offer-desc.p-2
         %h4.card-title
           = offer.name
