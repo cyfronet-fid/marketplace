@@ -25,7 +25,7 @@
         {
           "type": "template",
           "name": "layouts/application",
-          "line": 30,
+          "line": 32,
           "file": "app/views/layouts/application.html.haml",
           "rendered": {
             "name": "layouts/_recommendation",
@@ -51,7 +51,7 @@
       "check_name": "LinkToHref",
       "message": "Potentially unsafe model attribute in `link_to` href",
       "file": "app/views/catalogues/show.html.haml",
-      "line": 161,
+      "line": 163,
       "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
       "code": "link_to(\"Website\", Catalogue.with_attached_logo.friendly.find(params[:id]).website, :target => \"_blank\", :class => \"right-panel-button website\")",
       "render_path": [
@@ -75,6 +75,25 @@
       "confidence": "Weak",
       "cwe_id": [
         79
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Unmaintained Dependency",
+      "warning_code": 123,
+      "fingerprint": "40be17ee84017c91503dab23873e24bdd71665ab665bf6f351cfc09ff83e6582",
+      "check_name": "EOLRuby",
+      "message": "Support for Ruby 3.0.3 ends on 2024-03-31",
+      "file": ".ruby-version",
+      "line": 1,
+      "link": "https://brakemanscanner.org/docs/warning_types/unmaintained_dependency/",
+      "code": null,
+      "render_path": null,
+      "location": null,
+      "user_input": null,
+      "confidence": "Medium",
+      "cwe_id": [
+        1104
       ],
       "note": ""
     },
@@ -122,7 +141,7 @@
         {
           "type": "template",
           "name": "layouts/application",
-          "line": 30,
+          "line": 32,
           "file": "app/views/layouts/application.html.haml",
           "rendered": {
             "name": "layouts/_recommendation",
@@ -135,40 +154,6 @@
         "template": "layouts/_recommendation"
       },
       "user_input": "cookies[:lastPageId]",
-      "confidence": "Weak",
-      "cwe_id": [
-        79
-      ],
-      "note": ""
-    },
-    {
-      "warning_type": "Cross-Site Scripting",
-      "warning_code": 4,
-      "fingerprint": "5b3cb3cbe7983c26543e3ecd5c2f9cdb0d8a574009b81ecacae1d448b51a9245",
-      "check_name": "LinkToHref",
-      "message": "Potentially unsafe model attribute in `link_to` href",
-      "file": "app/views/catalogues/show.html.haml",
-      "line": 10,
-      "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
-      "code": "link_to(Catalogue.friendly.find(params[:id]).website, Catalogue.friendly.find(params[:id]).website, :target => \"_blank\")",
-      "render_path": [
-        {
-          "type": "controller",
-          "class": "CataloguesController",
-          "method": "show",
-          "line": 6,
-          "file": "app/controllers/catalogues_controller.rb",
-          "rendered": {
-            "name": "catalogues/show",
-            "file": "app/views/catalogues/show.html.haml"
-          }
-        }
-      ],
-      "location": {
-        "type": "template",
-        "template": "catalogues/show"
-      },
-      "user_input": "Catalogue.friendly.find(params[:id]).website",
       "confidence": "Weak",
       "cwe_id": [
         79
@@ -214,25 +199,6 @@
       "confidence": "Medium",
       "cwe_id": [
         89
-      ],
-      "note": ""
-    },
-    {
-      "warning_type": "Unmaintained Dependency",
-      "warning_code": 123,
-      "fingerprint": "715ee6d743a8af33c7b930d728708ce19c765fb40e2ad9d2b974db04d92dc7d1",
-      "check_name": "EOLRuby",
-      "message": "Support for Ruby 3.0.3 ends on 2024-03-31",
-      "file": ".ruby-version",
-      "line": 1,
-      "link": "https://brakemanscanner.org/docs/warning_types/unmaintained_dependency/",
-      "code": null,
-      "render_path": null,
-      "location": null,
-      "user_input": null,
-      "confidence": "Weak",
-      "cwe_id": [
-        1104
       ],
       "note": ""
     },
@@ -435,7 +401,7 @@
         {
           "type": "template",
           "name": "layouts/application",
-          "line": 30,
+          "line": 32,
           "file": "app/views/layouts/application.html.haml",
           "rendered": {
             "name": "layouts/_recommendation",
@@ -517,42 +483,8 @@
         915
       ],
       "note": ""
-    },
-    {
-      "warning_type": "Cross-Site Scripting",
-      "warning_code": 4,
-      "fingerprint": "fef1a486634fa350b87d5fd952cc7995d49fcb43c4db0faef8a2791a8012b515",
-      "check_name": "LinkToHref",
-      "message": "Potentially unsafe model attribute in `link_to` href",
-      "file": "app/views/catalogues/show.html.haml",
-      "line": 12,
-      "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
-      "code": "link_to(\"Open website\", Catalogue.friendly.find(params[:id]).website, :target => \"_blank\", :class => \"btn btn-primary text-white rounded-pill\")",
-      "render_path": [
-        {
-          "type": "controller",
-          "class": "CataloguesController",
-          "method": "show",
-          "line": 6,
-          "file": "app/controllers/catalogues_controller.rb",
-          "rendered": {
-            "name": "catalogues/show",
-            "file": "app/views/catalogues/show.html.haml"
-          }
-        }
-      ],
-      "location": {
-        "type": "template",
-        "template": "catalogues/show"
-      },
-      "user_input": "Catalogue.friendly.find(params[:id]).website",
-      "confidence": "Weak",
-      "cwe_id": [
-        79
-      ],
-      "note": ""
     }
   ],
-  "updated": "2024-02-15 15:29:15 +0100",
-  "brakeman_version": "6.1.1"
+  "updated": "2024-03-10 23:06:42 +0100",
+  "brakeman_version": "6.1.2"
 }
