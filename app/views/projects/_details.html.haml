@@ -89,17 +89,19 @@
           = _("Collaboration countries")
         %dd.mb-3= project.countries_of_partnership&.join(", ")
 
-%h3.border-bottom.mt-4.mb-3
-  = _("Usage")
+- if project.reason_for_access? || project.additional_information?
+  %h3.border-bottom.mt-4.mb-3
+    = _("Usage")
 
-.row.pin-details
-  .col.mt-2
-    %dl
-      %dt.mb-3
-        = _("Reason to request access to the EOSC services")
-      %dd= project.reason_for_access
+  .row.pin-details
+    .col.mt-2
+      %dl
+        - if project.reason_for_access?
+          %dt.mb-3
+            = _("Reason to request access to the EOSC resources")
+          %dd= project.reason_for_access
 
-      - if project.additional_information?
-        %dt.mt-4.mb-2
-          = _("Additional information")
-        %dd= project.additional_information
+        - if project.additional_information?
+          %dt.mt-4.mb-2
+            = _("Additional information")
+          %dd= project.additional_information
