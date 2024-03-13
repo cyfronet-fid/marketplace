@@ -10,7 +10,6 @@ RSpec.describe Project, backend: true do
   it { should belong_to(:user) }
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:customer_typology) }
-  it { should validate_presence_of(:reason_for_access) }
   it { should validate_presence_of(:email) }
   it { should have_many(:project_items) }
   it { should validate_presence_of(:status) }
