@@ -511,7 +511,7 @@ RSpec.feature "Service ordering", end_user_frontend: true do
         fill_in "Email", with: "john@doe.com"
         fill_in "Organization", with: "Home corp."
         fill_in "Webpage", with: "http://home.corp.com"
-        fill_in "Reason to request access to the EOSC services", with: "Some reason"
+        fill_in "Reason to request access to the EOSC resources", with: "Some reason"
         select "Non-European", from: "Origin country"
       end
       click_on "Create new project"
@@ -562,7 +562,7 @@ RSpec.feature "Service ordering", end_user_frontend: true do
       click_on "Add new project"
       within("#ajax-modal") do
         fill_in "Project name", with: "New project"
-        fill_in "Reason to request access to the EOSC services", with: "To pass test"
+        fill_in "Reason to request access to the EOSC resources", with: "To pass test"
         within ".project_scientific_domains" do
           find("label", text: "Scientific domains").click
           find("div", class: "choices__item", text: scientific_domain.name).click
