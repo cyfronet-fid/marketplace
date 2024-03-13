@@ -47,7 +47,7 @@ class Project < ApplicationRecord
               message: "Project name need to be unique"
             }
   validates :email, email: true, presence: true
-  validates :reason_for_access, presence: true
+
   validates :country_of_origin, presence: true, if: :single_user_or_private_company?, inclusion: { in: Country.all }
   validates :customer_typology, presence: true
 
