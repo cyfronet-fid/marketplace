@@ -1,0 +1,12 @@
+%div{ "data-raid-project-target": "alternativeTitle" }
+  .contact 
+    = alternative_title_f.hidden_field :id
+    = alternative_title_f.input :text, label: 'Alternative Title'
+    = alternative_title_f.input :language
+    = alternative_title_f.input :start_date, as: :date, html5: true
+    = alternative_title_f.input :end_date, as: :date, html5: true
+
+    = alternative_title_f.hidden_field :_destroy, "data-raid-project-target": "destroy"
+    .text-right
+      = link_to _("Delete title"), "#", id: "alternative-title-delete-#{alternative_title_f.index}",
+      class: "btn-sm disablable btn-danger", "data-action": "click->raid-project#removeField"

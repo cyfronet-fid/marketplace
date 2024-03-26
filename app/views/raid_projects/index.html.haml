@@ -1,0 +1,15 @@
+
+%h1 RAID Projects
+%table
+  %thead
+    %tr
+      %th Title
+      %th{colspan: "3"}
+  %tbody
+    - @raid_projects.each do |project|
+      %tr
+        %td= project.main_title.text
+      %tr  
+        %td= link_to 'Show', project
+%br/
+= link_to 'New Project', new_raid_project_path
