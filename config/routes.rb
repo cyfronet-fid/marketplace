@@ -198,7 +198,7 @@ Rails.application.routes.draw do
     service = Service.where(status: %i[published unverified errored]).order(:name).first
     service_path(service, params)
   end
-
+  resources :raid_projects
   get "errors/not_found"
   get "errors/unprocessable"
   get "errors/internal_server_error"

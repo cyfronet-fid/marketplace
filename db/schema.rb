@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_02_15_125231) do
+ActiveRecord::Schema.define(version: 2024_03_22_101306) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -634,6 +634,15 @@ ActiveRecord::Schema.define(version: 2024_02_15_125231) do
     t.string "ppid"
   end
 
+  create_table "raid_projects", force: :cascade do |t|
+    t.date "start_date", null: false
+    t.date "end_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_raid_projects_on_user_id"
+  end
+
   create_table "research_products", force: :cascade do |t|
     t.string "resource_id", null: false
     t.string "resource_type", null: false
@@ -890,6 +899,19 @@ ActiveRecord::Schema.define(version: 2024_02_15_125231) do
     t.index ["ancestry"], name: "index_target_users_on_ancestry"
   end
 
+  create_table "titles", force: :cascade do |t|
+    t.string "text", null: false
+    t.string "language"
+    t.string "type", null: false
+    t.date "start_date", null: false
+    t.date "end_date"
+    t.bigint "raid_project_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "title_type"
+    t.index ["raid_project_id"], name: "index_titles_on_raid_project_id"
+  end
+
   create_table "tour_feedbacks", force: :cascade do |t|
     t.string "controller_name"
     t.string "action_name"
@@ -1017,6 +1039,7 @@ ActiveRecord::Schema.define(version: 2024_02_15_125231) do
   add_foreign_key "provider_vocabularies", "providers"
   add_foreign_key "provider_vocabularies", "vocabularies"
   add_foreign_key "providers", "provider_sources", column: "upstream_id", on_delete: :nullify
+  add_foreign_key "raid_projects", "users"
   add_foreign_key "service_alternative_identifiers", "alternative_identifiers"
   add_foreign_key "service_alternative_identifiers", "services"
   add_foreign_key "service_catalogues", "catalogues"
@@ -1038,6 +1061,7 @@ ActiveRecord::Schema.define(version: 2024_02_15_125231) do
   add_foreign_key "services", "providers"
   add_foreign_key "services", "providers", column: "resource_organisation_id"
   add_foreign_key "services", "service_sources", column: "upstream_id", on_delete: :nullify
+  add_foreign_key "titles", "raid_projects"
   add_foreign_key "tour_feedbacks", "users"
   add_foreign_key "tour_histories", "users"
   add_foreign_key "user_categories", "categories"

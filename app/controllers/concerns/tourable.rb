@@ -35,7 +35,6 @@ module Tourable
 
   def finished_tours(controller = controller_name, action = action_name)
     finished = []
-
     if current_user.present?
       finished |=
         TourHistory.where(user_id: current_user.id, controller_name: controller, action_name: action).map(&:tour_name)
