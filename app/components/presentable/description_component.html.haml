@@ -28,6 +28,4 @@
             preview: @preview
         = render Presentable::LinksComponent.new(object: @object, preview: @preview)
       = additional_backoffice_info
-      - if @object.respond_to?(:resource_organisation)
-        = render Presentable::ProviderInfoComponent.new(base: @object, preview: @preview)
-
+      = render Presentable::ProviderInfoComponent.new(base: @object, preview: @preview) if @object.respond_to?(:resource_organisation)

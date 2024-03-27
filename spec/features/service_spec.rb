@@ -73,7 +73,7 @@ RSpec.feature "Service browsing", end_user_frontend: true do
 
     scenario "shows related services" do
       service, related = create_list(:service, 2)
-      ServiceRelationship.create!(source: service, target: related)
+      ServiceRelationship.create!(source: service, target: related, type: "ServiceRelationship")
 
       visit service_path(service)
 

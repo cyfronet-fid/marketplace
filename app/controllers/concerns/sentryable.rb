@@ -12,6 +12,6 @@ module Sentryable
   end
 
   def sentry_enabled?
-    Rails.env.production? && ENV["SENTRY_DSN"]
+    Rails.env.production? && ENV.fetch("SENTRY_DSN", nil)
   end
 end

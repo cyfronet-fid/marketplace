@@ -1,18 +1,17 @@
 %li.label
   = _("Services & Datasources")
 - results.each do |elem, highlights|
-  - if highlights[:name]
-    = render "services/autocomplete/service_item", service: elem, highlights: highlights
+  = render "services/autocomplete/service_item", service: elem, highlights: highlights if highlights[:name]
 %li.label
   = _("Offers")
 - results.each do |elem, highlights|
-  - if highlights[:offer_name]
-    = render "services/autocomplete/offer_item", offer: elem,
-      highlights: highlights,
-      service_titles: service_titles
+  - next unless highlights[:offer_name]
+  = render "services/autocomplete/offer_item", offer: elem,
+    highlights: highlights,
+    service_titles: service_titles
 %li.label
   = _("Providers")
 - results.each do |elem, highlights|
-  - if highlights[:provider_name]
-    = render "services/autocomplete/provider_item", provider: elem,
-     highlights: highlights
+  - next unless highlights[:provider_name]
+  = render "services/autocomplete/provider_item", provider: elem,
+    highlights: highlights

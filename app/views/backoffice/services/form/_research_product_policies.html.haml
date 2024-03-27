@@ -23,15 +23,13 @@
       = f.fields_for :link_research_product_license_urls,
       disabled: datasource.upstream_id.present?, multiple: true, as: :array,
                 wrapper_html: { "data-form-target" => "link" } do |link_form|
-        = render "backoffice/common_parts/form/link_fields",
-              link_form: link_form, object: datasource, link_name: "researchProductLicense"
+        = render_link(link_form, datasource, "researchProductLicense")
       = link_to _("Add new research product license"), "#", class: "btn btn-primary disablable",
               data: { "form-target": "addField",
               action: "click->form#addField",
               value: "researchProductLicense",
               fields: f.fields_for(:link_research_product_license_urls, Link::MultimediaUrl.new,
-              child_index: "new_field") { |lf| render "backoffice/common_parts/form/link_fields",
-              link_form: lf, object: datasource, link_name: "researchProductLicense" } }
+              child_index: "new_field") { |lf| render_link(lf, datasource, "researchProductLicense")} }
       .is-flipped
         = f.association :research_product_access_policies, multiple: true, input_html: { data: { choice: true } },
                 wrapper_html: { class: "col-lg-8 pl-0 pr-0" }

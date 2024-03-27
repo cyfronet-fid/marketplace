@@ -35,7 +35,8 @@ RSpec.describe Tourable, type: :controller, backend: true do
         "explicitly_default_tour" => {
           "activation_strategy" => "default"
         },
-        "implicitly_default_tour" => {},
+        "implicitly_default_tour" => {
+        },
         "some_tour" => {
           "activation_strategy" => "query_param"
         }

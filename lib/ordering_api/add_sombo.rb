@@ -2,8 +2,6 @@
 
 module OrderingApi
   class AddSombo
-    def initialize; end
-
     def call
       sombo_admin =
         User

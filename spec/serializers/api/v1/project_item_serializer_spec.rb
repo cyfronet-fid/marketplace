@@ -24,7 +24,8 @@ RSpec.describe Api::V1::ProjectItemSerializer, backend: true do
         order_type: project_item.order_type
       },
       oms_params: project_item.offer.oms_params,
-      user_secrets: {}
+      user_secrets: {
+      }
     }
 
     expect(serialized).to eq(expected)
@@ -50,7 +51,8 @@ RSpec.describe Api::V1::ProjectItemSerializer, backend: true do
         request_voucher: project_item.request_voucher,
         order_type: project_item.order_type
       },
-      user_secrets: {}
+      user_secrets: {
+      }
     }
 
     expect(serialized).to eq(expected)
@@ -76,7 +78,8 @@ RSpec.describe Api::V1::ProjectItemSerializer, backend: true do
         request_voucher: false,
         order_type: nil
       },
-      user_secrets: {}
+      user_secrets: {
+      }
     }
 
     expect(serialized).to eq(expected)

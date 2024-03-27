@@ -25,8 +25,8 @@ class Provider < ApplicationRecord
 
   attr_accessor :catalogue_id
 
-  serialize :participating_countries, Country::Array
-  serialize :country, Country
+  serialize :participating_countries, coder: Country::Array
+  serialize :country, coder: Country
 
   has_one_attached :logo
 
@@ -191,16 +191,14 @@ class Provider < ApplicationRecord
   end
 
   def services
-    Service
-      .left_joins(:service_providers)
-      .where(
-        "(status = 'unverified' OR status = 'published') AND
+    Service.left_joins(:service_providers).where(
+      "(status = 'unverified' OR status = 'published') AND
     (service_providers.provider_id = #{id} OR resource_organisation_id = #{id})"
-      )
+    )
   end
 
   def set_default_logo
-    assets_path = File.join(File.dirname(__FILE__), "../javascript/images")
+    assets_path = File.join(File.dirname(__FILE__), "../assets/images")
     default_logo_name = "provider_logo.svg"
     extension = ".svg"
     io = File.open(assets_path + "/" + default_logo_name)

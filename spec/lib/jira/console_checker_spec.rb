@@ -87,8 +87,9 @@ describe Jira::ConsoleChecker, backend: true do
       # noinspection RubyArgCount
       expect do
         output = con_checker.error_and_abort!(Jira::Checker::CheckerCompositeError.new(message, status: false))
-      end.to output(" FAIL".red + "\n" + "  " + "- ERROR".red + ": #{message}\n    - status:" + " ✕".red + "\n")
-        .to_stdout
+      end.to output(
+        " FAIL".red + "\n" + "  " + "- ERROR".red + ": #{message}\n    - status:" + " ✕".red + "\n"
+      ).to_stdout
       expect(output).to be_falsey
     end
   end
@@ -126,8 +127,9 @@ describe Jira::ConsoleChecker, backend: true do
     # noinspection RubyStringKeysInHashInspection
     con_checker = Jira::ConsoleChecker.new(checker, "MP_HOST" => host)
     expect(checker).to receive(:check_webhook).with(host).and_return(true)
-    expect { con_checker.check_webhook }.to output("Checking webhooks for hostname \"#{host}\"..." + " OK".green + "\n")
-      .to_stdout
+    expect { con_checker.check_webhook }.to output(
+      "Checking webhooks for hostname \"#{host}\"..." + " OK".green + "\n"
+    ).to_stdout
   end
 
   it "check should print to stdout" do
@@ -217,11 +219,10 @@ describe Jira::ConsoleChecker, backend: true do
         next false
       end
     )
-    expect(checker).to receive(:check_workflow)
-      .exactly(5) { |&block|
-        block.call(error)
-        next false
-      }
+    expect(checker).to receive(:check_workflow).exactly(5) { |&block|
+      block.call(error)
+      next false
+    }
     expect(checker).to receive(:check_custom_fields) { |&block|
       block.call(error)
       next false

@@ -2,8 +2,6 @@
 
 module TestBootstrap
   class OMSesWithDifferentCustomParams
-    def initialize; end
-
     def call
       puts "Creating OMS2 (with two params, mandatory and not) and OMS3 (without params)"
       OMS.create!(

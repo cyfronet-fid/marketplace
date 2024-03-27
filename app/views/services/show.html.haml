@@ -1,5 +1,5 @@
 - content_for :title, @service.name
-- id = @service.sources&.first&.eid || @service.slug
+- id = h(@service&.main_source&.eid) || h(@service&q.slug)
 :javascript
   _paq.push(['trackEvent', 'Service', 'Visit', '#{id}']);
 - breadcrumb :service, @service
@@ -30,5 +30,3 @@
           = render "services/offers", offers: @offers, service: @service,
                                       bundles: @bundles, bundled: @bundled,
                                       preview: local_assigns[:preview] || @service.suspended?
-
-

@@ -56,7 +56,7 @@
         - if @project_item.service.logo.attached?
           = image_tag @project_item.service.logo.variant(resize: "170x112")
         - else
-          = image_pack_tag "eosc-img.png"
+          = image_tag "eosc-img.png"
         %h2.mt-2
           = @project_item.service.name
         %span

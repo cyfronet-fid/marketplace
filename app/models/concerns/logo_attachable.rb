@@ -14,7 +14,7 @@ module LogoAttachable
   end
 
   def set_default_logo
-    assets_path = File.join(File.dirname(__FILE__), "../../javascript/images")
+    assets_path = File.join(File.dirname(__FILE__), "../../assets/images")
     default_logo_name = "eosc-img.png"
     extension = ".png"
     io = ImageHelper.binary_to_blob_stream(assets_path + "/" + default_logo_name)

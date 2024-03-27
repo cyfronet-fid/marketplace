@@ -156,8 +156,10 @@ class Attribute
       value_type: {
         type: "string"
       },
-      value: {},
-      config: {}
+      value: {
+      },
+      config: {
+      }
     }
   }.freeze
 

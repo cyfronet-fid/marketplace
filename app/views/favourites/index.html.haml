@@ -6,7 +6,7 @@
   .row
     .col-lg-3.mb-5
       .favourite-icon
-        = image_pack_tag "gfx_heart.svg"
+        = image_tag "gfx_heart.svg"
       .mt-4
       - unless @favourites.blank?
         = link_to "Go back to the services list", services_path,

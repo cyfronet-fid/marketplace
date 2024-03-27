@@ -10,7 +10,7 @@ class Service::Ess::Add < ApplicationService
   end
 
   def call
-    @service.offers.each(&:save) unless @service.offers.published.size.zero?
+    @service.offers.each(&:save) unless @service.offers.published.empty?
     @async ? Ess::UpdateJob.perform_later(payload) : Ess::Update.call(payload)
   end
 

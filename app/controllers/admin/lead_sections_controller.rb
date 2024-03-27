@@ -19,7 +19,8 @@ class Admin::LeadSectionsController < Admin::ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+  end
 
   def update
     if @lead_section.update(permitted_attributes(LeadSection))

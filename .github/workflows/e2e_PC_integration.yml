@@ -7,8 +7,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
-      - uses: actions/cache@v2
+        uses: actions/checkout@v4
+      - uses: actions/cache@v4
         with:
           path: |
             ~/.cache/Cypress
@@ -17,7 +17,7 @@ jobs:
       - name: Install e2e dependencies
         run: npm i --prefix ./test/system
       - name: Cypress run
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@main
         with:
           project: ./test/system
           command: npm run cy:run-provider-portal-integration --prefix ./test/system
@@ -32,7 +32,7 @@ jobs:
           CYPRESS_MARKETPLACE_URL: ${{ secrets.MARKETPLACE_URL }}
           CYPRESS_PROVIDER_PORTAL_CLIENT_ID: ${{ secrets.PROVIDER_PORTAL_CLIENT_ID }}
           CYPRESS_AAI_TOKEN_URL: ${{ secrets.AAI_TOKEN_URL }}
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: cypress-screenshots

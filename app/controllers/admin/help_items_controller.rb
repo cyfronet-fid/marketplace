@@ -19,7 +19,8 @@ class Admin::HelpItemsController < Admin::ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+  end
 
   def update
     if @help_item.update(permitted_attributes(HelpItem))

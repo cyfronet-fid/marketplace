@@ -6,7 +6,7 @@ module ProjectItem::Customization
   included do
     validate do
       if bundle.present?
-        bundled_property_values.each do |_offer, parameters|
+        bundled_property_values.to_h.each_value do |parameters|
           parameters.select(&:invalid?).each { |pv| errors.add(:bundled_property_values, :invalid, value: pv) }
         end
       end

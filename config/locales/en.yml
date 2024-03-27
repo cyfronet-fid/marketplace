@@ -93,15 +93,20 @@ en:
         url: https://eosc-portal.eu/eosc-scalable-computing-infrastructure-earth-observation
 
   pagy:
+    prev: "&lsaquo;&nbsp;Prev"
+    next: "Next&nbsp;&rsaquo;"
+    gap: "&hellip;"
 
     item_name:
       one: "result"
       other: "results"
 
-    nav:
-      prev: "&lsaquo;&nbsp;Prev"
-      next: "Next&nbsp;&rsaquo;"
+    aria_label:
+      prev: "Prev"
+      next: "Next"
       gap: "&hellip;"
+      nav:
+        other: "Current Page Selector"
 
     info:
       no_items: "No %{item_name}"

@@ -41,7 +41,8 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+  end
 
   def update
     if Project::Update.new(@project, permitted_attributes(@project)).call

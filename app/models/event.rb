@@ -51,8 +51,10 @@ class Event < ApplicationRecord
         field: {
           type: "string"
         },
-        before: {},
-        after: {}
+        before: {
+        },
+        after: {
+        }
       },
       additionalProperties: false,
       required: %i[field before after]

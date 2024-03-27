@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class Presentable::HeaderComponent < ApplicationComponent
+  include ComparisonsHelper
+  include FavouriteHelper
   include PresentableHelper
   include Presentable::HeaderHelper
   include ServiceHelper
-  include ComparisonsHelper
-  include FavouriteHelper
 
   renders_one :buttons
 

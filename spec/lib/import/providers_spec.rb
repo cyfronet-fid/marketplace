@@ -11,7 +11,7 @@ describe Import::Providers, backend: true do
   def make_and_stub_eosc_registry(ids: [], dry_run: false, filepath: nil, log: false, default_upstream: nil)
     options = { dry_run: dry_run, ids: ids, filepath: filepath, faraday: faraday }
 
-    options[:logger] = ->(_msg) {  } unless log
+    options[:logger] = ->(_msg) {} unless log
 
     options[:default_upstream] = default_upstream if default_upstream
 
@@ -58,26 +58,24 @@ describe Import::Providers, backend: true do
 
   def expect_responses(test_url, providers_response = nil)
     unless providers_response.nil?
-      allow_any_instance_of(Faraday::Connection).to receive(:get)
-        .with("#{test_url}/public/provider/bundle/all?quantity=10000&from=0")
-        .and_return(providers_response)
+      allow_any_instance_of(Faraday::Connection).to receive(:get).with(
+        "#{test_url}/public/provider/bundle/all?quantity=10000&from=0"
+      ).and_return(providers_response)
     end
   end
 
   def mock_access_token
     allow_any_instance_of(Faraday::Connection).to(
-      receive(:post)
-        .with(
-          "https://#{ENV["CHECKIN_HOST"] || "aai.eosc-portal.eu"}/auth/realms/core/protocol/openid-connect/token",
-          {
-            grant_type: "refresh_token",
-            refresh_token: nil,
-            client_id:
-              ENV["IMPORTER_AAI_CLIENT_ID"] || ENV["CHECKIN_IDENTIFIER"] ||
-                Rails.application.credentials.checkin[:identifier]
-          }
-        )
-        .and_return(OpenStruct.new({ body: "{\"access_token\": \"test_token\"}", status: 200 }))
+      receive(:post).with(
+        "https://#{ENV["CHECKIN_HOST"] || "aai.eosc-portal.eu"}/auth/realms/core/protocol/openid-connect/token",
+        {
+          grant_type: "refresh_token",
+          refresh_token: nil,
+          client_id:
+            ENV["IMPORTER_AAI_CLIENT_ID"] || ENV["CHECKIN_IDENTIFIER"] ||
+              Rails.application.credentials.checkin[:identifier]
+        }
+      ).and_return(OpenStruct.new({ body: "{\"access_token\": \"test_token\"}", status: 200 }))
     )
   end
 
@@ -103,8 +101,9 @@ describe Import::Providers, backend: true do
 
       eosc_registry = make_and_stub_eosc_registry(default_upstream: :mp, ids: ["phenomenal"], log: true)
 
-      expect { eosc_registry.call }.to output(/PROCESSED: 1, CREATED: 0, UPDATED: 0, NOT MODIFIED: 1$/)
-        .to_stdout.and change { Provider.count }.by(0)
+      expect { eosc_registry.call }.to output(
+        /PROCESSED: 1, CREATED: 0, UPDATED: 0, NOT MODIFIED: 1$/
+      ).to_stdout.and change { Provider.count }.by(0)
     end
 
     it "should update provider which has upstream to external id" do
@@ -116,14 +115,16 @@ describe Import::Providers, backend: true do
 
       eosc_registry = make_and_stub_eosc_registry(ids: ["phenomenal"], log: true)
 
-      expect { eosc_registry.call }.to output(/PROCESSED: 1, CREATED: 0, UPDATED: 1, NOT MODIFIED: 0$/)
-        .to_stdout.and change { Provider.count }.by(0)
+      expect { eosc_registry.call }.to output(
+        /PROCESSED: 1, CREATED: 0, UPDATED: 1, NOT MODIFIED: 0$/
+      ).to_stdout.and change { Provider.count }.by(0)
     end
 
     it "should not change db if dry_run is set to true" do
       eosc_registry = make_and_stub_eosc_registry(dry_run: true, log: true)
-      expect { eosc_registry.call }.to output(/PROCESSED: 4, CREATED: 3, UPDATED: 0, NOT MODIFIED: 1$/)
-        .to_stdout.and change { Provider.count }.by(0)
+      expect { eosc_registry.call }.to output(
+        /PROCESSED: 4, CREATED: 3, UPDATED: 0, NOT MODIFIED: 1$/
+      ).to_stdout.and change { Provider.count }.by(0)
     end
 
     it "should filter by ids if they are provided" do
@@ -134,12 +135,10 @@ describe Import::Providers, backend: true do
 
     it "should set default image on error" do
       eosc_registry = make_and_stub_eosc_registry(ids: ["phenomenal"])
-      allow(eosc_registry).to receive(:open)
-        .with(
-          "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png",
-          ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
-        )
-        .and_raise(OpenURI::HTTPError.new("", status: 404))
+      allow(eosc_registry).to receive(:open).with(
+        "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png",
+        ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
+      ).and_raise(OpenURI::HTTPError.new("", status: 404))
       eosc_registry.call
 
       expect(Provider.first.logo.attached?).to be_truthy
@@ -147,12 +146,10 @@ describe Import::Providers, backend: true do
 
     it "should set default image on error" do
       eosc_registry = make_and_stub_eosc_registry(ids: ["phenomenal"])
-      allow(eosc_registry).to receive(:open)
-        .with(
-          "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png",
-          ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
-        )
-        .and_raise(Errno::EHOSTUNREACH.new)
+      allow(eosc_registry).to receive(:open).with(
+        "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png",
+        ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
+      ).and_raise(Errno::EHOSTUNREACH.new)
       eosc_registry.call
       expect(Provider.first.logo.attached?).to be_truthy
     end

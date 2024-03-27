@@ -83,4 +83,8 @@ class Ess::ServiceSerializer < ApplicationSerializer
   def datasource?
     object.type == "Datasource"
   end
+
+  def phase
+    nil
+  end
 end

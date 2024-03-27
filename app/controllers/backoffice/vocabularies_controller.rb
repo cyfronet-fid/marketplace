@@ -10,7 +10,8 @@ class Backoffice::VocabulariesController < Backoffice::ApplicationController
     @all_types = VOCABULARY_TYPES.map { |k, v| [v[:name], k.to_s.pluralize.to_sym] }
   end
 
-  def show; end
+  def show
+  end
 
   def new
     @vocabulary = vocabulary_type.new
@@ -29,7 +30,8 @@ class Backoffice::VocabulariesController < Backoffice::ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+  end
 
   def update
     if @vocabulary.update(permitted_attributes(@vocabulary))

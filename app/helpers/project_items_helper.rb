@@ -2,7 +2,7 @@
 
 module ProjectItemsHelper
   def label_message(message)
-    date = message.created_at.to_s(:db)
+    date = message.created_at.to_fs(:db)
 
     case message.author_role
     when "user"
@@ -26,7 +26,7 @@ module ProjectItemsHelper
   end
 
   def ratingable?
-    (@project_item.ready? && @project_item.service_opinion.nil?)
+    @project_item.ready? && @project_item.service_opinion.nil?
   end
 
   def voucher_id(project_item)

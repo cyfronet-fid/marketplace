@@ -1,43 +1,43 @@
 %ul.list-group{ class: "#{"suspended" if inactive}" }
   - fields.map do |field|
-    - if object.send(field).present?
-      %li{ class: ("links" if nested.present? && nested[field.to_sym] == "link") }
-        - if with_desc && (nested.blank? || nested[field.to_sym] != "link")
-          %span.list-title
-            - if object.send(field).size > 1
-              %a{ href: "#" + t(".#{field}") , "data-toggle": "collapse" }
-                -# TODO: refactor dynamic translation
-                = t(".#{field}") + ":"
-            - else
+    - next unless object.send(field).present?
+    %li{ class: ("links" if nested.present? && nested[field.to_sym] == "link") }
+      - if with_desc && (nested.blank? || nested[field.to_sym] != "link")
+        %span.list-title
+          - if object.send(field).size > 1
+            %a{ href: "#" + t(".#{field}") , "data-toggle": "collapse" }
+              -# TODO: refactor dynamic translation
               = t(".#{field}") + ":"
-        - if object.send(field).is_a?(ActiveSupport::TimeWithZone)
-          %span
-            = object.send(field).to_date
-        - elsif field == "geographical_availabilities"
-          %div{ id: "#{field}", class: object.send(field).size > 1 ? "collapse" : nil }
-            %ul
-              - get_only_regions(object.send(field)).each do |c|
-                %li
+          - else
+            = t(".#{field}") + ":"
+      - if object.send(field).is_a?(ActiveSupport::TimeWithZone)
+        %span
+          = object.send(field).to_date
+      - elsif field == "geographical_availabilities"
+        %div{ id: "#{field}", class: object.send(field).size > 1 ? "collapse" : nil }
+          %ul
+            - get_only_regions(object.send(field)).each do |c|
+              %li
+                = link_to c, inactive ? "#" : services_geographical_availabilities_link(object, c),
+                "data-preview-target": local_assigns[:preview] ? "link" : ""
+            - if get_only_countries(object.send(field)).present?
+              - get_only_countries(object.send(field)).each do |c|
+                %li.geographical
                   = link_to c, inactive ? "#" : services_geographical_availabilities_link(object, c),
                   "data-preview-target": local_assigns[:preview] ? "link" : ""
-              - if get_only_countries(object.send(field)).present?
-                - get_only_countries(object.send(field)).each do |c|
-                  %li.geographical
-                    = link_to c, inactive ? "#" : services_geographical_availabilities_link(object, c),
+      - else
+        %div{ id: "#{field}", class: object.send(field).size > 1 ? "collapse" : nil }
+          %ul
+            - Array(object.send(field)).map.with_index do |element, idx|
+              - if nested.present? && nested[field.to_sym].present?
+                - if nested[field.to_sym] == "link"
+                  %li.links
+                    = link_to field.humanize, inactive ? "#" : element, "data-probe": "",
                     "data-preview-target": local_assigns[:preview] ? "link" : ""
-        - else
-          %div{ id: "#{field}", class: object.send(field).size > 1 ? "collapse" : nil }
-            %ul
-              - Array(object.send(field)).map.with_index do |element, idx|
-                - if nested.present? && nested[field.to_sym].present?
-                  - if nested[field.to_sym] == "link"
-                    %li.links
-                      = link_to field.humanize, inactive ? "#" : element, "data-probe": "",
-                      "data-preview-target": local_assigns[:preview] ? "link" : ""
-                      %i.fas.fa-arrow-right
-                  - else
-                    %li
-                      #{element.send(nested[field.to_sym])}#{idx == Array(object.send(field)).size - 1 ? nil : ", "}
+                    %i.fas.fa-arrow-right
                 - else
-                  %li.geographical
-                    #{element}
+                  %li
+                    #{element.send(nested[field.to_sym])}#{idx == Array(object.send(field)).size - 1 ? nil : ", "}
+              - else
+                %li.geographical
+                  #{element}

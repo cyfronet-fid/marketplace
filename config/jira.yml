@@ -55,8 +55,8 @@ default: &default
         private_company: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_private_company"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :select_values, :"CP-CustomerTypology", :private_company) || "") + "'" %>
         project: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_CP_CustomerTypology_project"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :select_values, :"CP-CustomerTypology", :project) || "") + "'" %>
       CP-INeedAVoucher:
-        'yes': <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_CP_INeedAVoucher_true"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :select_values, :"CP-INeedAVoucher", true) || "") + "'" %>
-        'no': <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_CP_INeedAVoucher_false"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :select_values, :"CP-INeedAVoucher", false) || "") + "'" %>
+        need: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_CP_INeedAVoucher_true"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :select_values, :"CP-INeedAVoucher", :need) || "") + "'" %>
+        no_need: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_CP_INeedAVoucher_false"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :select_values, :"CP-INeedAVoucher", :no_need) || "") + "'" %>
       SO-OfferType:
         orderable: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_SO_OfferType_normal"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :select_values, :"SO-OfferType", :normal) || "") + "'" %>
         open_access: <%= "'" + (ENV["MP_JIRA_FIELD_SELECT_VALUES_SO_OfferType_open_access"] || Rails.application.credentials.jira.dig(Rails.env.to_sym, :custom_fields, :select_values, :"SO-OfferType", :open_access) || "") + "'" %>
@@ -121,8 +121,8 @@ test:
         research: '20001'
         private_company: '20002'
       CP-INeedAVoucher:
-        'yes': '20003'
-        'no': '20004'
+        need: '20003'
+        no_need: '20004'
       SO-OfferType:
         orderable: '20005'
         open_access: '20006'

@@ -1,18 +1,18 @@
 - sidebar_fields.each do |group|
-  - if display_detail?(group, @object)
-    .details-box{
-      class: "#{group[:name]}"
-      }
-      .details-header
-        %h5= t("components.presentable.sidebar_component.title.#{group[:name]}")
-      .details-content
-        = render "components/presentable/sidebar_component/#{group[:template]}",
-                    object: @object,
-                    name: group[:name],
-                    fields: group[:fields],
-                    type: group[:type] || "",
-                    clazz: group[:clazz] || "",
-                    with_desc: group[:with_desc] || false,
-                    inactive: @object.suspended? && !group[:active_when_suspended],
-                    filter_query: group[:filter_query] || [],
-                    nested: group[:nested] || []
+  - next unless display_detail?(group, @object)
+  .details-box{
+    class: "#{group[:name]}"
+    }
+    .details-header
+      %h5= t("components.presentable.sidebar_component.title.#{group[:name]}")
+    .details-content
+      = render "components/presentable/sidebar_component/#{group[:template]}",
+                  object: @object,
+                  name: group[:name],
+                  fields: group[:fields],
+                  type: group[:type] || "",
+                  clazz: group[:clazz] || "",
+                  with_desc: group[:with_desc] || false,
+                  inactive: @object.suspended? && !group[:active_when_suspended],
+                  filter_query: group[:filter_query] || [],
+                  nested: group[:nested] || []

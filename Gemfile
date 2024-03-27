@@ -3,18 +3,21 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.0.3"
+ruby "3.3.0"
 
-gem "rails", "~> 6.1.5"
-gem "pg", ">= 0.18", "< 2.0"
+gem "rails", "~> 7.1.3"
+gem "pg", "~> 1.5", "< 2.0"
 gem "puma"
 gem "nori"
 
 gem "uglifier", ">= 1.3.0"
-gem "webpacker", "~> 5.4.4"
-gem "view_component"
+gem "sprockets-rails"
+gem "jsbundling-rails"
+gem "cssbundling-rails"
+gem "view_component", "~> 2.83"
 gem "haml-rails"
-gem "turbolinks", "~> 5", require: false
+gem "turbo-rails"
+gem "stimulus-rails"
 gem "render_async"
 
 gem "bootsnap", ">= 1.4.2", require: false
@@ -24,12 +27,13 @@ gem "ancestry"
 gem "gretel"
 gem "pagy"
 gem "simple_form"
-gem "friendly_id", "~> 5.2.0"
+gem "friendly_id", "~> 5.5"
 gem "acts-as-taggable-on"
 gem "countries"
+gem "i18n_data"
 
 gem "activestorage-validator"
-gem "image_processing"
+gem "image_processing", ">= 1.2"
 
 # translations
 gem "fast_gettext"
@@ -52,6 +56,7 @@ gem "devise"
 gem "omniauth"
 gem "omniauth_openid_connect"
 gem "omniauth-rails_csrf_protection"
+gem "rack-cors"
 gem "pundit", "~> 2.0"
 gem "role_model"
 gem "recaptcha", require: "recaptcha/rails"
@@ -69,13 +74,12 @@ gem "active_model_serializers"
 gem "jira-ruby"
 
 # soap
-gem "savon", "~> 2.12.0"
+gem "savon", "~> 2.15"
 
 gem "google-apis-analyticsreporting_v4", "~> 0.5"
 
-gem "redis-rails"
 gem "sidekiq"
-gem "sidekiq-limit_fetch", "~>4.2.0"
+gem "sidekiq-limit_fetch", "~>4.4"
 
 gem "stomp"
 
@@ -84,23 +88,24 @@ gem "aws-sdk-s3", require: false
 group :development, :test do
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
 
-  gem "rspec-rails", "~> 3.8.2"
+  gem "rspec-rails", "~> 6.1"
   gem "rspec-retry"
   gem "rswag-specs"
   gem "pry"
-  gem "pry-byebug", "~>3.10.0"
+  gem "pry-byebug", "~>3.10"
   gem "pry-rails"
   gem "pry-nav"
 
   gem "dotenv-rails"
   gem "webmock"
+  gem "foreman"
 end
 
 group :development do
-  gem "web-console", ">= 3.3.0"
+  gem "web-console", "~> 4.2"
   gem "listen"
   gem "spring"
-  gem "spring-watcher-listen", "~> 2.0.0"
+  gem "spring-watcher-listen", "~> 2.1"
   gem "spring-commands-rspec"
   gem "prettier", require: false
   gem "overcommit", require: false
@@ -132,4 +137,8 @@ gem "auto_strip_attributes"
 
 # Fix for puma memory leak
 gem "puma_worker_killer"
-gem "timeout", "~>0.3.2"
+gem "timeout", "~>0.4"
+
+# Use Redis for Action Cable
+gem "redis", "~> 5.0"
+gem "redis-actionpack", "~> 5.3"

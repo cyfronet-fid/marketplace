@@ -9,7 +9,7 @@ RSpec.describe Recommender::SimpleRecommender, backend: true do
   end
 
   [1, 2, 3].each do |n|
-    context "Simple recommender service call with n=#{n} returns" do
+    context "Simple recommender_lib service call with n=#{n} returns" do
       before :context do
         @recommended_services = Recommender::SimpleRecommender.new.call n
       end

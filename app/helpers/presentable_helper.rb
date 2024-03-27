@@ -37,9 +37,9 @@ module PresentableHelper
     if object.logo.attached? && object.logo.variable?
       image_tag object.logo.variant(resize: resize), class: classes
     elsif object.is_a?(Service)
-      image_pack_tag("service_logo.svg", resize: resize, class: classes)
+      image_tag("service_logo.svg", resize: resize, class: classes)
     else
-      image_pack_tag("provider_logo.svg", resize: resize, class: classes)
+      image_tag("provider_logo.svg", resize: resize, class: classes)
     end
   end
 

@@ -11,7 +11,8 @@ class Services::OrderingConfiguration::OffersController < Services::OrderingConf
     authorize @offer
   end
 
-  def edit; end
+  def edit
+  end
 
   def create
     template = offer_template

@@ -1,10 +1,7 @@
 # frozen_string_literal: true
 
-require "turbolinks"
-
 class ApplicationController < ActionController::Base
   include Pagy::Backend
-  include Turbolinks::Redirection
   include Sentryable
   include Pundit::Authorization
   include Devise::StoreLocation

@@ -24,7 +24,8 @@ class Admin::LeadsController < Admin::ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+  end
 
   def update
     if @lead.update(permitted_attributes(Lead))

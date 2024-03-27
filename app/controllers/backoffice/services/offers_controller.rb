@@ -30,7 +30,8 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
     render partial: "backoffice/services/offers/steps/summary", locals: { offer: template }
   end
 
-  def edit; end
+  def edit
+  end
 
   def update
     template = permitted_attributes(Offer)
@@ -98,7 +99,7 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
   end
 
   def default_parameters(category)
-    config = YAML.load_file("config/offer_parameters.yml")
+    config = YAML.load_file("config/offer_parameters.yml", aliases: true)
     category && config&.key?(category) ? config[category].flatten : {}
   end
 

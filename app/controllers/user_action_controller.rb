@@ -25,9 +25,9 @@ class UserActionController < ApplicationController
     request_body[:source]["root"]["panel_id"] = "v1" if is_recommendation_panel
 
     # We publish user actions to both JMS under the "user_actions" topic
-    # as well as to the recommender server directly for now
+    # as well as to the recommender_lib server directly for now
 
-    if %w[all recommender].include? Mp::Application.config.user_actions_target
+    if %w[all recommender_lib].include? Mp::Application.config.user_actions_target
       Probes::ProbesJob.perform_later(request_body.to_json)
     end
 

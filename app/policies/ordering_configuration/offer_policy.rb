@@ -42,7 +42,8 @@ class OrderingConfiguration::OfferPolicy < Backoffice::OfferPolicy
       :from,
       :tag_list,
       :bundle_exclusive,
-      oms_params: {},
+      oms_params: {
+      },
       parameters_attributes: %i[
         type
         name

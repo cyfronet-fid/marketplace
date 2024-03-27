@@ -20,7 +20,7 @@ class Services::InformationController < Services::ApplicationController
     if step.valid?
       redirect_to url_for([@service, next_step_key])
     else
-      flash.now[:alert] = @step.error
+      flash[:alert] = @step.error
       render :show
     end
   end

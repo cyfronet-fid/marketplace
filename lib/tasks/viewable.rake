@@ -49,12 +49,10 @@ namespace :viewable do
   task heal_tags: :environment do
     puts "Heal tag capitalization"
     tags =
-      ENV
-        .fetch(
-          "HEAL_TAG_LIST",
-          "EOSC::Jupyter Notebook,EOSC::Galaxy Workflow,EOSC::Twitter Data,EOSC::Data Cube,EOSC::RO-crate"
-        )
-        .split(",")
+      ENV.fetch(
+        "HEAL_TAG_LIST",
+        "EOSC::Jupyter Notebook,EOSC::Galaxy Workflow,EOSC::Twitter Data,EOSC::Data Cube,EOSC::RO-crate"
+      ).split(",")
     tags.each do |tag|
       puts "Healing #{tag}"
       current = ActsAsTaggableOn::Tag.where("LOWER(name) = '#{tag.downcase}'").each { |t| t.update(name: tag) }

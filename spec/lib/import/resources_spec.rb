@@ -11,7 +11,7 @@ describe Import::Resources, backend: true do
   def make_and_stub_eosc_registry(ids: [], dry_run: false, filepath: nil, log: false, default_upstream: nil)
     options = { dry_run: dry_run, ids: ids, filepath: filepath, faraday: faraday }
 
-    options[:logger] = ->(_msg) {  } unless log
+    options[:logger] = ->(_msg) {} unless log
 
     options[:default_upstream] = default_upstream if default_upstream
 
@@ -60,26 +60,24 @@ describe Import::Resources, backend: true do
 
   def expect_responses(test_url, services_response = nil)
     unless services_response.nil?
-      allow_any_instance_of(Faraday::Connection).to receive(:get)
-        .with("#{test_url}/public/service/adminPage/all?quantity=10000&from=0")
-        .and_return(services_response)
+      allow_any_instance_of(Faraday::Connection).to receive(:get).with(
+        "#{test_url}/public/service/adminPage/all?quantity=10000&from=0"
+      ).and_return(services_response)
     end
   end
 
   def mock_access_token
     allow_any_instance_of(Faraday::Connection).to(
-      receive(:post)
-        .with(
-          "https://#{ENV["CHECKIN_HOST"] || "aai.eosc-portal.eu"}/auth/realms/core/protocol/openid-connect/token",
-          {
-            grant_type: "refresh_token",
-            refresh_token: nil,
-            client_id:
-              ENV["IMPORTER_AAI_CLIENT_ID"] || ENV["CHECKIN_IDENTIFIER"] ||
-                Rails.application.credentials.checkin[:identifier]
-          }
-        )
-        .and_return(OpenStruct.new({ body: "{\"access_token\": \"test_token\"}", status: 200 }))
+      receive(:post).with(
+        "https://#{ENV["CHECKIN_HOST"] || "aai.eosc-portal.eu"}/auth/realms/core/protocol/openid-connect/token",
+        {
+          grant_type: "refresh_token",
+          refresh_token: nil,
+          client_id:
+            ENV["IMPORTER_AAI_CLIENT_ID"] || ENV["CHECKIN_IDENTIFIER"] ||
+              Rails.application.credentials.checkin[:identifier]
+        }
+      ).and_return(OpenStruct.new({ body: "{\"access_token\": \"test_token\"}", status: 200 }))
     )
   end
 
@@ -99,8 +97,9 @@ describe Import::Resources, backend: true do
     end
 
     it "should create an offer for a new services" do
-      expect { eosc_registry.call }.to output(/PROCESSED: 3, CREATED: 3, UPDATED: 0, NOT MODIFIED: 0$/)
-        .to_stdout.and change { Service.count }.by(3).and change { Offer.count }.by(3)
+      expect { eosc_registry.call }.to output(
+        /PROCESSED: 3, CREATED: 3, UPDATED: 0, NOT MODIFIED: 0$/
+      ).to_stdout.and change { Service.count }.by(3).and change { Offer.count }.by(3)
       service = Service.first
 
       expect(service.offers).to_not be_nil
@@ -122,8 +121,9 @@ describe Import::Resources, backend: true do
 
       eosc_registry = make_and_stub_eosc_registry(ids: ["phenomenal.phenomenal"], log: true)
 
-      expect { eosc_registry.call }.to output(/PROCESSED: 3, CREATED: 0, UPDATED: 0, NOT MODIFIED: 1$/)
-        .to_stdout.and change { Service.count }.by(0)
+      expect { eosc_registry.call }.to output(
+        /PROCESSED: 3, CREATED: 0, UPDATED: 0, NOT MODIFIED: 1$/
+      ).to_stdout.and change { Service.count }.by(0)
       expect(Service.first.as_json(except: %i[created_at updated_at])).to eq(
         service.as_json(except: %i[created_at updated_at])
       )
@@ -140,8 +140,9 @@ describe Import::Resources, backend: true do
 
       eosc_registry = make_and_stub_eosc_registry(ids: ["phenomenal.phenomenal"], log: true)
 
-      expect { eosc_registry.call }.to output(/PROCESSED: 3, CREATED: 0, UPDATED: 1, NOT MODIFIED: 0$/)
-        .to_stdout.and change { Service.count }.by(0)
+      expect { eosc_registry.call }.to output(
+        /PROCESSED: 3, CREATED: 0, UPDATED: 1, NOT MODIFIED: 0$/
+      ).to_stdout.and change { Service.count }.by(0)
 
       service.reload
 
@@ -159,14 +160,16 @@ describe Import::Resources, backend: true do
 
       eosc_registry = make_and_stub_eosc_registry(ids: ["phenomenal.phenomenal"], log: true)
 
-      expect { eosc_registry.call }.to output(/PROCESSED: 3, CREATED: 0, UPDATED: 1, NOT MODIFIED: 0$/)
-        .to_stdout.and change { Service.count }.by(0).and change { Offer.count }.by(0)
+      expect { eosc_registry.call }.to output(
+        /PROCESSED: 3, CREATED: 0, UPDATED: 1, NOT MODIFIED: 0$/
+      ).to_stdout.and change { Service.count }.by(0).and change { Offer.count }.by(0)
     end
 
     it "should not change db if dry_run is set to true" do
       eosc_registry = make_and_stub_eosc_registry(dry_run: true, log: true)
-      expect { eosc_registry.call }.to output(/PROCESSED: 3, CREATED: 3, UPDATED: 0, NOT MODIFIED: 0$/)
-        .to_stdout.and change { Service.count }.by(0).and change { Provider.count }.by(0)
+      expect { eosc_registry.call }.to output(
+        /PROCESSED: 3, CREATED: 3, UPDATED: 0, NOT MODIFIED: 0$/
+      ).to_stdout.and change { Service.count }.by(0).and change { Provider.count }.by(0)
     end
 
     it "should filter by ids if they are provided" do
@@ -188,13 +191,13 @@ describe Import::Resources, backend: true do
     it "should gracefully handle 404 status with logo download" do
       eosc_registry = make_and_stub_eosc_registry(ids: ["phenomenal.phenomenal"])
       mock_uri = double
-      expect(URI).to receive(:parse)
-        .with("http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png")
-        .and_return(mock_uri)
+      expect(URI).to receive(:parse).with(
+        "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png"
+      ).and_return(mock_uri)
       allow(URI).to receive(:parse).and_call_original
-      expect(mock_uri).to receive(:open)
-        .with(ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE)
-        .and_raise(OpenURI::HTTPError.new("", status: 404))
+      expect(mock_uri).to receive(:open).with(ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).and_raise(
+        OpenURI::HTTPError.new("", status: 404)
+      )
       eosc_registry.call
       expect(Service.first.logo.attached?).to be_falsey
     end
@@ -202,13 +205,13 @@ describe Import::Resources, backend: true do
     it "should gracefully handle unreachable host error with logo download" do
       eosc_registry = make_and_stub_eosc_registry(ids: ["phenomenal.phenomenal"])
       mock_uri = double
-      expect(URI).to receive(:parse)
-        .with("http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png")
-        .and_return(mock_uri)
+      expect(URI).to receive(:parse).with(
+        "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png"
+      ).and_return(mock_uri)
       allow(URI).to receive(:parse).and_call_original
-      expect(mock_uri).to receive(:open)
-        .with(ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE)
-        .and_raise(Errno::EHOSTUNREACH.new)
+      expect(mock_uri).to receive(:open).with(ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).and_raise(
+        Errno::EHOSTUNREACH.new
+      )
       eosc_registry.call
       expect(Service.first.logo.attached?).to be_falsey
     end

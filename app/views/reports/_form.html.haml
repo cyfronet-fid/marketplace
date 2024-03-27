@@ -8,9 +8,6 @@
   - unless current_user
     = f.input :author, label: _("Name and surname")
     = f.input :email, as: :email
-  -# haml-lint:disable MultilinePipe
   = f.input :text, as: :text, input_html: { rows: 6 }, label: _("Describe problem precisely"),
-            hint: _("We will send your report to our customer service. You will receive an answer to " + |
-                    "%{email} email address.") % { email: current_user&.email || "your" } |
-  -# haml-lint:enable MultilinePipe
+            hint: report_hint(current_user&.email)
   #recaptcha= recaptcha_tags

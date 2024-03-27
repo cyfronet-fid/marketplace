@@ -5,7 +5,7 @@ linters:
 
   LineLength:
     enabled: true
-    max: 120
+    max: 140
 
   ClassesBeforeIds:
     enabled: true

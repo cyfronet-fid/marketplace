@@ -4,8 +4,6 @@ require "active_support/core_ext/integer/time"
 
 
 Rails.application.configure do
-  # Verifies that versions and hashed value of the package contents in the project's package.json
-  config.webpacker.check_yarn_integrity = false
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
@@ -79,7 +77,7 @@ Rails.application.configure do
   config.i18n.fallbacks = true
 
   # Send deprecation notices to registered listeners.
-  config.active_support.deprecation = :notify
+  config.active_support.deprecation = :stderr
 
   # Log disallowed deprecations.
   config.active_support.disallowed_deprecation = :log
@@ -88,11 +86,11 @@ Rails.application.configure do
   config.active_support.disallowed_deprecation_warnings = []
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
-  config.log_formatter = ::Logger::Formatter.new
+  config.log_formatter = Logger::Formatter.new
 
   # Use a different logger for distributed setups.
   # require "syslog/logger"
-  # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
+  # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new "app-name")
 
   if ENV["RAILS_LOG_TO_STDOUT"].present?
     logger           = ActiveSupport::Logger.new($stdout)
@@ -125,20 +123,20 @@ Rails.application.configure do
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 
   # Mailer settings
-  config.action_mailer.default_url_options = { host: ENV["ROOT_URL"] }
+  config.action_mailer.default_url_options = { host: ENV.fetch("ROOT_URL", nil) }
   config.action_mailer.delivery_method = :smtp
 
   raise "Missing ASSET_HOST" if ENV["ASSET_HOST"].blank?
   raise "Missing ASSET_PROTOCOL" if ENV["ASSET_PROTOCOL"].blank?
-  config.action_controller.asset_host = "#{ENV["ASSET_HOST"]}"
-  config.action_mailer.asset_host = "#{ENV["ASSET_PROTOCOL"]}://#{ENV["ASSET_HOST"]}"
+  config.action_controller.asset_host = "#{ENV.fetch("ASSET_HOST", nil)}"
+  config.action_mailer.asset_host = "#{ENV.fetch("ASSET_PROTOCOL", nil)}://#{ENV.fetch("ASSET_HOST", nil)}"
 
   # SMTP settings
   config.action_mailer.smtp_settings = {
-      address: ENV["SMPT_ADDRESS"],
+      address: ENV.fetch("SMPT_ADDRESS", nil),
       port: 587,
-      user_name: ENV["SMPT_USERNAME"],
-      password: ENV["SMPT_PASSWORD"],
+      user_name: ENV.fetch("SMPT_USERNAME", nil),
+      password: ENV.fetch("SMPT_PASSWORD", nil),
       authentication: "plain",
       enable_starttls_auto: true
   }

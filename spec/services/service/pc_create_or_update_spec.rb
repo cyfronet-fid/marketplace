@@ -115,9 +115,10 @@ RSpec.describe Service::PcCreateOrUpdate, backend: true do
 
     stub_http_file(described_service, "MetalPDB.png", "http://metalweb.cerm.unifi.it/global/images/MetalPDB.png")
 
-    allow(described_service).to receive(:open)
-      .with("http://phenomenal-h2020.eu/home/wp-content/logo.png", ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE)
-      .and_raise(OpenURI::HTTPError.new("", status: 404))
+    allow(described_service).to receive(:open).with(
+      "http://phenomenal-h2020.eu/home/wp-content/logo.png",
+      ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
+    ).and_raise(OpenURI::HTTPError.new("", status: 404))
     described_service.call
   end
 
