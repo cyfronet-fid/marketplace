@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RaidProjectsController < ApplicationController
   before_action :authenticate_user!
   before_action :find_and_authorize, only: %i[show edit update destroy]
@@ -6,12 +8,12 @@ class RaidProjectsController < ApplicationController
     @raid_projects = policy_scope(RaidProject)
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @raid_project = RaidProject.new
     @raid_project.build_main_title
+
     # @raid_project.alternative_titles.build
 
     respond_to do |format|
@@ -19,7 +21,7 @@ class RaidProjectsController < ApplicationController
       format.js { render_modal_form }
     end
   end
-  
+
   def create
     @raid_project = RaidProject.new(permitted_attributes(RaidProject).merge(user: current_user))
     respond_to do |format|
@@ -40,7 +42,6 @@ class RaidProjectsController < ApplicationController
       render :edit, status: :bad_request
     end
   end
-
 
   def destroy
     @raid_project.destroy

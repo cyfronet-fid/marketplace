@@ -1,14 +1,14 @@
 %div
   %strong Main title:
   %p
-    = @raid_project.main_title.text
-    = @raid_project.main_title.start_date
-    = @raid_project.main_title.end_date
+    = @raid_project&.main_title&.text
+    = @raid_project&.main_title&.start_date
+    = @raid_project&.main_title&.end_date
 %div
   %strong Alternative Titles:
   - @raid_project.alternative_titles.each do |title|
-    %p 
-      = title.text 
+    %p
+      = title.text
       = title.start_date
       = title.end_date
 %p
@@ -17,6 +17,6 @@
 %p
   %strong End date:
   = @raid_project.end_date
-= link_to 'View All', raid_projects_path
-= link_to 'Update', edit_raid_project_path(@raid_project.id)
-= link_to 'Delete', @raid_project, method: :delete, data: { confirm: 'Are you sure?' }
+= link_to "View All", raid_projects_path
+= link_to "Update", edit_raid_project_path(@raid_project.id)
+= link_to "Delete", @raid_project, method: :delete, data: { confirm: "Are you sure?" }

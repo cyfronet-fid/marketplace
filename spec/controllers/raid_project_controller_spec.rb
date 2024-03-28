@@ -1,5 +1,6 @@
-require 'rails_helper'
+# frozen_string_literal: true
 
-RSpec.describe RaidProjectsController, type: :controller do
+require "rails_helper"
 
-end
+# RSpec.describe RaidProjectsController, type: :controller do
+# end

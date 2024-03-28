@@ -1,9 +1,9 @@
 import { Controller } from "stimulus";
 
 export default class extends Controller {
-  static targets = [ "alternativeTitle", "addField", "form", "destroy" ]
+  static targets = ["alternativeTitle", "addField", "form", "destroy"];
   connect() {
-    console.log(this.formTarget.dataset.disabled)
+    console.log(this.formTarget.dataset.disabled);
     console.log("Raid project controller connected");
   }
   addField(event) {
