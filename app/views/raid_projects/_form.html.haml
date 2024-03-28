@@ -11,7 +11,9 @@
       = _("Titles")
     = f.fields_for :main_title do |main_title_f|
       = main_title_f.input :text, label: 'Main Title'
-      = main_title_f.input :language
+      = main_title_f.input :language, as: :select,
+                  collection: Language.living.map { |c| [ c.name, "value" => c.alpha3 ] },
+                  input_html: { data: { choice: true },  multiple: false }
       = main_title_f.input :start_date,  as: :date, html5: true
       = main_title_f.error :start_date, id: "wrong date"
       = main_title_f.input :end_date,  as: :date, html5: true
@@ -26,5 +28,3 @@
             fields: f.fields_for(:alternative_titles, AlternativeTitle.new,
             child_index: "new_field") { |alternative_title_f| render "raid_projects/form/alternative_title_fields",
             alternative_title_f: alternative_title_f }}
-
-      
