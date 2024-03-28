@@ -1,8 +1,10 @@
 %div{ "data-raid-project-target": "alternativeTitle" }
-  .contact 
+  .contact
     = alternative_title_f.hidden_field :id
-    = alternative_title_f.input :text, label: 'Alternative Title'
-    = alternative_title_f.input :language
+    = alternative_title_f.input :text, label: "Alternative Title"
+    = alternative_title_f.input :language, as: :select,
+                  collection: Raid::Language.living.map { |c| [ c.name, "value" => c.alpha3 ] },
+                  input_html: { data: { choice: true },  multiple: false }
     = alternative_title_f.input :start_date, as: :date, html5: true
     = alternative_title_f.input :end_date, as: :date, html5: true
 
