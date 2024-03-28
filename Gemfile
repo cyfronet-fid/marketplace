@@ -133,3 +133,4 @@ gem "auto_strip_attributes"
 # Fix for puma memory leak
 gem "puma_worker_killer"
 gem "timeout", "~>0.3.2"
+gem 'human_languages'

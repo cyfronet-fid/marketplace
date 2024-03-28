@@ -257,6 +257,7 @@ GEM
     httpi (2.5.0)
       rack
       socksify
+    human_languages (0.8.0)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     i18n_data (0.16.0)
@@ -672,6 +673,7 @@ DEPENDENCIES
   gretel
   haml-rails
   haml_lint
+  human_languages
   image_processing
   jira-ruby
   json-schema
