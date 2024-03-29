@@ -2,11 +2,12 @@
 
 class Service < ApplicationRecord
   include Rails.application.routes.url_helpers
-  include Service::Search
   include LogoAttachable
   include Publishable
   include Presentable
+  include Propagable
   include Viewable
+  include Service::Search
   include Statusable
 
   extend FriendlyId
@@ -262,8 +263,6 @@ class Service < ApplicationRecord
 
   after_save :set_first_category_as_main!, if: :main_category_missing?
 
-  after_save :propagate_to_ess
-
   def self.popular(count)
     where(status: %i[published unverified]).includes(:providers).order(popularity_ratio: :desc, name: :asc).limit(count)
   end
@@ -274,10 +273,6 @@ class Service < ApplicationRecord
 
   def set_first_category_as_main!
     categorizations.first&.update(main: true)
-  end
-
-  def propagate_to_ess
-    public? && !destroyed? ? Service::Ess::Add.call(self) : Service::Ess::Delete.call(id, type)
   end
 
   def offers?
