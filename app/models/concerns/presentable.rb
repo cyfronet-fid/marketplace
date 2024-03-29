@@ -3,8 +3,6 @@
 module Presentable
   extend ActiveSupport::Concern
 
-  PUBLIC_STATUSES = %w[published unverified errored].freeze
-
   def administered_by?(user)
     resource_organisation.administered_by?(user)
   end
@@ -39,9 +37,5 @@ module Presentable
 
   def available_omses
     (OMS.where(default: true).to_a + omses.to_a + OMS.where(type: :global).to_a + resource_organisation&.omses).uniq
-  end
-
-  def public?
-    PUBLIC_STATUSES.include?(status)
   end
 end
