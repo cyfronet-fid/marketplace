@@ -2,8 +2,9 @@
 
 class Bundle < ApplicationRecord
   include Offerable
-  include Viewable
+  include Propagable
   include Statusable
+  include Viewable
 
   # include Offer::Parameters
 
@@ -74,7 +75,6 @@ class Bundle < ApplicationRecord
   validates :related_training_url, mp_url: true, if: :related_training?
   validates :helpdesk_url, mp_url: true, presence: true
 
-  after_save :propagate_to_ess
   def set_iid
     self.iid = (service.bundles.maximum(:iid) || 0) + 1 if iid.blank?
   end
@@ -93,10 +93,6 @@ class Bundle < ApplicationRecord
 
   def bundles_count
     service&.bundles&.size || 0
-  end
-
-  def propagate_to_ess
-    status == "published" && !destroyed? ? Bundle::Ess::Add.call(self) : Bundle::Ess::Delete.call(id)
   end
 
   def internal

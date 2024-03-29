@@ -5,6 +5,7 @@ class Provider < ApplicationRecord
   include ImageHelper
   include Publishable
   include Viewable
+  include Propagable
   include Statusable
 
   extend FriendlyId
@@ -19,7 +20,6 @@ class Provider < ApplicationRecord
   end
 
   before_save { self.catalogue = Catalogue.find(catalogue_id) if catalogue_id.present? }
-  after_save :propagate_to_ess
 
   scope :active, -> { where.not(status: %i[deleted draft]) }
 
@@ -254,9 +254,5 @@ class Provider < ApplicationRecord
     return true if (has_new_logo && !has_previous_logo) || (!has_new_logo && has_previous_logo)
 
     logo.attachment.blob != previous_logo.attachment.blob
-  end
-
-  def propagate_to_ess
-    status == "published" && !destroyed? ? Provider::Ess::Add.call(self) : Provider::Ess::Delete.call(id)
   end
 end
