@@ -3,6 +3,7 @@
 class Catalogue < ApplicationRecord
   extend FriendlyId
   include LogoAttachable
+  include Propagable
   include Statusable
 
   friendly_id :pid
