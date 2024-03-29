@@ -2,9 +2,10 @@
 
 class Offer < ApplicationRecord
   # TODO: validate parameter ids uniqueness - for now we are safe thanks to schema validation though
+  include ActionView::Helpers::TextHelper
   include Offerable
   include Offer::Parameters
-  include ActionView::Helpers::TextHelper
+  include Propagable
   include Statusable
 
   acts_as_taggable
@@ -74,7 +75,6 @@ class Offer < ApplicationRecord
                )
            }
 
-  after_save :propagate_to_ess
   before_destroy :check_main_bundles
 
   def current_oms
@@ -179,9 +179,5 @@ class Offer < ApplicationRecord
 
   def sanitize_oms_params
     oms_params.select! { |_, v| v.present? } if oms_params.present?
-  end
-
-  def propagate_to_ess
-    status == "published" && !destroyed? ? Offer::Ess::Add.call(self) : Offer::Ess::Delete.call(id)
   end
 end
