@@ -116,7 +116,7 @@ RSpec.describe Service, backend: true do
       Service::PUBLIC_STATUSES.each do |public_status|
         it "a new #{public_status} service" do
           expect { create(:service, status: public_status) }.to have_enqueued_job(Ess::UpdateJob)
-            .exactly(3)
+            .exactly(4)
             .times
             .with { |payload| expect(payload).to be_an_add_operation }
         end
@@ -150,8 +150,15 @@ RSpec.describe Service, backend: true do
         .each do |non_public_status|
           it "a new #{non_public_status} service" do
             provider = create(:provider)
+            catalogue = create(:catalogue)
             expect do
-              create(:service, resource_organisation: provider, providers: [provider], status: non_public_status)
+              create(
+                :service,
+                resource_organisation: provider,
+                providers: [provider],
+                catalogue: catalogue,
+                status: non_public_status
+              )
             end.to have_enqueued_job(Ess::UpdateJob).with { |payload| expect(payload).to be_a_delete_operation }
           end
 
