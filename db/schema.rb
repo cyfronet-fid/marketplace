@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_03_22_101306) do
+ActiveRecord::Schema.define(version: 2024_04_03_114500) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -241,6 +241,18 @@ ActiveRecord::Schema.define(version: 2024_03_22_101306) do
     t.index ["id", "contactable_id", "contactable_type"], name: "index_contacts_on_id_and_contactable_id_and_contactable_type", unique: true
   end
 
+  create_table "contributors", force: :cascade do |t|
+    t.string "pid_type", null: false
+    t.string "pid", null: false
+    t.boolean "leader", null: false
+    t.boolean "contact", null: false
+    t.string "roles", default: [], array: true
+    t.bigint "raid_project_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["raid_project_id"], name: "index_contributors_on_raid_project_id"
+  end
+
   create_table "data_administrators", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -250,6 +262,17 @@ ActiveRecord::Schema.define(version: 2024_03_22_101306) do
     t.index ["email"], name: "index_data_administrators_on_email"
     t.index ["first_name"], name: "index_data_administrators_on_first_name"
     t.index ["last_name"], name: "index_data_administrators_on_last_name"
+  end
+
+  create_table "descriptions", force: :cascade do |t|
+    t.text "text", null: false
+    t.string "language"
+    t.string "type", null: false
+    t.string "description_type", null: false
+    t.bigint "raid_project_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["raid_project_id"], name: "index_descriptions_on_raid_project_id"
   end
 
   create_table "events", force: :cascade do |t|
@@ -470,6 +493,16 @@ ActiveRecord::Schema.define(version: 2024_03_22_101306) do
     t.integer "ancestry_depth", default: 0
     t.jsonb "extras"
     t.index ["name"], name: "index_platforms_on_name", unique: true
+  end
+
+  create_table "positions", force: :cascade do |t|
+    t.string "pid", null: false
+    t.date "start_date", null: false
+    t.date "end_date"
+    t.bigint "contributor_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["contributor_id"], name: "index_positions_on_contributor_id"
   end
 
   create_table "project_items", force: :cascade do |t|
@@ -1014,6 +1047,8 @@ ActiveRecord::Schema.define(version: 2024_03_22_101306) do
   add_foreign_key "catalogue_vocabularies", "catalogues"
   add_foreign_key "catalogue_vocabularies", "vocabularies"
   add_foreign_key "catalogues", "catalogue_sources", column: "upstream_id", on_delete: :nullify
+  add_foreign_key "contributors", "raid_projects"
+  add_foreign_key "descriptions", "raid_projects"
   add_foreign_key "offer_links", "offers", column: "source_id"
   add_foreign_key "offer_links", "offers", column: "target_id"
   add_foreign_key "offers", "omses", column: "primary_oms_id"
@@ -1025,6 +1060,7 @@ ActiveRecord::Schema.define(version: 2024_03_22_101306) do
   add_foreign_key "oms_triggers", "omses"
   add_foreign_key "omses", "services"
   add_foreign_key "persistent_identity_systems", "services"
+  add_foreign_key "positions", "contributors"
   add_foreign_key "project_items", "bundles", on_delete: :nullify
   add_foreign_key "project_items", "offers"
   add_foreign_key "project_items", "projects"
