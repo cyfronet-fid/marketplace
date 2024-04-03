@@ -1,16 +1,27 @@
 import { Controller } from "stimulus";
+import initChoices from "../choices";
 
 export default class extends Controller {
-  static targets = ["alternativeTitle", "addField", "form", "destroy"];
+  static targets = [
+    "addField", 
+    "alternativeDescription", 
+    "alternativeTitle",
+    "contributor",
+    "destroy",
+    "form"
+  ];
   connect() {
-    console.log(this.formTarget.dataset.disabled);
     console.log("Raid project controller connected");
   }
   addField(event) {
+    console.log('adding')
     event.preventDefault();
     this.alternativeTitles = this.alternativeTitleTargets;
+    this.alternativeDescriptions = this.alternativeDescriptionTargets;
+    this.contributors = this.contributorTargets;
     const quantity = this[event.target.dataset.value].length;
     event.target.insertAdjacentHTML("beforebegin", event.target.dataset.fields.replace(/new_field/g, quantity));
+    initChoices();
   }
 
   removeField(event) {

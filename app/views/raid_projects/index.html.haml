@@ -1,15 +1,12 @@
 
 %h1 RAID Projects
-%table
-  %thead
-    %tr
-      %th Title
-      %th{ colspan: "3" }
-  %tbody
-    - @raid_projects.each do |project|
-      %tr
-        %td= project&.main_title&.text
-      %tr
-        %td= link_to "Show", project
-%br
+- if @raid_projects.present?
+  - @raid_projects.each do |project|
+    %div
+      %p 
+      %strong Title: 
+      = project.main_title.text 
+      %br
+      = link_to "Show", project
+    %hr
 = link_to "New Project", new_raid_project_path
