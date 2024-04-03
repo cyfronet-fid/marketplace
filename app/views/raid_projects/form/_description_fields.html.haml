@@ -1,0 +1,18 @@
+%div
+    %h2
+        = _("Descriptions")
+    = f.fields_for :main_description do |main_description_f|
+        = main_description_f.input :text, label: "Main Description"
+        = main_description_f.input :language, as: :select,
+                  collection: Raid::Language.living.map { |c| [ c.name, "value" => c.alpha3 ] },
+                  input_html: { data: { choice: true },  multiple: false }
+    = f.fields_for :alternative_descriptions, multiple: true, as: :array,
+                wrapper_html: { "data-raid-project-target" => "alternativeDescription" }  do |alternative_description_f|
+        = render "raid_projects/form/alternative_description_fields", alternative_description_f: alternative_description_f
+    = link_to _("Add alternative description"), "#", class: "btn btn-primary",
+            data: { raid_project: { target: "addField" },
+            action: "click->raid-project#addField",
+            value: "alternativeDescriptions",
+            fields: f.fields_for(:alternative_descriptions, Raid::AlternativeDescription.new,
+            child_index: "new_field") { |alternative_description_f| render "raid_projects/form/alternative_description_fields",
+            alternative_description_f: alternative_description_f }}

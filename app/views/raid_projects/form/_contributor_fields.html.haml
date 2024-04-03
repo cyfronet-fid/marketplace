@@ -1,0 +1,25 @@
+%div{ "data-raid-project-target": "contributor" }
+  .contact
+    = contributor_f.hidden_field :id
+    = contributor_f.input :pid_type, label: "ID Type", as: :select,
+                  collection: Raid::Contributor.pid_types.map { |k, v| [ k, v ] },
+                  input_html: { data: { choice: true },  multiple: false }
+    = contributor_f.input :pid, label: "ID"
+    = contributor_f.input :contact,  as: :boolean
+    = contributor_f.input :leader, as: :boolean
+    = contributor_f.input :roles, array: true,  as: :select,
+        collection: set_contributor_roles_options.map { |k, v| [ k.capitalize, v ] },
+        input_html: { data: { choice: true },  multiple: true }, include_hidden: false
+    %h4 
+      Position
+    = contributor_f.fields_for :position do |position_f|
+      = position_f.input :pid, as: :select,
+          collection: Raid::Position.pids.map { |k, v| [ k.humanize.capitalize, v ] },
+          input_html: { data: { choice: true },  multiple: false }, include_hidden: false
+      = position_f.input :start_date,  as: :date, html5: true
+      = position_f.input :end_date,  as: :date, html5: true
+    = contributor_f.hidden_field :_destroy, "data-raid-project-target": "destroy"
+    .text-right
+      = link_to _("Delete contributor"), "#", id: "contributor-delete-#{contributor_f.index}",
+      class: "btn-sm disablable btn-danger", "data-action": "click->raid-project#removeField"
+

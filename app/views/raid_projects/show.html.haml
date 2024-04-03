@@ -1,22 +1,54 @@
-%div
-  %strong Main title:
-  %p
-    = @raid_project&.main_title&.text
-    = @raid_project&.main_title&.start_date
-    = @raid_project&.main_title&.end_date
-%div
-  %strong Alternative Titles:
-  - @raid_project.alternative_titles.each do |title|
+- content_for :title, _("Your RAID Project")
+.container
+  .mb-4.pb-4.border-header
+    %h1.mr-auto.my-auto= _("Your RAID Project")
+
+  %div
+    %strong Main title:
     %p
-      = title.text
-      = title.start_date
-      = title.end_date
-%p
-  %strong Start date:
-  = @raid_project.start_date
-%p
-  %strong End date:
-  = @raid_project.end_date
-= link_to "View All", raid_projects_path
-= link_to "Update", edit_raid_project_path(@raid_project.id)
-= link_to "Delete", @raid_project, method: :delete, data: { confirm: "Are you sure?" }
+      = @raid_project&.main_title&.text
+      = @raid_project&.main_title&.start_date
+      = @raid_project&.main_title&.end_date
+  - if @raid_project.alternative_titles.present?
+    %div
+      %strong Alternative Titles:
+      - @raid_project.alternative_titles.each do |title|
+        %p
+          = title.text
+          = title.start_date
+          = title.end_date
+  %div
+    %strong Duration:
+    = @raid_project.start_date 
+    - if @raid_project.end_date
+      \-
+    = @raid_project.end_date
+  - if @raid_project.main_description.present?
+    %div
+      %strong Description: 
+      = @raid_project.main_description.text
+  %div
+    %strong
+    - @raid_project.contributors.each do |contributor|
+      %p  
+        = contributor.pid_type
+        = contributor.pid 
+      %p 
+        Contact: 
+        = contributor.contact 
+      %p 
+        Leader: 
+        = contributor.leader
+      %p 
+        %strong
+          Position: 
+        = contributor.position&.pid
+      %div 
+        Roles: 
+        - contributor.roles.each do |role|
+          %p
+            = role
+      %hr
+  = link_to "View All", raid_projects_path
+  = link_to "Update", edit_raid_project_path(@raid_project.id)
+  = link_to "Delete", @raid_project, method: :delete, data: { confirm: "Are you sure?" }

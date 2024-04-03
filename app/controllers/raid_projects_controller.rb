@@ -13,8 +13,8 @@ class RaidProjectsController < ApplicationController
   def new
     @raid_project = RaidProject.new
     @raid_project.build_main_title
-
-    # @raid_project.alternative_titles.build
+    @raid_project.contributors.build
+    @raid_project.build_main_description
 
     respond_to do |format|
       format.html
