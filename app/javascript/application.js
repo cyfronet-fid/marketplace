@@ -7,5 +7,9 @@
 // }
 
 import "./app";
-
 import "./controllers";
+
+import jquery from "jquery";
+import "@hotwired/turbo-rails";
+
+window.$ = window.jQuery = jquery;

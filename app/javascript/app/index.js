@@ -7,10 +7,7 @@ import initCookiesPolicy from "./cookies_policy";
 import "bootstrap/dist/js/bootstrap";
 import "./nav";
 
-import jQuery from "jquery";
-
 require("@rails/ujs").start();
-require("turbolinks").start();
 require("@rails/activestorage").start();
 require("shepherd.js");
 
@@ -25,8 +22,6 @@ import Shepherd from "shepherd.js";
 
 window.Shepherd = Shepherd;
 
-window.$ = window.jQuery = jQuery;
-
 window.Cookies = Cookies;
 
 // :TODO: for now import all fonts, so ux people can work without problems, optimize later
@@ -37,20 +32,17 @@ import assignTabIdToWindow from "./tabs";
 import { handleTourFor } from "./tours";
 import initMasonry from "./masonry";
 
-document.addEventListener("turbolinks:before-render", function (event) {
-  dom.i2svg({
-    node: event.data.newBody,
-  });
+document.addEventListener("turbo:before-render", function (event) {
   initSorting(event.data.newBody);
   dom.watch();
-  console.log("ELUWINKA");
 });
 
-document.addEventListener("turbolinks:load", async function (event) {
+document.addEventListener("turbo:load", async function (event) {
   initChoices();
   initCookiesPolicy();
   initBadgeState();
   initMasonry();
+  console.log("TEST UPDATE 1");
   await initProbes();
 });
 
