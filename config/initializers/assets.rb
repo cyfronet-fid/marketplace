@@ -11,7 +11,7 @@
 # # Add Yarn node_modules folder to the asset load path.
 Rails.application.config.assets.paths << Rails.root.join("node_modules")
 
-Rails.application.config.assets.precompile += %w[trix.css jquery.min.js jquery_ujs.js bootstrap.min.js popper.js]
+Rails.application.config.assets.precompile += %w[trix.css bootstrap.min.js popper.js]
 #
 # # Precompile additional assets.
 # # application.js, application.css, and all non-JS/CSS in the app/assets
