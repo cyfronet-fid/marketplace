@@ -1,0 +1,18 @@
+%div{ "data-raid-project-target": "organisation" }
+  .contact
+    = organisation_f.hidden_field :id
+    = organisation_f.input :pid, label: "Name"
+    %h4 
+      Position
+    = organisation_f.fields_for :position do |position_f|
+      = position_f.hidden_field :id
+      = position_f.input :pid, as: :select,
+          collection: set_organisation_roles.map { |k, v| [ k.capitalize, v ] },
+          input_html: { data: { choice: true },  multiple: false }, include_hidden: false
+      = position_f.input :start_date,  as: :date, html5: true
+      = position_f.input :end_date,  as: :date, html5: true
+    = organisation_f.hidden_field :_destroy, "data-raid-project-target": "destroy"
+    .text-right
+      = link_to _("Delete organisation"), "#", id: "organisation-delete-#{organisation_f.index}",
+      class: "btn-sm disablable btn-danger", "data-action": "click->raid-project#removeField"
+

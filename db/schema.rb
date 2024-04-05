@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_04_03_114500) do
+ActiveRecord::Schema.define(version: 2024_04_04_125135) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -496,13 +496,14 @@ ActiveRecord::Schema.define(version: 2024_04_03_114500) do
   end
 
   create_table "positions", force: :cascade do |t|
-    t.string "pid", null: false
-    t.date "start_date", null: false
+    t.string "pid"
+    t.date "start_date"
     t.date "end_date"
-    t.bigint "contributor_id", null: false
+    t.string "positionable_type", null: false
+    t.bigint "positionable_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["contributor_id"], name: "index_positions_on_contributor_id"
+    t.index ["positionable_type", "positionable_id"], name: "index_positions_on_positionable"
   end
 
   create_table "project_items", force: :cascade do |t|
@@ -665,6 +666,14 @@ ActiveRecord::Schema.define(version: 2024_04_03_114500) do
     t.string "status"
     t.integer "usage_counts_views", default: 0, null: false
     t.string "ppid"
+  end
+
+  create_table "raid_organisations", force: :cascade do |t|
+    t.string "pid", null: false
+    t.bigint "raid_project_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["raid_project_id"], name: "index_raid_organisations_on_raid_project_id"
   end
 
   create_table "raid_projects", force: :cascade do |t|
@@ -1060,7 +1069,6 @@ ActiveRecord::Schema.define(version: 2024_04_03_114500) do
   add_foreign_key "oms_triggers", "omses"
   add_foreign_key "omses", "services"
   add_foreign_key "persistent_identity_systems", "services"
-  add_foreign_key "positions", "contributors"
   add_foreign_key "project_items", "bundles", on_delete: :nullify
   add_foreign_key "project_items", "offers"
   add_foreign_key "project_items", "projects"
@@ -1075,6 +1083,7 @@ ActiveRecord::Schema.define(version: 2024_04_03_114500) do
   add_foreign_key "provider_vocabularies", "providers"
   add_foreign_key "provider_vocabularies", "vocabularies"
   add_foreign_key "providers", "provider_sources", column: "upstream_id", on_delete: :nullify
+  add_foreign_key "raid_organisations", "raid_projects"
   add_foreign_key "raid_projects", "users"
   add_foreign_key "service_alternative_identifiers", "alternative_identifiers"
   add_foreign_key "service_alternative_identifiers", "services"
