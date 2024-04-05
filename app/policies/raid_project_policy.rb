@@ -42,6 +42,9 @@ class RaidProjectPolicy < ApplicationPolicy
       contributors_attributes: [
         :id, :pid, :pid_type, :leader, :contact, :_destroy, [roles: []],
         position_attributes: [:id, :pid, :start_date, :end_date]
+      ],
+      raid_organisations_attributes: [
+        :id, :pid, position_attributes: [:id, :pid, :start_date, :end_date]
       ]
     ]
   end

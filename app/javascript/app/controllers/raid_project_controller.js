@@ -7,6 +7,7 @@ export default class extends Controller {
     "alternativeDescription", 
     "alternativeTitle",
     "contributor",
+    "raid_organisation",
     "destroy",
     "form"
   ];
@@ -19,6 +20,7 @@ export default class extends Controller {
     this.alternativeTitles = this.alternativeTitleTargets;
     this.alternativeDescriptions = this.alternativeDescriptionTargets;
     this.contributors = this.contributorTargets;
+    this.raid_organisations = this.raidOrganisationTargets;
     const quantity = this[event.target.dataset.value].length;
     event.target.insertAdjacentHTML("beforebegin", event.target.dataset.fields.replace(/new_field/g, quantity));
     initChoices();
