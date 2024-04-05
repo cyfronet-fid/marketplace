@@ -15,6 +15,10 @@ class RaidProjectsController < ApplicationController
     @raid_project.build_main_title
     @raid_project.contributors.build
     @raid_project.build_main_description
+    @raid_project.raid_organisations.build
+    # @raid_project.contributors.each do |contributor|
+    #   contributor.build_position
+    # end
 
     respond_to do |format|
       format.html

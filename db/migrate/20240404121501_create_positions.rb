@@ -1,10 +1,10 @@
 class CreatePositions < ActiveRecord::Migration[6.1]
   def change
     create_table :positions do |t|
-      t.string :pid, null: false
-      t.date :start_date, null: false
+      t.string :pid
+      t.date :start_date
       t.date :end_date
-      t.references :contributor, null: false, foreign_key: true
+      t.references :positionable, polymorphic: true, null: false
 
       t.timestamps
     end

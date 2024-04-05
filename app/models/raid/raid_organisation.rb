@@ -1,18 +1,11 @@
-# frozen_string_literal: true
-
-class Raid::Contributor < ApplicationRecord
+class Raid::RaidOrganisation < ApplicationRecord
   belongs_to :raid_project
   has_one :position, as: :positionable
   attr_accessor :position_attributes
 
   accepts_nested_attributes_for :position, allow_destroy: true
-  
-  PID_TYPES = { ORCID: "https://orcid.org/", ISNI: "https://isni.org/" }.freeze
-  
-  enum pid_type: PID_TYPES
 
   validates :pid, presence: true
-  validates :pid_type, presence: true
 
   after_initialize :init_position
   

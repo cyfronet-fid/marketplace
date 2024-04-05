@@ -13,8 +13,9 @@
     %h4 
       Position
     = contributor_f.fields_for :position do |position_f|
+      = position_f.hidden_field :id
       = position_f.input :pid, as: :select,
-          collection: Raid::Position.pids.map { |k, v| [ k.humanize.capitalize, v ] },
+          collection: set_contributor_positions.map { |k, v| [ k.capitalize, v ] },
           input_html: { data: { choice: true },  multiple: false }, include_hidden: false
       = position_f.input :start_date,  as: :date, html5: true
       = position_f.input :end_date,  as: :date, html5: true

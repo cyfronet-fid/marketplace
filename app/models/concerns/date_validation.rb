@@ -9,7 +9,7 @@ module DateValidation
     end
 
     def validate_dates
-        if end_date && !validate_start_end_date(start_date, end_date)
+        if end_date.present? && !validate_start_end_date(start_date, end_date)
           errors.add(:end_date, " cannot precede start date")
         end
       end
@@ -29,8 +29,8 @@ module DateValidation
       #validate start / end dates falls within project dates
       def validate_item_date(date)
         if self.class == Raid::Position
-          start_date = contributor.raid_project.start_date
-          end_date = contributor.raid_project.end_date
+          start_date = self.positionable.raid_project.start_date
+          end_date = self.positionable.raid_project.end_date
         else
           start_date = raid_project.start_date
           end_date = raid_project.end_date
