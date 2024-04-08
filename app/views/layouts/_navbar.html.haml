@@ -1,4 +1,15 @@
 = render "layouts/sections"
+.top-info-wrapper
+  .container
+    %h3 The EOSC Marketplace will be phased out by April 15, 2024 as we transition to the EOSC EU Node.
+    %p
+      More details on accessing and integrating with the next phase of EOSC are forthcoming. The EOSC EU Node will
+      maintain functions starting mid-April, with full features expected in late 2024. Service providers,
+      please give consent for future communications via the Providers Portal.
+    %p
+      Read
+      %a{ href: "https://eoscfuture.eu/newsfuture/eosc-future-signs-off/" } this article
+      for more information.
 
 - if whitelabel
   #mynav.overlay
@@ -59,7 +70,6 @@
             %li.list-inline-item.ml-2
               %a{ href: providers_dashboard_url }
                 = _("Providers Dashboard")
-
 
 - if external_search_url || request.fullpath.include?("backoffice")
   .container.eosc-back-search-bar
