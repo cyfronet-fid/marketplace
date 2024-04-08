@@ -7868,3 +7868,38 @@ abbr[title] {
   background: url('../images/chevron-up.svg');
   transform: rotate(-180deg);
 }
+
+.top-info-wrapper {
+  background: $custom-22;
+  padding: 40px 0 20px;
+  color: $palette-white;
+
+  .container {
+    max-width: 1120px;
+  }
+
+  h3 {
+    color: $palette-white;
+    font-size: 40px;
+    font-style: normal;
+    display: block;
+    font-weight: 500;
+    line-height: 116.1%;
+    margin-bottom: 40px;
+    letter-spacing: -0.8px;
+  }
+
+  p {
+    font-size: 21px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 125%;
+    letter-spacing: -0.48px;
+    margin-bottom: 25px;
+  }
+
+  a {
+    text-decoration: underline;
+    color: $palette-white;
+  }
+}
