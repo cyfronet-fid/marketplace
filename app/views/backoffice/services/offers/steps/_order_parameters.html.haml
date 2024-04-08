@@ -12,7 +12,7 @@
     %h4 Order Managment
     .offer-section-wrapper
       .buttons-selector.bottom-margin
-        = f.input :internal, as: :radio_buttons, collection: [["EOSC OMS", true], ["Your own OMS", false]],
+        = f.input :internal, as: :radio_buttons, collection: [["EOSC OMS", true], ["Own Ordering System", false]],
           checked: true,
           label: "Order Management System", wrapper_html: { "data-ordering-target": "internalWrapper" },
             input_html: { "data-ordering-target": "internal", "data-offer-target": "radioButton",
@@ -33,8 +33,9 @@
         this field should be visible if order_type == "open_access" || ("order_required" && !internal)
 
       = f.input :order_url,
-          wrapper_html: { "data-ordering-target": "orderUrlWrapper" },
-          input_html: { class: "form-control-lg" }, label: _("URL with Direct Access to the Resource")
+        "data-tooltip": "You've selected open access. Please share the resource URL for user entry.",
+        wrapper_html: { "data-ordering-target": "orderUrlWrapper" },
+        input_html: { class: "form-control-lg" }, label: _("URL with Direct Access to the Resource")
 
 
       = f.input :restrictions, input_html: { rows: 10 }, label: "Are there any restrictions on Access to the Resource?"
@@ -47,11 +48,17 @@
   .col-lg-5.right-tips
     .right-tip
       %p
-        In the EOSC Marketplace, users can access resources in two ways:
-
+        In the EOSC Marketplace, users can access resources in four ways:
       %p
         %strong Open Access:
         Resources are available openly with just one click, accessible to any user without the need to request access.
       %p
+        %strong Fully Open Access:
+        Resources are available openly with just one click,
+        accessible to any user without the need to request access or even login.
+      %p
         %strong Order Required:
-        The user gains access to the resource only after submitting a request for acc
+        The user gains access to the resource only after submitting a request for access
+      %p
+        %strong Other:
+        Access to the resource has other way to grant
