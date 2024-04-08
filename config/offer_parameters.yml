@@ -48,7 +48,6 @@ service_subcategory-compute-gpu_instances:
     name: "Number of CPU cores per GPU core"
     type: "select"
     value_type: "integer"
-    unit: "GB"
     mode: "buttons"
     values: [1, 2, 4]
   - id: "id3"

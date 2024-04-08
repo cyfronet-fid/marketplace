@@ -1133,12 +1133,19 @@ Service detail
           background: $custom-16;
           color: $palette-white;
 
+          img {
+            filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
+          }
+
           &:hover {
             background: $custom-16;
           }
         }
 
-
+        img {
+          width: 17px;
+          height: 17px;
+        }
       }
     }
 
@@ -7474,6 +7481,10 @@ abbr[title] {
     label,
     legend {
       font-weight: 600;
+    }
+
+    .choices.is-disabled .choices__inner {
+      background: $custom-18;
     }
 
     .choices__inner,
