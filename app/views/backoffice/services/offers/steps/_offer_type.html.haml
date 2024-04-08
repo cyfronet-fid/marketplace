@@ -19,16 +19,24 @@
 
     %h4 Basic informations
     .offer-section-wrapper.mb-0
-      = f.association :offer_category, collection: Vocabulary::ServiceCategory.where(ancestry_depth: 0),
-      input_html: { data: { action: "offer#updateParameters", choice: true }, "data-e2e": "categories-select" }
-      -# pin Vocabulary::ServiceType in this field
+      - other = Vocabulary::ServiceCategory.where(name: "Other")
+      = f.association :offer_category,
+      collection: Vocabulary::ServiceCategory.where(ancestry_depth: 0).reject { |c| c.name == "Other" } + other,
+      input_html: { data: { action: "offer#updateParameters",
+                            "offer-target": "category",
+                            choice: true,
+                            e2e: "categories-select", render: false } }
+      - type_query = Vocabulary::ServiceCategory.where(ancestry: offer&.offer_category, ancestry_depth: 1)
       = f.association :offer_type,
-        collection: Vocabulary::ServiceCategory.where(ancestry: offer&.offer_category, ancestry_depth: 1),
+        collection: type_query,
+        wrapper_html: { class: "#{"d-none" if type_query.size.zero?}" },
         input_html: { data: { "offer-target": "type", action: "offer#updateParameters",
         choice: true, render: false } }
       - type = offer&.offer_type
+      - subtype_query = Vocabulary::ServiceCategory.where(ancestry: "#{type&.ancestry}/#{type&.id}")
       = f.association :offer_subtype,
-        collection: Vocabulary::ServiceCategory.where(ancestry: "#{type&.ancestry}/#{type&.id}"),
+        collection: subtype_query,
+        wrapper_html: { class: "#{"d-none" if subtype_query.size.zero?}" },
         input_html: { data: { "offer-target": "subtype", action: "offer#updateParameters", include_hidden: true,
         choice: true, render: false } }
 
@@ -39,9 +47,9 @@
     .right-tip
       %p
         For more information, refer to the
-        %a{ href: "#" }Provider's Guide
+        %a{ href: "https://marketplace.eosc-portal.eu/user_documentation" }Provider's Guide
         or contact our
-        %a{ href: "#" }Helpdesk.
+        = mail_to "cyfronet-support@mailman.eosc-portal.eu", "Helpdesk"
     .right-tip
       %p
         In the EOSC Marketplace, you can combine one or more offers to create a bundle. Bundle offers
