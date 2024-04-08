@@ -48,12 +48,12 @@
               .col-6
                 Offer Management System
               .col-6
-                = offer.internal ? "EOSC OMS" : "Your own OMS"
+                = offer.internal ? "EOSC OMS" : "Own Ordering System"
             .row.mb-1
               .col-6
                 Restrictions to Access the Service
               .col-6
-                = offer.restrictions
+                = offer.restrictions.blank? ? "-" : offer.restrictions
       .offer-info-box.mb-0
         %h6 Order description
         .offer-info-data
@@ -61,17 +61,17 @@
             .col-6
               Name
             .col-6
-              = offer.name
+              = offer.name.blank? ? "-" : offer.name
           .row.mb-1
             .col-6
               Description
             .col-6
-              = offer.description
+              = offer.description.blank? ? "-" : offer.description
           .row.mb-1
             .col-6
               Tags
             .col-6
-              = offer.tag_list.join(",")
+              = offer.tag_list.size.zero? ? "-" : offer.tag_list.join(",")
   .col-lg-5.right-tips.pt-0
     %h4 Offer preview
 

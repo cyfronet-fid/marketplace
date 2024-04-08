@@ -31,15 +31,15 @@
     = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
     = f.hidden_field :id
 
-    %div{ data: {"offer-target": "section", section: "offer-type" } }
+    %div{ data: { "offer-target": "section", section: "offer-type" } }
       = render "backoffice/services/offers/steps/offer_type", offer: offer, f: f
-    .d-none{ data: {"offer-target": "section", section: "order-parameters" } }
+    .d-none{ data: { "offer-target": "section", section: "order-parameters" } }
       = render "backoffice/services/offers/steps/order_parameters", service: service, offer: offer, f: f
-    .d-none{ data: {"offer-target": "section", section: "offer-parameters" } }
+    .d-none{ data: { "offer-target": "section", section: "offer-parameters" } }
       = render "backoffice/services/offers/steps/offer_parameters", offer: offer, f: f
-    .d-none{ data: {"offer-target": "section", section: "description" } }
+    .d-none{ data: { "offer-target": "section", section: "description" } }
       = render "backoffice/services/offers/steps/description", offer: offer, f: f
-    .d-none{ data: {"offer-target": "section", section: "summary" } }
+    .d-none{ data: { "offer-target": "section", section: "summary" } }
       -# Render summary section here, from the backend
 
 
@@ -63,6 +63,6 @@
             data: { confirm: _("Confirm and unpublish the Offer. It will no longer be visible on the website.") }
         - if policy([:backoffice, offer]).publish?
           = link_to "Publish Offer", polymorphic_path(offer_form_source_module << :publish), method: :post,
-            class: "btn btn-success pl-5 pr-5",
+            class: "btn btn-primary pl-4 pr-4 mobile-bottom-margin ml-3",
             data: { confirm: _("Confirm and publish the Offer. It will be accessible on the website.") }
 

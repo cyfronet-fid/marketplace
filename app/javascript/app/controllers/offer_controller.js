@@ -10,6 +10,7 @@ export default class extends Controller {
     "attributes",
     "attributeType",
     "button",
+    "category",
     "external",
     "form",
     "nextButton",
@@ -36,6 +37,14 @@ export default class extends Controller {
       placeholderValue: "+ start typing to add",
     };
     this.setRadioButtonsStates();
+    if (this.hasCategoryTarget) {
+      this.categoryChoices = new Choices(this.categoryTarget, {
+        removeItems: true,
+        allowHTML: true,
+        duplicateItemsAllowed: false,
+        shouldSort: false,
+      });
+    }
     if (this.hasTypeTarget) {
       this.typeChoices = new Choices(this.typeTarget, choicesConfig);
     }
@@ -64,9 +73,6 @@ export default class extends Controller {
       .dataset.template.replace(/js_template_id/g, currentId);
     const newElement = document.createRange().createContextualFragment(template).firstChild;
 
-    console.log(attr);
-
-    console.log(newElement);
     this.attributesTarget.appendChild(newElement);
     Object.keys(attr).forEach((key, index) => {
       const param = document.getElementById(`offer_parameters_attributes_${currentId}_${key}`);
@@ -221,16 +227,19 @@ export default class extends Controller {
     const response = await this.getSubtypes(value, serviceId, offerId);
     const json = await response.json();
 
-    console.log(json);
     if (json.hasOwnProperty("types")) {
       this.typeChoices.clearChoices();
       this.typeChoices.removeActiveItems();
       await this.typeChoices.setChoices(json.types);
+      const wrapper = this.typeTarget.closest(".form-group.select");
+      json.types.length == 0 ? wrapper.classList.add("d-none") : wrapper.classList.remove("d-none");
     }
     if (json.hasOwnProperty("subtypes")) {
       this.subtypeChoices.clearChoices();
       this.subtypeChoices.removeActiveItems();
       await this.subtypeChoices.setChoices(json.subtypes);
+      const sub_wrapper = this.subtypeTarget.closest(".form-group.select");
+      json.subtypes.length == 0 ? sub_wrapper.classList.add("d-none") : sub_wrapper.classList.remove("d-none");
     }
     if (json.hasOwnProperty("parameters")) {
       await this.setParameters(json.parameters);
@@ -238,7 +247,6 @@ export default class extends Controller {
   }
 
   setParameters(json) {
-    console.log(json);
     this.attributesTarget.innerHTML = "";
     Array.from(json).forEach((attr) => this.generateAttribute(attr));
   }
