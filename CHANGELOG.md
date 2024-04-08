@@ -5,6 +5,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
+## [3.56.2]
+
+### Fixed
+- Offer's form content and actions (@goreck888)
+
+## [3.56.1] 2024-04-17
+
+### Changed
+- Information text in the front page (@jarekzet)
+
 ## [3.56.0] 2024-04-09
 
 ### Added

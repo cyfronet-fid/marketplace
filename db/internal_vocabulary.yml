@@ -75,8 +75,8 @@ service_types:
       gpu_instances:
         name: GPU Instances
         eid: service_subcategory-compute-gpu_instances
-  data_source:
-    name: Data Source
+  data:
+    name: Data
     eid: service_category-data_source
     children:
       data_transfer:
@@ -119,11 +119,3 @@ service_types:
   other:
     name: Other
     eid: service_category-other
-    children:
-      other_other:
-        name: Other
-        eid: service_subcategory-other-other
-        children:
-          other_other_other:
-            name: Other
-            eid: service_subsubcategory-other-other-other

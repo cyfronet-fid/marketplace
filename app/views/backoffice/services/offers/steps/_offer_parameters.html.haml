@@ -20,10 +20,6 @@
           %br
           4. As a result, a new box will appear on the right side of the screen, allowing you to input data.
 
-        %p
-          %strong
-            %a{ href: "#" } Learn More about Offer Parameters ->
-
       .offer-attributes{ "data-offer-target": "attributes" }
         - offer.parameters.each_with_index do |p, idx|
           = render "parameters/template", parameter: p, form: f, index: idx
