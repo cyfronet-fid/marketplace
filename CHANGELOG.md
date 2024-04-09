@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
-## [3.56.0]
+## [3.56.0] 2024-04-09
 
 ### Added
 - New design for the offer's form (@wujuu, @jarekzet, @goreck888)
