@@ -6,6 +6,7 @@ class Raid::RaidOrganisation < ApplicationRecord
   accepts_nested_attributes_for :position, allow_destroy: true
 
   validates :pid, presence: true
+  validates :name, presence: true
 
   after_initialize :init_position
   

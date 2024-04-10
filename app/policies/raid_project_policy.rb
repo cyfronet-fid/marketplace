@@ -44,7 +44,7 @@ class RaidProjectPolicy < ApplicationPolicy
         position_attributes: [:id, :pid, :start_date, :end_date]
       ],
       raid_organisations_attributes: [
-        :id, :pid, position_attributes: [:id, :pid, :start_date, :end_date]
+        :id, :pid, :name, position_attributes: [:id, :pid, :start_date, :end_date]
       ]
     ]
   end
