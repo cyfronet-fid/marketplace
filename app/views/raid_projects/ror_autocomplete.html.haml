@@ -1,0 +1,8 @@
+%li.label
+  = _("Organisations")
+- results.each do |ror|
+  %li.dropdown-item{ role: "option",
+      "data-raid-project-value": "#{ror[:pid]}",
+      "data-raid-project-display": "#{ror[:name]}",
+      "data-action": "click->raid-project#pickOption" }
+    = ror.name
