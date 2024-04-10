@@ -41,7 +41,7 @@ class RaidProject < ApplicationRecord
   validates :start_date, presence: true
   validates :contributors, presence: true
   validate :contributors,  :validate_leader, :validate_contact
-
+  validate :raid_organisations, :validate_organisations
 
   validate :validate_dates
   before_validation :clear_description
@@ -53,6 +53,24 @@ class RaidProject < ApplicationRecord
     end
   end
 
+  def validate_organisations
+    lead = false
+    raid_organisations.each do |organisation|
+       if organisation.position.pid == "lead-research-organisation"
+          p !lead
+          unless lead
+            lead = true
+          else
+            errors.add(:org_base, "Only one organisation can have Lead research organisation position")
+            break
+        end
+       end
+    unless lead
+      errors.add(:org_base, "One (and only one) organisation must have Lead research organisation position")
+    end
+  end
+  end
+
   def validate_leader
     leader = false
     contributors.each do |contributor|
@@ -62,7 +80,7 @@ class RaidProject < ApplicationRecord
       end
     end
     if leader == false
-      errors.add(:base, "At least one contributor must be a project leader")
+      errors.add(:contributor_base, "At least one contributor must be a project leader")
     end
   end
 
@@ -75,7 +93,7 @@ class RaidProject < ApplicationRecord
       end
     end
     if contact == false
-      errors.add(:base, "At least one contributor must be a project contact")
+      errors.add(:contributor_base, "At least one contributor must be a project contact")
     end
   end
 
