@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_04_04_125135) do
+ActiveRecord::Schema.define(version: 2024_04_09_150111) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -673,6 +673,7 @@ ActiveRecord::Schema.define(version: 2024_04_04_125135) do
     t.bigint "raid_project_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "name", null: false
     t.index ["raid_project_id"], name: "index_raid_organisations_on_raid_project_id"
   end
 
@@ -695,6 +696,16 @@ ActiveRecord::Schema.define(version: 2024_04_04_125135) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "best_access_right"
     t.index ["resource_id", "resource_type"], name: "index_research_products_on_resource_id_and_resource_type", unique: true
+  end
+
+  create_table "rors", force: :cascade do |t|
+    t.string "pid", null: false
+    t.string "name", null: false
+    t.string "acronyms", default: [], array: true
+    t.string "aliases", default: [], array: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["pid"], name: "index_rors_on_pid", unique: true
   end
 
   create_table "scientific_domains", force: :cascade do |t|

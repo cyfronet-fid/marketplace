@@ -11,3 +11,4 @@
 # Initial Vocabularies
 
 Rake::Task["rdt:add_vocabularies"].invoke
+Rake::Task["ror:add_rors"].invoke
