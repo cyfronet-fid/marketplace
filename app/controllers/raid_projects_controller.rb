@@ -6,9 +6,13 @@ class RaidProjectsController < ApplicationController
 
   def index
     @raid_projects = policy_scope(RaidProject)
+    # render json: { raid_projects: @raid_projects.map { |pi| serialize(pi) } }
   end
 
-  def show; end
+  def show
+    @raid_project = RaidProject.find(params[:id])
+    render json: @raid_project, serializer: Api::V1::Raid::RaidProjectSerializer
+  end
 
   def new
     @raid_project = RaidProject.new
@@ -16,9 +20,6 @@ class RaidProjectsController < ApplicationController
     @raid_project.contributors.build
     @raid_project.build_main_description
     @raid_project.raid_organisations.build
-    # @raid_project.contributors.each do |contributor|
-    #   contributor.build_position
-    # end
 
     respond_to do |format|
       format.html
@@ -60,5 +61,9 @@ class RaidProjectsController < ApplicationController
   def find_and_authorize
     @raid_project = RaidProject.find(params[:id])
     authorize(@raid_project)
+  end
+
+  def serialize(raid_project)
+    Api::V1::Raid::RaidProjectSerializer.new(raid_project).as_json
   end
 end

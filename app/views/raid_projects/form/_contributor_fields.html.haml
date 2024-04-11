@@ -1,4 +1,4 @@
-%div
+%div{ "data-raid-project-target": "contributor" }
   .contact
     = contributor_f.hidden_field :id
     = contributor_f.input :pid_type, label: "ID Type", as: :select,
@@ -23,4 +23,3 @@
     .text-right
       = link_to _("Delete contributor"), "#", id: "contributor-delete-#{contributor_f.index}",
       class: "btn-sm disablable btn-danger", "data-action": "click->raid-project#removeField"
-
