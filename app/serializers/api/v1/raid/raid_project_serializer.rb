@@ -1,9 +1,38 @@
 class Api::V1::Raid::RaidProjectSerializer < ActiveModel::Serializer
+  attribute :identifier
   attribute :date 
   attribute :title 
   attribute :description, if: -> { object.main_description.present? }
   attribute :organisation, if: -> { object.raid_organisations.present? }
   attribute :contributor
+  attribute :access
+  attribute(:alternateUrl) { nil}
+  attribute(:subject) { nil}
+  attribute(:relatedRaid) { nil}
+  attribute(:relatedObject) { nil}
+  attribute(:alternateIdentifier) { nil}
+  attribute(:spatialCoverage) { nil}
+  attribute(:traditionalKnowledgeLabel) { nil}
+
+
+  def identifier
+    {
+        "id": "http://raid.local/10.82841/619abd9d",
+        "schemaUri": "https://raid.org/",
+        "registrationAgency": {
+            "id": "https://ror.org/038sjwq14",
+            "schemaUri": "https://ror.org/"
+        },
+        "owner": {
+            "id": "https://ror.org/038sjwq14",
+            "schemaUri": "https://ror.org/",
+            "servicePoint": 20000000
+        },
+        "raidAgencyUrl": "http://localhost:808010.82841/619abd9d",
+        "license": "Creative Commons CC-0",
+        "version": 8
+    }
+  end
 
   def date
     {
@@ -85,31 +114,45 @@ end
 def serialize_title(t)
   {
     text: t.text,
-    type: {
-        id: "https://github.com/au-research/raid-metadata/blob/main/scheme/title/type/v1/#{t.title_type}.json",
-        schemaUri: "https://github.com/au-research/raid-metadata/tree/main/scheme/title/type/v1/"
-    },
+    type:  get_type("title", t.title_type),
     startDate: t.start_date,
     endDate: t.end_date,
-    language: {
-        id: t.language,
-        schemaUri: "https://iso639-3.sil.org"
-    }
+    language: get_language(t.language)
   }
 end
+
+
 
 def serialize_description(d)
   {
     text: d.text,
-    type: {
-      id: "https://github.com/au-research/raid-metadata/blob/main/scheme/description/type/v1/#{d.description_type}.json",
-      schemaUri: "https://github.com/au-research/raid-metadata/tree/main/scheme/description/type/v1/"
-    },
-    language: {
-        id: d.language,
-        schemaUri: "https://iso639-3.sil.org"
-    }
+    type:  get_type("description", d.description_type),
+    language: get_language(d.language)
   }
 end
-  
+
+def access
+  {
+    type:  get_type("access", object.raid_access.access_type),
+    statement: {
+        text: object.raid_access.statement_text,
+        language: get_language(object.raid_access.statement_lang)
+    },
+    embargoExpiry: object.raid_access.embargo_expiry
+}
+end
+
+def get_language(language)
+  {
+        id: language,
+        schemaUri: "https://iso639-3.sil.org"
+    }
+  end
+
+def get_type(obj, obj_type)
+  {
+        id: "https://github.com/au-research/raid-metadata/blob/main/scheme/#{obj}/type/v1/#{obj_type}.json",
+        schemaUri: "https://github.com/au-research/raid-metadata/tree/main/scheme/#{obj}/type/v1/"
+    }
+  end
 end

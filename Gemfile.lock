@@ -292,6 +292,7 @@ GEM
     irb (1.13.1)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
+    iso-639 (0.3.6)
     jira-ruby (2.3.0)
       activesupport
       atlassian-jwt
@@ -745,6 +746,7 @@ DEPENDENCIES
   human_languages
   i18n_data
   image_processing (>= 1.2)
+  iso-639
   jira-ruby
   jsbundling-rails
   json-schema

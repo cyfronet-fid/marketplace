@@ -3,17 +3,20 @@ import initChoices from "../choices";
 
 export default class extends Controller {
   static targets = [
+    "accessType",
     "addField", 
     "alternativeDescription", 
     "alternativeTitle",
     "contributor",
-    "raidOrganisation",
+    "embargoExpiry",
+    "embargoExpiryInput",
     "destroy",
     "form",
-    "rorInput",
+    "raidOrganisation",
     "results", 
-    "selectedOption", 
-    "rorValue"
+    "rorInput",
+    "rorValue",
+    "selectedOption"
   ];
   static values = {
     url: String, 
@@ -21,10 +24,33 @@ export default class extends Controller {
   }
   connect() {
     console.log("Raid project controller connected");
+    this.embargoExpiry = this.embargoExpiryTarget
+    this.embargoExpiry.hidden = true
+    this.embargoExpiry = ""
   }
+
+  setEmbargoed() {
+    const accessType = this.accessTypeTarget.value
+    this.embargoExpiryInput = this.embargoExpiryInputTarget
+    
+    if (this.embargoExpiry == "") {
+      this.embargoExpiry = this.embargoExpiryInput.value
+    };
+
+    if (accessType == 'embargoed')
+    { 
+      this.embargoExpiryTarget.hidden = false;
+      this.embargoExpiryInput.value = this.embargoExpiry; 
+    }
+    else {
+      this.embargoExpiryTarget.hidden = true;
+      this.embargoExpiryInput.value = '';
+    };
+  };
 
   autocomplete(event) {
     this.currentElementIndex = event.target.id.split('_')[5]
+    this.accessType = this.accessTypeTarget;
     const query = this.rorInputTargets[this.currentElementIndex].value.trim();
     if (query.length > 2) {
       const params = new URLSearchParams(window.location.search.slice(1));

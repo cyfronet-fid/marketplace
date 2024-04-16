@@ -7,9 +7,9 @@
     = f.input :start_date, as: :date, html5: true
     = f.input :end_date, as: :date, html5: true
   %hr
-  = render "raid_projects/form/title_fields", f: f
+  = render "raid_projects/form/title_fields", f: f, obj: raid_project
   %hr
-  = render "raid_projects/form/description_fields", f: f
+  = render "raid_projects/form/description_fields", f: f, obj: raid_project
   %hr
   %div
     %h2
@@ -38,3 +38,5 @@
               fields: f.fields_for(:raid_organisations, Raid::RaidOrganisation.new,
               child_index: "new_field") { |organisation_f| render "raid_projects/form/organisation_fields",
               organisation_f: organisation_f } }
+  %hr
+  = render "raid_projects/form/access_fields", f: f, obj: raid_project.raid_access

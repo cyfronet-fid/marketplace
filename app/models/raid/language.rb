@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require "languages"
+require 'iso-639'
 
 class Raid::Language
   class << self
-    def living
-      Languages.living.sort_by(&:name)
+    def all
+      ISO_639::ISO_639_2
     end
   end
 end

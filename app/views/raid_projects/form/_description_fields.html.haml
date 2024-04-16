@@ -4,7 +4,10 @@
     = f.fields_for :main_description do |main_description_f|
         = main_description_f.input :text, label: "Main Description"
         = main_description_f.input :language, as: :select,
-                  collection: Raid::Language.living.map { |c| [ c.name, "value" => c.alpha3 ] },
+                  collection: Raid::Language.all,
+                  label_method: :english_name,
+                  value_method: :alpha3,
+                  include_hidden: true,
                   input_html: { data: { choice: true },  multiple: false }
     = f.fields_for :alternative_descriptions, multiple: true, as: :array,
                 wrapper_html: { "data-raid-project-target" => "alternativeDescription" }  do |alternative_description_f|

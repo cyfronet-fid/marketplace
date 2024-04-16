@@ -45,6 +45,9 @@ class RaidProjectPolicy < ApplicationPolicy
       ],
       raid_organisations_attributes: [
         :id, :pid, :name, :_destroy, position_attributes: [:id, :pid, :start_date, :end_date]
+      ],
+      raid_access_attributes: [
+        :id, :access_type, :statement_text, :statement_lang, :embargo_expiry, :_destroy
       ]
     ]
   end
