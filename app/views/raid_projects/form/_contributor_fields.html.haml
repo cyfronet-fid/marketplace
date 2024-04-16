@@ -1,8 +1,8 @@
-%div{ "data-raid-project-target": "contributor" }
+%div{ "data-raid-project-target": "contributor" }  
   .contact
     = contributor_f.hidden_field :id
     = contributor_f.input :pid_type, label: "ID Type", as: :select,
-                  collection: Raid::Contributor.pid_types.map { |k, v| [ k, v ] },
+                  collection: Raid::Contributor.pid_types.map { |k, v| [ k.upcase, v ] },
                   input_html: { data: { choice: true },  multiple: false }
     = contributor_f.input :pid, label: "ID"
     = contributor_f.input :contact,  as: :boolean
