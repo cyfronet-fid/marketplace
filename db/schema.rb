@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_04_09_150111) do
+ActiveRecord::Schema.define(version: 2024_04_12_153457) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -668,6 +668,17 @@ ActiveRecord::Schema.define(version: 2024_04_09_150111) do
     t.string "ppid"
   end
 
+  create_table "raid_accesses", force: :cascade do |t|
+    t.string "access_type", null: false
+    t.date "embargo_expiry"
+    t.string "statement_text"
+    t.string "statement_lang"
+    t.bigint "raid_project_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["raid_project_id"], name: "index_raid_accesses_on_raid_project_id"
+  end
+
   create_table "raid_organisations", force: :cascade do |t|
     t.string "pid", null: false
     t.bigint "raid_project_id", null: false
@@ -1094,6 +1105,7 @@ ActiveRecord::Schema.define(version: 2024_04_09_150111) do
   add_foreign_key "provider_vocabularies", "providers"
   add_foreign_key "provider_vocabularies", "vocabularies"
   add_foreign_key "providers", "provider_sources", column: "upstream_id", on_delete: :nullify
+  add_foreign_key "raid_accesses", "raid_projects"
   add_foreign_key "raid_organisations", "raid_projects"
   add_foreign_key "raid_projects", "users"
   add_foreign_key "service_alternative_identifiers", "alternative_identifiers"

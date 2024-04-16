@@ -1,17 +1,24 @@
 # frozen_string_literal: true
 
 class RaidProjectsController < ApplicationController
+  acts_as_token_authentication_handler_for User, fallback: :exception
   before_action :authenticate_user!
   before_action :find_and_authorize, only: %i[show edit update destroy]
 
   def index
     @raid_projects = policy_scope(RaidProject)
-    # render json: { raid_projects: @raid_projects.map { |pi| serialize(pi) } }
+    respond_to do |format|
+      format.html 
+      format.json { render json:  @raid_projects.map { |pi| serialize(pi) }  }
+     end
   end
 
   def show
     @raid_project = RaidProject.find(params[:id])
-    render json: @raid_project, serializer: Api::V1::Raid::RaidProjectSerializer
+    respond_to do |format|
+      format.html 
+      format.json { render json:  @raid_project, serializer: Api::V1::Raid::RaidProjectSerializer }
+     end
   end
 
   def new
@@ -20,6 +27,7 @@ class RaidProjectsController < ApplicationController
     @raid_project.contributors.build
     @raid_project.build_main_description
     @raid_project.raid_organisations.build
+    @raid_project.build_raid_access
 
     respond_to do |format|
       format.html
@@ -38,7 +46,9 @@ class RaidProjectsController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    @raid_project.build_main_description if @raid_project.main_description.blank?
+  end
 
   def update
     if @raid_project.update(permitted_attributes(@raid_project))

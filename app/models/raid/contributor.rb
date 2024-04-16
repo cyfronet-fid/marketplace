@@ -7,7 +7,7 @@ class Raid::Contributor < ApplicationRecord
 
   accepts_nested_attributes_for :position, allow_destroy: true
   
-  PID_TYPES = { ORCID: "https://orcid.org/", ISNI: "https://isni.org/" }.freeze
+  PID_TYPES = { orcid: "orcid", isni: "isni" }.freeze
   
   enum pid_type: PID_TYPES
 

@@ -3,6 +3,7 @@
 class RaidProject < ApplicationRecord
   belongs_to :user
   has_one :main_title, class_name: "Raid::MainTitle", dependent: :destroy, autosave: true, inverse_of: :raid_project
+  has_one :raid_access, class_name: "Raid::RaidAccess",dependent: :destroy, autosave: true
   has_many :alternative_titles,
           class_name: "Raid::AlternativeTitle",
           dependent: :destroy,
@@ -36,16 +37,19 @@ class RaidProject < ApplicationRecord
   accepts_nested_attributes_for :main_description, allow_destroy: true
   accepts_nested_attributes_for :alternative_descriptions, allow_destroy: true
   accepts_nested_attributes_for :contributors, allow_destroy: true
+  accepts_nested_attributes_for :raid_access, allow_destroy: true
 
   validates :main_title, presence: true
   validates :start_date, presence: true
   validates :contributors, presence: true
   validate :contributors,  :validate_leader, :validate_contact
   validate :raid_organisations, :validate_organisations
-
+  validates :raid_access, presence: true
   validate :validate_dates
+  
   before_validation :clear_description
 
+  
 
   def clear_description
     if main_description.present? && main_description.text.empty? && main_description.language.empty?
@@ -57,7 +61,6 @@ class RaidProject < ApplicationRecord
     lead = false
     raid_organisations.each do |organisation|
        if organisation.position.pid == "lead-research-organisation"
-          p !lead
           unless lead
             lead = true
           else

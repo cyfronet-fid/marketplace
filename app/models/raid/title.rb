@@ -10,4 +10,5 @@ class Raid::Title < ::ApplicationRecord
   validates :title_type, presence: true
   validates :type, presence: true
   validates :language, length: { minimum: 3, maximum: 3 }
+
 end
