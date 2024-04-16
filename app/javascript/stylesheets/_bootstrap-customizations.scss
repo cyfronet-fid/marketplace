@@ -7871,7 +7871,7 @@ abbr[title] {
 
 .top-info-wrapper {
   background: $custom-22;
-  padding: 40px 0 20px;
+  padding: 40px 0 10px;
   color: $palette-white;
 
   .container {
@@ -7890,12 +7890,11 @@ abbr[title] {
   }
 
   p {
-    font-size: 21px;
-    font-style: normal;
+    font-size: 36px;
     font-weight: 400;
-    line-height: 125%;
-    letter-spacing: -0.48px;
-    margin-bottom: 25px;
+    margin-bottom: 40px;
+    line-height: 130%; /* 46.8px */
+    letter-spacing: -0.72px;
   }
 
   a {
