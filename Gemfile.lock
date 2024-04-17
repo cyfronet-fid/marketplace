@@ -707,6 +707,8 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
+    yajl-ffi (0.1.2)
+      ffi (~> 1.9)
     zeitwerk (2.6.14)
 
 PLATFORMS
@@ -783,6 +785,7 @@ DEPENDENCIES
   rswag-specs
   rswag-ui
   ruby_parser
+  rubyzip
   savon (~> 2.15)
   scss_lint
   searchkick
@@ -809,6 +812,7 @@ DEPENDENCIES
   view_component (~> 2.83)
   web-console (~> 4.2)
   webmock
+  yajl-ffi (~> 0.1.2)
 
 RUBY VERSION
    ruby 3.3.1p55
