@@ -27,6 +27,7 @@ gem "simple_form"
 gem "friendly_id", "~> 5.2.0"
 gem "acts-as-taggable-on"
 gem "countries"
+gem 'iso-639'
 
 gem "activestorage-validator"
 gem "image_processing"
@@ -133,4 +134,7 @@ gem "auto_strip_attributes"
 # Fix for puma memory leak
 gem "puma_worker_killer"
 gem "timeout", "~>0.3.2"
-gem 'iso-639'
+
+# Raid related gems
+gem 'yajl-ffi', '~> 0.1.2'
+gem 'rubyzip'
