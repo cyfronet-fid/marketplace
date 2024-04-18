@@ -1,7 +1,7 @@
 - datasource_fields_class = service.type == "Datasource" ? nil : "d-none"
 = simple_form_for [:backoffice, service],
-  html: { "data-controller" => "form", "data-form-target": "form",
-  "data-disabled": service.upstream_id.present? }  do |f|
+  html: { data: { controller: "form", "form-target": "form",
+  disabled: service.upstream_id.present?, turbo: false } } do |f|
   = f.error_notification
   .row
     .col-2.col-md-2

@@ -30,8 +30,7 @@ RSpec.describe ApplicationController, type: :controller, backend: true do
 
   it "Should return proper IDs for multiple roots" do
     scientific_domains = create_list(:scientific_domain, 10)
-    scientific_domains_id = []
-    scientific_domains.each { |sd| scientific_domains_id << sd.id }
+    scientific_domains_id = scientific_domains.map(&:id)
 
     categories = create_list(:category, 10)
     categories_slug = []
@@ -42,12 +41,10 @@ RSpec.describe ApplicationController, type: :controller, backend: true do
     end
 
     providers = create_list(:provider, 10)
-    providers_id = []
-    providers.each { |provider| providers_id << provider.id }
+    providers_id = providers.map(&:id)
 
     target_users = create_list(:target_user, 10)
-    target_users_id = []
-    target_users.each { |tg| target_users_id << tg.id }
+    target_users_id = target_users.map(&:id)
 
     expect(transformer[:scientific_domains].call(scientific_domains_id)).to match_array(scientific_domains_id)
 

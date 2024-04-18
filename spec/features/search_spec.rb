@@ -13,6 +13,8 @@ RSpec.feature "Service searching in top bar", js: true, end_user_frontend: true 
     visit root_path
     click_on(id: "query-submit")
 
+    sleep(1)
+
     url = URI.parse(page.current_path)
 
     expect(url.path).to eq(services_path)
@@ -24,6 +26,8 @@ RSpec.feature "Service searching in top bar", js: true, end_user_frontend: true 
     visit root_path
     select category.name, from: "category-select", visible: false
     click_on(id: "query-submit")
+
+    sleep(1)
 
     url = URI.parse(page.current_path)
 
