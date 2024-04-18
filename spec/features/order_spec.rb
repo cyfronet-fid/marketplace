@@ -644,10 +644,12 @@ RSpec.feature "Service ordering", end_user_frontend: true do
       click_on "Next", match: :first
 
       # Step 3
+      sleep(1)
       expect(current_path).to eq service_summary_path(service)
       click_on "Back to previous step - Configuration"
 
       # Step 2 - again
+      sleep(1)
       expect(current_path).to eq service_configuration_path(service)
       expect(page).to_not have_text("Voucher ID")
       find("label", id: "have").click
@@ -655,17 +657,20 @@ RSpec.feature "Service ordering", end_user_frontend: true do
       click_on "Next", match: :first
 
       # Step 3
+      sleep(1)
       expect(current_path).to eq service_summary_path(service)
       expect(page).to have_text("11111-22222-33333-44444")
       click_on "Back to previous step - Configuration"
 
       # Step 2 - again
+      sleep(1)
       expect(current_path).to eq service_configuration_path(service)
       expect(page).to have_selector("input[value='11111-22222-33333-44444']")
       find("label", id: "ask").click
       click_on "Next", match: :first
 
       # Step 3
+      sleep(1)
       expect(current_path).to eq service_summary_path(service)
       expect(page).to_not have_text("11111-22222-33333-44444")
     end

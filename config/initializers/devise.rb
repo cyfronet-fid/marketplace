@@ -311,6 +311,10 @@ Devise.setup do |config|
     manager.failure_app = CustomFailure
   end
 
+  # Add setup for working devise with turbo
+  config.responder.error_status = :unprocessable_entity
+  config.responder.redirect_status = :see_other
+
   # ==> Mountable engine configurations
   # When using Devise inside an engine, let's call it `MyEngine`, and this engine
   # is mountable, there are some extra configurations to be taken into account.

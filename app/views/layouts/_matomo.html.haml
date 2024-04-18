@@ -13,7 +13,7 @@
   })();
   (function() {
     let previousPageUrl = null;
-    addEventListener('turbolinks:load', function(event) {
+    addEventListener('turbo:load', function(event) {
       if (previousPageUrl) {
         _paq.push(['setReferrerUrl', previousPageUrl]);
         _paq.push(['setCustomUrl', window.location.href]);
