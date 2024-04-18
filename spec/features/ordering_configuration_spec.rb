@@ -224,12 +224,15 @@ RSpec.feature "Services in ordering_configuration panel", end_user_frontend: tru
       check "Use EOSC Portal as the order management platform"
       select "OMS1", from: "Order Management System"
       click_on "Update Offer"
+      sleep(1)
 
       offer.reload
       expect(offer.internal).to be_falsey
 
       fill_in "Foo", with: "bar"
       click_on "Update Offer"
+
+      sleep(1)
 
       offer.reload
       expect(offer.internal).to be_truthy
@@ -240,6 +243,8 @@ RSpec.feature "Services in ordering_configuration panel", end_user_frontend: tru
 
       select "OMS2", from: "Order Management System"
       click_on "Update Offer"
+
+      sleep(1)
 
       offer.reload
       expect(offer.primary_oms).to eq(oms2)

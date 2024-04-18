@@ -93,8 +93,10 @@ RSpec.feature "Comparison", js: true, end_user_frontend: true do
     sleep(10)
     click_on "Compare"
 
-    expect(current_path).to eql comparisons_path
     sleep(10)
+
+    expect(current_path).to eql comparisons_path
+
     expect(page).to have_content(service1.name)
     expect(page).to have_content(service2.name)
     expect(page).to have_content(service3.name)

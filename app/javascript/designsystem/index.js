@@ -1,5 +1,3 @@
-require("@rails/ujs").start();
-require("turbolinks").start();
 require("@rails/activestorage").start();
 
 import "bootstrap/dist/js/bootstrap";
@@ -14,7 +12,7 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 
 library.add(fas, far);
 
-document.addEventListener("turbolinks:before-render", function (event) {
+document.addEventListener("turbo:before-render", function (event) {
   dom.i2svg({ node: event.data.newBody });
   dom.watch();
 });

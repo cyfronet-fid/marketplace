@@ -38,6 +38,7 @@ export default class extends Controller {
   }
 
   onScroll(event) {
+    event.preventDefault();
     const titlePosition = document.getElementById("title").offsetTop;
     const footerPosition = document.getElementsByTagName("footer")[0].offsetTop;
     if (window.scrollY > titlePosition && window.scrollY < footerPosition - 750) {

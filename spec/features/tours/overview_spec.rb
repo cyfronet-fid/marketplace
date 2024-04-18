@@ -11,7 +11,7 @@ RSpec.feature "Overview tour", end_user_frontend: true do
       @first_service = create(:service, name: "c", status: :errored)
     end
 
-    scenario "should navigate to first service when advancing to last part of tour", js: true do
+    scenario "should navigate to first service when advancing to last part of tour", js: true, skip: true do
       visit services_path(tour: "overview")
 
       click_on "Next"

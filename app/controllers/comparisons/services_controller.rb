@@ -11,7 +11,7 @@ class Comparisons::ServicesController < ComparisonsController
     end
     session[:comparison] = current_slugs
     @services = Service.where(slug: session[:comparison])
-    respond_to { |format| format.js { render_json } }
+    respond_to { |format| format.json { render_json } }
   end
 
   def destroy
