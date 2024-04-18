@@ -12,4 +12,5 @@ import "./controllers";
 import jquery from "jquery";
 import "@hotwired/turbo-rails";
 
+Turbo.session.drive = false;
 window.$ = window.jQuery = jquery;

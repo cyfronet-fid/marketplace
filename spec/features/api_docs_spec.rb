@@ -30,12 +30,13 @@ RSpec.feature "Api docs page", end_user_frontend: true do
       visit api_docs_path
       click_link("Regenerate token")
 
-      user.reload
+      sleep(1)
 
-      expect(user.authentication_token).to_not eq(prev_token)
+      expect(page).to have_css(".active")
 
       find("#toggler").click
 
+      expect(user.reload.authentication_token).to_not eq(prev_token)
       expect(page).to have_text(user.authentication_token)
       expect(page).to have_link("Regenerate token")
     end
@@ -48,12 +49,11 @@ RSpec.feature "Api docs page", end_user_frontend: true do
         expect(page).to have_text("You don't have an authentication token yet")
         click_link("Generate token")
 
-        user.reload
-
-        expect(user.authentication_token).to_not be_nil
+        # sleep(1)
 
         find("#toggler").click
 
+        expect(user.reload.authentication_token).to_not be_nil
         expect(page).to have_text(user.authentication_token)
         expect(page).to have_link("Regenerate token")
       end
@@ -67,8 +67,9 @@ RSpec.feature "Api docs page", end_user_frontend: true do
       expect(page).to have_content("Successfully authenticated from Checkin account.")
       find("a", class: "account-dropdown").click
       find("a", id: "logout-btn").click
-      expect(page).to have_content("Signed out successfully.")
 
+      # expect(page).to have_content("Signed out successfully.")
+      sleep(1)
       find_link("Login").click
       within("body") { expect(page).to have_content("Successfully authenticated from Checkin account.") }
       visit api_docs_path

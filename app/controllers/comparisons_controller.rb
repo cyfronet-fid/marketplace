@@ -20,7 +20,7 @@ class ComparisonsController < ApplicationController
     session[:comparison] = []
     respond_to do |format|
       format.html { redirect_to services_path(@query_params) }
-      format.js { render_json }
+      format.json { render_json }
     end
   end
 

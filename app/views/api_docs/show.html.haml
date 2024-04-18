@@ -30,14 +30,16 @@
       .col-12.col-md-5.token-button
         - if current_user&.valid_token?
           %p
-            = link_to "Regenerate token", api_docs_path, method: :post, class: "btn btn-outline-danger float-right"
+            = link_to "Regenerate token", api_docs_path, method: :post, "data-turbo": false,
+            class: "btn btn-outline-danger float-right"
         - elsif current_user.present?
           %p
-            = link_to "Generate token", api_docs_path, method: :post, class: "btn btn-primary float-right"
+            = link_to "Generate token", api_docs_path, method: :post, "data-turbo": false,
+            class: "btn btn-primary float-right"
         - else
           %p
             = link_to "Log in", user_checkin_omniauth_authorize_path, class: "btn btn-primary float-right",
-            "data-e2e": "login-btn"
+            "data-e2e": "login-btn", "data-turbo": false
   %h2.mb-5 EOSC Marketplace API Documentation
   .container
     .row

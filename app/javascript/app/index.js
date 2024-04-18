@@ -7,7 +7,6 @@ import initCookiesPolicy from "./cookies_policy";
 import "bootstrap/dist/js/bootstrap";
 import "./nav";
 
-require("@rails/ujs").start();
 require("@rails/activestorage").start();
 require("shepherd.js");
 
@@ -33,7 +32,9 @@ import { handleTourFor } from "./tours";
 import initMasonry from "./masonry";
 
 document.addEventListener("turbo:before-render", function (event) {
-  initSorting(event.data.newBody);
+  if (event.hasOwnProperty("data")) {
+    initSorting(event.data.newBody);
+  }
   dom.watch();
 });
 

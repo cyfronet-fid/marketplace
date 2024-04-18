@@ -37,9 +37,6 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
 
-# Use test active job adapter for all tests
-ActiveJob::Base.queue_adapter = :test
-
 RSpec.configure do |config|
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
@@ -76,6 +73,7 @@ RSpec.configure do |config|
 
   config.include ActiveJob::TestHelper
   config.include ActiveSupport::Testing::TimeHelpers
+  config.include TurboAssertionsHelper
 
   # Use mock of middleware
   config.include Devise::Test::ControllerHelpers, type: :controller
