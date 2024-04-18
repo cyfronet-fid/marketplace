@@ -8,6 +8,7 @@ namespace :dev do
   desc "Sample data for local development environment"
   task prime: "db:setup" do
     create_all_from_path("db/data.yml")
+    ImportRor.new.create_dev_ror_data
     puts "Done!"
   end
 
