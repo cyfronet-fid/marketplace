@@ -1,0 +1,18 @@
+= turbo_frame_tag "modal" do
+  #form-modal.modal.d-block
+    .modal-dialog{ role: "document" }
+      .modal-content
+        .modal-header
+          %h3#form-modal-title.modal-title= @title
+          %button.close{ type: "button", data: { dismiss: "modal" }, aria: { label: _("Close") } }
+            %span{ aria: { hidden: "true" } } &times;
+
+        #form-modal-body.modal-body
+          = content
+
+        .modal-footer
+          %button#form-modal-action-btn.btn.btn-primary.pl-5.pr-5.float-left{ type: "submit", form: "modal-form" }
+            = _("New")
+          %button.close.close-link.pl-3.pr-3{ type: "button", data: { dismiss: "modal" } }
+            %span
+              = _("Close")
