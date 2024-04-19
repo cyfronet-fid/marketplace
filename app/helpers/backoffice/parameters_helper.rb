@@ -34,7 +34,6 @@ module Backoffice::ParametersHelper
                "data-offer-target": "button",
                "data-action": "click->offer#add"
              )
-      concat content_tag(:span)
     end
   end
 

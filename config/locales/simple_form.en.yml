@@ -128,12 +128,6 @@ en:
         project_website_url: *url_hint
         webpage: *url_hint
         company_website_url: *url_hint
-      offer:
-        order_url: |
-          Url should start with http:// or https:// prefix [e.g. https://example.com].<br/>
-          Given URL will be used in the offer order/access mechanism - on the service access information step this URL
-          will be used under 'Go to the order website' / 'Go to the service' button (depending on the offer order
-          type). If it isn't specified it will fall back to the service's webpage URL.
       project_item:
         additional_comment: |
           Use it to describe your additional comments/questions related to the
