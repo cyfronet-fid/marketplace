@@ -6,7 +6,7 @@ class Services::QuestionsController < ApplicationController
     @service = Service.friendly.find(params[:service_id])
     authorize(ServiceContext.new(@service, params.key?(:from) && params[:from] == "backoffice_service"), :show?)
 
-    respond_to { |format| format.js { render_modal_form } }
+    # respond_to { |format| format.js { render_modal_form } }
   end
 
   def create
