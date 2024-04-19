@@ -1,2 +1,5 @@
 = link_to _(prompt), question_link,
-  class: "question-link", remote: true, "data-probe": "", "data-preview-target": local_assigns[:preview] ? "link" : ""
+  class: "question-link",
+  data: { "turbo-frame": "modal",
+          probe: "",
+          "preview-target": local_assigns[:preview] ? "link" : "" }

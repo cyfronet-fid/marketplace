@@ -18,6 +18,7 @@
                                           "(on-logout)": "document.getElementById('hidden_logout').click()" }
   = link_to "logout",
             destroy_user_session_path,
+            "data-turbo": false,
             method: :delete,
             id: "hidden_logout",
             style: "display: none;",

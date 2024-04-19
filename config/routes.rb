@@ -30,7 +30,7 @@ Rails.application.routes.draw do
       resource :summary, only: %i[show create]
       resource :cancel, only: :destroy
       resource :logo, only: :show
-      resource :question, only: %i[new create], constraints: lambda { |req| req.format == :js }
+      resource :question, only: %i[new create]
       resources :opinions, only: :index
       resources :details, only: :index
       resources :guidelines, only: :index
