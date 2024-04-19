@@ -37,6 +37,13 @@
         wrapper_html: { "data-ordering-target": "orderUrlWrapper" },
         input_html: { class: "form-control-lg" }, label: _("URL with Direct Access to the Resource")
 
+      .tip-box.mb-5
+        %p
+          Url should start with http:// or https:// prefix [e.g. https://example.com].
+          %br
+          Given URL will be used in the offer order/access mechanism - on the service access information step
+          this URL will be used under 'Go to the order website' / 'Go to the service' button (depending on the
+          offer order type). If it isn't specified it will fall back to the service's webpage URL.
 
       = f.input :restrictions, input_html: { rows: 10 }, label: "Are there any restrictions on Access to the Resource?"
     .bottom-tip
