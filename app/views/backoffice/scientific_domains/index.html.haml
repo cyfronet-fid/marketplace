@@ -22,8 +22,7 @@
         .buttons-box
           - if policy([:backoffice, sd]).destroy?
             = link_to backoffice_scientific_domain_path(sd),
-                  method: :delete,
-                  data: { confirm: _("Are you sure you want to remove this scientific domain?") },
+                  data: { confirm: _("Are you sure you want to remove this scientific domain?"), "turbo-method": :delete },
                   class: "delete-icon float-right" do
               %i.far.fa-trash-alt
           - if policy([:backoffice, sd]).edit?

@@ -1,10 +1,13 @@
 export default function initFlash() {
-  const flash = $(".flash-container");
-  if (flash.length > 0) {
-    const fadeOut = function () {
-      flash.fadeOut();
-    };
-    flash.click(fadeOut);
-    setTimeout(fadeOut, 5000);
+  const flash = document.getElementById("flash-messages");
+  if (flash) {
+    flash.style.opacity = 1;
+    setTimeout(function () {
+      flash.style.transition = "5s";
+      flash.style.opacity = 0;
+    }, 1000);
+    setTimeout(function () {
+      flash.style.display = "none";
+    }, 5000);
   }
 }

@@ -5,7 +5,7 @@
     %header.pb-2.white-bg
       = render "layouts/badge" if ENV["MP_INSTANCE"]
       = render "layouts/admin/navbar"
-      = render "layouts/flash"
+      = render partial: "layouts/flash"
     %main
       = render "layouts/breadcrumb"
       .container

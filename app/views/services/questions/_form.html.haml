@@ -14,7 +14,9 @@
           hint: _("We will send your report to the Service provider. You will receive an answer to " + |
                  "%{email} email address.") % { email: current_user&.email || "your" }  |
   -# haml-lint:enable MultilinePipe
-  #recaptcha= recaptcha_tags
+  #recaptcha= recaptcha_tags noscript: false
   = f.error :verified_recaptcha, class: "invalid-feedback d-block"
 
-  = f.button :submit, label: "SEND", class: "btn btn-primary pl-5 pr-5 float-left"
+  - content_for(:buttons) do
+    = f.button :submit, _("SEND"), id: "form-modal-action-btn",
+    class: "btn btn-primary pl-5 pr-5 float-left", type: "submit", form: "modal-form"

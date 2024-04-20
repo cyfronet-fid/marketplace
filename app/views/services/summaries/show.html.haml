@@ -36,5 +36,5 @@
         %h4
           = _("Additional information")
         = f.input :additional_comment, as: :text, class: "form-control"
-        #recaptcha= recaptcha_tags
+        #recaptcha= recaptcha_tags noscript: false
         = f.error :verified_recaptcha, class: "invalid-feedback d-block"

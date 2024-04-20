@@ -40,19 +40,28 @@ document.addEventListener("turbo:before-render", function (event) {
 
 document.addEventListener("turbo:load", async function (event) {
   initChoices();
+  initFlash();
   initCookiesPolicy();
   initBadgeState();
   initMasonry();
-  console.log("TEST UPDATE 1");
+  await initProbes();
+});
+
+document.addEventListener("turbo:click", async function () {
+  console.log("ZIOMECZKU");
+  initChoices();
+  initFlash();
   await initProbes();
 });
 
 document.addEventListener("ajax:success", function (event) {
   initChoices();
+  initFlash();
 });
 
 document.addEventListener("MP:modalLoaded", function (event) {
   initChoices();
+  initFlash();
 });
 
 document.addEventListener("MP:tourEvent", function (event) {

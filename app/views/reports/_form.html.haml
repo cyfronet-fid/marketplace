@@ -10,4 +10,4 @@
     = f.input :email, as: :email
   = f.input :text, as: :text, input_html: { rows: 6 }, label: _("Describe problem precisely"),
             hint: report_hint(current_user&.email)
-  #recaptcha= recaptcha_tags
+  #recaptcha= recaptcha_tags noscript: false
