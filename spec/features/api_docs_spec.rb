@@ -30,8 +30,6 @@ RSpec.feature "Api docs page", end_user_frontend: true do
       visit api_docs_path
       click_link("Regenerate token")
 
-      sleep(1)
-
       expect(page).to have_css(".active")
 
       find("#toggler").click

@@ -65,22 +65,19 @@ class Import::Resources
           unless @dry_run
             service = Service.new(service)
             if service.valid?
-              service = Service::Create.new(service).call
+              Importers::Logo.new(service, image_url).call unless @rescue_mode
+              service = Service::Create.call(service)
               service_source =
                 ServiceSource.create!(service_id: service.id, eid: service.pid, source_type: "eosc_registry")
               update_from_eosc_registry(service, service_source, true)
-
-              Importers::Logo.new(service, image_url).call unless @rescue_mode
-              service.save!
             else
               service.status = service_data["active"] ? :errored : :draft
-              service.save(validate: false)
               service_source =
                 ServiceSource.create!(service_id: service.id, eid: service.pid, source_type: "eosc_registry")
               update_from_eosc_registry(service, service_source, false)
               log "Service #{service.name}, eid: #{service.pid} saved with errors: #{service.errors.full_messages}"
 
-              Importers::Logo.new(service, image_url).call unless @rescue_mode
+              Importers::Logo.call(service, image_url) unless @rescue_mode
               service.save(validate: false)
             end
           end
@@ -90,10 +87,8 @@ class Import::Resources
             updated += 1
             log "Updating [EXISTING] service #{service[:name]}, id: #{service_source.id}, eid: #{service[:pid]}"
             unless @dry_run
+              Importers::Logo.call(existing_service, image_url) unless @rescue_mode
               Service::Update.call(existing_service, service)
-
-              Importers::Logo.new(existing_service, image_url).call unless @rescue_mode
-              existing_service.save!
             end
           else
             existing_service = Service.find_by(id: service_source.service_id)
@@ -101,9 +96,8 @@ class Import::Resources
               updated += 1
               log "Updating [EXISTING] service #{service[:name]}, id: #{service_source.id}, eid: #{service[:pid]}"
               unless @dry_run
-                Service::Update.call(existing_service, service)
                 Importers::Logo.call(existing_service, image_url) unless @rescue_mode
-                existing_service.save!
+                Service::Update.call(existing_service, service)
               end
             else
               not_modified += 1
