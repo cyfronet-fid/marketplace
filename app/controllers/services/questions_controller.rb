@@ -4,9 +4,7 @@ class Services::QuestionsController < ApplicationController
   def new
     @question = Service::Question.new
     @service = Service.friendly.find(params[:service_id])
-    authorize(ServiceContext.new(@service, params.key?(:from) && params[:from] == "backoffice_service"), :show?)
-
-    # respond_to { |format| format.js { render_modal_form } }
+    # authorize(ServiceContext.new(@service, params.key?(:from) && params[:from] == "backoffice_service"), :show?)
   end
 
   def create
@@ -23,11 +21,13 @@ class Services::QuestionsController < ApplicationController
     respond_to do |format|
       if @question.valid? && verify_recaptcha(model: @question, attribute: :verified_recaptcha)
         Service::Question::Deliver.new(@question).call
-        format.html { redirect_to service_path(@service) }
-        format.js { render js: "location.reload();" }
-        flash[:notice] = "Your message was successfully sent"
+        flash[:notice] = "Question was successfully created"
+        format.html { redirect_to provider_path(@provider) }
+        format.turbo_stream { flash[:notice] = "Question was successfully created" }
       else
-        format.js { render_modal_form }
+        verify_recaptcha(model: @question, attribute: :verified_recaptcha)
+        format.html { render :new, question: @question, status: :unprocessable_entity }
+        format.json { render :new, question: @question, status: :unprocessable_entity }
       end
     end
   end

@@ -13,7 +13,7 @@
     - if current_page?("/")
       .main-elements
     = render "layouts/badge" if ENV["MP_INSTANCE"]
-    = render "layouts/flash"
+    = render partial: "layouts/flash"
     = render "layouts/welcome_modal"
     %header
       = render "layouts/navbar",

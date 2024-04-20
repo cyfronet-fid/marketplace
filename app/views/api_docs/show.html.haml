@@ -30,11 +30,11 @@
       .col-12.col-md-5.token-button
         - if current_user&.valid_token?
           %p
-            = link_to "Regenerate token", api_docs_path, method: :post, "data-turbo": false,
+            = link_to "Regenerate token", api_docs_path, "data-turbo-method": :delete,
             class: "btn btn-outline-danger float-right"
         - elsif current_user.present?
           %p
-            = link_to "Generate token", api_docs_path, method: :post, "data-turbo": false,
+            = link_to "Generate token", api_docs_path, "data-turbo-method": :post,
             class: "btn btn-primary float-right"
         - else
           %p

@@ -1,7 +1,7 @@
 - content_for :title, _("Offer selection")
-= simple_form_for @step, url: service_offers_path(@service), method: :put,
+= simple_form_for @step, url: service_offers_path(@service),
   html: { id: "order-form", role: "form", class: "btn-group-toogle",
-  data: { controller: "order", toogle: "buttons" } } do |f|
+  data: { controller: "order", toogle: "buttons", "turbo-method": :put } } do |f|
 
   - if policy(@service).offers_show?
     %h2.mb-4.mt-5.font-bold

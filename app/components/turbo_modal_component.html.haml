@@ -1,18 +1,21 @@
 = turbo_frame_tag "modal" do
-  #form-modal.modal.d-block
+  #form-modal.modal.d-block{ data: { controller: "turbo-modal",
+  "turbo-modal-target": "modal",
+  action: "turbo:submit-end->turbo-modal#submitEnd keyup@window->turbo-modal#closeWithKeyboard click@window->turbo-modal#closeBackground"
+    } }
     .modal-dialog{ role: "document" }
       .modal-content
         .modal-header
           %h3#form-modal-title.modal-title= @title
-          %button.close{ type: "button", data: { dismiss: "modal" }, aria: { label: _("Close") } }
+          %button.close{ data: { action: "turbo-modal#hideModal" },
+          type: "button", aria: { label: _("Close") } }
             %span{ aria: { hidden: "true" } } &times;
 
         #form-modal-body.modal-body
           = content
 
         .modal-footer
-          %button#form-modal-action-btn.btn.btn-primary.pl-5.pr-5.float-left{ type: "submit", form: "modal-form" }
-            = _("New")
-          %button.close.close-link.pl-3.pr-3{ type: "button", data: { dismiss: "modal" } }
+          = yield_content!(:buttons) if content_for?(:buttons)
+          %button.close.close-link.pl-3.pr-3{ data: { action: "turbo-modal#hideModal" }, type: "button" }
             %span
               = _("Close")

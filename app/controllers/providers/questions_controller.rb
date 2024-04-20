@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
 class Providers::QuestionsController < ApplicationController
+  before_action :ensure_frame_response, only: %i[new edit]
   def new
     @question = Provider::Question.new
     @provider = Provider.friendly.find(params[:provider_id])
-
-    respond_to { |format| format.js { render_modal_form } }
   end
 
   def create
@@ -21,11 +20,13 @@ class Providers::QuestionsController < ApplicationController
     respond_to do |format|
       if @question.valid? && verify_recaptcha(model: @question, attribute: :verified_recaptcha)
         Provider::Question::Deliver.new(@question).call
+        flash.now[:notice] = "Question was successfully created"
         format.html { redirect_to provider_path(@provider) }
-        format.js { render js: "location.reload();" }
-        flash[:notice] = "Your message was successfully sent"
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("flash-messages", partial: "layouts/flash") }
       else
-        format.js { render_modal_form }
+        verify_recaptcha(model: @question, attribute: :verified_recaptcha)
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render :new, status: :unprocessable_entity }
       end
     end
   end
