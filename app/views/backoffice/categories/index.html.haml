@@ -22,8 +22,7 @@
         .buttons-box
           - if policy([:backoffice, category]).destroy?
             = link_to backoffice_category_path(category),
-                method: :delete,
-                data: { confirm: _("Are you sure you want to remove this category") },
+                data: { confirm: _("Are you sure you want to remove this category"), "turbo-method": :delete },
                 class: "delete-icon float-right" do
               %i.far.fa-trash-alt
           - if policy([:backoffice, category]).edit?

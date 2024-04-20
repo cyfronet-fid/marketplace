@@ -1,6 +1,4 @@
-- if alert
-  .alert.alert-danger.mb-0.text-center.flash-container{ role: "alert" }
-    = alert
-- elsif notice
-  .alert.alert-success.mb-0.text-center.flash-container{ role: "alert" }
-    = notice
+#flash-messages
+  - flash.each do |type, msg|
+    .alert.mb-0.text-center.flash-container{ class: "alert-#{type == "notice" ? "success" : "danger" }", role: "alert" }
+      = msg

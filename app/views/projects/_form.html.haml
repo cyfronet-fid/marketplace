@@ -21,5 +21,5 @@
                   "data-action" => "change->project#showSelectedSection", class: "col-lg-5 form-control-lg" }
   = render "customer_typology_fields", f: f
   - if show_recaptcha
-    #recaptcha= recaptcha_tags
+    #recaptcha= recaptcha_tags noscript: false
   = f.error :verified_recaptcha, class: "invalid-feedback d-block"

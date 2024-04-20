@@ -23,6 +23,5 @@
     - if policy([:backoffice, @catalogue]).destroy?
       = link_to _("Delete"),
                 backoffice_catalogue_path(@catalogue),
-                method: :delete,
-                data: { confirm: _("Are you sure you want to remove this catalogue") },
+                data: { confirm: _("Are you sure you want to remove this catalogue"), "turbo-method": :delete },
                 class: "btn btn-danger"

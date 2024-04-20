@@ -20,7 +20,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
           end
           cookies.delete(:favourites)
         end
-        set_flash_message(:notice, :success, kind: "Checkin") if is_navigational_format?
+        flash[:notice] = I18n.t "devise.omniauth_callbacks.success", kind: "Checkin"
       else
         flash[:alert] = "Cannot register user #{@user.errors.inspect}"
         session["devise.checkin_data"] = auth

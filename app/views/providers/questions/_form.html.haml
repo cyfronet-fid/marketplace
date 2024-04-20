@@ -3,7 +3,7 @@
     = _("We will send your question to the Provider.")
     %br
       = _("You will receive an answer to your email address.")
-= simple_form_for question, remote: true, url: provider_question_path(provider),
+= simple_form_for question, url: provider_question_path(provider),
   html: { role: "form", id: "modal-form", data: { action: "submit" } } do |f|
   - unless current_user
     = f.input :author, label: _("Name and surname")
@@ -14,5 +14,8 @@
           hint: _("We will send your report to the Provider. You will receive an answer to " + |
                  "%{email} email address.") % { email: current_user&.email || "your" }  |
   -# haml-lint:enable MultilinePipe
-  #recaptcha= recaptcha_tags
+  #recaptcha= recaptcha_tags noscript: false
   = f.error :verified_recaptcha, class: "invalid-feedback d-block"
+  - content_for(:buttons) do
+    = f.button :submit, _("SEND"), id: "form-modal-action-btn",
+    class: "btn btn-primary pl-5 pr-5 float-left", type: "submit", form: "modal-form"

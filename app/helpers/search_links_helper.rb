@@ -30,7 +30,7 @@ module SearchLinksHelper
       link_to _("Add your first service"),
               project_add_path(project),
               class: "btn btn-primary mb-4 pl-5 pr-5 mt-3 text-center",
-              method: :post
+              "data-turbo-method": :post
     end
   end
 

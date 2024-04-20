@@ -21,8 +21,7 @@
             .actions
               - if policy([:backoffice, provider]).destroy?
                 = link_to backoffice_provider_path(provider),
-                    method: :delete,
-                    data: { confirm: _("Are you sure you want to remove this provider") },
+                    data: { confirm: _("Are you sure you want to remove this provider"), "turbo-method": :delete },
                     class: "delete-icon float-right" do
                   %i.far.fa-trash-alt
 

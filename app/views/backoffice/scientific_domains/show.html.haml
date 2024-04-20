@@ -22,6 +22,5 @@
     - if policy([:backoffice, @scientific_domain]).destroy?
       = link_to _("Delete"),
                 backoffice_scientific_domain_path(@scientific_domain),
-                method: :delete,
-                data: { confirm: _("Are you sure you want to remove this scientific domain?") },
+                data: { confirm: _("Are you sure you want to remove this scientific domain?"), "turbo-method": :delete },
                 class: "btn btn-danger"

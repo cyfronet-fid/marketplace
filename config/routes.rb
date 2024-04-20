@@ -88,7 +88,7 @@ Rails.application.routes.draw do
 
   resources :providers, only: %i[index show], constraints: { id: %r{[^/]+} } do
     scope module: :providers do
-      resource :question, only: %i[new create], constraints: lambda { |req| req.format == :js }
+      resource :question, only: %i[new create]
       resources :details, only: :index
       resource :logo, only: :show
     end
