@@ -7323,6 +7323,7 @@ abbr[title] {
     border: none;
     padding: 0;
     margin: 0 0 13px;
+    text-transform: uppercase;
   }
 
   .offer-section-wrapper {
@@ -7338,7 +7339,7 @@ abbr[title] {
         font-size: 14px;
         font-weight: 500;
         text-transform: uppercase;
-        border-bottom: 1px solid $custom-22;
+        border-bottom: 1px solid $palette-gray-10;
         padding-bottom: 16px;
         margin-bottom: 0;
       }
@@ -7347,7 +7348,7 @@ abbr[title] {
         .row {
           font-size: 12px;
           margin: 0;
-          border-bottom: 1px solid $custom-22;
+          border-bottom: 1px solid $palette-gray-10;
           padding: 5px 0;
 
           .col-6 {
