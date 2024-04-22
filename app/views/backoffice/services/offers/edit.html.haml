@@ -1,8 +1,5 @@
-- content_for :title, _("Edit Offer")
-- breadcrumb :backoffice_offer_edit, @offer
 .container
   .mb-4.pb-4.border-header
-    %h1= _("Edit offer")
     = render "form",
       offer: @offer,
       service: @service,
