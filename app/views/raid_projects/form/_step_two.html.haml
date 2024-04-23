@@ -1,0 +1,14 @@
+%div
+    %h2
+        = _("Contributors")
+    = f.error :contributor_base, class: "invalid-feedback d-block"
+    = f.fields_for :contributors, multiple: true, as: :array do |contributor_f|
+        = render "raid_projects/form/contributor_fields", contributor_f: contributor_f
+    = link_to _("Add contributor"), "#", class: "btn btn-primary disablable",
+        data: { raid_project: { target: "addField" },
+              action: "click->raid-project#addField",
+              value: "contributors",
+              fields: f.fields_for(:contributors, Raid::Contributor.new,
+              child_index: "new_field") { |contributor_f| render "raid_projects/form/contributor_fields",
+              contributor_f: contributor_f } }
+%hr
