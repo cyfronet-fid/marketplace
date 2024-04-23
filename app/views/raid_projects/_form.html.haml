@@ -1,42 +1,11 @@
 = simple_form_for raid_project, remote: local_assigns[:show_as_modal],
     html: { role: "form", id: "modal-form", "data-controller" => "raid-project",
             "data-raid-project-target": "form", "data-raid-project-url-value": ror_autocomplete_url } do |f|
-  %div
-    %h2
-      = _("Dates")
-    = f.input :start_date, as: :date, html5: true
-    = f.input :end_date, as: :date, html5: true
-  %hr
-  = render "raid_projects/form/title_fields", f: f, obj: raid_project
-  %hr
-  = render "raid_projects/form/description_fields", f: f, obj: raid_project
-  %hr
-  %div
-    %h2
-      = _("Contributors")
-    = f.error :contributor_base, class: "invalid-feedback d-block"
-    = f.fields_for :contributors, multiple: true, as: :array do |contributor_f|
-      = render "raid_projects/form/contributor_fields", contributor_f: contributor_f
-    = link_to _("Add contributor"), "#", class: "btn btn-primary disablable",
-      data: { raid_project: { target: "addField" },
-              action: "click->raid-project#addField",
-              value: "contributors",
-              fields: f.fields_for(:contributors, Raid::Contributor.new,
-              child_index: "new_field") { |contributor_f| render "raid_projects/form/contributor_fields",
-              contributor_f: contributor_f } }
-  %hr
-  %div
-    %h2
-      = _("Organisations")
-    = f.error :org_base, class: "invalid-feedback d-block"
-    = f.fields_for :raid_organisations, multiple: true, as: :array do |organisation_f|
-      = render "raid_projects/form/organisation_fields", organisation_f: organisation_f
-    = link_to _("Add organisation"), "#", class: "btn btn-primary disablable",
-      data: { raid_project: { target: "addField" },
-              action: "click->raid-project#addField",
-              value: "raidOrganisations",
-              fields: f.fields_for(:raid_organisations, Raid::RaidOrganisation.new,
-              child_index: "new_field") { |organisation_f| render "raid_projects/form/organisation_fields",
-              organisation_f: organisation_f } }
-  %hr
-  = render "raid_projects/form/access_fields", f: f, obj: raid_project.raid_access
+  %div{ data: {"raid-form-target": "section", section: "project-details" } }
+    = render "raid_projects/form/step_one", f: f, raid_project: raid_project
+  .d-none{ data: {"raid-form-target": "section", section: "contributors" } }
+    = render "raid_projects/form/step_two",  f: f, raid_project: raid_project
+  .d-none{ data: {"raid-form-target": "section", section: "organisations" } }
+    = render "raid_projects/form/step_three",  f: f, raid_project: raid_project
+  .d-none{ data: {"raid-form-target": "section", section: "access" } }
+    = render "raid_projects/form/step_four", f: f, obj: raid_project.raid_access
