@@ -1,0 +1,12 @@
+%div
+  %h2
+    = _("Dates")
+  = f.input :start_date, as: :date, html5: true
+  = f.input :end_date, as: :date, html5: true
+%hr
+%div
+  = render "raid_projects/form/title_fields", f: f, obj: raid_project
+%hr
+%div
+  = render "raid_projects/form/description_fields", f: f, obj: raid_project
+%hr

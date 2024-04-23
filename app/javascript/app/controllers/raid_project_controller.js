@@ -24,9 +24,12 @@ export default class extends Controller {
   }
   connect() {
     console.log("Raid project controller connected");
-    this.embargoExpiry = this.embargoExpiryTarget
-    this.embargoExpiry.hidden = true
-    this.embargoExpiry = ""
+    this.embargoExpiry = this.embargoExpiryTarget;
+    this.embargoExpiry.hidden = true;
+    this.embargoExpiry = "";
+    const summarySection = this.element.querySelector('[data-raid-form-target="section"][data-section="project-details"]');
+    console.log(summarySection);
+    console.log(this.formTarget)
   }
 
   setEmbargoed() {
