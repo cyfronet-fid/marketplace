@@ -82,6 +82,9 @@ application.register("provider", ProviderController);
 import QuantityPriceController from "./quantity_price_controller";
 application.register("quantity-price", QuantityPriceController);
 
+import RemovalsController from "./removals_controller";
+application.register("removals", RemovalsController);
+
 import ScrollerController from "./scroller_controller";
 application.register("scroller", ScrollerController);
 

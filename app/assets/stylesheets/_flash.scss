@@ -1,3 +1,20 @@
-.flash-container {
-  cursor: pointer;
+.flash {
+  &-container {
+    animation: appear-fade-out 6s both;
+    cursor: pointer;
+  }
+}
+
+@keyframes appear-fade-out {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translateY(-4rem);
+  }
+
+  5%,
+  60% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

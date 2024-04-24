@@ -22,7 +22,7 @@ class Providers::QuestionsController < ApplicationController
         Provider::Question::Deliver.new(@question).call
         flash.now[:notice] = "Question was successfully created"
         format.html { redirect_to provider_path(@provider) }
-        format.turbo_stream { render turbo_stream: turbo_stream.replace("flash-messages", partial: "layouts/flash") }
+        format.turbo_stream { flash.now[:notice] = "Question was successfully created" }
       else
         verify_recaptcha(model: @question, attribute: :verified_recaptcha)
         format.html { render :new, status: :unprocessable_entity }
