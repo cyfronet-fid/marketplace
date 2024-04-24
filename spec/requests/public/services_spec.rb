@@ -97,7 +97,7 @@ RSpec.describe "Services" do
       it "I can't create a new question" do
         service = create(:service, owners: [user], status: :deleted)
 
-        get new_service_question_path(service, format: :js)
+        get new_service_question_path(service)
         expect(response).to redirect_to "/404"
       end
 

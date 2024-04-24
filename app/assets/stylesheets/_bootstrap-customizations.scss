@@ -1125,6 +1125,7 @@ Service detail
             background: $custom-16;
           }
         }
+
         img {
           width: 17px;
           height: 17px;
@@ -5270,6 +5271,7 @@ abbr[title] {
 .comparison-bar {
   box-shadow: 15px 15px 15px 15px RGB(0, 0, 0, 0.2);
   z-index: 100 !important;
+  animation: fade-in 1s both;
 
   .action-box {
     display: flex;
@@ -5672,6 +5674,8 @@ abbr[title] {
 }
 
 .details-box-wrapper {
+  z-index: 1;
+
   .details-box {
     border: 1px solid $palette-solid-10;
     border-radius: 8px;
@@ -6819,6 +6823,8 @@ abbr[title] {
 
 .provider-view {
   .details-box-wrapper {
+    z-index: 1;
+
     .details-box {
       .details-content {
         padding: 10px 10px 15px 30px;

@@ -36,6 +36,8 @@
 
 @media (max-width: 991px) {
   .details-box-wrapper {
+    z-index: 1;
+
     .details-box {
       width: 100%;
     }
@@ -875,6 +877,7 @@
   }
 
   .details-box-wrapper {
+    z-index: 1;
     -moz-column-count: 1;
     column-count: 1;
   }

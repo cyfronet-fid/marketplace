@@ -10,7 +10,11 @@ class ApiDocsController < ApplicationController
 
   def create
     regenerate_token
-    redirect_to api_docs_path
+    respond_to do |format|
+      notice = "Token regenerated successfully"
+      format.html { redirect_to api_docs_path, notice: notice }
+      format.turbo_stream { flash.now[:notice] = notice }
+    end
   end
 
   private

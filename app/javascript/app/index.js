@@ -1,7 +1,6 @@
 import "./sort_filter";
 import initBadgeState from "./badge";
 import initSorting from "./sort_filter";
-import initFlash from "./flash";
 import initChoices from "./choices";
 import initCookiesPolicy from "./cookies_policy";
 import "bootstrap/dist/js/bootstrap";
@@ -31,53 +30,32 @@ import assignTabIdToWindow from "./tabs";
 import { handleTourFor } from "./tours";
 import initMasonry from "./masonry";
 
-document.addEventListener("turbo:before-render", function (event) {
+document.addEventListener("turbo:before-stream-render", function (event) {
   if (event.hasOwnProperty("data")) {
     initSorting(event.data.newBody);
   }
+  initChoices();
   dom.watch();
 });
 
 document.addEventListener("turbo:load", async function (event) {
   initChoices();
-  initFlash();
   initCookiesPolicy();
   initBadgeState();
   initMasonry();
   await initProbes();
 });
 
-document.addEventListener("turbo:click", async function () {
-  console.log("ZIOMECZKU");
-  initChoices();
-  initFlash();
-  await initProbes();
-});
-
 document.addEventListener("ajax:success", function (event) {
   initChoices();
-  initFlash();
 });
 
 document.addEventListener("MP:modalLoaded", function (event) {
   initChoices();
-  initFlash();
 });
 
 document.addEventListener("MP:tourEvent", function (event) {
   handleTourFor(event);
-});
-
-/**
- * Apart from turbolinks we need to replace FA for the first page load
- */
-document.addEventListener("DOMContentLoaded", function (event) {
-  dom.i2svg();
-  initSorting();
-  initFlash();
-  initBadgeState();
-  assignTabIdToWindow();
-  dom.watch();
 });
 
 window.addEventListener("beforeunload", () => {

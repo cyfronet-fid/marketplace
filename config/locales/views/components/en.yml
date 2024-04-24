@@ -16,7 +16,7 @@ en:
           scientific_categorisation: Scientific categorisation
           categorisation: Categorisation
           uptime_monitoring: Uptime monitoring
-          target_users: Target users
+          target_users: Target Users
           resource_availability_and_languages: Availability and language
         fields:
           link_multimedia_urls: Multimedia %{idx}

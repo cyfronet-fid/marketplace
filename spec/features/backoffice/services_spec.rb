@@ -621,6 +621,8 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
 
       visit edit_backoffice_service_offer_path(service, offer)
 
+      find("#summary-button").click
+
       click_on "Delete Offer"
 
       expect(page).to have_content("Offer removed successfully")

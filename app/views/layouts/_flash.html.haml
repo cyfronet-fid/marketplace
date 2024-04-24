@@ -1,4 +1,2 @@
-#flash-messages
-  - flash.each do |type, msg|
-    .alert.mb-0.text-center.flash-container{ class: "alert-#{type == "notice" ? "success" : "danger" }", role: "alert" }
-      = msg
+- flash.each do |type, msg|
+  = render "layouts/message", type: type, msg: msg

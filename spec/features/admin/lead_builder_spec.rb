@@ -50,7 +50,7 @@ RSpec.feature "Marketplace lead builder", manager_frontend: true do
   context "lead", js: true do
     let!(:section) { create(:lead_section) }
 
-    scenario "can be created", skip: true do
+    scenario "can be created" do
       visit admin_leads_path
 
       find("#add-new-lead-#{section.id}").click
@@ -66,7 +66,7 @@ RSpec.feature "Marketplace lead builder", manager_frontend: true do
       expect(page).to have_content("New body")
     end
 
-    scenario "can be updated", skip: true do
+    scenario "can be updated" do
       item = create(:lead, lead_section: section)
 
       visit edit_admin_lead_path(item)

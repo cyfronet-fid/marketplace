@@ -1,0 +1,4 @@
+= turbo_stream.replace("token-wrapper", partial: "api_docs/token_wrapper",
+                                        locals: { valid_token: current_user&.valid_token?,
+                                        token: current_user&.authentication_token })
+= render_turbo_stream_flash

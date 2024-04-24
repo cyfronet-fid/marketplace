@@ -19,11 +19,6 @@ class ProjectsController < ApplicationController
 
   def new
     @project = new_record
-
-    respond_to do |format|
-      format.html
-      format.js { render_modal_form }
-    end
   end
 
   def create
@@ -32,8 +27,8 @@ class ProjectsController < ApplicationController
     respond_to do |format|
       form_valid = @project.valid? & verify_recaptcha(model: @project, attribute: :verified_recaptcha)
       if form_valid && Project::Create.new(@project).call
-        format.html { redirect_to project_path(@project), notice: "Project created successfully" }
-        format.js { render :show }
+        format.html { redirect_to project_path(@project), notice: "Project successfully created" }
+        format.turbo_stream { flash.now[:notice] = "Project successfully created" }
       else
         format.html { render :new, status: :bad_request }
         format.js { render_modal_form }
