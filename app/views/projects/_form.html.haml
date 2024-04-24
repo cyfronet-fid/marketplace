@@ -1,7 +1,6 @@
-= simple_form_for project, remote: local_assigns[:show_as_modal],
+= simple_form_for project,
   html: { role: "form", id: "modal-form",
-          "data-controller" => "project",
-          data: { action: "submit->project#filterFileds" } } do |f|
+          data: { controller: "project", action: "submit->project#filterFileds" } } do |f|
   %h4
     = _("Usage")
   = f.input :name, input_html: { class: "col-lg-6 form-control-lg" }
@@ -23,3 +22,7 @@
   - if show_recaptcha
     #recaptcha= recaptcha_tags noscript: false
   = f.error :verified_recaptcha, class: "invalid-feedback d-block"
+
+  - content_for(:buttons) do
+    = f.button :submit, _("Create new project"), id: "form-modal-action-btn",
+    class: "btn btn-primary pl-5 pr-5 float-left", type: "submit", form: "modal-form"

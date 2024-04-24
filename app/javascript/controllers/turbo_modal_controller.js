@@ -1,5 +1,4 @@
 import { Controller } from "@hotwired/stimulus";
-import initFlash from "../app/flash";
 
 export default class extends Controller {
   static targets = ["modal"];
@@ -9,7 +8,6 @@ export default class extends Controller {
     // Remove src reference from parent frame element
     // Without this, turbo won't re-open the modal on subsequent click
     this.modalTarget.remove();
-    initFlash();
   }
 
   // hide modal on successful form submission

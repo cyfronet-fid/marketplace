@@ -29,14 +29,14 @@
       - type_query = Vocabulary::ServiceCategory.where(ancestry: offer&.offer_category, ancestry_depth: 1)
       = f.association :offer_type,
         collection: type_query,
-        wrapper_html: { class: "#{"d-none" if type_query.size.zero?}" },
+        wrapper_html: { class: "#{"d-none" if type_query.empty?}" },
         input_html: { data: { "offer-target": "type", action: "offer#updateParameters",
         choice: true, render: false } }
       - type = offer&.offer_type
       - subtype_query = Vocabulary::ServiceCategory.where(ancestry: "#{type&.ancestry}/#{type&.id}")
       = f.association :offer_subtype,
         collection: subtype_query,
-        wrapper_html: { class: "#{"d-none" if subtype_query.size.zero?}" },
+        wrapper_html: { class: "#{"d-none" if subtype_query.empty?}" },
         input_html: { data: { "offer-target": "subtype", action: "offer#updateParameters", include_hidden: true,
         choice: true, render: false } }
 

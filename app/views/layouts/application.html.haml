@@ -13,19 +13,19 @@
     - if current_page?("/")
       .main-elements
     = render "layouts/badge" if ENV["MP_INSTANCE"]
-    = render partial: "layouts/flash"
+    #flash-messages.flash
+      = render "layouts/flash"
     = render "layouts/welcome_modal"
+    = turbo_frame_tag "modal"
     %header
       = render "layouts/navbar",
         categories: @siblings || @root_categories,
         query_params: @query_params || {}
     %main
       = render "layouts/breadcrumb"
-      = turbo_frame_tag "modal"
+
       = yield
 
-
-  = render "layouts/modal"
   = render "layouts/eosc_commons_footer"
   = render "layouts/jira_collector"
   = tour @tour, @show_welcome_modal unless controller.tour_disabled

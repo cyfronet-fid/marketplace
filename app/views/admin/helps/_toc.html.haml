@@ -5,4 +5,4 @@
       class: "btn btn-sm btn-warning"
     = link_to _("Remove"), admin_help_section_path(section),
       class: "btn btn-sm btn-danger",
-      data: { confirm: _("Are you sure?"), "turbo-method": :delete }
+      data: { "turbo-confirm": _("Are you sure?"), "turbo-method": :delete }
