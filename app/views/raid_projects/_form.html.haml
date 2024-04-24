@@ -3,9 +3,9 @@
             "data-raid-project-target": "form", "data-raid-project-url-value": ror_autocomplete_url } do |f|
   %div{ data: {"raid-form-target": "section", section: "project-details" } }
     = render "raid_projects/form/step_one", f: f, raid_project: raid_project
-  .d-none{ data: {"raid-form-target": "section", section: "contributors" } }
+  %div{ data: {"raid-form-target": "section", section: "contributors" } }
     = render "raid_projects/form/step_two",  f: f, raid_project: raid_project
-  .d-none{ data: {"raid-form-target": "section", section: "organisations" } }
+  %div{ data: {"raid-form-target": "section", section: "organisations" } }
     = render "raid_projects/form/step_three",  f: f, raid_project: raid_project
-  .d-none{ data: {"raid-form-target": "section", section: "access" } }
+  %div{ data: {"raid-form-target": "section", section: "access" } }
     = render "raid_projects/form/step_four", f: f, obj: raid_project.raid_access
