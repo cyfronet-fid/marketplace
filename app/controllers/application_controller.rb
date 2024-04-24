@@ -78,4 +78,8 @@ class ApplicationController < ActionController::Base
     return unless Rails.env.development?
     redirect_to root_path unless turbo_frame_request?
   end
+
+  def init_flash
+    render turbo_stream: turbo_stream.replace("flash-messages", partial: "layouts/flash")
+  end
 end

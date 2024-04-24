@@ -71,7 +71,7 @@
             .col-6
               Tags
             .col-6
-              = offer.tag_list.size.zero? ? "-" : offer.tag_list.join(",")
+              = offer.tag_list.empty? ? "-" : offer.tag_list.join(",")
   .col-lg-5.right-tips.pt-0
     %h4 Offer preview
 

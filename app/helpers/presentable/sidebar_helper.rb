@@ -68,7 +68,7 @@ module Presentable::SidebarHelper
 
   def tags
     {
-      name: "Tags",
+      name: "tags",
       template: "filter",
       fields: %w[sliced_tag_list],
       with_desc: false,
@@ -80,7 +80,7 @@ module Presentable::SidebarHelper
 
   def target_users
     {
-      name: "Target Users",
+      name: "target_users",
       template: "filter",
       fields: %w[target_users],
       with_desc: false,

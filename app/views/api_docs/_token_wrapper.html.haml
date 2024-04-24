@@ -1,0 +1,41 @@
+#token-wrapper
+  .container{ "data-controller": "token" }
+    .row.pt-4.pb-4.pl-3.pr-3.mt-4.shadow-sm.rounded.service-box.tokens
+      .col-12.col-md-7.vertical-middle
+        .icon
+          %i.fas.fa-key
+        .mt-2
+          - if valid_token
+            %p.mb-1
+              %i.fas.fa-check-circle
+              Your token is active:
+            %p.active{ "data-token-target": "content", "data-token": "#{token}" }
+              = "*" * 20
+            %a#toggler.text-uppercase.underline-light.token-visibility{ "data-token-target": "button",
+                      "data-action": "click->token#toggle" }
+              Show token
+
+          - elsif current_user.present?
+            %p
+              You don't have an authentication token yet.
+              %br
+              Click
+              %b Generate token
+              to get one.
+
+          - else
+            %p
+              Log in to access your authentication token.
+      .col-12.col-md-5.token-button
+        - if valid_token
+          %p
+            = link_to "Regenerate token", api_docs_path, "data-turbo-method": :post,
+                class: "btn btn-outline-danger float-right"
+        - elsif current_user.present?
+          %p
+            = link_to "Generate token", api_docs_path, "data-turbo-method": :post,
+                class: "btn btn-primary float-right"
+        - else
+          %p
+            = link_to "Log in", user_checkin_omniauth_authorize_path, class: "btn btn-primary float-right",
+                "data-e2e": "login-btn"

@@ -8,7 +8,7 @@ export default class extends Controller {
   }
 
   toggle() {
-    if (this.contentTarget.classList.contains("show-token")) {
+    if (this.hasContentTarget && this.contentTarget.classList.contains("show-token")) {
       this.hide();
     } else {
       this.show();
@@ -22,8 +22,10 @@ export default class extends Controller {
   }
 
   hide() {
-    this.contentTarget.classList.remove("show-token");
-    this.contentTarget.innerHTML = "********************";
-    this.buttonTarget.innerHTML = "Show token";
+    if (this.hasContentTarget) {
+      this.contentTarget.classList.remove("show-token");
+      this.contentTarget.innerHTML = "********************";
+      this.buttonTarget.innerHTML = "Show token";
+    }
   }
 }

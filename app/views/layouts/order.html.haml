@@ -15,6 +15,7 @@
           .ml-3.d-inline
             %button.btn.btn-primary{ form: "order-form", type: "submit", "data-probe": "summary" }= next_title
       = render "layouts/flash"
+      = turbo_frame_tag "modal"
     %main.container.order-container
       = render "layouts/order/nav", service: @service, wizard: @wizard
       = yield
@@ -28,7 +29,6 @@
             "data-probe": "summary", "data-service-id": @service.id }= next_title
 
   = render "layouts/eosc_commons_footer"
-  = render "layouts/modal"
   = render "layouts/recommendation"
 
   - file_base = Mp::Application.config.eosc_commons_base_url + "index." + Mp::Application.config.eosc_commons_env
