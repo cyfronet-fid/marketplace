@@ -46,7 +46,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
   def show
     @service.monitoring_status = fetch_status(@service.pid)
-    @offer = Offer.new(service: @service, status: :draft)
+    @offer = Offer.new(service: @service, status: :unpublished)
     @offers = policy_scope(@service.offers).order(:created_at)
     @bundles = policy_scope(@service.bundles).order(:created_at)
     @similar_services = fetch_similar(@service.id, current_user&.id)
@@ -64,12 +64,12 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   def create
     attrs = temp_attrs || permitted_attributes(Service)
     if params[:commit] == "Preview"
-      @service = Service.new(**attrs, status: :draft)
+      @service = Service.new(**attrs, status: :unpublished)
       perform_preview(:new)
       return
     end
 
-    @service = Service::Create.call(Service.new(**attrs, status: :draft), temp_logo)
+    @service = Service::Create.call(Service.new(**attrs, status: :unpublished), temp_logo)
     if @service.invalid?
       add_missing_nested_models(@service)
       render :new, status: :bad_request unless @service.persisted?

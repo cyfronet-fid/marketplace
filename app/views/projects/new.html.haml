@@ -1,17 +1,19 @@
 - content_for :title, _("Create new Project")
 - breadcrumb :project_new
-.container
-  .mb-4.pb-4.border-header
-    %h1.mr-auto.my-auto= _("Create new Project")
-  = render "form", project: @project, show_recaptcha: true
+- if turbo_frame_request?
+  = render TurboModalComponent.new(title: "Add Project") do
+    = render "form", project: @project, show_recaptcha: true, turbo_enabled: true
+- else
+  .container
+    .mb-4.pb-4.border-header
+      %h1.mr-auto.my-auto= _("Create new Project")
+      = render "form", project: @project, show_recaptcha: true, turbo_enabled: false
 
-  %hr.bottom-hr.mt-5.mb-4
-  .row
-    .col-12
-      %button.btn.btn-primary.pl-5.pr-5{ type: "submit",
-                               form: "modal-form", "data-e2e": "create-project-btn" }
-        = _("Create new project")
-      = back_link_to _("Cancel"), @project,
-        class: "btn btn-link text-uppercase"
-
-  = render "modal_form", project: @project
+    %hr.bottom-hr.mt-5.mb-4
+    .row
+      .col-12
+        %button.btn.btn-primary.pl-5.pr-5{ type: "submit",
+                                 form: "modal-form", "data-e2e": "create-project-btn", "data-turbo": false }
+          = _("Create new project")
+        = back_link_to _("Cancel"), @project,
+          class: "btn btn-link text-uppercase"

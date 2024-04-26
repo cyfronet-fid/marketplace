@@ -11,6 +11,8 @@ class ApplicationController < ActionController::Base
 
   before_action :welcome_popup, :load_root_categories!, :report, :set_locale, :set_gettext_locale
 
+  helper_method :turbo_frame_request?
+
   protect_from_forgery
 
   rescue_from ActiveRecord::RecordNotFound do |_|
@@ -81,5 +83,9 @@ class ApplicationController < ActionController::Base
 
   def init_flash
     render turbo_stream: turbo_stream.replace("flash-messages", partial: "layouts/flash")
+  end
+
+  def turbo_frame_request?
+    request.headers["Turbo-Frame"].present?
   end
 end

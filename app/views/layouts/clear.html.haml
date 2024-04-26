@@ -11,15 +11,15 @@
       %div
   %body{ class: "#{action_name}" }
     = render "layouts/badge" if ENV["MP_INSTANCE"]
-    = render "layouts/flash"
+    #flash-messages.flash
+      = render "layouts/flash"
+    = turbo_frame_tag "modal"
     %header
       = render "layouts/sections"
     %main
       = render "layouts/breadcrumb"
       = yield
 
-
-  = render "layouts/modal"
   = render "layouts/eosc_commons_footer"
   = render "layouts/jira_collector"
   = tour @tour, @show_welcome_modal unless controller.tour_disabled
