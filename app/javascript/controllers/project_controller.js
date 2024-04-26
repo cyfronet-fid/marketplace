@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
+import initChoices from "../app/choices";
 
 export default class extends Controller {
   static targets = [
@@ -13,7 +14,9 @@ export default class extends Controller {
     "input",
   ];
 
-  connect() {}
+  connect() {
+    initChoices();
+  }
 
   initialize() {
     this.CUSTOMER_TYPOLOGIES = {
@@ -77,7 +80,7 @@ export default class extends Controller {
     });
   }
 
-  filterFileds(event) {
+  filterFields(event) {
     this.inputTargets.forEach((el) => {
       if (el.classList.contains("hidden-fields")) {
         var hidden_element = el.getElementsByClassName("form-control")[0];

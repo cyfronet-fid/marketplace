@@ -1,6 +1,6 @@
 = simple_form_for project,
   html: { role: "form", id: "modal-form",
-          data: { controller: "project", action: "submit->project#filterFileds" } } do |f|
+          data: { controller: "project", action: "submit->project#filterFields", turbo: turbo_enabled } } do |f|
   %h4
     = _("Usage")
   = f.input :name, input_html: { class: "col-lg-6 form-control-lg" }

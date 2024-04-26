@@ -484,8 +484,8 @@ Cypress.Commands.add("hasResourceDetails", () => {
     "Access Types",
     "Access Modes",
     "Tags",
-    "Availability and language",
-    "Geographical Availabilities",
+    "Availability and Language",
+    "Geographic Locations",
     "Languages",
     "Marketing",
     "Multimedia",
@@ -508,14 +508,12 @@ Cypress.Commands.add("hasResourceDetails", () => {
     "Standards",
     "Open Source Technologies",
     "Version",
-    "Management",
     "Helpdesk",
     "Manual",
     "Terms of use",
     "Privacy policy",
     "Access policies",
     "Training information",
-    "Status Monitoring",
     "Maintenance",
     "Financial Information",
     "Payment Model",
@@ -530,8 +528,8 @@ Cypress.Commands.add("hasResourceDetails", () => {
 
 Cypress.Commands.add("hasResourceAbout", () => {
   const resourceAbout = [
-    "Target users",
-    "Availability and language",
+    "Target Users",
+    "Availability and Language",
     "Suggested compatible services"
   ]
 

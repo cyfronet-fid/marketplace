@@ -21,30 +21,14 @@ class Services::QuestionsController < ApplicationController
     respond_to do |format|
       if @question.valid? && verify_recaptcha(model: @question, attribute: :verified_recaptcha)
         Service::Question::Deliver.new(@question).call
-        notice = "Question was successfully created"
+        notice = "Your message was successfully sent"
         format.html { redirect_to provider_path(@provider, notice: notice) }
         format.turbo_stream { flash.now[:notice] = notice }
       else
         verify_recaptcha(model: @question, attribute: :verified_recaptcha)
-        format.html { render :new, question: @question, status: :unprocessable_entity }
-        format.json { render :new, question: @question, status: :unprocessable_entity }
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render :new, status: :unprocessable_entity }
       end
     end
-  end
-
-  private
-
-  def render_modal_form
-    render "layouts/show_modal",
-           content_type: "text/javascript",
-           locals: {
-             title: "Ask provider",
-             action_btn: t("simple_form.labels.question.new"),
-             form: "services/questions/form",
-             form_locals: {
-               service: @service,
-               question: @question
-             }
-           }
   end
 end

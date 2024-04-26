@@ -52,7 +52,7 @@ describe("Owned services", () => {
       .should("be.visible") 
     cy.contains("a","Set parameters and offers")
       .should("be.visible")  
-    cy.contains("span", "draft")
+    cy.contains("span", "unpublished")
       .should("be.visible") 
     cy.get("[data-e2e='publish-btn']")
       .click();
@@ -280,8 +280,7 @@ describe("Owned services", () => {
           .click();
         cy.hasResourceAbout();
         cy.wait("@servicesPage")
-        cy.get("a[data-e2e='tag-btn']")
-          .should("be.visible")
+        cy.get("[data-e2e='tag-btn']")
           .click();
         cy.location("href")
           .should("contain", "/services?tag=");

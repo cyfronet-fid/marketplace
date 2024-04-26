@@ -25,8 +25,7 @@
             .buttons-box
               - if policy([:backoffice, Vocabulary]).destroy?
                 = link_to send("backoffice_#{snake_cased(@type)}_path", vocabulary),
-                      method: :delete,
-                      data: { confirm: _("Are you sure you want to remove this #{@type}?") },
+                      data: { "turbo-method": :delete, "turbo-confirm": _("Are you sure you want to remove this #{@type}?") },
                       class: "delete-icon float-right" do
                   %i.far.fa-trash-alt
               - if policy([:backoffice, Vocabulary]).edit?

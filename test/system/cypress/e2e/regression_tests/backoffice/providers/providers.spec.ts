@@ -134,6 +134,8 @@ describe("Providers", () => {
     cy.fillFormCreateProvider(provider2, correctLogo);
     cy.get("[data-e2e='create-provider-btn']")
       .click();
+    cy.location("href")
+      .should("not.contain", "/providers/new");
     cy.get("h1")
       .invoke("text")
       .then((value) => {

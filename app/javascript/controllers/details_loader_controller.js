@@ -10,8 +10,10 @@ export default class extends Controller {
   changed(event) {
     this._fetchDetails(event.target.value);
     if (event.target.value) {
-      this.projectsTarget.classList.remove("d-none");
-      this.emptyTarget.classList.add("d-none");
+      if (this.hasProjectsTarget) {
+        this.projectsTarget.classList.remove("d-none");
+        this.emptyTarget.classList.add("d-none");
+      }
     }
   }
 
