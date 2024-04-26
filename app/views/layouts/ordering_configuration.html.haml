@@ -4,7 +4,8 @@
   %body
     %header.pb-2
       = render "layouts/badge" if ENV["MP_INSTANCE"]
-      = render "layouts/flash"
+      #flash-messages.flash
+        = render "layouts/flash"
       = render "layouts/ordering_configuration/navbar"
     %main
       .container

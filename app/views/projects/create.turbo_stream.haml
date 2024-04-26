@@ -1,0 +1,2 @@
+- %w[customizable_project_item_project_id project_research_product_project_id].each do |field_id|
+  = turbo_stream.append(field_id, partial: "projects/project_option", locals: { project: @project } )

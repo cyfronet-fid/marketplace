@@ -1,0 +1,6 @@
+%option{ value: project.id, selected: true }= project.name
+
+:javascript
+  let projectSelect = document.getElementById("customizable_project_item_project_id") ??
+                      document.getElementById("project_research_product_project_id");
+  projectSelect.dispatchEvent(new Event("change"));
