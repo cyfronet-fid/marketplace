@@ -32,7 +32,7 @@ RSpec.feature "Question about service", end_user_frontend: true do
 
       click_on "Contact provider"
 
-      within("#ajax-modal") { fill_in("service_question_text", with: "text") }
+      within("#form-modal") { fill_in("service_question_text", with: "text") }
 
       expect do
         click_on "SEND"
@@ -69,7 +69,7 @@ RSpec.feature "Question about service", end_user_frontend: true do
 
       click_on "Contact provider"
 
-      within("#ajax-modal") do
+      within("#form-modal") do
         fill_in("service_question_author", with: "John Doe")
         fill_in("service_question_email", with: "john.doe@company.com")
         fill_in("service_question_text", with: "text")

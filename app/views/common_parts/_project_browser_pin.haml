@@ -8,20 +8,17 @@
       = image_tag "empty-projects.svg", alt: "Empty"
     .text-center.mt-4
       = link_to _("CREATE NEW PROJECT"), new_project_path,
-          class: "btn btn-primary pl-5 pr-5 mobile-bottom-margin", remote: true,
-          "data-e2e": "add-new-project-btn"
+          class: "btn btn-primary pl-5 pr-5 mobile-bottom-margin",
+          data: { turbo: true, e2e: "add-new-project-btn", "turbo-frame": "modal" }
   %div{ class: ("d-none" if current_user.projects.empty?), "data-details-loader-target": "projects" }
     %h2 Select a Marketplace project to add the resource
     = f.input :project do
       .select-row
-        = f.input_field :project_id, collection: projects,
-            class: "form-control custom-select #{"is-invalid" unless step.errors[:project].empty?}",
-            "data-action" => "change->details-loader#changed",
-            "data-details-loader-target" => "idSource"
+        = render "common_parts/project_select", f: f, pojects: current_user.projects, valid: errors[:project].empty?
         .mt-3.text-right
           = link_to _("+ Create new"), new_project_path,
-              class: "text-uppercase font-weight-bolder", remote: true,
-              "data-e2e": "add-new-project-btn"
+              class: "text-uppercase font-weight-bolder",
+              data: { turbo: true, e2e: "add-new-project-btn", "turbo-frame": "modal" }
 
     %div{ "data-details-loader-target" => "details" }
 

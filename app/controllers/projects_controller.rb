@@ -30,8 +30,7 @@ class ProjectsController < ApplicationController
         format.html { redirect_to project_path(@project), notice: "Project successfully created" }
         format.turbo_stream { flash.now[:notice] = "Project successfully created" }
       else
-        format.html { render :new, status: :bad_request }
-        format.js { render_modal_form }
+        format.html { render :new, status: :unprocessable_entity }
       end
     end
   end
@@ -72,21 +71,6 @@ class ProjectsController < ApplicationController
     else
       { user: current_user }
     end
-  end
-
-  def render_modal_form
-    render "layouts/show_modal",
-           content_type: "text/javascript",
-           locals: {
-             title: "New project",
-             action_btn: t("projects.buttons.create"),
-             form: "projects/form",
-             form_locals: {
-               project: @project,
-               show_as_modal: true,
-               show_recaptcha: true
-             }
-           }
   end
 
   def find_and_authorize

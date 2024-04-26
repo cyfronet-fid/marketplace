@@ -1,0 +1,5 @@
+#project-select
+  = f.input_field :project_id, collection: projects,
+    class: "form-control custom-select #{"is-invalid" unless valid}",
+    "data-action" => "change->details-loader#changed",
+    "data-details-loader-target" => "idSource"

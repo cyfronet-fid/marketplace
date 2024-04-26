@@ -14,8 +14,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "cypress": "13.2.0",
-    "typescript": "^4.4.4"
+    "cypress": "13.8.1",
+    "typescript": "^5.4.5"
   },
   "devDependencies": {
     "@cypress/skip-test": "^2.6.1",

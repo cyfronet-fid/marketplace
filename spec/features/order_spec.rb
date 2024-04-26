@@ -505,7 +505,7 @@ RSpec.feature "Service ordering", end_user_frontend: true do
       click_on "Next", match: :first
 
       click_on "Add new project"
-      within("#ajax-modal") do
+      within("#form-modal") do
         fill_in "Project name", with: "New project"
         select "Single user", from: "Customer typology"
         fill_in "Email", with: "john@doe.com"
@@ -535,7 +535,7 @@ RSpec.feature "Service ordering", end_user_frontend: true do
       click_on "Add new project"
 
       click_on "Create new project"
-      within("#ajax-modal") do
+      within("#form-modal") do
         expect(page).to have_button("Create new project")
         expect(page).to have_selector("input[placeholder='+ start typing to add']")
       end
@@ -543,7 +543,7 @@ RSpec.feature "Service ordering", end_user_frontend: true do
       # fail form validation by not filling any fields
       click_on "Create new project"
 
-      within("#ajax-modal") do
+      within("#form-modal") do
         expect(page).to have_button("Create new project")
         expect(page).to have_selector("input[placeholder='+ start typing to add']")
       end
@@ -560,7 +560,7 @@ RSpec.feature "Service ordering", end_user_frontend: true do
       click_on "Access the service"
       click_on "Next", match: :first
       click_on "Add new project"
-      within("#ajax-modal") do
+      within("#form-modal") do
         fill_in "Project name", with: "New project"
         fill_in "Reason to request access to the EOSC resources", with: "To pass test"
         within ".project_scientific_domains" do

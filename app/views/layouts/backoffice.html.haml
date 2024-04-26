@@ -6,7 +6,8 @@
   %body
     %header.pb-2.white-bg
       = render "layouts/badge" if ENV["MP_INSTANCE"]
-      = render "layouts/flash"
+      #flash-messages.flash
+        = render "layouts/flash"
       = render "layouts/backoffice/navbar"
     %main
       .container

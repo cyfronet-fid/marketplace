@@ -14,7 +14,8 @@
             method: :delete, class: "text-uppercase align-middle", "data-probe": "", "data-service-id": @service.id
           .ml-3.d-inline
             %button.btn.btn-primary{ form: "order-form", type: "submit", "data-probe": "summary" }= next_title
-      = render "layouts/flash"
+      #flash-messages.flash
+        = render "layouts/flash"
       = turbo_frame_tag "modal"
     %main.container.order-container
       = render "layouts/order/nav", service: @service, wizard: @wizard
