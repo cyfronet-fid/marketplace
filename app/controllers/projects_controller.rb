@@ -25,7 +25,7 @@ class ProjectsController < ApplicationController
     @project = Project.new(permitted_attributes(Project).merge(user: current_user, status: :active))
 
     respond_to do |format|
-      form_valid = @project.valid? & verify_recaptcha(model: @project, attribute: :verified_recaptcha)
+      form_valid = @project.valid? && verify_recaptcha(model: @project, attribute: :verified_recaptcha)
       if form_valid && Project::Create.new(@project).call
         format.html { redirect_to project_path(@project), notice: "Project successfully created" }
         format.turbo_stream { flash.now[:notice] = "Project successfully created" }
