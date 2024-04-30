@@ -17,8 +17,7 @@
  * Libs
  */
 require('cypress-terminal-report/src/installLogsCollector')();
-require('cypress-grep')();
-import '@cypress/skip-test/support';
+require('@cypress/grep')();
 import 'cypress-promise/register';
 import 'cypress-wait-until';
 import 'cypress-file-upload';
