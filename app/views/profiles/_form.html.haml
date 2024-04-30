@@ -36,5 +36,5 @@
             "your profile by clicking the button") |
         -# haml-lint:enable MultilinePipe
 
-      = link_to _("Delete"), profile_path(user), method: :delete, class: "btn-sm btn-danger", "data-e2e": "delete-btn",
-      data: { confirm: _("Are you sure?") }
+      = link_to _("Delete"), profile_path, class: "btn-sm btn-danger",
+      data: { e2e: "delete-btn", "turbo-confirm": _("Are you sure?"), "turbo-method": :delete }

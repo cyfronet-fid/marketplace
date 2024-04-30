@@ -34,7 +34,7 @@ describe("Api page", () => {
     cy.location("href")
       .should("contain", "swagger")
       .and("contain", "Offering");
-    cy.go("back");
+    cy.visit("/api_docs")
     cy.get("[data-e2e='ordering-api-link']")
       .invoke('removeAttr', 'target')
       .click();

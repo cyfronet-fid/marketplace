@@ -52,4 +52,8 @@ module ProjectItemsHelper
       )
     end
   end
+
+  def archive_project_prompt
+    _("Are you sure you want to archive this project? It won't be possible to use it any more")
+  end
 end
