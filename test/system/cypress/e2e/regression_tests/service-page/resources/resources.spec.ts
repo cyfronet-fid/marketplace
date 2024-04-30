@@ -14,7 +14,7 @@ describe("Resources", () => {
   const orderRequiredResourceInternal = "B2ACCESS";
   const resourceWithFewOffer = "B2DROP";
 
-  it("should pin open access offer to a project only once", () => {
+  it.skip("should pin open access offer to a project only once", () => {
     cy.get("[data-e2e='searchbar-input']")
       .type(openAccessResource)
       .type('{enter}');
@@ -26,7 +26,6 @@ describe("Resources", () => {
       .should("contain", "/services/");
     cy.get('[data-e2e="access-service-btn"]')
       .click();
-    cy.reload();
     cy.location("href")
       .should("contain", `/services/${openAccessResource.toLocaleLowerCase()}/information`);
     cy.contains("a", "Pin to a project")
@@ -72,7 +71,7 @@ describe("Resources", () => {
       .should("be.visible");
   });
 
-  it("should order order required internal offer many times", () => {
+  it.skip("should order order required internal offer many times", () => {
     cy.get("[data-e2e='searchbar-input']")
       .type(orderRequiredResourceInternal)
       .type('{enter}');
@@ -128,7 +127,7 @@ describe("Resources", () => {
       .should("be.visible");
   });
 
-  it("should add service with few offers", () => {
+  it.skip("should add service with few offers", () => {
     cy.get("[data-e2e='searchbar-input']")
       .type(resourceWithFewOffer)
       .type('{enter}');

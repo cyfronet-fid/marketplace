@@ -10,7 +10,7 @@
         %th{ colspan: 4 }
           = _("Comparison")
           %span.float-right.font-weight-light.text-uppercase
-            = link_to _("Clear all"), comparisons_path, method: :delete, "data-probe": ""
+            = link_to _("Clear all"), comparisons_path, data: { probe: "", "turbo-method": :delete }
     %tbody
       %tr
         %th.title-col
@@ -20,8 +20,7 @@
               %span.helper
               = image_tag service.logo.variant(resize: "100x100") if service.logo.attached? && service.logo.variable?
             = link_to comparisons_services_path(slug: service.slug, fromc: params[:fromc], params: @query_params),
-              method: :delete,
-              "data-e2e": "delete-service-btn", "data-probe": "", "data-service-id": service.id do
+              data: { e2e: "delete-service-btn", probe: "", "service-id": service.id, "turbo-method": :delete } do
               %i.far.fa-trash-alt
             .service-title
               = link_to service.name.truncate(30, separator: " "),

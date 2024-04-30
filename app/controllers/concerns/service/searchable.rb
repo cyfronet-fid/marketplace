@@ -135,6 +135,7 @@ module Service::Searchable
   end
 
   def store_query_params
+    previous_query = session&.dig("query", "q").dup
     session[:query] = {}
     @filters.each do |filter|
       session[:query][filter.field_name] = params[filter.field_name] unless params[filter.field_name].blank?
@@ -142,10 +143,10 @@ module Service::Searchable
         "#{filter.field_name}-all"
       ].blank?
     end
-    session[:query][:q] = params[:q] unless params[:q].blank?
-    session[:query][:sort] = params[:sort] unless params[:sort].blank?
-    session[:query][:per_page] = params[:per_page] unless params[:per_page].blank?
-    session[:query][:page] = params[:page] unless params[:page].blank?
+    %i[q sort per_page].each do |field_name|
+      session[:query][field_name] = params[field_name] unless params[field_name].blank?
+    end
+    session[:query][:page] = params[:page] if params[:page].present? && previous_query == params[:q]
   end
 
   def filter_classes
