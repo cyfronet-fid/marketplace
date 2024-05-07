@@ -14,7 +14,7 @@
     %h2 Select a Marketplace project to add the resource
     = f.input :project do
       .select-row
-        = render "common_parts/project_select", f: f, pojects: current_user.projects, valid: errors[:project].empty?
+        = render "common_parts/project_select", f: f, projects: current_user.projects, valid: step.errors[:project].empty?
         .mt-3.text-right
           = link_to _("+ Create new"), new_project_path,
               class: "text-uppercase font-weight-bolder",

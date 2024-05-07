@@ -13,7 +13,8 @@
             service_cancel_path(@service),
             method: :delete, class: "text-uppercase align-middle", "data-probe": "", "data-service-id": @service.id
           .ml-3.d-inline
-            %button.btn.btn-primary{ form: "order-form", type: "submit", "data-probe": "summary" }= next_title
+            %button.btn.btn-primary{ form: "order-form", type: "submit",
+                                     data: { probe: "summary", turbo: false } }= next_title
       #flash-messages.flash
         = render "layouts/flash"
       = turbo_frame_tag "modal"
@@ -27,7 +28,7 @@
           class: "text-uppercase", "data-probe": "" if prev_visible_step_key
         .ml-3.d-inline
           %button.btn.btn-primary{ form: "order-form", type: "submit",
-            "data-probe": "summary", "data-service-id": @service.id }= next_title
+            "data-probe": "summary", "data-service-id": @service.id, "data-turbo": false }= next_title
 
   = render "layouts/eosc_commons_footer"
   = render "layouts/recommendation"
