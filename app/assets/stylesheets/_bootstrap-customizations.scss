@@ -5017,6 +5017,8 @@ abbr[title] {
 }
 
 .modal {
+  overflow-y: auto;
+
   .modal-dialog {
     max-width: 570px;
 
