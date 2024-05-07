@@ -11,7 +11,7 @@ class ComparisonsController < ApplicationController
         category = Category.find_by(slug: params[:fromc])
         redirect_to category_services_path(category, params: @query_params)
       else
-        redirect_to services_path(params: @query_params)
+        redirect_to services_path(params: @query_params), allow_other_host: true
       end
     end
   end

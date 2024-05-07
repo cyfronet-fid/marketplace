@@ -24,7 +24,7 @@ class Bundle < ApplicationRecord
   belongs_to :main_offer, class_name: "Offer", optional: false
   belongs_to :resource_organisation, class_name: "Provider", optional: false
   has_many :bundle_offers
-  has_many :offers, through: :bundle_offers, dependent: :destroy
+  has_many :offers, through: :bundle_offers, dependent: :destroy, validate: false
   has_many :project_items
 
   has_many :bundle_target_users

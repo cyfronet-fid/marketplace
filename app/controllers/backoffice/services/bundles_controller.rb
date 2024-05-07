@@ -19,7 +19,7 @@ class Backoffice::Services::BundlesController < Backoffice::ApplicationControlle
     if @bundle.persisted?
       redirect_to backoffice_service_path(@service), notice: "New bundle created successfully"
     else
-      render :new, status: :bad_request
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -31,7 +31,7 @@ class Backoffice::Services::BundlesController < Backoffice::ApplicationControlle
     if Bundle::Update.call(@bundle, transform_attributes(template))
       redirect_to backoffice_service_path(@service), notice: "Bundle updated successfully"
     else
-      render :edit, status: :bad_request
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -40,7 +40,7 @@ class Backoffice::Services::BundlesController < Backoffice::ApplicationControlle
     if Bundle::Destroy.call(@bundle)
       redirect_to backoffice_service_path(@service), notice: "Bundle removed successfully"
     else
-      render :edit, status: :bad_request
+      render :edit, status: :unprocessable_entity
     end
   end
 

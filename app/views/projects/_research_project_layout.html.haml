@@ -12,7 +12,7 @@
           = link_to _("Back to %{pn} project details") % { pn: project.name }, [project, :services]
       .buttons-panel.col-md-3.float-right.d-flex.align-items-center
         - if policy(research_product).destroy?
-          = link_to project_research_product_path(project, research_product), method: :delete,
+          = link_to project_research_product_path(project, research_product), "data-turbo-method": :delete,
             class: "btn btn-outline-primary btn-sm mb-1 mt-1 unpin-button",
             type: "button", role: "button" do
             = image_tag "unpin.svg", alt: "Unpin", class: "button-icon"

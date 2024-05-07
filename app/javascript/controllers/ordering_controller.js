@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
+import initChoices from "../app/choices";
 
 export default class extends Controller {
   static targets = [
@@ -19,6 +20,7 @@ export default class extends Controller {
   initialize() {
     this.toggleSuggestion();
     this.updateVisibility();
+    initChoices();
   }
 
   toggleSuggestion(event) {
@@ -54,7 +56,8 @@ export default class extends Controller {
     }
 
     const currentOption = this.hasOrderTypeTarget ? this.orderTypeTargets.find((el) => el.checked) : null;
-    const valueCheck = typeof currentOption === "undefined" ? false : currentOption.value === "order_required";
+    const valueCheck =
+      typeof currentOption === "undefined" || currentOption === null ? false : currentOption.value === "order_required";
     const isOrderRequired = !this.hasOrderTypeTarget || valueCheck;
     const isInternal = this.hasInternalTarget && this.internalTarget.checked;
 

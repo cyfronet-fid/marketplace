@@ -24,28 +24,26 @@
           - if policy([:backoffice, @service]).publish?
             = link_to _("Publish"),
                       backoffice_service_publish_path(@service),
-                      data: { confirm: _("Are you sure you want to publish this service?"),
+                      data: { "turbo-confirm": _("Are you sure you want to publish this service?"),
                               e2e: "publish-btn",
                               "turbo-method": :post },
                       class: "btn btn-success btn-sm"
           - if policy([:backoffice, @service]).publish_unverified?
             = link_to _("Publish as unverified #{@service.type.downcase}"),
                       backoffice_service_publish_path(@service, unverified: true),
-                      data: { confirm: _("Are you sure you want to publish this service as unverified service?"),
+                      data: { "turbo-confirm": _("Are you sure you want to publish this service as unverified service?"),
                               "turbo-method": :post },
                       class: "btn btn-warning btn-sm"
           - if policy([:backoffice, @service]).suspend?
             = link_to _("Suspend #{@service.type.downcase}"),
                       backoffice_service_draft_path(@service, suspend: true),
-                      method: :post,
-                      data: { confirm: _("Are you sure you want to publish this service as unverified service?"),
+                      data: { "turbo-confirm": _("Are you sure you want to publish this service as unverified service?"),
                               "turbo-method": :post },
                       class: "btn btn-info btn-sm"
           - if policy([:backoffice, @service]).unpublish?
             = link_to _("Stop showing in the MP"),
                       backoffice_service_draft_path(@service),
-                      method: :post,
-                      data: { confirm: _("Are you sure you want to stop showing this service?"),
+                      data: { "turbo-confirm": _("Are you sure you want to stop showing this service?"),
                               e2e: "draft-btn",
                               "turbo-method": :post },
                       class: "btn btn-error btn-sm"
