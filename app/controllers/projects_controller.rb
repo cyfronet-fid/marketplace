@@ -30,6 +30,7 @@ class ProjectsController < ApplicationController
         format.html { redirect_to project_path(@project), notice: "Project successfully created" }
         format.turbo_stream { flash.now[:notice] = "Project successfully created" }
       else
+        verify_recaptcha(model: @project, attribute: :verified_recaptcha)
         format.html { render :new, status: :unprocessable_entity }
       end
     end
