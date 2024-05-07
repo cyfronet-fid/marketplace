@@ -8,6 +8,7 @@
       = render "layouts/badge" if ENV["MP_INSTANCE"]
       #flash-messages.flash
         = render "layouts/flash"
+      = turbo_frame_tag "modal"
       = render "layouts/backoffice/navbar"
     %main
       .container
