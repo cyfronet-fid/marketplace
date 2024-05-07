@@ -1,13 +1,13 @@
 - content_for :title, _("Create new Project")
 - breadcrumb :project_new
 - if turbo_frame_request?
-  = render TurboModalComponent.new(title: "Add Project") do
+  = render TurboModalComponent.new(title: "New Project") do
     = render "form", project: @project, show_recaptcha: true, turbo_enabled: true
 - else
   .container
     .mb-4.pb-4.border-header
       %h1.mr-auto.my-auto= _("Create new Project")
-      = render "form", project: @project, show_recaptcha: true, turbo_enabled: false
+    = render "form", project: @project, show_recaptcha: true, turbo_enabled: false
 
     %hr.bottom-hr.mt-5.mb-4
     .row

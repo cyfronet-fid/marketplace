@@ -3,7 +3,7 @@
   "turbo-modal-target": "modal",
   action: "turbo:submit-end->turbo-modal#submitEnd keyup@window->turbo-modal#closeWithKeyboard click@window->turbo-modal#closeBackground"
     } }
-    .modal-dialog.modal-dialog-scrollable{ role: "document" }
+    .modal-dialog{ role: "document" }
       .modal-content
         .modal-header
           %h3#form-modal-title.modal-title= @title
