@@ -30,6 +30,7 @@ class Catalogue::PcCreateOrUpdate < ApplicationService
   end
 
   def self.new_update_available(catalogue, modified_at)
+    return false if catalogue.blank?
     return true unless catalogue&.synchronized_at.present?
     modified_at >= catalogue.synchronized_at
   end

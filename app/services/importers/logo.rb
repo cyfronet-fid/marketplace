@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "mini_magick"
+require "image_processing/mini_magick"
 require "timeout"
 
 class Importers::Logo < ApplicationService

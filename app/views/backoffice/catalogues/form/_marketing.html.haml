@@ -17,7 +17,7 @@
   .card-body
     .service-description
       = f.input :description, disabled: cant_edit_catalogue(:description)
-    - has_logo = catalogue.logo.present? && catalogue.logo.attached? && catalogue.logo.variable?
+    - has_logo = catalogue.logo.present? && catalogue.logo.attached? && catalogue.logo.persisted?
     = f.input :logo, disabled: cant_edit_catalogue(:logo), as: :file,
       input_html: { value: has_logo ? url_for(catalogue.logo) : nil }
     %h3
