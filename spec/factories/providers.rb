@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require "image_processing/mini_magick"
 
 FactoryBot.define do
   factory :provider do

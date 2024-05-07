@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "mini_magick"
+require "image_processing/mini_magick"
 
 desc "Add an extension to the images that has lack of them"
 task :add_extension_to_images, [:root_url] => :environment do |_, args|

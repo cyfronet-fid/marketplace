@@ -16,8 +16,8 @@
         = link_to platform.name, backoffice_platform_path(platform)
         .buttons-box
           - if policy([:backoffice, platform]).destroy?
-            = link_to backoffice_platform_path(platform),
-                data: { confirm: _("Are you sure you want to remove this platform"), "turbo-method": :delete },
+            = link_to backoffice_platform_path(platform.id),
+                data: { "turbo-confirm": _("Are you sure you want to remove this platform?"), "turbo-method": :delete },
                 class: "delete-icon float-right" do
               %i.far.fa-trash-alt
 

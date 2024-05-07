@@ -14,7 +14,7 @@ describe("Resources", () => {
   const orderRequiredResourceInternal = "B2ACCESS";
   const resourceWithFewOffer = "B2DROP";
 
-  it.skip("should pin open access offer to a project only once", () => {
+  it("should pin open access offer to a project only once", () => {
     cy.get("[data-e2e='searchbar-input']")
       .type(openAccessResource)
       .type('{enter}');
@@ -35,8 +35,8 @@ describe("Resources", () => {
     cy.get("[data-e2e='add-new-project-btn']")
       .click();
     cy.fillFormProject(project);
-    cy.checkCaptcha(2);
-    cy.contains("button", "Create new project")
+    cy.checkCaptcha(1);
+    cy.contains("input", "Create new project")
       .click();
     cy.contains("h3","Project details")
       .should("be.visible");
@@ -71,7 +71,7 @@ describe("Resources", () => {
       .should("be.visible");
   });
 
-  it.skip("should order order required internal offer many times", () => {
+  it("should order order required internal offer many times", () => {
     cy.get("[data-e2e='searchbar-input']")
       .type(orderRequiredResourceInternal)
       .type('{enter}');
@@ -90,8 +90,8 @@ describe("Resources", () => {
     cy.get("[data-e2e='add-new-project-btn']")
       .click();
     cy.fillFormProject(project2);
-    cy.checkCaptcha(2);
-    cy.contains("button", "Create new project")
+    cy.checkCaptcha(1);
+    cy.contains("input", "Create new project")
       .click();
     cy.contains("h3","Project details")
       .should("be.visible");
@@ -127,7 +127,7 @@ describe("Resources", () => {
       .should("be.visible");
   });
 
-  it.skip("should add service with few offers", () => {
+  it("should add service with few offers", () => {
     cy.get("[data-e2e='searchbar-input']")
       .type(resourceWithFewOffer)
       .type('{enter}');
@@ -166,9 +166,9 @@ describe("Resources", () => {
     cy.get("[data-e2e='add-new-project-btn']")
       .click();
     cy.fillFormProject(project2);
-    cy.checkCaptcha(2);
-    cy.contains("button", "Create new project")
-      .click();
+    cy.checkCaptcha(1);
+    cy.get("input[name='commit']")
+      .click("bottom");
     cy.contains("h3","Project details")
       .should("be.visible");
     cy.contains("button", "Send access request")

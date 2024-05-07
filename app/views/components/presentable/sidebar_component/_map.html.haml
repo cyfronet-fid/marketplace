@@ -5,7 +5,7 @@
       - if with_desc && (nested.blank? || nested[field.to_sym] != "link")
         %span.list-title
           - if object.send(field).size > 1
-            %a{ href: "#" + t(".#{field}") , "data-toggle": "collapse" }
+            %a{ href: "##{field}", "data-toggle": "collapse" }
               -# TODO: refactor dynamic translation
               = t(".#{field}") + ":"
           - else

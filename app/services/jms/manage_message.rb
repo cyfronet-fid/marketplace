@@ -21,6 +21,7 @@ class Jms::ManageMessage < ApplicationService
     @logger = logger
     @eosc_registry_base_url = eosc_registry_base_url
     @token = token
+    Sidekiq.strict_args! false
   end
 
   # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
@@ -30,7 +31,7 @@ class Jms::ManageMessage < ApplicationService
     body = JSON.parse(@message.body)
     resource_type = @message.headers["destination"].split(".")[-2]
     action = @message.headers["destination"].split(".").last
-    resource = @parser.parse(body["resource"])
+    resource = @parser.parse(body["resource"]).as_json
 
     raise ResourceParseError, "Cannot parse resource" if resource.empty?
 

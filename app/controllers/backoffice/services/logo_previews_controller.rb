@@ -28,7 +28,7 @@ class Backoffice::Services::LogoPreviewsController < Backoffice::ApplicationCont
     elsif logo.present?
       blob, ext = ImageHelper.base_64_to_blob_stream(logo["base64"])
       path = ImageHelper.to_temp_file(blob, ext)
-      resized_logo = ImageProcessing::MiniMagick.source(path).resize_to_limit!(180, 120)
+      resized_logo = MiniMagick.source(path).resize_to_limit!(180, 120)
       send_file resized_logo.path, type: ext
     elsif has_service_logo
       redirect_to url_for(@service.logo.variant(resize: "180x120"))

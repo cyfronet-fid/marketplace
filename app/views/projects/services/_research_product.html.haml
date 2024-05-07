@@ -15,7 +15,7 @@
                       "aria-expanded" => "false",
                       type: "button" } Links
     - if policy(research_product).destroy?
-      = link_to project_research_product_path(project, research_product), method: :delete,
+      = link_to project_research_product_path(project, research_product), "data-turbo-method": :delete,
         class: "projects-links unpin-link mt-1 ml-3 pl-4",
         type: "button", role: "button" do
         = image_tag "unpin.svg", alt: "Unpin"
