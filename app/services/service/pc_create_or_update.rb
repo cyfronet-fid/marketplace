@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "mini_magick"
+require "image_processing/mini_magick"
 
 class Service::PcCreateOrUpdate
   class ConnectionError < StandardError

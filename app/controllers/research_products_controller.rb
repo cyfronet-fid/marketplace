@@ -15,7 +15,7 @@ class ResearchProductsController < ApplicationController
     else
       @research_product = @project_research_product.research_product || ResearchProduct.new
       load_projects
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 

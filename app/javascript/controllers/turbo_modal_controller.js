@@ -3,11 +3,16 @@ import { Controller } from "@hotwired/stimulus";
 export default class extends Controller {
   static targets = ["modal"];
 
+  connect() {
+    document.body.classList.add("overflow-hidden");
+  }
+
   hideModal() {
     this.element.parentElement.removeAttribute("src");
     // Remove src reference from parent frame element
     // Without this, turbo won't re-open the modal on subsequent click
     this.modalTarget.remove();
+    document.body.classList.remove("overflow-hidden");
   }
 
   // hide modal on successful form submission

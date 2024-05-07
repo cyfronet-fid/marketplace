@@ -148,6 +148,11 @@ a {
   &:hover {
     cursor: pointer;
   }
+
+  &.image-replaced {
+    border: none;
+    background: none;
+  }
 }
 
 .btn {
