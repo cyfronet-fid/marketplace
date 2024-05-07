@@ -13,7 +13,7 @@
 .collapse{ id: "other", "aria-labelledby": "other-header",
           "data-parent": "#accordion-form",
           class: ("show" unless collapsed?(catalogue,
-              [:sources, :upstream_id])) }
+              [:"sources.eid", :upstream_id])) }
   .card-body
     .row
       .col-12

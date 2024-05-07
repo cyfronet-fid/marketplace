@@ -36,7 +36,7 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
     if valid_model_and_urls? && @provider.save(validate: false)
       redirect_to backoffice_provider_path(@provider), notice: "New provider created successfully"
     else
-      render :new, status: :bad_request
+      render :new, status: :unprocessable_entity
     end
   end
 

@@ -35,6 +35,7 @@ export default class extends Controller {
     this.addListenersForCollapse();
     this.disableFormButtons();
     this.handleRelatedFields();
+    initChoices();
   }
 
   onScroll(event) {

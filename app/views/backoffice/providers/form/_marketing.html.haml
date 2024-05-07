@@ -18,7 +18,7 @@
   .card-body
     .service-description
       = f.input :description, disabled: cant_edit(:description)
-    - has_logo = provider.logo.present? && provider.logo.attached? && provider.logo.variable?
+    - has_logo = provider.logo.present? && provider.logo.attached? && provider.logo.persisted?
     = f.input :logo, disabled: cant_edit(:logo), as: :file,
       input_html: { value: has_logo ? url_for(provider.logo) : nil }
     %h3

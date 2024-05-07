@@ -39,6 +39,7 @@ class Backoffice::CataloguesController < Backoffice::ApplicationController
     if valid_model_and_urls? && @catalogue.save(validate: false)
       redirect_to backoffice_catalogue_path(@catalogue), notice: "New catalogue created successfully"
     else
+      add_missing_nested_models
       render :new, status: :bad_request
     end
   end
@@ -66,7 +67,7 @@ class Backoffice::CataloguesController < Backoffice::ApplicationController
   end
 
   def add_missing_nested_models
-    %i[sources public_contacts link_multimedia_urls].each do |association|
+    %i[sources public_contacts link_multimedia_urls data_administrators].each do |association|
       @catalogue.send(association).build if @catalogue.send(association).empty?
     end
     @catalogue.build_main_contact if @catalogue.main_contact.blank?

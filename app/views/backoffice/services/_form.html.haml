@@ -45,6 +45,7 @@
               value: "Preview",
               class: "btn btn-primary pl-5 pr-5 mr-5 mobile-bottom-margin",
               data: { e2e: "preview-btn" }
-          = f.button :submit, class: "btn btn-primary pl-5 pr-5 mr-5 mobile-bottom-margin", "data-e2e": "submit-btn"
+          = f.button :submit, class: "btn btn-primary pl-5 pr-5 mr-5 mobile-bottom-margin", "data-e2e": "submit-btn",
+            "data-turbo": false
           = back_link_to _("Cancel and back to previous page"), service, prefix: :backoffice,
               class: "text-left flex-grow-1 text-uppercase"
