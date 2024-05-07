@@ -11,7 +11,9 @@
           -# TODO: refactor dynamic translation
           = link_to @offer&.orderable? ? _("Cancel order and quit") : _("Cancel and quit"),
             service_cancel_path(@service),
-            method: :delete, class: "text-uppercase align-middle", "data-probe": "", "data-service-id": @service.id
+            class: "text-uppercase align-middle", data: { probe: "",
+                                                          "service-id": @service.id,
+                                                          "turbo-method": :delete }
           .ml-3.d-inline
             %button.btn.btn-primary{ form: "order-form", type: "submit",
                                      data: { probe: "summary", turbo: false } }= next_title
