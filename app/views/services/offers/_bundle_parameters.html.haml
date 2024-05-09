@@ -1,7 +1,10 @@
 - if technical_parameters.present?
-  %table.offer-params.table.table-borderless
-    %tbody
-      - technical_parameters.each do |parameter|
-        %tr
-          %td= parameter["label"]
-          %td.text-right.text-nowrap.font-weight-bold= parse_offer_parameter_value(parameter)
+  .card-body.pt-0.collapse-group.parameters-wrapper{ "data-controller": "parameter" }
+    %table.offer-params.table.table-borderless
+      %tbody
+        - technical_parameters.each_with_index do |parameter, idx|
+          %tr{ hideable_options(idx) }
+            %td= parameter["label"]
+            %td.text-right.font-weight-bold= parse_offer_parameter_value(parameter)
+    - if technical_parameters.size > 3
+      = render "common_parts/show_more_link", id: id

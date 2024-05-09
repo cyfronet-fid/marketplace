@@ -1,20 +1,34 @@
 .bundle-item.align-items-stretch{ id: "offer-#{offer.id}" }
   .card
-    .card-body.d-flex.flex-row
-      - if offer.service.logo.attached? && offer.service.logo.variable?
-        .bundle-offer-pic.p-2
-          = image_tag offer.service.logo.variant(resize: "84x84")
-      - else
-        .bundle-offer-pic.p-2
-          = image_pack_tag("eosc-img.png")
-      .bundle-offer-desc.p-2
-        %h4.card-title
-          = offer.name
-        .provided-by
-          = _("Provided by #{offer.service.resource_organisation.name}")
-      .bundle-offer-parameters.p-2
+    .card-body
+      .d-flex
+        - if offer.service.logo.attached? && offer.service.logo.variable?
+          .bundle-offer-pic.pr-3
+            = image_tag offer.service.logo.variant(resize: "84x84")
+        - else
+          .bundle-offer-pic
+            = image_pack_tag("eosc-img.png")
+        .bundle-offer-desc
+          %h4.card-title
+            = offer.name
+      .card-text.bundle-offer-shortinfo{ "data-controller" => "parameter" }
+        - if offer.description.squish.size > 150
+          %div{ data: { "parameter-target": "hideableParameter", state: "visible" } }
+            = markdown(offer.description.truncate(150, separator: " "))
+          .d-none{ data: { "parameter-target": "hideableParameter", state: "hidden" } }
+            = markdown(offer.description)
+          = render "common_parts/show_more_link", id: offer.id
+        - else
+          = markdown(offer.description)
+      .bundle-offer-parameters
+        %h5.text-uppercase.parameters-title.mb-3.mt-3
+          %i.fas.fa-tachometer-alt
+          = _("Technical Parameters")
         .card-text{ "data-controller" => "paragraph" }
-          = render "services/offers/bundle_parameters",
+          = render "services/offers/bundle_parameters", id: offer.id,
                 technical_parameters: offer.attributes.map(&:to_json)
-      .bundle-offer-order-type
+
+      .bundle-offer-order-type.badge.access-information.badge-right.style_order_required{ class: offer.order_type }
+        %i.ordertype{ class: offer.order_type }
         = t("offers.type.#{offer.order_type}")
+
