@@ -1,14 +1,15 @@
 .card-body{ class: "#{"suspended" if bundle.service.suspended?}" }
-  %span.text-sm-right.fa-pull-right.badge-right
+  %span.text-sm-right.fa-pull-right.badge-right{ class: order_type(bundle) }
     %i{ class: "ordertype #{order_type(bundle)}" }
     = t("offers.type.#{order_type(bundle)}")
   = yield_content!(:status) if content_for?(:status)
+  .d-flex.top-bundle-wrapper
+    %h4.card-title.pt-0.mb-4
+      = link_to bundle.name, bundle.service.suspended? ? nil : service_bundle_path(bundle.service, bundle)
+
   .bundle-goals
     - bundle.bundle_goals.each do |goal|
       %span.goal= goal.name
-  %h4.card-title.pt-2
-    = link_to bundle.name, bundle.service.suspended? ? nil : service_bundle_path(bundle.service, bundle)
-
   .bundle-description
     .card-text.mb-2{ "data-controller" => "parameter" }
       - if bundle.description.size > 500
