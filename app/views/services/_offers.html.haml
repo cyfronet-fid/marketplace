@@ -30,5 +30,7 @@
   .row
     = render partial: "services/bundle_box", collection: bundles, as: :bundle, locals: { bundled: false }
     - if bundled.present?
-      = _("This service is included in bundles:")
+      .col-md-12
+        %h2.mb-4.font-weight-bolder
+          = _("This service is included in bundles:")
       = render partial: "services/bundle_box", collection: bundled, as: :bundle, locals: { bundled: true }
