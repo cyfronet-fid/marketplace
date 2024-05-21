@@ -7572,6 +7572,15 @@ abbr[title] {
     margin: 0 0 13px;
   }
 
+  h5 {
+    color: $custom-form-16;
+    border: none;
+    text-transform: uppercase;
+    padding: 0 0 5px;
+    margin: 30px 0 13px;
+    border-bottom: 1px solid $custom-form-16;
+  }
+
   .offer-section-wrapper {
     border: 1px solid $custom-form-17;
     border-radius: 8px;
@@ -7662,6 +7671,21 @@ abbr[title] {
       display: block;
       margin: 0 0 20px 0;
     }
+
+    .delete-link {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 20px;
+      display: block;
+      margin: 15px 0 20px 0;
+      background: url('../images/icon-delete.svg') no-repeat;
+      padding: 0 0 0 26px;
+      float: right;
+    }
+  }
+
+  .raid_project_contributors_contact {
+    margin-right: 25px;
   }
 }
 // scss-lint:enable all
