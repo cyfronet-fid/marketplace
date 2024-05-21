@@ -384,6 +384,16 @@ ActiveRecord::Schema.define(version: 2024_04_12_153457) do
     t.index ["target_id"], name: "index_offer_links_on_target_id"
   end
 
+  create_table "offer_vocabularies", force: :cascade do |t|
+    t.bigint "offer_id"
+    t.bigint "vocabulary_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["offer_id", "vocabulary_id"], name: "index_offer_vocabularies_on_offer_id_and_vocabulary_id", unique: true
+    t.index ["offer_id"], name: "index_offer_vocabularies_on_offer_id"
+    t.index ["vocabulary_id"], name: "index_offer_vocabularies_on_vocabulary_id"
+  end
+
   create_table "offers", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -403,6 +413,10 @@ ActiveRecord::Schema.define(version: 2024_04_12_153457) do
     t.boolean "bundle_exclusive", default: false
     t.integer "project_items_count", default: 0, null: false
     t.integer "usage_counts_views", default: 0, null: false
+    t.text "restrictions"
+    t.integer "offer_category_id"
+    t.integer "offer_type_id"
+    t.integer "offer_subtype_id"
     t.index ["iid"], name: "index_offers_on_iid"
     t.index ["primary_oms_id"], name: "index_offers_on_primary_oms_id"
     t.index ["service_id", "iid"], name: "index_offers_on_service_id_and_iid", unique: true
@@ -1082,6 +1096,8 @@ ActiveRecord::Schema.define(version: 2024_04_12_153457) do
   add_foreign_key "descriptions", "raid_projects"
   add_foreign_key "offer_links", "offers", column: "source_id"
   add_foreign_key "offer_links", "offers", column: "target_id"
+  add_foreign_key "offer_vocabularies", "offers"
+  add_foreign_key "offer_vocabularies", "vocabularies"
   add_foreign_key "offers", "omses", column: "primary_oms_id"
   add_foreign_key "oms_administrations", "omses"
   add_foreign_key "oms_administrations", "users"

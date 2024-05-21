@@ -4,8 +4,8 @@ import initChoices from "../choices";
 export default class extends Controller {
   static targets = [
     "accessType",
-    "addField", 
-    "alternativeDescription", 
+    "addField",
+    "alternativeDescription",
     "alternativeTitle",
     "contributor",
     "embargoExpiry",
@@ -13,65 +13,65 @@ export default class extends Controller {
     "destroy",
     "form",
     "raidOrganisation",
-    "results", 
+    "results",
     "rorInput",
     "rorValue",
-    "selectedOption"
+    "selectedOption",
   ];
   static values = {
-    url: String, 
-    value: String
-  }
+    url: String,
+    value: String,
+  };
   connect() {
     console.log("Raid project controller connected");
     this.embargoExpiry = this.embargoExpiryTarget;
     this.embargoExpiry.hidden = true;
     this.embargoExpiry = "";
-    const summarySection = this.element.querySelector('[data-raid-form-target="section"][data-section="project-details"]');
+    const summarySection = this.element.querySelector(
+      '[data-raid-form-target="section"][data-section="project-details"]',
+    );
     console.log(summarySection);
-    console.log(this.formTarget)
+    console.log(this.formTarget);
   }
 
   setEmbargoed() {
-    const accessType = this.accessTypeTarget.value
-    this.embargoExpiryInput = this.embargoExpiryInputTarget
-    
-    if (this.embargoExpiry == "") {
-      this.embargoExpiry = this.embargoExpiryInput.value
-    };
+    const accessType = this.accessTypeTarget.value;
+    this.embargoExpiryInput = this.embargoExpiryInputTarget;
 
-    if (accessType == 'embargoed')
-    { 
-      this.embargoExpiryTarget.hidden = false;
-      this.embargoExpiryInput.value = this.embargoExpiry; 
+    if (this.embargoExpiry == "") {
+      this.embargoExpiry = this.embargoExpiryInput.value;
     }
-    else {
+
+    if (accessType == "embargoed") {
+      this.embargoExpiryTarget.hidden = false;
+      this.embargoExpiryInput.value = this.embargoExpiry;
+    } else {
       this.embargoExpiryTarget.hidden = true;
-      this.embargoExpiryInput.value = '';
-    };
-  };
+      this.embargoExpiryInput.value = "";
+    }
+  }
 
   autocomplete(event) {
-    this.currentElementIndex = event.target.id.split('_')[5]
+    this.currentElementIndex = event.target.id.split("_")[5];
     this.accessType = this.accessTypeTarget;
     const query = this.rorInputTargets[this.currentElementIndex].value.trim();
     if (query.length > 2) {
       const params = new URLSearchParams(window.location.search.slice(1));
       params.append("q", query);
-      const url = new URL(this.urlValue)
+      const url = new URL(this.urlValue);
       url.search = params.toString();
       this.element.dispatchEvent(new CustomEvent("loadstart"));
       fetch(url.toString(), { headers: { "X-Requested-With": "XMLHttpRequest" } })
         .then((response) => response.text())
         .then((body) => this.success(body))
         .catch((response) => this.error(response));
-    }   
+    }
   }
 
   success(body) {
-    const currentResult = this.resultsTargets[this.currentElementIndex]
+    const currentResult = this.resultsTargets[this.currentElementIndex];
     currentResult.innerHTML = body;
-    
+
     const hasResults = !!currentResult.querySelector('[role="option"]');
     currentResult.hidden = !hasResults;
     this.element.dispatchEvent(new CustomEvent("load"));
@@ -84,14 +84,14 @@ export default class extends Controller {
   }
 
   pickOption(event) {
-    let chosenValue = event.target.getAttribute("data-raid-project-value") 
-    let chosenName = event.target.getAttribute("data-raid-project-display") 
-    this.rorInputTargets[this.currentElementIndex].value = chosenName
-    this.rorValueTargets[this.currentElementIndex].value = chosenValue
-    this.resultsTargets[this.currentElementIndex].innerHTML = ''
+    let chosenValue = event.target.getAttribute("data-raid-project-value");
+    let chosenName = event.target.getAttribute("data-raid-project-display");
+    this.rorInputTargets[this.currentElementIndex].value = chosenName;
+    this.rorValueTargets[this.currentElementIndex].value = chosenValue;
+    this.resultsTargets[this.currentElementIndex].innerHTML = "";
   }
 
-  addField(event) { 
+  addField(event) {
     event.preventDefault();
     this.alternativeTitles = this.alternativeTitleTargets;
     this.alternativeDescriptions = this.alternativeDescriptionTargets;

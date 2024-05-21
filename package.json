@@ -24,6 +24,7 @@
     "lodash.debounce": "^4.0.8",
     "masonry-layout": "^4.2.2",
     "popper.js": "^1.14.3",
+    "prettier": "^3.2.5",
     "shepherd.js": "8.0.0",
     "stimulus": "^3.2.1",
     "trix": "^1.0.0",
