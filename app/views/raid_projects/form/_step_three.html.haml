@@ -1,14 +1,12 @@
-%div
-    %h2
-        = _("Organisations")
-    = f.error :org_base, class: "invalid-feedback d-block"
-    = f.fields_for :raid_organisations, multiple: true, as: :array do |organisation_f|
-        = render "raid_projects/form/organisation_fields", organisation_f: organisation_f
-    = link_to _("Add organisation"), "#", class: "btn btn-primary disablable",
+%h4 Organisations
+.offer-section-wrapper.bottom-margin
+  = f.error :org_base, class: "invalid-feedback d-block"
+  = f.fields_for :raid_organisations, multiple: true, as: :array do |organisation_f|
+    = render "raid_projects/form/organisation_fields", organisation_f: organisation_f
+  = link_to _("+ Add organisation"), "#", class: "add-link",
         data: { raid_project: { target: "addField" },
               action: "click->raid-project#addField",
               value: "raidOrganisations",
               fields: f.fields_for(:raid_organisations, Raid::RaidOrganisation.new,
               child_index: "new_field") { |organisation_f| render "raid_projects/form/organisation_fields",
               organisation_f: organisation_f } }
-%hr

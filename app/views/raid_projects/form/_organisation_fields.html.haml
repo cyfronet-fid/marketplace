@@ -1,13 +1,13 @@
 %div{ "data-raid-project-target": "raidOrganisation" }
   .contact
     = organisation_f.hidden_field :id
-    = organisation_f.input :name,  placeholder: 'Search your organisation...', label: "Organisation name",
+    = organisation_f.input :name,  placeholder: "Search your organisation...", label: "Organisation name",
                             input_html: { "data-raid-project-target": "rorInput",
-                            "data-action": "keydown->raid-project#autocomplete" } 
+                            "data-action": "keydown->raid-project#autocomplete" }
     %ul.autocomplete-results{ "data-raid-project-target": "results" }
     = organisation_f.input :pid, label: "ROR", readonly: true,
                            input_html: { "data-raid-project-target": "rorValue"}
-    %h4 
+    %h5
       Position
     = organisation_f.fields_for :position do |position_f|
       = position_f.hidden_field :id
@@ -19,4 +19,4 @@
     = organisation_f.hidden_field :_destroy, "data-raid-project-target": "destroy"
     .text-right
       = link_to _("Delete organisation"), "#", id: "organisation-delete-#{organisation_f.index}",
-      class: "btn-sm disablable btn-danger", "data-action": "click->raid-project#removeField"
+      class: "delete-link", "data-action": "click->raid-project#removeField"

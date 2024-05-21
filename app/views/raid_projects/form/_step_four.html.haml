@@ -1,24 +1,23 @@
-%div
-    %h2
-        = _("Access")
-    = f.error :access_base, class: "invalid-feedback d-block"
-    = f.fields_for :raid_access do |access_f|
-        = access_f.hidden_field :id
-        = access_f.input :access_type, as: :select,
+%h4 Access
+.offer-section-wrapper.bottom-margin
+  = f.error :access_base, class: "invalid-feedback d-block"
+  = f.fields_for :raid_access do |access_f|
+    = access_f.hidden_field :id
+    = access_f.input :access_type, as: :select,
                   collection: Raid::RaidAccess.access_types.map { |k, v| [ k.capitalize, v ] },
                   input_html: {"data-raid-project-target": "accessType",
                     "data-action": "raid-project#setEmbargoed",
                     data: { choice: true },  multiple: false }
-        %div
-            %h4 
-                = _("Statement")
-            = access_f.input :statement_text, label: "Text"
-            = access_f.input :statement_lang, label: "Language",
+    %div
+      %h5
+        = _("Statement")
+      = access_f.input :statement_text, label: "Text"
+      = access_f.input :statement_lang, label: "Language",
                   collection: Raid::Language.all,
                   label_method: :english_name,
                   value_method: :alpha3,
                   include_hidden: true,
                   input_html: { data: { choice: true },  multiple: false }
-        = access_f.input :embargo_expiry,  as: :date, html5: true,
+    = access_f.input :embargo_expiry,  as: :date, html5: true,
             wrapper_html: {"data-raid-project-target" => "embargoExpiry"},
             input_html: {"data-raid-project-target" => "embargoExpiryInput"}

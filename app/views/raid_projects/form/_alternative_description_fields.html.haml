@@ -10,6 +10,5 @@
                   input_html: { data: { choice: true },  multiple: false }
 
     = alternative_description_f.hidden_field :_destroy, "data-raid-project-target": "destroy"
-    .text-right
-      = link_to _("Delete description"), "#", id: "alternative-description-delete-#{alternative_description_f.index}",
-      class: "btn-sm disablable btn-danger", "data-action": "click->raid-project#removeField"
+    = link_to _("Delete description"), "#", id: "alternative-description-delete-#{alternative_description_f.index}",
+      class: "delete-link", "data-action": "click->raid-project#removeField"
