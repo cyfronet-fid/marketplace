@@ -1,6 +1,7 @@
 - content_for :title, _("Create new RAID Project")
+- breadcrumb :project_new
 .container
-  .mb-4.pb-4.border-header
+  .mb-5.pb-2.border-header
     %h1.mr-auto.my-auto= _("Create new RAID Project")
   = render "form", raid_project: @raid_project, show_recaptcha: true
 
