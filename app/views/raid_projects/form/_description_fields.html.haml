@@ -1,21 +1,19 @@
 %div
-    %h2
-        = _("Descriptions")
-    = f.fields_for :main_description do |main_description_f|
-        = main_description_f.input :text, label: "Main Description"
-        = main_description_f.input :language, as: :select,
+  = f.fields_for :main_description do |main_description_f|
+    = main_description_f.input :text, label: "Main Description"
+    = main_description_f.input :language, as: :select,
                   collection: Raid::Language.all,
                   label_method: :english_name,
                   value_method: :alpha3,
                   include_hidden: true,
                   input_html: { data: { choice: true },  multiple: false }
     = f.fields_for :alternative_descriptions, multiple: true, as: :array,
-                wrapper_html: { "data-raid-project-target" => "alternativeDescription" }  do |alternative_description_f|
-        = render "raid_projects/form/alternative_description_fields", alternative_description_f: alternative_description_f
-    = link_to _("Add alternative description"), "#", class: "btn btn-primary",
-            data: { raid_project: { target: "addField" },
-            action: "click->raid-project#addField",
-            value: "alternativeDescriptions",
-            fields: f.fields_for(:alternative_descriptions, Raid::AlternativeDescription.new,
-            child_index: "new_field") { |alternative_description_f| render "raid_projects/form/alternative_description_fields",
-            alternative_description_f: alternative_description_f }}
+            wrapper_html: { "data-raid-project-target" => "alternativeDescription" }  do |alternative_description_f|
+      = render "raid_projects/form/alternative_description_fields",
+        alternative_description_f: alternative_description_f
+    = link_to _("+ Add alternative description"), "#", class: "add-link mt-4",
+        data: { raid_project: { target: "addField" }, action: "click->raid-project#addField",
+        value: "alternativeDescriptions",
+        fields: f.fields_for(:alternative_descriptions, Raid::AlternativeDescription.new,
+        child_index:"new_field"){|alternative_description_f| render "raid_projects/form/alternative_description_fields",
+        alternative_description_f: alternative_description_f }}
