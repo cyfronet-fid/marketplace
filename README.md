@@ -25,6 +25,8 @@ We will need:
   * [imagemagick](https://imagemagick.org/script/install-source.php). After installation use `convert --version`
     to verify your delegates. If `png` is missing please refer to the
     [related issue](https://askubuntu.com/questions/745660/imagemagick-png-delegate-install-problems).
+  * [vips](https://github.com/libvips/libvips) The second, alternative
+    images processor included in rails 7 and ImageProcessing gem
   * [docker-compose 1](https://docs.docker.com/compose/) (Compose 2 is still in the making)
 
 If you are using [asdf](https://github.com/asdf-vm/asdf) the easiest way to
