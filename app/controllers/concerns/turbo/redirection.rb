@@ -6,7 +6,7 @@ module Turbo::Redirection
   def redirect_to(url = {}, options = {})
     turbo = options.delete(:turbo)
 
-    super.tap { visit_location_with_turbo(location, turbo) if turbo != false && request.xhr? && !request.get? }
+    super.tap { visit_location_with_turbo(url, turbo) if turbo != false && request.xhr? && !request.get? }
   end
 
   private

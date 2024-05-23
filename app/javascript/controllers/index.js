@@ -40,9 +40,6 @@ application.register("filter", FilterController);
 import FormController from "./form_controller";
 application.register("form", FormController);
 
-import HelloController from "./hello_controller";
-application.register("hello", HelloController);
-
 import HomePageController from "./home_page_controller";
 application.register("home-page", HomePageController);
 
