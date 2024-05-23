@@ -12,6 +12,7 @@ class Services::OrderingConfigurationsController < Services::OrderingConfigurati
     @bundles = policy_scope(@service.bundles)
     @related_services = @service.related_services
     @service.monitoring_status = fetch_status(@service.pid)
+    @question = Service::Question.new(service: @service)
   end
 
   private

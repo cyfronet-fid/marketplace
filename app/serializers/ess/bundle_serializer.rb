@@ -34,6 +34,6 @@ class Ess::BundleSerializer < ApplicationSerializer
   end
 
   def catalogues
-    object.all_offers.map { |o| o.service.catalogue.pid }.compact
+    object.all_offers.map { |o| o.service.catalogue&.pid }.compact
   end
 end
