@@ -5,5 +5,4 @@ class Raid::Position < ApplicationRecord
   include DateValidation
 
   validates :pid, presence: true
- 
 end

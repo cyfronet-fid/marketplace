@@ -31,24 +31,25 @@ class RaidProjectPolicy < ApplicationPolicy
     owner?
   end
   def permitted_attributes
-
     [
       :start_date,
       :end_date,
-      main_title_attributes: [:id, :text, :language, :start_date, :end_date],
-      alternative_titles_attributes: [:id, :text, :language, :start_date, :end_date, :_destroy],
-      main_description_attributes: [:id, :text, :language ],
-      alternative_descriptions_attributes: [:id, :text, :language,  :_destroy],
+      main_title_attributes: %i[id text language start_date end_date],
+      alternative_titles_attributes: %i[id text language start_date end_date _destroy],
+      main_description_attributes: %i[id text language],
+      alternative_descriptions_attributes: %i[id text language _destroy],
       contributors_attributes: [
-        :id, :pid, :pid_type, :leader, :contact, :_destroy, [roles: []],
-        position_attributes: [:id, :pid, :start_date, :end_date]
+        :id,
+        :pid,
+        :pid_type,
+        :leader,
+        :contact,
+        :_destroy,
+        [roles: []],
+        position_attributes: %i[id pid start_date end_date]
       ],
-      raid_organisations_attributes: [
-        :id, :pid, :name, :_destroy, position_attributes: [:id, :pid, :start_date, :end_date]
-      ],
-      raid_access_attributes: [
-        :id, :access_type, :statement_text, :statement_lang, :embargo_expiry, :_destroy
-      ]
+      raid_organisations_attributes: [:id, :pid, :name, :_destroy, position_attributes: %i[id pid start_date end_date]],
+      raid_access_attributes: %i[id access_type statement_text statement_lang embargo_expiry _destroy]
     ]
   end
 
@@ -57,6 +58,4 @@ class RaidProjectPolicy < ApplicationPolicy
   def owner?
     record.user == user
   end
-
-  
 end

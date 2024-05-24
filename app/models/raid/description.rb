@@ -1,4 +1,6 @@
-class Raid::Description < ::ApplicationRecord
+# frozen_string_literal: true
+
+class Raid::Description < ApplicationRecord
   belongs_to :raid_project
 
   enum description_type: { primary: "primary", alternative: "alternative" }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateRaidOrganisations < ActiveRecord::Migration[6.1]
   def change
     create_table :raid_organisations do |t|

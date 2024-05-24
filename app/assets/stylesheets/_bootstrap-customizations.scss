@@ -7808,7 +7808,6 @@ abbr[title] {
 
 // scss-lint:disable all
 .new-form-style {
-
   h4 {
     color: $custom-form-16;
     border: none;
@@ -7836,7 +7835,6 @@ abbr[title] {
     }
 
     .buttons-selector {
-
       &.bottom-margin {
         margin-bottom: 40px;
       }
@@ -7875,7 +7873,7 @@ abbr[title] {
             color: $custom-form-16;
             line-height: 62px;
             font-size: 16px;
-            width: 100%
+            width: 100%;
           }
 
           &.active {
@@ -7905,7 +7903,7 @@ abbr[title] {
 
     .form-control {
       &.text {
-        padding-top: 10px
+        padding-top: 10px;
       }
     }
 
@@ -7923,7 +7921,7 @@ abbr[title] {
       line-height: 20px;
       display: block;
       margin: 15px 0 20px 0;
-      background: url('../images/icon-delete.svg') no-repeat;
+      background: url("../images/icon-delete.svg") no-repeat;
       padding: 0 0 0 26px;
       float: right;
     }

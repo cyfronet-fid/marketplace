@@ -6,22 +6,20 @@ class Raid::Contributor < ApplicationRecord
   attr_accessor :position_attributes
 
   accepts_nested_attributes_for :position, allow_destroy: true
-  
+
   PID_TYPES = { orcid: "orcid", isni: "isni" }.freeze
-  
+
   enum pid_type: PID_TYPES
 
   validates :pid, presence: true
   validates :pid_type, presence: true
 
   after_initialize :init_position
-  
 
   protected
+
   def init_position
-    if position
-      return position
-    end
+    return position if position
     build_position(position_attributes)
   end
 end

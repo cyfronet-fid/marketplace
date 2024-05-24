@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Raid::RaidOrganisation < ApplicationRecord
   belongs_to :raid_project
   has_one :position, as: :positionable
@@ -9,13 +11,11 @@ class Raid::RaidOrganisation < ApplicationRecord
   validates :name, presence: true
 
   after_initialize :init_position
-  
 
   protected
+
   def init_position
-    if position
-      return position
-    end
+    return position if position
     build_position(position_attributes)
   end
 end

@@ -145,5 +145,5 @@ gem "redis", "~> 5.0"
 gem "redis-actionpack", "~> 5.3"
 
 # Raid related gems
-gem 'yajl-ffi', '~> 0.1.2'
-gem 'rubyzip'
+gem "yajl-ffi", "~> 0.1.2"
+gem "rubyzip"

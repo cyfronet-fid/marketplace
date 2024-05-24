@@ -8,17 +8,17 @@ class RaidProjectsController < ApplicationController
   def index
     @raid_projects = policy_scope(RaidProject)
     respond_to do |format|
-      format.html 
-      format.json { render json:  @raid_projects.map { |pi| serialize(pi) }  }
-     end
+      format.html
+      format.json { render json: @raid_projects.map { |pi| serialize(pi) } }
+    end
   end
 
   def show
     @raid_project = RaidProject.find(params[:id])
     respond_to do |format|
-      format.html 
-      format.json { render json:  @raid_project, serializer: Api::V1::Raid::RaidProjectSerializer }
-     end
+      format.html
+      format.json { render json: @raid_project, serializer: Api::V1::Raid::RaidProjectSerializer }
+    end
   end
 
   def new

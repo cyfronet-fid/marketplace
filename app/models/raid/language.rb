@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'iso-639'
+require "iso-639"
 
 class Raid::Language
   class << self

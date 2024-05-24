@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Raid::Title < ::ApplicationRecord
+class Raid::Title < ApplicationRecord
   extend ActiveModel::Naming
   include DateValidation
   belongs_to :raid_project
@@ -10,5 +10,4 @@ class Raid::Title < ::ApplicationRecord
   validates :title_type, presence: true
   validates :type, presence: true
   validates :language, length: { minimum: 3, maximum: 3 }
-
 end
