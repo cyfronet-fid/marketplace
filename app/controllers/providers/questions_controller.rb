@@ -18,13 +18,12 @@ class Providers::QuestionsController < ApplicationController
         provider: @provider
       )
     respond_to do |format|
-      if @question.valid? && verify_recaptcha(model: @question, attribute: :verified_recaptcha)
+      if @question.valid? & verify_recaptcha(model: @question, attribute: :verified_recaptcha)
         Provider::Question::Deliver.new(@question).call
         notice = "Your message was successfully sent"
         format.html { redirect_to provider_path(@provider, notice: notice) }
         format.turbo_stream { flash.now[:notice] = notice }
       else
-        verify_recaptcha(model: @question, attribute: :verified_recaptcha)
         format.html { render :new, status: :unprocessable_entity }
         format.json { render :new, status: :unprocessable_entity }
       end

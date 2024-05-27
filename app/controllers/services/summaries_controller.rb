@@ -16,10 +16,9 @@ class Services::SummariesController < Services::ApplicationController
     @step = step(summary_params)
     @bundle_params = session[session_key][:bundled_parameters] || []
 
-    if @step.valid? && verify_recaptcha(model: @step, attribute: :verified_recaptcha)
+    if @step.valid? & verify_recaptcha(model: @step, attribute: :verified_recaptcha)
       do_create(@step.project_item, @bundle_params)
     else
-      verify_recaptcha(model: @step, attribute: :verified_recaptcha)
       setup_show_variables!
       flash[:alert] = @step.error
       render "show", status: :unprocessable_entity

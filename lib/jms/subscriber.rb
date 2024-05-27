@@ -8,7 +8,7 @@ module Jms
   class Subscriber
     class ConnectionError < StandardError
       def initialize(msg)
-        super(msg)
+        super
         Sentry.capture_exception(self)
       end
     end

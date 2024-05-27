@@ -16,7 +16,7 @@ class Api::V1::Ess::ApplicationController < ActionController::API
 
   def policy_scope(scope = controller_class, policy_scope_class: nil)
     if scope == Datasource
-      super(scope, policy_scope_class: policy_scope_class)
+      super
     else
       super([:api, :v1, :ess, scope])
     end

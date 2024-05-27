@@ -12,14 +12,14 @@ module Parameter::Minmax
 
     validates :min,
               numericality: {
-                less_than_or_equal_to: ->(p) { p.max },
+                less_than_or_equal_to: lambda(&:max),
                 message: "must be less or equal than maximum value"
               },
               if: :max
 
     validates :max,
               numericality: {
-                greater_than_or_equal_to: ->(p) { p.min },
+                greater_than_or_equal_to: lambda(&:min),
                 message: "must be greater or equal than minimum value"
               },
               if: :min
