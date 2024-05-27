@@ -11,6 +11,6 @@
         %label
           = link_to service_offers_path(bundle.service,
                 customizable_project_item: { offer_id: bundle.main_offer.iid, bundle_id: bundle.iid }),
-                "data-probe": "", "data-service-id": bundle.service.id, method: :put do
+                data: { probe: "", service_id: bundle.service.id, turbo_method: :put } do
             %span.btn.btn-primary
               = _("Select bundle")

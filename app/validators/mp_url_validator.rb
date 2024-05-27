@@ -7,7 +7,7 @@ class MpUrlValidator < ActiveModel::EachValidator
     options.reverse_merge!(schemes: %w[http https])
     options.reverse_merge!(message: :url)
 
-    super(options)
+    super
   end
 
   def validate_each(record, attribute, value)
