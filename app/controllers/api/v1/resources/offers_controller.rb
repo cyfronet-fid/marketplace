@@ -48,7 +48,7 @@ class Api::V1::Resources::OffersController < Api::V1::ApplicationController
   private
 
   def permitted_attributes(record)
-    super(record)
+    super
   rescue ActionController::ParameterMissing => e
     if @bundled_offers.is_a?(Array)
       {}

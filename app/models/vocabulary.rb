@@ -16,7 +16,7 @@ class Vocabulary < ApplicationRecord
   validates :type, presence: true
 
   def to_s
-    super()
+    super
     name
   end
 end

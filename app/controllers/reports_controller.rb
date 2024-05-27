@@ -14,12 +14,11 @@ class ReportsController < ApplicationController
         text: params[:report][:text]
       )
     respond_to do |format|
-      if @report.valid? && verify_recaptcha(model: @report, attribute: :verified_recaptcha)
+      if @report.valid? & verify_recaptcha(model: @report, attribute: :verified_recaptcha)
         Report::Create.new(@report).call
         format.turbo_stream { flash.now[:notice] = notice }
         flash[:notice] = "Your report was successfully sent"
       else
-        verify_recaptcha(model: @report, attribute: :verified_recaptcha)
         format.json { render :new, status: :unprocessable_entity }
       end
     end
