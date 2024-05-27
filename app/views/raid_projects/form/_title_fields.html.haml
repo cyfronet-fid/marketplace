@@ -20,4 +20,4 @@
             action: "click->raid-project#addField",
             value: "alternativeTitles",
             fields: f.fields_for(:alternative_titles, Raid::AlternativeTitle.new,
-            child_index: "new_field") { |at_f| render render_alternative_title_fields(at_f) } }
+            child_index: "new_field") { |at_f| render_alternative_title_fields(at_f) } }

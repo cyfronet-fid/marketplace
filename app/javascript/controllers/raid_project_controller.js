@@ -1,5 +1,5 @@
-import { Controller } from "stimulus";
-import initChoices from "../choices";
+import { Controller } from "@hotwired/stimulus";
+import initChoices from "../app/choices";
 
 export default class extends Controller {
   static targets = [
