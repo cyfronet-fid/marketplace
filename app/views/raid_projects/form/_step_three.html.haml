@@ -1,0 +1,11 @@
+%h4 Organisations
+.offer-section-wrapper.bottom-margin
+  = f.error :org_base, class: "invalid-feedback d-block"
+  = f.fields_for :raid_organisations, multiple: true, as: :array do |organisation_f|
+    = render_organisation_fields(organisation_f)
+  = link_to _("+ Add organisation"), "#", class: "add-link",
+        data: { raid_project: { target: "addField" },
+              action: "click->raid-project#addField",
+              value: "raidOrganisations",
+              fields: f.fields_for(:raid_organisations, Raid::RaidOrganisation.new,
+              child_index: "new_field") { |o_f| render_organisation_fields(o_f) } }

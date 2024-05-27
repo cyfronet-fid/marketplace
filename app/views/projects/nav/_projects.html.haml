@@ -20,6 +20,10 @@
 = link_to "Create new project", new_project_path, class: "btn btn-sm btn-primary pl-5 pr-5 mt-4 text-center w-100",
   "data-e2e" => "go-to-create-project-form-btn"
 
+= link_to "Create new RAID project", new_raid_project_path,
+      class: "btn btn-sm btn-primary pl-5 pr-5 mt-4 text-center w-100",
+  "data-e2e" => "go-to-create-project-form-btn"
+
 - if projects.archived.any?
   %h5.mt-5.font-weight-bold.projects-title.text-uppercase My archived projects
   %ul.nav.flex-column.project-menu
