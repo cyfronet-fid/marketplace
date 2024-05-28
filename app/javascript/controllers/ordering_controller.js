@@ -72,6 +72,7 @@ export default class extends Controller {
     }
     if (this.hasOrderUrlWrapperTarget) {
       doShowOrDisable(this.orderUrlWrapperTarget, !(isOrderRequired && isInternal));
+      doShowOrDisable(document.getElementById("order-url-hint"), !(isOrderRequired && isInternal));
     }
     if (this.hasPrimaryOmsWrapperTarget) {
       doShowOrDisable(this.primaryOmsWrapperTarget, isOrderRequired && isInternal);
