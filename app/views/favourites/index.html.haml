@@ -12,11 +12,12 @@
         = link_to "Go back to the services list", services_path,
         class: "btn btn-sm btn-outline-primary d-block mb-3", "data-favourite-target": "backlink"
     .col-lg-9.favourites{ "data-favourite-target": "serviceBox" }
-      - if @favourites.blank?
-        = render "empty_box"
-      - else
-        = render partial: "service", collection: @favourites,
-          locals: { comparison_enabled: false, remote: true, favourite_services: @favourites }
+      #service-box
+        - if @favourites.blank?
+          = render "empty_box"
+        - else
+          = render partial: "service", collection: @favourites,
+            locals: { comparison_enabled: false, remote: true, favourite_services: @favourites }
   - display_class = (session[:comparison]&.size || 0).positive? ? "d-block" : "d-none"
   #comparison-bar.comparison-bar.fixed-bottom{ class: display_class, "data-comparison-target": "bar" }
     = render "comparisons/bar", services: @compare_services, category: @category

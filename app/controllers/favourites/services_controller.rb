@@ -7,15 +7,29 @@ class Favourites::ServicesController < FavouritesController
     @service = Service.where(slug: params.fetch(:favourite)).first
     cookies[:favourites] ||= []
     added = Array(cookies[:favourites].split("&"))
-    if params.fetch(:update) == "true"
+    p "OLE #{params.fetch(:update)} #{params.fetch(:update).class}"
+    if params.fetch(:update)
       current_user.present? ? UserService.new(user: current_user, service: @service).save : added << @service.slug
-      respond_to { |format| format.js { render_popup_json(title, text, logged?) } } unless many?
+      unless many?
+        render turbo_stream:
+                 turbo_stream.replace(
+                   "popup-modal",
+                   partial: "layouts/popup",
+                   locals: {
+                     popup_title: title,
+                     popup_text: text,
+                     logged: logged?
+                   }
+                 )
+      end
     elsif current_user.present?
       UserService.find_by(user: current_user, service: @service)&.destroy
     else
       added.delete(@service.slug)
     end
-    respond_to { |format| format.js { render_empty_box } } if current_user&.favourite_services&.empty?
+    if current_user&.favourite_services&.empty?
+      render turbo_stream: turbo_stream.replace("service-box", partial: "favourites/empty_box", type: "empty_box")
+    end
     cookies[:favourites] = added.reject(&:blank?)
   end
 

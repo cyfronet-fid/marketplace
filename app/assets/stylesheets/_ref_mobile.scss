@@ -684,7 +684,8 @@
   }
 
   .favourites-popup {
-    position: absolute;
+    position: fixed;
+    display: flex;
     right: 10px;
     left: 10px;
   }

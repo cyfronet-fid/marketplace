@@ -32,7 +32,7 @@
           = _("Email notifications")
         %span= link_to _("Edit"), edit_profile_path, class: "btn-sm btn-warning", "data-e2e": "email-notif-edit"
       %h5
-        = _("You are signed up to receive updates about new EOSC Services in your") + ":"
+        = _("You are signed up to receive updates about new EGI Services in your") + ":"
       %ul{ "data-e2e": "email-notif-item" }
         - if current_user.categories_updates
           %li

@@ -1,5 +1,6 @@
 import { Controller } from "@hotwired/stimulus";
 import Rails from "@rails/ujs";
+import { post } from "@rails/request.js";
 
 export default class extends Controller {
   static targets = ["checkbox", "result", "popup", "serviceBox", "backlink"];
@@ -9,35 +10,31 @@ export default class extends Controller {
   }
 
   async updateFromRes(event) {
-    const response = await this.sendRequest(this.updateFavourites());
+    const response = await this.sendRequest(this.updateFavourites(event));
     const result = await this.getResponse(response);
     this.updateCheckboxLabels();
   }
 
   async updateFromFav(event) {
-    const response = await this.sendRequest(this.updateFavourites());
+    const response = await this.sendRequest(this.updateFavourites(event));
     const result = await this.getResponse(response);
     this.updateResults(event);
     this.updateCheckboxLabels();
-    this.showEmptyList(result);
+    // this.showEmptyList(result);
   }
 
   async sendRequest(data) {
-    const rawResponse = await fetch("/favourites/services", {
-      method: "POST",
-      headers: {
-        "X-Requested-With": "XMLHttpRequest",
-        "X-CSRF-Token": Rails.csrfToken(),
-        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-      },
+    console.log(data);
+    const rawResponse = await post("/favourites/services", {
       body: data,
+      responseKind: "turbo-stream",
     });
     return rawResponse;
   }
 
   async getResponse(response) {
     try {
-      return await response.json();
+      return await response;
     } catch (e) {
       if (e instanceof SyntaxError) {
         response.data = [];
@@ -65,25 +62,10 @@ export default class extends Controller {
     }
   }
 
-  updateFavourites() {
-    return new URLSearchParams({
+  updateFavourites(event) {
+    return {
       favourite: event.currentTarget.getAttribute("value"),
       update: event.currentTarget.checked,
-    });
-  }
-
-  showPopup(result) {
-    if (result.html.length > 0 && result.type === "modal") {
-      this.popupTarget.innerHTML = result.html;
-      $("#popup-modal").modal("show");
-    }
-  }
-
-  showEmptyList(result) {
-    if (result.html.length > 0 && result.type === "empty_box") {
-      this.serviceBoxTarget.innerHTML = result.html;
-      this.backlinkTarget.classList.add("d-none");
-      this.backlinkTarget.classList.remove("d-block");
-    }
+    };
   }
 }

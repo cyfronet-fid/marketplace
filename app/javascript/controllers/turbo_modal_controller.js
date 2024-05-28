@@ -4,7 +4,10 @@ export default class extends Controller {
   static targets = ["modal"];
 
   connect() {
-    document.body.classList.add("overflow-hidden");
+    console.log(this.modalTarget.dataset);
+    if (!this.modalTarget.dataset.hasOwnProperty("overflowEnabled")) {
+      document.body.classList.add("overflow-hidden");
+    }
   }
 
   hideModal() {

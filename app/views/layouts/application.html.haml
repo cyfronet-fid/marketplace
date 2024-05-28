@@ -26,7 +26,6 @@
       = yield
 
   = render "layouts/report", report: @report
-  = render "layouts/modal"
   = render "layouts/footer", root_categories: @root_categories
   = render "layouts/jira_collector"
   = tour @tour, @show_welcome_modal unless controller.tour_disabled
