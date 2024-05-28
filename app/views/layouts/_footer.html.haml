@@ -2,9 +2,6 @@
   - portal_base = Mp::Application.config.portal_base_url
   .container
     .row
-      .col-md-4
-        .egi-logo-mono.d-block{ href: portal_base }
-          = image_tag "egi-footer-logo.png"
       .col-md-2
         %ul
           %li
@@ -25,7 +22,7 @@
           %li
             .row
               .col-3.mr-0
-                = image_pack_tag "eu-logo.png", size: "70x40", class: "border"
+                = image_tag "eu-logo.png", size: "70x40", class: "border"
               .col-9.ml-0
                 %h3.text-left= _("Co-funded by the European Union")
           %li.funder-links
@@ -38,7 +35,7 @@
             under Grant Agreement No. 101017567
       .col-md-2
         .egi-logo-mono.text-center.d-block.mb-4{ href: portal_base }
-          = image_pack_tag "egi-footer-logo.png", size: "90x75"
+          = image_tag "egi-footer-logo.png", size: "90x75"
         .my-auto.text-center
           %a.social-logo.d-inline-block.mr-2{ href: "https://twitter.com/egi_einfra" }
             %i.fab.fa-twitter
@@ -46,19 +43,10 @@
             %i.fab.fa-linkedin
           %a.social-logo.d-inline-block{ href: "https://www.youtube.com/c/EGIFederation/" }
             %i.fab.fa-youtube
-      .col-md-9.my-auto.copyright
-        %span.copy-text
-          = _("Copyright 2024 - All rights reserved")
-        %a.ml-4{ href: "https://www.egi.eu/privacy-policy/" }
-          = _("Privacy policy")
+
     .mb-4
     .row.h-100
       .col-md-4.my-auto.socials-box
         %a.pr-3.border-right{ href: "#" }= _("terms of use")
         %a.pl-2.pr-3.border-right{ href: "#" }= _("data protection")
         %a.pl-2{ href: "#" }= _("certifications")
-
-.eu-information.p-4
-  .container
-    %p.mb-1
-      = image_tag "egi-ue-info.png"

@@ -15,8 +15,9 @@ a {
 
 input,
 textarea,
-select {
-  border: 1px solid $palette-gray-50;
+select,
+button {
+  border: 1px solid $color-6;
   border-radius: $border-radius-default;
   line-height: 1.25rem;
 }
@@ -417,6 +418,7 @@ li {
 
   header {
     align-items: center;
+    background: none;
     padding: 1rem 1rem 0;
     margin-bottom: 1.2rem;
   }
@@ -632,7 +634,6 @@ li {
         font-weight: 300;
         line-height: 1.1;
 
-
         &:hover {
           text-decoration: none;
           color: $palette-dark-blue;
@@ -707,7 +708,7 @@ li {
   }
 
   .linkedin-logo {
-    background: url('../images/linkedin-icon.png') top center no-repeat;
+    background: url("../images/linkedin-icon.png") top center no-repeat;
     background-size: contain;
   }
 }
@@ -753,8 +754,8 @@ li {
 
       &::after {
         transition: all 0.3s ease;
-        font-family: 'Font Awesome 5 Free';
-        content: '\f061';
+        font-family: "Font Awesome 6 Free";
+        content: "\f061";
         font-size: 14px;
         font-weight: 900;
         position: absolute;
@@ -1150,7 +1151,6 @@ li {
     font-size: 1rem;
     margin-right: -1px;
     width: 100%;
-    border: none;
     border-radius: 25px 0 0 25px;
     position: relative;
     z-index: 20;
@@ -1164,6 +1164,7 @@ li {
     position: relative;
     background: $color-white;
     margin-left: -1px;
+    border: 1px solid $color-6;
 
     span {
       position: absolute;
@@ -1181,6 +1182,7 @@ li {
       height: 100%;
       position: relative;
       z-index: 2;
+      border: 1px solid $color-8;
     }
 
     &::after {
@@ -1202,7 +1204,6 @@ li {
     background: transparent;
     padding: 0 15px;
     font-size: 1rem;
-    border: none;
     margin-left: -1px;
     border-radius: 0 25px 25px 0;
   }
@@ -1282,8 +1283,8 @@ li {
 
     &::after {
       transition: all 0.3s ease;
-      font-family: 'Font Awesome 5 Free';
-      content: '\f061';
+      font-family: "Font Awesome 6 Free";
+      content: "\f061";
       font-size: 14px;
       font-weight: 900;
       position: absolute;
@@ -1334,8 +1335,8 @@ li {
   &:hover {
     &::before {
       transition: all 0.3s ease;
-      font-family: 'Font Awesome 5 Free';
-      content: '\f061';
+      font-family: "Font Awesome 6 Free";
+      content: "\f061";
       font-size: 14px;
       font-weight: 900;
       position: absolute;
@@ -1359,4 +1360,4 @@ li {
   color: $palette-orange;
 }
 
-@import 'ref_mobile';
+@import "ref_mobile";

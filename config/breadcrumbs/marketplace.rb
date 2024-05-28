@@ -162,8 +162,8 @@ crumb :sla do
   parent :marketplace_root
 end
 
-crumb :terms_of_use do
-  link "Terms of Use", about_path
+crumb :terms_and_conditions do
+  link "Terms and Conditions", terms_and_conditions_path
   parent :marketplace_root
 end
 
