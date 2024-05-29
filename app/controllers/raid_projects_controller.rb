@@ -22,12 +22,13 @@ class RaidProjectsController < ApplicationController
   end
 
   def new
+    session[:raid_form_params] = {}
     @raid_project = RaidProject.new
     @raid_project.build_main_title
-    @raid_project.contributors.build
+    
     @raid_project.build_main_description
-    @raid_project.raid_organisations.build
-    @raid_project.build_raid_access
+    
+    
 
     respond_to do |format|
       format.html
@@ -35,13 +36,47 @@ class RaidProjectsController < ApplicationController
     end
   end
 
+
+
   def create
-    @raid_project = RaidProject.new(permitted_attributes(RaidProject).merge(user: current_user))
-    respond_to do |format|
+    step = params[:raid_project][:step].to_i
+    last_step_data = params[:raid_project].to_unsafe_h 
+    if params[:raid_project]
+      session[:raid_form_params].merge!(last_step_data)
+    end
+    p '======================='
+    p step
+    @raid_project = RaidProject.new(
+      permitted_attributes(RaidProject).merge(user: current_user).merge(session[:raid_form_params]))
+     
+    case step
+    when 1
+      p step
+      p session[:raid_form_params]
+      @raid_project.contributors.build
+      render turbo_stream: turbo_stream.replace(
+        'form-container', partial: 'raid_projects/form/step_2', locals: { raid_project: @raid_project })
+    when 2
+      p step
+      p session[:raid_form_params]
+      @raid_project.raid_organisations.build
+      render turbo_stream: turbo_stream.replace(
+        'form-container', partial: 'raid_projects/form/step_3', locals: { raid_project: @raid_project })
+    when 3
+      p step
+      p session[:raid_form_params]
+      @raid_project.build_raid_access
+      render turbo_stream: turbo_stream.replace(
+        'form-container', partial: 'raid_projects/form/step_4', locals: { raid_project: @raid_project })
+    when 4
+      render turbo_stream: turbo_stream.replace(
+        'form-container', partial: 'raid_projects/form/step_5', locals: { raid_project: @raid_project })
+    when 5
       if @raid_project.save
         format.html { redirect_to raid_project_url(@raid_project), notice: "RAID project was successfully created." }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        render turbo_stream: turbo_stream.replace(
+          'form-container', partial: 'raid_projects/form/step_2', locals: { raid_project: @raid_project })
       end
     end
   end

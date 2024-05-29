@@ -1,0 +1,37 @@
+= turbo_frame_tag "raid-form" do
+  = simple_form_for raid_project, remote: local_assigns[:show_as_modal],
+      html: { role: "form", id: "modal-form", "data-controller" => "raid-project",
+              "data-raid-project-target": "form", "data-raid-project-url-value": ror_autocomplete_url } do |f|
+    .new-form-style{ data: {"raid-form-target": "section", section: "access" } }
+
+      %h4 Access
+      .offer-section-wrapper.bottom-margin
+        = f.error :access_base, class: "invalid-feedback d-block"
+        = f.input :step, as: :hidden, input_html: { value: 4 }
+        = f.fields_for :raid_access do |access_f|
+          = access_f.hidden_field :id
+          = access_f.input :access_type, as: :select,
+                  collection: Raid::RaidAccess.access_types.map { |k, v| [ k.capitalize, v ] },
+                  input_html: {"data-raid-project-target": "accessType",
+                    "data-action": "raid-project#setEmbargoed",
+                    data: { choice: true },  multiple: false }
+          %div
+            %h5
+              = _("Statement")
+            = access_f.input :statement_text, label: "Text"
+            = access_f.input :statement_lang, label: "Language",
+                  collection: Raid::Language.all,
+                  label_method: :english_name,
+                  value_method: :alpha3,
+                  include_hidden: true,
+                  input_html: { data: { choice: true },  multiple: false }
+          = access_f.input :embargo_expiry,  as: :date, html5: true,
+              wrapper_html: {"data-raid-project-target" => "embargoExpiry"},
+              input_html: {"data-raid-project-target" => "embargoExpiryInput"}
+
+    %hr.bottom-hr.mt-5.mb-4
+        .row
+          .col-12
+            %button.btn.btn-primary.pl-5.pr-5{ type: "submit",
+                               form: "modal-form", "data-e2e": "create-project-btn" }
+              = _("Next")
