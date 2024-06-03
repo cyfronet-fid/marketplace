@@ -206,6 +206,12 @@ Rails.application.routes.draw do
     service_path(service, params)
   end
   resources :raid_projects
+  # resources :build_raid_project, only: [:update, :show], controller: 'raid_steps'
+  
+  resources :build_raid_project, only: [] do
+    resources :steps, only: [:update, :show], controller: 'raid_steps'
+  end
+
   get "errors/not_found"
   get "errors/unprocessable"
   get "errors/internal_server_error"
