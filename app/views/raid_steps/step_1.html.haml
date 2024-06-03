@@ -1,0 +1,39 @@
+- content_for :title, _("Create new RAID Project")
+- breadcrumb :project_new
+.container
+  #form-container
+    .mb-5.pb-2.border-header
+      %h1.mr-auto.my-auto= _("Create new RAID Project")
+  
+  = turbo_frame_tag "raid-form" do
+
+    = simple_form_for @raid_project, remote: local_assigns[:show_as_modal],
+          html: { role: "form", id: "modal-form", "data-controller" => "raid-project",
+              "data-raid-project-target": "form", "data-raid-project-url-value": ror_autocomplete_url },
+          url: wizard_path do |f|
+      .new-form-style{ data: {"raid-form-target": "section", section: "project-details" } }
+        = f.input :form_step, as: :hidden, input_html: { value:"step_1" }
+
+
+        %h4 Project LIFETIME
+        .offer-section-wrapper.bottom-margin
+
+          .row
+            .col-6
+              = f.input :start_date, as: :date, html5: true, label: "Enter Project Start Date"
+            .col-6
+              = f.input :end_date, as: :date, html5: true, label: "Predicted End Date"
+        %h4 Project TITLES
+        .offer-section-wrapper.bottom-margin
+          = render "title_fields", f: f, obj: @raid_project
+        %h4 Description
+        .offer-section-wrapper.bottom-margin
+          = render "description_fields", f: f, obj: @raid_project
+
+
+        %hr.bottom-hr.mt-5.mb-4
+          .row
+            .col-12
+              %button.btn.btn-primary.pl-5.pr-5{ type: "submit",
+                                 form: "modal-form", "data-e2e": "create-project-btn" }
+                = _("Next")

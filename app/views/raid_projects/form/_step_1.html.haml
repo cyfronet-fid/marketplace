@@ -1,28 +1,26 @@
-= turbo_frame_tag "raid-form" do
-  = simple_form_for raid_project, remote: local_assigns[:show_as_modal],
+= simple_form_for raid_project, remote: local_assigns[:show_as_modal],
       html: { role: "form", id: "modal-form", "data-controller" => "raid-project",
             "data-raid-project-target": "form", "data-raid-project-url-value": ror_autocomplete_url } do |f|
-    .new-form-style{ data: {"raid-form-target": "section", section: "project-details" } }
+  .new-form-style{ data: {"raid-form-target": "section", section: "project-details" } }
 
-      %h4 Project LIFETIME
-      .offer-section-wrapper.bottom-margin
-        = f.input :step, as: :hidden, input_html: { value: 1 }
-        .row
-          .col-6
-            = f.input :start_date, as: :date, html5: true, label: "Enter Project Start Date"
-          .col-6
-            = f.input :end_date, as: :date, html5: true, label: "Predicted End Date"
-      %h4 Project TITLES
-      .offer-section-wrapper.bottom-margin
-        = render "raid_projects/form/title_fields", f: f, obj: raid_project
-      %h4 Description
-      .offer-section-wrapper.bottom-margin
-        = render "raid_projects/form/description_fields", f: f, obj: raid_project
+    %h4 Project LIFETIME
+    .offer-section-wrapper.bottom-margin
+      .row
+        .col-6
+          = f.input :start_date, as: :date, html5: true, label: "Enter Project Start Date"
+        .col-6
+          = f.input :end_date, as: :date, html5: true, label: "Predicted End Date"
+    %h4 Project TITLES
+    .offer-section-wrapper.bottom-margin
+      = render "raid_projects/form/title_fields", f: f, obj: raid_project
+    %h4 Description
+    .offer-section-wrapper.bottom-margin
+      = render "raid_projects/form/description_fields", f: f, obj: raid_project
 
 
-      %hr.bottom-hr.mt-5.mb-4
-        .row
-          .col-12
-            %button.btn.btn-primary.pl-5.pr-5{ type: "submit",
+    %hr.bottom-hr.mt-5.mb-4
+      .row
+        .col-12
+          %button.btn.btn-primary.pl-5.pr-5{ type: "submit",
                                form: "modal-form", "data-e2e": "create-project-btn" }
-              = _("Next")
+            = _("Next")

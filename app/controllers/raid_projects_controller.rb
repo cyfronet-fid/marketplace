@@ -5,6 +5,14 @@ class RaidProjectsController < ApplicationController
   before_action :authenticate_user!
   before_action :find_and_authorize, only: %i[show edit update destroy]
 
+  RAID_FORM_STEPS = {
+    step_1: [:start_date, :end_date, :main_title, :alternative_titles, :main_description, :alternative_descriptions],
+    step_2: [:contributors],
+    step_3: [:raid_organisations],
+    step_4: [:raid_access],
+    step_5: []
+}.freeze
+
   def index
     @raid_projects = policy_scope(RaidProject)
     respond_to do |format|
@@ -21,62 +29,19 @@ class RaidProjectsController < ApplicationController
     end
   end
 
-  def new
-    session[:raid_form_params] = {}
-    @raid_project = RaidProject.new
-    @raid_project.build_main_title
-    
-    @raid_project.build_main_description
-    
-    
-
-    respond_to do |format|
-      format.html
-      format.js { render_modal_form }
-    end
+  def new 
+    raid_builder_key = Random.urlsafe_base64(6)
+    Rails.cache.fetch(raid_builder_key) { Hash.new }
+    redirect_to build_raid_project_step_path(raid_builder_key, RAID_FORM_STEPS.keys.first)
   end
 
-
-
   def create
-    step = params[:raid_project][:step].to_i
-    last_step_data = params[:raid_project].to_unsafe_h 
-    if params[:raid_project]
-      session[:raid_form_params].merge!(last_step_data)
-    end
-    p '======================='
-    p step
-    @raid_project = RaidProject.new(
-      permitted_attributes(RaidProject).merge(user: current_user).merge(session[:raid_form_params]))
-     
-    case step
-    when 1
-      p step
-      p session[:raid_form_params]
-      @raid_project.contributors.build
-      render turbo_stream: turbo_stream.replace(
-        'form-container', partial: 'raid_projects/form/step_2', locals: { raid_project: @raid_project })
-    when 2
-      p step
-      p session[:raid_form_params]
-      @raid_project.raid_organisations.build
-      render turbo_stream: turbo_stream.replace(
-        'form-container', partial: 'raid_projects/form/step_3', locals: { raid_project: @raid_project })
-    when 3
-      p step
-      p session[:raid_form_params]
-      @raid_project.build_raid_access
-      render turbo_stream: turbo_stream.replace(
-        'form-container', partial: 'raid_projects/form/step_4', locals: { raid_project: @raid_project })
-    when 4
-      render turbo_stream: turbo_stream.replace(
-        'form-container', partial: 'raid_projects/form/step_5', locals: { raid_project: @raid_project })
-    when 5
+    @raid_project = RaidProject.new(permitted_attributes(RaidProject).merge(user: current_user))
+    respond_to do |format|
       if @raid_project.save
         format.html { redirect_to raid_project_url(@raid_project), notice: "RAID project was successfully created." }
       else
-        render turbo_stream: turbo_stream.replace(
-          'form-container', partial: 'raid_projects/form/step_2', locals: { raid_project: @raid_project })
+        format.html { render :new, status: :unprocessable_entity }
       end
     end
   end

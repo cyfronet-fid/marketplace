@@ -1,0 +1,32 @@
+- content_for :title, _("Create new RAID Project")
+- breadcrumb :project_new
+.container
+  #form-container
+    .mb-5.pb-2.border-header
+      %h1.mr-auto.my-auto= _("Create new RAID Project")
+  = turbo_frame_tag "raid-form" do
+    = simple_form_for raid_project, remote: local_assigns[:show_as_modal],
+          html: { role: "form", id: "modal-form", "data-controller" => "raid-project",
+                  "data-raid-project-target": "form", "data-raid-project-url-value": ror_autocomplete_url } do |f|
+      .new-form-style{ data: {"raid-form-target": "section", section: "organisations" } }
+      = f.input :form_step, as: :hidden, input_html: { value:"step_3" }
+
+        %h4 Organisations
+        .offer-section-wrapper.bottom-margin
+          = f.error :org_base, class: "invalid-feedback d-block"
+          = f.fields_for :raid_organisations, multiple: true, as: :array do |organisation_f|
+            = render_organisation_fields(organisation_f)
+          = link_to _("+ Add organisation"), "#", class: "add-link",
+                data: { raid_project: { target: "addField" },
+                    action: "click->raid-project#addField",
+                    value: "raidOrganisations",
+                    fields: f.fields_for(:raid_organisations, Raid::RaidOrganisation.new,
+                    child_index: "new_field") { |o_f| render_organisation_fields(o_f) } }
+
+
+        %hr.bottom-hr.mt-5.mb-4
+          .row
+            .col-12
+              %button.btn.btn-primary.pl-5.pr-5{ type: "submit",
+                                 form: "modal-form", "data-e2e": "create-project-btn" }
+                = _("Next")

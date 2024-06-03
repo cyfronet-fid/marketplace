@@ -33,7 +33,7 @@ class RaidProjectPolicy < ApplicationPolicy
   
   def permitted_attributes
     [
-      :step,
+      :form_step,
       :start_date,
       :end_date,
       main_title_attributes: %i[id text language start_date end_date],

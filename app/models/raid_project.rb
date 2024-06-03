@@ -1,55 +1,63 @@
 # frozen_string_literal: true
 
 class RaidProject < ApplicationRecord
-
-  attr_accessor :step
+   
+  attr_accessor :form_step
   belongs_to :user
-  has_one :main_title, class_name: "Raid::MainTitle", dependent: :destroy, autosave: true, inverse_of: :raid_project
-  has_one :raid_access, class_name: "Raid::RaidAccess", dependent: :destroy, autosave: true
-  has_many :alternative_titles,
-           class_name: "Raid::AlternativeTitle",
-           dependent: :destroy,
-           autosave: true,
-           inverse_of: :raid_project
-  has_many :raid_organisations,
-           class_name: "Raid::RaidOrganisation",
-           dependent: :destroy,
-           autosave: true,
-           inverse_of: :raid_project
-  has_one :main_description,
-          class_name: "Raid::MainDescription",
-          dependent: :destroy,
-          autosave: true,
-          inverse_of: :raid_project,
-          required: false
-  has_many :alternative_descriptions,
-           class_name: "Raid::AlternativeDescription",
-           dependent: :destroy,
-           autosave: true,
-           inverse_of: :raid_project
-  has_many :contributors, class_name: "Raid::Contributor", dependent: :destroy, autosave: true
   
+  with_options dependent: :destroy, autosave: true, inverse_of: :raid_project do |assoc|
+    assoc.has_one :main_title, class_name: "Raid::MainTitle"
+    assoc.has_many :alternative_titles, class_name: "Raid::AlternativeTitle"
+    assoc.has_many :raid_organisations, class_name: "Raid::RaidOrganisation"
+    assoc.has_one :main_description, class_name: "Raid::MainDescription"
+    assoc.has_many :alternative_descriptions, class_name: "Raid::AlternativeDescription"
+    assoc.has_one :raid_access, class_name: "Raid::RaidAccess"
+    assoc.has_many :contributors, class_name: "Raid::Contributor"
+  end
 
-  accepts_nested_attributes_for :main_title, allow_destroy: true
-  accepts_nested_attributes_for :raid_organisations, allow_destroy: true
-  validates_associated :main_title
-  accepts_nested_attributes_for :alternative_titles, allow_destroy: true
-  accepts_nested_attributes_for :main_description, allow_destroy: true
-  accepts_nested_attributes_for :alternative_descriptions, allow_destroy: true
-  accepts_nested_attributes_for :contributors, allow_destroy: true
-  accepts_nested_attributes_for :raid_access, allow_destroy: true
+  with_options  allow_destroy: true do |nested_attrs|
+    nested_attrs.accepts_nested_attributes_for :main_title
+    nested_attrs.accepts_nested_attributes_for :alternative_titles
+    nested_attrs.accepts_nested_attributes_for :main_description
+    nested_attrs.accepts_nested_attributes_for :alternative_descriptions
+    nested_attrs.accepts_nested_attributes_for :contributors 
+    nested_attrs.accepts_nested_attributes_for :raid_organisations
+    nested_attrs.accepts_nested_attributes_for :raid_access
+  end
   
-  validates :main_title, presence: true
-  validates :start_date, presence: true
-  validates :contributors, presence: true
-  validate :contributors, :validate_leader, :validate_contact
-  validate :raid_organisations, :validate_organisations
-  validates :raid_access, presence: true
-  validate :validate_dates
+  validates_associated :main_title
+
+  with_options  if: -> { required_for_step?(1) } do
+    validates :start_date, presence: true
+    validates :main_title, presence: true
+    validate :validate_dates
+  end
+  
+  with_options if: -> { required_for_step?(2) } do
+    validates :contributors, presence: true
+    validate :contributors, :validate_leader, :validate_contact
+  end
+  
+  with_options if: -> { required_for_step?(3) } do
+    validate :raid_organisations, :validate_organisations
+  end
+
+  with_options presence: true, if: -> { required_for_step?(4) } do
+    validates :raid_access
+  end
 
   before_validation :clear_description
 
- 
+
+  def required_for_step?(step)
+    # All fields are required if no form step is present
+    return true if form_step.nil?
+
+    current_step = form_step[-1].to_i
+
+    # All fields from previous steps are required
+    step <= current_step
+  end
 
   def clear_description
     if main_description.present? && main_description.text.empty? && main_description.language.empty?
@@ -97,4 +105,5 @@ class RaidProject < ApplicationRecord
   def validate_dates
     errors.add(:end_date, "cannot precede start date") if end_date && start_date >= end_date
   end
+
 end
