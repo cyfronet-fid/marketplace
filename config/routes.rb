@@ -205,11 +205,12 @@ Rails.application.routes.draw do
     service = Service.where(status: %i[published unverified errored]).order(:name).first
     service_path(service, params)
   end
-  resources :raid_projects
-  # resources :build_raid_project, only: [:update, :show], controller: 'raid_steps'
-  
-  resources :build_raid_project, only: [] do
-    resources :steps, only: [:update, :show], controller: 'raid_steps'
+
+
+  resources :raid_projects do
+    scope module: :raid_project do
+      resources :steps, only: [:update, :show], controller: "steps"
+    end
   end
 
   get "errors/not_found"

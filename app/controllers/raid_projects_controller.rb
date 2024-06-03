@@ -32,7 +32,7 @@ class RaidProjectsController < ApplicationController
   def new 
     raid_builder_key = Random.urlsafe_base64(6)
     Rails.cache.fetch(raid_builder_key) { Hash.new }
-    redirect_to build_raid_project_step_path(raid_builder_key, RAID_FORM_STEPS.keys.first)
+    redirect_to raid_project_step_path(raid_builder_key, RAID_FORM_STEPS.keys.first)
   end
 
   def create

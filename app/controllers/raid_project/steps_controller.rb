@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class RaidStepsController < ApplicationController
+class RaidProject::StepsController < ApplicationController
     include Wicked::Wizard
 
     RAID_FORM_STEPS = {
@@ -16,7 +16,7 @@ class RaidStepsController < ApplicationController
     def show
         p '================='
         p "show"
-        raid_project_attrs = Rails.cache.read params[:build_raid_project_id]
+        raid_project_attrs = Rails.cache.read params[:raid_project_id] if params[:raid_project_id]
         p raid_project_attrs
         p wizard_path
         p next_wizard_path
@@ -33,11 +33,11 @@ class RaidStepsController < ApplicationController
     def update
         p '++++++++++++++++++++++++++++==='
         p "update"
-        raid_project_attrs = Rails.cache.read(params[:build_raid_project_id]).merge raid_project_params
+        raid_project_attrs = Rails.cache.read(params[:raid_project_id]).merge raid_project_params
         @raid_project = RaidProject.new raid_project_attrs
 
         if @raid_project.valid?
-          Rails.cache.write params[:build_raid_project_id], raid_project_attrs
+          Rails.cache.write params[:raid_project_id], raid_project_attrs
           redirect_to_next next_step
         else
           render_wizard 
@@ -52,10 +52,10 @@ class RaidStepsController < ApplicationController
     end
   
     def finish_wizard_path
-        raid_project_attrs = Rails.cache.read(params[:build_raid_project_id])
+        raid_project_attrs = Rails.cache.read(params[:raid_project_id])
         @raid_project = RaidProject.new raid_project_attrs
         @raid_project.save!
-        Rails.cache.delete params[:build_raid_project_id]
+        Rails.cache.delete params[:raid_project_id]
         raid_project_path(@raid_project)
       end
     end
