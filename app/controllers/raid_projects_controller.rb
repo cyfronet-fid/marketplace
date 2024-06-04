@@ -6,12 +6,12 @@ class RaidProjectsController < ApplicationController
   before_action :find_and_authorize, only: %i[show edit update destroy]
 
   RAID_FORM_STEPS = {
-    step_1: [:start_date, :end_date, :main_title, :alternative_titles, :main_description, :alternative_descriptions],
-    step_2: [:contributors],
-    step_3: [:raid_organisations],
-    step_4: [:raid_access],
-    step_5: []
-}.freeze
+    step1: %i[start_date end_date main_title alternative_titles main_description alternative_descriptions],
+    step2: [:contributors],
+    step3: [:raid_organisations],
+    step4: [:raid_access],
+    step5: []
+  }.freeze
 
   def index
     @raid_projects = policy_scope(RaidProject)
@@ -29,9 +29,11 @@ class RaidProjectsController < ApplicationController
     end
   end
 
-  def new 
+  def new
+    p "************************************"
     raid_builder_key = Random.urlsafe_base64(6)
-    Rails.cache.fetch(raid_builder_key) { Hash.new }
+    Rails.cache.fetch(raid_builder_key) { {} }
+
     redirect_to raid_project_step_path(raid_builder_key, RAID_FORM_STEPS.keys.first)
   end
 

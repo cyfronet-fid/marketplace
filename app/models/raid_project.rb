@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
 class RaidProject < ApplicationRecord
-   
   attr_accessor :form_step
   belongs_to :user
-  
+
   with_options dependent: :destroy, autosave: true, inverse_of: :raid_project do |assoc|
     assoc.has_one :main_title, class_name: "Raid::MainTitle"
     assoc.has_many :alternative_titles, class_name: "Raid::AlternativeTitle"
@@ -15,29 +14,29 @@ class RaidProject < ApplicationRecord
     assoc.has_many :contributors, class_name: "Raid::Contributor"
   end
 
-  with_options  allow_destroy: true do |nested_attrs|
+  with_options allow_destroy: true do |nested_attrs|
     nested_attrs.accepts_nested_attributes_for :main_title
     nested_attrs.accepts_nested_attributes_for :alternative_titles
     nested_attrs.accepts_nested_attributes_for :main_description
     nested_attrs.accepts_nested_attributes_for :alternative_descriptions
-    nested_attrs.accepts_nested_attributes_for :contributors 
+    nested_attrs.accepts_nested_attributes_for :contributors
     nested_attrs.accepts_nested_attributes_for :raid_organisations
     nested_attrs.accepts_nested_attributes_for :raid_access
   end
-  
+
   validates_associated :main_title
 
-  with_options  if: -> { required_for_step?(1) } do
+  with_options if: -> { required_for_step?(1) } do
     validates :start_date, presence: true
     validates :main_title, presence: true
     validate :validate_dates
   end
-  
+
   with_options if: -> { required_for_step?(2) } do
     validates :contributors, presence: true
     validate :contributors, :validate_leader, :validate_contact
   end
-  
+
   with_options if: -> { required_for_step?(3) } do
     validate :raid_organisations, :validate_organisations
   end
@@ -47,7 +46,6 @@ class RaidProject < ApplicationRecord
   end
 
   before_validation :clear_description
-
 
   def required_for_step?(step)
     # All fields are required if no form step is present
@@ -69,11 +67,11 @@ class RaidProject < ApplicationRecord
     lead = false
     raid_organisations.each do |organisation|
       if organisation.position.pid == "lead-research-organisation"
-        if !lead
-          lead = true
-        else
+        if lead
           errors.add(:org_base, "Only one organisation can have Lead research organisation position")
           break
+        else
+          lead = true
         end
       end
       errors.add(:org_base, "One (and only one) organisation must have Lead research organisation position") unless lead
@@ -105,5 +103,4 @@ class RaidProject < ApplicationRecord
   def validate_dates
     errors.add(:end_date, "cannot precede start date") if end_date && start_date >= end_date
   end
-
 end

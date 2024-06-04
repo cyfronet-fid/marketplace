@@ -1,15 +1,14 @@
 = turbo_frame_tag "raid-form" do
 
-  = simple_form_for raid_project, remote: local_assigns[:show_as_modal],
+  = simple_form_for @raid_project, remote: local_assigns[:show_as_modal],
         html: { role: "form", id: "modal-form", "data-controller" => "raid-project",
               "data-raid-project-target": "form", "data-raid-project-url-value": ror_autocomplete_url },
-        url: wizard_path, data: { turbo_frame: :_top }  do |f|
+        url: wizard_path, method: :put, data: { turbo_frame: :_top }  do |f|
     .new-form-style{ data: {"raid-form-target": "section", section: "access" } }
-      = f.input :form_step, as: :hidden, input_html: { value:"step_5" }
+      = f.input :form_step, as: :hidden, input_html: { value:"5" }
 
       %h4 Summary
 
-  
     %hr.bottom-hr.mt-5.mb-4
       .row
         .col-12

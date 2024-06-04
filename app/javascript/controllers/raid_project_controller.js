@@ -3,13 +3,10 @@ import initChoices from "../app/choices";
 
 export default class extends Controller {
   static targets = [
-    "accessType",
     "addField",
     "alternativeDescription",
     "alternativeTitle",
     "contributor",
-    "embargoExpiry",
-    "embargoExpiryInput",
     "destroy",
     "form",
     "raidOrganisation",
@@ -24,31 +21,7 @@ export default class extends Controller {
   };
   connect() {
     console.log("Raid project controller connected");
-    this.embargoExpiry = this.embargoExpiryTarget;
-    this.embargoExpiry.hidden = true;
-    this.embargoExpiry = "";
-    const summarySection = this.element.querySelector(
-      '[data-raid-form-target="section"][data-section="project-details"]',
-    );
-    console.log(summarySection);
-    console.log(this.formTarget);
-  }
-
-  setEmbargoed() {
-    const accessType = this.accessTypeTarget.value;
-    this.embargoExpiryInput = this.embargoExpiryInputTarget;
-
-    if (this.embargoExpiry == "") {
-      this.embargoExpiry = this.embargoExpiryInput.value;
-    }
-
-    if (accessType == "embargoed") {
-      this.embargoExpiryTarget.hidden = false;
-      this.embargoExpiryInput.value = this.embargoExpiry;
-    } else {
-      this.embargoExpiryTarget.hidden = true;
-      this.embargoExpiryInput.value = "";
-    }
+    initChoices();
   }
 
   autocomplete(event) {

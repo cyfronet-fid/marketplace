@@ -30,7 +30,7 @@ class RaidProjectPolicy < ApplicationPolicy
   def destroy?
     owner?
   end
-  
+
   def permitted_attributes
     [
       :form_step,
