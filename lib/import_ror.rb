@@ -69,7 +69,7 @@ class ImportRor
 
   def download_zip_file(zip_data)
     puts "Downloading zip file..."
-    Dir.mkdir @destination_path
+    Dir.mkdir @destination_path unless File.directory?(@destination_path)
     destination_zip_file = File.join(@destination_path, zip_data[:filename])
     target_url = URI(zip_data[:path])
     Net::HTTP.start(target_url.host, target_url.port, use_ssl: true) do |http|
@@ -90,18 +90,19 @@ class ImportRor
   def extract_json(zip_file_path)
     puts "Extracting json from the downloaded zip..."
     Zip::File.open(zip_file_path) do |zip_file|
-      zip_file.each do |entry|
-        next if entry.name.include? "data.json"
-        destination_json_file = File.join(@destination_path, entry.name)
-        zip_file.extract(entry, destination_json_file)
-        puts "Json successfully extracted"
-        return destination_json_file
-      end
+        zip_file.each do |entry| 
+            if entry.name.include? "data.json" 
+                destination_json_file = File.join(@destination_path, entry.name)
+                zip_file.extract(entry, destination_json_file)
+                puts "Json successfully extracted"
+                return destination_json_file
+            end
+        end
     rescue StandardError => e
-      Rails.logger.warn "ERROR[ROR] - Extracting json failed: #{e}"
-      raise NewDumpDataError("Extracting json failed: #{e}")
+        Rails.logger.warn "ERROR[ROR] - Extracting json failed: #{e}"
+        raise NewDumpDataError("Extracting json failed: #{e}")
     end
-  end
+end
 
   def seed_db(json_file = @json_file)
     puts "Seeding db with organisations ROR data..."
