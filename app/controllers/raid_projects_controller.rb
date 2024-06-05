@@ -30,7 +30,6 @@ class RaidProjectsController < ApplicationController
   end
 
   def new
-    p "************************************"
     raid_builder_key = Random.urlsafe_base64(6)
     Rails.cache.fetch(raid_builder_key) { {} }
 
@@ -49,7 +48,8 @@ class RaidProjectsController < ApplicationController
   end
 
   def edit
-    @raid_project.build_main_description if @raid_project.main_description.blank?
+    Rails.cache.fetch(@raid_project.id) { {} }
+    redirect_to raid_project_step_path(@raid_project, RAID_FORM_STEPS.keys.first)
   end
 
   def update

@@ -3,6 +3,9 @@
 class RaidProject::StepsController < ApplicationController
   include Wicked::Wizard
 
+  @@existing = false
+  @@building_project_valid = false
+
   RAID_FORM_STEPS = {
     step1: [
       :start_date,
@@ -14,8 +17,8 @@ class RaidProject::StepsController < ApplicationController
       alternative_descriptions_attributes: %i[id text language _destroy]
     ],
     step2: [
+      :form_step,
       contributors_attributes: [
-        :form_step,
         :id,
         :pid,
         :pid_type,
@@ -40,8 +43,24 @@ class RaidProject::StepsController < ApplicationController
   steps(*RAID_FORM_STEPS.keys)
 
   def show
-    raid_project_attrs = Rails.cache.read params[:raid_project_id] if params[:raid_project_id]
+    obj_form_db = RaidProject.where(:id => params[:raid_project_id]).first if params[:raid_project_id]
+    if obj_form_db.nil?
+      show_new_object
+    else
+      @@existing = true
+      show_existing_object
+    end
+  end
 
+  def show_existing_object
+    @raid_project = RaidProject.find(params[:raid_project_id])
+    @raid_project.build_main_description if @raid_project.main_description.blank?
+    render_wizard 
+  end
+
+  def show_new_object
+    raid_project_attrs = Rails.cache.read params[:raid_project_id] if params[:raid_project_id]
+   
     @raid_project = RaidProject.new raid_project_attrs
     @raid_project.build_main_title
     @raid_project.contributors.build
@@ -52,16 +71,25 @@ class RaidProject::StepsController < ApplicationController
   end
 
   def update
+   
     saved_params = Rails.cache.read(params[:raid_project_id])
     raid_project_attrs = saved_params.merge raid_project_params
 
-    @raid_project = RaidProject.new(raid_project_attrs)
-
-    if @raid_project.valid?
+    if @@existing
+      p '==========================='
+      @raid_project = RaidProject.find(params[:raid_project_id])
+      p 'found'
+      temp_pr =  RaidProject.new(raid_project_attrs)
+      p '+++++++++++++++++++++++++'
+      @@building_project_valid =temp_pr.valid?
+    else
+      @raid_project = RaidProject.new(raid_project_attrs)
+      @@building_project_valid = @raid_project.valid?
+    end
+    if @@building_project_valid
       Rails.cache.write params[:raid_project_id], raid_project_attrs
       redirect_to_next next_step
     else
-      p @raid_project.errors
       render_wizard
     end
   end
@@ -74,6 +102,8 @@ class RaidProject::StepsController < ApplicationController
 
   def finish_wizard_path
     raid_project_attrs = Rails.cache.read(params[:raid_project_id])
+    # existing = saved_params.delete(:existing)
+   
     @raid_project = RaidProject.new raid_project_attrs
     @raid_project.save!
     Rails.cache.delete params[:raid_project_id]

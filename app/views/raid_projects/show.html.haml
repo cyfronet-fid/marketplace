@@ -50,4 +50,4 @@
         = organisation&.position&.pid
   = link_to "View All", raid_projects_path
   = link_to "Update", edit_raid_project_path(@raid_project.id)
-  = link_to "Delete", @raid_project, method: :delete, data: { confirm: "Are you sure?" }
+  = link_to "Delete", @raid_project, data: { "turbo-confirm": "Are you sure?", "turbo-method": :delete }, class: "btn btn-danger"
