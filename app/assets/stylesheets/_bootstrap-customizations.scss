@@ -7775,6 +7775,15 @@ abbr[title] {
   }
 }
 
+.new-service,
+.edit-service {
+  .accordion {
+    .card {
+      overflow: visible;
+    }
+  }
+}
+
 // scss-lint:enable all
 
 .subpage-title {

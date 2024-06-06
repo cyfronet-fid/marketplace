@@ -2,4 +2,5 @@
 - breadcrumb :backoffice_service_new
 .container
   %h1#title.mb-3= _("New Service")
-  = render "form", service: @service
+  .new-service
+    = render "form", service: @service
