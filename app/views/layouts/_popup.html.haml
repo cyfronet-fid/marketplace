@@ -1,4 +1,5 @@
-.modal-dialog.favourites-popup{ role: "document", "data-e2e": "favourites-popup" }
+.modal-dialog.favourites-popup{ role: "document", data: { controller: "turbo-modal",
+  turbo_modal_target: "modal", overflow_enabled: "", e2e: "favourites-popup" } }
   .modal-content
 
     #form-modal-body.modal-body
@@ -13,6 +14,7 @@
             - unless logged
               %button#popup-modal-btn.btn-sm.btn-primary.mr-3{ type: "button" }
                 = link_to _("Sign in"), user_checkin_omniauth_authorize_path
-            %button#popup-modal-action-btn.btn-sm.btn-primary{ type: "button", data: { dismiss: "modal",
-            e2e: "favourites-popup-button-ok" } }
+            %button#popup-modal-action-btn.btn-sm.btn-primary{ data: { action: "turbo-modal#hideModal",
+                                                                       e2e: "favourites-popup-button-ok" },
+                                                               type: "button" }
               = _("Ok")

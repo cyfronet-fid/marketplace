@@ -1,13 +1,4 @@
 = render "layouts/sections"
-.top-info-wrapper
-  .container
-    %p
-      IMPORTANT: The EOSC Portal is currently being phased out, but don’t worry! Information is coming soon on where
-      and when you can access the next phase of EOSC (the EOSC EU Node).
-    %p
-      Thank you for your patience and understanding. In the meantime, you can read
-      %a{ href: "https://eoscfuture.eu/newsfuture/eosc-future-signs-off/" } this article
-      for more information on the shift to the EOSC EU Node.
 
 - if whitelabel
   #mynav.overlay
@@ -57,17 +48,26 @@
         .container
           %ul.list-inline.mb-0
             %li.list-inline-item.ml-2
-              %a{ href: "https://www.eosc-portal.eu/contact-us" }
-                = _("Contact us")
+              %a{ href: "https://www.egi.eu/about/egi-foundation/how-to-reach-the-egi-foundation/" }= _("Contact us")
             %li.list-inline-item.ml-2
-              %a{ href: Mp::Application.config.portal_base_url }
-                = _("Portal Home")
+              %a{ href: Mp::Application.config.portal_base_url }= _("Portal Home")
             %li.list-inline-item.ml-2
-              = link_to "Catalogue & Marketplace", root_path,
-                class: "#{"active" if local_assigns[:section].nil?}"
+              = link_to _("Catalogue & Marketplace"), root_path,
+                      class: "#{"active" if local_assigns[:section].nil? }"
             %li.list-inline-item.ml-2
-              %a{ href: providers_dashboard_url }
-                = _("Providers Dashboard")
+              %a{ href: Mp::Application.config.providers_dashboard_url }= _("Providers Dashboard")
+            - if policy([:backoffice, :backoffice]).show?
+              %li.list-inline-item.ml-2
+                = link_to _("Backoffice"), backoffice_path,
+                        class: "#{"active" if local_assigns[:section] == :backoffice}"
+            - if policy([:admin, :admin]).show?
+              %li.list-inline-item.ml-2
+                = link_to _("Admin"), admin_path, section: "admin",
+                        class: "#{"active" if local_assigns[:section] == :admin}"
+            - if policy([:executive, :executive]).show?
+              %li.list-inline-item.ml-2
+                = link_to _("Executive"), executive_path,
+                        class: "#{"active" if local_assigns[:section] == :executive}"
 
 
 - if external_search_url || request.fullpath.include?("backoffice")
@@ -81,7 +81,7 @@
     %section.header
       .logo
         = link_to root_path do
-          = image_tag "eosc-logo-mono.png", class: "eosc-hub-logo-main"
+          = image_tag "egi-logo-color.png", class: "egi-hub-logo-main"
           .logo-bg
 
       = render "services/search", categories: categories, query_params: query_params
@@ -89,14 +89,13 @@
       - if whitelabel
         .menu.dropdown
           - if user_signed_in?
-            %a#dropdown-menu-button.dropdown-toggle{ "aria-expanded" => "false",
-                                                        "aria-haspopup" => "true",
-                                                        "data-e2e" => "my-eosc-button",
-                                                        "data-toggle" => "dropdown",
-                                                        type: "button" }
-
-              .menu__label My EOSC Marketplace
-            .dropdown-menu
+            %a#dropdown-menu-button.dropdown-toggle{ aria_expanded: "false",
+                                                     aria_haspopup: "true",
+                                                     data: { e2e: "my-eosc-button",
+                                                     toggle: "dropdown" },
+                                                     type: "button" }
+              .menu__label= _("My EGI Marketplace")
+            .dropdown-menu.w-auto
               %ul
                 %li
                   %a.dropdown-item.dropdown-projects{ href: "/projects" }
@@ -126,7 +125,7 @@
                       = _("Executive")
           - else
             = link_to user_checkin_omniauth_authorize_path, class: "menu__label menu__label--unauth" do
-              = _("My EOSC Marketplace")
+              = _("My EGI Marketplace")
 
           .menu__hamburger{ onclick: "openNav()" }
             %span

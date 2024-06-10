@@ -3,6 +3,9 @@
   = f.input :title
   = f.input :template, collection: LeadSection::TEMPLATES
 
-  = f.button :submit, class: "btn btn-primary pl-5 pr-5 mr-5"
-  = link_to _("Cancel and back to lead manager"), admin_leads_path,
-    class: "text-left flex-grow-1 text-uppercase"
+  .row.mt-5
+    .col-12
+      .button-wrapper.mr-5
+        = f.button :submit, class: "btn btn-primary"
+      = link_to _("Cancel and back to lead manager"), admin_leads_path,
+        class: "text-left flex-grow-1 text-uppercase float-left mt-2"

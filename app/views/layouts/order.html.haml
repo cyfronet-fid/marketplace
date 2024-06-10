@@ -6,7 +6,7 @@
     %header.container.white-bg
       %nav.navbar.navbar-expand-lg
         = link_to root_path, class: "navbar-brand col-7 col-lg-3 pl-0" do
-          = image_tag "eosc-logo-color.png", class: "eosc-hub-logo-main"
+          = image_tag "egi-logo-color.png", class: "eosc-hub-logo-main"
         .text-right.flex-grow-1.order-top-nav
           -# TODO: refactor dynamic translation
           = link_to @offer&.orderable? ? _("Cancel order and quit") : _("Cancel and quit"),

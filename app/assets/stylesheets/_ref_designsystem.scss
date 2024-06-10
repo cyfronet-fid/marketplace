@@ -9,15 +9,15 @@ body > main {
   padding: 0 15px;
 }
 
-a,
-a:hover {
+a {
   text-decoration: none;
 }
 
 input,
 textarea,
-select {
-  border: 1px solid $palette-gray-50;
+select,
+button {
+  border: 1px solid $color-6;
   border-radius: $border-radius-default;
   line-height: 1.25rem;
 }
@@ -243,15 +243,22 @@ li {
 .branch-box {
   border: 3px solid $palette-gray-5;
   border-radius: 5px;
+  background: $palette-white;
   text-align: center;
   text-decoration: none;
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   padding: 15px 7px 12px;
 
   &:hover {
     border: 3px solid $palette-gray-10;
     text-decoration: none;
+
+    .branch-name {
+      color: $color-primary;
+      text-decoration: underline;
+      text-decoration-color: $palette-orange;
+    }
   }
 
   a {
@@ -267,9 +274,9 @@ li {
 
   .branch-name {
     margin-top: 15px;
-    font-size: 1.25rem;
+    font-size: 1.15rem;
     min-height: 48px;
-    font-weight: 300;
+    font-weight: bold;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -335,6 +342,8 @@ li {
     &:hover {
       .title {
         color: $color-primary;
+        text-decoration: underline;
+        text-decoration-color: $palette-orange;
       }
     }
   }
@@ -371,10 +380,9 @@ li {
   margin: 0 10px;
   flex-direction: column;
   margin-bottom: 25px;
-  overflow: hidden;
-  border-radius: 8px;
-  background: $color-1;
-  border: 1px solid $palette-gray-10;
+  border-radius: 2px;
+  background: $border-header;
+  box-shadow: 0 0.125rem 0.25rem $palette-gray-30;
 
   &.recommendation {
     margin: 0 10px 0 0;
@@ -410,6 +418,7 @@ li {
 
   header {
     align-items: center;
+    background: none;
     padding: 1rem 1rem 0;
     margin-bottom: 1.2rem;
   }
@@ -422,12 +431,10 @@ li {
     font-weight: 500;
     line-height: 1.4rem;
     font-size: 1.3em;
-    text-decoration: none;
-    color: $palette-white;
+    color: $palette-blue;
 
     &:hover {
-      color: $palette-white;
-      text-decoration: underline;
+      color: $palette-blue;
     }
   }
 
@@ -570,7 +577,7 @@ li {
 
 .footer {
   width: 100%;
-  background-color: $color-4;
+  background-color: $palette-gray-100;
   font-weight: 300;
   padding: 1rem 0;
 
@@ -598,13 +605,11 @@ li {
 
   .copyright {
     text-align: right;
-    font-size: 0.875rem;
-    font-weight: 700;
+    font-size: 0.85rem;
 
     a {
-      text-transform: uppercase;
-      font-size: 0.75rem;
       margin-left: 10px;
+      font-size: 0.85rem;
 
       &:hover {
         text-decoration: none;
@@ -619,29 +624,49 @@ li {
     margin: 0;
 
     li {
-      margin-bottom: 0.25rem;
-      font-size: 0.68rem;
-      font-weight: 700;
+      margin-bottom: 0.5rem;
+      font-size: 0.73rem;
+      font-weight: 300;
       color: $color-white;
 
       a {
-        font-size: 0.68rem;
-        font-weight: 700;
+        font-size: 0.9rem;
+        font-weight: 300;
         line-height: 1.1;
 
         &:hover {
           text-decoration: none;
+          color: $palette-dark-blue;
         }
+      }
+    }
+  }
+
+  .contact-list {
+    li {
+      margin-bottom: 14px;
+      line-height: 1.4;
+      font-size: 0.95rem;
+
+      svg {
+        width: 20px;
+        float: left;
+        font-size: 1.1rem;
+        margin-right: 10px;
+      }
+
+      span {
+        display: inline-block;
       }
     }
   }
 
   .title {
     color: $color-white;
-    font-weight: 200;
+    font-weight: 800;
     line-height: 1.2;
-    font-size: 0.875rem;
-    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+    margin-bottom: 0.95rem;
 
     a {
       font-size: 0.875rem;
@@ -655,7 +680,7 @@ li {
     font-size: 1rem;
 
     &:hover {
-      color: $color-secondary;
+      text-decoration: underline;
     }
   }
 
@@ -681,6 +706,11 @@ li {
   .yt-logo {
     background: url("yt-icon.svg") top center no-repeat;
   }
+
+  .linkedin-logo {
+    background: url("../images/linkedin-icon.png") top center no-repeat;
+    background-size: contain;
+  }
 }
 
 .eu-information {
@@ -703,15 +733,11 @@ li {
   text-align: center;
   vertical-align: middle;
   border: 0 solid transparent;
-  padding: 0.375rem 2rem;
+  padding: 0.58rem 2.2rem;
   font-size: 1rem;
   line-height: 1.5;
-  border-radius: 2rem;
-  transition:
-    color 0.15s ease-in-out,
-    background-color 0.15s ease-in-out,
-    border-color 0.15s ease-in-out,
-    box-shadow 0.15s ease-in-out;
+  border-radius: 6px;
+  transition: all 0.3s ease;
 
   &:hover {
     color: $color-white;
@@ -720,11 +746,22 @@ li {
 
   &--primary {
     color: $color-white;
-    background-color: $color-primary;
-    background-image: linear-gradient(135deg, $color-7 0%, $color-primary 100%);
+    background: $palette-orange;
 
     &:hover {
-      background: $color-primary;
+      padding: 0.58rem 3.2rem 0.58rem 1.2rem;
+      background: $palette-orange;
+
+      &::after {
+        transition: all 0.3s ease;
+        font-family: "Font Awesome 6 Free";
+        content: "\f061";
+        font-size: 14px;
+        font-weight: 900;
+        position: absolute;
+        right: 12px;
+        top: 8px;
+      }
     }
   }
 
@@ -895,7 +932,8 @@ li {
 
 .top {
   padding: 5px 0;
-  background: $color-3;
+  margin-bottom: 20px;
+  background: $palette-gray-100;
 
   .left-links {
     float: left;
@@ -913,17 +951,17 @@ li {
     li {
       margin: 0 0.5rem;
       display: inline-block;
-      font-family: "Inter";
+      font-family: "DM Sans";
       font-size: 0.875rem;
       font-weight: 300;
-      color: $palette-gray-80;
+      color: $palette-white;
 
       svg {
         margin-right: 4px;
       }
 
       a {
-        color: $palette-gray-80;
+        color: $palette-white;
         padding-bottom: 5px;
         text-decoration: none;
 
@@ -932,7 +970,7 @@ li {
         }
 
         &:hover {
-          color: $palette-gray-50;
+          color: $palette-dark-blue;
         }
       }
     }
@@ -1039,7 +1077,7 @@ li {
 
         &:hover,
         &:active {
-          color: $color-link;
+          color: $palette-dark-blue;
           background: transparent;
         }
       }
@@ -1113,7 +1151,6 @@ li {
     font-size: 1rem;
     margin-right: -1px;
     width: 100%;
-    border: none;
     border-radius: 25px 0 0 25px;
     position: relative;
     z-index: 20;
@@ -1127,6 +1164,7 @@ li {
     position: relative;
     background: $color-white;
     margin-left: -1px;
+    border: 1px solid $color-6;
 
     span {
       position: absolute;
@@ -1144,6 +1182,7 @@ li {
       height: 100%;
       position: relative;
       z-index: 2;
+      border: 1px solid $color-8;
     }
 
     &::after {
@@ -1165,7 +1204,6 @@ li {
     background: transparent;
     padding: 0 15px;
     font-size: 1rem;
-    border: none;
     margin-left: -1px;
     border-radius: 0 25px 25px 0;
   }
@@ -1234,12 +1272,92 @@ li {
   margin-right: 10px;
 }
 
-.btn-success {
-  background-color: $color-primary;
+.btn-primary {
+  position: relative;
+  transition: all 0.3s ease;
 
   &:hover {
-    background-color: $color-7;
+    background: $palette-orange;
+    padding-left: 1.3rem;
+    padding-right: 2.7rem;
+
+    &::after {
+      transition: all 0.3s ease;
+      font-family: "Font Awesome 6 Free";
+      content: "\f061";
+      font-size: 14px;
+      font-weight: 900;
+      position: absolute;
+      right: 12px;
+      top: 8px;
+    }
   }
+
+  &.btn-sm {
+    &:hover {
+      &::after {
+        top: 6px;
+        font-size: 12px;
+        right: 15px;
+      }
+    }
+  }
+}
+
+.alert-danger {
+  color: $error-color;
+  border-color: $error-color;
+  background: $palette-white;
+}
+
+.alert-warning {
+  color: $warning-color;
+  border-color: $warning-color;
+  background: $palette-white;
+}
+
+.alert-success {
+  color: $success-color;
+  border-color: $success-color;
+  background: $palette-white;
+}
+
+.button-wrapper {
+  display: inline;
+  float: left;
+  position: relative;
+
+  input,
+  button {
+    margin-right: 0;
+  }
+
+  &:hover {
+    &::before {
+      transition: all 0.3s ease;
+      font-family: "Font Awesome 6 Free";
+      content: "\f061";
+      font-size: 14px;
+      font-weight: 900;
+      position: absolute;
+      top: 8px;
+      right: 14px;
+      z-index: 10;
+      color: $palette-white;
+    }
+  }
+}
+
+.btn-primary:focus,
+.btn-primary:not(:disabled):not(.disabled):active,
+.btn-primary:active {
+  background: $palette-orange;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background: none;
+  color: $palette-orange;
 }
 
 @import "ref_mobile";

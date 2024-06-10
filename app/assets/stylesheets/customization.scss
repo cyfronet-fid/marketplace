@@ -1,143 +1,370 @@
-.header {
-  position: relative;
-  z-index: 2;
-  padding: 25px 0;
+.main-elements {
+  height: auto;
 }
 
-.main {
-  background: url("home-bg.png") no-repeat;
-  background-position: 50% -120px;
-  z-index: 3;
-  position: relative;
+.egi-hub-logo-main {
+  width: 100%;
+}
 
-  > main {
-    overflow: hidden;
+.contentbox {
+  padding-top: 4rem;
+
+  .left-column {
+    display: inline;
+
+    img {
+      max-width: 96%;
+      height: auto;
+    }
   }
 
-  .contentbox {
-    display: block;
-    margin-bottom: 30px;
+  .right-column {
+    display: inline;
 
-    > div {
-      width: 58%;
+    img {
+      width: 96%;
+      height: auto;
+      float: right;
     }
+  }
 
-    aside {
-      background: transparent;
-      position: absolute;
-      top: -25px;
-      right: -100px;
-      width: 68%;
+  .first {
+    padding-right: 20px;
+    max-width: 50%;
+  }
+
+  .last {
+    padding-left: 20px;
+
+    ul {
+      li {
+        margin-bottom: 35px;
+        line-height: 1.25;
+
+        svg {
+          display: inline;
+          float: left;
+          margin-right: 16px;
+          font-size: 55px;
+          color: $palette-orange;
+          margin-top: 3px;
+        }
+
+        .list-title {
+          font-size: 21px;
+          font-weight: bold;
+          color: $color-primary;
+        }
+      }
     }
+  }
 
-    &__lead {
-      font-size: 1.1rem;
+  .contentbox__title {
+    font-size: 2.15rem;
+    margin-bottom: 25px;
+  }
+}
+
+.carousel-indicators {
+  bottom: auto;
+  right: 0;
+}
+
+.footer {
+  .egi-logo-mono {
+    img {
+      max-width: 155px;
+    }
+  }
+
+  .copy-text {
+    color: $color-white;
+  }
+
+  .title {
+    color: $color-white;
+  }
+
+  ul {
+    li {
+      &.funder-links {
+        a {
+          color: $palette-orange;
+        }
+      }
+    }
+  }
+
+  .socials-box {
+    a {
+      color: $palette-orange !important;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 }
 
-// scss-lint:disable QualifyingElement
+.tab-content-home {
+  .col-lg-4:nth-child(3n + 3) {
+    padding-right: 0;
+  }
 
-img.provider-header {
-  max-width: 180px;
-  max-height: 120px;
-}
-
-// scss-lint:enable QualifyingElement
-
-/* ===============================
-Mobile version only for customization.
-=============================== */
-
-@media (max-width: 1120px) {
-  .main {
-    .contentbox {
-      > div {
-        width: 100%;
-      }
-
-      &__title,
-      &__lead {
-        width: 50%;
-      }
-    }
+  .col-lg-4:nth-child(3n + 1) {
+    padding-left: 0;
   }
 }
 
 @media (max-width: 992px) {
-  .main {
+  .header {
+    .logo {
+      margin-bottom: 20px;
+    }
+  }
+
+  .contentbox {
+    .left-column {
+      margin-bottom: 30px;
+
+      img {
+        max-width: 100%;
+        width: 100%;
+      }
+    }
+
+    .right-column {
+      img {
+        max-width: 100%;
+        width: 100%;
+      }
+    }
+  }
+
+  .contentbox {
+    padding-top: 2rem;
+
+    .contentbox__title {
+      font-size: 2.15rem;
+      margin-bottom: 25px;
+    }
+
+    .first {
+      max-width: 100%;
+      margin-bottom: 30px;
+      padding-right: 0;
+    }
+
+    .last {
+      max-width: 100%;
+      padding-left: 0;
+
+      ul {
+        li {
+          .list-title {
+            font-size: 19px;
+          }
+        }
+      }
+    }
+  }
+
+  .carousel-indicators {
+    right: 0;
+  }
+
+  .footer {
+    .egi-logo-mono {
+      img {
+        max-width: 155px;
+      }
+    }
+
+    .copy-text {
+      color: $color-white;
+    }
+
+    .title {
+      color: $color-white;
+    }
+
+    ul {
+      li {
+        &.funder-links {
+          a {
+            color: $palette-orange;
+          }
+        }
+      }
+    }
+
+    .socials-box {
+      a {
+        color: $palette-orange !important;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  .tab-content-home {
+    .col-lg-4:nth-child(3n + 3) {
+      padding-right: 0;
+    }
+
+    .col-lg-4:nth-child(3n + 1) {
+      padding-left: 0;
+    }
+  }
+
+  @media (max-width: 992px) {
+    .header {
+      .logo {
+        margin-bottom: 20px;
+      }
+    }
+
     .contentbox {
-      &__title {
-        font-size: 3rem;
+      .left-column {
+        margin-bottom: 30px;
+
+        img {
+          max-width: 100%;
+          width: 100%;
+        }
       }
 
-      .intro-box {
-        max-width: 45%;
+      .right-column {
+        img {
+          max-width: 100%;
+          width: 100%;
+        }
+      }
+    }
+
+    .contentbox {
+      padding-top: 2rem;
+
+      .contentbox__title {
+        font-size: 1.75rem;
+        margin-bottom: 20px;
+      }
+
+      .first {
+        max-width: 100%;
+        margin-bottom: 30px;
+        padding-right: 0;
+      }
+
+      .last {
+        max-width: 100%;
+        padding-left: 0;
+
+        ul {
+          li {
+            .list-title {
+              font-size: 19px;
+            }
+          }
+        }
       }
     }
   }
 }
 
 @media (max-width: 768px) {
-  .main {
-    .contentbox {
-      &__title {
-        font-size: 2rem;
-      }
+  .footer {
+    .title {
+      margin: 25px 0 10px;
+    }
 
-      &__lead {
-        font-size: 1rem;
-      }
+    .egi-logo-mono {
+      text-align: center;
 
-      .intro-box {
-        max-width: 45%;
+      img {
+        max-width: 100px;
+      }
+    }
+
+    .intro-box {
+      max-width: 45%;
+    }
+  }
+
+  .contact-list {
+    li {
+      font-size: 0.8rem;
+      line-height: 1.5;
+
+      svg {
+        font-size: 0.95rem;
+        margin-right: 7px;
       }
     }
   }
 }
 
-@media (max-width: 576px) {
-  .main {
-    .contentbox {
-      display: flex;
-      flex-direction: column-reverse;
+.branch-box .branch-icon img {
+  max-height: 80px;
+  height: auto;
+}
 
-      &__title,
-      &__lead {
-        width: 100%;
-      }
+.standard-list {
+  margin: 0;
+  padding: 0 0 0 20px;
 
-      aside {
-        position: relative;
-        width: 100%;
-        right: auto;
-      }
-
-      .intro-box {
-        max-width: 100%;
-      }
-    }
+  li {
+    list-style: square;
+    margin-bottom: 5px;
   }
 }
 
-@media (max-width: 376px) {
-  .main {
-    .home-tabs {
-      margin-top: 20px;
+// scss-lint:disable ColorVariable
+.testimonials {
+  border: 1px solid;
+  border-color: #dfdede #d2d0d0 #b0afaf;
+  margin: 4px 0 13px;
+  position: relative;
 
-      .tabs {
-        position: absolute;
-        left: 0;
-        right: 0;
+  .inner {
+    border: 1px solid #fff;
+    font-size: 16px;
+    font-style: italic;
+    line-height: 24px;
+    padding: 14px 18px;
+    background: #fbfbfb;
+    background: -moz-linear-gradient(top, #fbfbfb 0%, #fefefe 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fbfbfb), color-stop(100%, #fefefe));
+    background: -webkit-linear-gradient(top, #fbfbfb 0%, #fefefe 100%);
+    background: -o-linear-gradient(top, #fbfbfb 0%, #fefefe 100%);
+    background: -ms-linear-gradient(top, #fbfbfb 0%, #fefefe 100%);
+    background: linear-gradient(to bottom, #fbfbfb 0%, #fefefe 100%); // scss-lint:disable DuplicateProperty
 
-        .tab-link {
-          border-radius: 0;
-        }
-      }
-
-      .tab-content-home {
-        padding-top: 80px;
-      }
+    span {
+      text-indent: -5000px;
+      display: inline-block;
+      width: 20px;
+      height: 15px;
     }
+  }
+
+  // scss-lint:enable ColorVariable
+
+  ::after {
+    content: ".";
+    display: block;
+    text-indent: -5000px;
+    position: absolute;
+    bottom: -16px;
+    left: 21px;
+    width: 15px;
+    height: 16px;
+  }
+
+  p {
+    padding-left: 45px;
+    margin-bottom: 30px;
   }
 }

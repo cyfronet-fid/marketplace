@@ -53,11 +53,11 @@ gem "searchkick"
 gem "elasticsearch", "7.6.0"
 
 gem "devise"
-gem "omniauth"
+gem "omniauth", "~> 2.1"
 gem "omniauth_openid_connect"
 gem "omniauth-rails_csrf_protection"
 gem "rack-cors"
-gem "pundit", "~> 2.0"
+gem "pundit", "~> 2.3"
 gem "role_model"
 gem "recaptcha", require: "recaptcha/rails"
 # Markdown

@@ -1,7 +1,9 @@
 %ul{ class: html_classes }
   - options.each do |option|
-    - muted = option[:count].to_i.zero?
-    - target = root ? "element item" : "item"
+    :ruby
+      muted = option[:count].to_i.zero?
+      target = root ? "element item" : "item"
+      next if muted
     %li{ "data-multicheckbox-target": target }
       %label{ class: ("text-muted" if muted) }
         %input.form-check-input{ type: "checkbox", name: "#{name}[]",

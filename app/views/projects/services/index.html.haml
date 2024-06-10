@@ -33,7 +33,7 @@
           = render(partial: "projects/services/project_item",
             collection: @other_items,
             locals: { project: @project })
-
+    %hr.bottom-hr.mt-3.mb-4
     - unless @project.archived?
       - if external_search_enabled
         = link_to _("Add resource to this project"), project_add_external_link,

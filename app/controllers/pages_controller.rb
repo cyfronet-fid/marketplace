@@ -3,10 +3,21 @@
 class PagesController < ApplicationController
   helper_method :community_link
   helper_method :target_users_link
+
   def about
   end
 
   def about_projects
+  end
+
+  def sla
+  end
+
+  def terms_and_conditions
+  end
+
+  def communities
+    @platforms = Platform.all.order(:name)
   end
 
   def community_link(platform)
@@ -18,10 +29,6 @@ class PagesController < ApplicationController
     target_link = @search_base_url + "/search/service?q=*&fq=dedicated_for:(%22#{target_user.name}%22)"
     return target_link if @enable_external_search
     services_path(dedicated_for: target_user.to_param)
-  end
-
-  def communities
-    @platforms = Platform.all.order(:name)
   end
 
   def target_users

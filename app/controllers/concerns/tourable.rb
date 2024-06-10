@@ -9,7 +9,8 @@ module Tourable
 
   def determine_tour
     tour_name = nil
-    if params[:tour].present? && (available_tours.dig(params[:tour], "activation_strategy") == "query_param")
+    p "ELO #{params}"
+    if params.key?(:tour).present? && (available_tours.dig(params[:tour], "activation_strategy") == "query_param")
       tour_name = params[:tour]
     end
     if tour_name.nil?

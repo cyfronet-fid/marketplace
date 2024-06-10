@@ -208,6 +208,8 @@ Rails.application.routes.draw do
   get "errors/unprocessable"
   get "errors/internal_server_error"
   match "about", to: "pages#about", via: "get", as: :about
+  match "sla", to: "pages#sla", via: "get", as: :sla
+  match "terms_and_conditions", to: "pages#terms_and_conditions", via: "get", as: :terms_and_conditions
   match "target_users", to: "pages#target_users", via: "get", as: :target_users
   match "communities", to: "pages#communities", via: "get", as: :communities
   match "about_projects", to: "pages#about_projects", via: "get", as: :about_projects
