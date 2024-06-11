@@ -4,6 +4,8 @@
   #form-container
     .mb-5.pb-2.border-header
       %h1.mr-auto.my-auto= _("Create new RAID Project")
-    = render "raid_project/steps/step5", raid_project: @raid_project, show_recaptcha: true
+      
+    = turbo_frame_tag dom_id(@raid_project) do
+      = render_next_step(params[:id], raid_project: @raid_project)
 
   

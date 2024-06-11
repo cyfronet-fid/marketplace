@@ -39,18 +39,22 @@ module RaidProjectHelper
   end
 
   def render_alternative_description_fields(form)
-    render "raid_projects/form/alternative_description_fields", alternative_description_f: form
+    render "raid_project/steps/alternative_description_fields", alternative_description_f: form
   end
 
   def render_alternative_title_fields(form)
-    render "raid_projects/form/alternative_title_fields", alternative_title_f: form
+    render "raid_project/steps/alternative_title_fields", alternative_title_f: form
   end
 
   def render_contributor_fields(form)
-    render "raid_projects/form/contributor_fields", contributor_f: form
+    render "raid_project/steps/contributor_fields", contributor_f: form
   end
 
   def render_organisation_fields(form)
-    render "raid_projects/form/organisation_fields", organisation_f: form
+    render "raid_project/steps/organisation_fields", organisation_f: form
+  end
+
+  def render_next_step(step_id, raid_project)
+    render "/raid_project/steps/#{step_id}", raid_project: raid_project, show_recaptcha: true
   end
 end

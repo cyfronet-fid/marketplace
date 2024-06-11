@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 class RaidProject::StepsController < ApplicationController
-  include Wicked::Wizard
-
-  @@existing = false
-  @@building_project_valid = false
 
   RAID_FORM_STEPS = {
     step1: [
@@ -17,7 +13,6 @@ class RaidProject::StepsController < ApplicationController
       alternative_descriptions_attributes: %i[id text language _destroy]
     ],
     step2: [
-      :form_step,
       contributors_attributes: [
         :id,
         :pid,
@@ -30,83 +25,142 @@ class RaidProject::StepsController < ApplicationController
       ]
     ],
     step3: [
-      :form_step,
       raid_organisations_attributes: [:id, :pid, :name, :_destroy, position_attributes: %i[id pid start_date end_date]]
     ],
     step4: [
-      :form_step,
       raid_access_attributes: %i[id access_type statement_text statement_lang embargo_expiry _destroy]
     ],
     step5: [:form_step]
   }.freeze
 
-  steps(*RAID_FORM_STEPS.keys)
+  @@action = nil
 
   def show
-    obj_form_db = RaidProject.where(:id => params[:raid_project_id]).first if params[:raid_project_id]
-    if obj_form_db.nil?
-      show_new_object
-    else
-      @@existing = true
-      show_existing_object
+    session[params[:raid_project_id]]
+    unless @@action
+      set_action
     end
-  end
-
-  def show_existing_object
-    @raid_project = RaidProject.find(params[:raid_project_id])
-    @raid_project.build_main_description if @raid_project.main_description.blank?
-    render_wizard 
-  end
-
-  def show_new_object
-    raid_project_attrs = Rails.cache.read params[:raid_project_id] if params[:raid_project_id]
-   
-    @raid_project = RaidProject.new raid_project_attrs
-    @raid_project.build_main_title
-    @raid_project.contributors.build
-    @raid_project.build_main_description
-    @raid_project.raid_organisations.build
-    @raid_project.build_raid_access
-    render_wizard
+    set_step_state(step)
   end
 
   def update
-   
-    saved_params = Rails.cache.read(params[:raid_project_id])
+    raid_id = params[:raid_project_id]
+    saved_params = session[raid_id]
+
     raid_project_attrs = saved_params.merge raid_project_params
 
-    if @@existing
-      p '==========================='
-      @raid_project = RaidProject.find(params[:raid_project_id])
-      p 'found'
-      temp_pr =  RaidProject.new(raid_project_attrs)
-      p '+++++++++++++++++++++++++'
-      @@building_project_valid =temp_pr.valid?
+    @raid_project = RaidProject.new(raid_project_attrs)
+    
+    if @raid_project.valid?
+      session[raid_id]  = raid_project_attrs
+      redirect_to_next_step
     else
-      @raid_project = RaidProject.new(raid_project_attrs)
-      @@building_project_valid = @raid_project.valid?
+      render :show 
     end
-    if @@building_project_valid
-      Rails.cache.write params[:raid_project_id], raid_project_attrs
-      redirect_to_next next_step
-    else
-      render_wizard
-    end
+  end
+  # http://localhost:5000/raid_projects/IdWjr4eM/steps/step1
+  private
+
+  def raid_project_params
+    params.require(:raid_project).permit(:form_step, *RAID_FORM_STEPS[step]).merge(user: current_user)
+  end
+
+  def serialize(raid_project)
+    Api::V1::Raid::RaidWizardSerializer.new(raid_project).as_json
   end
 
   private
 
-  def raid_project_params
-    params.require(:raid_project).permit(RAID_FORM_STEPS[step]).merge(form_step: step.to_sym).merge(user: current_user)
+  def steps
+    RAID_FORM_STEPS.keys
+  end
+
+  def step
+    params[:id].to_sym
+  end
+
+  def next_step_template
+    "raid_project/steps/#{next_step}"
+  end
+
+  def redirect_to_next_step
+    if current_step_index == 4
+      finish_wizard_path
+    else
+      project = set_step_state(next_step)
+      render turbo_stream: turbo_stream.replace(
+        'raid-form', partial: next_step_template, locals: { :@raid_project => project })
+      # redirect_to raid_project_step_path(params[:raid_project_id], next_step)
+    end
   end
 
   def finish_wizard_path
-    raid_project_attrs = Rails.cache.read(params[:raid_project_id])
-    # existing = saved_params.delete(:existing)
-   
-    @raid_project = RaidProject.new raid_project_attrs
+    saved_params = session[params[:raid_project_id]] 
+    @raid_project = RaidProject.new saved_params
     @raid_project.save!
-    Rails.cache.delete params[:raid_project_id]
-    raid_project_path(@raid_project)
+    session.delete params[:raid_project_id]
+  
+    # redirect_to controller: :controller_name, action: :action_name ### namespace
+
+    respond_to do |format|
+      format.html { redirect_to @raid_project, notice: "RAID project was successfully created." }
+    end
+  end
+
+  def current_step_index
+    steps.index(step)
+  end
+
+  def next_step
+    steps[current_step_index+1] if current_step_index < 4    
+  end
+
+  def set_action
+    @raid_project = RaidProject.find_by(id: params[:raid_project_id])
+    @@action = !!@raid_project ? "updating" : "creating"
+   
+    session[params[:raid_project_id]] = {}
+  end
+
+  def set_step1
+
+    raid_project_attrs = session[params[:raid_project_id]] || {}
+    @raid_project = RaidProject.new raid_project_attrs
+    @raid_project.build_main_title
+    @raid_project.build_main_description
+    @raid_project
+  end
+
+  def set_step2
+   
+    raid_project_attrs = session[params[:raid_project_id]]
+    @raid_project = RaidProject.new raid_project_attrs
+    @raid_project.contributors.build
+    @raid_project
+  end
+
+  def set_step3
+    raid_project_attrs = session[params[:raid_project_id]]
+    @raid_project = RaidProject.new raid_project_attrs
+    @raid_project.raid_organisations.build
+    @raid_project
+  end
+
+  def set_step4
+    raid_project_attrs = session[params[:raid_project_id]]
+    @raid_project = RaidProject.new raid_project_attrs
+   
+    @raid_project.build_raid_access
+    @raid_project
+  end
+
+  def set_step5
+    raid_project_attrs = session[params[:raid_project_id]]
+    @raid_project = RaidProject.new raid_project_attrs
+    @raid_project
+  end
+
+  def set_step_state(step_to_set)
+    method("set_#{step_to_set}").call
   end
 end
