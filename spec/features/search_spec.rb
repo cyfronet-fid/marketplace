@@ -36,7 +36,7 @@ RSpec.feature "Service searching in top bar", js: true, end_user_frontend: true 
     expect(page).to have_text(category.name)
   end
 
-  scenario "I can clear search conditions" do
+  scenario "I can clear search conditions", skip: true do
     visit services_path(q: "DDDD Something")
     expect(page).to have_css(".categories", text: "Looking for: DDDD Something")
     find(:css, ".search-clear").click

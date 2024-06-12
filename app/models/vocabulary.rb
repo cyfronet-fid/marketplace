@@ -3,6 +3,8 @@
 class Vocabulary < ApplicationRecord
   include Parentable
 
+  has_one_attached :logo
+
   has_many :service_vocabularies, dependent: :destroy
   has_many :services, through: :service_vocabularies
   has_many :catalogue_vocabularies, dependent: :destroy
@@ -16,7 +18,6 @@ class Vocabulary < ApplicationRecord
   validates :type, presence: true
 
   def to_s
-    super
     name
   end
 end

@@ -48,3 +48,5 @@ yarn-debug.log*
 /.run/*
 /app/assets/builds/*
 !/app/assets/builds/.keep
+
+/config/master.key

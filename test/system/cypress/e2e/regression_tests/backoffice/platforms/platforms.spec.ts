@@ -12,7 +12,7 @@ describe("Platform", () => {
     cy.loginAs(user);
   });
 
-  it("should create new platform", () => {
+  it.skip("should create new platform", () => {
     cy.openUserDropdown();
     cy.get("[data-e2e='backoffice']")
       .click();

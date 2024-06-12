@@ -1,7 +1,62 @@
-- if external_search_enabled
-  %eosc-common-main-footer{ "terms-of-use": "#{external_search_url}/acceptable-use-policy",
-                            "privacy-policy": "#{external_search_url}/privacy-policy" }
-- else
-  %eosc-common-main-footer
+.totop-wrapper
+  .container
+    %a{ href: "#" }
+      %i.fa.fa-arrow-up
+      Back to the top
+%footer
+  .container
+    .row
+      .col-lg-9.col-sm-12.footer-left
+        .footer-row
+          .footer-column
+            %ul
+              %li
+                .menu-title About
+              %li
+                %a{ href: "https://eosc-portal.eu/about/eosc" } EOSC
+              %li
+                %a{ href: "https://eosc-portal.eu/about-eosc-portal" } EOSC Portal
+          .footer-column
+            %ul
+              %li
+                .menu-title For Providers
+              %li
+                %a{ href: "#" } Why and how to become an EOSC service provider
+              %li
+                %a{ href: "#" } Login to the dashboard
+          .footer-column
+            %ul
+              %li
+                .menu-title For Researchers
+              %li
+                %a{ href: "#" } Find data
+              %li
+                %a{ href: "#" } Store Data
+              %li
+                %a{ href: "#" } Marketplace FAQ
+          .footer-column
+            %ul
+              %li
+                .menu-title Contact
+              %li
+                %a{ href: "#" } Researchers - support@marketplace.eu
+              %li
+                %a{ href: "#" } Providers - onboarding@eosc-portal.eu
+              %li
+                %a{ href: "#" } Businesses - business@eosc-dih.eu
 
-%eosc-common-eu-information
+        .copyright-row
+          %p
+            Copyright 2023 &nbsp;|&nbsp; All rights reserved &nbsp; | &nbsp;
+            %a{ href: "#" } Privacy policy
+          %p
+            The EOSC Portal is currently operated by the EOSC Future (Grant Agreement no. 101017536) projects
+            funded by the European Union’s Horizon 2020 research and innovation programme.
+
+      .col-lg-3.col-sm-12.footer-right
+        = image_tag "white-label-logo.png", alt: "Whitelabel Logo"
+        .row.mt-5.pl-4
+          %strong
+            %a{ href: "#" } Looking for help?
+        .row.mt-3.pl-4
+          %a{ href: "#" } Helpdesk

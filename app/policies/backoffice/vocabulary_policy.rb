@@ -32,7 +32,7 @@ class Backoffice::VocabularyPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    %i[name description eid parent_id]
+    %i[name description logo eid parent_id]
   end
 
   private
