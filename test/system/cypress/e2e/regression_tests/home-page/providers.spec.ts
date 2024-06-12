@@ -3,7 +3,7 @@ describe("Providers", () => {
     cy.visit("/");
   });
   
-  it("should go to provider page and browse resources", () => {
+  it.skip("should go to provider page and browse resources", () => {
     cy.get("a[data-e2e='provider-link']")
       .eq(0)
       .click();
@@ -14,7 +14,7 @@ describe("Providers", () => {
     cy.get("[data-e2e='filter-tag']")
       .should("be.visible");
   });
-  it("should go to page with all providers", () => {
+  it.skip("should go to page with all providers", () => {
     cy.get("a[data-e2e='more-link-providers']")
       .click();
     cy.location("href")

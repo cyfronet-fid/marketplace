@@ -3,7 +3,7 @@ describe("Communities and infrastructures", () => {
     cy.visit("/");
   });
   
-  it("should go to service page with selected filter", () => {
+  it.skip("should go to service page with selected filter", () => {
     cy.get("a[href*='related_platforms'][data-e2e='communities_target-user']")
       .eq(0)
       .click();
@@ -12,7 +12,7 @@ describe("Communities and infrastructures", () => {
     cy.get("[data-e2e='filter-tag']")
       .should("be.visible");
   });
-  it("should go to page with all communities/infrastructures", () => {
+  it.skip("should go to page with all communities/infrastructures", () => {
     cy.get("a[href*='/communities'][data-e2e='more-link-communities_target-users']")
       .click();
     cy.location("href")

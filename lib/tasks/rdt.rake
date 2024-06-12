@@ -49,6 +49,14 @@ namespace :rdt do
       Vocabulary::BundleCapabilityOfGoal.find_or_create_by(name: hash["name"])
     end
 
+    puts "Creating marketplace locations with descriptions"
+    yaml_hash["marketplace_locations"].each_value do |hash|
+      Vocabulary::MarketplaceLocation.find_or_create_by(name: hash["name"]).update(
+        description: hash["description"],
+        eid: hash["eid"]
+      )
+    end
+
     puts "Creating subcategories for service type"
     yaml_hash["service_types"].each_value { |hash| create_category_with_children(hash) }
   end

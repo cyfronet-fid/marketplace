@@ -4,6 +4,8 @@ class HomeController < ApplicationController
   include LandingPageHelper
   before_action :load_services, :load_platforms, :load_providers, :load_target_users, :load_opinion
 
+  layout "clear"
+
   def index
     @learn_more_section = LeadSection.includes(:leads).find_by(slug: "learn-more")
     @use_cases_section = LeadSection.includes(:leads).find_by(slug: "use-cases")
@@ -61,6 +63,7 @@ class HomeController < ApplicationController
 
     @main_scientific_domains =
       ScientificDomain.with_attached_logo.roots.partition { |sd| sd.name != "Other" }.flatten(1)
+    @action = "landing_page"
   end
 
   def robots
@@ -74,7 +77,7 @@ class HomeController < ApplicationController
     @providers_number = Provider.count
     @services_number = Service.count
     @countries_number = 32
-    @services = Service.popular(6)
+    @services = Service.popular(4)
   end
 
   def load_platforms
