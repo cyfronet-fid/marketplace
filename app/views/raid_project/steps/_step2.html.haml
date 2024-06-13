@@ -1,6 +1,6 @@
 = turbo_frame_tag "raid-form" do
 
-  = simple_form_for @raid_project, url: raid_project_step_path(params[:raid_project_id], "step2"),
+  = simple_form_for raid_project, url: raid_project_step_path(params[:raid_project_id], "step2"),
         html: { role: "form", id: "modal-form", "data-controller" => "raid-project",
               "data-raid-project-target": "form", "data-raid-project-url-value": ror_autocomplete_url }, method: :put do |f|
     .new-form-style{ data: {"raid-form-target": "section", section: "contributors" } }

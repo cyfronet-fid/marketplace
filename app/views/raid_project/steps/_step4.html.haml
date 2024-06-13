@@ -1,5 +1,5 @@
 = turbo_frame_tag "raid-form" do
-  = simple_form_for @raid_project, url: raid_project_step_path(params[:raid_project_id], "step4"),
+  = simple_form_for raid_project, url: raid_project_step_path(params[:raid_project_id], "step4"),
       html: { role: "form", "data-controller" => "raid-project",
               "data-raid-project-target": "form", "data-raid-project-url-value": ror_autocomplete_url },
               method: :put do |f|

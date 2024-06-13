@@ -90,14 +90,13 @@ class ImportRor
   def extract_json(zip_file_path)
     puts "Extracting json from the downloaded zip..."
     Zip::File.open(zip_file_path) do |zip_file|
-        zip_file.each do |entry| 
-            if entry.name.include? "data.json" 
-                destination_json_file = File.join(@destination_path, entry.name)
-                zip_file.extract(entry, destination_json_file)
-                puts "Json successfully extracted"
-                return destination_json_file
-            end
-        end
+      zip_file.each do |entry|
+        next unless entry.name.include? "data.json"
+        destination_json_file = File.join(@destination_path, entry.name)
+        zip_file.extract(entry, destination_json_file)
+        puts "Json successfully extracted"
+        return destination_json_file
+      end
     rescue StandardError => e
         Rails.logger.warn "ERROR[ROR] - Extracting json failed: #{e}"
         raise NewDumpDataError("Extracting json failed: #{e}")

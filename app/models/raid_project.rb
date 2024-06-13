@@ -4,24 +4,24 @@ class RaidProject < ApplicationRecord
   attr_accessor :form_step
   belongs_to :user
 
-  with_options dependent: :destroy, autosave: true, inverse_of: :raid_project do |assoc|
-    assoc.has_one :main_title, class_name: "Raid::MainTitle"
-    assoc.has_many :alternative_titles, class_name: "Raid::AlternativeTitle"
-    assoc.has_many :raid_organisations, class_name: "Raid::RaidOrganisation"
-    assoc.has_one :main_description, class_name: "Raid::MainDescription"
-    assoc.has_many :alternative_descriptions, class_name: "Raid::AlternativeDescription"
-    assoc.has_one :raid_access, class_name: "Raid::RaidAccess"
-    assoc.has_many :contributors, class_name: "Raid::Contributor"
+  with_options dependent: :destroy, autosave: true do 
+    has_one :main_title, class_name: "Raid::MainTitle"
+    has_many :alternative_titles, class_name: "Raid::AlternativeTitle"
+    has_many :raid_organisations, class_name: "Raid::RaidOrganisation"
+    has_one :main_description, class_name: "Raid::MainDescription"
+    has_many :alternative_descriptions, class_name: "Raid::AlternativeDescription"
+    has_one :raid_access, class_name: "Raid::RaidAccess"
+    has_many :contributors, class_name: "Raid::Contributor"
   end
 
   with_options allow_destroy: true do |nested_attrs|
-    nested_attrs.accepts_nested_attributes_for :main_title
-    nested_attrs.accepts_nested_attributes_for :alternative_titles
-    nested_attrs.accepts_nested_attributes_for :main_description
-    nested_attrs.accepts_nested_attributes_for :alternative_descriptions
-    nested_attrs.accepts_nested_attributes_for :contributors
-    nested_attrs.accepts_nested_attributes_for :raid_organisations
-    nested_attrs.accepts_nested_attributes_for :raid_access
+    accepts_nested_attributes_for :main_title
+    accepts_nested_attributes_for :alternative_titles
+    accepts_nested_attributes_for :main_description
+    accepts_nested_attributes_for :alternative_descriptions
+    accepts_nested_attributes_for :contributors
+    accepts_nested_attributes_for :raid_organisations
+    accepts_nested_attributes_for :raid_access
   end
 
   validates_associated :main_title

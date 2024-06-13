@@ -1,5 +1,5 @@
 = turbo_frame_tag "raid-form" do
-  = simple_form_for @raid_project, url: raid_project_step_path(params[:raid_project_id], "step5"),
+  = simple_form_for raid_project, url: raid_project_step_path(params[:raid_project_id], "step5"),
         html: { role: "form", "data-controller" => "raid-project",
               "data-raid-project-target": "form", "data-raid-project-url-value": ror_autocomplete_url },
               method: :put do |f|
@@ -15,5 +15,5 @@
           .row
             .col-12
               = f.button :submit, "Create new RAID project", class: "btn btn-primary pl-5 pr-5"
-          = back_link_to _("Cancel"), @raid_project,
+          = back_link_to _("Cancel"), raid_project,
             class: "btn btn-link text-uppercase"
