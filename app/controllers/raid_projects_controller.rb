@@ -23,6 +23,8 @@ class RaidProjectsController < ApplicationController
 
   def new
     raid_builder_key = Random.urlsafe_base64(6)
+    session[raid_builder_key.to_sym] = {}
+    session[:wizard_action] = "create"
 
     redirect_to raid_project_step_path(raid_builder_key, "step1")
   end
@@ -40,6 +42,10 @@ class RaidProjectsController < ApplicationController
 
   def edit
     @raid_project.build_main_description if @raid_project.main_description.blank?
+    session[@raid_project.id] = {}
+    session[:wizard_action] = "update"
+    
+    redirect_to raid_project_step_path(@raid_project, "step1")
   end
 
   def update

@@ -2,6 +2,9 @@
 
 class RaidProject::StepsController < ApplicationController
 
+  class WizardActionError < StandardError
+  end
+
   RAID_FORM_STEPS = {
     step1: [
       :start_date,
@@ -33,32 +36,28 @@ class RaidProject::StepsController < ApplicationController
     step5: [:form_step]
   }.freeze
 
-  @@action = nil
 
   def show
-    session[params[:raid_project_id]]
-    unless @@action
-      set_action
-    end
     set_step_state(step)
   end
 
   def update
     raid_id = params[:raid_project_id]
     saved_params = session[raid_id]
-
+    
     raid_project_attrs = saved_params.merge raid_project_params
 
     @raid_project = RaidProject.new(raid_project_attrs)
     
     if @raid_project.valid?
-      session[raid_id]  = raid_project_attrs
+      session[raid_id] = raid_project_attrs
       redirect_to_next_step
     else
       render :show 
     end
   end
-  # http://localhost:5000/raid_projects/IdWjr4eM/steps/step1
+  
+
   private
 
   def raid_project_params
@@ -68,8 +67,6 @@ class RaidProject::StepsController < ApplicationController
   def serialize(raid_project)
     Api::V1::Raid::RaidWizardSerializer.new(raid_project).as_json
   end
-
-  private
 
   def steps
     RAID_FORM_STEPS.keys
@@ -94,14 +91,29 @@ class RaidProject::StepsController < ApplicationController
     end
   end
 
-  def finish_wizard_path
-    saved_params = session[params[:raid_project_id]] 
-    @raid_project = RaidProject.new saved_params
-    @raid_project.save!
-    session.delete params[:raid_project_id]
-  
-    # redirect_to controller: :controller_name, action: :action_name ### namespace
+  def deserliaze(obj)
+    ActiveModelSerializers::Deserialization.jsonapi_parse!(obj.to_h)
+  end
 
+  def finish_wizard_path
+    saved_params = session[params[:raid_project_id]]
+    @raid_project = RaidProject.new(permitted_attributes(RaidProject).merge(user: current_user).merge(saved_params))
+    unless @raid_project.valid?
+      p @raid_project.errors
+      render :show
+    end
+
+    if session[:wizard_action] == "create"
+      @raid_project.save!
+    else
+      p '=============================='
+      p saved_params.keys    
+      raid_project = RaidProject.find_by(id: params[:raid_project_id])
+      raid_project.update!(saved_params)
+    end
+
+    session.delete params[:raid_project_id]
+    # redirect_to controller: :controller_name, action: :action_name ### namespace
     respond_to do |format|
       format.html { redirect_to @raid_project, notice: "RAID project was successfully created." }
     end
@@ -115,52 +127,68 @@ class RaidProject::StepsController < ApplicationController
     steps[current_step_index+1] if current_step_index < 4    
   end
 
-  def set_action
-    @raid_project = RaidProject.find_by(id: params[:raid_project_id])
-    @@action = !!@raid_project ? "updating" : "creating"
-   
-    session[params[:raid_project_id]] = {}
-  end
-
   def set_step1
+    if session[:wizard_action].nil?
+      raise WizardActionError, "wizard_action parameter not set"
+    end
+    if session[:wizard_action] == "create"
+      set_step1_create
+    elsif session[:wizard_action] == "update"
+      set_step1_update
+    else
+      raise WizardActionError, "Unpermitted wizard_action parameter: #{session[:wizard_action]}"
+    end
+  end
+  
 
+  def set_step1_create
     raid_project_attrs = session[params[:raid_project_id]] || {}
     @raid_project = RaidProject.new raid_project_attrs
     @raid_project.build_main_title
     @raid_project.build_main_description
-    @raid_project
   end
 
+  def set_step1_update
+    @raid_project = RaidProject.find_by(id: params[:raid_project_id])
+    raid_project_attrs = serialize @raid_project
+    session[params[:raid_project_id]] = raid_project_attrs
+    @raid_project.build_main_description if @raid_project.main_description.blank?
+  end
+
+
   def set_step2
-   
     raid_project_attrs = session[params[:raid_project_id]]
-    @raid_project = RaidProject.new raid_project_attrs
-    @raid_project.contributors.build
-    @raid_project
+    if session[:wizard_action] == "create"
+      @raid_project = RaidProject.new raid_project_attrs
+      @raid_project.contributors.build
+    end
   end
 
   def set_step3
     raid_project_attrs = session[params[:raid_project_id]]
-    @raid_project = RaidProject.new raid_project_attrs
-    @raid_project.raid_organisations.build
-    @raid_project
+    if session[:wizard_action] == "create"
+      @raid_project = RaidProject.new raid_project_attrs
+      @raid_project.raid_organisations.build
+    end
   end
 
   def set_step4
     raid_project_attrs = session[params[:raid_project_id]]
-    @raid_project = RaidProject.new raid_project_attrs
-   
-    @raid_project.build_raid_access
-    @raid_project
+    if session[:wizard_action] == "create"
+      @raid_project = RaidProject.new raid_project_attrs
+      @raid_project.build_raid_access
+    end
   end
 
   def set_step5
     raid_project_attrs = session[params[:raid_project_id]]
-    @raid_project = RaidProject.new raid_project_attrs
-    @raid_project
+    if session[:wizard_action] == "create"
+      @raid_project = RaidProject.new raid_project_attrs
+    end
   end
 
   def set_step_state(step_to_set)
     method("set_#{step_to_set}").call
   end
+
 end
