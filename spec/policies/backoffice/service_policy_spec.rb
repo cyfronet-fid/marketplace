@@ -4,12 +4,23 @@ require "rails_helper"
 
 RSpec.describe Backoffice::ServicePolicy, backend: true do
   let(:service_portfolio_manager) { create(:user, roles: [:service_portfolio_manager]) }
+  let(:provider_data_administrator) { create(:user) }
+  let(:provider) do
+    create(:provider, data_administrators: [build(:data_administrator, email: provider_data_administrator&.email)])
+  end
+  let(:catalogue_data_administrator) { create(:user) }
+  let(:catalogue) do
+    create(:catalogue, data_administrators: [build(:data_administrator, email: catalogue_data_administrator&.email)])
+  end
+
   let(:service_owner) do
     create(:user).tap do |user|
       service = create(:service)
       ServiceUserRelationship.create!(user: user, service: service)
     end
   end
+
+  let(:basic_user) { create(:user) }
 
   subject { described_class }
 
@@ -136,6 +147,21 @@ RSpec.describe Backoffice::ServicePolicy, backend: true do
       it "grants access for service owner" do
         expect(subject).to permit(service_owner, build(:service, status: :draft))
       end
+
+      it "grants access for provider data administrator" do
+        expect(subject).to permit(
+          provider_data_administrator,
+          build(:service, resource_organisation: provider, status: :draft)
+        )
+      end
+
+      it "grants access for catalogue data administrator" do
+        expect(subject).to permit(catalogue_data_administrator, build(:service, catalogue: catalogue, status: :draft))
+      end
+
+      it "denies access for basic user" do
+        expect(subject).to_not permit(basic_user, build(:service, status: :draft))
+      end
     end
 
     permissions :show? do
@@ -147,8 +173,20 @@ RSpec.describe Backoffice::ServicePolicy, backend: true do
         expect(subject).to permit(service_owner, service_owner.owned_services.first)
       end
 
+      it "grants access for provider data administrator" do
+        expect(subject).to permit(provider_data_administrator, build(:service, resource_organisation: provider))
+      end
+
+      it "denies access for provider data administrator of other service" do
+        expect(subject).to_not permit(provider_data_administrator, build(:service, status: :draft))
+      end
+
+      it "grants access for catalogue data administrator" do
+        expect(subject).to permit(catalogue_data_administrator, build(:service, catalogue: catalogue))
+      end
+
       it "denies access for not owned service" do
-        expect(subject).to_not permit(service_owner, build(:service, status: :draft))
+        expect(subject).to_not permit(basic_user, build(:service, status: :draft))
       end
     end
 
@@ -159,6 +197,14 @@ RSpec.describe Backoffice::ServicePolicy, backend: true do
 
       it "denies access for service owner" do
         expect(subject).to_not permit(service_owner, build(:service, status: :draft))
+      end
+
+      it "grants access for provider data administrator" do
+        expect(subject).to permit(provider_data_administrator, build(:service, resource_organisation: provider))
+      end
+
+      it "grants access for catalogue data administrator" do
+        expect(subject).to permit(catalogue_data_administrator, build(:service, catalogue: catalogue))
       end
 
       it "grants access for service portfolio manager" do
@@ -332,7 +378,7 @@ RSpec.describe Backoffice::ServicePolicy, backend: true do
         expect(subject).to_not permit(service_portfolio_manager, service)
       end
 
-      it "danies access to service owner" do
+      it "grants access to service owner" do
         expect(subject).to_not permit(service_owner, service)
       end
     end

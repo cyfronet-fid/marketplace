@@ -22,6 +22,7 @@ class Provider < ApplicationRecord
   before_save { self.catalogue = Catalogue.find(catalogue_id) if catalogue_id.present? }
 
   scope :active, -> { where.not(status: %i[deleted draft]) }
+  scope :managed_by, ->(user) { joins(:data_administrators).where(data_administrators: { email: user&.email }) }
 
   attr_accessor :catalogue_id
 
