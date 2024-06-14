@@ -6,7 +6,7 @@ export class IProviders {
     basicWebpage_url: string;
     marketingDescription: string;
     classificationScientificDomains: string[];
-    classificationTag: string;
+    classificationTagList: string;
     locationStreet:string;
     locationPostCode:string;
     locationCity:string;
@@ -27,7 +27,7 @@ export const ProvidersFactory = {
         basicWebpage_url: 'http://example.org/',
         marketingDescription: Utilities.getRandomString(8).toLowerCase(),
         classificationScientificDomains: ["Agricultural Sciences ⇒ Agricultural Biotechnology"],
-        classificationTag: Utilities.getRandomString(8).toLowerCase(),
+        classificationTagList: Utilities.getRandomString(8).toLowerCase(),
         locationStreet:Utilities.getRandomString(8).toLowerCase(),
         locationPostCode:Utilities.getRandomString(8).toLowerCase(),
         locationCity:Utilities.getRandomString(8).toLowerCase(),
@@ -74,7 +74,7 @@ export const ProvidersFactoryExtended = {
       marketingDescription: Utilities.getRandomString(8).toLowerCase(),
       marketingMultimedia: 'http://example.org/',
       classificationScientificDomains: ["Agricultural Sciences ⇒ Agricultural Biotechnology"],
-      classificationTag: Utilities.getRandomString(8).toLowerCase(),
+      classificationTagList: Utilities.getRandomString(8).toLowerCase(),
       classificationStructureTypes: ["Distributed"],
       locationStreet: Utilities.getRandomString(8).toLowerCase(),
       locationPostCode: Utilities.getRandomString(8).toLowerCase(),

@@ -195,7 +195,7 @@ catalogues:
     participating_countries: ["FR"]
     affiliations: ["EOSC"]
     networks: ["provider_network-fao"]
-    tags: ["open data"]
+    tag_list: ["open data"]
     street: "Easy Street"
     postal_code: "FR12345"
     city: "Paris"
@@ -220,7 +220,7 @@ catalogues:
     participating_countries: ["PL", "US"]
     affiliations: ["EOSC"]
     networks: ["provider_network-fao"]
-    tags: ["open data"]
+    tag_list: ["open data"]
     street: "Street 10"
     postal_code: "GR12345"
     city: "Thessaloniki"
@@ -243,7 +243,7 @@ catalogues:
     participating_countries: ["PL", "US"]
     affiliations: ["EOSC", "CatRIS"]
     networks: ["provider_network-fao"]
-    tags: ["open data", "open science", "publications", "research papers"]
+    tag_list: ["open data", "open science", "publications", "research papers"]
     street: "Street 10"
     postal_code: "GR12345"
     city: "Athens"
