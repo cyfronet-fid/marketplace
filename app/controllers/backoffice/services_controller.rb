@@ -12,6 +12,8 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   before_action :find_and_authorize, only: %i[show edit update destroy]
   before_action :sort_options, :favourites
   before_action :load_query_params_from_session, only: :index
+  before_action :provider_scope
+  before_action :catalogue_scope
   prepend_before_action(only: [:index]) { authorize(Service) }
   helper_method :cant_edit
 
@@ -56,6 +58,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
   def new
     @service = Service.new(temp_attrs || {})
+
     remove_temp_data!(save_logo: true)
     add_missing_nested_models(@service)
     authorize(@service)
@@ -71,6 +74,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
     @service = Service::Create.call(Service.new(**attrs, status: :unpublished), temp_logo)
     if @service.invalid?
+      provider_scope
       add_missing_nested_models(@service)
       render :new, status: :bad_request unless @service.persisted?
       return
@@ -82,6 +86,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
   def edit
     @service.assign_attributes(temp_attrs || {})
+    provider_scope
     remove_temp_data!(save_logo: true)
     add_missing_nested_models(@service)
   end
@@ -95,7 +100,8 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     end
 
     unless Service::Update.call(@service, attrs, temp_logo)
-      render :edit, status: :bad_request
+      provider_scope
+      render :edit, status: :unprocessable_entity
       return
     end
     @service.store_analytics
@@ -191,7 +197,11 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   end
 
   def provider_scope
-    policy_scope(Provider).with_attached_logo
+    @providers = policy_scope(Provider)
+  end
+
+  def catalogue_scope
+    @catalogues = policy_scope(Catalogue)
   end
 
   def datasource_scope

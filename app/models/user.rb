@@ -35,6 +35,14 @@ class User < ApplicationRecord
     owned_services_count.positive?
   end
 
+  def provider_owner?
+    ProviderDataAdministrator.joins(:data_administrator).where(data_administrators: { email: email }).size.positive?
+  end
+
+  def catalogue_owner?
+    CatalogueDataAdministrator.joins(:data_administrator).where(data_administrators: { email: email }).size.positive?
+  end
+
   def data_administrator?
     DataAdministrator.where(email: email).count.positive?
   end

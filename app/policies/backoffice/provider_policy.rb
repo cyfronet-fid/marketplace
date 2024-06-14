@@ -1,40 +1,34 @@
 # frozen_string_literal: true
 
-class Backoffice::ProviderPolicy < ApplicationPolicy
-  class Scope < Scope
-    def resolve
-      scope
-    end
-  end
-
+class Backoffice::ProviderPolicy < Backoffice::ApplicationPolicy
   MP_INTERNAL_FIELDS = [:upstream_id, [sources_attributes: %i[id source_type eid _destroy]]].freeze
 
   def index?
-    service_portfolio_manager?
+    access?
   end
 
   def show?
-    service_portfolio_manager?
+    access? || record&.data_administrators&.map(:email)&.include?(user&.email)
   end
 
   def new?
-    service_portfolio_manager?
+    catalogue_access?
   end
 
   def create?
-    service_portfolio_manager?
+    catalogue_access?
   end
 
   def edit?
-    service_portfolio_manager? && !record.deleted?
+    access? && !record.deleted?
   end
 
   def update?
-    service_portfolio_manager? && !record.deleted?
+    access? && !record.deleted?
   end
 
   def destroy?
-    service_portfolio_manager? && !record.deleted?
+    access? && !record.deleted?
   end
 
   def permitted_attributes
@@ -54,7 +48,7 @@ class Backoffice::ProviderPolicy < ApplicationPolicy
       :logo,
       [multimedia: []],
       [scientific_domain_ids: []],
-      [tag_list: []],
+      :tag_list,
       :street_name_and_number,
       :postal_code,
       :city,
@@ -91,5 +85,14 @@ class Backoffice::ProviderPolicy < ApplicationPolicy
 
   def service_portfolio_manager?
     user&.service_portfolio_manager?
+  end
+
+  def access?
+    service_portfolio_manager? || user&.data_administrator?
+  end
+
+  def catalogue_access?
+    service_portfolio_manager? ||
+      Catalogue.joins(:data_administrators).where(data_administrators: { email: user&.email }).exists?
   end
 end
