@@ -1,14 +1,12 @@
 # frozen_string_literal: true
 
-class Backoffice::ServicePolicy < ApplicationPolicy
-  class Scope < Scope
+class Backoffice::ServicePolicy < Backoffice::ApplicationPolicy
+  class Scope < Backoffice::ApplicationPolicy::Scope
     def resolve
-      if user.service_portfolio_manager?
-        scope
-      elsif user.service_owner?
-        scope.joins(:service_user_relationships).where(service_user_relationships: { user: user })
+      if user&.service_owner?
+        scope.joins(:service_user_relationships).where(service_user_relationships: { user: user }).or(super)
       else
-        Service.none
+        super
       end
     end
   end
@@ -26,51 +24,55 @@ class Backoffice::ServicePolicy < ApplicationPolicy
   ].freeze
 
   def index?
-    service_portfolio_manager? || service_owner?
+    service_portfolio_manager? || service_owner? || data_administrator?
   end
 
   def show?
-    service_portfolio_manager? || owned_service?
+    can_edit?
   end
 
   def new?
-    service_portfolio_manager?
+    service_portfolio_manager? || user&.data_administrator?
   end
 
   def create?
-    service_portfolio_manager?
+    can_edit?
+  end
+
+  def edit?
+    can_edit? && !record.deleted?
   end
 
   def update?
-    (service_portfolio_manager? || owned_service?) && !record.deleted?
+    can_edit? && !record.deleted?
   end
 
   def publish?
-    service_portfolio_manager? && !record.published? && !record.deleted?
+    can_edit? && !record.published? && !record.deleted?
   end
 
   def publish_unverified?
-    service_portfolio_manager? && !record.unverified? && !record.deleted?
+    can_edit? && !record.unverified? && !record.deleted?
   end
 
   def suspend?
-    service_portfolio_manager? && !record.suspended? && !record.deleted?
+    can_edit? && !record.suspended? && !record.deleted?
   end
 
   def unpublish?
-    service_portfolio_manager? && !record.unpublished? && !record.deleted?
+    can_edit? && !record.unpublished? && !record.deleted?
   end
 
   def draft?
-    service_portfolio_manager? && !record.draft? && !record.deleted?
+    can_edit? && !record.draft? && !record.deleted?
   end
 
   def preview?
-    service_portfolio_manager?
+    can_edit? || owned_service?
   end
 
   def destroy?
-    service_portfolio_manager? && project_items&.count&.zero? && record.draft?
+    can_edit? && project_items&.count&.zero? && record.draft?
   end
 
   def permitted_attributes
@@ -165,9 +167,13 @@ class Backoffice::ServicePolicy < ApplicationPolicy
 
   private
 
-  def service_portfolio_manager?
-    user&.service_portfolio_manager?
+  # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+  def can_edit?
+    service_portfolio_manager? || owned_service? ||
+      record&.resource_organisation&.data_administrators&.map(&:email)&.include?(user&.email) ||
+      record&.catalogue&.data_administrators&.map(&:email)&.include?(user&.email)
   end
+  # rubocop:enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
 
   def service_owner?
     user&.service_owner?
@@ -176,7 +182,6 @@ class Backoffice::ServicePolicy < ApplicationPolicy
   def owned_service?
     record.owned_by?(user)
   end
-
   def project_items
     ProjectItem.joins(:offer).where(offers: { service_id: record })
   end

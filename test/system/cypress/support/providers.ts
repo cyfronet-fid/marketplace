@@ -109,7 +109,7 @@ Cypress.Commands.add("fillFormCreateProvider", (provider: IProvidersExtended, lo
   }
 
   if (provider.classificationTag) {
-    cy.get("#provider_tag_list_0")
+    cy.get("#provider_tag_list")
       .clear()
       .type(provider.classificationTag);
   }
