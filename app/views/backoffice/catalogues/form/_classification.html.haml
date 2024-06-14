@@ -20,7 +20,5 @@
               input_html: { data: { choice: true } },
               collection: sds,
               label_method: :first, value_method: :second
-    = f.input :tags, multiple: true, input_html: { class: "form-control" },
-              wrapper_html: { "data-form-target" => "tag_list" },
-              as: :array, disabled: cant_edit_catalogue([tags: []])
-    = link_to_add_array_field("catalogue", "tags")
+    = f.input :tag_list, input_html: { value: catalogue.tag_list.to_s, data: { choice: true } },
+    disabled: cant_edit_catalogue(:tag_list)

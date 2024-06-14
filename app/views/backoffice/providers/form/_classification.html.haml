@@ -20,9 +20,7 @@
               input_html: { data: { choice: true } },
               collection: sds,
               label_method: :first, value_method: :second
-    = f.input :tag_list, multiple: true, input_html: { class: "form-control" },
-              wrapper_html: { "data-form-target" => "tag_list" },
-              as: :array, disabled: cant_edit([tag_list: []])
-    = link_to_add_array_field("provider", "tag_list")
+    = f.input :tag_list, input_html: { value: provider.tag_list.to_s, data: { choice: true } },
+    disabled: cant_edit(:tag_list)
     = f.association :structure_types, disabled: cant_edit([structure_type_ids: []]),
             input_html: { multiple: true, data: { choice: true } }

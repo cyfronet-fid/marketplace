@@ -32,4 +32,4 @@
               input_html: { multiple: true, data: { choice: true } }
         = f.input :catalogue_id, disabled: cant_edit(:catalogue_id),
         input_html: { multiple: false, data: { choice: true } },
-        collection: Catalogue.all, selected: provider.catalogue&.id || nil
+        collection: catalogues, selected: provider.catalogue&.id || nil
