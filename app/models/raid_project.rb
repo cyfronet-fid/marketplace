@@ -4,7 +4,7 @@ class RaidProject < ApplicationRecord
   attr_accessor :form_step
   belongs_to :user
 
-  with_options dependent: :destroy, autosave: true do 
+  with_options dependent: :destroy, autosave: true do
     has_one :main_title, class_name: "Raid::MainTitle"
     has_many :alternative_titles, class_name: "Raid::AlternativeTitle"
     has_many :raid_organisations, class_name: "Raid::RaidOrganisation"
@@ -14,7 +14,7 @@ class RaidProject < ApplicationRecord
     has_many :contributors, class_name: "Raid::Contributor"
   end
 
-  with_options allow_destroy: true do |nested_attrs|
+  with_options allow_destroy: true do
     accepts_nested_attributes_for :main_title
     accepts_nested_attributes_for :alternative_titles
     accepts_nested_attributes_for :main_description

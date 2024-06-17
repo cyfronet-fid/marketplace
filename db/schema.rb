@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_04_12_153457) do
-
+ActiveRecord::Schema[7.1].define(version: 2024_04_12_153457) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -248,8 +247,8 @@ ActiveRecord::Schema.define(version: 2024_04_12_153457) do
     t.boolean "contact", null: false
     t.string "roles", default: [], array: true
     t.bigint "raid_project_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["raid_project_id"], name: "index_contributors_on_raid_project_id"
   end
 
@@ -270,8 +269,8 @@ ActiveRecord::Schema.define(version: 2024_04_12_153457) do
     t.string "type", null: false
     t.string "description_type", null: false
     t.bigint "raid_project_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["raid_project_id"], name: "index_descriptions_on_raid_project_id"
   end
 
@@ -515,8 +514,8 @@ ActiveRecord::Schema.define(version: 2024_04_12_153457) do
     t.date "end_date"
     t.string "positionable_type", null: false
     t.bigint "positionable_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["positionable_type", "positionable_id"], name: "index_positions_on_positionable"
   end
 
@@ -688,16 +687,16 @@ ActiveRecord::Schema.define(version: 2024_04_12_153457) do
     t.string "statement_text"
     t.string "statement_lang"
     t.bigint "raid_project_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["raid_project_id"], name: "index_raid_accesses_on_raid_project_id"
   end
 
   create_table "raid_organisations", force: :cascade do |t|
     t.string "pid", null: false
     t.bigint "raid_project_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "name", null: false
     t.index ["raid_project_id"], name: "index_raid_organisations_on_raid_project_id"
   end
@@ -705,8 +704,8 @@ ActiveRecord::Schema.define(version: 2024_04_12_153457) do
   create_table "raid_projects", force: :cascade do |t|
     t.date "start_date", null: false
     t.date "end_date"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.index ["user_id"], name: "index_raid_projects_on_user_id"
   end
@@ -728,8 +727,8 @@ ActiveRecord::Schema.define(version: 2024_04_12_153457) do
     t.string "name", null: false
     t.string "acronyms", default: [], array: true
     t.string "aliases", default: [], array: true
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["pid"], name: "index_rors_on_pid", unique: true
   end
 
@@ -984,8 +983,8 @@ ActiveRecord::Schema.define(version: 2024_04_12_153457) do
     t.date "start_date", null: false
     t.date "end_date"
     t.bigint "raid_project_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "title_type"
     t.index ["raid_project_id"], name: "index_titles_on_raid_project_id"
   end

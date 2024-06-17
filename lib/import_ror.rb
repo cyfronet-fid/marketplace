@@ -98,10 +98,10 @@ class ImportRor
         return destination_json_file
       end
     rescue StandardError => e
-        Rails.logger.warn "ERROR[ROR] - Extracting json failed: #{e}"
-        raise NewDumpDataError("Extracting json failed: #{e}")
+      Rails.logger.warn "ERROR[ROR] - Extracting json failed: #{e}"
+      raise NewDumpDataError("Extracting json failed: #{e}")
     end
-end
+  end
 
   def seed_db(json_file = @json_file)
     puts "Seeding db with organisations ROR data..."

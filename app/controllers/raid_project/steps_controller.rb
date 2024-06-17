@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class RaidProject::StepsController < ApplicationController
-
   class WizardActionError < StandardError
   end
 
@@ -30,12 +29,9 @@ class RaidProject::StepsController < ApplicationController
     step3: [
       raid_organisations_attributes: [:id, :pid, :name, :_destroy, position_attributes: %i[id pid start_date end_date]]
     ],
-    step4: [
-      raid_access_attributes: %i[id access_type statement_text statement_lang embargo_expiry _destroy]
-    ],
+    step4: [raid_access_attributes: %i[id access_type statement_text statement_lang embargo_expiry _destroy]],
     step5: [:form_step]
   }.freeze
-
 
   def show
     step_state(step)
@@ -43,26 +39,24 @@ class RaidProject::StepsController < ApplicationController
 
   def update
     raid_id = params[:raid_project_id]
-    saved_params = session[raid_id] 
+    saved_params = session[raid_id]
 
     if session[:wizard_action] == "create"
       raid_project_attrs = saved_params.merge permitted_step_attributes
       @raid_project = RaidProject.new(raid_project_attrs)
-
     else
       @raid_project = RaidProject.find_by(id: params[:raid_project_id])
       raid_project_attrs = saved_params.merge permitted_attributes(RaidProject)
       @raid_project.assign_attributes(raid_project_attrs)
     end
-    
+
     if @raid_project.valid?
       session[raid_id] = raid_project_attrs
       redirect_to_next_step
     else
-      render :show 
+      render :show
     end
   end
-  
 
   private
 
@@ -82,7 +76,6 @@ class RaidProject::StepsController < ApplicationController
     if current_step_index == 4
       finish_wizard_path
     else
-      project = step_state(next_step)
       render turbo_stream:
                turbo_stream.replace("raid-form", partial: next_step_template, locals: { raid_project: @raid_project })
       # redirect_to raid_project_step_path(params[:raid_project_id], next_step)
@@ -92,7 +85,6 @@ class RaidProject::StepsController < ApplicationController
   def finish_wizard_path
     saved_params = session[params[:raid_project_id]]
     session.delete params[:raid_project_id]
-   
 
     if session[:wizard_action] == "create"
       @raid_project = RaidProject.new(permitted_attributes(RaidProject).merge(user: current_user).merge(saved_params))
@@ -101,11 +93,10 @@ class RaidProject::StepsController < ApplicationController
       else
         render :show
       end
-    else  
+    else
       RaidProject.find_by(id: params[:raid_project_id]).update!(saved_params)
     end
 
-    
     # redirect_to controller: :controller_name, action: :action_name ### namespace
     respond_to do |format|
       format.html { redirect_to raid_project_path(@raid_project), notice: "RAID project was successfully created." }
@@ -117,7 +108,7 @@ class RaidProject::StepsController < ApplicationController
   end
 
   def next_step
-    steps[current_step_index+1] if current_step_index < 4    
+    steps[current_step_index + 1] if current_step_index < 4
   end
 
   def set_step1
@@ -128,7 +119,6 @@ class RaidProject::StepsController < ApplicationController
       @raid_project = RaidProject.new raid_project_attrs
       @raid_project.build_main_title
       @raid_project.build_main_description
-
     elsif session[:wizard_action] == "update"
       @raid_project = RaidProject.find_by(id: params[:raid_project_id])
       @raid_project.build_main_description if @raid_project.main_description.blank?
@@ -136,9 +126,9 @@ class RaidProject::StepsController < ApplicationController
       raise WizardActionError, "Unpermitted wizard_action parameter: #{session[:wizard_action]}"
     end
   end
-  
+
   def set_step2
-    @raid_project.contributors.build if session[:wizard_action] == "create"      
+    @raid_project.contributors.build if session[:wizard_action] == "create"
   end
 
   def set_step3
@@ -163,5 +153,4 @@ class RaidProject::StepsController < ApplicationController
   def permitted_step_attributes
     params.require(:raid_project).permit(:form_step, *RAID_FORM_STEPS[step]).merge(user: current_user)
   end
-
 end
