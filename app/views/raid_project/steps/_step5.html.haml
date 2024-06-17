@@ -2,11 +2,12 @@
   = simple_form_for raid_project, url: raid_project_step_path(params[:raid_project_id], "step5"),
         html: { role: "form", "data-controller" => "raid-project",
               "data-raid-project-target": "form", "data-raid-project-url-value": ror_autocomplete_url },
-              method: :put do |f|
+              method: :put, data: { turbo_frame: :_top } do |f|
     .new-form-style{ data: {"raid-form-target": "section", section: "access" } }
-      = f.input :form_step, as: :hidden, input_html: { value:"5" }
+      = f.input :form_step, as: :hidden, input_html: { value: "step5" }
 
       %h4 Summary
+      = render "raid_project/steps/summary", raid_project: raid_project
 
     %hr.bottom-hr.mt-5.mb-4
       .row
@@ -14,6 +15,6 @@
         %hr.bottom-hr.mt-5.mb-4
           .row
             .col-12
-              = f.button :submit, "Create new RAID project", class: "btn btn-primary pl-5 pr-5"
+              = f.button :submit, wizard_title, class: "btn btn-primary pl-5 pr-5"
           = back_link_to _("Cancel"), raid_project,
             class: "btn btn-link text-uppercase"

@@ -14,7 +14,6 @@ class RaidProjectsController < ApplicationController
   end
 
   def show
-    @raid_project = RaidProject.find(params[:id])
     respond_to do |format|
       format.html
       format.json { render json: @raid_project, serializer: Api::V1::Raid::RaidProjectSerializer }

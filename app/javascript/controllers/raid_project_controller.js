@@ -76,8 +76,11 @@ export default class extends Controller {
   }
 
   removeField(event) {
+    console.log("removing")
+    console.log("-----------------------")
+    console.log(event.target.parentElement)
     event.preventDefault();
     event.target.parentElement.previousElementSibling.value = "true";
-    event.target.closest(".contact").classList.add("d-none");
+    event.target.closest(".contact").remove();
   }
 }

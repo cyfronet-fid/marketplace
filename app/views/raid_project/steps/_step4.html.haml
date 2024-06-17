@@ -4,16 +4,16 @@
               "data-raid-project-target": "form", "data-raid-project-url-value": ror_autocomplete_url },
               method: :put do |f|
     .new-form-style{ data: {"raid-form-target": "section", section: "access" } }
+      = f.input :form_step, as: :hidden, input_html: { value:"step4" }
 
       %h4 Access
       .offer-section-wrapper.bottom-margin
         = f.error :access_base, class: "invalid-feedback d-block"
-        = f.input :form_step, as: :hidden, input_html: { value: 4 }
         = f.fields_for :raid_access do |access_f|
           = access_f.hidden_field :id
           = access_f.input :access_type, as: :select,
                   collection: Raid::RaidAccess.access_types.map { |k, v| [ k.capitalize, v ] },
-                  input_html: {"data-raid-project-target": "accessType",
+                  input_html: {"data-raid-access-target": "accessType",
                     "data-action": "raid-project#setEmbargoed",
                     data: { choice: true },  multiple: false }
           %div

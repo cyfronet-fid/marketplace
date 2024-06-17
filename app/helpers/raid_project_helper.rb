@@ -57,4 +57,8 @@ module RaidProjectHelper
   def render_next_step(step_id, raid_project)
     render "/raid_project/steps/#{step_id}", raid_project: raid_project, show_recaptcha: true
   end
+
+  def wizard_title
+    session[:wizard_action] == "create" ? "Create new RAID Project" : "Update RAID Project"
+  end
 end
