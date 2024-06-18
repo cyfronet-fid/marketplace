@@ -7,7 +7,7 @@ RSpec.describe UsageReport, backend: true do
     it "counts orderable services" do
       s1 = create(:service, status: :published)
       s2 = create(:service, status: :published)
-      s3 = create(:service, status: :unverified)
+      s3 = create(:service, status: :published)
       s4 = create(:service, status: :draft)
       create(:service, status: :published)
 
@@ -27,7 +27,7 @@ RSpec.describe UsageReport, backend: true do
     it "counts open access and external services" do
       s1 = create(:service, status: :published)
       s2 = create(:open_access_service, status: :published)
-      s3 = create(:service, status: :unverified)
+      s3 = create(:service, status: :published)
       s4 = create(:service, status: :draft)
       create(:service, status: :published)
 
@@ -43,9 +43,9 @@ RSpec.describe UsageReport, backend: true do
   end
 
   context ".all_services_count" do
-    it "counts all published and unverified services" do
+    it "counts all published and errored services" do
       create(:service, status: :published)
-      create(:service, status: :unverified)
+      create(:service, status: :errored)
       create(:service, status: :draft)
 
       expect(subject.all_services_count).to eq(2)

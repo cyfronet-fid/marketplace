@@ -2,10 +2,7 @@
 - breadcrumb :backoffice_provider, @provider
 
 %h1= @provider.name
-.status-row
-  %span Status:
-  %span.font-weight-bold
-    = @provider.status
+= render "status", status: @provider.status
 
 .service-box.p-4.mt-3.backoffice-form
   .logo-wrapper
@@ -21,13 +18,4 @@
       - @provider.sources.each do |source|
         %li "#{source.source_type}: #{source.eid}"
   %hr.bottom-hr.mt-5.mb-4
-  .btn-group
-    - if policy([:backoffice, @provider]).edit?
-      = unescaped_link_to _("Edit"),
-                edit_backoffice_provider_path(@provider),
-                class: "btn btn-primary"
-    - if policy([:backoffice, @provider]).destroy?
-      = link_to _("Delete"),
-                backoffice_provider_path(@provider),
-                data: { "turbo-confirm": _("Are you sure you want to remove this provider?"), "turbo-method": :delete },
-                class: "btn btn-danger"
+  = render "actions", provider: @provider

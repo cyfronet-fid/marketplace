@@ -24,11 +24,12 @@ class Backoffice::CataloguesController < Backoffice::ApplicationController
 
   def destroy
     if Catalogue::Delete.call(@catalogue.id)
-      redirect_to backoffice_catalogues_path, notice: "Catalogue removed successfully"
+      flash[:notice] = "Catalogue removed successfully"
     else
-      redirect_to backoffice_catalogues_path,
-                  alert: "This Catalogue has services connected to it, therefore is not possible to remove it."
+      flash[:alert] = "This Catalogue has providers/services connected to it, " +
+        "therefore, it is not possible to remove it."
     end
+    redirect_to backoffice_catalogues_path
   end
 
   def create
@@ -37,7 +38,8 @@ class Backoffice::CataloguesController < Backoffice::ApplicationController
     authorize(@catalogue)
 
     if valid_model_and_urls? && @catalogue.save(validate: false)
-      redirect_to backoffice_catalogue_path(@catalogue), notice: "New catalogue created successfully"
+      flash[:notice] = "New catalogue created successfully"
+      redirect_to backoffice_catalogue_path(@catalogue)
     else
       add_missing_nested_models
       render :new, status: :bad_request
@@ -49,7 +51,8 @@ class Backoffice::CataloguesController < Backoffice::ApplicationController
     @catalogue.assign_attributes(permitted_attributes)
 
     if valid_model_and_urls? && @catalogue.save(validate: false)
-      redirect_to backoffice_catalogue_path(@catalogue), notice: "Catalogue updated successfully"
+      flash[:notice] = "Catalogue updated successfully"
+      redirect_to backoffice_catalogue_path(@catalogue)
     else
       if @catalogue.public_contacts.present? && @catalogue.public_contacts.all?(&:marked_for_destruction?)
         @catalogue.public_contacts[0].reload

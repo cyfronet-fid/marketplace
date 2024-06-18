@@ -126,8 +126,14 @@ Rails.application.routes.draw do
     get "services/c/:category_id" => "services#index", :as => :category_services
     resources :scientific_domains
     resources :categories
-    resources :providers, constraints: { id: pid_format_constraint }
-    resources :catalogues
+    resources :providers, constraints: { id: pid_format_constraint } do
+      resource :publish, controller: "providers/publishes", only: :create
+      resource :unpublish, controller: "providers/unpublishes", only: :create
+    end
+    resources :catalogues do
+      resource :publish, controller: "catalogues/publishes", only: :create
+      resource :unpublish, controller: "catalogues/unpublishes", only: :create
+    end
     resources :platforms
     get "vocabularies", to: "vocabularies#index", type: "target_user", as: :vocabularies
     scope "/vocabularies" do

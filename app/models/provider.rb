@@ -194,7 +194,7 @@ class Provider < ApplicationRecord
 
   def services
     Service.left_joins(:service_providers).where(
-      "(status = 'unverified' OR status = 'published') AND
+      "status = 'published' AND
     (service_providers.provider_id = #{id} OR resource_organisation_id = #{id})"
     )
   end
