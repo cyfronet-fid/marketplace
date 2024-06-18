@@ -317,20 +317,11 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       expect(page).to have_content("Status: published")
     end
 
-    scenario "I can publish as unverified service" do
-      service = create(:service, status: :draft)
-
-      visit backoffice_service_path(service)
-      expect { click_on "Publish as unverified service" }.to have_enqueued_job(Ess::UpdateJob)
-
-      expect(page).to have_content("Status: unverified")
-    end
-
     scenario "I can unpublish service" do
       service = create(:service, status: :published)
 
       visit backoffice_service_path(service)
-      expect { click_on "Stop showing in the MP" }.to have_enqueued_job(Ess::UpdateJob)
+      expect { click_on "Unpublish" }.to have_enqueued_job(Ess::UpdateJob)
 
       expect(page).to have_content("Status: unpublished")
     end
@@ -639,7 +630,7 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       service = create(:service, name: "my service")
 
       visit backoffice_service_path(service)
-      click_on("Stop showing in the MP")
+      click_on("Unpublish")
 
       expect(page).to have_selector(:link_or_button, "Publish")
     end

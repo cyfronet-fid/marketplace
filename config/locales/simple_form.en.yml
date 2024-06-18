@@ -158,10 +158,9 @@ en:
           production: "Production (min. TRL 8)"
           retired: "Retired (n/a)"
         status:
-          draft: "Unpublish"
+          draft: "Draft"
           unpublished: "Unpublished"
           published: "Published"
-          unverified: "Published as unverified"
           suspended: "Suspended"
           errored: "Errored"
           deleted: "Deleted"

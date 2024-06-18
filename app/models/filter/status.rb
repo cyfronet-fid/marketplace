@@ -15,7 +15,10 @@ class Filter::Status < Filter
 
   def fetch_options
     [{ name: "Any", id: nil }] +
-      Service.statuses.map { |key, value| { name: I18n.t("simple_form.options.service.status.#{key}"), id: value } }
+      Service
+        .statuses
+        .except(:draft)
+        .map { |key, value| { name: I18n.t("simple_form.options.service.status.#{key}"), id: value } }
   end
 
   def where_constraint

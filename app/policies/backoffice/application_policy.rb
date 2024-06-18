@@ -20,7 +20,7 @@ class Backoffice::ApplicationPolicy < ApplicationPolicy
   end
 
   def show?
-    access?
+    actionable?
   end
 
   def new?
@@ -32,15 +32,27 @@ class Backoffice::ApplicationPolicy < ApplicationPolicy
   end
 
   def edit?
-    access? && !record.deleted?
+    access?
   end
 
   def update?
-    access? && !record.deleted?
+    access?
+  end
+
+  def publish?
+    access? && !record.published?
+  end
+
+  def unpublish?
+    access? && !record.unpublished?
+  end
+
+  def suspend?
+    access? && !record.suspended?
   end
 
   def destroy?
-    access? && !record.deleted?
+    access?
   end
 
   private
@@ -53,7 +65,12 @@ class Backoffice::ApplicationPolicy < ApplicationPolicy
     user&.data_administrator?
   end
 
+  def actionable?
+    user&.service_portfolio_manager? ||
+      (record&.data_administrators && record.data_administrators.map(&:email)&.include?(user&.email))
+  end
+
   def access?
-    user&.service_portfolio_manager? || record&.data_administrators&.map(&:email)&.include?(user&.email)
+    actionable? && !record.deleted?
   end
 end

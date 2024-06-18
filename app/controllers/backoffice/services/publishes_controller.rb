@@ -4,7 +4,7 @@ class Backoffice::Services::PublishesController < Backoffice::ApplicationControl
   before_action :find_and_authorize
 
   def create
-    Service::Publish.call(@service, verified: verified?)
+    Service::Publish.call(@service)
     redirect_to backoffice_service_path(@service)
   end
 
@@ -12,11 +12,6 @@ class Backoffice::Services::PublishesController < Backoffice::ApplicationControl
 
   def find_and_authorize
     @service = Service.friendly.find(params[:service_id])
-
-    authorize(@service, verified? ? :publish? : :publish_unverified?)
-  end
-
-  def verified?
-    params[:unverified] != "true"
+    authorize(@service, :publish?)
   end
 end
