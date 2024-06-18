@@ -11,7 +11,6 @@ module Statusable
 
   STATUSES = {
     published: "published",
-    unverified: "unverified",
     suspended: "suspended",
     unpublished: "unpublished",
     draft: "draft",
@@ -19,8 +18,8 @@ module Statusable
     deleted: "deleted"
   }.freeze
 
-  PUBLIC_STATUSES = %w[published unverified errored].freeze
-  VISIBLE_STATUSES = %w[published unverified suspended errored].freeze
+  PUBLIC_STATUSES = %w[published errored].freeze
+  VISIBLE_STATUSES = %w[published suspended errored].freeze
   INVISIBLE_STATUSES = %w[deleted].freeze
   HIDEABLE_STATUSES = %w[suspended deleted].freeze
   MANAGEABLE_STATUSES = (STATUSES.values - INVISIBLE_STATUSES).freeze

@@ -30,14 +30,6 @@ RSpec.describe Service::Publish, backend: true do
     end
   end
 
-  it "publish unverified service" do
-    service = create(:service)
-
-    described_class.call(service, verified: false)
-
-    expect(service.reload).to be_unverified
-  end
-
   context "#bundled_offers" do
     it "doesn't send notification if service wasn't made public" do
       service = build(:service, status: "errored")

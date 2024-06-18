@@ -25,12 +25,12 @@
   integrity sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==
 
 "@cypress/grep@^4.0.1":
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/@cypress/grep/-/grep-4.0.2.tgz#ad4f5bf97c743e450aeb36f5dc6f3709dc0b25a5"
-  integrity sha512-jsgbu+WMW7qbDR6aG8EqeY0Ley4/O/j7pMjj2iUkTHYeU3iES0D/uZwzQ2ijOv4jsLadp5etltQJc5jhMl8+IA==
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/@cypress/grep/-/grep-4.1.0.tgz#77dba973f0023ce01f5d2481a257f3e55c8f73ee"
+  integrity sha512-yUscMiUgM28VDPrNxL19/BhgHZOVrAPrzVsuEcy6mqPqDYt8H8fIaHeeGQPW4CbMu/ry9sehjH561WDDBIXOIg==
   dependencies:
     debug "^4.3.4"
-    find-test-names "^1.19.0"
+    find-test-names "^1.28.18"
     globby "^11.0.4"
 
 "@cypress/request@^3.0.0":
@@ -123,9 +123,9 @@ acorn-walk@^8.2.0:
     acorn "^8.11.0"
 
 acorn@^8.11.0:
-  version "8.12.0"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.12.0.tgz#1627bfa2e058148036133b8d9b51a700663c294c"
-  integrity sha512-RTvkC4w+KNXrM39/lWCUaG0IbRkWdCv7W/IOW9oU6SawyxulvkQy5HQPVTKxEjczcUvapcrw3cFx/60VN/NRNw==
+  version "8.12.1"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.12.1.tgz#71616bdccbe25e27a54439e0046e89ca76df2248"
+  integrity sha512-tcpGyI9zbizT9JbV6oYE477V6mTlXvvi0T0G3SNIYE2apm/G5huBa1+K89VGeovbg+jycCrfhl3ADxErOuO6Jg==
 
 aggregate-error@^3.0.0:
   version "3.1.0"
@@ -634,7 +634,7 @@ fill-range@^7.1.1:
   dependencies:
     to-regex-range "^5.0.1"
 
-find-test-names@^1.19.0:
+find-test-names@^1.28.18:
   version "1.28.22"
   resolved "https://registry.yarnpkg.com/find-test-names/-/find-test-names-1.28.22.tgz#c7156bcc6c9e60e55bc32df54fd00cf4fdf752b0"
   integrity sha512-cnQaOMvA75FZF4BYfr9DbxxUcoATlRpzcorgkf7It7JLLdD1G5ZBU6PSaDYR8Ssj/ugJH2BvWZwnDPbRLWMI/g==
@@ -1369,9 +1369,9 @@ type-fest@^0.21.3:
   integrity sha512-t0rzBq87m3fVcduHDUFhKmyyX+9eo6WQjZvf51Ea/M0Q7+T374Jp1aUiyUl0GKxp8M/OETVHSDvmkyPgvX+X2w==
 
 typescript@^5.4.5:
-  version "5.5.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.5.2.tgz#c26f023cb0054e657ce04f72583ea2d85f8d0507"
-  integrity sha512-NcRtPEOsPFFWjobJEtfihkLCZCXZt/os3zf8nTxjVH3RvTSxjrCamJpbExGvYOF+tFHc3pA65qpdwPbzjohhew==
+  version "5.5.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.5.3.tgz#e1b0a3c394190838a0b168e771b0ad56a0af0faa"
+  integrity sha512-/hreyEujaB0w76zKo6717l3L0o/qEUtRgdvUBvlkhoWeOVMjMuHNHk0BRBzikzuGDqNmPQbg5ifMEqsHLiIUcQ==
 
 undici-types@~5.26.4:
   version "5.26.5"

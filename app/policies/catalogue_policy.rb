@@ -3,7 +3,7 @@
 class CataloguePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.where(status: %i[published unverified errored])
+      scope.where(status: %i[published errored])
     end
   end
 
