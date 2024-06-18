@@ -7,12 +7,11 @@ class Backoffice::Services::DraftsController < Backoffice::ApplicationController
     result = params[:suspend] ? Service::Suspend.call(@service) : Service::Unpublish.call(@service)
     if result
       flash[:notice] = "Service #{params[:suspend] ? "suspended" : "unpublished"} successfully"
-      redirect_to backoffice_service_path(@service)
     else
       flash[:alert] = "Service not #{params[:suspend] ? "suspended" : "unpublished"}. " +
         "Reason: #{@service.errors.full_messages.join(", ")}"
-      redirect_to edit_backoffice_service_path(@service)
     end
+    redirect_to backoffice_service_path(@service)
   end
 
   private

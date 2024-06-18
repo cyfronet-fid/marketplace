@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Api::ServicesController", backend: true do
   let!(:published_service) { create(:service, public_contacts: [build(:public_contact)]) }
-  let!(:unverified_service) { create(:service, public_contacts: [build(:public_contact)], status: :unverified) }
+  let!(:second_service) { create(:service, public_contacts: [build(:public_contact)], status: :published) }
   let!(:draft_service) { create(:service, public_contacts: [build(:public_contact)], status: :draft) }
   let!(:deleted_service) { create(:service, public_contacts: [build(:public_contact)], status: :deleted) }
   let!(:errored_service) { create(:service, public_contacts: [build(:public_contact)], status: :errored) }
@@ -17,7 +17,7 @@ RSpec.describe "Api::ServicesController", backend: true do
       expect(response.header["Content-Type"]).to eq("application/json; charset=utf-8")
     end
 
-    it "shows only published and unverified services with correct data" do
+    it "shows only published services with correct data" do
       body = JSON.parse(response.body)
       expect(body.size).to eq(2)
 
@@ -46,12 +46,12 @@ RSpec.describe "Api::ServicesController", backend: true do
         "URL"
       )
 
-      expect(body[1]["Service Unique ID"]).to eq(unverified_service.id)
+      expect(body[1]["Service Unique ID"]).to eq(second_service.id)
       expect(body[1]["SERVICE_TYPE"]).to eq("eu.eosc.portal.services.url")
-      expect(body[1]["CONTACT_EMAIL"]).to eq(unverified_service.public_contacts.map(&:email))
-      expect(body[1]["SITENAME-SERVICEGROUP"]).to eq(unverified_service.name)
-      expect(body[1]["COUNTRY_NAME"]).to eq(unverified_service.geographical_availabilities.as_json)
-      expect(body[1]["URL"]).to eq(unverified_service.webpage_url)
+      expect(body[1]["CONTACT_EMAIL"]).to eq(second_service.public_contacts.map(&:email))
+      expect(body[1]["SITENAME-SERVICEGROUP"]).to eq(second_service.name)
+      expect(body[1]["COUNTRY_NAME"]).to eq(second_service.geographical_availabilities.as_json)
+      expect(body[1]["URL"]).to eq(second_service.webpage_url)
     end
   end
 end

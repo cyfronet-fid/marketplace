@@ -22,8 +22,7 @@ RSpec.describe Api::V1::Ess::ServicesController, swagger_doc: "v1/ess_swagger.js
         schema "$ref" => "ess/service/service_index.json"
 
         let!(:manager) { create(:user, roles: [:service_portfolio_manager]) }
-        let!(:services) { create_list(:service, 2) }
-        let!(:unverified) { create(:service, status: :unverified) }
+        let!(:services) { create_list(:service, 3) }
         let!(:draft) { create(:service, status: :draft) }
         let!(:deleted) { create(:service, status: :deleted) }
         let!(:datasource) { create(:datasource) }
@@ -32,7 +31,7 @@ RSpec.describe Api::V1::Ess::ServicesController, swagger_doc: "v1/ess_swagger.js
 
         run_test! do |response|
           data = JSON.parse(response.body)
-          expected = services << unverified
+          expected = services
           expect(data.length).to eq(expected.size)
           expect(data).to eq(expected&.map { |s| Ess::ServiceSerializer.new(s).as_json.deep_stringify_keys })
         end

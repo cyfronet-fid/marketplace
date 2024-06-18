@@ -20,7 +20,6 @@ describe("Providers", () => {
   const providerWithResourceDraft = "European Space Agency (ESA)";
   const providerWithResourcePublished = "EUDAT";
   const providerWithResourceErrored = "CSC";
-  const providerWithResourceUnverified = "Institute of Atmospheric Pollution - National Research Council of Italy (CNR-IIA)"
   const resourceProviderForPublishedResource = "Interuniversity consortium CIRMMP";
 
   beforeEach(() => {
@@ -214,16 +213,6 @@ describe("Providers", () => {
   it("shouldn't delete provider with services with errored status", () => {
     cy.visit("/backoffice/providers");
     cy.contains("a", providerWithResourceErrored)
-      .parents('li.providers')
-      .find("a.delete-icon")
-      .click();
-    cy.contains("div.alert-danger", message.alertDeletionMessage)
-      .should("be.visible");
-  });
-
-  it("shouldn't delete provider with services with unverified status", () => {
-    cy.visit("/backoffice/providers");
-    cy.contains("a", providerWithResourceUnverified)
       .parents('li.providers')
       .find("a.delete-icon")
       .click();

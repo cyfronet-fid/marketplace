@@ -26,7 +26,7 @@ class UsageReport
   end
 
   def all_services_count
-    Service.where(status: %i[published unverified errored]).count
+    Service.where(status: %i[published errored]).count
   end
 
   def providers
@@ -52,7 +52,7 @@ class UsageReport
   end
 
   def service_count_by_order_type(*types, internal: false)
-    statuses = %w[published unverified errored]
+    statuses = %w[published errored]
     if internal
       Service
         .joins(:offers)
