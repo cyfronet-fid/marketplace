@@ -2730,7 +2730,7 @@ label[data-multicheckbox].small {
     .status {
       float: right;
       margin: 0 20px 0 0;
-      width: 85px;
+      width: 90px;
       text-align: center;
       color: $palette-white;
       font-size: 12px;
@@ -2741,6 +2741,14 @@ label[data-multicheckbox].small {
 
       &.published {
         background: $green;
+      }
+
+      &.unpublished {
+        background: $error;
+      }
+
+      &.draft {
+        background: $warning;
       }
 
       &.deleted {

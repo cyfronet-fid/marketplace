@@ -2437,7 +2437,7 @@ services:
         description: *notSpecified
         order_url: http://geosspublish.uat.esaportal.eu/knowledge-producer
   GEO DAB:
-    status: unverified
+    status: published
     name: &geossDab GEO DAB
     parents: *sharingAndDicoveryParent
     resource_organisation: *cnr
