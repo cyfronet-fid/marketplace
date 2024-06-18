@@ -6,7 +6,7 @@ class Backoffice::CataloguePolicy < Backoffice::ApplicationPolicy
   end
 
   def show?
-    access?
+    actionable?
   end
 
   def new?

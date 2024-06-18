@@ -22,8 +22,7 @@ RSpec.describe Api::V1::Ess::DatasourcesController, swagger_doc: "v1/ess_swagger
         schema "$ref" => "ess/datasource/datasource_index.json"
 
         let!(:manager) { create(:user, roles: [:service_portfolio_manager]) }
-        let!(:datasources) { create_list(:datasource, 2) }
-        let!(:unverified) { create(:datasource, status: :unverified) }
+        let!(:datasources) { create_list(:datasource, 3) }
         let!(:draft) { create(:datasource, status: :draft) }
         let!(:deleted) { create(:datasource, status: :deleted) }
         let!(:service) { create(:service) }
@@ -31,7 +30,7 @@ RSpec.describe Api::V1::Ess::DatasourcesController, swagger_doc: "v1/ess_swagger
         let(:"X-User-Token") { manager.authentication_token }
 
         run_test! do |response|
-          expected = datasources << unverified
+          expected = datasources
           data = JSON.parse(response.body)
 
           expect(data.length).to eq(expected.size)
