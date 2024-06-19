@@ -56,6 +56,8 @@ jobs:
         CYPRESS_MARKETPLACE_URL: ${{secrets.MARKETPLACE_URL}}
         CYPRESS_PROVIDER_PORTAL_CLIENT_ID: ${{secrets.PROVIDER_PORTAL_CLIENT_ID}}
         CYPRESS_AAI_TOKEN_URL: ${{secrets.AAI_TOKEN_URL}}
+        RECAPTCHA_SITE_KEY: ${{secrets.GR_SITE_KEY}}
+        RECAPTCHA_SECRET_KEY: ${{secrets.GR_SECRET_KEY}}
         PORT: 5000
         RAILS_ENV: development
         RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
