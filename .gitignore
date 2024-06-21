@@ -31,8 +31,8 @@
 .byebug_history
 
 # Ignore master key for decrypting credentials and more.
-/config/master.key
-/config/google_api*.json
+master.key
+google_api*.json
 /public/packs
 /public/packs-test
 yarn-debug.log*
