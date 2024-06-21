@@ -1,4 +1,5 @@
 = turbo_frame_tag "raid-form" do
+  = render "raid_project/steps/navbar", step: 5
   = simple_form_for raid_project, url: raid_project_step_path(params[:raid_project_id], "step5"),
         html: { role: "form", 
               "data-raid-project-target": "form" },
@@ -16,7 +17,6 @@
           .row
             .col-12
               = f.button :submit, wizard_title, class: "btn btn-primary pl-5 pr-5"
-          = link_to _("Cancel"), raid_project_path(raid_project),
+          = link_to _("Cancel"), raid_projects_path,
             class: "btn btn-link text-uppercase", data: { turbo_frame: :_top }
-          = link_to "Back", raid_project_step_path(raid_project, "step4"),
-            "data-action": "click->raid-project#setCurrentStepInactive"
+          = link_to "Back", raid_project_step_path(params[:raid_project_id], "step4")

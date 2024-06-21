@@ -1,4 +1,5 @@
 = turbo_frame_tag "raid-form" do
+  = render "raid_project/steps/navbar", step: 1
   = simple_form_for raid_project, url: raid_project_step_path(params[:raid_project_id], "step1"),
         html: { role: "form", data_raid_project_target: "form" },
             method: :put do |f|
@@ -23,5 +24,4 @@
       %hr.bottom-hr.mt-5.mb-4
         .row
           .col-12
-            = f.button :submit, "Next", class: "btn btn-primary pl-5 pr-5",
-              "data-action": "click->raid-project#setNextStepActive"
+            = f.button :submit, "Next", class: "btn btn-primary pl-5 pr-5"

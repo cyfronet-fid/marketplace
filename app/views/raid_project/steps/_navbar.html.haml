@@ -1,13 +1,13 @@
 .steps-row
   -# haml-lint:disable InlineClasses
-  #offer-type-button.offer-step.active-button{ "section" => "step1", "data-raid-project-target": "sectionButton" }
+  #offer-type-button.offer-step.active-button
     Project Details
   -# haml-lint:enable InlineClasses
-  #order-parameters-button.offer-step{ "section" => "step2", "data-raid-project-target": "sectionButton" } 
+  #order-parameters-button.offer-step{ class: ("active-button" unless step < 2 ) } 
     Contributors
-  #offer-parameters-button.offer-step{ "section" => "step3", "data-raid-project-target": "sectionButton" } 
+  #offer-parameters-button.offer-step{ class: ("active-button" unless step < 3 ) } 
     Organisations
-  #offer-description-button.offer-step{ "section" => "step4", "data-raid-project-target": "sectionButton" } 
+  #offer-description-button.offer-step{ class: ("active-button" unless step < 4 ) } 
     Access
-  #summary-button.offer-step{ "section" => "step5", "data-raid-project-target": "sectionButton" } 
+  #summary-button.offer-step{ class: ("active-button" unless step < 5 ) } 
     Summary

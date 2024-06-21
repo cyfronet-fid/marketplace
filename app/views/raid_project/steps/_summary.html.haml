@@ -3,9 +3,7 @@
     .col-6
       %h4 PROJECT LIFETIME
     .col-6
-      = link_to "EDIT", raid_project_step_path(raid_project, "step1"),
-        { "data-raid-project-step": "step1",
-          "data-action": "click->raid-project#setActiveSteps" }
+      = link_to "EDIT", raid_project_step_path(params[:raid_project_id], "step1")
   - if raid_project.end_date.present?
     .row
       .col-6
@@ -23,7 +21,7 @@
     .col-6
       %h4 PROJECT TITLES
     .col-6 
-      = link_to "EDIT", raid_project_step_path(raid_project, "step1")
+      = link_to "EDIT", raid_project_step_path(params[:raid_project_id], "step1")
   .row
     .col-6
       %h5 Main Title
@@ -40,7 +38,7 @@
       .col-6
         %h4 DESCRIPTION
       .col-6 
-        = link_to "EDIT", raid_project_step_path(raid_project, "step1")
+        = link_to "EDIT", raid_project_step_path(params[:raid_project_id], "step1")
     .row
       .col-6
         %h5 Main Description
@@ -57,9 +55,7 @@
     .col-6
       %h4 CONTRIBUTORS
     .col-6
-      = link_to "EDIT", raid_project_step_path(raid_project, "step2"),
-      { "data-raid-project-step": "step2",
-          "data-action": "click->raid-project#setActiveSteps" }
+      = link_to "EDIT", raid_project_step_path(params[:raid_project_id], "step2")
   - raid_project.contributors.each do |contributor|
     .offer-section-wrapper
       .row
@@ -107,7 +103,7 @@
       .col-6
         %h4 ORGANISATIONS
       .col-6
-        = link_to "EDIT", raid_project_step_path(raid_project, "step3")
+        = link_to "EDIT", raid_project_step_path(params[:raid_project_id], "step3")
     - raid_project.raid_organisations.each do |organisation|
       .offer-section-wrapper
         .row 
@@ -138,7 +134,7 @@
     .col-6
       %h4 ACCESS
     .col-6
-      = link_to "EDIT", raid_project_step_path(raid_project, "step4")
+      = link_to "EDIT", raid_project_step_path(params[:raid_project_id], "step4")
   .row
     .col-6
       Access Type
@@ -153,7 +149,7 @@
     .col-6
       Statement Language
     .col-6
-      = get_language_name(raid_project.raid_access.statement_lang)
+      = language_name(raid_project.raid_access.statement_lang)
   - if raid_project.raid_access.embargo_expiry
     .row
       .col-6
