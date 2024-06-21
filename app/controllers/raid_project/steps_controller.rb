@@ -72,10 +72,15 @@ class RaidProject::StepsController < ApplicationController
     "raid_project/steps/#{next_step}"
   end
 
+  def previous_step_template
+    "raid_project/steps/#{previous_step}"
+  end
+
   def redirect_to_next_step
     if current_step_index == 4
       finish_wizard_path
     else
+      step_state(next_step)
       render turbo_stream:
                turbo_stream.replace("raid-form", partial: next_step_template, locals: { raid_project: @raid_project })
       # redirect_to raid_project_step_path(params[:raid_project_id], next_step)
@@ -109,6 +114,10 @@ class RaidProject::StepsController < ApplicationController
 
   def next_step
     steps[current_step_index + 1] if current_step_index < 4
+  end
+
+  def previous_step
+    steps[current_step_index - 1] if current_step_index > 0
   end
 
   def set_step1

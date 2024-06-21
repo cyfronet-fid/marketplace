@@ -14,6 +14,8 @@ export default class extends Controller {
     "rorInput",
     "rorValue",
     "selectedOption",
+    "section",
+    "sectionButton",
   ];
   static values = {
     url: String,
@@ -76,11 +78,50 @@ export default class extends Controller {
   }
 
   removeField(event) {
-    console.log("removing");
-    console.log("-----------------------");
-    console.log(event.target.parentElement);
     event.preventDefault();
     event.target.parentElement.previousElementSibling.value = "true";
     event.target.closest(".contact").remove();
   }
+
+  steps() {
+    return ["step1", "step2", "step3", "step4", "step5"]
+  }
+
+  currentStep(){
+    console.log(this.sectionTarget.dataset.section);
+    return this.steps().indexOf(this.sectionTarget.dataset.section);
+  }
+
+  setNextStepActive() {
+    let currentStepIndex = this.currentStep();
+    if (currentStepIndex < 4) 
+      {
+        let nextStepButton = this.sectionButtonTargets[currentStepIndex + 1];
+        nextStepButton.classList.add("active-button");
+      }
+  }
+
+  setCurrentStepInactive() {
+    let currentStepIndex = this.currentStep();
+    if (currentStepIndex > 0) {
+      let currentStepButton = this.sectionButtonTargets[currentStepIndex];
+      currentStepButton.classList.remove("active-button");
+    }
+  }
+
+  setActiveSteps(event) {
+    let chosenStep = event.target.getAttribute("data-raid-project-step");
+    let chosenStepIndex = this.steps().indexOf(chosenStep);
+    this.steps = this.sectionButtonTargets;
+    let activeSteps = this.steps.slice(0, chosenStepIndex + 1);
+    let inactiveSteps = this.steps.slice(chosenStepIndex + 1);
+    activeSteps.forEach(step => {
+      step.classList.add("active-button");
+    });
+    inactiveSteps.forEach(step => {
+      step.classList.remove("active-button");
+    });
+    
+  }
+
 }

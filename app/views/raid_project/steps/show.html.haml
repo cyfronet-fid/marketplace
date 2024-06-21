@@ -1,9 +1,22 @@
 - content_for :title, _(wizard_title)
 - breadcrumb :project_new
 .container
-  #form-container
+  #form-container{ "data-controller" => "raid-project", "data-raid-project-url-value": ror_autocomplete_url }
     .mb-5.pb-2.border-header
       %h1.mr-auto.my-auto= _(wizard_title)
+    .steps-row
+      -# haml-lint:disable InlineClasses
+      #offer-type-button.offer-step.active-button{ "section" => "step1", "data-raid-project-target": "sectionButton" }
+        Project Details
+      -# haml-lint:enable InlineClasses
+      #order-parameters-button.offer-step{ "section" => "step2", "data-raid-project-target": "sectionButton" } 
+        Contributors
+      #offer-parameters-button.offer-step{ "section" => "step3", "data-raid-project-target": "sectionButton" } 
+        Organisations
+      #offer-description-button.offer-step{ "section" => "step4", "data-raid-project-target": "sectionButton" } 
+        Access
+      #summary-button.offer-step{ "section" => "step5", "data-raid-project-target": "sectionButton" } 
+        Summary
       
     = turbo_frame_tag dom_id(@raid_project) do
       = render_next_step(params[:id], @raid_project)

@@ -38,6 +38,15 @@ module RaidProjectHelper
     }.freeze
   end
 
+  def humanize_role(role)
+    role.gsub('-', ' ')
+  end
+
+  def display_roles(roles)
+    roles.map! { |role| humanize_role(role) }
+    roles.join(', ')
+  end
+
   def render_alternative_description_fields(form)
     render "raid_project/steps/alternative_description_fields", alternative_description_f: form
   end
@@ -60,5 +69,9 @@ module RaidProjectHelper
 
   def wizard_title
     session[:wizard_action] == "create" ? "Create new RAID Project" : "Update RAID Project"
+  end
+
+  def get_language_name(code)
+    Raid::Language.get(code).english_name
   end
 end

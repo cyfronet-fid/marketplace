@@ -1,9 +1,8 @@
 = turbo_frame_tag "raid-form" do
   = simple_form_for raid_project, url: raid_project_step_path(params[:raid_project_id], "step4"),
-      html: { role: "form", "data-controller" => "raid-project",
-              "data-raid-project-target": "form", "data-raid-project-url-value": ror_autocomplete_url },
+      html: { role: "form", "data-raid-project-target": "form" },
               method: :put do |f|
-    .new-form-style{ data: {"raid-form-target": "section", section: "access" } }
+    .new-form-style{ data: {"raid-project-target": "section", section: "step4" } }
       = f.input :form_step, as: :hidden, input_html: { value:"step4" }
 
       %h4 Access
@@ -32,5 +31,9 @@
 
       %hr.bottom-hr.mt-5.mb-4
         .row
-          .col-12
-            = f.button :submit, "Next", class: "btn btn-primary pl-5 pr-5"
+          .col-10
+            = f.button :submit, "Next", class: "btn btn-primary pl-5 pr-5",
+              "data-action": "click->raid-project#setNextStepActive"
+          .col-2 
+            = link_to "Back", raid_project_step_path(raid_project, "step3"),
+              "data-action": "click->raid-project#setCurrentStepInactive"
