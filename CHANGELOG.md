@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 Please view this file on the master branch, on stable branches it's out of date.
 ## [3.57.0-milestone]
 
+### Added
+- Handling data administrator scope in the backoffice (@goreck888)
+- Statuses changes for providers and catalogues (@goreck888)
+- Delete button for services (@goreck888)
+
 ### Changed
 - New design for bundles (@jarekzet, @goreck888)
 

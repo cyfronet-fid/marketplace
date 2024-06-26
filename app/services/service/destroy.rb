@@ -2,6 +2,6 @@
 
 class Service::Destroy < Service::ApplicationService
   def call
-    @service.destroy
+    @service.update(status: :deleted)
   end
 end
