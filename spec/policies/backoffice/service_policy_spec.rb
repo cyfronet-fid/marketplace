@@ -236,11 +236,11 @@ RSpec.describe Backoffice::ServicePolicy, backend: true do
         expect(subject).to_not permit(service_owner, build(:service, status: :draft))
       end
 
-      it "denies when service has project_items attached" do
+      it "allows when service has project_items attached" do
         service = create(:service, status: :draft)
         create(:project_item, offer: create(:offer, service: service))
 
-        expect(subject).to_not permit(service_portfolio_manager, service)
+        expect(subject).to permit(service_portfolio_manager, service)
       end
     end
   end
@@ -281,19 +281,19 @@ RSpec.describe Backoffice::ServicePolicy, backend: true do
     end
 
     permissions :destroy? do
-      it "denies access for service portfolio manager" do
-        expect(subject).to_not permit(service_portfolio_manager, build(:service))
+      it "allows access for service portfolio manager" do
+        expect(subject).to permit(service_portfolio_manager, build(:service))
       end
 
       it "denies access for service owner" do
         expect(subject).to_not permit(service_owner, build(:service))
       end
 
-      it "denies when service has project_items attached" do
+      it "allows when service has project_items attached" do
         service = create(:service)
         create(:project_item, offer: create(:offer, service: service))
 
-        expect(subject).to_not permit(service_portfolio_manager, service)
+        expect(subject).to permit(service_portfolio_manager, service)
       end
     end
   end
