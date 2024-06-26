@@ -29,6 +29,11 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Add duplicate offer feature to offers form (@maria-j-k)
 - Readme section about manual dev setup (@Michal-Kolomanski)
 
+### Added
+- Handling data administrator scope in the backoffice (@goreck888)
+- Statuses changes for providers and catalogues (@goreck888)
+- Delete button for services (@goreck888)
+
 ### Changed
 
 ### Fixed
