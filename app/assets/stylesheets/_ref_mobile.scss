@@ -1,6 +1,18 @@
 @import "variables";
 
 @media (max-width: 1225px) {
+  // scss-lint:disable all
+  .landing_page {
+    .research-activity {
+      .activity-wrapper {
+        .text-wrapper {
+          width: 49%;
+          font-size: 20px;
+        }
+      }
+    }
+  }
+  // scss-lint:enable all
   .standard-list-wrapper {
     flex-wrap: wrap;
 
@@ -223,6 +235,26 @@
 }
 
 @media (max-width: 768px) {
+  .browse {
+    width: 100%;
+
+    &.whitelabel {
+      display: flex;
+      flex-direction: column;
+      font-size: 12px;
+
+      .browse-label {
+        margin-bottom: 7px;
+      }
+    }
+  }
+
+  header {
+    .whitelabel-header-container {
+      padding: 10px 15px 0;
+    }
+  }
+
   h1 {
     font-size: 1.5rem;
   }
@@ -253,6 +285,11 @@
   }
 
   .service-box {
+    .info-icons {
+      top: 15px;
+      right: 15px;
+    }
+
     h2 {
       font-size: 1rem;
     }
@@ -292,6 +329,8 @@
       order: 1;
       position: relative;
       width: 100%;
+      padding: 50px 0 20px;
+      text-align: center;
 
       .service-logo {
         margin-top: 10px;
@@ -498,6 +537,18 @@
       margin-bottom: 15px;
     }
   }
+  // scss-lint:disable all
+  .landing_page {
+    .research-activity {
+      .activity-wrapper {
+        .text-wrapper {
+          width: 99%;
+          font-size: 17px;
+        }
+      }
+    }
+  }
+  // scss-lint:enable all
 }
 
 @media (max-width: 576px) {

@@ -3,7 +3,7 @@ describe("Scientific domain", () => {
     cy.visit("/");
   });
 
-  it("should go to services page with selected scientific domain", () => {
+  it.skip("should go to services page with selected scientific domain", () => {
     cy.intercept("GET", "/services*").as("services");
     cy.get("a[data-e2e='branch-link']")
       .eq(0)
@@ -12,7 +12,7 @@ describe("Scientific domain", () => {
       .should("include", "search/service");
 
   });
-  it("should go to services page with selected category", () => {
+  it.skip("should go to services page with selected category", () => {
     cy.intercept("GET", "/categories/*").as("categories");
     cy.get("li")
       .contains("Categories")

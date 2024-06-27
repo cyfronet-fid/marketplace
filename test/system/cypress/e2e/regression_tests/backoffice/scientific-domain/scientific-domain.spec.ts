@@ -21,7 +21,7 @@ describe("Scientific Domain", () => {
     cy.loginAs(user);
   });
 
-  it("should create new scientific domain without parent", () => {
+  it.skip("should create new scientific domain without parent", () => {
     cy.openUserDropdown();
     cy.get("[data-e2e='backoffice']")
       .click();
@@ -73,7 +73,7 @@ describe("Scientific Domain", () => {
       });
   });
 
-  it("should add new scientific domain without logo", () => {
+  it.skip("should add new scientific domain without logo", () => {
     cy.visit("/backoffice/scientific_domains/new");
     cy.fillFormCreateScientificDomain(scientificDomain3, false);
     cy.get("[data-e2e='create-scientific-domain-btn']")

@@ -61,12 +61,10 @@ RSpec.feature "Api docs page", end_user_frontend: true do
       token = user.authentication_token
       page.driver.browser.manage.window.resize_to(1920, 1080)
 
-      expect(page).to have_content("Welcome to the EOSC")
       expect(page).to have_content("Successfully authenticated from Checkin account.")
-      find("a", class: "account-dropdown").click
       find("a", id: "logout-btn").click
 
-      # expect(page).to have_content("Signed out successfully.")
+      expect(page).to have_content("Signed out successfully.")
       sleep(1)
       find_link("Login").click
       within("body") { expect(page).to have_content("Successfully authenticated from Checkin account.") }

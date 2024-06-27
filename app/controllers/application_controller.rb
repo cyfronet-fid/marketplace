@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   include Recommendation::Followable
   include Tourable
 
-  before_action :welcome_popup, :load_root_categories!, :report, :set_locale, :set_gettext_locale
+  before_action :welcome_popup, :load_root_categories!, :report, :set_locale, :set_gettext_locale, :action
 
   helper_method :turbo_frame_request?
 
@@ -44,6 +44,7 @@ class ApplicationController < ActionController::Base
 
   def load_root_categories!
     @root_categories = Category.roots.order(:name)
+    @marketplace_locations = Vocabulary::MarketplaceLocation.where.not(description: nil || "")
   end
 
   def not_authorized_message(exception)
@@ -87,5 +88,9 @@ class ApplicationController < ActionController::Base
 
   def turbo_frame_request?
     request.headers["Turbo-Frame"].present?
+  end
+
+  def action
+    @action ||= action_name
   end
 end

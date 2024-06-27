@@ -9,7 +9,7 @@
       %div
       %div
       %div
-  %body{ class: "#{action_name}" }
+  %body{ class: "#{@action}" }
     = render "layouts/badge" if ENV["MP_INSTANCE"]
     #flash-messages.flash
       = render "layouts/flash"

@@ -53,11 +53,11 @@ Cypress.Commands.add('setSessionId', (user: IUser, preserveUser) => {
 Cypress.Commands.add('loginAs', function (user: IUser, preserveUser: boolean = false) {
     cy.setSessionId(user, preserveUser);
     cy.reload();
-    cy.get('nav.eosc-common.top .right-links .account-dropdown').should('be.visible');
+    cy.get('.eosc-common.top.white-label .right-links').should('be.visible');
 });
 
 Cypress.Commands.add("openUserDropdown", function () {
-    cy.get("nav.eosc-common.top .right-links .account-dropdown").click()
+    cy.get('a[data-e2e="my-eosc-button"').click()
 });
 
 Cypress.Commands.add('logout', () => {
