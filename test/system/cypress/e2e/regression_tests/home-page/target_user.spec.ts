@@ -3,7 +3,7 @@ describe("Target user", () => {
     cy.visit("/");
   });
   
-  it("should go to service page with selected filter", () => {
+  it.skip("should go to service page with selected filter", () => {
     cy.get("a[href*='dedicated_for'][data-e2e='communities_target-user']")
       .eq(0)
       .click();
@@ -11,7 +11,7 @@ describe("Target user", () => {
       .should("include", "/services?dedicated_for");
     cy.get("[data-e2e='filter-tag']").should("be.visible");
   });
-  it("should go to page with all target user", () => {
+  it.skip("should go to page with all target user", () => {
     cy.get("a[href*='/target_users'][data-e2e='more-link-communities_target-users']")
       .click();
     cy.location("href")

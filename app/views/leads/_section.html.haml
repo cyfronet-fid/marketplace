@@ -1,5 +1,5 @@
 .container
-  %h2.home-title= section.title
+  %h3= section.title
   .row
     = render partial: "leads/#{section.template}/card",
       collection: section.leads,

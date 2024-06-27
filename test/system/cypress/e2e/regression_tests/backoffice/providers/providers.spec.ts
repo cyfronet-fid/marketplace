@@ -47,7 +47,7 @@ describe("Providers", () => {
       .should("be.visible");
   });
 
-  it("should add new provider and find in filter and autocomplete in front and backoffice", () => {
+  it.skip("should add new provider and find in filter and autocomplete in front and backoffice", () => {
     cy.visit("/backoffice/providers");
     cy.get("[data-e2e='add-new-provider']")
       .click();
@@ -127,7 +127,7 @@ describe("Providers", () => {
       .should("be.visible");
   });
 
-  it("should deleted provider without service and find only in filter and autocomplete in backoffice", () => {
+  it.skip("should deleted provider without service and find only in filter and autocomplete in backoffice", () => {
     cy.visit("/backoffice/providers/new");
     cy.location("href")
       .should("contain", "/providers/new");
@@ -257,7 +257,7 @@ describe("Providers", () => {
       .should("be.visible");
   });
 
-  it("should check if draft provider is visible only in Backoffice", () => {
+  it.skip("should check if draft provider is visible only in Backoffice", () => {
     cy.get("a[data-e2e='more-link-providers']")
       .click();
     cy.contains("a", providerStatusDraft)

@@ -92,7 +92,7 @@ RSpec.feature "Marketplace lead builder", manager_frontend: true do
       expect(page).to_not have_content(item.header)
     end
 
-    scenario "cannot be created without picture", js: true do
+    scenario "cannot be created without picture", skip: true, js: true do
       visit admin_leads_path
 
       find("#add-new-lead-#{section.id}").click

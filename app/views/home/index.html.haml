@@ -1,21 +1,85 @@
-.container
-  = render "info"
+.landing-header
+  %section.text-center.heading
+    .container
+      .row.py-lg-3
+        .col-md-8.col-sm-12.mx-auto
+          %h1 Browse Marketplace
+          = render "services/search",
+          categories: @siblings || @root_categories,
+          query_params: @query_params || {}
+%section.research-activity
+  .container
+    .activity-wrapper
+      - @marketplace_locations.each do |location|
+        %a.activity{ href: services_path(marketplace_locations: location.id) }
+          .activity-icon
+            - logo = location.logo
+            - logo = logo.attached? && logo.persisted? ? logo.variant(resize: "84x84") : "landing_page/ico-01.svg"
+            = image_tag logo, alt: location.name
+          .activity-texts
+            .activity-title= location.name
+            .activity-subtitle= location.description
 
-  = render "products",
-    scientific_domains: @main_scientific_domains,
-    categories: @root_categories_with_logos
+    .activity-wrapper
+      .text-wrapper
+        Browse
+        %span all resources
+        in one place:
+      .text-wrapper
+        %a.btn{ href: services_path } Browse All Resources
 
-  = render "communities",
-    platforms: @home_platforms, more_platforms_count: @home_platforms_counter,
-    providers: @home_providers, more_providers_count: @home_providers_counter,
-    target_users: @home_target_users, more_target_users_count: @home_target_users_counter
+%section.questions
+  .container
+    .questions-wrapper
+      .row
+        .col-md-4.col-sm-12
+          %h3 Q&A
+          %p
+            Check out our Q&A guide to find answers to your questions. It's designed to help you understand and solve
+            common issues. If you still have questions after reading the guide, don’t worry:
+          %a.white-link{ href: help_path }
+            See user guide
+            %i.fa.fa-arrow-right
+        .col-md-8.col-sm-12
+          #accordion-qa.accordion
+            -# Here should be user defined section of FAQ, now is hardcoded id
+            - HelpItem.where(help_section_id: 2).order(:position).each do |help_item|
+              .qa-box
+                %div{ id: "heading-#{help_item.id}" }
+                  %button.qa-button.collapsed{ "data-toggle": "collapse", "data-target": "#collapse-#{help_item.id}",
+                  "aria-expanded": "false", "aria-controls": "collapse-#{help_item.id}" }
+                    = help_item.title
+                .collapse{ id: "collapse-#{help_item.id}", "aria-labelledby": "heading-#{help_item.id}",
+                           "data-parent": "#accordion-qa" }
+                  = help_item.content
 
+%section.learn
   = render_sections("learn-more")
 
-  = render "services", services: @services
-
-  .row
-    .col-12.col-lg-4.col-sm-5
-      = render "opinions", opinion: @opinion
-    .col-12.col-lg-8.col-sm-7
-      = render_sections("use-cases")
+-# Here should be = render_sections("use-cases") - below is a placeholder
+%section.research
+  .container
+    %h3 Popular services
+    .row
+      - @services.each do |service|
+        .col-md-3.col-sm-12.d-flex.align-items-stretch
+          .popular-services-box.card
+            .popular-top
+              - if service.logo.attached?
+                = image_tag service.logo.variant(resize: "100x80")
+              - else
+                = image_tag "eosc-img.png", alt: "Service name"
+              .badge.access-information.fa-pull-right.badge-right{ class: "style_#{order_type(service)}" }
+                %i{ class: "ordertype #{order_type(service)}" }
+                -# TODO: refactor dynamic translation
+                = t("offers.type.#{order_type(service)}")
+            %a.popular-title{ href: service_path(service) }= service.name
+            %a.popular-provider{ href: services_path(providers: service.resource_organisation.id) }
+              = service.resource_organisation.name
+            .popular-description{ data_toggle: "tooltip", title: service.description }
+              = service.description.truncate(72)
+            - if service.tag_list.present?
+              .taglist-holder
+                - service.tags.each do |tag|
+                  .tag-item
+                    = link_to tag, services_path(tag: tag.name)
