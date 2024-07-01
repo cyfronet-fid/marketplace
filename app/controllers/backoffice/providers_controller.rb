@@ -4,6 +4,7 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
   include UrlHelper
 
   before_action :find_and_authorize, only: %i[show edit update destroy]
+  before_action :catalogue_scope
 
   def index
     authorize(Provider)
@@ -36,6 +37,7 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
     if valid_model_and_urls? && @provider.save(validate: false)
       redirect_to backoffice_provider_path(@provider), notice: "New provider created successfully"
     else
+      catalogue_scope
       render :new, status: :unprocessable_entity
     end
   end
@@ -61,6 +63,7 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
       if @provider.data_administrators.present? && @provider.data_administrators.all?(&:marked_for_destruction?)
         @provider.data_administrators[0].reload
       end
+      catalogue_scope
       add_missing_nested_models
       render :edit, status: :bad_request
     end
@@ -77,13 +80,17 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
 
   private
 
+  def catalogue_scope
+    @catalogues = policy_scope(Catalogue).with_attached_logo
+  end
+
   def find_and_authorize
     @provider = Provider.with_attached_logo.friendly.find(params[:id])
     authorize(@provider)
   end
 
   def add_missing_nested_models
-    %i[alternative_identifiers sources data_administrators public_contacts link_multimedia_urls].each do |association|
+    %i[alternative_identifiers data_administrators public_contacts link_multimedia_urls].each do |association|
       @provider.send(association).build if @provider.send(association).empty?
     end
     @provider.build_main_contact if @provider.main_contact.blank?

@@ -24,6 +24,16 @@ class Service < ApplicationRecord
 
   scope :horizontal, -> { where(horizontal: true) }
   scope :visible, -> { where(status: %i[published unverified suspended]) }
+  scope :managed_by,
+        ->(user) do
+          includes(resource_organisation: :data_administrators, catalogue: :data_administrators).where(
+            providers: {
+              data_administrators: {
+                email: user&.email
+              }
+            }
+          ).or where(catalogues: { data_administrators: { email: user&.email } })
+        end
   scope :datasources, -> { where(type: "Datasource") }
 
   has_one_attached :logo

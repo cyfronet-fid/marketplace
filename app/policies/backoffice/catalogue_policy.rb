@@ -1,18 +1,12 @@
 # frozen_string_literal: true
 
-class Backoffice::CataloguePolicy < ApplicationPolicy
-  class Scope < Scope
-    def resolve
-      scope
-    end
-  end
-
+class Backoffice::CataloguePolicy < Backoffice::ApplicationPolicy
   def index?
-    service_portfolio_manager?
+    service_portfolio_manager? || user&.catalogue_owner?
   end
 
   def show?
-    service_portfolio_manager?
+    access?
   end
 
   def new?
@@ -24,11 +18,11 @@ class Backoffice::CataloguePolicy < ApplicationPolicy
   end
 
   def update?
-    service_portfolio_manager?
+    access?
   end
 
   def destroy?
-    service_portfolio_manager?
+    access?
   end
 
   def permitted_attributes
@@ -49,7 +43,7 @@ class Backoffice::CataloguePolicy < ApplicationPolicy
       :logo,
       [multimedia: []],
       [scientific_domain_ids: []],
-      [tags: []],
+      :tag_list,
       :street_name_and_number,
       :postal_code,
       :city,
@@ -64,11 +58,5 @@ class Backoffice::CataloguePolicy < ApplicationPolicy
       [data_administrators_attributes: %i[id first_name last_name email _destroy]],
       [link_multimedia_urls_attributes: %i[id name url _destroy]]
     ]
-  end
-
-  private
-
-  def service_portfolio_manager?
-    user&.service_portfolio_manager?
   end
 end
