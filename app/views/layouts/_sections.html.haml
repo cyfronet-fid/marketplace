@@ -18,7 +18,6 @@
                                           "(on-logout)": "document.getElementById('hidden_logout').click()" }
   = link_to "logout",
             destroy_user_session_path,
-            "data-turbo-method": :delete,
+            data: { turbo_method: :delete, e2e: "logout" },
             id: "hidden_logout",
-            style: "display: none;",
-            "data-e2e": "logout"
+            class: "#{"d-none" unless Rails.env.test?}"
