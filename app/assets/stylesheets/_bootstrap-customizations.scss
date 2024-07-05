@@ -7879,37 +7879,3 @@ abbr[title] {
   background: url("chevron-up.svg");
   transform: rotate(-180deg);
 }
-
-.top-info-wrapper {
-  background: $custom-22;
-  padding: 40px 0 10px;
-  color: $palette-white;
-
-  .container {
-    max-width: 1120px;
-  }
-
-  h3 {
-    color: $palette-white;
-    font-size: 40px;
-    font-style: normal;
-    display: block;
-    font-weight: 500;
-    line-height: 116.1%;
-    margin-bottom: 40px;
-    letter-spacing: -0.8px;
-  }
-
-  p {
-    font-size: 36px;
-    font-weight: 400;
-    margin-bottom: 40px;
-    line-height: 130%; /* 46.8px */
-    letter-spacing: -0.72px;
-  }
-
-  a {
-    text-decoration: underline;
-    color: $palette-white;
-  }
-}
