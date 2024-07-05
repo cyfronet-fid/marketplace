@@ -1,14 +1,4 @@
 = render "layouts/sections"
-.top-info-wrapper
-  .container
-    %p
-      IMPORTANT: The EOSC Portal is currently being phased out, but don’t worry! Information is coming soon on where
-      and when you can access the next phase of EOSC (the EOSC EU Node).
-    %p
-      Thank you for your patience and understanding. In the meantime, you can read
-      %a{ href: "https://eoscfuture.eu/newsfuture/eosc-future-signs-off/" } this article
-      for more information on the shift to the EOSC EU Node.
-
 - if whitelabel
   #mynav.overlay
     %a.closebtn{ href: "javascript:void(0)", onclick: "closeNav()" }
@@ -45,7 +35,7 @@
                 autologin_cookie = "document.cookie = '_eosc_common_autologin=_eosc_common_autologin; path=/;"
                 expired_autologin_cookie = autologin_cookie + " expires=Thu, 01 Jan 1970 00:00:01 GMT; domain="
                 domains = %w[.eosc-portal.eu eosc-portal.eu localhost .docker-fid.grid.cyf-kr.edu.pl]
-              = link_to _("Logout"), destroy_user_session_path, "data-turbo-method": :delete,
+              = link_to _("Logout"), destroy_user_session_path, id: "logout-btn", data_turbo_method: :delete,
               class: "btn btn-primary font-weight-bold mt-3 logout-link",
               onclick: domains.map { |domain| expired_autologin_cookie + domain + "';" }.join
           - else
