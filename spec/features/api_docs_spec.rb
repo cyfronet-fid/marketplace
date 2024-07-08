@@ -34,6 +34,8 @@ RSpec.feature "Api docs page", end_user_frontend: true do
 
       find("#toggler").click
 
+      sleep(1)
+
       expect(user.reload.authentication_token).to_not eq(prev_token)
       expect(page).to have_text(user.authentication_token)
       expect(page).to have_link("Regenerate token")

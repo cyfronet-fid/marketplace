@@ -21,6 +21,10 @@ class Backoffice::CataloguePolicy < Backoffice::ApplicationPolicy
     access?
   end
 
+  def edit?
+    access?
+  end
+
   def destroy?
     access?
   end
