@@ -20,11 +20,11 @@ class ServicePolicy < ApplicationPolicy
   end
 
   def errors_show?
-    user.service_portfolio_manager? || record.administered_by?(user)
+    user.service_portfolio_manager? || data_administrator?
   end
 
   def data_administrator?
-    record.administered_by?(user)
+    record.owned_by?(user)
   end
 
   private

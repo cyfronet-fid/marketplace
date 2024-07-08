@@ -10,10 +10,10 @@ class Api::V1::ServicePolicy < ApplicationPolicy
   end
 
   def show?
-    administered_by? && !record.deleted?
+    owned_by? && !record.deleted?
   end
 
-  def administered_by?
-    record.administered_by?(user)
+  def owned_by?
+    record.owned_by?(user)
   end
 end

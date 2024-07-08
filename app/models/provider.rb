@@ -22,7 +22,9 @@ class Provider < ApplicationRecord
   before_save { self.catalogue = Catalogue.find(catalogue_id) if catalogue_id.present? }
 
   scope :active, -> { where.not(status: %i[deleted draft]) }
-  scope :managed_by, ->(user) { joins(:data_administrators).where(data_administrators: { email: user&.email }) }
+  scope :managed_by, ->(user) { provider_managed_by(user).or(catalogue_managed_by(user)) }
+  scope :provider_managed_by, ->(user) { joins(:data_administrators).where(data_administrators: { user_id: user&.id }) }
+  scope :catalogue_managed_by, ->(user) { where(catalogues: { data_administrators: { user_id: user&.id } }) }
 
   attr_accessor :catalogue_id
 
@@ -210,8 +212,9 @@ class Provider < ApplicationRecord
     logo.attach(io: io, filename: SecureRandom.uuid + extension, content_type: "image/#{extension.delete(".", "")}")
   end
 
-  def administered_by?(user)
-    data_administrators.where(email: user.email).size.positive?
+  def owned_by?(user)
+    data_administrators&.map(&:user_id)&.include?(user&.id) ||
+      (catalogue.present? && catalogue.data_administrators&.map(&:user_id)&.include?(user.id))
   end
 
   private

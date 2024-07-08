@@ -26,13 +26,13 @@ class Service < ApplicationRecord
   scope :visible, -> { where(status: %i[published suspended]) }
   scope :managed_by,
         ->(user) do
-          includes(resource_organisation: :data_administrators, catalogue: :data_administrators).where(
+          includes(resource_organisation: :data_administrators).where(
             providers: {
               data_administrators: {
-                email: user&.email
+                user_id: user&.id
               }
             }
-          ).or where(catalogues: { data_administrators: { email: user&.email } })
+          ).or where(catalogues: { data_administrators: { user_id: user&.id } })
         end
   scope :datasources, -> { where(type: "Datasource") }
 
@@ -268,7 +268,7 @@ class Service < ApplicationRecord
   after_save :set_first_category_as_main!, if: :main_category_missing?
 
   def self.popular(count)
-    where(status: :published).includes(:providers).order(popularity_ratio: :desc, name: :asc).limit(count)
+    includes(:providers).where(status: :published).order(popularity_ratio: :desc, name: :asc).limit(count)
   end
 
   def main_category
@@ -308,7 +308,10 @@ class Service < ApplicationRecord
   end
 
   def owned_by?(user)
-    service_user_relationships.where(user: user).size.positive?
+    service_user_relationships.where(user: user).size.positive? ||
+      (
+        resource_organisation.present? && resource_organisation.data_administrators&.map(&:user_id)&.include?(user.id)
+      ) || (catalogue.present? && catalogue.data_administrators&.map(&:user_id)&.include?(user.id))
   end
 
   def organisation_search_link(target, default_path = nil)
