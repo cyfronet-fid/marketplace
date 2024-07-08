@@ -10,7 +10,7 @@ gem "pg", "~> 1.5", "< 2.0"
 gem "puma"
 gem "nori"
 
-gem "uglifier", ">= 1.3.0"
+gem "uglifier", "~> 4.2"
 gem "sprockets-rails"
 gem "jsbundling-rails"
 gem "cssbundling-rails"
@@ -20,8 +20,8 @@ gem "turbo-rails"
 gem "stimulus-rails"
 gem "render_async"
 
-gem "bootsnap", ">= 1.4.2", require: false
-gem "colorize", ">= 0.8.1", require: false
+gem "bootsnap", "~> 1.18", require: false
+gem "colorize", "~> 1.1", require: false
 
 gem "ancestry"
 gem "gretel"
@@ -38,7 +38,7 @@ gem "image_processing", ">= 1.2"
 # translations
 gem "fast_gettext"
 gem "gettext_i18n_rails"
-gem "gettext", ">=3.0.2", require: false, group: :development
+gem "gettext", "~> 3.4", require: false, group: :development
 gem "ruby_parser", require: false, group: :development
 
 # turbo-charged counter caches
@@ -141,5 +141,5 @@ gem "puma_worker_killer"
 gem "timeout", "~>0.4"
 
 # Use Redis for Action Cable
-gem "redis", "~> 5.0"
-gem "redis-actionpack", "~> 5.3"
+gem "redis", "~> 5.2"
+gem "redis-actionpack", "~> 5.4"
