@@ -8,7 +8,7 @@ RSpec.feature "Services in ordering_configuration panel", end_user_frontend: tru
 
   context "As a data_administrator" do
     let(:user) { create(:user) }
-    let(:data_administrator) { create(:data_administrator, email: user.email) }
+    let(:data_administrator) { build(:data_administrator, email: user.email) }
     let(:provider) { create(:provider, data_administrators: [data_administrator]) }
     let(:service) { create(:service, resource_organisation: provider, offers: [create(:offer)]) }
 

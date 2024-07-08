@@ -52,7 +52,7 @@ RSpec.describe ServiceContextPolicy, backend: true do
 
     it "admin is granted for draft service" do
       service = build(:service, status: :draft)
-      allow(service).to receive(:administered_by?).with(user).and_return(true)
+      allow(service).to receive(:owned_by?).with(user).and_return(true)
       expect(subject).to permit(user, ServiceContext.new(service, true))
     end
 
@@ -68,7 +68,7 @@ RSpec.describe ServiceContextPolicy, backend: true do
 
       service = build(:service, status: :draft)
       allow(service).to receive(:owned_by?).with(user).and_return(true)
-      allow(service).to receive(:administered_by?).with(user).and_return(true)
+      allow(service).to receive(:owned_by?).with(user).and_return(true)
 
       permit(user, build(:service, status: :deleted))
     rescue e

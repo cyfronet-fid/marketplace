@@ -79,12 +79,7 @@ class Backoffice::ProviderPolicy < Backoffice::ApplicationPolicy
 
   private
 
-  def service_portfolio_manager?
-    user&.service_portfolio_manager?
-  end
-
   def catalogue_access?
-    service_portfolio_manager? ||
-      Catalogue.joins(:data_administrators).where(data_administrators: { email: user&.email }).exists?
+    service_portfolio_manager? || user&.catalogue_owner?
   end
 end
