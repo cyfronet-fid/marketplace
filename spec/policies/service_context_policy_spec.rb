@@ -32,21 +32,11 @@ RSpec.describe ServiceContextPolicy, backend: true do
 
       expect(resolve.count).to eq(1)
     end
-
-    it "allows unverified services" do
-      create(:service, status: :unverified)
-
-      expect(resolve.count).to eq(1)
-    end
   end
 
   permissions :show? do
     it "is granted for published service" do
       expect(subject).to permit(user, ServiceContext.new(build(:service, status: :published), false))
-    end
-
-    it "is granted for unverified service" do
-      expect(subject).to permit(user, ServiceContext.new(build(:service, status: :unverified), false))
     end
 
     it "portfolio manager is granted for draft service" do

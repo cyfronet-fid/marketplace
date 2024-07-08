@@ -33,12 +33,6 @@ RSpec.describe ServicePolicy, backend: true do
 
       expect(resolve.count).to eq(1)
     end
-
-    it "allows unverified services" do
-      create(:service, status: :unverified)
-
-      expect(resolve.count).to eq(1)
-    end
   end
 
   permissions :offers_show? do

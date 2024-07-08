@@ -33,7 +33,7 @@
                     class: "btn btn-primary d-block mt-4 mr-3", "data-e2e": "providers"
       - if policy([:backoffice, Catalogue]).index?
         %a= link_to _("Catalogues"), backoffice_catalogues_path,
-                    class: "btn btn-primary d-block mt-4", "data-e2e": "catalogues"
+                    class: "btn btn-primary d-block mt-4 mr-3", "data-e2e": "catalogues"
       - if policy([:backoffice, ScientificDomain]).index?
         %a= link_to _("Scientific domains"), backoffice_scientific_domains_path,
                     class: "btn btn-primary d-block mt-4 mr-3", "data-e2e": "scientific-domains"

@@ -70,11 +70,17 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
   end
 
   def destroy
-    if Provider::Delete.new(@provider.id).call
-      redirect_to backoffice_providers_path, notice: "Provider removed successfully"
-    else
-      redirect_to backoffice_providers_path,
-                  alert: "This Provider has services connected to it, therefore is not possible to remove it."
+    respond_to do |format|
+      if Provider::Delete.new(@provider.id).call
+        @provider.reload
+        notice = "Provider removed successfully"
+        format.html { redirect_to backoffice_providers_path, notice: notice }
+        format.turbo_stream { flash.now[:notice] = notice }
+      else
+        alert = "This Provider has services connected to it, therefore is not possible to remove it."
+        format.html { redirect_to backoffice_provider_path(@provider), alert: alert }
+        format.turbo_stream { flash.now[:alert] = alert }
+      end
     end
   end
 

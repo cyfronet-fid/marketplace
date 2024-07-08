@@ -23,7 +23,7 @@ class Service < ApplicationRecord
   SERVICE_TYPES = %w[Service Datasource].freeze
 
   scope :horizontal, -> { where(horizontal: true) }
-  scope :visible, -> { where(status: %i[published unverified suspended]) }
+  scope :visible, -> { where(status: %i[published suspended]) }
   scope :managed_by,
         ->(user) do
           includes(resource_organisation: :data_administrators, catalogue: :data_administrators).where(
@@ -265,7 +265,7 @@ class Service < ApplicationRecord
   after_save :set_first_category_as_main!, if: :main_category_missing?
 
   def self.popular(count)
-    where(status: %i[published unverified]).includes(:providers).order(popularity_ratio: :desc, name: :asc).limit(count)
+    where(status: :published).includes(:providers).order(popularity_ratio: :desc, name: :asc).limit(count)
   end
 
   def main_category
