@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe ProviderPolicy, backend: true do
   let(:user) { create(:user) }
   let(:stranger) { create(:user) }
-  let(:data_administrator) { create(:data_administrator, email: user.email) }
+  let(:data_administrator) { build(:data_administrator, email: user.email) }
   let(:provider) { create(:provider, data_administrators: [data_administrator]) }
   subject { described_class }
 

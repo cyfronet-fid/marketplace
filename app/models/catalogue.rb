@@ -51,11 +51,7 @@ class Catalogue < ApplicationRecord
   has_many :data_administrators, through: :catalogue_data_administrators, dependent: :destroy, autosave: true
 
   scope :active, -> { where.not(status: %i[deleted draft]) }
-  scope :managed_by, ->(user) { joins(:data_administrators).where(data_administrators: { email: user&.email }) }
-  scope :inherited_from_provider,
-        ->(user) do
-          joins(providers: :data_administrators).where(providers: { data_administrators: { email: user&.email } })
-        end
+  scope :managed_by, ->(user) { joins(:data_administrators).where(data_administrators: { user_id: user&.id }) }
 
   accepts_nested_attributes_for :data_administrators, allow_destroy: true
   accepts_nested_attributes_for :main_contact, allow_destroy: true
@@ -110,6 +106,10 @@ class Catalogue < ApplicationRecord
     return nil if legal_statuses.blank?
 
     legal_statuses[0].id
+  end
+
+  def owned_by?(user)
+    data_administrators.map(&:user_id).include?(user.id)
   end
 
   def legal_status=(status_id)

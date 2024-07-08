@@ -3,10 +3,12 @@
 class Backoffice::ServicePolicy < Backoffice::ApplicationPolicy
   class Scope < Backoffice::ApplicationPolicy::Scope
     def resolve
-      if user&.service_owner?
-        scope.includes(:service_user_relationships).where(service_user_relationships: { user: user }) || super
-      else
+      if user&.service_portfolio_manager? || user&.data_administrator?
         super
+      elsif user&.service_owner?
+        scope.includes(:service_user_relationships).where(service_user_relationships: { user: user })
+      else
+        scope.none
       end
     end
   end
@@ -28,7 +30,7 @@ class Backoffice::ServicePolicy < Backoffice::ApplicationPolicy
   end
 
   def show?
-    can_edit?
+    actionable?
   end
 
   def new?
@@ -36,39 +38,39 @@ class Backoffice::ServicePolicy < Backoffice::ApplicationPolicy
   end
 
   def create?
-    can_edit?
+    access?
   end
 
   def edit?
-    can_edit? && !record.deleted?
+    access?
   end
 
   def update?
-    can_edit? && !record.deleted?
+    access?
   end
 
   def publish?
-    can_edit? && !record.published? && !record.deleted?
+    access? && !record.published?
   end
 
   def suspend?
-    can_edit? && !record.suspended? && !record.deleted?
+    access? && !record.suspended?
   end
 
   def unpublish?
-    can_edit? && !record.unpublished? && !record.deleted?
+    access? && !record.unpublished?
   end
 
   def draft?
-    can_edit? && !record.draft? && !record.deleted?
+    access? && !record.draft?
   end
 
   def preview?
-    can_edit? || owned_service?
+    access?
   end
 
   def destroy?
-    can_edit? && !record.deleted?
+    access?
   end
 
   def permitted_attributes
@@ -163,20 +165,8 @@ class Backoffice::ServicePolicy < Backoffice::ApplicationPolicy
 
   private
 
-  # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
-  def can_edit?
-    service_portfolio_manager? || owned_service? ||
-      record&.resource_organisation&.data_administrators&.map(&:email)&.include?(user&.email) ||
-      record&.catalogue&.data_administrators&.map(&:email)&.include?(user&.email)
-  end
-  # rubocop:enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
-
   def service_owner?
     user&.service_owner?
-  end
-
-  def owned_service?
-    record.owned_by?(user)
   end
 
   def project_items

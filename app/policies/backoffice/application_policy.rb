@@ -16,7 +16,7 @@ class Backoffice::ApplicationPolicy < ApplicationPolicy
   MP_INTERNAL_FIELDS = [:upstream_id, [sources_attributes: %i[id source_type eid _destroy]]].freeze
 
   def index?
-    service_portfolio_manager? || user&.data_administrator?
+    service_portfolio_manager? || data_administrator?
   end
 
   def show?
@@ -66,7 +66,7 @@ class Backoffice::ApplicationPolicy < ApplicationPolicy
   end
 
   def actionable?
-    user&.service_portfolio_manager? || record&.data_administrators&.map(&:email)&.include?(user&.email)
+    service_portfolio_manager? || record&.owned_by?(user)
   end
 
   def access?
