@@ -13,8 +13,6 @@ class Service::Update < Service::ApplicationService
       if @service.public_contacts.present? && @service.public_contacts.all?(&:marked_for_destruction?)
         @service.public_contacts[0].reload
       end
-      @params.merge(status: :unverified) if @service.errored? && @service.valid?
-
       @service.update_logo!(@logo) if @logo
       @service.update!(@params)
     end

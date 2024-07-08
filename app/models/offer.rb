@@ -27,7 +27,7 @@ class Offer < ApplicationRecord
             bundle_exclusive: false,
             status: :published,
             services: {
-              status: %i[published unverified suspended errored]
+              status: %i[published suspended errored]
             }
           )
         end

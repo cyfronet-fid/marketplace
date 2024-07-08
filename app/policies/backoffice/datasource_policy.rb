@@ -38,15 +38,11 @@ class Backoffice::DatasourcePolicy < ApplicationPolicy
   end
 
   def publish?
-    service_portfolio_manager? && (record.draft? || record.unverified?) && !record.deleted?
-  end
-
-  def publish_unverified?
-    service_portfolio_manager? && (record.draft? || record.published?) && !record.deleted?
+    service_portfolio_manager? && record.draft? && !record.deleted?
   end
 
   def draft?
-    service_portfolio_manager? && (record.published? || record.unverified?) && !record.deleted?
+    service_portfolio_manager? && record.published? && !record.deleted?
   end
 
   def permitted_attributes

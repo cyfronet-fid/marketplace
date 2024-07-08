@@ -4,7 +4,7 @@ class Backoffice::ServicePolicy < Backoffice::ApplicationPolicy
   class Scope < Backoffice::ApplicationPolicy::Scope
     def resolve
       if user&.service_owner?
-        scope.joins(:service_user_relationships).where(service_user_relationships: { user: user }).or(super)
+        scope.includes(:service_user_relationships).where(service_user_relationships: { user: user }) || super
       else
         super
       end
@@ -49,10 +49,6 @@ class Backoffice::ServicePolicy < Backoffice::ApplicationPolicy
 
   def publish?
     can_edit? && !record.published? && !record.deleted?
-  end
-
-  def publish_unverified?
-    can_edit? && !record.unverified? && !record.deleted?
   end
 
   def suspend?

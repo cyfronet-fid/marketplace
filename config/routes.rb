@@ -122,8 +122,14 @@ Rails.application.routes.draw do
     get "services/c/:category_id" => "services#index", :as => :category_services
     resources :scientific_domains
     resources :categories
-    resources :providers, constraints: { id: %r{[^/]+} }
-    resources :catalogues
+    resources :providers, constraints: { id: %r{[^/]+} } do
+      resource :publish, controller: "providers/publishes", only: :create
+      resource :unpublish, controller: "providers/unpublishes", only: :create
+    end
+    resources :catalogues do
+      resource :publish, controller: "catalogues/publishes", only: :create
+      resource :unpublish, controller: "catalogues/unpublishes", only: :create
+    end
     resources :platforms
     get "vocabularies", to: "vocabularies#index", type: "target_user", as: :vocabularies
     scope "/vocabularies" do
@@ -200,7 +206,7 @@ Rails.application.routes.draw do
   resource :tour_feedbacks, only: :create
 
   direct :overview_tour_first_service do |params|
-    service = Service.where(status: %i[published unverified errored]).order(:name).first
+    service = Service.where(status: %i[published errored]).order(:name).first
     service_path(service, params)
   end
 
