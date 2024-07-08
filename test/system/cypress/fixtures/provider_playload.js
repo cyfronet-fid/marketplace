@@ -1,4 +1,4 @@
-import {Utilities} from "../support/utilities";
+import { Utilities } from "../support/utilities";
 
 const providerName = Utilities.getRandomString(8).toLocaleLowerCase();
 
@@ -14,31 +14,29 @@ export const providerJson = {
   multimedia: [
     {
       multimediaURL: "https://example.com",
-      multimediaName: "Multimedia Name"
-    }
+      multimediaName: "Multimedia Name",
+    },
   ],
   scientificDomains: [
     {
       scientificDomain: "scientific_domain-humanities",
-      scientificSubdomain: "scientific_subdomain-humanities-other_humanities"
-    }
+      scientificSubdomain: "scientific_subdomain-humanities-other_humanities",
+    },
   ],
-  tags: [
-    "tags"
-  ],
+  tags: ["tags"],
   location: {
     streetNameAndNumber: "Street name and number",
     postalCode: "Postal Code 123",
     city: "City",
     region: "Region",
-    country: "DE"
+    country: "DE",
   },
   mainContact: {
     firstName: "MC First Name",
     lastName: "MC Last Name",
     email: "test@mail.pl",
     phone: "1234567890",
-    position: "Position"
+    position: "Position",
   },
   publicContacts: [
     {
@@ -46,51 +44,33 @@ export const providerJson = {
       lastName: "PC Last Name",
       email: "test@mail.pl",
       phone: "1234567890",
-      position: "Position"
-    }
+      position: "Position",
+    },
   ],
   lifeCycleStatus: "provider_life_cycle_status-operational",
-  certifications: [
-    "Certifications Value"
-  ],
-  participatingCountries: [
-    "FR"
-  ],
-  affiliations: [
-    "Affiliations Value"
-  ],
-  networks: [
-    "provider_network-wds"
-  ],
+  certifications: ["Certifications Value"],
+  participatingCountries: ["FR"],
+  affiliations: ["Affiliations Value"],
+  networks: ["provider_network-wds"],
   catalogueId: "eosc",
-  structureTypes: [
-    "provider_structure_type-virtual"
-  ],
-  esfriDomains: [
-    "provider_esfri_domain-physical_sciences_and_engineering"
-  ],
+  structureTypes: ["provider_structure_type-virtual"],
+  esfriDomains: ["provider_esfri_domain-physical_sciences_and_engineering"],
   esfriType: "provider_esfri_type-landmark",
   merilScientificDomains: [
     {
       merilScientificDomain: "provider_meril_scientific_domain-other",
-      merilScientificSubdomain: "provider_meril_scientific_subdomain-other-other"
-    }
+      merilScientificSubdomain: "provider_meril_scientific_subdomain-other-other",
+    },
   ],
-  areasOfActivity: [
-    "provider_area_of_activity-applied_research"
-  ],
-  societalGrandChallenges: [
-    "provider_societal_grand_challenge-environment"
-  ],
-  nationalRoadmaps: [
-    "National Roadmaps Value"
-  ],
+  areasOfActivity: ["provider_area_of_activity-applied_research"],
+  societalGrandChallenges: ["provider_societal_grand_challenge-environment"],
+  nationalRoadmaps: ["National Roadmaps Value"],
   users: [
     {
       email: "test@mail.pl",
       id: "",
       name: "User - Name",
-      surname: "User - Surname"
-    }
-  ]
-}
+      surname: "User - Surname",
+    },
+  ],
+};
