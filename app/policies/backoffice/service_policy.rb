@@ -68,7 +68,7 @@ class Backoffice::ServicePolicy < Backoffice::ApplicationPolicy
   end
 
   def destroy?
-    can_edit? && project_items&.count&.zero? && record.draft?
+    can_edit? && !record.deleted?
   end
 
   def permitted_attributes
@@ -178,6 +178,7 @@ class Backoffice::ServicePolicy < Backoffice::ApplicationPolicy
   def owned_service?
     record.owned_by?(user)
   end
+
   def project_items
     ProjectItem.joins(:offer).where(offers: { service_id: record })
   end
