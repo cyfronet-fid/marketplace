@@ -64,6 +64,11 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Postgres update from 14.1 to 16.4 (@goreck888)
 - Remove most of services from database (@maria-j-k)
 
+## Fixed
+
+- Number of requests handling data_administrators scope (@goreck888)
+
+
 ## [3.58.1]
 
 ### Changed
