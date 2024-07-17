@@ -64,7 +64,12 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Postgres update from 14.1 to 16.4 (@goreck888)
 - Remove most of services from database (@maria-j-k)
 
-## Fixed
+### Changed
+
+- Unlock unpublish/suspend and delete actions for active providers and catalogues (@goreck888)
+- New backoffice view (@jarekzet, goreck888)
+
+### Fixed
 
 - Number of requests handling data_administrators scope (@goreck888)
 - Show pop-up on add to favourites (@maria-j-k)
