@@ -15,7 +15,12 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Offer recommendations in project view (@wujuu)
 - Node information (@goreck888)
 
-## Fixed
+### Changed
+
+- Unlock unpublish/suspend and delete actions for active providers and catalogues (@goreck888)
+- New backoffice view (@jarekzet, goreck888)
+
+### Fixed
 
 - Number of requests handling data_administrators scope (@goreck888)
 - Show pop-up on add to favourites (@maria-j-k)
@@ -42,8 +47,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Handling data administrator scope in the backoffice (@goreck888)
 - Statuses changes for providers and catalogues (@goreck888)
 - Delete button for services (@goreck888)
-
-### Changed
 
 ### Fixed
 

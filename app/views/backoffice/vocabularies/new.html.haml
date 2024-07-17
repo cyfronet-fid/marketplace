@@ -1,7 +1,0 @@
-- content_for :title, _("New #{@type}")
-- breadcrumb :backoffice_vocabulary_new, @type
-
-%h2= _("New #{@type}")
-= render "backoffice/vocabularies/form", vocabulary: @vocabulary,
-         url: url_for(action: "create", controller: "backoffice/vocabularies", type: @vocabulary.model_name.element),
-         button_name: "Create #{@type}", type: @type

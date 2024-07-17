@@ -1,7 +1,7 @@
 - content_for :title, _("Edit Catalogue")
 - breadcrumb :backoffice_catalogue_edit, @catalogue
 
-.container
-  %h1#title.mb-5= _("Edit Catalogue")
+.container.p-0.backoffice
+  %h1= _("Edit Catalogue")
   .edit-provider
     = render "form", catalogue: @catalogue

@@ -56,6 +56,23 @@
 }
 
 @media (max-width: 991px) {
+  .eosc-common.white-label {
+    .container {
+      ul {
+        li {
+          a {
+            float: right;
+            margin-bottom: 5px;
+          }
+        }
+      }
+    }
+  }
+
+  .breadcrumbs-backoffice-wrapper {
+    padding-top: 15px;
+  }
+
   .service-info-box {
     .title {
       font-size: 1em;
@@ -91,16 +108,12 @@
     }
   }
 
-  .backoffice {
-    margin: 0 0 20px;
-  }
-
   .navbar-toggler {
     display: block;
   }
 
   .backoffice-menu {
-    margin-top: 15px;
+    margin: 7px 0;
     border: none;
   }
 
@@ -223,6 +236,43 @@
 }
 
 @media (max-width: 768px) {
+  .empty-information {
+    padding: 18px;
+
+    h2 {
+      font-size: 23px;
+      line-height: 120%;
+    }
+
+    .details-intro {
+      font-size: 19px;
+    }
+
+    .btn {
+      padding: 0.62rem 2rem;
+    }
+  }
+
+  .browse {
+    width: 100%;
+
+    &.whitelabel {
+      display: flex;
+      flex-direction: column;
+      font-size: 12px;
+
+      .browse-label {
+        margin-bottom: 7px;
+      }
+    }
+  }
+
+  header {
+    .whitelabel-header-container {
+      padding: 10px 15px 0;
+    }
+  }
+
   h1 {
     font-size: 1.5rem;
   }
@@ -253,8 +303,22 @@
   }
 
   .service-box {
+    .info-icons {
+      top: 15px;
+      right: 15px;
+
+      .access-information {
+        padding-top: 8px !important;
+      }
+    }
+
     h2 {
       font-size: 1rem;
+
+      .badge {
+        top: 0;
+        left: 10px;
+      }
     }
 
     .media-body {
@@ -288,10 +352,16 @@
       order: 2;
     }
 
+    .backoffice-button-row {
+      order: 3;
+    }
+
     .right-extra-info {
       order: 1;
       position: relative;
       width: 100%;
+      padding: 50px 0 20px;
+      text-align: center;
 
       .service-logo {
         margin-top: 10px;
@@ -479,6 +549,82 @@
         float: left;
         padding: 5px 0;
         margin-right: 0;
+      }
+    }
+  }
+
+  .top-info-wrapper {
+    padding: 25px 0 10px;
+
+    h3 {
+      font-size: 21px;
+      line-height: 125.1%;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 133%;
+      margin-bottom: 15px;
+    }
+  }
+  // scss-lint:disable all
+  .landing_page {
+    .research-activity {
+      .activity-wrapper {
+        .text-wrapper {
+          width: 99%;
+          font-size: 17px;
+        }
+      }
+    }
+  }
+  // scss-lint:enable all
+
+  .become-provider {
+    padding: 30px 20px 25px;
+
+    .backoffice-arrow {
+      display: none;
+    }
+
+    h1 {
+      font-size: 30px;
+    }
+
+    h2 {
+      font-size: 27px;
+      margin-bottom: 20px;
+    }
+
+    h4 {
+      font-size: 17px;
+    }
+
+    .become-provider h4 {
+      font-size: 19px;
+      margin: 0 0 16px;
+    }
+
+    .backoffice-item {
+      padding: 20px 25px;
+      gap: 15px;
+
+      .backoffice-image {
+        img {
+          max-width: 70px;
+          height: auto;
+        }
+      }
+
+      .backoffice-item-txt {
+        .backoffice-item-title {
+          font-size: 22px;
+        }
+
+        .backoffice-item-desc {
+          font-size: 16px;
+        }
       }
     }
   }
@@ -898,6 +1044,8 @@
   .backoffice-list {
     .list-group-item {
       a {
+        font-size: 13px !important;
+
         &:first-child {
           max-width: 60%;
           font-size: 0.9rem;
@@ -908,6 +1056,12 @@
 
     &.indent-list {
       .list-group-item {
+        &.subcategory {
+          a {
+            font-size: 12px;
+          }
+        }
+
         a {
           &:first-child {
             max-width: 100%;
@@ -915,6 +1069,29 @@
           }
         }
       }
+    }
+  }
+
+  .other-settings-menu {
+    margin-bottom: 40px;
+    border-bottom: 0;
+    flex-direction: column;
+
+    a {
+      font-size: 16px;
+      padding: 0 0 17px;
+    }
+  }
+
+  .backoffice {
+    h1 {
+      font-size: 20px;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      font-size: 12px;
+      padding: 0.52rem 1rem;
     }
   }
 
