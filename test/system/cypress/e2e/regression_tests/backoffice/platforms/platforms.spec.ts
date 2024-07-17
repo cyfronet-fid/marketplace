@@ -16,10 +16,12 @@ describe("Platform", () => {
     cy.openUserDropdown();
     cy.get("[data-e2e='backoffice']").click();
     cy.location("href").should("contain", "/backoffice");
+    cy.get("[data-e2e='other_settings']").click();
+    cy.location("href").should("contain", "backoffice/other_settings");
     cy.get("[data-e2e='platforms']").click();
-    cy.location("href").should("contain", "/backoffice/platforms");
+    cy.location("href").should("contain", "/backoffice/other_settings/platforms");
     cy.get("[data-e2e='add-new-platform-btn']").click();
-    cy.location("href").should("contain", "/backoffice/platforms/new");
+    cy.location("href").should("contain", "/backoffice/other_settings/platforms/new");
     cy.fillFormCreatePlatform(platform);
     cy.get("[data-e2e='create-platform-btn']").click();
     cy.contains("div.alert-success", message.successCreationMessage).should("be.visible");
@@ -35,13 +37,13 @@ describe("Platform", () => {
   });
 
   it("shouldn't create new platform", () => {
-    cy.visit("/backoffice/platforms/new");
+    cy.visit("/backoffice/other_settings/platforms/new");
     cy.get("[data-e2e='create-platform-btn']").click();
     cy.contains("div.invalid-feedback", message.alertNameValidation).should("be.visible");
   });
 
   it("should edit platform", () => {
-    cy.visit("/backoffice/platforms/");
+    cy.visit("/backoffice/other_settings/platforms/");
     cy.get("[data-e2e='backoffice-platforms-list'] li").eq(0).find("a").contains("Edit").click();
     cy.fillFormCreatePlatform({ ...platform, name: "Edited category" });
     cy.get("[data-e2e='create-platform-btn']").click();
@@ -49,7 +51,7 @@ describe("Platform", () => {
   });
 
   it("should delete platform", () => {
-    cy.visit("/backoffice/platforms");
+    cy.visit("/backoffice/other_settings/platforms");
     cy.get("[data-e2e='backoffice-platforms-list'] li").eq(0).find("a.delete-icon").click();
     cy.contains("div.alert-success", message.successDeletionMessage).should("be.visible");
   });

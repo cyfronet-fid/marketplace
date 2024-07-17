@@ -1,35 +1,32 @@
 - content_for :title, _("Owned services & datasources")
 - breadcrumb :backoffice_services, @category
 
-= content_for :category_view, "backoffice/categories/nav/category"
+= content_for :category_view, "backoffice/other_settings/categories/nav/category"
 = content_for :all_services, backoffice_services_path(category_query_params)
-
-.row.mb-3.d-flex.justify-content-center
-  .col-lg-3
-  .col-lg-6
-    = render "backoffice/services/search", query_params: @query_params || {}
-  .col-lg-3
-    - if policy([:backoffice, Service]).new?
-      = link_to _("Create new Service"),
-                    new_backoffice_service_path,
-                    class: "btn btn-primary create-resource float-right",
-                    "data-e2e": "create-resource"
-
-
-= render "services/index", services: @services,
-                           presentable: @services,
-                           category: @category,
-                           pagy: @pagy,
-                           services_count: @services_total,
-                           categories: @siblings_with_counters,
-                           subcategories: @subcategories_with_counters,
-                           sort_options: @sort_options,
-                           highlights: @highlights,
-                           filters: @filters,
-                           active_filters: @active_filters,
-                           offers: @offers,
-                           comparison_enabled: @comparison_enabled,
-                           favourite_services: @favourite_services,
-                           query_params: @query_params,
-                           show_recommendations: false,
-                           show_comparison: false
+.container.p-0.backoffice
+  - if policy_scope([:backoffice, Service]).size.positive?
+    = render "services/index", services: @services,
+                             presentable: @services,
+                             category: @category,
+                             pagy: @pagy,
+                             services_count: @services_total,
+                             categories: @siblings_with_counters,
+                             subcategories: @subcategories_with_counters,
+                             sort_options: @sort_options,
+                             highlights: @highlights,
+                             filters: @filters,
+                             active_filters: @active_filters,
+                             offers: @offers,
+                             comparison_enabled: @comparison_enabled,
+                             favourite_services: @favourite_services,
+                             query_params: @query_params,
+                             show_recommendations: false,
+                             show_comparison: false
+  - elsif !policy_scope([:backoffice, Provider]).size.positive?
+    = render "backoffice/services/blank_prompt", title: _("To add a Service, create a Provider first"),
+      prompt: _("Join our Providers to explore how to onboard services and create offers."),
+      link_text: _("Go to providers page"), link_path: backoffice_providers_path
+  - else
+    = render "backoffice/services/blank_prompt", title: _("You don't have any Owned Services"),
+      prompt: _("Create your first service by clicking the button below."),
+      link_text: _("+ Create new Service"), link_path: new_backoffice_service_path

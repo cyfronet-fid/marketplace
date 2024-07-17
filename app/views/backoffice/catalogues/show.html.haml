@@ -1,11 +1,12 @@
 - content_for :title, @catalogue.name
 - breadcrumb :backoffice_catalogue, @catalogue
 
-%h1= @catalogue.name
-.status-row
-  %span Status:
-  %span.font-weight-bold
-    = @catalogue.status
+.container.p-0.backoffice
+  %h1.mb-3= @catalogue.name
+  .status-row
+    %span Status:
+    %span.font-weight-bold
+      = @catalogue.status
 
 .service-box.p-4.mt-3.backoffice-form
   .logo-wrapper
@@ -43,3 +44,5 @@
                 backoffice_catalogue_path(@catalogue.id),
                 class: "btn btn-danger",
                 data: { turbo_confirm: _("Are you sure you want to remove this catalogue?"), turbo_method: :delete }
+
+  = link_to _("<- Back to Catalogues"), backoffice_catalogues_path, class: "backoffice-back-link mt-3"

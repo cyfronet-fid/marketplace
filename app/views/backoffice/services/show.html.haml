@@ -1,6 +1,7 @@
 - content_for :title, @service.name
 - breadcrumb :backoffice_service, @service
-.container
+
+.container.p-0.backoffice
   - if @service.offers.blank?
     .alert.alert-danger.mb-0.text-center
       = _("This service has no offers. Add one offer to make possible for a user to Access the service.")
@@ -12,7 +13,7 @@
       -# haml-lint:enable MultilinePipe
   = render "services/errors", service: @service
 
-.container
+.container.p-0.backoffice
   .status-row
     .row
       .col-12.col-lg-4
@@ -48,8 +49,8 @@
               data: { turbo_confirm: _("Are you sure you want to remove this #{@service.type.downcase}?"),
                       turbo_method: :delete }
 
-.container
-  .pt-4.pl-3.pr-3.service-box-redesign.service-detail.backoffice{ "data-shepherd-tour-target": "service-box" }
+.container.p-0.backoffice
+  .pt-3.service-box-redesign.service-detail.backoffice{ "data-shepherd-tour-target": "service-box" }
     = render Presentable::HeaderComponent.new(object: @service,
                           title: @service.name,
                           abbreviation: @service.abbreviation,
@@ -69,5 +70,5 @@
     - c.description_panels do
       = render "layouts/common_parts/services/offers", offers: @offers, service: @service, bundles: @bundles
     - c.additional_backoffice_info do
-      .right-panel-links
+      .right-panel-links.pt-4.pb-4
         = render "components/presentable/updates", object: @service
