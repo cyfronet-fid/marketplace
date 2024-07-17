@@ -1,0 +1,17 @@
+- content_for :title, t(".title") # TODO: missing translation (no entry in original i18 locales)
+- breadcrumb :backoffice_platform, @platform
+= render "layouts/backoffice/other_settings_wrapper" do
+  .container.p-0.backoffice
+    %h1= @platform.name
+
+    .service-box.p-4.mt-3.backoffice-form
+
+      .btn-group
+        - if policy([:backoffice, @platform]).edit?
+          = link_to _("Edit"), edit_backoffice_other_settings_platform_path(@platform),
+                    class: "btn btn-primary"
+        - if policy([:backoffice, @platform]).destroy?
+          = link_to _("Delete"), backoffice_other_settings_platform_path(@platform),
+                    data: { "turbo-confirm": _("Are you sure you want to remove this platform?"), "turbo-method": :delete },
+                    class: "btn btn-danger"
+    = link_to _("<- Back to Platforms"), backoffice_other_settings_platforms_path, class: "backoffice-back-link mt-3"

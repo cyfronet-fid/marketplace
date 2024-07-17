@@ -1,0 +1,8 @@
+- content_for :title, _("Edit Platform")
+- breadcrumb :backoffice_platform_edit, @platform
+= render "layouts/backoffice/other_settings_wrapper" do
+  .container.p-0.backoffice
+    %h1= _("Edit Platform")
+    .container
+      .row.mt-3.backoffice-form
+        = render "form", platform: @platform

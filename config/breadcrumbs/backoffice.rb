@@ -61,62 +61,72 @@ crumb :backoffice_service_preview do |service|
 end
 
 crumb :backoffice_offer_new do |service|
-  link "New", new_backoffice_service_offer_path(service)
+  link "New Offer", new_backoffice_service_offer_path(service)
   parent :backoffice_service, service
 end
 
 crumb :backoffice_offer_edit do |offer|
-  link "Edit", edit_backoffice_service_offer_path(offer)
+  link "Edit Offer", edit_backoffice_service_offer_path(offer.service, offer)
   parent :backoffice_service, offer.service
 end
 
 crumb :backoffice_bundle_new do |bundle|
-  link "New", backoffice_service_path(bundle.service)
+  link "New Bundle", backoffice_service_path(bundle.service)
   parent :backoffice_service, bundle.service
 end
 
 crumb :backoffice_bundle_edit do |bundle|
-  link "Edit", edit_backoffice_service_bundle_path(bundle)
+  link "Edit Bundle", edit_backoffice_service_bundle_path(bundle.service, bundle)
   parent :backoffice_service, bundle.service
 end
 
-crumb :backoffice_scientific_domains do
-  link "Scientific Domains", backoffice_scientific_domains_path
+crumb :backoffice_statistics do
+  link "Statistics", backoffice_statistics_path
   parent :backoffice_root
 end
 
+crumb :backoffice_other_settings do
+  link "Other settings", backoffice_other_settings_scientific_domains_path
+  parent :backoffice_root
+end
+
+crumb :backoffice_scientific_domains do
+  link "Scientific Domains", backoffice_other_settings_scientific_domains_path
+  parent :backoffice_other_settings
+end
+
 crumb :backoffice_scientific_domain do |scientific_domain|
-  link scientific_domain.name, backoffice_scientific_domain_path(scientific_domain)
+  link scientific_domain.name, backoffice_other_settings_scientific_domain_path(scientific_domain)
   parent :backoffice_scientific_domains
 end
 
 crumb :backoffice_scientific_domain_new do |scientific_domain|
-  link "New", new_backoffice_scientific_domain_path(scientific_domain)
+  link "New", new_backoffice_other_settings_scientific_domain_path(scientific_domain)
   parent :backoffice_scientific_domains
 end
 
 crumb :backoffice_scientific_domain_edit do |scientific_domain|
-  link "Edit", edit_backoffice_scientific_domain_path(scientific_domain)
+  link "Edit", edit_backoffice_other_settings_scientific_domain_path(scientific_domain)
   parent :backoffice_scientific_domain, scientific_domain
 end
 
 crumb :backoffice_categories do
-  link "Categories", backoffice_categories_path
-  parent :backoffice_root
+  link "Categories", backoffice_other_settings_categories_path
+  parent :backoffice_other_settings
 end
 
 crumb :backoffice_category do |category|
-  link category.name, backoffice_category_path(category)
+  link category.name, backoffice_other_settings_category_path(category)
   parent :backoffice_categories
 end
 
 crumb :backoffice_category_new do |category|
-  link "New", new_backoffice_category_path(category)
+  link "New", new_backoffice_other_settings_category_path(category)
   parent :backoffice_categories
 end
 
 crumb :backoffice_category_edit do |category|
-  link "Edit", edit_backoffice_category_path(category)
+  link "Edit", edit_backoffice_other_settings_category_path(category)
   parent :backoffice_category, category
 end
 
@@ -161,41 +171,46 @@ crumb :backoffice_catalogue_edit do |catalogue|
 end
 
 crumb :backoffice_platforms do
-  link "Platforms", backoffice_platforms_path
-  parent :backoffice_root
+  link "Platforms", backoffice_other_settings_platforms_path
+  parent :backoffice_other_settings
 end
 
 crumb :backoffice_platform do |platform|
-  link platform.name, backoffice_platform_path(platform)
+  link platform.name, backoffice_other_settings_platform_path(platform)
   parent :backoffice_platforms
 end
 
 crumb :backoffice_platform_new do |platform|
-  link "New", new_backoffice_platform_path(platform)
+  link "New", new_backoffice_other_settings_platform_path(platform)
   parent :backoffice_platforms
 end
 
 crumb :backoffice_platform_edit do |platform|
-  link "Edit", edit_backoffice_platform_path(platform)
+  link "Edit", edit_backoffice_other_settings_platform_path(platform)
   parent :backoffice_platform, platform
 end
 
+crumb :backoffice_vocabularies_root do
+  link "Vocabularies", backoffice_other_settings_target_users_path
+  parent :backoffice_other_settings
+end
+
 crumb :backoffice_vocabularies do |type|
-  link type, send("backoffice_#{type.parameterize(separator: "_").pluralize}_path")
-  parent :backoffice_root
+  link type, send("backoffice_other_settings_#{type.parameterize(separator: "_").pluralize}_path")
+  parent :backoffice_vocabularies_root
 end
 
 crumb :backoffice_vocabulary do |vocabulary, type|
-  link vocabulary.name, send("backoffice_#{type.parameterize(separator: "_")}_path", vocabulary)
+  link vocabulary.name, send("backoffice_other_settings_#{type.parameterize(separator: "_")}_path", vocabulary)
   parent :backoffice_vocabularies, type
 end
 
 crumb :backoffice_vocabulary_new do |type|
-  link "New", send("new_backoffice_#{type.parameterize(separator: "_")}_path")
+  link "New", send("new_backoffice_other_settings_#{type.parameterize(separator: "_")}_path")
   parent :backoffice_vocabularies, type
 end
 
 crumb :backoffice_vocabulary_edit do |vocabulary, type|
-  link "Edit", send("edit_backoffice_#{type.parameterize(separator: "_")}_path", vocabulary)
+  link "Edit", send("edit_backoffice_other_settings_#{type.parameterize(separator: "_")}_path", vocabulary)
   parent :backoffice_vocabulary, vocabulary, type
 end

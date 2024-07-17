@@ -14,7 +14,7 @@ RSpec.feature "Categories in backoffice", manager_frontend: true do
       create(:category, name: "c1")
       create(:category, name: "c2")
 
-      visit backoffice_categories_path
+      visit backoffice_other_settings_categories_path
 
       expect(page).to have_content("c1")
       expect(page).to have_content("c2")
@@ -24,7 +24,7 @@ RSpec.feature "Categories in backoffice", manager_frontend: true do
       parent = create(:category, name: "parent")
       child = create(:category, name: "child", parent: parent)
 
-      visit backoffice_category_path(child)
+      visit backoffice_other_settings_category_path(child)
 
       expect(page).to have_content("child")
       expect(page).to have_content("parent")
@@ -33,7 +33,7 @@ RSpec.feature "Categories in backoffice", manager_frontend: true do
     scenario "I can create new category" do
       create(:category, name: "parent")
 
-      visit backoffice_categories_path
+      visit backoffice_other_settings_categories_path
       click_on "Add new Category"
 
       fill_in "Name", with: "My new category"
@@ -49,7 +49,7 @@ RSpec.feature "Categories in backoffice", manager_frontend: true do
       create(:category, name: "parent")
       category = create(:category, name: "Old name")
 
-      visit edit_backoffice_category_path(category)
+      visit edit_backoffice_other_settings_category_path(category)
 
       fill_in "Name", with: "New name"
       select "parent", from: "Parent"

@@ -1,21 +1,23 @@
 - content_for :title, @provider.name
 - breadcrumb :backoffice_provider, @provider
 
-%h1= @provider.name
-= render "status", status: @provider.status
+.container.p-0.backoffice
+  %h1.mb-3= @provider.name
+  = render "status", status: @provider.status
 
-.service-box.p-4.mt-3.backoffice-form
-  .logo-wrapper
-    %span.helper
-    - if @provider.logo.attached? && @provider.logo.variable?
-      = image_tag @provider.logo.variant(resize: "100x67"), class: "align-self-center mr-4 float-left img-responsive"
-    - else
-      = image_tag "eosc-img.png", size: "100x67", class: "align-self-center mr-4 float-left img-responsive"
-  - unless @provider.sources.empty?
-    %h3
-      = _("External Sources:")
-    %ul
-      - @provider.sources.each do |source|
-        %li "#{source.source_type}: #{source.eid}"
-  %hr.bottom-hr.mt-5.mb-4
-  = render "actions", provider: @provider
+  .service-box.p-4.mt-3.backoffice-form
+    .logo-wrapper
+      %span.helper
+      - if @provider.logo.attached? && @provider.logo.variable?
+        = image_tag @provider.logo.variant(resize: "100x67"), class: "align-self-center mr-4 float-left img-responsive"
+      - else
+        = image_tag "eosc-img.png", size: "100x67", class: "align-self-center mr-4 float-left img-responsive"
+    - unless @provider.sources.empty?
+      %h3
+        = _("External Sources:")
+      %ul
+        - @provider.sources.each do |source|
+          %li "#{source.source_type}: #{source.eid}"
+    %hr.bottom-hr.mt-5.mb-4
+    = render "actions", provider: @provider
+  = link_to _("<- Back to Providers"), backoffice_providers_path, class: "backoffice-back-link mt-3"
