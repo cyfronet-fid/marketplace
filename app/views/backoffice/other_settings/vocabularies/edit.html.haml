@@ -1,0 +1,8 @@
+- content_for :title, _("Edit #{@type}")
+- breadcrumb :backoffice_vocabulary_edit, @vocabulary, @type
+= render "layouts/backoffice/other_settings_wrapper" do
+  .container.p-0.backoffice
+    %h1= _("Edit #{@type}")
+    = render "form", vocabulary: @vocabulary,
+             url: send("backoffice_other_settings_#{snake_cased(@type)}_path", @vocabulary),
+             button_name: "Update #{@type}", type: @type

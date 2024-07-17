@@ -1,5 +1,6 @@
 - content_for :title, @provider.name
 - breadcrumb :provider, @provider
+
 .container{ class: "#{"suspended" if @provider.suspended?}" }
   .pt-4.service-box-redesign.service-detail
     = render Presentable::HeaderComponent.new(object: @provider,

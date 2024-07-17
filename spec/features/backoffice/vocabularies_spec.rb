@@ -30,7 +30,7 @@ RSpec.feature "Vocabularies in backoffice", manager_frontend: true do
         before { checkin_sign_in_as(user) }
 
         scenario "I can create new" do
-          visit send("backoffice_#{vocabulary.to_s.pluralize}_path")
+          visit send("backoffice_other_settings_#{vocabulary.to_s.pluralize}_path")
 
           click_on "Add new #{humanized}"
 
@@ -52,7 +52,7 @@ RSpec.feature "Vocabularies in backoffice", manager_frontend: true do
         scenario "I can edit existing" do
           existing_vocabulary = create(vocabulary)
 
-          visit send("backoffice_#{vocabulary}_path", existing_vocabulary)
+          visit send("backoffice_other_settings_#{vocabulary}_path", existing_vocabulary)
 
           click_on "Edit"
 
@@ -74,7 +74,7 @@ RSpec.feature "Vocabularies in backoffice", manager_frontend: true do
         scenario "I can delete existing if is not root element" do
           existing_vocabulary = create(vocabulary)
 
-          visit send("backoffice_#{vocabulary}_path", existing_vocabulary)
+          visit send("backoffice_other_settings_#{vocabulary}_path", existing_vocabulary)
 
           click_on "Delete"
 
@@ -112,7 +112,7 @@ RSpec.feature "Vocabularies in backoffice", manager_frontend: true do
             nil
           end
 
-          visit send("backoffice_#{vocabulary}_path", to_associate)
+          visit send("backoffice_other_settings_#{vocabulary}_path", to_associate)
 
           click_on "Delete"
 
@@ -125,7 +125,7 @@ RSpec.feature "Vocabularies in backoffice", manager_frontend: true do
           parent = create(vocabulary)
           create(vocabulary, ancestry: parent.id)
 
-          visit send("backoffice_#{vocabulary}_path", parent)
+          visit send("backoffice_other_settings_#{vocabulary}_path", parent)
 
           click_on "Delete"
 

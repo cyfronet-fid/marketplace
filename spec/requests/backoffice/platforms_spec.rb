@@ -9,9 +9,9 @@ RSpec.describe "Backoffice: platforms", backend: true do
     before { login_as(user) }
 
     it "I can delete platform" do
-      platfrom = create(:platform)
+      platform = create(:platform)
 
-      expect { delete backoffice_platform_path(platfrom) }.to change { Platform.count }.by(-1)
+      expect { delete backoffice_other_settings_platform_path(platform) }.to change { Platform.count }.by(-1)
     end
   end
 end
