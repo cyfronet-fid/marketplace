@@ -1,16 +1,24 @@
+- if request.fullpath.include?("backoffice")
+  .col-12.justify-content-center.d-flex
+    .col-lg-9.pl-0
+      = render "backoffice/services/search", query_params: query_params || {}
+    .col-lg-3.pr-0
+      - if policy([:backoffice, Service]).new?
+        = link_to _("+ Create new Service"),
+                      new_backoffice_service_path,
+                      class: "btn btn-primary create-resource float-right",
+                      "data-e2e": "create-resource"
 .col-md-12.mb-2
-  %h1.categories
+  %h1.categories.mt-5
     - if params[:q].present?
       %span
         = _("Looking for") + ":"
       #{params[:q]}
-    - else
-      = category&.name || "EOSC Services and Data Sources"
   .col-md-12.mb-1
     - if category && params[:q].blank?
       %p.text-muted= category.description
   - if active_filters.present?
-    .col-md-12.mb-3
+    .col-md-12.mb-3.pl-0
       %p.mb-1
         = _("Active filters")
       .active-filters

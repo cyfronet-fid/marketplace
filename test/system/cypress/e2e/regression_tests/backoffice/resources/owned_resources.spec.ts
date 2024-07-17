@@ -33,7 +33,7 @@ describe("Owned services", () => {
     cy.contains("a", "Edit service").should("be.visible");
   });
 
-  it("should add new service and published it", () => {
+  it("should add new service and publish it", () => {
     cy.visit("/backoffice/services/new");
     cy.fillFormCreateResource(resource, correctLogo);
     cy.get("[data-e2e='submit-btn']").click();

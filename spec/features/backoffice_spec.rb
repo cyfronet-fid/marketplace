@@ -36,14 +36,15 @@ RSpec.feature "Backoffice", manager_frontend: true do
     scenario "I'm able to enter into backoffice" do
       visit backoffice_path
 
-      expect(page).to have_current_path(backoffice_path)
+      expect(page).to have_current_path(backoffice_providers_path)
     end
   end
 
   context "as a service owner" do
     let(:user) do
       create(:user).tap do |user|
-        service = create(:service)
+        provider = create(:provider, data_administrators: [build(:data_administrator, email: user.email)])
+        service = create(:service, resource_organisation: provider)
         ServiceUserRelationship.create!(user: user, service: service)
       end
     end
@@ -58,7 +59,7 @@ RSpec.feature "Backoffice", manager_frontend: true do
     scenario "I'm able to enter into backoffice" do
       visit backoffice_path
 
-      expect(page).to have_current_path(backoffice_path)
+      expect(page).to have_current_path(backoffice_services_path)
     end
   end
 end

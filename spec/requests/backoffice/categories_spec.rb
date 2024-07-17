@@ -11,7 +11,7 @@ RSpec.describe "Backoffice category", backend: true do
     it "I can delete category" do
       category = create(:category)
 
-      expect { delete backoffice_category_path(category) }.to change { Category.count }.by(-1)
+      expect { delete backoffice_other_settings_category_path(category) }.to change { Category.count }.by(-1)
     end
   end
 end

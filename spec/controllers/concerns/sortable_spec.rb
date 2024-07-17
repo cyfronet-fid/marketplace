@@ -18,24 +18,24 @@ RSpec.describe SortableFakeController, backend: true do
 
   context "ordering" do
     it "should by default sort by name" do
-      expect(controller.send(:ordering)).to eq(sort_name: :asc)
+      expect(controller.send(:ordering)).to eq(sort_name: { order: :asc, unmapped_type: :string })
     end
 
     it "should return ascending ordering by rating" do
       controller.params = { sort: "rating" }
-      expect(controller.send(:ordering)).to eq("rating" => :asc)
+      expect(controller.send(:ordering)).to eq("rating" => { order: :asc, unmapped_type: :long })
     end
     it "should return descending ordering by rating" do
       controller.params = { sort: "-rating" }
-      expect(controller.send(:ordering)).to eq("rating" => :desc)
+      expect(controller.send(:ordering)).to eq("rating" => { order: :desc, unmapped_type: :long })
     end
     it "should return ascending ordering by status" do
       controller.params = { sort: "status" }
-      expect(controller.send(:ordering)).to eq("status" => :asc)
+      expect(controller.send(:ordering)).to eq("status" => { order: :asc, unmapped_type: :string })
     end
     it "should return ascending ordering by status" do
       controller.params = { sort: "-status" }
-      expect(controller.send(:ordering)).to eq("status" => :desc)
+      expect(controller.send(:ordering)).to eq("status" => { order: :desc, unmapped_type: :string })
     end
   end
 end

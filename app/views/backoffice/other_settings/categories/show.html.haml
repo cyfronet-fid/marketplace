@@ -1,0 +1,24 @@
+- breadcrumb :backoffice_category, @category
+= render "layouts/backoffice/other_settings_wrapper" do
+  .container.p-0.backoffice
+    %h1= @category.name
+    .service-box.p-4.mt-3.backoffice-form
+      %h2 Description:
+      %p= @category.description
+      %h2 eID:
+      %p= @category.eid
+      %h2= @category.parent ? _("Parent: %{cpn}") % { cpn: @category.parent.name } : _("Root element")
+      = image_tag @category.logo.variant(resize: "200x200") if @category.logo.attached? && @category.logo.variable?
+
+      %hr.bottom-hr.mt-5.mb-4
+      .btn-group
+        - if policy([:backoffice, @category]).edit?
+          = link_to "Edit",
+                    edit_backoffice_other_settings_category_path(@category),
+                    class: "btn btn-primary"
+        - if policy([:backoffice, @category]).destroy?
+          = link_to "Delete",
+                    backoffice_other_settings_category_path(@category.id),
+                    data: { "turbo-confirm": "Are you sure you want to remove this category?", "turbo-method": :delete },
+                    class: "btn btn-danger"
+  = link_to _("<- Back to Categories"), backoffice_other_settings_categories_path, class: "backoffice-back-link mt-3"

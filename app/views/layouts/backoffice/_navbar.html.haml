@@ -1,8 +1,12 @@
+- other_settings = %w[scientific_domains categories platforms vocabularies]
 = render "layouts/sections"
+
+.breadcrumbs-backoffice-wrapper
+  .container
+    = render "layouts/breadcrumb"
+
 .container
-  %nav.navbar.navbar-expand-lg.navbar-light
-    = link_to root_path, class: "navbar-brand col-8 col-lg-3 pl-0 backoffice-logo" do
-      = image_tag "eosc-logo-color-backoffice.png"
+  %nav.navbar.navbar-expand-lg.navbar-light.backoffice-nav
 
     %button.navbar-toggler.backoffice-menu{ "aria-controls" => "navbar-supported-content",
                             "aria-expanded" => "false", "aria-label" => "Toggle navigation",
@@ -10,28 +14,20 @@
                             "data-toggle" => "collapse",
                              type: "button" }
       %span.navbar-toggler-icon
-
-    #navbar-supported-content.collapse.navbar-collapse
-      %ul.navbar-nav.ml-auto.pt-2
-        = nav_link controller: :backoffices, html_options: { class: "nav-item" } do
-          = link_to _("Getting Started"), backoffice_path, class: "nav-link py-1"
-        = nav_link controller: :services, html_options: { class: "nav-item" } do
-          = link_to _("Owned Services & Datasources"), backoffice_services_path, class: "nav-link py-1"
-        - if policy([:backoffice, Provider]).index?
-          = nav_link controller: :providers, html_options: { class: "nav-item" } do
-            = link_to _("Providers"), backoffice_providers_path, class: "nav-link py-1"
-        - if policy([:backoffice, Catalogue]).index?
-          = nav_link controller: :catalogues, html_options: { class: "nav-item" } do
-            = link_to _("Catalogues"), backoffice_catalogues_path, class: "nav-link py-1"
-        - if policy([:backoffice, ScientificDomain]).index?
-          = nav_link controller: :scientific_domains, html_options: { class: "nav-item" } do
-            = link_to _("Scientific domains"), backoffice_scientific_domains_path, class: "nav-link py-1"
-        - if policy([:backoffice, Category]).index?
-          = nav_link controller: :categories, html_options: { class: "nav-item" } do
-            = link_to _("Categories"), backoffice_categories_path, class: "nav-link py-1"
-        - if policy([:backoffice, Platform]).index?
-          = nav_link controller: :platforms, html_options: { class: "nav-item" } do
-            = link_to _("Platforms"), backoffice_platforms_path, class: "nav-link py-1"
-        - if policy([:backoffice, Vocabulary]).index?
-          = nav_link controller: :platforms, html_options: { class: "nav-item" } do
-            = link_to _("Vocabularies"), backoffice_vocabularies_path, class: "nav-link px-2 py-1"
+    - if controller.action_name == "index"
+      #navbar-supported-content.collapse.navbar-collapse
+        %ul.navbar-nav
+          = nav_link controller: :services, html_options: { class: "nav-item" } do
+            = link_to _("Services"), backoffice_services_path, class: "nav-link", data: { e2e: "owned-services" }
+          - if policy([:backoffice, Provider]).index?
+            = nav_link controller: :providers, html_options: { class: "nav-item" } do
+              = link_to _("Providers"), backoffice_providers_path, class: "nav-link", data: { e2e: "providers" }
+          - if policy([:backoffice, Catalogue]).index?
+            = nav_link controller: :catalogues, html_options: { class: "nav-item" } do
+              = link_to _("Catalogues"), backoffice_catalogues_path, class: "nav-link", data: { e2e: "catalogues" }
+          = nav_link controller: :statistics, html_options: { class: "nav-item" } do
+            = link_to _("Statistics"), backoffice_statistics_path, class: "nav-link", data: { e2e: "statistics" }
+          = nav_link controller: :scientific_domains,
+          html_options: { class: "nav-item #{"active" if controller.controller_name.in? other_settings}" } do
+            = link_to _("Other settings"), backoffice_scientific_domains_path,
+            class: "nav-link", data: { e2e: "other_settings" }

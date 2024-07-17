@@ -31,3 +31,5 @@
   .right-extra-info
     .service-logo
       = presentable_logo(service, "align-center mx-4 service-logo", "120x120")
+  .backoffice-button-row.d-none{ class: ("d-block" if request.fullpath.include?("backoffice")) }
+    = link_to "Manage service and offers", backoffice_service_path(service), class: "btn btn-primary"

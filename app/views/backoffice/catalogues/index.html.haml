@@ -1,34 +1,51 @@
 - content_for :title, _("Catalogues")
-- breadcrumb :backoffice_catalogues, params[:page].presence
-.container
-  %h1
-    = _("Catalogues")
-    - if policy([:backoffice, Catalogue]).new?
-      .float-right
-        = link_to _("Add new Catalogue"),
+- breadcrumb :backoffice_catalogues
+
+.container.p-0.backoffice
+  - if @catalogues.blank?
+    .empty-information.col-12.col-md-9.m-auto
+      %h2 Group Providers into Catalogues
+      .details-intro
+        Use catalogues to manage and organise multiple providers. Add, remove, and arrange them to keep your
+        marketplace in order.
+      = link_to _("+ Add new Catalogue"),
                   new_backoffice_catalogue_path,
                   class: "btn btn-primary",
                   "data-e2e": "add-new-catalogue"
-      .clearfix
-  %ul.list-group.backoffice-list.mt-3.mb-3{ "data-e2e": "backoffice-catalogues-list" }
-    - @catalogues.each do |catalogue|
-      %li.list-group-item.providers
+  - else
+    %h1
+      = _("Catalogues")
+      - if policy([:backoffice, Catalogue]).new?
+        .float-right
+          = link_to _("+ Add new Catalogue"),
+                    new_backoffice_catalogue_path,
+                    class: "btn btn-primary",
+                    "data-e2e": "add-new-catalogue"
+        .clearfix
+    %ul.list-group.backoffice-list.mt-3.mb-3{ "data-e2e": "backoffice-catalogues-list" }
+      %li.list-group-item.heading-row
         .row
-          .col-12.col-md-7
-            = link_to catalogue.name, backoffice_catalogue_path(catalogue,
-            params: { page: params[:page] } || {}), class: "catalogue-name"
-          .col-12.col-md-5
-            .actions
-              - if policy([:backoffice, catalogue]).destroy?
-                = link_to backoffice_catalogue_path(catalogue.id),
-                      data: { "turbo-confirm": action_prompt("catalogue", "remove"), "turbo-method": :delete },
-                      class: "delete-icon float-right" do
-                  %i.far.fa-trash-alt
+          .col-12.col-md-8 Name
+          .col-12.col-md-2.text-center Status
+          .col-12.col-md-2
+      - @catalogues.each do |catalogue|
+        %li.list-group-item.providers
+          .row
+            .col-12.col-md-8
+              = link_to catalogue.name, backoffice_catalogue_path(catalogue,
+              params: { page: params[:page] } || {}), class: "catalogue-name"
+            .col-12.col-md-2.text-center
+              %span.status{ class: catalogue.status }
+                = catalogue.status
+            .col-12.col-md-2
+              .actions
+                - if policy([:backoffice, catalogue]).destroy?
+                  = link_to backoffice_catalogue_path(catalogue.id),
+                        data: { "turbo-confirm": action_prompt("catalogue", "remove"), "turbo-method": :delete },
+                        class: "delete-icon float-right" do
+                    %i.far.fa-trash-alt
 
-                - if policy([:backoffice, catalogue]).edit?
-                  = link_to _("Edit"),
-                      edit_backoffice_catalogue_path(catalogue),
-                      class: "btn-sm btn-warning float-right mr-4"
-
-            %span.status{ class: catalogue.status }
-              = catalogue.status
+                  - if policy([:backoffice, catalogue]).edit?
+                    = link_to _("Edit"),
+                        edit_backoffice_catalogue_path(catalogue),
+                        class: "edit-btn float-right mr-4"

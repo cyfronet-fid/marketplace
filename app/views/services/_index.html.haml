@@ -9,10 +9,11 @@
                                           services_count: services_count
       = render "services/filters", filters: filters, query_params: query_params
 
-    .col-lg-9{ "data-controller": "favourite #{effective_show_comparison ? "comparison" : ""}",
+    .col-lg-9.pr-0{ "data-controller": "favourite #{effective_show_comparison ? "comparison" : ""}",
                "data-shepherd-tour-target": "overview_5" }
       .row.mb-4
-        = render "services/active_filters", category: category, active_filters: active_filters
+        = render "services/active_filters", category: category, active_filters: active_filters,
+          query_params: query_params
         - if effective_show_recommendations && recommended_services.present?
           = render partial: "services/recommendation_panel_v1",
                      locals: { highlights: highlights, category: category, recommended_services: recommended_services }

@@ -14,7 +14,7 @@ RSpec.feature "Scientific domains in backoffice", manager_frontend: true do
       create(:scientific_domain, name: "ra1")
       create(:scientific_domain, name: "ra2")
 
-      visit backoffice_scientific_domains_path
+      visit backoffice_other_settings_scientific_domains_path
 
       expect(page).to have_content("ra1")
       expect(page).to have_content("ra2")
@@ -24,7 +24,7 @@ RSpec.feature "Scientific domains in backoffice", manager_frontend: true do
       parent = create(:scientific_domain, name: "parent")
       child = create(:scientific_domain, name: "child", parent: parent)
 
-      visit backoffice_scientific_domain_path(child)
+      visit backoffice_other_settings_scientific_domain_path(child)
 
       expect(page).to have_content("child")
       expect(page).to have_content("parent")
@@ -33,7 +33,7 @@ RSpec.feature "Scientific domains in backoffice", manager_frontend: true do
     scenario "I can create new scientific domain" do
       create(:scientific_domain, name: "parent")
 
-      visit backoffice_scientific_domains_path
+      visit backoffice_other_settings_scientific_domains_path
       click_on "Add new Scientific Domain"
 
       fill_in "Name", with: "My new scientific domain"
@@ -49,7 +49,7 @@ RSpec.feature "Scientific domains in backoffice", manager_frontend: true do
       create(:scientific_domain, name: "parent")
       scientific_domain = create(:scientific_domain, name: "Old name")
 
-      visit edit_backoffice_scientific_domain_path(scientific_domain)
+      visit edit_backoffice_other_settings_scientific_domain_path(scientific_domain)
 
       fill_in "Name", with: "New name"
       select "parent", from: "Parent"
