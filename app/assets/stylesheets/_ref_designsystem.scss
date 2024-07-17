@@ -1175,13 +1175,12 @@ li {
 
   &.backoffice {
     border: 1px solid $color-8;
-    border-radius: 30px;
-    margin-left: 2%;
-    margin-bottom: 12px;
+    border-radius: 8px;
+    margin: 0;
 
     input {
-      padding-top: 8px;
-      padding-bottom: 8px;
+      padding-top: 10px;
+      padding-bottom: 10px;
     }
   }
 }

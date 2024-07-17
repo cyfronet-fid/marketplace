@@ -93,7 +93,7 @@ VOCABULARY_TYPES = {
     route: :meril_scientific_domains
   },
   research_activity: {
-    name: "Research Step",
+    name: "Research Activity",
     klass: "Vocabulary::ResearchActivity",
     route: :research_activities
   },

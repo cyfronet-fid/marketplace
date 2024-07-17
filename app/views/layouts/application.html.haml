@@ -22,7 +22,8 @@
         categories: @siblings || @root_categories,
         query_params: @query_params || {}
     %main
-      = render "layouts/breadcrumb"
+      .container.breadcrumbs-wrapper
+        = render "layouts/breadcrumb"
 
       = yield
 

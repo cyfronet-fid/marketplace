@@ -1,0 +1,8 @@
+- content_for :title, _("Edit Scientific Domain")
+- breadcrumb :backoffice_scientific_domain_edit, @scientific_domain
+= render "layouts/backoffice/other_settings_wrapper" do
+  .container.p-0.backoffice
+    %h1= _("Edit Scientific Domain")
+    .container
+      .row.service-box.shadow-sm.p-4.mt-3.backoffice-form
+        = render "form", scientific_domain: @scientific_domain

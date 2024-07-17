@@ -120,8 +120,6 @@ Rails.application.routes.draw do
     end
     get "service_autocomplete", to: "services#autocomplete", as: :service_autocomplete
     get "services/c/:category_id" => "services#index", :as => :category_services
-    resources :scientific_domains
-    resources :categories
     resources :providers, constraints: { id: %r{[^/]+} } do
       resource :publish, controller: "providers/publishes", only: :create
       resource :unpublish, controller: "providers/unpublishes", only: :create
@@ -130,11 +128,17 @@ Rails.application.routes.draw do
       resource :publish, controller: "catalogues/publishes", only: :create
       resource :unpublish, controller: "catalogues/unpublishes", only: :create
     end
-    resources :platforms
-    get "vocabularies", to: "vocabularies#index", type: "target_user", as: :vocabularies
-    scope "/vocabularies" do
-      VOCABULARY_TYPES.each do |type, opts|
-        resources opts[:route], controller: "vocabularies", type: type.to_s
+    resources :statistics, only: :index
+    get "other_settings", to: "other_settings/scientific_domains#index", as: :scientific_domains
+    namespace :other_settings do
+      resources :scientific_domains
+      resources :categories
+      resources :platforms
+      get "vocabularies", to: "vocabularies#index", type: "target_user", as: :vocabularies
+      scope "/vocabularies" do
+        VOCABULARY_TYPES.each do |type, opts|
+          resources opts[:route], controller: "vocabularies", type: type.to_s
+        end
       end
     end
   end
@@ -143,11 +147,6 @@ Rails.application.routes.draw do
 
   post "/backoffice/services/:service_id/offers/:offer_id/submit", to: "backoffice/services/offers#submit_summary"
   patch "/backoffice/services/:service_id/offers/:offer_id/submit", to: "backoffice/services/offers#submit_summary"
-
-  resource :executive, only: :show
-  namespace :executive do
-    resources :statistics, only: :index
-  end
 
   mount Rswag::Ui::Engine => "/api_docs/swagger"
   mount Rswag::Api::Engine => "/api_docs/swagger"
