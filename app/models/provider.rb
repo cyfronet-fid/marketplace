@@ -136,6 +136,7 @@ class Provider < ApplicationRecord
             }
   validate :logo_variable, on: %i[create update]
   validate :validate_array_values_uniqueness
+  validate :catalogue_published
 
   def legal_status=(status_id)
     self.legal_statuses = status_id.blank? ? [] : [Vocabulary.find(status_id)]
@@ -193,6 +194,10 @@ class Provider < ApplicationRecord
     "#{street_name_and_number} <br> #{postal_code} #{city} <br> #{region} #{country}"
   end
 
+  def managed_services
+    Service.left_joins(:service_providers).where("status = 'published' AND resource_organisation_id = #{id}")
+  end
+
   def services
     Service.left_joins(:service_providers).where(
       "status = 'published' AND
@@ -242,6 +247,10 @@ class Provider < ApplicationRecord
     if national_roadmaps.uniq.length != national_roadmaps.length
       errors.add(:national_roadmaps, "has duplicates, please remove them to continue")
     end
+  end
+
+  def catalogue_published
+    errors.add(:catalogue, "must be published") if published? && catalogue.present? && !catalogue.published?
   end
 
   def logo_changed?

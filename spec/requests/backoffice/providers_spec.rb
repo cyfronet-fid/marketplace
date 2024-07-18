@@ -27,19 +27,19 @@ RSpec.describe "Backoffice: manage providers", backend: true do
       end
     end
 
-    it "I can't delete provider having service with status different than deleted" do
+    it "I can delete provider having service with status different than deleted" do
       provider = create(:provider)
       create(:service, status: :errored, resource_organisation: provider)
 
       expect { delete backoffice_provider_path(provider) }.to change { Provider.where.not(status: :deleted).count }.by(
-        0
+        -1
       )
 
       provider = create(:provider)
       create(:service, status: :draft, resource_organisation: provider)
 
       expect { delete backoffice_provider_path(provider) }.to change { Provider.where.not(status: :deleted).count }.by(
-        0
+        -1
       )
     end
 

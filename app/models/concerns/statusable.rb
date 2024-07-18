@@ -6,6 +6,10 @@ module Statusable
   included do
     enum status: STATUSES
 
+    scope :visible, -> { where(status: VISIBLE_STATUSES) }
+    scope :active, -> { where(status: PUBLIC_STATUSES) }
+    scope :associable, -> { where.not(status: INVISIBLE_STATUSES) }
+
     validates :status, presence: true, inclusion: { in: STATUSES.values }
   end
 

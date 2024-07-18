@@ -3,8 +3,12 @@
 class Service::Suspend < Service::ApplicationService
   def call
     public_before = @service.public?
-    result = @service.update!(status: :suspended)
-    unbundle_and_notify! if result && public_before
+    @service.status = :suspended
+    result = @service.save(validate: false)
+    if result
+      unbundle_and_notify! if public_before
+      @service.reindex
+    end
     result
   end
 

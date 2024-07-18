@@ -21,4 +21,11 @@ class Offer::ApplicationService < ApplicationService
       )
     end
   end
+
+  def disconnect_main_offer!
+    @main_bundles.each do |bundle|
+      bundle.main_offer = nil
+      bundle.save!(validate: false)
+    end
+  end
 end

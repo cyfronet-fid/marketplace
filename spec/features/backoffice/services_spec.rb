@@ -704,7 +704,8 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       expect(page).to have_field "Activate message", disabled: false
     end
 
-    scenario "If eosc_registry is selected as upstream fields imported from there should be disabled" do
+    scenario "If eosc_registry is selected as upstream fields imported from there should be disabled",
+             skip: "Not valid in the whitelabel use-case" do
       service = create(:service, name: "my service")
       external_source = create(:service_source, service: service, source_type: :eosc_registry)
       service.upstream = external_source

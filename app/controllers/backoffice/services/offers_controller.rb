@@ -44,7 +44,7 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
 
   def destroy
     @offer = @service.offers.find_by(iid: params[:id])
-    if Offer::Destroy.call(@offer)
+    if Offer::Delete.call(@offer)
       redirect_to backoffice_service_path(@service), notice: "Offer removed successfully"
     else
       render :edit, status: :bad_request

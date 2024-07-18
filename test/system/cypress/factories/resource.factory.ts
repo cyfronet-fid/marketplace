@@ -24,7 +24,7 @@ export const ResourcesFactory = {
   create: (args: { [field: string]: string } = {}): IResources => ({
     basicName: Utilities.getUUID4(),
     basicResourceOrganisation: "EGI Federation",
-    basicProviders: ["EUDAT", "CloudFerro"],
+    basicProviders: ["CLARIN ERIC", "CloudFerro"],
     basicWebpage_url: "https://example.com",
     marketingDescription: Utilities.getRandomString(8).toLowerCase(),
     marketingTagline: Utilities.getRandomEmail(),
@@ -90,7 +90,7 @@ export const ResourcesFactoryExtended = {
   create: (args: { [field: string]: string } = {}): IResourcesExtended => ({
     basicName: Utilities.getUUID4(),
     basicResourceOrganisation: "EGI Federation",
-    basicProviders: ["EUDAT", "CloudFerro"],
+    basicProviders: ["CLARIN ERIC", "CloudFerro"],
     basicWebpage_url: "https://example.com",
     marketingDescription: Utilities.getRandomString(8).toLowerCase(),
     marketingTagline: Utilities.getRandomString(8).toLowerCase(),

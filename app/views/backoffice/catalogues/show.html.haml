@@ -30,16 +30,16 @@
       = link_to _("Suspend"),
                 backoffice_catalogue_unpublish_path(@catalogue, suspend: true),
                 class: "btn btn-info",
-                data: { turbo_confirm: _("Are you sure you want to publish this catalogue as suspended?"),
+                data: { turbo_confirm: action_prompt("catalogue", "suspend"),
                 turbo_method: :post }
     - if policy([:backoffice, @catalogue]).unpublish?
       = link_to _("Unpublish"),
                 backoffice_catalogue_unpublish_path(@catalogue),
                 class: "btn btn-error",
-                data: { turbo_confirm: _("Are you sure you want to unpublish this catalogue?"),
+                data: { turbo_confirm: action_prompt("catalogue", "unpublish"),
                 turbo_method: :post }
     - if policy([:backoffice, @catalogue]).destroy?
       = link_to _("Delete"),
                 backoffice_catalogue_path(@catalogue.id),
                 class: "btn btn-danger",
-                data: { turbo_confirm: _("Are you sure you want to remove this catalogue?"), turbo_method: :delete }
+                data: { turbo_confirm: action_prompt("catalogue", "remove"), turbo_method: :delete }

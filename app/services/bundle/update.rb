@@ -14,8 +14,7 @@ class Bundle::Update < Bundle::ApplicationService
     result = @bundle.update(@params)
     if @external_update
       notify_own_offer!
-      @bundle =
-        @current_offer_ids.empty? ? Bundle::Draft.call(@bundle, empty_offers: true) : Bundle::Unpublish.call(@bundle)
+      @bundle = Bundle::Unpublish.call(@bundle)
     else
       public_before = @bundle.published?
       notify_bundled_offers! if result && public_before

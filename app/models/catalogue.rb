@@ -50,7 +50,6 @@ class Catalogue < ApplicationRecord
   has_many :catalogue_data_administrators
   has_many :data_administrators, through: :catalogue_data_administrators, dependent: :destroy, autosave: true
 
-  scope :active, -> { where.not(status: %i[deleted draft]) }
   scope :managed_by, ->(user) { joins(:data_administrators).where(data_administrators: { user_id: user&.id }) }
 
   accepts_nested_attributes_for :data_administrators, allow_destroy: true

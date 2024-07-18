@@ -22,7 +22,7 @@
   - if offers.present?
     = render partial: "layouts/common_parts/services/default_parameters", locals: { offer: offers.manageable.first }
     = render partial: "layouts/common_parts/services/offer", collection: offers[1..], as: :offer if offers.manageable.size > 1
-  = render "layouts/common_parts/services/new_offer", service: service
+  = render "layouts/common_parts/services/new_offer", service: service if policy([:backoffice, service]).edit?
 .row.parameters
 %h2.mb-4.mt-5.font-weight-normal
   = _("Bundles")
@@ -33,4 +33,4 @@
   -# haml-lint:enable MultilinePipe
 .row
   = render partial: "layouts/common_parts/services/bundle_box", collection: bundles, as: :bundle
-  = render "layouts/common_parts/services/new_bundle", service: service
+  = render "layouts/common_parts/services/new_bundle", service: service if policy([:backoffice, service]).edit?

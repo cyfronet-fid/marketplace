@@ -23,7 +23,6 @@ class Service < ApplicationRecord
   SERVICE_TYPES = %w[Service Datasource].freeze
 
   scope :horizontal, -> { where(horizontal: true) }
-  scope :visible, -> { where(status: %i[published suspended]) }
   scope :managed_by,
         ->(user) do
           includes(resource_organisation: :data_administrators).where(
@@ -261,8 +260,13 @@ class Service < ApplicationRecord
             }
   validates :resource_organisation, presence: true
   validates :public_contacts, presence: true, length: { minimum: 1, message: "are required. Please add at least one" }
+  validate :resource_organisation_published
 
   after_save :set_first_category_as_main!, if: :main_category_missing?
+
+  def resource_organisation_published
+    errors.add(:resource_organisation, "must be published") if published? && !resource_organisation.published?
+  end
 
   def self.popular(count)
     includes(:providers).where(status: :published).order(popularity_ratio: :desc, name: :asc).limit(count)

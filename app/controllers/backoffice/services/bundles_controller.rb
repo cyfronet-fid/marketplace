@@ -37,7 +37,7 @@ class Backoffice::Services::BundlesController < Backoffice::ApplicationControlle
 
   def destroy
     @bundle = @service.bundles.find_by(iid: params[:id])
-    if Bundle::Destroy.call(@bundle)
+    if Bundle::Delete.call(@bundle)
       redirect_to backoffice_service_path(@service), notice: "Bundle removed successfully"
     else
       render :edit, status: :unprocessable_entity

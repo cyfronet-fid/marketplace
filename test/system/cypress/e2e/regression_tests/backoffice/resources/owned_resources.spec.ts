@@ -29,7 +29,7 @@ describe("Owned services", () => {
     cy.location("href").should("contain", "/backoffice");
     cy.get("[data-e2e='owned-services']").click();
     cy.location("href").should("contain", "/backoffice/services");
-    cy.get("[data-e2e='service-id'] a").eq(0).click();
+    cy.get("[data-e2e='service-id'] a").eq(1).click();
     cy.contains("a", "Edit service").should("be.visible");
   });
 
