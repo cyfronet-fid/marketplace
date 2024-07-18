@@ -1,0 +1,27 @@
+= turbo_frame_tag "raid-form" do
+  = render "raid_project/steps/navbar", step: 1
+  = simple_form_for raid_project, url: raid_project_step_path(params[:raid_project_id], "step1"),
+        html: { role: "form", data_raid_project_target: "form" },
+            method: :put do |f|
+    .new-form-style{ data: {"raid-project-target": "section", section: "step1" } }
+      = f.input :form_step, as: :hidden, input_html: { value:"step1" }
+
+
+      %h4 Project LIFETIME
+      .offer-section-wrapper.bottom-margin
+        .row
+          .col-6
+            = f.input :start_date, as: :date, html5: true, label: "Enter Project Start Date"
+          .col-6
+            = f.input :end_date, as: :date, html5: true, label: "Predicted End Date"
+      %h4 Project TITLES
+      .offer-section-wrapper.bottom-margin
+        = render "raid_project/steps/title_fields", f: f, obj: raid_project
+      %h4 Description
+      .offer-section-wrapper.bottom-margin
+        = render "raid_project/steps/description_fields", f: f, obj: raid_project
+
+      %hr.bottom-hr.mt-5.mb-4
+        .row
+          .col-12
+            = f.button :submit, "Next", class: "btn btn-primary pl-5 pr-5"

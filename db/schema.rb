@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_06_071515) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_12_153457) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -240,6 +240,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_06_071515) do
     t.index ["id", "contactable_id", "contactable_type"], name: "index_contacts_on_id_and_contactable_id_and_contactable_type", unique: true
   end
 
+  create_table "contributors", force: :cascade do |t|
+    t.string "pid_type", null: false
+    t.string "pid", null: false
+    t.boolean "leader", null: false
+    t.boolean "contact", null: false
+    t.string "roles", default: [], array: true
+    t.bigint "raid_project_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["raid_project_id"], name: "index_contributors_on_raid_project_id"
+  end
+
   create_table "data_administrators", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -249,6 +261,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_06_071515) do
     t.index ["email"], name: "index_data_administrators_on_email"
     t.index ["first_name"], name: "index_data_administrators_on_first_name"
     t.index ["last_name"], name: "index_data_administrators_on_last_name"
+  end
+
+  create_table "descriptions", force: :cascade do |t|
+    t.text "text", null: false
+    t.string "language"
+    t.string "type", null: false
+    t.string "description_type", null: false
+    t.bigint "raid_project_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["raid_project_id"], name: "index_descriptions_on_raid_project_id"
   end
 
   create_table "events", force: :cascade do |t|
@@ -485,6 +508,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_06_071515) do
     t.index ["name"], name: "index_platforms_on_name", unique: true
   end
 
+  create_table "positions", force: :cascade do |t|
+    t.string "pid"
+    t.date "start_date"
+    t.date "end_date"
+    t.string "positionable_type", null: false
+    t.bigint "positionable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["positionable_type", "positionable_id"], name: "index_positions_on_positionable"
+  end
+
   create_table "project_items", force: :cascade do |t|
     t.string "status_type", null: false
     t.datetime "created_at", precision: nil, null: false
@@ -647,6 +681,35 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_06_071515) do
     t.string "ppid"
   end
 
+  create_table "raid_accesses", force: :cascade do |t|
+    t.string "access_type", null: false
+    t.date "embargo_expiry"
+    t.string "statement_text"
+    t.string "statement_lang"
+    t.bigint "raid_project_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["raid_project_id"], name: "index_raid_accesses_on_raid_project_id"
+  end
+
+  create_table "raid_organisations", force: :cascade do |t|
+    t.string "pid", null: false
+    t.bigint "raid_project_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name", null: false
+    t.index ["raid_project_id"], name: "index_raid_organisations_on_raid_project_id"
+  end
+
+  create_table "raid_projects", force: :cascade do |t|
+    t.date "start_date", null: false
+    t.date "end_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_raid_projects_on_user_id"
+  end
+
   create_table "research_products", force: :cascade do |t|
     t.string "resource_id", null: false
     t.string "resource_type", null: false
@@ -657,6 +720,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_06_071515) do
     t.datetime "updated_at", null: false
     t.string "best_access_right"
     t.index ["resource_id", "resource_type"], name: "index_research_products_on_resource_id_and_resource_type", unique: true
+  end
+
+  create_table "rors", force: :cascade do |t|
+    t.string "pid", null: false
+    t.string "name", null: false
+    t.string "acronyms", default: [], array: true
+    t.string "aliases", default: [], array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pid"], name: "index_rors_on_pid", unique: true
   end
 
   create_table "scientific_domains", force: :cascade do |t|
@@ -903,6 +976,19 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_06_071515) do
     t.index ["ancestry"], name: "index_target_users_on_ancestry"
   end
 
+  create_table "titles", force: :cascade do |t|
+    t.string "text", null: false
+    t.string "language"
+    t.string "type", null: false
+    t.date "start_date", null: false
+    t.date "end_date"
+    t.bigint "raid_project_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "title_type"
+    t.index ["raid_project_id"], name: "index_titles_on_raid_project_id"
+  end
+
   create_table "tour_feedbacks", force: :cascade do |t|
     t.string "controller_name"
     t.string "action_name"
@@ -1005,6 +1091,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_06_071515) do
   add_foreign_key "catalogue_vocabularies", "catalogues"
   add_foreign_key "catalogue_vocabularies", "vocabularies"
   add_foreign_key "catalogues", "catalogue_sources", column: "upstream_id", on_delete: :nullify
+  add_foreign_key "contributors", "raid_projects"
+  add_foreign_key "descriptions", "raid_projects"
   add_foreign_key "offer_links", "offers", column: "source_id"
   add_foreign_key "offer_links", "offers", column: "target_id"
   add_foreign_key "offer_vocabularies", "offers"
@@ -1032,6 +1120,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_06_071515) do
   add_foreign_key "provider_vocabularies", "providers"
   add_foreign_key "provider_vocabularies", "vocabularies"
   add_foreign_key "providers", "provider_sources", column: "upstream_id", on_delete: :nullify
+  add_foreign_key "raid_accesses", "raid_projects"
+  add_foreign_key "raid_organisations", "raid_projects"
+  add_foreign_key "raid_projects", "users"
   add_foreign_key "service_alternative_identifiers", "alternative_identifiers"
   add_foreign_key "service_alternative_identifiers", "services"
   add_foreign_key "service_catalogues", "catalogues"
@@ -1053,6 +1144,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_06_071515) do
   add_foreign_key "services", "providers"
   add_foreign_key "services", "providers", column: "resource_organisation_id"
   add_foreign_key "services", "service_sources", column: "upstream_id", on_delete: :nullify
+  add_foreign_key "titles", "raid_projects"
   add_foreign_key "tour_feedbacks", "users"
   add_foreign_key "tour_histories", "users"
   add_foreign_key "user_categories", "categories"

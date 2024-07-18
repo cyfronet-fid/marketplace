@@ -1,0 +1,22 @@
+= turbo_frame_tag "raid-form" do
+  = render "raid_project/steps/navbar", step: 5
+  = simple_form_for raid_project, url: raid_project_step_path(params[:raid_project_id], "step5"),
+        html: { role: "form", 
+              "data-raid-project-target": "form" },
+              method: :put, data: { turbo_frame: :_top } do |f|
+    .new-form-style{ data: {"raid-project-target": "section", section: "step5" } }
+      = f.input :form_step, as: :hidden, input_html: { value: "step5" }
+
+      %h4 Summary
+      = render "raid_project/steps/summary", raid_project: raid_project
+
+    %hr.bottom-hr.mt-5.mb-4
+      .row
+        .col-12
+        %hr.bottom-hr.mt-5.mb-4
+          .row
+            .col-12
+              = f.button :submit, wizard_title, class: "btn btn-primary pl-5 pr-5"
+          = link_to _("Cancel"), raid_projects_path,
+            class: "btn btn-link text-uppercase", data: { turbo_frame: :_top }
+          = link_to "Back", raid_project_step_path(params[:raid_project_id], "step4")

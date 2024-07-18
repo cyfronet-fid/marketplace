@@ -1,0 +1,22 @@
+.row
+  .col-6
+    Text
+  .col-6
+    = title.text
+.row
+  .col-6
+    Language
+  .col-6
+    = language_name(title.language)
+- if title.end_date.present?
+  .row
+    .col-6
+      Title Start - End Date
+    .col-6
+      = "#{title.start_date} - #{title.end_date}" 
+- if title.end_date.nil?
+  .row
+    .col-6
+      Title Start 
+    .col-6
+      = title.start_date

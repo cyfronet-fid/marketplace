@@ -1,0 +1,13 @@
+.steps-row
+  -# haml-lint:disable InlineClasses
+  #offer-type-button.offer-step.active-button
+    Project Details
+  -# haml-lint:enable InlineClasses
+  #order-parameters-button.offer-step{ class: ("active-button" unless step < 2 ) } 
+    Contributors
+  #offer-parameters-button.offer-step{ class: ("active-button" unless step < 3 ) } 
+    Organisations
+  #offer-description-button.offer-step{ class: ("active-button" unless step < 4 ) } 
+    Access
+  #summary-button.offer-step{ class: ("active-button" unless step < 5 ) } 
+    Summary

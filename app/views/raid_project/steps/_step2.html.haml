@@ -1,0 +1,29 @@
+= turbo_frame_tag "raid-form" do
+  = render "raid_project/steps/navbar", step: 2
+  = simple_form_for raid_project, url: raid_project_step_path(params[:raid_project_id], "step2"),
+        html: { role: "form", id: "modal-form", "data-controller" => "raid-project",
+              "data-raid-project-target": "form" }, method: :put do |f|
+    .new-form-style{ data: {"raid-project-target": "section", section: "step2" } }
+      = f.input :form_step, as: :hidden, input_html: { value:"step2" }
+
+      %h4 Contributors
+      %div{ class: [
+        ("raid-info-tooltip" unless raid_project.errors.where(:contributor_base).present? ), 
+        ("raid-error-tooltip" if raid_project.errors.where(:contributor_base).present? )] }
+      
+        At least one of contributors must be selected as a leader, and at least one of contributors must be selected as a contact.
+      .offer-section-wrapper.bottom-margin
+        = f.fields_for :contributors, multiple: true, as: :array do |contributor_f|
+          = render_contributor_fields(contributor_f)
+        = link_to _("+ Add contributor"), "#", class: "add-link mt-3",
+              data: { raid_project: { target: "addField" },
+                action: "click->raid-project#addField",
+                value: "contributors",
+                fields: f.fields_for(:contributors, Raid::Contributor.new,
+                child_index: "new_field") { |c_f| render_contributor_fields(c_f) } }
+      %hr.bottom-hr.mt-5.mb-4
+        .row
+          .col-10
+            = f.button :submit, "Next", class: "btn btn-primary pl-5 pr-5"
+          .col-2
+            = link_to "Back", raid_project_step_path(params[:raid_project_id], "step1")

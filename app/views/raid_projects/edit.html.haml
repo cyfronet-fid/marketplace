@@ -1,0 +1,14 @@
+- content_for :title, _("Update your RAID Project")
+.container
+  .mb-4.pb-4.border-header
+    %h1.mr-auto.my-auto= _("Update your RAID Project")
+  = render "form", raid_project: @raid_project, show_recaptcha: true
+
+  %hr.bottom-hr.mt-5.mb-4
+  .row
+    .col-12
+      %button.btn.btn-primary.pl-5.pr-5{ type: "submit",
+                               form: "modal-form", "data-e2e": "create-project-btn" }
+        = _("Update RAID project")
+      = back_link_to _("Cancel"), @raid_project,
+        class: "btn btn-link text-uppercase"

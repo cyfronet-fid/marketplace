@@ -31,6 +31,7 @@ gem "friendly_id", "~> 5.5"
 gem "acts-as-taggable-on"
 gem "countries"
 gem "i18n_data"
+gem "iso-639"
 
 gem "activestorage-validator"
 gem "image_processing", ">= 1.2"
@@ -142,3 +143,8 @@ gem "timeout", "~>0.4"
 # Use Redis for Action Cable
 gem "redis", "~> 5.0"
 gem "redis-actionpack", "~> 5.3"
+
+# Raid related gems
+gem "yajl-ffi", "~> 0.1.2"
+gem "rubyzip"
+gem "wicked"

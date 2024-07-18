@@ -1,0 +1,12 @@
+
+%h1 RAID Projects
+- if @raid_projects.present?
+  - @raid_projects.each do |project|
+    %div
+      %p
+      %strong Title: #{project.main_title.text}
+      %br
+      = link_to "Show", project
+      = link_to "Delete", project, data: { "turbo-confirm": "Are you sure?", "turbo-method": :delete }, class: "btn btn-danger"
+    %hr
+= link_to "New Project", new_raid_project_path

@@ -1,0 +1,38 @@
+= turbo_frame_tag "raid-form" do
+  = render "raid_project/steps/navbar", step: 4
+  = simple_form_for raid_project, url: raid_project_step_path(params[:raid_project_id], "step4"),
+      html: { "data-controller" => "raid-project" },  method: :put do |f|
+    .new-form-style
+      = f.input :form_step, as: :hidden, input_html: { value:"step4" }
+
+      %h4 Access
+      .offer-section-wrapper.bottom-margin
+        = f.error :access_base, class: "invalid-feedback d-block"
+        = f.fields_for :raid_access do |access_f|
+          = access_f.hidden_field :id
+          = access_f.input :access_type, as: :select,
+                  collection: Raid::RaidAccess.access_types.map { |k, v| [ k.capitalize, v ] },
+                  input_html: {"data-raid-project-target": "accessType",
+                    "data-action": "raid-project#setEmbargoed",
+                    data: { choice: true },  multiple: false }
+          %div
+            %h5
+              = _("Statement")
+            = access_f.input :statement_text, label: "Text"
+            = access_f.input :statement_lang, label: "Language", as: :select,
+                  required: true, 
+                  collection: Raid::Language.all,
+                  label_method: :english_name,
+                  value_method: :alpha3,
+                  include_hidden: true,
+                  input_html: { data: { choice: true },  multiple: false }                  
+          = access_f.input :embargo_expiry, 
+            as: :date, html5: true, 
+            wrapper_html: {"data-raid-project-target" => "embargoExpiry", class: ("d-none" unless raid_project.raid_access.access_type == "embargoed")},
+            input_html: { "data-raid-project-target": "embargoExpiryInput" }
+      %hr.bottom-hr.mt-5.mb-4
+        .row
+          .col-10
+            = f.button :submit, "Next", class: "btn btn-primary pl-5 pr-5"
+          .col-2 
+            = link_to "Back", raid_project_step_path(params[:raid_project_id], "step3")
