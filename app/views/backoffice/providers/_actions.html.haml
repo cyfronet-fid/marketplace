@@ -13,16 +13,16 @@
     = link_to _("Suspend"),
               backoffice_provider_unpublish_path(provider, suspend: true),
               class: "btn btn-info",
-              data: { turbo_confirm: _("Are you sure you want to publish this provider as suspended?"),
+              data: { turbo_confirm: action_prompt("provider", "suspend"),
               turbo_method: :post }
   - if policy([:backoffice, provider]).unpublish?
     = link_to _("Unpublish"),
               backoffice_provider_unpublish_path(provider),
               class: "btn btn-error",
-              data: { turbo_confirm: _("Are you sure you want to unpublish this provider?"),
+              data: { turbo_confirm: action_prompt("provider", "unpublish"),
               turbo_method: :post }
   - if policy([:backoffice, provider]).destroy?
     = link_to _("Delete"),
               backoffice_provider_path(provider.id),
               class: "btn btn-danger",
-              data: { turbo_confirm: _("Are you sure you want to remove this provider?"), turbo_method: :delete }
+              data: { turbo_confirm: action_prompt("provider", "remove"), turbo_method: :delete }

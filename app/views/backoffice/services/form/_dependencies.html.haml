@@ -33,4 +33,4 @@
         = link_to_add_array_field("service", "related_platforms")
       = f.input :catalogue_id, disabled: cant_edit(:catalogue_id),
             input_html: { multiple: false, data: { choice: true } },
-            collection: Catalogue.all, selected: service.catalogue&.id || nil
+            collection: catalogues, selected: service&.resource_organisation&.catalogue&.id || nil

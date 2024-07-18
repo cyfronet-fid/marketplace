@@ -21,7 +21,7 @@
             .actions
               - if policy([:backoffice, catalogue]).destroy?
                 = link_to backoffice_catalogue_path(catalogue.id),
-                      data: { "turbo-confirm": _("Are you sure you want to remove this catalogue?"), "turbo-method": :delete },
+                      data: { "turbo-confirm": action_prompt("catalogue", "remove"), "turbo-method": :delete },
                       class: "delete-icon float-right" do
                   %i.far.fa-trash-alt
 

@@ -13,18 +13,6 @@ class Backoffice::ServicePolicy < Backoffice::ApplicationPolicy
     end
   end
 
-  MP_INTERNAL_FIELDS = [
-    :type,
-    :restrictions,
-    :status,
-    :activate_message,
-    :upstream_id,
-    :horizontal,
-    [research_activity_ids: []],
-    [owner_ids: []],
-    [sources_attributes: %i[id source_type eid _destroy]]
-  ].freeze
-
   def index?
     service_portfolio_manager? || service_owner? || data_administrator?
   end
@@ -74,7 +62,7 @@ class Backoffice::ServicePolicy < Backoffice::ApplicationPolicy
   end
 
   def permitted_attributes
-    attrs = [
+    [
       :type,
       :name,
       :abbreviation,
@@ -159,8 +147,6 @@ class Backoffice::ServicePolicy < Backoffice::ApplicationPolicy
       [public_contacts_attributes: %i[id first_name last_name email phone organisation position _destroy]],
       [alternative_identifiers_attributes: %i[id identifier_type value _destroy]]
     ]
-
-    !@record.is_a?(Service) || @record.upstream.nil? ? attrs : MP_INTERNAL_FIELDS
   end
 
   private

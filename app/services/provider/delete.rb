@@ -1,19 +1,13 @@
 # frozen_string_literal: true
 
-class Provider::Delete
-  def initialize(provider_id)
-    @provider = Provider.friendly.find(provider_id)
-  end
-
+class Provider::Delete < Provider::ApplicationService
   def call
-    active_organisation_service = Service.where(resource_organisation_id: @provider.id).where.not(status: :deleted)
-    if active_organisation_service.present?
-      false
-    else
-      @provider.status = :deleted
-      updated = @provider.save(validate: false)
+    @provider.status = :deleted
+    result = @provider.save(validate: false)
+    if result
+      @provider.managed_services.each { |service| DeleteJob.perform_later(service) unless service.deleted? }
       @provider.reindex
-      updated
     end
+    result
   end
 end

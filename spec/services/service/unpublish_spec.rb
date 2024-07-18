@@ -23,7 +23,7 @@ RSpec.describe Service::Unpublish, backend: true do
       expect { described_class.call(service) }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
       bundle.reload
-      expect(bundle.status).to eq("draft")
+      expect(bundle).to be_unpublished
     end
   end
 end

@@ -116,7 +116,8 @@ RSpec.describe Backoffice::ServicePolicy, backend: true do
       )
     end
 
-    it "should filter EOSC Registry managed fields if upstream is set to eosc_registry source" do
+    it "should filter EOSC Registry managed fields if upstream is set to eosc_registry source",
+       skip: "Not valid in the whitelabel use-case" do
       service = create(:service)
       source = create(:service_source, source_type: :eosc_registry, service: service)
       service.update!(upstream: source)

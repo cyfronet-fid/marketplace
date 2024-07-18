@@ -18,12 +18,13 @@
     .card-body
       = f.input :name, disabled: cant_edit(:name)
       = f.input :abbreviation, disabled: cant_edit(:abbreviation)
-      = f.association :resource_organisation, disabled: cant_edit(:resource_organisation_id),
-                              label: "Service organisation",
-                              collection: providers.order(:name)
+      = f.association :resource_organisation,
+                      disabled: cant_edit(:resource_organisation_id),
+                      label: "Service organisation",
+                      collection: providers.order(:name)
       = f.association :providers, multiple: true, input_html: { data: { choice: true } },
-                              disabled: cant_edit([provider_ids: []]),
-                              collection: Provider.active.sort_by { |e| e.name.strip.downcase }
+                      disabled: cant_edit([provider_ids: []]),
+                      collection: Provider.active.sort_by { |e| e.name.strip.downcase }
       = f.input :webpage_url, disabled: cant_edit(:webpage_url)
       -# rubocop:disable Style/BlockDelimiters
       .row.service-contact-emails
@@ -31,15 +32,15 @@
           %h3= _("Alternative Identifiers")
           = f.error :alternative_identifiers, class: "invalid-feedback d-block"
           = f.fields_for :alternative_identifiers, disabled: service.upstream_id.present?, multiple: true, as: :array,
-                    wrapper_html: { "data-form-target" => "alternativeIdentifier" } do |identifier_form|
+              wrapper_html: { "data-form-target" => "alternativeIdentifier" } do |identifier_form|
             = render "backoffice/common_parts/form/alternative_identifier_fields",
-                  identifier_form: identifier_form, object: service
+              identifier_form: identifier_form, object: service
 
           = link_to _("Add additional Alternative Identifier"), "#", class: "btn btn-primary disablable",
-                  data: { "form-target": "addField",
-                  action: "click->form#addField",
-                  value: "alternativeIdentifier",
-                  fields: f.fields_for(:alternative_identifiers, AlternativeIdentifier.new,
-                  child_index: "new_field") { |idf| render "backoffice/common_parts/form/alternative_identifier_fields",
-                  identifier_form: idf, object: service } }
+            data: { "form-target": "addField",
+            action: "click->form#addField",
+            value: "alternativeIdentifier",
+            fields: f.fields_for(:alternative_identifiers, AlternativeIdentifier.new,
+            child_index: "new_field") { |idf| render "backoffice/common_parts/form/alternative_identifier_fields",
+            identifier_form: idf, object: service } }
       -# rubocop:enable Style/BlockDelimiters

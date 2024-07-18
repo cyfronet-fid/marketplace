@@ -15,7 +15,7 @@
                                                           "data-toggle" => "dropdown",
                                                           type: "button" }
                 %i.fas.fa-user.mr-1
-                = _("#{current_user.first_name} #{current_user.last_name}")
+                #{current_user.first_name} #{current_user.last_name}
               .dropdown-menu
                 %ul
                   %li

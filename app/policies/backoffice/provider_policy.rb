@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Backoffice::ProviderPolicy < Backoffice::ApplicationPolicy
-  MP_INTERNAL_FIELDS = [:upstream_id, [sources_attributes: %i[id source_type eid _destroy]]].freeze
-
   def show?
     actionable?
   end
@@ -28,7 +26,7 @@ class Backoffice::ProviderPolicy < Backoffice::ApplicationPolicy
   end
 
   def permitted_attributes
-    attrs = [
+    [
       :name,
       :abbreviation,
       :website,
@@ -73,8 +71,6 @@ class Backoffice::ProviderPolicy < Backoffice::ApplicationPolicy
       [link_multimedia_urls_attributes: %i[id name url _destroy]],
       [alternative_identifiers_attributes: %i[id identifier_type value _destroy]]
     ]
-
-    !@record.is_a?(Provider) || @record.upstream_id.blank? ? attrs : attrs & MP_INTERNAL_FIELDS
   end
 
   private

@@ -41,7 +41,7 @@ class Api::V1::Resources::OffersController < Api::V1::ApplicationController
   end
 
   def destroy
-    Offer::Destroy.call(@offer)
+    Offer::Delete.call(@offer)
     head :ok
   end
 

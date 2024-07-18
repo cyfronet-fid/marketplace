@@ -2,12 +2,15 @@
 
 class Bundle::Unpublish < Bundle::ApplicationService
   def call
-    if @bundle.update(status: :unpublished)
-      notify_unbundled!
-      @bundle.service.reindex
-      @bundle.offers.reindex
-    else
-      return false
+    unless @bundle.deleted?
+      @bundle.status = :unpublished
+      if @bundle.save(validate: false)
+        notify_unbundled!
+        @bundle.service.reindex
+        @bundle.offers.reindex
+      else
+        return false
+      end
     end
     @bundle
   end

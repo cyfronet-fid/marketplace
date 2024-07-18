@@ -113,22 +113,22 @@ describe("Providers", () => {
     cy.contains("div.alert-success", message.successDeletionMessage).should("be.visible");
   });
 
-  it("shouldn't delete provider with services with draft status", () => {
+  it("should delete provider with services with draft status", () => {
     cy.visit("/backoffice/providers");
     cy.contains("a", providerWithResourceDraft).parents("li.providers").find("a.delete-icon").click();
-    cy.contains("div.alert-danger", message.alertDeletionMessage).should("be.visible");
+    cy.contains("div.alert-success", message.successDeletionMessage).should("be.visible");
   });
 
-  it("shouldn't delete provider with services with published status", () => {
+  it("should delete provider with services with published status", () => {
     cy.visit("/backoffice/providers");
     cy.contains("a", providerWithResourcePublished).parents("li.providers").find("a.delete-icon").click();
-    cy.contains("div.alert-danger", message.alertDeletionMessage).should("be.visible");
+    cy.contains("div.alert-success", message.successDeletionMessage).should("be.visible");
   });
 
-  it("shouldn't delete provider with services with errored status", () => {
+  it("should delete provider with services with errored status", () => {
     cy.visit("/backoffice/providers");
     cy.contains("a", providerWithResourceErrored).parents("li.providers").find("a.delete-icon").click();
-    cy.contains("div.alert-danger", message.alertDeletionMessage).should("be.visible");
+    cy.contains("div.alert-success", message.successDeletionMessage).should("be.visible");
   });
 
   it("should delete provider which is services provider for published resources", () => {

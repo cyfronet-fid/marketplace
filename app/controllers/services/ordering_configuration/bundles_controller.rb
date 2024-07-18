@@ -37,7 +37,7 @@ class Services::OrderingConfiguration::BundlesController < Services::OrderingCon
 
   def destroy
     @bundle = @service.bundles.find_by(iid: params[:id])
-    Bundle::Destroy.call(@bundle)
+    Bundle::Delete.call(@bundle)
     redirect_to service_ordering_configuration_path(@service), notice: "Bundle removed successfully"
   end
 

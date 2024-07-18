@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_23_073801) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_30_021132) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -349,16 +349,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_23_073801) do
     t.index ["author_role"], name: "index_messages_on_author_role"
     t.index ["messageable_type", "messageable_id"], name: "index_messages_on_messageable_type_and_messageable_id"
     t.index ["scope"], name: "index_messages_on_scope"
-  end
-
-  create_table "offer_links", force: :cascade do |t|
-    t.bigint "source_id", null: false
-    t.bigint "target_id", null: false
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.index ["source_id", "target_id"], name: "index_offer_links_on_source_id_and_target_id", unique: true
-    t.index ["source_id"], name: "index_offer_links_on_source_id"
-    t.index ["target_id"], name: "index_offer_links_on_target_id"
   end
 
   create_table "offer_vocabularies", force: :cascade do |t|
@@ -1009,8 +999,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_23_073801) do
   add_foreign_key "catalogue_vocabularies", "vocabularies"
   add_foreign_key "catalogues", "catalogue_sources", column: "upstream_id", on_delete: :nullify
   add_foreign_key "data_administrators", "users"
-  add_foreign_key "offer_links", "offers", column: "source_id"
-  add_foreign_key "offer_links", "offers", column: "target_id"
   add_foreign_key "offer_vocabularies", "offers"
   add_foreign_key "offer_vocabularies", "vocabularies"
   add_foreign_key "offers", "omses", column: "primary_oms_id"
