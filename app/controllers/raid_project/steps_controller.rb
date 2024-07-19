@@ -103,7 +103,7 @@ class RaidProject::StepsController < ApplicationController
 
     # redirect_to controller: :controller_name, action: :action_name ### namespace
     respond_to do |format|
-      format.html { redirect_to raid_project_path(@raid_project), notice: "RAID project was successfully created." }
+      format.html { redirect_to raid_project_path(@raid_project), notice: "RAiD project was successfully created." }
     end
   end
 

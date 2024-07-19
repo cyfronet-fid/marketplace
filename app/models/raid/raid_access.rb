@@ -17,7 +17,7 @@ class Raid::RaidAccess < ApplicationRecord
     created_date = created_at if id.present?
     valid = ((embargo_expiry > created_date) && (embargo_expiry <= created_date + 18.month)) || false
     unless valid
-      errors.add(:embargo_expiry, "Embargo expiry date have to be no greater than 18 months from the RAID creation")
+      errors.add(:embargo_expiry, "Embargo expiry date have to be no greater than 18 months from the RAiD creation")
     end
   end
 end

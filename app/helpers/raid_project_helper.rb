@@ -68,7 +68,7 @@ module RaidProjectHelper
   end
 
   def wizard_title
-    session[:wizard_action] == "create" ? "Create new RAID Project" : "Update RAID Project"
+    session[:wizard_action] == "create" ? "Create new RAiD Project" : "Update RAiD Project"
   end
 
   def language_name(code)

@@ -1,0 +1,19 @@
+.pt-4.pl-3.pr-3.rounded.service-box.service-detail.mb-4.project-heading
+  .row
+    .col-md-9.d-flex.align-items-center
+      .box-wrapper
+        %h1.flex-grow-1.text-break
+          = link_to raid_project.main_title.text,  edit_raid_project_path(raid_project)
+        .details-row
+          - if raid_project.end_date
+            Duration: #{raid_project.start_date} -  #{raid_project.end_date}
+          - unless raid_project.end_date
+            Project start: #{raid_project.start_date} 
+    .buttons-panel.col-md-3.float-right.d-flex.align-items-center
+
+      = link_to _("Edit"), edit_raid_project_path(raid_project),
+          class: "btn btn-outline-secondary text-uppercase btn-sm mb-1 mt-1"
+      
+      = link_to _("Delete"), raid_project_path(raid_project),
+            data: { "turbo-confirm": _("Are you sure?"), "turbo-method": :delete },
+            class: "btn btn-outline-danger text-uppercase btn-sm mb-1 mt-1"

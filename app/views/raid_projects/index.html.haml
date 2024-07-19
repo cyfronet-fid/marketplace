@@ -1,12 +1,13 @@
-
-%h1 RAID Projects
-- if @raid_projects.present?
-  - @raid_projects.each do |project|
-    %div
-      %p
-      %strong Title: #{project.main_title.text}
-      %br
-      = link_to "Show", project
-      = link_to "Delete", project, data: { "turbo-confirm": "Are you sure?", "turbo-method": :delete }, class: "btn btn-danger"
-    %hr
-= link_to "New Project", new_raid_project_path
+.container
+  .row
+    .col-sm-3.mb-5
+      = render "projects/nav/raid_projects", raid_projects: @raid_projects
+    .col-sm-9
+      .container
+        %h2 My RAiD projects
+        - if @raid_projects.present?
+          - @raid_projects.each do |project|
+            = render "raid_projects/index_item_card", raid_project: project
+          .col-md-5
+        - unless @raid_projects.present?
+          = render "raid_projects/index_empty_card"

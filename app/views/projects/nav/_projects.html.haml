@@ -17,10 +17,19 @@
           class: "nav-link #{"active" if project == current}"
         = image_tag "ico_message.svg", class: "new-message-icon" if project.user_has_new_messages? || project.items_have_new_messages?
 
+%hr.bottom-hr.mb-2
+.font-weight-normal.mb-2
+  = link_to raid_projects_url do
+    .my-dashboard
+      My RAiD Projects
+      %span.float-right.arrow-box
+        %i.fas.fa-arrow-right
+%hr.bottom-hr.mt-1.mb-2
+
 = link_to "Create new project", new_project_path, class: "btn btn-sm btn-primary pl-5 pr-5 mt-4 text-center w-100",
   "data-e2e" => "go-to-create-project-form-btn"
 
-= link_to "Create new RAID project", new_raid_project_path,
+= link_to "Create new RAiD project", new_raid_project_path,
       class: "btn btn-sm btn-primary pl-5 pr-5 mt-4 text-center w-100",
   "data-e2e" => "go-to-create-project-form-btn"
 

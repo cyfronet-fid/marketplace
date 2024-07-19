@@ -32,7 +32,7 @@ class RaidProjectsController < ApplicationController
     @raid_project = RaidProject.new(permitted_attributes(RaidProject).merge(user: current_user))
     respond_to do |format|
       if @raid_project.save
-        format.html { redirect_to raid_project_url(@raid_project), notice: "RAID project was successfully created." }
+        format.html { redirect_to raid_project_url(@raid_project), notice: "RAiD project was successfully created." }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -49,7 +49,7 @@ class RaidProjectsController < ApplicationController
 
   def update
     if @raid_project.update(permitted_attributes(@raid_project))
-      redirect_to raid_project_path(@raid_project), notice: "RAID Project updated successfully"
+      redirect_to raid_project_path(@raid_project), notice: "RAiD Project updated successfully"
     else
       render :edit, status: :bad_request
     end
@@ -59,7 +59,7 @@ class RaidProjectsController < ApplicationController
     @raid_project.destroy
 
     respond_to do |format|
-      format.html { redirect_to raid_projects_url, notice: "RAID Project was successfully destroyed." }
+      format.html { redirect_to raid_projects_url, notice: "RAiD Project was successfully destroyed." }
     end
   end
 
