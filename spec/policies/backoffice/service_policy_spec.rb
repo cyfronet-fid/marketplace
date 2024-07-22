@@ -4,12 +4,12 @@ require "rails_helper"
 
 RSpec.describe Backoffice::ServicePolicy, backend: true do
   let(:service_portfolio_manager) { create(:user, roles: [:service_portfolio_manager]) }
-  let(:provider_data_administrator) { create(:user) }
-  let(:provider) do
+  let!(:provider_data_administrator) { create(:user) }
+  let!(:provider) do
     create(:provider, data_administrators: [build(:data_administrator, email: provider_data_administrator&.email)])
   end
-  let(:catalogue_data_administrator) { create(:user) }
-  let(:catalogue) do
+  let!(:catalogue_data_administrator) { create(:user) }
+  let!(:catalogue) do
     create(:catalogue, data_administrators: [build(:data_administrator, email: catalogue_data_administrator&.email)])
   end
 
@@ -148,6 +148,7 @@ RSpec.describe Backoffice::ServicePolicy, backend: true do
       end
 
       it "grants access for provider data administrator" do
+        provider_data_administrator.reload
         expect(subject).to permit(
           provider_data_administrator,
           build(:service, resource_organisation: provider, status: :draft)
@@ -155,6 +156,7 @@ RSpec.describe Backoffice::ServicePolicy, backend: true do
       end
 
       it "grants access for catalogue data administrator" do
+        catalogue_data_administrator.reload
         expect(subject).to permit(catalogue_data_administrator, build(:service, catalogue: catalogue, status: :draft))
       end
 
@@ -199,10 +201,12 @@ RSpec.describe Backoffice::ServicePolicy, backend: true do
       end
 
       it "grants access for provider data administrator" do
+        provider_data_administrator.reload
         expect(subject).to permit(provider_data_administrator, build(:service, resource_organisation: provider))
       end
 
       it "grants access for catalogue data administrator" do
+        catalogue_data_administrator.reload
         expect(subject).to permit(catalogue_data_administrator, build(:service, catalogue: catalogue))
       end
 

@@ -1,4 +1,4 @@
-%div{ "data-provider-target": "dataAdministrator" }
+%div{ "data-administrator-target": "dataAdministrator" }
   .contact
     = data_administrator_form.hidden_field :id, disabled: provider.upstream_id.present?
     = data_administrator_form.input :first_name, disabled: provider.upstream_id.present?
@@ -7,4 +7,4 @@
     = data_administrator_form.hidden_field :_destroy, "data-provider-target": "destroy"
     .text-right
       = link_to _("Delete administrator"), "#", id: "data-administrator-delete-#{data_administrator_form.index}",
-      class: "btn-sm disablable btn-danger", "data-action": "click->provider#removeAdmin"
+      class: "btn-sm disablable btn-danger", "data-action": "click->administrator#removeAdmin"

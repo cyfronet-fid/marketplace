@@ -13,19 +13,19 @@ class Api::V1::OfferPolicy < ApplicationPolicy
   end
 
   def show?
-    service_administered_by? && !service_deleted? && record.published?
+    service_owned_by? && !service_deleted? && record.published?
   end
 
   def create?
-    service_administered_by? && !service_deleted? && record.published?
+    service_owned_by? && !service_deleted? && record.published?
   end
 
   def update?
-    service_administered_by? && !service_deleted? && record.published?
+    service_owned_by? && !service_deleted? && record.published?
   end
 
   def destroy?
-    service_administered_by? && !service_deleted? && record.published?
+    service_owned_by? && !service_deleted? && record.published?
   end
 
   def permitted_attributes
@@ -66,8 +66,8 @@ class Api::V1::OfferPolicy < ApplicationPolicy
 
   private
 
-  def service_administered_by?
-    record.service.administered_by?(user)
+  def service_owned_by?
+    record.service.owned_by?(user)
   end
 
   def service_deleted?

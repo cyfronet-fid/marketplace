@@ -4,11 +4,11 @@
 
 import { application } from "./application";
 
+import AdministratorController from "./administrator_controller";
+application.register("administrator", AdministratorController);
+
 import AutocompleteController from "./autocomplete_controller";
 application.register("autocomplete", AutocompleteController);
-
-import CatalogueController from "./catalogue_controller";
-application.register("catalogue", CatalogueController);
 
 import ClearerrorsController from "./clearerrors_controller";
 application.register("clearerrors", ClearerrorsController);
@@ -72,9 +72,6 @@ application.register("project", ProjectController);
 
 import ProjectItemController from "./project_item_controller";
 application.register("project-item", ProjectItemController);
-
-import ProviderController from "./provider_controller";
-application.register("provider", ProviderController);
 
 import QuantityPriceController from "./quantity_price_controller";
 application.register("quantity-price", QuantityPriceController);

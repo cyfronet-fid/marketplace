@@ -1,12 +1,12 @@
-import {Utilities} from "../support/utilities";
+import { Utilities } from "../support/utilities";
 
 export class IPlatform {
-    name: string;
+  name: string;
 }
 
 export const PlatformFactory = {
-    create: (args: {[field: string]: string} = {}): IPlatform => ({
-        name: Utilities.getUUID4(),
-        ...args
-    })
+  create: (args: { [field: string]: string } = {}): IPlatform => ({
+    name: Utilities.getUUID4(),
+    ...args,
+  }),
 };

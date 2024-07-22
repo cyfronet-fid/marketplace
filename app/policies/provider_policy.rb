@@ -14,6 +14,6 @@ class ProviderPolicy < ApplicationPolicy
   end
 
   def data_administrator?
-    record.administered_by?(user)
+    record.owned_by?(user)
   end
 end
