@@ -5,7 +5,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
-## [3.57.0-milestone]
+
+## [3.58.0]
+
+### Fixed
+- Number of requests handling data_administrators scope (@goreck888)
+
+## [3.57.0]
 
 ### Added
 - Handling data administrator scope in the backoffice (@goreck888)

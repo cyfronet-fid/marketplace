@@ -16,40 +16,38 @@
 /**
  * Libs
  */
-require('cypress-terminal-report/src/installLogsCollector')();
-require('@cypress/grep')();
-import 'cypress-promise/register';
-import 'cypress-wait-until';
-import 'cypress-file-upload';
+require("cypress-terminal-report/src/installLogsCollector")();
+require("@cypress/grep")();
+import "cypress-promise/register";
+import "cypress-wait-until";
+import "cypress-file-upload";
 import "cypress-fail-fast";
-
-
 
 /**
  * Custom commands
  */
-import './all'
-import './auth';
-import './coverage';
-import './utilities';
+import "./all";
+import "./auth";
+import "./coverage";
+import "./utilities";
 
-import './jira';
-import './project';
-import './resources';
-import './category';
-import './scientific-domain';
-import './providers';
-import './platforms'
-import './vocabulary'
-import './provider_portal'
-import './provider_portal_access_token'
+import "./jira";
+import "./project";
+import "./resources";
+import "./category";
+import "./scientific-domain";
+import "./providers";
+import "./platforms";
+import "./vocabulary";
+import "./provider_portal";
+import "./provider_portal_access_token";
 
 /**
  * Don't fail on uncaught exception
  */
-Cypress.on('uncaught:exception', (err, runnable) => false);
+Cypress.on("uncaught:exception", (err, runnable) => false);
 
 beforeEach(() => {
   // hide cookie policy box
-  cy.setCookie('cookieconsent_status', 'dismiss')
+  cy.setCookie("cookieconsent_status", "dismiss");
 });

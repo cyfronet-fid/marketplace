@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_06_071515) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_08_123747) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -246,6 +246,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_06_071515) do
     t.string "email", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
     t.index ["email"], name: "index_data_administrators_on_email"
     t.index ["first_name"], name: "index_data_administrators_on_first_name"
     t.index ["last_name"], name: "index_data_administrators_on_last_name"
@@ -981,6 +982,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_06_071515) do
     t.boolean "scientific_domains_updates", default: false, null: false
     t.boolean "show_welcome_popup", default: false, null: false
     t.string "authentication_token", limit: 30
+    t.integer "providers_count", default: 0, null: false
+    t.integer "catalogues_count", default: 0, null: false
     t.index ["authentication_token"], name: "index_users_on_authentication_token", unique: true
     t.index ["email"], name: "index_users_on_email"
   end
@@ -1005,6 +1008,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_06_071515) do
   add_foreign_key "catalogue_vocabularies", "catalogues"
   add_foreign_key "catalogue_vocabularies", "vocabularies"
   add_foreign_key "catalogues", "catalogue_sources", column: "upstream_id", on_delete: :nullify
+  add_foreign_key "data_administrators", "users"
   add_foreign_key "offer_links", "offers", column: "source_id"
   add_foreign_key "offer_links", "offers", column: "target_id"
   add_foreign_key "offer_vocabularies", "offers"

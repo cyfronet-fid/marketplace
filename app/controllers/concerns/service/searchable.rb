@@ -114,8 +114,8 @@ module Service::Searchable
   end
 
   def highlights(from_search)
-    result = from_search.try(:with_highlights) if (params[:q]&.size || 0) > 2
-    {} if result.blank?
+    result = from_search.try(:with_highlights) || {} if (params[:q]&.size || 0) > 2
+    return {} if result.blank?
     result.to_h.transform_keys(&:id)
   end
 

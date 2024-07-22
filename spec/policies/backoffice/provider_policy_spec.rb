@@ -18,7 +18,7 @@ RSpec.describe Backoffice::ProviderPolicy, backend: true do
     end
 
     it "denies for other users" do
-      expect(subject).to_not permit(build(:user), build(:provider))
+      expect(subject).to_not permit(create(:user), build(:provider))
     end
   end
 
@@ -28,7 +28,8 @@ RSpec.describe Backoffice::ProviderPolicy, backend: true do
     end
 
     it "denies for other users" do
-      expect(subject).to_not permit(build(:user))
+      user = create(:user)
+      expect(subject).to_not permit(user)
     end
   end
 end
