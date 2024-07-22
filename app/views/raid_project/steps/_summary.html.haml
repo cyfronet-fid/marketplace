@@ -1,0 +1,159 @@
+.offer-section-wrapper.bottom-margin
+  .row
+    .col-6
+      %h4 PROJECT LIFETIME
+    .col-6
+      = link_to "EDIT", raid_project_step_path(params[:raid_project_id], "step1")
+  - if raid_project.end_date.present?
+    .row
+      .col-6
+        Project Start - End Date
+      .col-6
+        #{raid_project.start_date} - #{raid_project.end_date}
+  - if raid_project.end_date.nil?
+    .row
+      .col-6
+        Project Start
+      .col-6
+        = raid_project.start_date
+.offer-section-wrapper.bottom-margin
+  .row
+    .col-6
+      %h4 PROJECT TITLES
+    .col-6
+      = link_to "EDIT", raid_project_step_path(params[:raid_project_id], "step1")
+  .row
+    .col-6
+      %h5 Main Title
+  = render "raid_project/steps/summary_titles_section", title: raid_project.main_title
+  - if raid_project.alternative_titles.present?
+    .row
+      .col-6
+        %h5 Alternative Titles
+        - raid_project.alternative_titles.each do |title|
+          = render "raid_project/steps/summary_titles_section", title: title
+- if raid_project.main_description.present? && raid_project.main_description.text.present?
+  .offer-section-wrapper.bottom-margin
+    .row
+      .col-6
+        %h4 DESCRIPTION
+      .col-6
+        = link_to "EDIT", raid_project_step_path(params[:raid_project_id], "step1")
+    .row
+      .col-6
+        %h5 Main Description
+    = render "raid_project/steps/summary_description_section", description: raid_project.main_description
+    - if raid_project.alternative_descriptions.present?
+      .row
+        .col-6
+          %h5 Alternative Descriptions
+          - raid_project.alternative_descriptions.each do |description|
+            = render "raid_project/steps/summary_description_section", description: description
+
+.offer-section-wrapper.bottom-margin
+  .row
+    .col-6
+      %h4 CONTRIBUTORS
+    .col-6
+      = link_to "EDIT", raid_project_step_path(params[:raid_project_id], "step2")
+  - raid_project.contributors.each do |contributor|
+    .offer-section-wrapper
+      .row
+        .col-6
+          ID
+        .col-6
+          #{contributor.pid_type}/#{contributor.pid}
+      .row
+        .col-6
+          Contact
+        .col-6
+          = contributor.contact ? "Yes" : "No"
+      .row
+        .col-6
+          Leader
+        .col-6
+          = contributor.leader ? "Yes" : "No"
+      .row
+        - if contributor.roles.present?
+          .col-6
+            Roles
+          .col-6
+            = display_roles(contributor.roles)
+
+      .row
+        .col-6
+          Position
+        .col-6
+          = humanize_role(contributor.position.pid)
+      - if contributor.position.end_date.present?
+        .row
+          .col-6
+            Start - End Date
+          .col-6
+            #{contributor.position.start_date} - #{contributor.position.end_date}
+      - if contributor.position.end_date.nil?
+        .row
+          .col-6
+            Start Date
+          .col-6
+            = contributor.position.start_date
+
+- if raid_project.raid_organisations.present?
+  .offer-section-wrapper.bottom-margin
+    .row
+      .col-6
+        %h4 ORGANISATIONS
+      .col-6
+        = link_to "EDIT", raid_project_step_path(params[:raid_project_id], "step3")
+    - raid_project.raid_organisations.each do |organisation|
+      .offer-section-wrapper
+        .row
+          .col-6
+            Name
+          .col-6
+            = organisation.name
+        .row
+          .col-6
+            Position
+          .col-6
+            = humanize_role(organisation.position.pid)
+        - if organisation.position.end_date.present?
+          .row
+            .col-6
+              Position Start - End Date
+            .col-6
+              #{organisation.position.start_date} - #{organisation.position.end_date}
+        - if organisation.position.end_date.nil?
+          .row
+            .col-6
+              Position Start  Date
+            .col-6
+              = organisation.position.start_date
+
+.offer-section-wrapper.bottom-margin
+  .row
+    .col-6
+      %h4 ACCESS
+    .col-6
+      = link_to "EDIT", raid_project_step_path(params[:raid_project_id], "step4")
+  .row
+    .col-6
+      Access Type
+    .col-6
+      = raid_project.raid_access.access_type
+  .row
+    .col-6
+      Statement
+    .col-6
+      = raid_project.raid_access.statement_text
+  .row
+    .col-6
+      Statement Language
+    .col-6
+      = language_name(raid_project.raid_access.statement_lang)
+  - if raid_project.raid_access.embargo_expiry
+    .row
+      .col-6
+        Embargo Expiry
+      .col-6
+        = raid_project.raid_access.embargo_expiry

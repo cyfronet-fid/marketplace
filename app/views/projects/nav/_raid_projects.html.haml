@@ -1,0 +1,23 @@
+
+%hr.bottom-hr.mb-2
+.font-weight-normal.mb-2
+  = link_to user_dashboard_url do
+    .my-dashboard
+      My Dashboard
+      %span.float-right.arrow-box
+        %i.fas.fa-arrow-right
+%hr.bottom-hr.mt-1.mb-2
+
+.font-weight-normal.mb-2
+  = link_to projects_url do
+    .my-dashboard
+      My Projects
+      %span.float-right.arrow-box
+        %i.fas.fa-arrow-right
+%hr.bottom-hr.mt-1.mb-2
+
+= link_to "Create new project", new_project_path, class: "btn btn-sm btn-primary pl-5 pr-5 mt-4 text-center w-100",
+  "data-e2e" => "go-to-create-project-form-btn"
+
+= link_to "Create new RAiD project", new_raid_project_path,
+      class: "btn btn-sm btn-primary pl-5 pr-5 mt-4 text-center w-100"
