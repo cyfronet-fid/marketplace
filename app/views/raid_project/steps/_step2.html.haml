@@ -8,9 +8,8 @@
 
       %h4 Contributors
       %div{ class: [
-        ("raid-info-tooltip" unless raid_project.errors.where(:contributor_base).present? ), 
+        ("raid-info-tooltip" unless raid_project.errors.where(:contributor_base).present? ),
         ("raid-error-tooltip" if raid_project.errors.where(:contributor_base).present? )] }
-      
         At least one of contributors must be selected as a leader, and at least one of contributors must be selected as a contact.
       .offer-section-wrapper.bottom-margin
         = f.fields_for :contributors, multiple: true, as: :array do |contributor_f|

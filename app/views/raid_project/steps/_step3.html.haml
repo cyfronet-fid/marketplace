@@ -6,9 +6,9 @@
 
       %h4 Organisations
       %div{ class: [
-        ("raid-info-tooltip" unless raid_project.errors.where(:org_base).present? ), 
+        ("raid-info-tooltip" unless raid_project.errors.where(:org_base).present? ),
         ("raid-error-tooltip" if raid_project.errors.where(:org_base).present? )] }
-        At least one of organisations must be lead research organisation (PID). 
+        At least one of organisations must be lead research organisation (PID).
       .offer-section-wrapper.bottom-margin
         = f.fields_for :raid_organisations, multiple: true, as: :array do |organisation_f|
           = render_organisation_fields(organisation_f)
@@ -24,5 +24,5 @@
         .row
           .col-10
             = f.button :submit, "Next", class: "btn btn-primary pl-5 pr-5"
-          .col-2 
+          .col-2
             = link_to "Back", raid_project_step_path(params[:raid_project_id], "step2")

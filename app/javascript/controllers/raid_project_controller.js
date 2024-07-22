@@ -20,8 +20,7 @@ export default class extends Controller {
     "embargoExpiry",
     "embargoExpiryInput",
     "statementText",
-    "statementLanguage"
-
+    "statementLanguage",
   ];
   static values = {
     url: String,
@@ -34,7 +33,7 @@ export default class extends Controller {
 
   autocomplete(event) {
     this.currentElementIndex = event.target.id.split("_")[5];
-    
+
     const query = this.rorInputTargets[this.currentElementIndex].value.trim();
     if (query.length > 2) {
       const params = new URLSearchParams(window.location.search.slice(1));
@@ -91,27 +90,26 @@ export default class extends Controller {
 
   addDescription(event) {
     event.preventDefault();
-    this.mainDescriptionTarget.classList.add('d-none') ;
-    document.getElementById("main-description").classList.remove('d-none') ;
+    this.mainDescriptionTarget.classList.add("d-none");
+    document.getElementById("main-description").classList.remove("d-none");
   }
 
   removeDescription(event) {
     event.preventDefault();
-    this.descriptionTextTarget.value = '';
-    this.descriptionLanguageTarget.value = '';
-    document.getElementById("main-description").classList.add('d-none');
-    this.mainDescriptionTarget.classList.remove('d-none') ;
+    this.descriptionTextTarget.value = "";
+    this.descriptionLanguageTarget.value = "";
+    document.getElementById("main-description").classList.add("d-none");
+    this.mainDescriptionTarget.classList.remove("d-none");
   }
 
   setEmbargoed(event) {
     const accessType = this.accessTypeTarget.value;
-   
+
     if (accessType == "open") {
-      this.embargoExpiryTarget.classList.add('d-none');
-      this.embargoExpiryInputTarget.value = ""
+      this.embargoExpiryTarget.classList.add("d-none");
+      this.embargoExpiryInputTarget.value = "";
     } else {
-      this.embargoExpiryTarget.classList.remove('d-none');
-      
+      this.embargoExpiryTarget.classList.remove("d-none");
     }
-  } 
+  }
 }

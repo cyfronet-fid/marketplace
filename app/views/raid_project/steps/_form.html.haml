@@ -1,9 +1,0 @@
-- content_for :title, _("Create new RAiD Project")
-- breadcrumb :project_new
-.container
-  #form-container
-    .mb-5.pb-2.border-header
-      %h1.mr-auto.my-auto= _("Create new RAiD Project")
-      
-    = turbo_frame_tag dom_id(@raid_project) do
-      = render_next_step(params[:id], @raid_project)

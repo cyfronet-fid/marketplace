@@ -1,8 +1,7 @@
 = turbo_frame_tag "raid-form" do
   = render "raid_project/steps/navbar", step: 5
   = simple_form_for raid_project, url: raid_project_step_path(params[:raid_project_id], "step5"),
-        html: { role: "form", 
-              "data-raid-project-target": "form" },
+        html: { role: "form", "data-raid-project-target": "form" },
               method: :put, data: { turbo_frame: :_top } do |f|
     .new-form-style{ data: {"raid-project-target": "section", section: "step5" } }
       = f.input :form_step, as: :hidden, input_html: { value: "step5" }

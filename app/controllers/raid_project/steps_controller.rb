@@ -38,13 +38,14 @@ class RaidProject::StepsController < ApplicationController
   end
 
   def update
-    raid_id = params[:raid_project_id]
+    raid_id = session[:raid_project_id]
     saved_params = session[raid_id]
+
     if session[:wizard_action] == "create"
       raid_project_attrs = saved_params.merge permitted_step_attributes
       @raid_project = RaidProject.new(raid_project_attrs)
     else
-      @raid_project = RaidProject.find_by(id: params[:raid_project_id])
+      @raid_project = RaidProject.find_by(id: raid_id)
       raid_project_attrs = saved_params.merge permitted_attributes(RaidProject)
       @raid_project.assign_attributes(raid_project_attrs)
     end
@@ -82,13 +83,13 @@ class RaidProject::StepsController < ApplicationController
       step_state(next_step)
       render turbo_stream:
                turbo_stream.replace("raid-form", partial: next_step_template, locals: { raid_project: @raid_project })
-      # redirect_to raid_project_step_path(params[:raid_project_id], next_step)
     end
   end
 
   def finish_wizard_path
-    saved_params = session[params[:raid_project_id]]
-    session.delete params[:raid_project_id]
+    raid_id = session[:raid_project_id]
+    saved_params = session[raid_id]
+    session.delete raid_id
 
     if session[:wizard_action] == "create"
       @raid_project = RaidProject.new(permitted_attributes(RaidProject).merge(user: current_user).merge(saved_params))
@@ -98,12 +99,10 @@ class RaidProject::StepsController < ApplicationController
         render :show
       end
     else
-      RaidProject.find_by(id: params[:raid_project_id]).update!(saved_params)
+      RaidProject.find_by(id: raid_id).update!(saved_params)
     end
-
-    # redirect_to controller: :controller_name, action: :action_name ### namespace
     respond_to do |format|
-      format.html { redirect_to raid_project_path(@raid_project), notice: "RAiD project was successfully created." }
+      format.html { redirect_to raid_projects_path, notice: "RAiD project was successfully created." }
     end
   end
 
@@ -116,19 +115,20 @@ class RaidProject::StepsController < ApplicationController
   end
 
   def previous_step
-    steps[current_step_index - 1] if current_step_index > 0
+    steps[current_step_index - 1] if current_step_index.positive?
   end
 
   def set_step1
+    raid_id = session[:raid_project_id]
     raise WizardActionError, "wizard_action parameter not set" if session[:wizard_action].nil?
     if session[:wizard_action] == "create"
-      session[params[:raid_project_id]] ||= {}
-      raid_project_attrs = session[params[:raid_project_id]] || {}
+      session[raid_id] ||= {}
+      raid_project_attrs = session[raid_id] || {}
       @raid_project = RaidProject.new raid_project_attrs
       @raid_project.build_main_title if @raid_project.main_title.blank?
       @raid_project.build_main_description if @raid_project.main_description.blank?
     elsif session[:wizard_action] == "update"
-      @raid_project = RaidProject.find_by(id: params[:raid_project_id])
+      @raid_project = RaidProject.find_by(id: raid_id)
       @raid_project.build_main_description if @raid_project.main_description.blank?
     else
       raise WizardActionError, "Unpermitted wizard_action parameter: #{session[:wizard_action]}"
@@ -136,25 +136,20 @@ class RaidProject::StepsController < ApplicationController
   end
 
   def set_step2
-    if session[:wizard_action] == "create"
-      @raid_project.contributors.build if @raid_project.contributors.blank?
-    end
+    @raid_project.contributors.build if session[:wizard_action] == "create" && @raid_project.contributors.blank?
   end
 
   def set_step3
-    if session[:wizard_action] == "create"
-      @raid_project.raid_organisations.build if @raid_project.raid_organisations.blank?
+    if session[:wizard_action] == "create" && @raid_project.raid_organisations.blank?
+      @raid_project.raid_organisations.build
     end
   end
 
   def set_step4
-    if session[:wizard_action] == "create"
-      @raid_project.build_raid_access if @raid_project.raid_access.blank?
-    end
+    @raid_project.build_raid_access if session[:wizard_action] == "create" && @raid_project.raid_access.blank?
   end
 
   def set_step5
-
   end
 
   def step_state(step_to_set)
@@ -162,7 +157,7 @@ class RaidProject::StepsController < ApplicationController
   end
 
   def find_or_create_raid_project
-    @raid_project = RaidProject.find_by(id: params[:raid_project_id])
+    @raid_project = RaidProject.find_by(id: session[:raid_project_id])
   end
 
   def permitted_step_attributes

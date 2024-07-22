@@ -1,5 +1,5 @@
 .offer-section-wrapper.bottom-margin
-  .row 
+  .row
     .col-6
       %h4 PROJECT LIFETIME
     .col-6
@@ -9,7 +9,7 @@
       .col-6
         Project Start - End Date
       .col-6
-        = "#{raid_project.start_date} - #{raid_project.end_date}"
+        #{raid_project.start_date} - #{raid_project.end_date}
   - if raid_project.end_date.nil?
     .row
       .col-6
@@ -20,15 +20,15 @@
   .row
     .col-6
       %h4 PROJECT TITLES
-    .col-6 
+    .col-6
       = link_to "EDIT", raid_project_step_path(params[:raid_project_id], "step1")
   .row
     .col-6
       %h5 Main Title
   = render "raid_project/steps/summary_titles_section", title: raid_project.main_title
   - if raid_project.alternative_titles.present?
-    .row 
-      .col-6 
+    .row
+      .col-6
         %h5 Alternative Titles
         - raid_project.alternative_titles.each do |title|
           = render "raid_project/steps/summary_titles_section", title: title
@@ -37,21 +37,21 @@
     .row
       .col-6
         %h4 DESCRIPTION
-      .col-6 
+      .col-6
         = link_to "EDIT", raid_project_step_path(params[:raid_project_id], "step1")
     .row
       .col-6
         %h5 Main Description
     = render "raid_project/steps/summary_description_section", description: raid_project.main_description
     - if raid_project.alternative_descriptions.present?
-      .row 
-        .col-6 
+      .row
+        .col-6
           %h5 Alternative Descriptions
-          -raid_project.alternative_descriptions.each do |description|
+          - raid_project.alternative_descriptions.each do |description|
             = render "raid_project/steps/summary_description_section", description: description
 
 .offer-section-wrapper.bottom-margin
-  .row 
+  .row
     .col-6
       %h4 CONTRIBUTORS
     .col-6
@@ -62,7 +62,7 @@
         .col-6
           ID
         .col-6
-          = "#{contributor.pid_type}/#{contributor.pid}"
+          #{contributor.pid_type}/#{contributor.pid}
       .row
         .col-6
           Contact
@@ -72,9 +72,9 @@
         .col-6
           Leader
         .col-6
-          = contributor.leader ? "Yes" : "No" 
-      .row 
-        -if contributor.roles.present?
+          = contributor.leader ? "Yes" : "No"
+      .row
+        - if contributor.roles.present?
           .col-6
             Roles
           .col-6
@@ -82,7 +82,7 @@
 
       .row
         .col-6
-          Position 
+          Position
         .col-6
           = humanize_role(contributor.position.pid)
       - if contributor.position.end_date.present?
@@ -90,7 +90,7 @@
           .col-6
             Start - End Date
           .col-6
-            = "#{contributor.position.start_date} - #{contributor.position.end_date}"
+            #{contributor.position.start_date} - #{contributor.position.end_date}
       - if contributor.position.end_date.nil?
         .row
           .col-6
@@ -100,38 +100,38 @@
 
 - if raid_project.raid_organisations.present?
   .offer-section-wrapper.bottom-margin
-    .row 
+    .row
       .col-6
         %h4 ORGANISATIONS
       .col-6
         = link_to "EDIT", raid_project_step_path(params[:raid_project_id], "step3")
     - raid_project.raid_organisations.each do |organisation|
       .offer-section-wrapper
-        .row 
-          .col-6 
+        .row
+          .col-6
             Name
           .col-6
             = organisation.name
-        .row 
-          .col-6 
+        .row
+          .col-6
             Position
           .col-6
             = humanize_role(organisation.position.pid)
         - if organisation.position.end_date.present?
-          .row 
-            .col-6 
+          .row
+            .col-6
               Position Start - End Date
             .col-6
-              = "#{organisation.position.start_date} - #{organisation.position.end_date}"
+              #{organisation.position.start_date} - #{organisation.position.end_date}
         - if organisation.position.end_date.nil?
-          .row 
-            .col-6 
+          .row
+            .col-6
               Position Start  Date
             .col-6
               = organisation.position.start_date
 
 .offer-section-wrapper.bottom-margin
-  .row 
+  .row
     .col-6
       %h4 ACCESS
     .col-6

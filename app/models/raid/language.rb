@@ -11,6 +11,5 @@ class Raid::Language
     def get(code)
       ISO_639.find(code)
     end
-
   end
 end

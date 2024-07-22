@@ -9,7 +9,6 @@
                   value_method: :alpha3,
                   include_hidden: true,
                   input_html: { data: { choice: true },  multiple: false }
-    
     = alternative_description_f.hidden_field :_destroy, "data-raid-project-target": "destroy"
     .text-right
       = link_to _("Delete description"), "#", id: "alternative-description-delete-#{alternative_description_f.index}",
