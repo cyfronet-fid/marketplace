@@ -25,7 +25,7 @@ module Service::Search
     {
       service_id: id,
       name: name,
-      sort_name: name.downcase,
+      sort_name: name&.downcase,
       tagline: tagline,
       description: description,
       status: status,
