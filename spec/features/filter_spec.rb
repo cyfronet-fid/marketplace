@@ -12,21 +12,21 @@ RSpec.feature "Service filter", end_user_frontend: true do
   end
 
   context "wrapper" do
-    it "can be closed", js: true do
+    it "can be opened", js: true do
       create(:provider, name: "Cyfronet provider")
 
       # By default all filters are expanded
       visit services_path
-      expect(page).to have_text("Cyfronet provider")
-      click_on "Providers"
       expect(page).to_not have_text("Cyfronet provider")
+      click_on "Providers"
+      expect(page).to have_text("Cyfronet provider")
     end
 
-    it "stores collapsable state", js: true do
+    it "forgets a collapsable state", js: true do
       create(:scientific_domain, name: "Science!")
 
       visit services_path
-      expect(page).to have_text("Science!")
+      expect(page).to_not have_text("Science!")
       click_on "Scientific Domain"
       visit services_path
       expect(page).to_not have_text("Science!")
@@ -35,6 +35,8 @@ RSpec.feature "Service filter", end_user_frontend: true do
 
   it "respects search query" do
     visit services_path(q: "Funcy search phrase")
+    expect(body).to have_text("Order type")
+    find("#order_type-filter").click
     select "Other"
 
     expect(body).to have_text("Funcy search phrase")
@@ -57,6 +59,7 @@ RSpec.feature "Service filter", end_user_frontend: true do
     create_list(:service, 5)
 
     visit services_path(page: 3, per_page: 1)
+    find("#geographical_availabilities-filter").click
     select "European Union"
 
     expect(page.current_path).to_not have_content("page=")
@@ -133,6 +136,8 @@ RSpec.feature "Service filter", end_user_frontend: true do
 
       visit services_path
 
+      click_on "Providers"
+
       expect(page).to have_text(providers[0].name)
       expect(page).to have_text(providers[4].name)
       expect(page).to_not have_text(providers[5].name)
@@ -144,6 +149,9 @@ RSpec.feature "Service filter", end_user_frontend: true do
       providers = create_list(:provider, 7)
 
       visit services_path
+
+      click_on "Providers"
+
       click_on "Show 2 more"
 
       expect(page).to have_text(providers[5].name)
@@ -170,6 +178,8 @@ RSpec.feature "Service filter", end_user_frontend: true do
 
       visit services_path(q: "abc")
 
+      click_on "Scientific Domains"
+
       find(:css, "input[name='scientific_domains[]'][value='#{scientific_domains[0].id}']", visible: false).set(true)
 
       expect(page).to have_current_path(services_path(q: "abc", scientific_domains: [scientific_domains[0].id]))
@@ -180,6 +190,8 @@ RSpec.feature "Service filter", end_user_frontend: true do
       child = create(:scientific_domain, parent: scientific_domains[6])
 
       visit services_path(scientific_domains: [child.id])
+
+      click_on "Providers"
 
       expect(page).to_not have_text(scientific_domains[5].name)
       expect(page).to have_text(scientific_domains[6].name)
