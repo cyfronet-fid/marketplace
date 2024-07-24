@@ -5,6 +5,7 @@ describe("Filter rating", () => {
 
   it("should select filter", () => {
     cy.get("[data-e2e='filter-tag']").should("not.exist");
+    cy.get("#rating-filter").click();
     cy.get("#collapse_rating [data-e2e='filter-select'] > option")
       .eq(1)
       .invoke("text")
