@@ -5,6 +5,7 @@ describe("Filter resource availabilities", () => {
 
   it("should select filter", () => {
     cy.get("[data-e2e='filter-tag']").should("not.exist");
+    cy.get("#geographical_availabilities-filter").click();
     cy.get("#collapse_geographical_availabilities [data-e2e='filter-select'] > option")
       .eq(1)
       .invoke("text")
