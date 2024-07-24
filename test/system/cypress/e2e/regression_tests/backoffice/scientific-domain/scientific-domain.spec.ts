@@ -46,6 +46,7 @@ describe("Scientific Domain", () => {
       .invoke("text")
       .then((value) => {
         cy.visit("/services");
+        cy.get("#scientific_domains-filter").click();
         cy.get("#collapse_scientific_domains [data-e2e='filter-checkbox']")
           .next()
           .contains("Natural Sciences")
