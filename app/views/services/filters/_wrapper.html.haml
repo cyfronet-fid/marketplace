@@ -1,4 +1,4 @@
-- collapsed = cookies["#{filter.field_name}-filter"] == "true"
+- collapsed = filter.blank?
 %a{ href: "#collapse_#{filter.field_name}", "data-toggle": "collapse",
     id: "#{filter.field_name}-filter",
     "data-action": "click->filter#toggle",
