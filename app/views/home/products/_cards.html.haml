@@ -3,7 +3,7 @@
   .col-6.col-lg-4
     .branch-box
       = link_to url.call(card), "data-e2e": "branch-link" do
-        -# this if should be removed after moving Marketplace locations into cms
+        -# this if should be removed after moving Research activities into cms
         - if card.is_a?(Hash)
           .branch-icon
             = image_tag(card[:logo], alt: "#{card[:name]}")

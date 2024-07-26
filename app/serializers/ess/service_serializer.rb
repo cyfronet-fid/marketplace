@@ -65,7 +65,7 @@ class Ess::ServiceSerializer < ApplicationSerializer
   attribute :usage_counts_views
 
   attribute :target_users, key: :dedicated_for
-  attribute :marketplace_locations, key: :unified_categories
+  attribute :research_activities, key: :unified_categories
   attribute :languages, key: :language_availability
 
   #TODO: ALL attributes to the line 77 should be included in datasource schema

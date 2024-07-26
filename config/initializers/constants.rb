@@ -92,10 +92,10 @@ VOCABULARY_TYPES = {
     klass: "Vocabulary::MerilScientificDomain",
     route: :meril_scientific_domains
   },
-  marketplace_location: {
-    name: "Marketplace Location",
-    klass: "Vocabulary::MarketplaceLocation",
-    route: :marketplace_locations
+  research_activity: {
+    name: "Research Step",
+    klass: "Vocabulary::ResearchActivity",
+    route: :research_activities
   },
   jurisdiction: {
     name: "Jurisdiction",
