@@ -260,6 +260,7 @@ We are currently using the following ENV variables:
     * `IMPORTER_AAI_BASE_URL` (Optional) - Base URL used to generate access token from a refresh token (default `ENV["CHECKIN_HOST"]` or "aai.eosc-portal.eu")
     * `IMPORTER_AAI_REFRESH_TOKEN` - The refresh token generated for specific instance of AAI
     * `IMPORTER_AAI_CLIENT_ID` (Optional) - The client id for the generated refresh token (default `ENV["CHECKIN_IDENTIFIER"]` or `Rails.application.credentials.checkin[:identifier]`)
+  * `SHOW_RECOMMENDATION_PANEL` - Boolean (true/false) indicating if recommendation panel should be visible or not. Defaults to true
 
 ## Commits
 

@@ -8,10 +8,6 @@
 
       = description_panels
       .related-container
-        .row
-          .col-12
-            = render "services/related", related_services: @similar_services, title: similar_services_title,
-            preview: @preview
         - unless @object.suspended?
           .row
             .col-12
