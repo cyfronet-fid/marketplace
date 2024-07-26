@@ -56,7 +56,7 @@ class Backoffice::BundlePolicy < ApplicationPolicy
       [category_ids: []],
       [scientific_domain_ids: []],
       [target_user_ids: []],
-      [marketplace_location_ids: []],
+      [research_activity_ids: []],
       :main_offer_id,
       :tag_list,
       :from,
