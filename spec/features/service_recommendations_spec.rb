@@ -19,6 +19,7 @@ RSpec.feature "recommended services panel", js: true, end_user_frontend: true do
   end
 
   it "has header with 'SUGGESTED' box in version 1" do
+    allow(Mp::Application.config).to receive(:is_recommendation_panel).and_return(true)
     services_ids = [@services[0].id, @services[1].id, @services[2].id]
     response = double(Faraday::Response, status: 200, body: "{ \"recommendations\": #{services_ids} }")
     allow_any_instance_of(Faraday::Connection).to receive(:post).and_return(response)

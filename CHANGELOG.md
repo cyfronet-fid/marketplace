@@ -8,6 +8,12 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ## [3.58.0]
 
+### Added
+- Environmental variable to hide recommendation panel (`SHOW_RECOMMENDATION_PANEL`) (@maria-j-k)
+
+### Changed
+- Remove suggested services (@maria-j-k)
+
 ### Fixed
 - Number of requests handling data_administrators scope (@goreck888)
 
