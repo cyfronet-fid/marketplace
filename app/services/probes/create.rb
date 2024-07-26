@@ -29,8 +29,7 @@ class Probes::Create
       request_body[:source]["root"]["service_id"] = request_body[:source]["root"]["service_id"].to_i
     end
 
-    is_recommendation_panel = @params[:source]["root"]["type"] != "other"
-    request_body[:source]["root"]["panel_id"] = "v1" if is_recommendation_panel
+    request_body[:source]["root"]["panel_id"] = "v1" if config.is_recommendation_panel
 
     Probes::ProbesJob.perform_later(request_body.to_json)
   end

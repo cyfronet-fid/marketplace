@@ -55,7 +55,7 @@ en:
       service:
         grant_project_names: Grant/Project names
         required_services: Required Services
-        related_services: Related Services
+        related_services: Suggested compatible services
       user:
         categories: Categories of interests
         scientific_domains: Scientific domains of interests

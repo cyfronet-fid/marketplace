@@ -382,7 +382,7 @@ Cypress.Commands.add("hasResourceDetails", () => {
     "Use Case",
     "Dependencies",
     "Required Services",
-    "Related Services",
+    "Suggested compatible services",
     "Platforms",
     "Attribution",
     "Funding Bodies",
