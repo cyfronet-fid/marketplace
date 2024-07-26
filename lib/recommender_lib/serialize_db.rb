@@ -19,9 +19,9 @@ module RecommenderLib
         trls: Vocabulary::Trl.all.map { |s| Recommender::Vocabulary::TrlSerializer.new(s).as_json },
         life_cycle_statuses:
           Vocabulary::LifeCycleStatus.all.map { |s| Recommender::Vocabulary::LifeCycleStatusSerializer.new(s).as_json },
-        research_steps:
-          Vocabulary::MarketplaceLocation.all.map do |s|
-            Recommender::Vocabulary::MarketplaceLocationSerializer.new(s).as_json
+        research_activities:
+          Vocabulary::ResearchActivity.all.map do |s|
+            Recommender::Vocabulary::ResearchActivitySerializer.new(s).as_json
           end
       }.as_json
     end

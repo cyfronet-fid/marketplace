@@ -22,8 +22,8 @@ module Importable
     Category.where(eid: categories)
   end
 
-  def map_marketplace_location_ids(marketplace_locations)
-    marketplace_locations.present? ? Vocabulary::MarketplaceLocation.where(eid: marketplace_locations).map(&:id) : []
+  def map_research_activity_ids(research_activities)
+    research_activities.present? ? Vocabulary::ResearchActivity.where(eid: research_activities).map(&:id) : []
   end
 
   def map_scientific_domains(domains)

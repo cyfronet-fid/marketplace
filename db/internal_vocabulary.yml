@@ -58,45 +58,45 @@ bundle_capabilities_of_goals:
   other:
     name: Other
 
-marketplace_locations:
+research_activities:
   access_computing_and_storage_resources:
     name: Access Computing and Storage Resources
-    eid: marketplace_location-access_computing_and_storage_resources
+    eid: research_activity-access_computing_and_storage_resources
   access_research_infrastructures:
     name: Access Research Infrastructures
     description: Find frameworks made by scientific clusters or RIs that will equip you with...
-    eid: marketplace_location-access_research_infrastructures
+    eid: research_activity-access_research_infrastructures
   access_training_material:
     name: Access Training Material
-    eid: marketplace_location-access_training_material
+    eid: research_activity-access_training_material
   build_analysis_environment:
     name: Build analysis environment
-    eid: marketplace_location-build_analysis_environment
+    eid: research_activity-build_analysis_environment
   discover_research_outputs:
     name: Discover Research Outputs
     description: Find datasets, scientific publications, software
-    eid: marketplace_location-discover_research_outputs
+    eid: research_activity-discover_research_outputs
   explore_other_research_catalogues:
     name: Explore other research catalogues
-    eid: marketplace_location-explore_other_research_catalogues
+    eid: research_activity-explore_other_research_catalogues
   find_instruments_and_equipment:
     name: Find Instruments and Equipment
     description: Find research instruments and scientific equipment
-    eid: marketplace_location-find_instruments_and_equipment
+    eid: research_activity-find_instruments_and_equipment
   find_supporting_services_for_e_infras_and_research_institutions:
     name: Find supporting services for eInfras and research institutions
-    eid: marketplace_location-find_supporting_services_for_eInfras
+    eid: research_activity-find_supporting_services_for_eInfras
   manage_research_data:
     name: Manage Research Data
     description: Find robust, feature-rich and user-friendly services for Data Management
-    eid: marketplace_location-manage_research_data
+    eid: research_activity-manage_research_data
   process_and_analyze:
     name: Process and Analyze
-    eid: marketplace_location-process_and_analyze
+    eid: research_activity-process_and_analyze
   publish_research_outputs:
     name: Publish Research Outputs
     description: Store, backup, archive your data, publications, software
-    eid: marketplace_location-publish_research_outputs
+    eid: research_activity-publish_research_outputs
 
 service_types:
   compute:

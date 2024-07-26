@@ -67,10 +67,10 @@ class Service < ApplicationRecord
            through: :service_vocabularies,
            source: :vocabulary,
            source_type: "Vocabulary::ServiceCategory"
-  has_many :marketplace_locations,
+  has_many :research_activities,
            through: :service_vocabularies,
            source: :vocabulary,
-           source_type: "Vocabulary::MarketplaceLocation"
+           source_type: "Vocabulary::ResearchActivity"
   has_many :funding_bodies, through: :service_vocabularies, source: :vocabulary, source_type: "Vocabulary::FundingBody"
   has_many :funding_programs,
            through: :service_vocabularies,

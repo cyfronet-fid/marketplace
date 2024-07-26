@@ -6,13 +6,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+
 ## [3.58.0]
+
+### Changed
+- MarketplaceLocation renamed to ResearchActivity (@maria-j-k)
+- Remove suggested services (@maria-j-k)
 
 ### Added
 - Environmental variable to hide recommendation panel (`SHOW_RECOMMENDATION_PANEL`) (@maria-j-k)
-
-### Changed
-- Remove suggested services (@maria-j-k)
 
 ### Fixed
 - Number of requests handling data_administrators scope (@goreck888)

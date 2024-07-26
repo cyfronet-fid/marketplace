@@ -10,8 +10,8 @@
 %section.research-activity
   .container
     .activity-wrapper
-      - @marketplace_locations.each do |location|
-        %a.activity{ href: services_path(marketplace_locations: location.id) }
+      - @research_activities.each do |location|
+        %a.activity{ href: services_path(research_activities: location.id) }
           .activity-icon
             - logo = location.logo
             - logo = logo.attached? && logo.persisted? ? logo.variant(resize: "84x84") : "landing_page/ico-01.svg"

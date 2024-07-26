@@ -24,7 +24,7 @@ RSpec.describe Recommender::ServiceSerializer, backend: true do
         life_cycle_statuses: [create(:life_cycle_status)],
         pid: "pid",
         horizontal: true,
-        marketplace_locations: create_list(:marketplace_location, 2)
+        research_activities: create_list(:research_activity, 2)
       )
 
     serialized = described_class.new(service).as_json
@@ -51,6 +51,6 @@ RSpec.describe Recommender::ServiceSerializer, backend: true do
     expect(serialized[:trls]).to match_array(service.trl_ids)
     expect(serialized[:life_cycle_statuses]).to match_array(service.life_cycle_status_ids)
     expect(serialized[:horizontal]).to eq(service.horizontal)
-    expect(serialized[:research_steps]).to match_array(service.marketplace_location_ids)
+    expect(serialized[:research_activities]).to match_array(service.research_activity_ids)
   end
 end

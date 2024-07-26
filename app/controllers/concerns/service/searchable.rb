@@ -153,7 +153,7 @@ module Service::Searchable
     url_path = URI.parse(request.path).path
     backoffice = url_path.start_with?("/backoffice")
     [
-      Filter::MarketplaceLocation,
+      Filter::ResearchActivity,
       Filter::ScientificDomain,
       backoffice ? Filter::BackofficeProvider : Filter::Provider,
       Filter::TargetUser,
