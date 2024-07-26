@@ -23,7 +23,7 @@ class Ess::BundleSerializer < ApplicationSerializer
              :usage_counts_views,
              :updated_at
 
-  attribute :marketplace_locations, key: :research_steps
+  attribute :research_activities, key: :research_activities
   attribute :created_at, key: :publication_date
   attribute :project_items_count, key: :usage_counts_downloads
 

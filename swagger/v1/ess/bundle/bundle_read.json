@@ -62,7 +62,7 @@
         "type": "string"
       }
     },
-    "research_steps": {
+    "research_activities": {
       "type": "array",
       "items": {
         "type": "string"

@@ -75,9 +75,9 @@ class Importers::Service < ApplicationService
       funding_bodies = map_funding_bodies(@data.dig("fundingBody", "fundingBody"))
       funding_programs = map_funding_programs(@data.dig("fundingPrograms", "fundingProgram"))
       grant_project_names = Array(@data.dig("grantProjectNames", "grantProjectName"))
-      marketplace_locations =
-        if @data.dig("marketplaceLocations", "marketplaceLocation").present?
-          Array(@data.dig("marketplaceLocations", "marketplaceLocation"))
+      research_activities =
+        if @data.dig("researchActivities", "researchActivity").present?
+          Array(@data.dig("researchActivities", "researchActivity"))
         else
           []
         end
@@ -109,7 +109,7 @@ class Importers::Service < ApplicationService
       funding_bodies = map_funding_bodies(Array(@data["fundingBody"]))
       funding_programs = map_funding_programs(Array(@data["fundingPrograms"]))
       grant_project_names = Array(@data["grantProjectNames"]) || []
-      marketplace_locations = @data["marketplaceLocations"] || []
+      research_activities = @data["researchActivities"] || []
     end
 
     main_contact = @data["mainContact"].present? ? MainContact.new(map_contact(@data["mainContact"])) : nil
@@ -135,7 +135,7 @@ class Importers::Service < ApplicationService
       service_categories: map_service_categories(service_categories),
       categories: map_categories(categories) || [],
       horizontal: @data["horizontalService"] || false,
-      marketplace_location_ids: map_marketplace_location_ids(marketplace_locations),
+      research_activity_ids: map_research_activity_ids(research_activities),
       target_users: map_target_users(target_users),
       access_types: map_access_types(access_types),
       access_modes: map_access_modes(access_modes),

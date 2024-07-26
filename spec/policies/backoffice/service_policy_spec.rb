@@ -96,7 +96,7 @@ RSpec.describe Backoffice::ServicePolicy, backend: true do
           # Reseach Product Metadata
           [research_product_metadata_access_policy_ids: []],
           [service_category_ids: []],
-          [marketplace_location_ids: []],
+          [research_activity_ids: []],
           [entity_type_scheme_ids: []],
           [persistent_identity_systems_attributes: %i[id entity_type_id entity_type_scheme_ids _destroy]],
           [link_research_product_license_urls_attributes: %i[id url name _destroy]],
@@ -130,7 +130,7 @@ RSpec.describe Backoffice::ServicePolicy, backend: true do
           :status,
           :upstream_id,
           :horizontal,
-          [marketplace_location_ids: []],
+          [research_activity_ids: []],
           [sources_attributes: %i[id source_type eid _destroy]]
         ]
       )

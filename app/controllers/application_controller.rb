@@ -44,7 +44,7 @@ class ApplicationController < ActionController::Base
 
   def load_root_categories!
     @root_categories = Category.roots.order(:name)
-    @marketplace_locations = Vocabulary::MarketplaceLocation.where.not(description: nil || "")
+    @research_activities = Vocabulary::ResearchActivity.where.not(description: nil || "")
   end
 
   def not_authorized_message(exception)

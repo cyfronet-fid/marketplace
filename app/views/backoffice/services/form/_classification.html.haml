@@ -27,7 +27,7 @@
       = f.input :horizontal, as: :boolean, label: "Horizontal service",
               boolean_style: :inline, include_hidden: true
       = f.association :service_categories, multiple: true, input_html: { data: { choice: true } }
-      = f.association :marketplace_locations, multiple: true, input_html: { data: { choice: true } }
+      = f.association :research_activities, multiple: true, input_html: { data: { choice: true } }
 
       = f.association :target_users,
               label: _("Dedicated For"),
