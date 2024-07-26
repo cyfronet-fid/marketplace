@@ -754,7 +754,7 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       expect(page).to have_field "service_changelog_0", disabled: true
       expect(page).to have_field "service_related_platforms_0", disabled: true
       expect(page).to have_field "Required Services", disabled: true
-      expect(page).to have_field "Related Services", disabled: true
+      expect(page).to have_field "Suggested compatible services", disabled: true
       expect(page).to have_field "Scientific domains", disabled: true
       expect(page).to have_field "Dedicated For", disabled: true
       expect(page).to have_field "Funding bodies", disabled: true
