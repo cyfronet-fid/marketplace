@@ -12,6 +12,7 @@ export default class extends Controller {
     const response = await this.sendRequest(this.updateFavourites());
     const result = await this.getResponse(response);
     this.updateCheckboxLabels();
+    this.showPopup(result);
   }
 
   async updateFromFav(event) {
