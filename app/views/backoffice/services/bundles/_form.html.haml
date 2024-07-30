@@ -39,6 +39,7 @@
       class: "btn btn-primary pl-5 pr-5 mobile-bottom-margin", "data-e2e": "create-offer-btn"
       - if policy([:backoffice, bundle]).delete?
         = link_to "Delete Bundle", polymorphic_path(bundle_form_source_module),
+        class: "btn btn-danger pl-5 pr-5 mobile-bottom-margin",
           data: { "turbo-confirm": _("This action cannot be undone. Confirm to delete the Bundle."), "turbo-method": :delete }
       - if policy([:backoffice, bundle]).draft?
         = link_to "Unpublish Bundle", polymorphic_path(bundle_form_source_module << :draft),
