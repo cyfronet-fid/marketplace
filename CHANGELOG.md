@@ -18,6 +18,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Number of requests handling data_administrators scope (@goreck888)
+- Show pop-up on add to favourites 
 
 ## [3.57.0]
 
