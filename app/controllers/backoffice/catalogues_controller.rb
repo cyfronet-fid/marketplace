@@ -14,6 +14,11 @@ class Backoffice::CataloguesController < Backoffice::ApplicationController
   def new
     @catalogue = Catalogue.new
     @catalogue.sources.build source_type: "eosc_registry"
+    @catalogue.data_administrators << DataAdministrator.new(
+      first_name: current_user.first_name,
+      last_name: current_user.last_name,
+      email: current_user.email
+    )
     add_missing_nested_models
     authorize(@catalogue)
   end
