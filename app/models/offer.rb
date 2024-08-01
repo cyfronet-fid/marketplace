@@ -108,7 +108,7 @@ class Offer < ApplicationRecord
   end
 
   def offers_count
-    service&.offers&.size || 0
+    service&.offers_count || 0
   end
 
   def oms_params_match?

@@ -67,6 +67,6 @@ class OrderingConfiguration::OfferPolicy < Backoffice::OfferPolicy
   private
 
   def offer_editor?
-    record.service.owned_by?(user) || user&.service_portfolio_manager? || user&.service_owner?
+    user&.service_portfolio_manager? || record.service.owned_by?(user)
   end
 end

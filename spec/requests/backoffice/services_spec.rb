@@ -19,7 +19,7 @@ RSpec.describe "Backoffice service", backend: true do
     end
 
     it "I can publish service" do
-      service = create(:service, owners: [user], status: :draft)
+      service = create(:service, status: :draft)
 
       post backoffice_service_publish_path(service)
       service.reload
@@ -28,7 +28,7 @@ RSpec.describe "Backoffice service", backend: true do
     end
 
     it "I can change service status to unpublished" do
-      service = create(:service, owners: [user])
+      service = create(:service, status: :published)
 
       post backoffice_service_draft_path(service)
       service.reload
@@ -37,7 +37,7 @@ RSpec.describe "Backoffice service", backend: true do
     end
 
     it "I can't publish a service with deleted status" do
-      service = create(:service, owners: [user], status: :deleted)
+      service = create(:service, status: :deleted)
 
       post backoffice_service_publish_path(service)
       expect(response).to redirect_to root_path(anchor: "")
@@ -45,7 +45,7 @@ RSpec.describe "Backoffice service", backend: true do
     end
 
     it "I can't change status to a service with deleted status" do
-      service = create(:service, owners: [user], status: :deleted)
+      service = create(:service, status: :deleted)
 
       post backoffice_service_draft_path(service)
       expect(response).to redirect_to root_path(anchor: "")

@@ -98,9 +98,6 @@ class Service < ApplicationRecord
   has_many :user_services, dependent: :destroy
   has_many :favourite_users, through: :user_services, source: :user, class_name: "User"
 
-  has_many :service_user_relationships, dependent: :destroy
-  has_many :owners, through: :service_user_relationships, source: :user, class_name: "User"
-
   has_many :source_relationships,
            class_name: "ServiceRelationship",
            foreign_key: "target_id",
@@ -309,8 +306,7 @@ class Service < ApplicationRecord
   end
 
   def owned_by?(user)
-    service_user_relationships.where(user: user).size.positive? ||
-      resource_organisation&.data_administrators&.map(&:user_id)&.include?(user.id) ||
+    resource_organisation&.data_administrators&.map(&:user_id)&.include?(user.id) ||
       catalogue&.data_administrators&.map(&:user_id)&.include?(user.id)
   end
 

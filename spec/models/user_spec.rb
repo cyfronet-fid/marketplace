@@ -31,22 +31,6 @@ RSpec.describe User, backend: true do
     end
   end
 
-  context "#service_owner?" do
-    it "is false when user does not own any services" do
-      user = create(:user)
-
-      expect(user).to_not be_service_owner
-    end
-
-    it "is true when user owns services" do
-      user = create(:user)
-      service = create(:service)
-      ServiceUserRelationship.create!(user: user, service: service)
-
-      expect(user).to be_service_owner
-    end
-  end
-
   %i[catalogue provider].each do |model|
     context "#{model}_owner?" do
       it "connects created user to #{model} through user hooks" do

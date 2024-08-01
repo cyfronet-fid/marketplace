@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Backoffice::VocabularyPolicy < ApplicationPolicy
+class Backoffice::VocabularyPolicy < Backoffice::ApplicationPolicy
   class Scope < Scope
     def resolve
       scope
@@ -23,6 +23,10 @@ class Backoffice::VocabularyPolicy < ApplicationPolicy
     service_portfolio_manager?
   end
 
+  def edit?
+    service_portfolio_manager?
+  end
+
   def update?
     service_portfolio_manager?
   end
@@ -32,12 +36,6 @@ class Backoffice::VocabularyPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    %i[name description logo eid parent_id]
-  end
-
-  private
-
-  def service_portfolio_manager?
-    user&.service_portfolio_manager?
+    %i[name description eid parent_id logo]
   end
 end

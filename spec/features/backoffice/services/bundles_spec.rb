@@ -6,15 +6,14 @@ RSpec.feature "Bundles in backoffice", manager_frontend: true do
   include OmniauthHelper
 
   let!(:service_portfolio_manager) { create(:user, roles: [:service_portfolio_manager]) }
-  let!(:owner) { create(:user) }
   let!(:data_manager) { create(:user) }
   let!(:provider) { build(:provider, data_administrators: [build(:data_administrator, email: data_manager.email)]) }
-  let!(:service) { create(:service_with_offers, owners: [owner], resource_organisation: provider) }
+  let!(:service) { create(:service_with_offers, resource_organisation: provider) }
   let!(:offer) { create(:offer) }
   let!(:bundle) { build(:bundle, main_offer: service.offers.first, offers: [offer], service: service) }
   let!(:scientific_domain) { bundle.scientific_domains.first }
 
-  %i[service_portfolio_manager owner].each do |user|
+  %i[service_portfolio_manager data_manager].each do |user|
     context "As a #{user}" do
       before { checkin_sign_in_as(send(user)) }
 

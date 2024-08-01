@@ -61,9 +61,10 @@ RSpec.describe Service, backend: true do
   end
 
   context "#owned_by?" do
-    it "is true when user is in the owners list" do
+    it "is true when user is in the data administrator of provider" do
       owner = create(:user)
-      service = create(:service, owners: [owner])
+      provider = create(:provider, data_administrators: [build(:data_administrator, email: owner.email)])
+      service = create(:service, resource_organisation: provider)
 
       expect(service.owned_by?(owner)).to be_truthy
     end

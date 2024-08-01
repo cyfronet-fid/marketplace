@@ -1,63 +1,15 @@
 # frozen_string_literal: true
 
 class Backoffice::ServicePolicy < Backoffice::ApplicationPolicy
-  class Scope < Backoffice::ApplicationPolicy::Scope
-    def resolve
-      if user&.service_portfolio_manager? || user&.data_administrator?
-        super
-      elsif user&.service_owner?
-        scope.includes(:service_user_relationships).where(service_user_relationships: { user: user })
-      else
-        scope.none
-      end
-    end
-  end
-
-  def index?
-    service_portfolio_manager? || service_owner? || data_administrator?
-  end
-
-  def show?
-    actionable?
-  end
-
   def new?
-    service_portfolio_manager? || user&.data_administrator?
+    management_role?
   end
 
   def create?
-    access?
-  end
-
-  def edit?
-    access?
-  end
-
-  def update?
-    access?
-  end
-
-  def publish?
-    access? && !record.published?
-  end
-
-  def suspend?
-    access? && !record.suspended?
-  end
-
-  def unpublish?
-    access? && !record.unpublished?
-  end
-
-  def draft?
-    access? && !record.draft?
+    management_role?
   end
 
   def preview?
-    access?
-  end
-
-  def destroy?
     access?
   end
 
@@ -116,7 +68,6 @@ class Backoffice::ServicePolicy < Backoffice::ApplicationPolicy
       [manual_related_service_ids: []],
       :catalogue,
       :catalogue_id,
-      [owner_ids: []],
       :status,
       :upstream_id,
       :version,
@@ -150,10 +101,6 @@ class Backoffice::ServicePolicy < Backoffice::ApplicationPolicy
   end
 
   private
-
-  def service_owner?
-    user&.service_owner?
-  end
 
   def project_items
     ProjectItem.joins(:offer).where(offers: { service_id: record })

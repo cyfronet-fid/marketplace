@@ -44,8 +44,7 @@ RSpec.feature "Backoffice", manager_frontend: true do
     let(:user) do
       create(:user).tap do |user|
         provider = create(:provider, data_administrators: [build(:data_administrator, email: user.email)])
-        service = create(:service, resource_organisation: provider)
-        ServiceUserRelationship.create!(user: user, service: service)
+        create(:service, resource_organisation: provider)
       end
     end
 

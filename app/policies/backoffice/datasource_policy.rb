@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Backoffice::DatasourcePolicy < ApplicationPolicy
+class Backoffice::DatasourcePolicy < Backoffice::ApplicationPolicy
   class Scope < Scope
     def resolve
       scope
@@ -145,15 +145,5 @@ class Backoffice::DatasourcePolicy < ApplicationPolicy
     ]
 
     !@record.is_a?(Provider) || @record.upstream_id.blank? ? attrs : attrs & MP_INTERNAL_FIELDS
-  end
-
-  def data_administrator?
-    record.owned_by?(user)
-  end
-
-  private
-
-  def service_portfolio_manager?
-    user&.service_portfolio_manager?
   end
 end

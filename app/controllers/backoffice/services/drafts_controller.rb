@@ -19,6 +19,6 @@ class Backoffice::Services::DraftsController < Backoffice::ApplicationController
   def find_and_authorize
     @service = Service.friendly.find(params[:service_id])
 
-    authorize(@service, :draft?)
+    authorize(@service, :unpublish?)
   end
 end
