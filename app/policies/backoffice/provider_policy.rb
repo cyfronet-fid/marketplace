@@ -1,28 +1,12 @@
 # frozen_string_literal: true
 
 class Backoffice::ProviderPolicy < Backoffice::ApplicationPolicy
-  def show?
-    actionable?
-  end
-
   def new?
-    catalogue_access?
+    super || catalogue_access?
   end
 
   def create?
-    catalogue_access?
-  end
-
-  def edit?
-    access? && !record.deleted?
-  end
-
-  def update?
-    access? && !record.deleted?
-  end
-
-  def destroy?
-    access? && !record.deleted?
+    super || catalogue_access?
   end
 
   def permitted_attributes
@@ -76,6 +60,6 @@ class Backoffice::ProviderPolicy < Backoffice::ApplicationPolicy
   private
 
   def catalogue_access?
-    service_portfolio_manager? || user&.catalogue_owner?
+    user&.catalogue_owner?
   end
 end

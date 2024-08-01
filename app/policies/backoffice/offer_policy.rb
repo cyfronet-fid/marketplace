@@ -1,44 +1,6 @@
 # frozen_string_literal: true
 
-class Backoffice::OfferPolicy < ApplicationPolicy
-  class Scope < Scope
-    def resolve
-      if user.service_portfolio_manager? || user.service_owner? || user.data_administrator?
-        scope.where.not(status: Statusable::INVISIBLE_STATUSES)
-      else
-        Offer.none
-      end
-    end
-  end
-
-  def new?
-    (service_portfolio_manager? || record.service.owned_by?(user)) && !service_deleted?
-  end
-
-  def create?
-    managed? && !service_deleted?
-  end
-
-  def edit?
-    managed? && !record.deleted? && !service_deleted?
-  end
-
-  def update?
-    managed? && !service_deleted?
-  end
-
-  def destroy?
-    managed? && record.persisted? && orderless? && !service_deleted? && other_offers_with_service_order_type?
-  end
-
-  def publish?
-    managed? && record.persisted? && (record.unpublished? || record.draft?)
-  end
-
-  def draft?
-    managed? && record.persisted? && record.published? && other_offers_with_service_order_type?
-  end
-
+class Backoffice::OfferPolicy < Backoffice::OrderablePolicy
   def submit_summary?
     managed? && !service_deleted?
   end
@@ -79,6 +41,14 @@ class Backoffice::OfferPolicy < ApplicationPolicy
         value
       ]
     ]
+  end
+
+  def delete?
+    super && other_offers_with_service_order_type?
+  end
+
+  def destroy?
+    super && other_offers_with_service_order_type?
   end
 
   private

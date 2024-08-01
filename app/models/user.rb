@@ -13,8 +13,6 @@ class User < ApplicationRecord
 
   has_many :projects, dependent: :destroy
 
-  has_many :service_user_relationships, dependent: :destroy
-  has_many :owned_services, through: :service_user_relationships, source: :service, class_name: "Service"
   has_many :user_categories, dependent: :destroy
   has_many :categories, through: :user_categories
   has_many :user_scientific_domains, dependent: :destroy
@@ -36,10 +34,6 @@ class User < ApplicationRecord
 
   def full_name
     "#{first_name} #{last_name}"
-  end
-
-  def service_owner?
-    owned_services_count.positive?
   end
 
   def provider_owner?

@@ -9,7 +9,8 @@ RSpec.describe Backoffice::OfferPolicy, backend: true do
   let(:service_portfolio_manager) { create(:user, roles: [:service_portfolio_manager]) }
   let(:owner) { create(:user) }
   let(:stranger) { create(:user) }
-  let(:service) { create(:service, owners: [owner]) }
+  let(:provider) { create(:provider, data_administrators: [build(:data_administrator, email: owner.email)]) }
+  let(:service) { create(:service, resource_organisation: provider) }
 
   subject { described_class }
 
@@ -81,7 +82,7 @@ RSpec.describe Backoffice::OfferPolicy, backend: true do
   end
 
   context "When offer is published and service is deleted" do
-    let(:service) { create(:service, owners: [owner], status: :deleted) }
+    let(:service) { create(:service, resource_organisation: provider, status: :deleted) }
     let(:offer) { build(:offer, service: service, status: :published) }
 
     permissions :create?, :edit?, :update?, :destroy? do
@@ -90,7 +91,7 @@ RSpec.describe Backoffice::OfferPolicy, backend: true do
   end
 
   context "When offer is draft and service is deleted" do
-    let(:service) { create(:service, owners: [owner], status: :deleted) }
+    let(:service) { create(:service, resource_organisation: provider, status: :deleted) }
     let(:offer) { build(:offer, service: service, status: :draft) }
 
     permissions :create?, :edit?, :update?, :destroy? do

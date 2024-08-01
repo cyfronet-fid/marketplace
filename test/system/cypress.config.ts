@@ -16,7 +16,7 @@ export default defineConfig({
   video: false,
   env: {
     debug: false,
-    FAIL_FAST_ENABLED: true,
+    FAIL_FAST_ENABLED: false,
   },
   e2e: {
     // We've imported your old cypress plugins here.

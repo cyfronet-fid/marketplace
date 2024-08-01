@@ -27,7 +27,7 @@ We will need:
     [related issue](https://askubuntu.com/questions/745660/imagemagick-png-delegate-install-problems).
   * [vips](https://github.com/libvips/libvips) The second, alternative
     images processor included in rails 7 and ImageProcessing gem
-  * [docker-compose 1](https://docs.docker.com/compose/) (Compose 2 is still in the making)
+  * [docker compose 1](https://docs.docker.com/compose/) (Compose 2 is still in the making)
 
 If you are using [asdf](https://github.com/asdf-vm/asdf) the easiest way to
 install required ruby and nodejs versions is to type
@@ -42,7 +42,7 @@ way.
 ### Setup
 Before running `./bin/setup` you need to:
   * create file `config/master.key` with appropriate content in order to make `config/credentials.yml.enc` decryptable.
-  * run docker services (i.e. postgresql, redis and elasticsearch) (see [docker-compose](#docker-compose)).
+  * run docker services (i.e. postgresql, redis and elasticsearch) (see [docker compose](#docker-compose)).
 
 To set up the environment run `./bin/setup`. It will install bundler, foreman, 
 dependencies and setup databases (development and test).
@@ -92,9 +92,9 @@ You also need to run postgresql, Elasticsearch and Redis in the [background](#do
 application server.
 
 
-## Docker-compose
+## Docker compose
 
-Docker-compose is used to manage background services: postgresql, Elasticsearch and Redis.
+Docker compose is used to manage background services: postgresql, Elasticsearch and Redis.
 The service containers are named `db`, `el` and `redis`, accordingly.
 Inspect the `docker-compose.yml` file for their configuration.
 
@@ -102,12 +102,12 @@ Inspect the `docker-compose.yml` file for their configuration.
 - Elasticsearch is used for full text resource search,
 - Redis is used to pass state to sidekiq (for running background jobs).
 
-To run all the services at once `$ docker-compose up -d` (remove `-d` to run in foreground).
-You can later inspect logs `$ docker-compose logs`.
-Lastly, to remove the containers (with data) `$ docker-compose down -v` (remove `-v` not to remove DB data).
+To run all the services at once `$ docker compose up -d` (remove `-d` to run in foreground).
+You can later inspect logs `$ docker compose logs`.
+Lastly, to remove the containers (with data) `$ docker compose down -v` (remove `-v` not to remove DB data).
 
-To run specific service `<serv>` in foreground `$ docker-compose up <serv>`.
-To stop it `$ docker-compose stop <serv>`, and to remove its state: `$ docker-compose rm <serv>`
+To run specific service `<serv>` in foreground `$ docker compose up <serv>`.
+To stop it `$ docker compose stop <serv>`, and to remove its state: `$ docker compose rm <serv>`
 
 ## FriendlyId
 
@@ -325,7 +325,7 @@ existence checks.
 
 ## Database
 
-In general, [docker-compose](#docker-compose) correctly manages DB permissions.
+In general, [docker compose](#docker-compose) correctly manages DB permissions.
 Nevertheless, if using a direct postgresql install or you want to use socket communication, than the below info may
 be useful.
 
@@ -558,7 +558,7 @@ For more info, click [here](https://docs.cyfronet.pl/pages/viewpage.action?space
 
 Start a local Solr instance by executing:
 ```shell
-cd solr; docker-compose up
+cd solr; docker compose up
 ```
 
 It will set up a local instance with a single core `marketplace`.

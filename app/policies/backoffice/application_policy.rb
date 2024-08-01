@@ -16,11 +16,11 @@ class Backoffice::ApplicationPolicy < ApplicationPolicy
   MP_INTERNAL_FIELDS = [:upstream_id, [sources_attributes: %i[id source_type eid _destroy]]].freeze
 
   def index?
-    service_portfolio_manager? || data_administrator?
+    management_role?
   end
 
   def show?
-    actionable?
+    access?
   end
 
   def new?
@@ -32,27 +32,27 @@ class Backoffice::ApplicationPolicy < ApplicationPolicy
   end
 
   def edit?
-    access?
+    actionable?
   end
 
   def update?
-    access?
+    actionable?
   end
 
   def publish?
-    access? && !record.published?
+    actionable? && !record.published?
   end
 
   def unpublish?
-    access? && !record.unpublished?
+    actionable? && !record.unpublished?
   end
 
   def suspend?
-    access? && !record.suspended?
+    actionable? && !record.suspended?
   end
 
   def destroy?
-    access?
+    actionable?
   end
 
   private
@@ -65,11 +65,15 @@ class Backoffice::ApplicationPolicy < ApplicationPolicy
     user&.data_administrator?
   end
 
-  def actionable?
+  def access?
     service_portfolio_manager? || record&.owned_by?(user)
   end
 
-  def access?
-    actionable? && !record.deleted?
+  def actionable?
+    access? && !record.deleted?
+  end
+
+  def management_role?
+    service_portfolio_manager? || data_administrator?
   end
 end

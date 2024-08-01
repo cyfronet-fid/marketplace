@@ -97,14 +97,13 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       # TODO: uncomment when Resource Profile 4.0 will be released
       # select platform.name, from: "Platforms"
       select category.name, from: "Categories"
-      select user.to_s, from: "Owners"
       fill_in "Version", with: "2.2.2"
 
       fill_in "service_sources_attributes_0_eid", with: "12345a"
 
-      expect { click_on "Create Service" }.to change { user.owned_services.count }.by(1).and change { Offer.count }.by(
-              1
-            ).and have_enqueued_job(Ess::UpdateJob).exactly(2).times
+      expect { click_on "Create Service" }.to change { Offer.count }.by(1).and have_enqueued_job(
+              Ess::UpdateJob
+            ).exactly(2).times
 
       expect(page).to have_content("service name")
       expect(page).to have_content("service description")
@@ -306,7 +305,7 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       select scientific_domain.name, from: "Scientific domains"
       select provider.name, from: "Providers"
 
-      expect { click_on "Create Service" }.to change { user.owned_services.count }.by(0)
+      expect { click_on "Create Service" }.to change { Service.count }.by(0)
 
       expect(page).to have_content("Logo format you're trying to attach is not supported.")
     end
@@ -433,7 +432,8 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
     end
 
     scenario "I can add new offer", js: true, skip: "New Offer Wizard" do
-      service = create(:service, name: "my service", owners: [user])
+      provider = create(:provider, data_administrators: [build(:data_administrator, email: user.email)])
+      service = create(:service, name: "my service", resource_organisation: provider)
 
       visit backoffice_service_path(service)
       click_on "Add new offer"
@@ -462,7 +462,8 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
     end
 
     scenario "I can update default offer through service", js: true do
-      service = create(:service, name: "my service", owners: [user])
+      provider = create(:provider, data_administrators: [build(:data_administrator, email: user.email)])
+      service = create(:service, name: "my service", resource_organisation: provider)
       create(:offer, service: service)
 
       service.reload
@@ -532,7 +533,8 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
     end
 
     scenario "I cannot add invalid offer", js: true, skip: "New Offer Wizard" do
-      service = create(:service, name: "my service", owners: [user], offers: [create(:offer)])
+      provider = create(:provider, data_administrators: [build(:data_administrator, email: user.email)])
+      service = create(:service, name: "my service", resource_organisation: provider, offers: [create(:offer)])
 
       visit backoffice_service_path(service)
       click_on "Add new offer"
@@ -690,7 +692,6 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       # expect(page).to have_field "Platforms", disabled: false
       expect(page).to have_field "Scientific domains", disabled: false
       expect(page).to have_field "Dedicated For", disabled: false
-      expect(page).to have_field "Owners", disabled: false
       expect(page).to have_field "Funding bodies", disabled: false
       expect(page).to have_field "Funding programs", disabled: false
       expect(page).to have_field "Language availability", disabled: false
@@ -764,7 +765,6 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       expect(page).to have_field "Funding bodies", disabled: true
       expect(page).to have_field "Funding programs", disabled: true
       expect(page).to have_field "service_grant_project_names_0", disabled: true
-      expect(page).to have_field "Owners", disabled: false
       expect(page).to have_field "Language availability", disabled: true
       expect(page).to have_field "Geographical availabilities", disabled: true
       expect(page).to have_field "Service geographic locations", disabled: true
@@ -884,12 +884,12 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
 
   context "as a service owner" do
     let(:user) { create(:user) }
+    let(:provider) { create(:provider, data_administrators: [build(:data_administrator, email: user.email)]) }
 
     before { checkin_sign_in_as(user) }
 
     scenario "I can edit service draft" do
-      provider = create(:provider, data_administrators: [build(:data_administrator, email: user.email)])
-      service = create(:service, owners: [user], status: :draft, resource_organisation: provider)
+      service = create(:service, resource_organisation: provider, status: :draft)
 
       visit backoffice_service_path(service)
       click_on "Edit"
@@ -902,7 +902,7 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
     end
 
     scenario "I can create new offer", skip: "New Offer Wizard" do
-      service = create(:service, owners: [user])
+      service = create(:service, resource_organisation: provider)
       create(:offer, service: service)
 
       visit backoffice_service_path(service)
@@ -917,9 +917,9 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
 
     ["EOSC::Jupyter Notebook", "EOSC::Galaxy Workflow", "EOSC::Twitter Data"].each do |tag|
       scenario "I can see EOSC explore integration for EGI Notebooks" do
-        notebook_service = create(:service, tag_list: [tag], pid: "egi-fed.notebook", owners: [user])
-        other_service_with_pid = create(:service, pid: "other.pid", owners: [user])
-        other_service_without_pid = create(:service, pid: nil, owners: [user])
+        notebook_service = create(:service, tag_list: [tag], pid: "egi-fed.notebook", resource_organisation: provider)
+        other_service_with_pid = create(:service, pid: "other.pid", resource_organisation: provider)
+        other_service_without_pid = create(:service, pid: nil, resource_organisation: provider)
 
         visit backoffice_service_path(notebook_service)
         expect(page).to have_text("Explore Compatible Research Products")

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_30_021132) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_07_164825) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -756,15 +756,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_30_021132) do
     t.index ["target_user_id"], name: "index_service_target_users_on_target_user_id"
   end
 
-  create_table "service_user_relationships", force: :cascade do |t|
-    t.bigint "service_id"
-    t.bigint "user_id"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.index ["service_id"], name: "index_service_user_relationships_on_service_id"
-    t.index ["user_id"], name: "index_service_user_relationships_on_user_id"
-  end
-
   create_table "service_vocabularies", force: :cascade do |t|
     t.bigint "service_id"
     t.bigint "vocabulary_id"
@@ -967,7 +958,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_30_021132) do
     t.string "first_name", null: false
     t.string "last_name", null: false
     t.integer "roles_mask"
-    t.integer "owned_services_count", default: 0, null: false
     t.boolean "categories_updates", default: false, null: false
     t.boolean "scientific_domains_updates", default: false, null: false
     t.boolean "show_welcome_popup", default: false, null: false
@@ -1038,8 +1028,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_30_021132) do
   add_foreign_key "service_scientific_domains", "services"
   add_foreign_key "service_target_users", "services"
   add_foreign_key "service_target_users", "target_users"
-  add_foreign_key "service_user_relationships", "services"
-  add_foreign_key "service_user_relationships", "users"
   add_foreign_key "service_vocabularies", "services"
   add_foreign_key "service_vocabularies", "vocabularies"
   add_foreign_key "services", "providers"
