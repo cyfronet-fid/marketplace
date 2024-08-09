@@ -21,6 +21,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Number of requests handling data_administrators scope (@goreck888)
 - Show pop-up on add to favourites (@maria-j-k)
 - Pre-fill administrator data in catalogues creation form (@maria-j-k)
+- Fix access_type validator in offer (@maria-j-k)
 
 
 ## [3.57.0]

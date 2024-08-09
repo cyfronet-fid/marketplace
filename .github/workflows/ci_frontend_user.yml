@@ -12,7 +12,7 @@ jobs:
           sudo sysctl -w vm.max_map_count=262144
       - uses: actions/checkout@v4
       - name: Start containers
-        run: docker-compose -f docker-compose-x64.yml up -d
+        run: docker compose -f docker-compose-x64.yml up -d
       - name: Run VIPS
         run: sudo apt-get update && sudo apt-get install libvips42 -y
       - uses: ruby/setup-ruby@v1
@@ -34,7 +34,7 @@ jobs:
           bundle exec rspec -t end_user_frontend
       - name: Containers logs
         if: failure()
-        run: docker-compose logs
+        run: docker compose logs
       - name: Stop containers
         if: always()
-        run: docker-compose down
+        run: docker compose down
