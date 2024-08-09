@@ -66,14 +66,7 @@ class Offer < ApplicationRecord
   validates :oms_params, absence: true, if: -> { current_oms.blank? }
   validate :check_oms_params, if: -> { current_oms.present? }
   validate :check_main_bundles, if: -> { draft? }
-  validate :same_order_type_as_in_service,
-           if: -> do
-             service&.order_type.present? &&
-               (
-                 (new_record? && service.offers.published.empty?) ||
-                   (persisted? && service.offers.published.none? { |o| o.order_type == service&.order_type })
-               )
-           end
+  validate :same_order_type_as_in_service, if: -> { service&.order_type.present? }
 
   before_destroy :check_main_bundles
 
@@ -131,7 +124,9 @@ class Offer < ApplicationRecord
   end
 
   def same_order_type_as_in_service
-    unless order_type == service.order_type
+    other_services = service.offers.published.reject { |o| o&.id == id }
+    other_check = other_services.none? { |o| o.order_type == service&.order_type }
+    if (other_services.empty? || other_check) && order_type != service.order_type
       errors.add(:order_type, "must be the same as in the service: #{service.order_type}")
     end
   end
