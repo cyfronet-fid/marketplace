@@ -1494,10 +1494,10 @@ to-regex-range@^5.0.1:
   dependencies:
     is-number "^7.0.0"
 
-trix@^2.1.1:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/trix/-/trix-2.1.2.tgz#8185fa7e12d6cbee93db7f149907b3f7a79b3704"
-  integrity sha512-PsQC4qn1Ub0djn7FZ9KLzEC2whE1J27JiRycn5WddlVT8JgwKq5PtlXo6rRfjc7Qj2aSzIdjkApai9zAW7/IRA==
+trix@^2.1.4:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/trix/-/trix-2.1.4.tgz#a2f1e37fec03c9050bc7ba1d56056e606389a46f"
+  integrity sha512-f0AGnqBV8J2qW+fCtVU71JmvzjcxnO5Xbbd6Cl2KrHVRpgXKDqNGTmDmQzNHWU7T2OgtwHwvNiN+OIf3Z3KmHQ==
 
 undici-types@~5.26.4:
   version "5.26.5"
