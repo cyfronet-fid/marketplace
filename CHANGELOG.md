@@ -27,6 +27,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Bundle status changes to draft if any of its offers changes the status from public to other (@maria-j-k)
 - Fix access_type validator in offer (@maria-j-k)
 - Compare/Favourite icons on the service page (@jarekzet)
+- Removed `no_offers` message in deleted services (@goreck888)
 
 
 ## [3.57.0]
