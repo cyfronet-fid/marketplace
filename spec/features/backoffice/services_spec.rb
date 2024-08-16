@@ -522,6 +522,20 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       expect(service.offers).to eq([offer])
     end
 
+    scenario "I don't see warning about published offers in the deleted service", js: true do
+      service = create(:service, status: :deleted)
+
+      visit backoffice_service_path(service)
+
+      expect(page).to_not have_content(
+        "This service has no offers. " \
+          "Add one offer to make possible for a user to Access the service."
+      )
+      offer = create(:offer, service: service)
+      service.reload
+      expect(service.offers).to eq([offer])
+    end
+
     scenario "Offer are converted from markdown to html on service view", skip: "New Offer Wizard" do
       offer = create(:offer, name: "offer1", description: "# Test offer\r\n\rDescription offer")
       create(:offer, service: offer.service)
