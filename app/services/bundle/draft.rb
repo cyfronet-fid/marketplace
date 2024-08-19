@@ -1,15 +1,16 @@
 # frozen_string_literal: true
 
 class Bundle::Draft < Bundle::ApplicationService
-  def initialize(bundle, empty_offers: false)
+  def initialize(bundle, empty_offers: false, external_update: false)
     super(bundle)
     @empty_offers = empty_offers
+    @external_update = external_update
   end
 
   def call
     if @empty_offers
       @bundle.offers = []
-    else
+    elsif !@external_update
       notify_unbundled!
     end
     @bundle.status = "draft"

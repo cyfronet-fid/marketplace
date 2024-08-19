@@ -5,18 +5,19 @@ class Bundle::Update < Bundle::ApplicationService
     super(bundle)
     @params = params
     @external_update = external_update
-    @current_offer_ids = @params["offer_ids"] || @params["offers"]&.map(&:id) || []
+    @current_offer_ids = @params[:offer_ids] || @params[:offers]&.map(&:id) || []
     @added_bundled_offer_ids = @current_offer_ids - @bundle.offers.map(&:id)
     @removed_bundled_offer_ids = @bundle.offers.map(&:id) - @current_offer_ids
   end
 
   def call
-    result = @bundle.update(@params)
     if @external_update
       notify_own_offer!
-      @bundle = Bundle::Unpublish.call(@bundle)
+      @bundle = Bundle::Draft.call(@bundle, external_update: @external_update)
+      result = @bundle.update(@params)
     else
       public_before = @bundle.published?
+      result = @bundle.update(@params)
       notify_bundled_offers! if result && public_before
     end
     @bundle.service.reindex

@@ -24,8 +24,8 @@ RSpec.describe Offer::Unpublish, backend: true do
         bundled_offer.reload
         bundle.reload
 
-        expect(bundle.valid?).to be_falsey
-        expect(bundle).to be_unpublished
+        expect(bundle.valid?).to be_truthy
+        expect(bundle).to be_draft
       end
 
       it "change to draft for main offer" do
