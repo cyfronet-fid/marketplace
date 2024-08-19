@@ -5309,10 +5309,11 @@ abbr[title] {
     }
   }
 
-  &.favourite {
+  &.favourites {
     input[type="checkbox"] + span {
       background: url("icon-heart.svg") no-repeat 24px 2px;
       background-size: auto 90%;
+      padding-left: 45px;
     }
   }
 
