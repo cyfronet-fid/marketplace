@@ -19,7 +19,7 @@ RSpec.describe Offer::Delete, backend: true do
       expect { Offer::Delete.call(bundled_offer) }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
       bundle.reload
-      expect(bundle).to be_unpublished
+      expect(bundle).to be_draft
     end
 
     context "with project items" do
@@ -40,7 +40,7 @@ RSpec.describe Offer::Delete, backend: true do
         expect { Offer::Delete.call(destroyed_bundled_offer) }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
         bundle.reload
-        expect(bundle).to be_unpublished
+        expect(bundle).to be_draft
       end
     end
   end

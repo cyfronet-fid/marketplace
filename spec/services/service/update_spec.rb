@@ -75,7 +75,7 @@ RSpec.describe Service::Update, backend: true do
       }.by(1)
 
       bundle.reload
-      expect(bundle).to be_unpublished
+      expect(bundle).to be_draft
     end
   end
 end

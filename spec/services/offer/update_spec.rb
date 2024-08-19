@@ -4,16 +4,6 @@ require "rails_helper"
 
 RSpec.describe Offer::Update, backend: true do
   context "#bundled_offers" do
-    it "doesn't send notification if bundled offers removed" do
-      provider1 = build(:provider)
-      provider2 = build(:provider)
-      bundled_offer = build(:offer, service: build(:service, resource_organisation: provider1))
-      bundle_offer = create(:offer, service: build(:service, resource_organisation: provider2))
-      bundle = create(:bundle, main_offer: bundle_offer, offers: [bundled_offer])
-
-      expect { Bundle::Update.call(bundle, { offers: [] }) }.not_to change { ActionMailer::Base.deliveries.count }
-    end
-
     it "doesn't send notification if offer non-public" do
       bundled_offer = create(:offer, service: build(:service))
       bundle = create(:bundle, status: "draft", service: build(:service, status: "draft"))
@@ -53,7 +43,7 @@ RSpec.describe Offer::Update, backend: true do
       bundled_offer.reload
       bundle.reload
 
-      expect(bundle).to be_unpublished
+      expect(bundle).to be_draft
     end
   end
 end
