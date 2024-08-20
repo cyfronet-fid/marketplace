@@ -5296,24 +5296,15 @@ abbr[title] {
   input[type="checkbox"] + span {
     position: relative;
     cursor: pointer;
-    padding-left: 47px;
+    padding-left: 25px;
     color: $palette-blue;
     padding-top: 1px;
     margin-right: 6px;
-    background: url("icon-compare.svg") no-repeat 24px 2px;
 
     &.smaller {
       font-size: 14px;
       font-weight: 400;
       line-height: 120%;
-    }
-  }
-
-  &.favourites {
-    input[type="checkbox"] + span {
-      background: url("icon-heart.svg") no-repeat 24px 2px;
-      background-size: auto 90%;
-      padding-left: 45px;
     }
   }
 
@@ -5326,7 +5317,7 @@ abbr[title] {
     height: 16px;
     top: 1px;
     left: 0;
-    border: 1px solid $palette-solid-20;
+    border: 1px solid $custom-16;
     border-radius: 3px;
     background-color: $white;
   }
@@ -5349,6 +5340,29 @@ abbr[title] {
     position: absolute;
     top: 2px;
     left: 6px;
+  }
+
+  &.favourites {
+    input[type="checkbox"] + span {
+      background: url("icon-heart.svg") no-repeat 0 2px;
+      background-size: auto 90%;
+      padding-left: 23px;
+    }
+
+    input[type="checkbox"] + span::before {
+      display: none;
+    }
+
+    input[type="checkbox"]:checked + span::after {
+      background: url("icon-heart-full.svg") no-repeat 0 2px;
+      background-size: auto 90%;
+      transform: none;
+      border: none;
+      width: 20px;
+      top: -1px;
+      left: 0;
+      height: 18px;
+    }
   }
 }
 
