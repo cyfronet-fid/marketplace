@@ -45,7 +45,7 @@
                         = _("Compare")
                   - if @favourites_enabled
                     %span.compare.favourites.ml-3
-                      %label{ @preview ? {} : options(@object.slug, @comparison_enabled) }
+                      %label{ @preview ? {} : options(@object.slug, @comparison_enabled), "data-toggle": "tooltip-none" }
                         = check_box_tag "favourite", @object.slug, favourite?(Array(@favourite_services), @object.slug),
                           id: "favourite-#{@object.id}",
                               class: "form-check-input",
