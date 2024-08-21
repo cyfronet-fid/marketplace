@@ -5342,6 +5342,10 @@ abbr[title] {
     left: 6px;
   }
 
+  input[type="checkbox"]:disabled + span::before {
+    border: 1px solid $palette-solid-50;
+  }
+
   &.favourites {
     input[type="checkbox"] + span {
       background: url("icon-heart.svg") no-repeat 0 2px;
