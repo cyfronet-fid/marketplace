@@ -21,6 +21,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Remove suggested services (@maria-j-k)
 - Unlock unpublish/suspend and delete actions for active providers and catalogues (@goreck888)
 - New backoffice view (@jarekzet, goreck888)
+- Postgres update from 14.1 to 16.4 (@goreck888)
 
 ### Fixed
 
@@ -31,7 +32,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Fix access_type validator in offer (@maria-j-k)
 - Compare/Favourite icons on the service page (@jarekzet)
 - Removed `no_offers` message in deleted services (@goreck888)
-
 
 
 ## [3.58.1]
