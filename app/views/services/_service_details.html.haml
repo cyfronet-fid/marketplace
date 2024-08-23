@@ -15,7 +15,10 @@
         .abbreviation.list
           = service.abbreviation
       %p.mb-2= highlighted_for(:tagline, service, highlights)
-      = render "components/presentable/header_component/categorization", service: service, highlights: highlights
+      = render "components/presentable/header_component/categorization",
+        service: service,
+        highlights: highlights,
+        backoffice: request.fullpath.include?("backoffice")
       = yield_content!(:comparison_checkbox) if content_for(:comparison_checkbox)
       = yield_content!(:favourite_checkbox) if content_for(:favourite_checkbox)
     - if service_offers&.any?

@@ -14,7 +14,10 @@
 
       - unless @object.instance_of?(Provider)
         = render "components/presentable/header_component/categorization",
-              service: @object, highlights: nil, preview: @preview || @object.suspended?
+              service: @object,
+              highlights: nil,
+              preview: @preview || @object.suspended?,
+              backoffice: request.fullpath.include?("backoffice")
       %p.mb-3.subtitle-row= @subtitle
 
       - if @object.instance_of?(Service)

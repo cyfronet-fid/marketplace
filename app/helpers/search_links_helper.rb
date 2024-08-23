@@ -39,20 +39,12 @@ module SearchLinksHelper
     search_base_url + "/search/all_collection?q=*"
   end
 
-  def resource_organisation(service, highlights = nil, preview: false)
-    target = service.resource_organisation
-    preview_options = preview ? { "data-preview-target": "link" } : {}
-    link_to_unless(
-      target.deleted? || target.draft? || service.suspended?,
-      highlighted_for(:resource_organisation_name, service, highlights),
-      service.organisation_search_link(target.name, services_path(providers: target.id)),
-      preview_options
-    )
+  def resource_organisation_detail_path(service, backoffice)
+    link_to service.resource_organisation.name,
+            backoffice ? backoffice_provider_path(service.resource_organisation) : service.resource_organisation
   end
 
-  def providers(service, highlights = nil, preview: false)
-    highlighted = highlights.present? ? sanitize(highlights[:provider_names])&.to_str : ""
-    preview_options = preview ? { "data-preview-target": "link" } : {}
+  def providers(service, backoffice)
     service
       .providers
       .compact
@@ -60,16 +52,10 @@ module SearchLinksHelper
       .reject { |p| p == service.resource_organisation }
       .uniq
       .map do |target|
-        if highlighted.present? && highlighted.strip == target.name.strip
-          link_to_unless target.deleted? || target.draft? || target.suspended?,
-                         highlights[:provider_names].html_safe,
-                         service.provider_search_link(target.name, services_path(providers: target.id)),
-                         preview_options
+        if backoffice
+          link_to target.name, backoffice_provider_path(target)
         else
-          link_to_unless target.deleted? || target.draft? || target.suspended?,
-                         target.name,
-                         service.provider_search_link(target.name, services_path(providers: target.id)),
-                         preview_options
+          link_to target.name, target
         end
       end
   end

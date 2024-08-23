@@ -3,9 +3,8 @@
     %span
       = _("Organisation") + ":"
   %dd
-    .categorization-content= resource_organisation(service, highlights,
-      preview: local_assigns[:preview])
-- active_providers = providers(service, highlights, preview: local_assigns[:preview])
+    .categorization-content= resource_organisation_detail_path(service, backoffice)
+- active_providers = providers(service, backoffice)
 - if active_providers.present?
   %dl.mb-0.d-flex
     %dt

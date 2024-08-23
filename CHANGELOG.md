@@ -17,6 +17,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Remove suggested services (@maria-j-k)
 - Unlock unpublish/suspend and delete actions for active providers and catalogues (@goreck888)
 - New backoffice view (@jarekzet, goreck888)
+- Organisation name on service detail and list view links to provider detail page (@maria-j-k)
 
 ### Fixed
 - Number of requests handling data_administrators scope (@goreck888)
