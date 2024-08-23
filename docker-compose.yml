@@ -2,7 +2,7 @@ version: "3"
 
 services:
   db:
-    image: postgres:14.1
+    image: postgres:16.4
     volumes:
       - db-data:/var/lib/postgresql/data
     ports:
@@ -23,7 +23,7 @@ services:
     environment:
       discovery.type: single-node
   redis:
-    image: redis:6.2.6
+    image: arm64v8/redis:7.2.4
     ports:
       - "127.0.0.1:6379:6379"
     networks:

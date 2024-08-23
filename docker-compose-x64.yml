@@ -2,7 +2,7 @@ version: "3"
 
 services:
   db:
-    image: postgres:14.1
+    image: postgres:16.4
     volumes:
       - db-data:/var/lib/postgresql/data
     ports:
