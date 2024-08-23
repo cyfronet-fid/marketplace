@@ -44,18 +44,19 @@
                         "data-action": "click->comparison#update"
                       %span.smaller
                         = _("Compare")
-                  - if @favourites_enabled
-                    %span.compare.favourites.ml-3
-                      %label{ @preview ? {} : options(@object.slug, @comparison_enabled), "data-toggle": "tooltip-none" }
-                        = check_box_tag "favourite", @object.slug, favourite?(Array(@favourite_services), @object.slug),
-                          id: "favourite-#{@object.id}",
-                              class: "form-check-input",
-                              "data-favourite-target": "checkbox",
-                              "data-e2e": "favourite-checkbox",
-                              "data-action": "click->favourite#updateFromRes",
-                              "data-value": "favourite-#{@object.id}"
-                        %span.smaller
-                          = _("Add to favourites")
+                    - if @favourites_enabled
+                      %span.compare.favourites.ml-3
+                        %label{ @preview ? {} : options(@object.slug, @comparison_enabled),
+                        "data-toggle": "tooltip-none", title: "" }
+                          = check_box_tag "favourite", @object.slug, favourite?(Array(@favourite_services), @object.slug),
+                            id: "favourite-#{@object.id}",
+                                class: "form-check-input",
+                                "data-favourite-target": "checkbox",
+                                "data-e2e": "favourite-checkbox",
+                                "data-action": "click->favourite#updateFromRes",
+                                "data-value": "favourite-#{@object.id}"
+                          %span.smaller
+                            = _("Add to favourites")
   .col-12.col-lg-3.text-center{ class: ("horizontal-space" if horizontal) }
     .vertical-center-inner.access-type
       = buttons
