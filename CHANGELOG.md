@@ -14,9 +14,11 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Simplify project creation form (@wujuu)
 - Offer recommendations in project view (@wujuu)
 - Node information (@goreck888)
+- Environmental variable to hide recommendation panel (`SHOW_RECOMMENDATION_PANEL`) (@maria-j-k)
 
 ### Changed
-
+- MarketplaceLocation renamed to ResearchActivity (@maria-j-k)
+- Remove suggested services (@maria-j-k)
 - Unlock unpublish/suspend and delete actions for active providers and catalogues (@goreck888)
 - New backoffice view (@jarekzet, goreck888)
 
