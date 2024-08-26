@@ -18,6 +18,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Unlock unpublish/suspend and delete actions for active providers and catalogues (@goreck888)
 - New backoffice view (@jarekzet, goreck888)
 - Organisation name on service detail and list view links to provider detail page (@maria-j-k)
+- Other settings tab should be visible only for users with service portfolio manager role (@maria-j-k)
 
 ### Fixed
 - Number of requests handling data_administrators scope (@goreck888)
