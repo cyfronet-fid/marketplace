@@ -26,6 +26,6 @@ class Services::OrderingConfigurationsController < Services::OrderingConfigurati
     else
       not_authorized_message(e)
     end
-    redirect_to service_path(@service)
+    redirect_to service_offers_path(@service)
   end
 end

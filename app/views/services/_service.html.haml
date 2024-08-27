@@ -4,7 +4,7 @@
   - if service.horizontal
     %span.badge.badge-success Horizontal service
   = link_to highlighted_for(:name, service, highlights[service.id]),
-    service_path(service, category.present? ? { fromc: category.slug } : nil),
+    service_offers_path(service, category.present? ? { fromc: category.slug } : nil),
       "data-e2e": "service-name", "data-probe": "", "data-service-id": service.id
   - content_for :comparison_checkbox do
     .mt-3.compare

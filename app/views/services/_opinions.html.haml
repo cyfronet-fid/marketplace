@@ -1,17 +1,2 @@
-#opinions.tab-pane.container.active{ "aria-labelledby" => "opinions-tab", role: "tabpanel" }
-  .row
-    %main.col-12.col-xl-9.pr-4.mb-4.pt-4
-      = render(partial: "service_opinions/service_opinion",
-          collection: service_opinions) || _("There are no reviews available.")
-    %sidebar.col-12.col-xl-3{ "data-shepherd-tour-target": "service-classification" }
-      = render "components/presentable/explore_links", object: service
-      .right-panel-links
-        - if !service.public_contacts.empty? && (question || preview)
-          = render "components/presentable/header_component/ask_question", question_link: new_question_link(service),
-            question: question,
-            prompt: new_question_prompt,
-            preview: preview
-        = render Presentable::LinksComponent.new(object: service, preview: preview)
-      - if service.respond_to?(:resource_organisation)
-        .provider-panel
-          = render Presentable::ProviderInfoComponent.new(base: service, preview: preview)
+= render(partial: "service_opinions/service_opinion",
+    collection: service_opinions) || _("There are no reviews available.")

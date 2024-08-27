@@ -7,6 +7,6 @@
           "data-preview-target": preview ? "link" : "")
       - else
         = link_to(t("components.presentable.sidebar_component.fields.#{field}"),
-          object.suspended? && !field.in?(active_when_suspended) ? nil : object.send(field), "data-probe": "",
-          "data-preview-target": preview ? "link" : "")
+          preview || (object.suspended? && !field.in?(active_when_suspended)) ? "javascript:;" : object.send(field),
+          "data-probe": "", "data-preview-target": preview ? "link" : "")
         -# TODO: refactor dynamic translation (above)
