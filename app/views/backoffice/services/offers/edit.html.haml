@@ -9,5 +9,5 @@
       show_delete_button: true,
       offer_form_source_module: [:backoffice, @service, @offer],
       offer_delete_link: backoffice_service_offer_path(@service, @offer),
-      back_link: backoffice_service_path(@service),
+      back_link: backoffice_service_offers_path(@service),
       from: params[:from] || local_assigns[:from]

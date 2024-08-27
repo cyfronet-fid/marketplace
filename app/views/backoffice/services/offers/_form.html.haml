@@ -53,17 +53,18 @@
 
       .submit.d-none{ "data-offer-target": "submitRow" }
         = f.button :submit, class: "btn btn-primary pl-5 pr-5 mobile-bottom-margin", "data-e2e": "create-offer-btn"
-        - if policy([:backoffice, offer]).destroy?
-          = link_to "Delete Offer", polymorphic_path(offer_form_source_module),
-              data: { "turbo-confirm": _("This action cannot be undone. Confirm to delete the Offer."), "turbo-method": :delete },
-              class: "btn btn-primary pl-4 pr-4 mobile-bottom-margin btn-danger ml-3"
-        - if policy([:backoffice, offer]).draft?
-          = link_to "Unpublish Offer", polymorphic_path(offer_form_source_module << :draft),
-            class: "btn btn-primary pl-4 pr-4 mobile-bottom-margin btn-info ml-3",
-            data: { "turbo-confirm": _("Confirm and unpublish the Offer. It will no longer be visible on the website."),
-                    "turbo-method": :post }
-        - if policy([:backoffice, offer]).publish?
-          = link_to "Publish Offer", polymorphic_path(offer_form_source_module << :publish),
-            class: "btn btn-primary pl-4 pr-4 mobile-bottom-margin ml-3",
-            data: { "turbo-confirm": _("Confirm and publish the Offer. It will be accessible on the website."),
-                    "turbo-method": :post }
+        - if offer.persisted?
+          - if policy([:backoffice, offer]).delete?
+            = link_to "Delete Offer", polymorphic_path(offer_form_source_module),
+                data: { "turbo-confirm": _("This action cannot be undone. Confirm to delete the Offer."), "turbo-method": :delete },
+                class: "btn btn-primary pl-4 pr-4 mobile-bottom-margin btn-danger ml-3"
+          - if policy([:backoffice, offer]).draft?
+            = link_to "Unpublish Offer", polymorphic_path(offer_form_source_module << :draft),
+              class: "btn btn-primary pl-4 pr-4 mobile-bottom-margin btn-info ml-3",
+              data: { "turbo-confirm": _("Confirm and unpublish the Offer. It will no longer be visible on the website."),
+                      "turbo-method": :post }
+          - if policy([:backoffice, offer]).publish?
+            = link_to "Publish Offer", polymorphic_path(offer_form_source_module << :publish),
+              class: "btn btn-primary pl-4 pr-4 mobile-bottom-margin ml-3",
+              data: { "turbo-confirm": _("Confirm and publish the Offer. It will be accessible on the website."),
+                      "turbo-method": :post }

@@ -2,7 +2,7 @@
   service_offers: filtered_offers(offers[service.id]), comparison_enabled: comparison_enabled,
   tour_overview_9_target: local_assigns[:tour_overview_9_target_on_counter] == service_counter do
   = link_to highlighted_for(:name, service, highlights[service.id]),
-    service_path(service, category.present? ? { fromc: category.slug } : nil),
+    service_offers_path(service, category.present? ? { fromc: category.slug } : nil),
       "data-e2e": "service-name", "data-probe": "", "data-service-id": service.id
   - content_for :comparison_checkbox do
     .mt-3.compare

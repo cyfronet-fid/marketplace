@@ -51,7 +51,7 @@ describe("Owned services", () => {
         cy.get("[data-e2e='query-submit-btn']").click();
         cy.get("[data-e2e='service-name']").should("include.text", value);
         cy.contains("[data-e2e='service-name']", value).click();
-        cy.get("[data-e2e='access-service-btn']").should("be.visible");
+        cy.get("[data-e2e='access-service-btn']").should("not.exist");
       });
   });
 

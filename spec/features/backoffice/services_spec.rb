@@ -24,12 +24,12 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
     scenario "I can see any service" do
       service = create(:service, name: "service1")
 
-      visit backoffice_service_path(service)
+      visit backoffice_service_offers_path(service)
 
       expect(page).to have_content("service1")
     end
 
-    scenario "I can create new service with default offer" do
+    scenario "I can create new service without default offer" do
       category = create(:category)
       provider = create(:provider)
       scientific_domain = create(:scientific_domain)
@@ -101,9 +101,9 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
 
       fill_in "service_sources_attributes_0_eid", with: "12345a"
 
-      expect { click_on "Create Service" }.to change { Offer.count }.by(1).and have_enqueued_job(
-              Ess::UpdateJob
-            ).exactly(2).times
+      expect { click_on "Create Service" }.to have_enqueued_job(Ess::UpdateJob).exactly(1).times
+
+      click_on "About"
 
       expect(page).to have_content("service name")
       expect(page).to have_content("service description")
@@ -157,6 +157,8 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       click_on "Create Service"
 
       expect(page).to have_content("New service created successfully")
+
+      click_on "About"
 
       expect(page).to have_content("service name")
       expect(page).to have_content("service description")
@@ -212,17 +214,6 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       expect(page).to_not have_content(public_contacts.second.email)
     end
 
-    scenario "I can see warning about no offers" do
-      service = create(:service)
-
-      visit backoffice_service_path(service)
-
-      expect(page).to have_content(
-        "This service has no offers. " \
-          "Add one offer to make possible for a user to Access the service."
-      )
-    end
-
     scenario "I can preview service before create" do
       provider = create(:provider)
       scientific_domain = create(:scientific_domain)
@@ -260,7 +251,7 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       click_on "Go back to edit"
       expect { click_on "Create Service" }.to change { Service.count }.by(1).and have_enqueued_job(
               Ess::UpdateJob
-            ).exactly(2).times
+            ).exactly(1).times
       expect(page).to have_content("service name")
     end
 
@@ -335,7 +326,7 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       click_on "Edit"
 
       fill_in "service_name", with: "updated name"
-      expect { click_on "Update Service" }.to have_enqueued_job(Ess::UpdateJob).exactly(2).times
+      expect { click_on "Update Service" }.to have_enqueued_job(Ess::UpdateJob).exactly(1).times
 
       expect(page).to have_content("updated name")
     end
@@ -492,7 +483,7 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       end
     end
 
-    pending "I can update offer's order_type from service by removing second offer" do
+    scenario "I can update offer's order_type from service by removing second offer" do
       service = create(:service, order_type: :other)
       other_offer = create(:offer, order_type: :other, service: service)
       offer_to_update = create(:offer, order_type: :order_required, service: service)
@@ -506,20 +497,6 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       expect(service.order_type).to eq("other")
       offer_to_update.reload
       expect(offer_to_update.order_type).to eq("other")
-    end
-
-    scenario "I can see warning about no published offers", js: true do
-      service = create(:service)
-
-      visit backoffice_service_path(service)
-
-      expect(page).to have_content(
-        "This service has no offers. " \
-          "Add one offer to make possible for a user to Access the service."
-      )
-      offer = create(:offer, service: service)
-      service.reload
-      expect(service.offers).to eq([offer])
     end
 
     scenario "I don't see warning about published offers in the deleted service", js: true do
@@ -636,17 +613,6 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       click_on "Delete Offer"
 
       expect(page).to have_content("Offer removed successfully")
-    end
-
-    scenario "I can see info if service has no offer" do
-      service = create(:service, name: "my service")
-
-      visit backoffice_service_path(service)
-
-      expect(page).to have_content(
-        "This service has no offers. " \
-          "Add one offer to make possible for a user to Access the service."
-      )
     end
 
     scenario "I can change service status from publish to draft" do

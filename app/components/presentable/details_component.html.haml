@@ -1,41 +1,25 @@
-#opinions.tab-pane.container.active{ "aria-labelledby": "opinions-tab", role: "tabpanel",
-                                          "data-shepherd-tour-target": "service-details-content" }
-  .row.justify-content-between
-    %main.col-12.col-xl-9.pr-4.mb-4.pt-4
-
-      .details-box-wrapper
-        = render Presentable::SidebarComponent.new(@object)
-        - details_columns.each do |column|
-          - column.map do |group|
-            - next unless display_detail?(group, @object)
-            .details-box{
-              class: "#{group[:name]}"
-              }
-              .details-header
-                %h5= t("components.presentable.details_component.details.title.#{group[:name]}")
-              .details-content
-                = render "components/presentable/details_component/#{group[:template]}",
-                                object: @object,
-                                fields: group[:fields],
-                                type: group[:type] || "single",
-                                clazz: group[:clazz] || "",
-                                nested: group[:nested] || {},
-                                inactive: @object.suspended? && !group[:active_when_suspended],
-                                with_desc: group[:with_desc] || false,
-                                preview: @preview
-      .related-container
-        .row
-          .col-12
-            = render "services/related", related_services: @related_services, title: related_services_title,
-            preview: @preview
-
-    %sidebar.col-12.col-xl-3{ "data-shepherd-tour-target": "service-classification" }
-      = render "components/presentable/explore_links", object: @object
-      .right-panel-links
-        - if !@object.public_contacts.empty? && (@question || @preview)
-          = render "components/presentable/header_component/ask_question", question_link: new_question_link,
-            question: @question,
-            prompt: new_question_prompt,
-            preview: @preview
-        = render Presentable::LinksComponent.new(object: @object, preview: @preview)
-      = render Presentable::ProviderInfoComponent.new(base: @object, preview: @preview) if @object.respond_to?(:resource_organisation)
+.details-box-wrapper
+  = render Presentable::SidebarComponent.new(@object)
+  - details_columns.each do |column|
+    - column.map do |group|
+      - next unless display_detail?(group, @object)
+      .details-box{
+        class: "#{group[:name]}"
+        }
+        .details-header
+          %h5= t("components.presentable.details_component.details.title.#{group[:name]}")
+        .details-content
+          = render "components/presentable/details_component/#{group[:template]}",
+                          object: @object,
+                          fields: group[:fields],
+                          type: group[:type] || "single",
+                          clazz: group[:clazz] || "",
+                          nested: group[:nested] || {},
+                          inactive: @object.suspended? && !group[:active_when_suspended],
+                          with_desc: group[:with_desc] || false,
+                          preview: @preview
+.related-container
+  .row
+    .col-12
+      = render "services/related", related_services: @related_services, title: related_services_title,
+      preview: @preview

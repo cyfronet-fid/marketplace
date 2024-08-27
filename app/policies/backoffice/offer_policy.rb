@@ -43,10 +43,6 @@ class Backoffice::OfferPolicy < Backoffice::OrderablePolicy
     ]
   end
 
-  def delete?
-    super && other_offers_with_service_order_type?
-  end
-
   def destroy?
     super && other_offers_with_service_order_type?
   end

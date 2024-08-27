@@ -9,7 +9,7 @@ class Backoffice::Services::PublishesController < Backoffice::ApplicationControl
     else
       flash[:alert] = "Service not published. Reason: #{@service.errors.full_messages.join(", ")}"
     end
-    redirect_to backoffice_service_path(@service)
+    redirect_to backoffice_service_offers_path(@service)
   end
 
   private

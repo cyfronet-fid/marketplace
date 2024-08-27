@@ -1,59 +1,31 @@
 # frozen_string_literal: true
 
-class Services::OffersController < Services::ApplicationController
-  skip_before_action :authenticate_user!
+class Services::OffersController < ApplicationController
+  include Service::Autocomplete
+  include Service::Comparison
+  include Service::Monitorable
+  include Service::Recommendable
 
-  def show
-    init_step_data
+  def index
+    @service = Service.includes(:offers).friendly.find(params[:service_id])
 
-    unless step.visible?
-      if @offers.inclusive.size.positive?
-        params[:customizable_project_item] = { offer_id: @offers.inclusive.first.iid }
-      elsif @bundles.published.size.positive?
-        params[:customizable_project_item] = { bundle_id: @bundles.published.first.iid }
-      end
-
-      update
-    end
-  end
-
-  def update
-    @step = step(step_params)
-
-    if @step.valid?
-      save_in_session(@step)
-      redirect_to url_for([@service, next_step_key])
-    else
-      init_step_data
-      flash[:alert] = @step.error
-      render :show
-    end
-  end
-
-  private
-
-  def step_key
-    :offers
-  end
-
-  def step_params
-    { offer_id: offer&.id, bundle_id: bundle&.id, project_id: session[:selected_project] }
-  end
-
-  def offer
-    form_params = params.fetch(:customizable_project_item, session[session_key] || {}).permit(:offer_id)
-    @service.offers.find_by(iid: form_params[:offer_id] || bundle&.main_offer&.iid)
-  end
-
-  def bundle
-    form_params = params.fetch(:customizable_project_item, session[session_key] || {}).permit(:bundle_id)
-    @service.bundles.find_by(iid: form_params[:bundle_id])
-  end
-
-  def init_step_data
+    authorize(
+      ServiceContext.new(@service, params.key?(:from) && params[:from] == "backoffice_service"),
+      :show?,
+      policy_class: ServiceContextPolicy
+    )
+    redirect_to service_path(@service, q: session[:query][:q]) if @service.offers.inclusive.published.empty?
+    @service.store_analytics
+    @service.monitoring_status = fetch_status(@service.pid)
     @offers = policy_scope(@service.offers.inclusive).order(:iid)
     @bundles = policy_scope(@service.bundles.published).order(:iid)
-    @bundled = policy_scope(@service.offers.published).order(:iid).select(&:bundled?).map(&:bundles)&.flatten
-    @step = step(session[session_key])
+    @bundled = bundled
+    @similar_services = fetch_similar(@service.id, current_user&.id)
+    @related_services = @service.related_services
+
+    @service_opinions = ServiceOpinion.joins(project_item: :offer).where(offers: { service_id: @service })
+    @question = Service::Question.new(service: @service)
+    @favourite_services =
+      current_user&.favourite_services || Service.where(slug: Array(cookies[:favourites]&.split("&") || []))
   end
 end

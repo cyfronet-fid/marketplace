@@ -101,7 +101,7 @@ module ServiceHelper
     case controller_name
     when "ordering_configurations"
       edit_service_ordering_configuration_offer_path(service, offer, from: params[:from])
-    when "services"
+    else
       edit_backoffice_service_offer_path(service, offer)
     end
   end
@@ -110,7 +110,7 @@ module ServiceHelper
     case controller_name
     when "ordering_configuration"
       edit_service_ordering_configuration_bundle_path(service, bundle, from: params[:from])
-    when "service"
+    else
       edit_backoffice_service_bundle_path(service, bundle)
     end
   end
@@ -125,5 +125,13 @@ module ServiceHelper
 
   def get_only_countries(locations)
     locations.reject { |c| Country.regions.include? c }
+  end
+
+  def new_offer_prompt
+    "<p>#{_("Create an offer for your service to maximise its visibility and usability.")}</p>" +
+      "<p>#{_("With specified offers:")}" +
+      "<ul><li>#{_("Your service will be searchable in both the service catalog and the offers catalog")}</li>" +
+      "<li>#{_("Your service can be ordered directly in the Marketplace")}</li>" +
+      "<li>#{_("You can customize your service to attract more users")}</li></ul>"
   end
 end

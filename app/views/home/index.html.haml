@@ -73,7 +73,7 @@
                 %i{ class: "ordertype #{order_type(service)}" }
                 -# TODO: refactor dynamic translation
                 = t("offers.type.#{order_type(service)}")
-            %a.popular-title{ href: service_path(service) }= service.name
+            %a.popular-title{ href: service_offers_path(service) }= service.name
             %a.popular-provider{ href: services_path(providers: service.resource_organisation.id) }
               = service.resource_organisation.name
             .popular-description{ data_toggle: "tooltip", title: service.description }

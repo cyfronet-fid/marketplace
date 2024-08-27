@@ -2,7 +2,7 @@
   = _("Recent opinions")
 
 - if opinion
-  %a#opinion-link.card-title{ href: "#{service_path(opinion.project_item.service)}" }
+  %a#opinion-link.card-title{ href: "#{service_offers_path(opinion.project_item.service)}" }
     = opinion.project_item.service.name
   .row.mt-3
     .col

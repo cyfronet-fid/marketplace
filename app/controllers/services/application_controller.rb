@@ -14,7 +14,7 @@ class Services::ApplicationController < ApplicationController
   helper_method :step_title, :prev_title, :next_title
 
   STEP_TITLES = {
-    offers: "Offer selection",
+    choose_offer: "Offer selection",
     information: "Access instructions",
     configuration: "Configuration",
     summary: "Final details"
@@ -27,7 +27,7 @@ class Services::ApplicationController < ApplicationController
   end
 
   def ensure_in_session!
-    redirect_to service_offers_path(@service), alert: "Service request template not found" unless @saved_state
+    redirect_to service_choose_offer_path(@service), alert: "Service request template not found" unless @saved_state
   end
 
   def load_and_authenticate_service!

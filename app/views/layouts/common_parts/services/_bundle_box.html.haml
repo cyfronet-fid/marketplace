@@ -4,7 +4,7 @@
       = service_status(bundle, "text-sm-left fa-pull-left badge-left")
     = render "services/bundles/description", bundle: bundle
     = render "services/bundle", bundled_offers: bundle.all_offers, parent: bundle.main_offer
-    = render "services/offers/bundle_links",
+    = render "services/choose_offers/bundle_links",
        contact_email: bundle.contact_email || "",
        related_training: bundle.related_training ? bundle.related_training_url : "",
        helpdesk_url: bundle.helpdesk_url || ""

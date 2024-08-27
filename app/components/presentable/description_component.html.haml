@@ -1,27 +1,12 @@
-#desc.tab-pane.container.active.desc{ "aria-labelledby" => "home-tab", role: "tabpanel" }
-  .row.justify-content-between
-    %main.col-12.col-xl-9.pr-4.pt-4{ "data-shepherd-tour-target": "service-about" }
-      .service-description-container
-        = markdown(@object.description)
-      .details-box-wrapper.mt-5
-        = render Presentable::SidebarComponent.new(@object)
+.service-description-container
+  = markdown(@object.description)
+.details-box-wrapper.mt-5
+  = render Presentable::SidebarComponent.new(@object)
 
-      = description_panels
-      .related-container
-        - unless @object.suspended?
-          .row
-            .col-12
-              = render "services/related", related_services: @related_services, title: related_services_title,
-              preview: @preview
-
-    %sidebar.col-12.col-xl-3{ "data-shepherd-tour-target": "service-classification" }
-      = render "components/presentable/explore_links", object: @object
-      .right-panel-links
-        - if !@object.public_contacts.empty? && (@question || @preview)
-          = render "components/presentable/header_component/ask_question", question_link: new_question_link,
-            question: @question,
-            prompt: new_question_prompt,
-            preview: @preview
-        = render Presentable::LinksComponent.new(object: @object, preview: @preview)
-      = additional_backoffice_info
-      = render Presentable::ProviderInfoComponent.new(base: @object, preview: @preview) if @object.respond_to?(:resource_organisation)
+= description_panels
+.related-container
+  - unless @object.suspended?
+    .row
+      .col-12
+        = render "services/related", related_services: @related_services, title: related_services_title,
+        preview: @preview
