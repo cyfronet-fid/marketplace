@@ -33,7 +33,7 @@ describe("Comparison", () => {
 
   it("should add and remove services from comparison - services from details page", () => {
     cy.get("[data-e2e='service-name']").eq(0).click();
-    cy.get("[data-e2e='access-service-btn']").should("be.visible");
+    cy.get("[data-e2e='service-details-btn']").should("be.visible");
 
     cy.get("[data-e2e='comparison-checkbox']").click();
     cy.get("[data-e2e='comparison-bar']").should("be.visible");
@@ -41,7 +41,7 @@ describe("Comparison", () => {
     cy.go("back");
 
     cy.get("[data-e2e='service-name']").eq(2).click();
-    cy.get("[data-e2e='access-service-btn']").should("be.visible");
+    cy.get("[data-e2e='service-details-btn']").should("be.visible");
     cy.get("[data-e2e='comparison-checkbox']").click();
 
     cy.get("[data-e2e='compare-btn']").click();

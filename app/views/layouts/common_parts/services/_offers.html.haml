@@ -14,14 +14,12 @@
           = _("Vouchers allow researchers to test different configurations or different services to choose the " + |
               "best offer for their needs.") |
           -# haml-lint:enable MultilinePipe
-%hr.bottom-hr.mt-5.mb-4
+
 #offers
 %h2.mb-4.mt-5.font-weight-normal
   = _("Parameters and offers")
 .row.parameters
-  - if offers.present?
-    = render partial: "layouts/common_parts/services/default_parameters", locals: { offer: offers.manageable.first }
-    = render partial: "layouts/common_parts/services/offer", collection: offers[1..], as: :offer if offers.manageable.size > 1
+  = render partial: "layouts/common_parts/services/offer", collection: offers, as: :offer if offers.present?
   = render "layouts/common_parts/services/new_offer", service: service if policy([:backoffice, service]).edit?
 .row.parameters
 %h2.mb-4.mt-5.font-weight-normal

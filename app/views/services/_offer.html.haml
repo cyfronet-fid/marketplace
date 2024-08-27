@@ -6,7 +6,7 @@
     - if policy(ServiceContext.new(offer.service, params.key?(:from) && params[:from] == "backoffice_service")).order?
       .card-button.text-center
         %label.d-block
-          = link_to service_offers_path(offer.service, customizable_project_item: { offer_id: offer.iid }),
+          = link_to service_choose_offer_path(offer.service, customizable_project_item: { offer_id: offer.iid }),
           data: { probe: "", "service-id": offer.service.id, e2e: "select-offer-btn",
           "preview-target": local_assigns[:preview] ? "link" : "", "turbo-method": :put } do
             %span.btn.btn-secondary.font-weight-bolder

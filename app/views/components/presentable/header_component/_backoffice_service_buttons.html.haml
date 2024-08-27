@@ -1,6 +1,6 @@
 - if policy([:backoffice, service]).edit?
   = link_to _("Edit #{service.type.downcase}"), edit_backoffice_service_path(service),
         class: "btn btn-outline-primary d-block mb-3"
-  = link_to _("Set parameters and offers"), backoffice_service_path(service, anchor: "offers"),
+  = link_to _("Set parameters and offers"), backoffice_service_offers_path(service, anchor: "offers"),
       class: "btn btn-outline-secondary d-block mb-3"
 = render "layouts/common_parts/services/order_type_label", object: service

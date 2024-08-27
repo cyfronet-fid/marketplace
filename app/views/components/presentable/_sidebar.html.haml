@@ -1,0 +1,10 @@
+%sidebar.col-12.col-xl-3{ "data-shepherd-tour-target": "service-classification" }
+  = render "components/presentable/explore_links", object: object
+  .right-panel-links
+    - if !object.public_contacts.empty? && (question || preview)
+      = render "components/presentable/ask_question", question_link: new_question_link(object),
+          question: question,
+          prompt: new_question_prompt(object),
+          preview: preview
+    = render Presentable::LinksComponent.new(object: object, preview: preview)
+  = render Presentable::ProviderInfoComponent.new(base: object, preview: preview) if object.respond_to?(:resource_organisation)

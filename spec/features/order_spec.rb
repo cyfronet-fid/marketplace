@@ -31,14 +31,14 @@ RSpec.feature "Service ordering", end_user_frontend: true do
     end
 
     scenario "I can order service" do
-      offer, _seconds_offer = create_list(:offer, 2, service: service)
+      offer, _second_offer = create_list(:offer, 2, service: service)
 
       visit service_path(service)
 
       click_on "Access the service", match: :first
 
       # Step 1
-      expect(page).to have_current_path(service_offers_path(service))
+      expect(page).to have_current_path(service_choose_offer_path(service))
       expect(page).to have_text("Select an offer or service bundle")
       expect(page).to have_selector(:link_or_button, "Next", exact: true)
 
@@ -414,7 +414,7 @@ RSpec.feature "Service ordering", end_user_frontend: true do
 
       visit service_information_path(service)
 
-      expect(page).to have_current_path(service_offers_path(service))
+      expect(page).to have_current_path(service_choose_offer_path(service))
     end
 
     scenario "I'm redirected into service offers when offer is not chosen" do
@@ -422,7 +422,7 @@ RSpec.feature "Service ordering", end_user_frontend: true do
 
       visit service_configuration_path(service)
 
-      expect(page).to have_current_path(service_offers_path(service))
+      expect(page).to have_current_path(service_choose_offer_path(service))
     end
 
     scenario "I'm redirected into order summary when project is not chosen" do
@@ -720,7 +720,7 @@ RSpec.feature "Service ordering", end_user_frontend: true do
         parent = create(:offer, service: service)
         bundle = create(:bundle, service: service, main_offer: parent, offers: [child1, child2])
 
-        visit service_path(service)
+        visit service_offers_path(service)
 
         click_on "Select bundle"
 
@@ -803,7 +803,7 @@ RSpec.feature "Service ordering", end_user_frontend: true do
       user = build(:user)
       stub_checkin(user)
 
-      visit service_offers_path(service)
+      visit service_choose_offer_path(service)
 
       expect do
         # If new user is logged in using checkin new user record is created

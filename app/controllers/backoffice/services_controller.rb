@@ -26,12 +26,12 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
                       anchor: ("offer-#{params["anchor"]}" if params["anchor"].present?)
                     )
       when "service"
-        redirect_to backoffice_service_path(
+        redirect_to backoffice_service_offers_path(
                       Service.friendly.find(params["object_id"]),
                       anchor: ("offer-#{params["anchor"]}" if params["anchor"].present?)
                     )
       when "datasource"
-        redirect_to backoffice_service_path(Datasource.friendly.find(params["object_id"]))
+        redirect_to backoffice_service_offers_path(Datasource.friendly.find(params["object_id"]))
       end
     end
     @services, @offers = search(scope)
@@ -81,7 +81,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     end
 
     remove_temp_data!
-    redirect_to backoffice_service_path(@service), notice: "New service created successfully"
+    redirect_to backoffice_service_offers_path(@service), notice: "New service created successfully"
   end
 
   def edit
@@ -108,14 +108,14 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     end
     @service.store_analytics
     remove_temp_data!
-    redirect_to backoffice_service_path(@service), notice: "Service updated successfully"
+    redirect_to backoffice_service_offers_path(@service), notice: "Service updated successfully"
   end
 
   def destroy
     if Service::Delete.new(@service).call
       redirect_to backoffice_services_path, notice: "Service removed successfully"
     else
-      redirect_to backoffice_service_path(@service),
+      redirect_to backoffice_service_offers_path(@service),
                   alert: "Could not remove service. Reason: #{@service.errors.full_messages}"
     end
   end

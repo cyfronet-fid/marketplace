@@ -112,7 +112,7 @@ RSpec.feature "Services in ordering_configuration panel", end_user_frontend: tru
     scenario "I cannot delete offer if it's only one" do
       visit service_ordering_configuration_path(service)
 
-      click_on "Edit parameters"
+      click_on "Edit"
 
       expect(page).to_not have_link("Delete Offer")
     end

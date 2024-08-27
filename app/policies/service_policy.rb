@@ -12,7 +12,7 @@ class ServicePolicy < ApplicationPolicy
   end
 
   def offers_show?
-    enough_to_show? && any_published_offers?
+    any_published_offers?
   end
 
   def bundles_show?
@@ -28,10 +28,6 @@ class ServicePolicy < ApplicationPolicy
   end
 
   private
-
-  def enough_to_show?
-    record.offers? && record.offers.inclusive.size + record&.bundles&.published&.size > 1
-  end
 
   def any_published_bundled_offers?
     record.bundles.published.size.positive? ||
