@@ -7,7 +7,7 @@
         .col-9.col-md-9
           %h3
             = link_to truncate(service.name, length: 40, escape: false),
-                      service_path(service)
+                      service_offers_path(service)
             - if service.horizontal
               %span.horizontal-badge-new Horizontal service
           - if providers_text(service).present?

@@ -8,6 +8,12 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
   before_action :load_form_data, only: %i[fetch_subtypes]
   after_action :reindex_offer, only: %i[create update destroy]
 
+  def index
+    @offers = policy_scope(@service.offers)
+    @bundles = policy_scope(@service.bundles)
+    @question = Service::Question.new(service: @service)
+  end
+
   def new
     @offer = Offer.new(service: @service)
     authorize(@offer)
@@ -28,7 +34,7 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
     end
 
     if @offer.persisted?
-      redirect_to backoffice_service_path(@service), notice: "New offer created successfully"
+      redirect_to backoffice_service_offers_path(@service), notice: "New offer created successfully"
     else
       render :new, status: :bad_request
     end

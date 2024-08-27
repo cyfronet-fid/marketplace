@@ -18,7 +18,7 @@ class Projects::Services::OpinionsController < ApplicationController
       if @service_opinion.persisted?
         Matomo::SendRequestJob.perform_later(@project_item, "Rate", @service_opinion.service_rating)
         format.html do
-          redirect_to project_service_path(@project, @project_item), notice: "Rating submitted successfully"
+          redirect_to project_service_offers_path(@project, @project_item), notice: "Rating submitted successfully"
         end
       else
         format.html { render :new, status: :unprocessable_entity }

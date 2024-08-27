@@ -7,5 +7,7 @@
 = render "services/wrapper", service: @service, category: @category,
   comparison_enabled: @comparison_enabled, compare_services: @compare_services,
   favourite_services: @favourite_services, question: @question, tab_id: "desc", preview: false do
-  = render Presentable::DescriptionComponent.new(object: @service,
-    similar_services: @similar_services, related_services: @related_services, question: @question)
+  - if policy(@service).offers_show? || policy(@service).bundles_show?
+    = render "services/offers", offers: @offers, service: @service,
+                                      bundles: @bundles, bundled: @bundled,
+                                      preview: local_assigns[:preview] || @service.suspended?

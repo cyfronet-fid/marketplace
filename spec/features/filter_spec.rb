@@ -48,7 +48,7 @@ RSpec.feature "Service filter", end_user_frontend: true do
     create(:service, name: "dd", providers: [provider], scientific_domains: [scientific_domain])
 
     visit services_path(q: "dd", providers: [provider.id], scientific_domains: [scientific_domain.id])
-    find("a[href='/services/dd']").click
+    find("a[href='/services/dd/offers']").click
     click_on "Services"
 
     expect(page).to have_text("Looking for: dd")
