@@ -2,7 +2,5 @@
           highlights: highlights[service.id],
           service_offers: offers[service.id] do
   = service_status(service)
-  = link_to backoffice_service_path(service) do
+  = link_to backoffice_service_offers_path(service) do
     = highlighted_for(:name, service, highlights[service.id])
-  %br
-  = offers_status(service) unless service.deleted?

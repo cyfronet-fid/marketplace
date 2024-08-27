@@ -26,7 +26,8 @@ Rails.application.routes.draw do
 
   resources :services, only: %i[index show], constraints: { id: pid_format_constraint } do
     scope module: :services do
-      resource :offers, only: %i[show update]
+      resources :offers, only: %i[index]
+      resource :choose_offer, only: %i[show update]
       resource :configuration, only: %i[show update]
       resource :information, only: %i[show update]
       resource :summary, only: %i[show create]
@@ -39,12 +40,12 @@ Rails.application.routes.draw do
       resources :bundles, only: :show
       resource :ordering_configuration, only: :show do
         scope module: :ordering_configuration do
-          resources :offers, only: %i[new edit create update destroy] do
+          resources :offers, only: %i[index new edit create update destroy] do
             resource :publish, controller: "offers/publishes", only: :create
             resource :draft, controller: "offers/drafts", only: :create
             resource :summary, controller: "offers/summaries", only: %i[create update]
           end
-          resources :bundles, only: %i[new edit create update destroy] do
+          resources :bundles, only: %i[index new edit create update destroy] do
             resource :publish, controller: "bundles/publishes", only: :create
             resource :draft, controller: "bundles/drafts", only: :create
           end

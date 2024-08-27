@@ -26,12 +26,12 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
                       anchor: ("offer-#{params["anchor"]}" if params["anchor"].present?)
                     )
       when "service"
-        redirect_to backoffice_service_path(
+        redirect_to backoffice_service_offers_path(
                       Service.friendly.find(params["object_id"]),
                       anchor: ("offer-#{params["anchor"]}" if params["anchor"].present?)
                     )
       when "datasource"
-        redirect_to backoffice_service_path(Datasource.friendly.find(params["object_id"]))
+        redirect_to backoffice_service_offers_path(Datasource.friendly.find(params["object_id"]))
       end
     end
     @services, @offers = search(scope)
@@ -81,7 +81,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     end
 
     remove_temp_data!
-    redirect_to backoffice_service_path(@service), notice: "New service created successfully"
+    redirect_to backoffice_service_offers_path(@service), notice: "New service created successfully"
   end
 
   def edit
@@ -98,7 +98,9 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
       perform_preview(:edit)
       return
     end
-
+    if @service.published? && !@service&.resource_organisation&.published?
+      attrs.merge(status: @service.resource_organisation.status)
+    end
     unless Service::Update.call(@service, attrs, temp_logo)
       provider_scope
       render :edit, status: :unprocessable_entity
@@ -106,12 +108,16 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     end
     @service.store_analytics
     remove_temp_data!
-    redirect_to backoffice_service_path(@service), notice: "Service updated successfully"
+    redirect_to backoffice_service_offers_path(@service), notice: "Service updated successfully"
   end
 
   def destroy
-    Service::Destroy.new(@service).call
-    redirect_to backoffice_services_path, notice: "Service removed successfully"
+    if Service::Delete.new(@service).call
+      redirect_to backoffice_services_path, notice: "Service removed successfully"
+    else
+      redirect_to backoffice_service_offers_path(@service),
+                  alert: "Could not remove service. Reason: #{@service.errors.full_messages}"
+    end
   end
 
   def cant_edit(attribute)
@@ -197,11 +203,11 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   end
 
   def provider_scope
-    @providers = policy_scope(Provider)
+    @providers = policy_scope(Provider.associable)
   end
 
   def catalogue_scope
-    @catalogues = policy_scope(Catalogue)
+    @catalogues = policy_scope(Catalogue.associable)
   end
 
   def datasource_scope

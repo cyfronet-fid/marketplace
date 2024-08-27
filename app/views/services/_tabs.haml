@@ -21,6 +21,11 @@
           %a.nav-link.disabled.text-uppercase{ "data-probe" => "", "data-service-id" => service.id }
             = _("Reviews (%{ssoc})") % { ssoc: service.service_opinion_count }
       - else
+        - if request.fullpath.include?("backoffice") || policy_scope(service.offers).any?
+          %li.nav-item
+            = link_to _("Offers"), offers_link(service, go_to_search_query_params(params)),
+              class: "nav-link #{"active" if controller.controller_name == "offers" }", role: "tab",
+              data: { probe: "", "service-id": service.id, e2e: "service-about-btn" }
         %li.nav-item
           = link_to _("About"), about_link(service, go_to_search_query_params(params)),
             class: "nav-link #{"active" if about_active }", role: "tab",

@@ -1,45 +1,11 @@
 - content_for :title, @service.name
 - breadcrumb :backoffice_service, @service
 
-.container.p-0.backoffice
-  - if @service.offers.blank? && !@service.deleted?
-    .alert.alert-danger.mb-0.text-center
-      = _("This service has no offers. Add one offer to make possible for a user to Access the service.")
-  - elsif @service.published? && @service.offers.published.blank?
-    .alert.alert-warning.mb-0.text-center
-      -# haml-lint:disable MultilinePipe
-      = ("The service is published but has no published offers. Publish one offer to make possible for a user to " + |
-         "Access the service.") |
-      -# haml-lint:enable MultilinePipe
-  = render "services/errors", service: @service
-
-.container.p-0.backoffice
-  = render Presentable::StatusActionsComponent.new(object: @service,
-      publish: policy([:backoffice, @service]).publish?,
-      suspend: policy([:backoffice, @service]).suspend?,
-      unpublish: policy([:backoffice, @service]).unpublish?,
-      destroy: policy([:backoffice, @service]).destroy?)
-
-.container.p-0.backoffice
-  .pt-3.service-box-redesign.service-detail.backoffice{ "data-shepherd-tour-target": "service-box" }
-    = render Presentable::HeaderComponent.new(object: @service,
-                          title: @service.name,
-                          abbreviation: @service.abbreviation,
-                          subtitle: @service.tagline,
-                          comparison_enabled: @comparison_enabled,
-                          show_checkboxes: false,
-                          preview: local_assigns[:preview],
-                          favourite_services: @favourite_services) do |c|
-      - c.buttons do
-        = render "components/presentable/header_component/backoffice_service_buttons", service: @service
-
-    = render "services/tabs", service: @service, params: { from: "backoffice_service" }
-.tab-content
+= render "wrapper", service: @service, comparison_enabled: @comparison_enabled,
+  favourite_services: @favourite_services, question: @question, preview: false do
   = render Presentable::DescriptionComponent.new(object: @service,
     similar_services: @similar_services, related_services: @related_services,
-    question: @question, from: "backoffice_service") do |c|
-    - c.description_panels do
-      = render "layouts/common_parts/services/offers", offers: @offers, service: @service, bundles: @bundles
+    from: "backoffice_service") do |c|
     - c.additional_backoffice_info do
       .right-panel-links.pt-4.pb-4
         = render "components/presentable/updates", object: @service
