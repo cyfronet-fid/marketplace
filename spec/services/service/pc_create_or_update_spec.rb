@@ -57,16 +57,7 @@ RSpec.describe Service::PcCreateOrUpdate, backend: true do
       create(:provider_source, source_type: "eosc_registry", eid: "tp", provider: provider_tp)
 
       service = create(:jms_service, prov_eid: "new.prov", name: "New supper service")
-      expect { stub_described_class(service) }.to change { Offer.count }.by(1)
-      offer = Offer.last
-      service = Service.last
-
-      expect(offer.name).to eq("Offer")
-      expect(offer.description).to eq("#{service.name} Offer")
-      expect(offer.order_type).to eq("other")
-      expect(offer.status).to eq("published")
-      expect(offer.service.id).to eq(service.id)
-      expect(service.upstream_id).to eq(service.sources.first.id)
+      expect { stub_described_class(service) }.to_not change { Offer.count }
     end
 
     it "should add provider with improper data to the resource" do

@@ -42,11 +42,11 @@ RSpec.describe ServicePolicy, backend: true do
       expect(subject).to permit(user, service.reload)
     end
 
-    it "denies when there is only one offer" do
+    it "grants when there is only one offer" do
       service = create(:service)
       create(:offer, service: service)
 
-      expect(subject).to_not permit(user, service.reload)
+      expect(subject).to permit(user, service.reload)
     end
 
     it "denies when there is not offers" do

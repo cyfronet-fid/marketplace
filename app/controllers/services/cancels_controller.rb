@@ -7,6 +7,6 @@ class Services::CancelsController < Services::ApplicationController
     session.delete(session_key)
     session.delete(:selected_project)
 
-    redirect_to service_path(@service)
+    redirect_to service_offers_path(@service)
   end
 end

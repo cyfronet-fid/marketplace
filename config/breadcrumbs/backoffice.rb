@@ -23,6 +23,11 @@ crumb :backoffice_service do |service|
   parent :backoffice_services
 end
 
+crumb :backoffice_service_offers do |service|
+  link "Offers", backoffice_service_offers_path(service)
+  parent :backoffice_service, service
+end
+
 crumb :resource_details do |service|
   link "Details", service_details_path(service)
   if params[:from]

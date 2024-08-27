@@ -27,7 +27,7 @@ class ServicesController < ApplicationController
                       anchor: ("offer-#{params["anchor"]}" if params["anchor"].present?)
                     )
       when "service"
-        redirect_to service_path(
+        redirect_to service_offers_path(
                       Service.friendly.find(params["object_id"]),
                       q: params["q"],
                       anchor: ("offer-#{params["anchor"]}" if params["anchor"].present?)
@@ -123,20 +123,6 @@ class ServicesController < ApplicationController
   def hide_horizontals?(init: true)
     empty_listed = init ? Service.published.horizontal.empty? : @horizontals.empty?
     empty_listed || active_filters.size.positive? || params[:q].present? || @category.present?
-  end
-
-  def bundled
-    if @service.offers.published.select(&:bundled?).present?
-      @service
-        .offers
-        .published
-        .select(&:bundled?)
-        .map { |o| policy_scope(o.bundles).reject { |b| b.service.status.in?(Statusable::HIDEABLE_STATUSES) } }
-        .flatten
-        .uniq
-    else
-      []
-    end
   end
 
   def external_search_enabled

@@ -24,7 +24,7 @@ RSpec.describe Service::Update, backend: true do
     expect(offer).to be_published
   end
 
-  it "creates new offer by service update if offers_count equals 0" do
+  it "doesn't create new offer by service update if offers_count equals 0" do
     service = create(:service, order_type: "fully_open_access")
 
     expect(service.offers.size).to eq(0)
@@ -33,13 +33,7 @@ RSpec.describe Service::Update, backend: true do
 
     service.reload
 
-    expect(service.offers.size).to eq(1)
-
-    offer = service.offers.first
-
-    expect(offer.order_type).to eq("fully_open_access")
-    expect(offer.order_url).to eq("http://order.valid")
-    expect(offer).to be_published
+    expect(service.offers.size).to eq(0)
   end
 
   it "doesn't create a new offer if service update fails" do

@@ -144,7 +144,7 @@ RSpec.feature "Service browsing", end_user_frontend: true do
       default = create(:offer, description: "# Test default\r\n\rDescription default", service: service)
       offer = create(:offer, description: "# Test offer\r\n\rDescription offer", service: service)
 
-      visit service_path(offer.service)
+      visit service_offers_path(offer.service)
 
       find(".card-body h1", text: "Test offer")
       find(".card-body p", text: "Description offer")
@@ -215,7 +215,7 @@ RSpec.feature "Service browsing", end_user_frontend: true do
           ]
         )
 
-      visit service_path(offer.service)
+      visit service_offers_path(offer.service)
 
       expect(page).to have_text(offer1.name)
       expect(page.body).to have_content("Number of CPU Cores")
