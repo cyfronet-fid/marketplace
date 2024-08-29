@@ -7,5 +7,4 @@
     .col-12
       = f.button :submit, class: "btn btn-primary pl-5 pr-5 mr-5 mobile-bottom-margin",
       "data-e2e": "create-platform-btn"
-      %a.text-left.flex-grow-1.text-uppercase.mobile-bottom-margin{ href: "/backoffice/platforms" }
-        = _("Cancel and back to previous page")
+      = link_to "Cancel and back to previous page", :back, class: "text-left flex-grow-1 text-uppercase mobile-bottom-margin"
