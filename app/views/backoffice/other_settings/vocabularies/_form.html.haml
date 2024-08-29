@@ -12,6 +12,5 @@
     .col-12
       = f.button :submit, button_name, class: "btn btn-primary pl-5 pr-5 mr-5 mobile-bottom-margin",
       "data-e2e": "create-vocabulary-btn"
-      %a{ href: "/backoffice/other_settings/vocabularies/#{snake_cased(type).pluralize}",
-      class: "text-left flex-grow-1 text-uppercase mobile-bottom-margin" }
-        = _("Cancel and back to previous page")
+      = link_to "Back", :back
+      = link_to "Cancel and back to previous page", :back, class: "text-left flex-grow-1 text-uppercase mobile-bottom-margin"
