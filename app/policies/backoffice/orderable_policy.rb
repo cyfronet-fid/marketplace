@@ -28,22 +28,26 @@ class Backoffice::OrderablePolicy < Backoffice::ApplicationPolicy
   end
 
   def destroy?
-    managed? && orderless? && !service_deleted?
+    status_change? && orderless? && !service_deleted?
   end
 
   def delete?
-    managed? && record.persisted? && !service_deleted?
+    status_change? && !service_deleted?
   end
 
   def draft?
-    managed? && record.persisted? && record.published?
+    status_change? && record.published?
   end
 
   def publish?
-    managed? && !record.published? && !service_deleted?
+    status_change? && !record.published? && !service_deleted?
   end
 
   private
+
+  def status_change?
+    managed? && record.persisted?
+  end
 
   def managed?
     service_portfolio_manager? || record.service.owned_by?(user)
