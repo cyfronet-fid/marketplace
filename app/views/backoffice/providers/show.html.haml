@@ -11,7 +11,7 @@
       - if @provider.logo.attached? && @provider.logo.variable?
         = image_tag @provider.logo.variant(resize: "100x67"), class: "align-self-center mr-4 float-left img-responsive"
       - else
-        = image_tag "eosc-img.png", size: "100x67", class: "align-self-center mr-4 float-left img-responsive"
+        = image_tag "provider_logo.svg", size: "100x45", class: "align-self-center mr-4 float-left img-responsive"
     - unless @provider.sources.empty?
       %h3
         = _("External Sources:")

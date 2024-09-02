@@ -7,7 +7,7 @@ class Catalogues::LogosController < ApplicationController
     if @catalogue.logo.attached? && @catalogue.logo.variable?
       redirect_to @catalogue.logo.variant(resize: "84x84"), allow_other_host: false
     else
-      redirect_to ActionController::Base.helpers.asset_url(ImageHelper::DEFAULT_LOGO_PATH, type: :image)
+      redirect_to ActionController::Base.helpers.asset_url(ImageHelper::DEFAULT_CATALOGUE_LOGO_PATH, type: :image)
     end
   end
 end
