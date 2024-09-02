@@ -125,7 +125,7 @@ class Provider < ApplicationRecord
   validates :postal_code, presence: true
   validates :city, presence: true
   validates :country, presence: true
-  validates :logo, presence: true, blob: { content_type: :image }
+  validates :logo, blob: { content_type: :image }
   validates :provider_life_cycle_statuses, length: { maximum: 1 }
   validates :public_contacts, presence: true, length: { minimum: 1, message: "are required. Please add at least one" }
   validates :data_administrators,
