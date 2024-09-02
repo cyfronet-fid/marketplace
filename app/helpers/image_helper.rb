@@ -8,6 +8,7 @@ module ImageHelper
            Supported formats: png, gif, jpg, jpeg, pjpeg, tiff, vnd.adobe.photoshop or vnd.microsoft.icon."
   DEFAULT_LOGO_PATH = "service_logo.svg"
   DEFAULT_PROVIDER_LOGO_PATH = "provider_logo.svg"
+  DEFAULT_CATALOGUE_LOGO_PATH = "catalogue_logo.svg"
 
   def self.to_temp_file(logo, ext)
     tmp_logo = Tempfile.new(["logo_temp", ext])
