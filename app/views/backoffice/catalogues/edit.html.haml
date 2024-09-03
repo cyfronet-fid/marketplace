@@ -1,7 +1,14 @@
-- content_for :title, _("Edit Catalogue")
+- content_for :title, _("Edit #{@catalogue.name} Catalogue")
 - breadcrumb :backoffice_catalogue_edit, @catalogue
 
 .container.p-0.backoffice
-  %h1= _("Edit Catalogue")
+  %h1= _("Edit #{@catalogue.name} Catalogue")
+  .container.p-0.backoffice
+    = render Presentable::StatusActionsComponent.new(object: @catalogue,
+      publish: policy([:backoffice, @catalogue]).publish?,
+      suspend: policy([:backoffice, @catalogue]).suspend?,
+      unpublish: policy([:backoffice, @catalogue]).unpublish?,
+      destroy: policy([:backoffice, @catalogue]).destroy?)
+
   .edit-provider
     = render "form", catalogue: @catalogue

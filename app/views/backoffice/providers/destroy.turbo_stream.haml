@@ -1,5 +1,0 @@
-= turbo_stream.replace "provider-#{@provider.id}", partial: "provider",
-  locals: { provider: @provider }
-= turbo_stream.replace "status", partial: "status", locals: { status: @provider.status }
-= turbo_stream.replace "actions", partial: "actions", locals: { provider: @provider }
-= turbo_stream.prepend "flash-messages", partial: "layouts/flash"

@@ -1,0 +1,31 @@
+.status-row
+  .row
+    .col-12.col-lg-4
+      %span
+        = _("Status") + ":"
+      %span.font-weight-bold= @object.status
+    .col-12.col-lg-8.service-buttons
+      .btn-group.float-right
+        - if @publish
+          = link_to _("Publish"),
+              send("backoffice_#{@object_type}_publish_path", @object),
+              class: "btn btn-primary",
+              data: { "turbo-confirm": _("Are you sure you want to publish this #{@object_type}?"),
+              e2e: "publish-btn", "turbo-method": :post }
+        - if @suspend
+          = link_to _("Suspend"),
+              suspend_path,
+              class: "btn btn-info",
+              data: { turbo_confirm: action_prompt(@object_type, "suspend"),
+              turbo_method: :post }
+        - if @unpublish
+          = link_to _("Unpublish"),
+              unpublish_path,
+              class: "btn btn-error",
+              data: { turbo_confirm: action_prompt(@object_type, "unpublish"),
+              turbo_method: :post }
+        - if @destroy
+          = link_to _("Delete"),
+              send("backoffice_#{@object_type}_path", @object.id),
+              class: "btn btn-danger",
+              data: { turbo_confirm: action_prompt(@object_type, "remove"), turbo_method: :delete }
