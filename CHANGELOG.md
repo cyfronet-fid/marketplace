@@ -68,6 +68,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 - Unlock unpublish/suspend and delete actions for active providers and catalogues (@goreck888)
 - New backoffice view (@jarekzet, goreck888)
+- Logo in catalogues, services, providers is not required. Set default logo for each (@maria-j-k)
+- Status bar with actions buttons in detail and edit views for services, catalogues and providers (@maria-j-k)
 - Postgres update from 14.1 to 16.4 (@goreck888)
 
 ### Fixed
@@ -78,6 +80,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Bundle status changes to draft if any of its offers changes the status from public to other (@maria-j-k)
 - Fix access_type validator in offer (@maria-j-k)
 - Compare/Favourite icons on the service page (@jarekzet)
+- Back to previous button fixed (@maria-j-k)
 - Removed `no_offers` message in deleted services (@goreck888)
 
 
