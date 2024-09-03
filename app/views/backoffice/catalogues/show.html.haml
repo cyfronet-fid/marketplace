@@ -3,46 +3,24 @@
 
 .container.p-0.backoffice
   %h1.mb-3= @catalogue.name
-  .status-row
-    %span Status:
-    %span.font-weight-bold
-      = @catalogue.status
+  = render Presentable::StatusActionsComponent.new(object: @catalogue,
+      publish: policy([:backoffice, @catalogue]).publish?,
+      suspend: policy([:backoffice, @catalogue]).suspend?,
+      unpublish: policy([:backoffice, @catalogue]).unpublish?,
+      destroy: policy([:backoffice, @catalogue]).destroy?)
 
-.service-box.p-4.mt-3.backoffice-form
-  .logo-wrapper
-    %span.helper
-    - if @catalogue.logo.attached? && @catalogue.logo.variable?
-      = image_tag @catalogue.logo.variant(resize: "100x67"), class: "align-self-center mr-4 float-left img-responsive"
-    - else
-      = image_tag "catalogue_logo.svg", size: "100x45", class: "align-self-center mr-4 float-left img-responsive"
-  %hr.bottom-hr.mt-5.mb-4
-  .btn-group
-    - if policy([:backoffice, @catalogue]).edit?
-      = unescaped_link_to _("Edit"),
-                edit_backoffice_catalogue_path(@catalogue),
-                class: "btn btn-primary"
-    - if policy([:backoffice, @catalogue]).publish?
-      = link_to _("Publish"),
-                backoffice_catalogue_publish_path(@catalogue),
-                class: "btn btn-primary",
-                data: { turbo_confirm: _("Are you sure you want to publish this catalogue?"),
-                turbo_method: :post }
-    - if policy([:backoffice, @catalogue]).suspend?
-      = link_to _("Suspend"),
-                backoffice_catalogue_unpublish_path(@catalogue, suspend: true),
-                class: "btn btn-info",
-                data: { turbo_confirm: _("Are you sure you want to publish this catalogue as suspended?"),
-                turbo_method: :post }
-    - if policy([:backoffice, @catalogue]).unpublish?
-      = link_to _("Unpublish"),
-                backoffice_catalogue_unpublish_path(@catalogue),
-                class: "btn btn-error",
-                data: { turbo_confirm: _("Are you sure you want to unpublish this catalogue?"),
-                turbo_method: :post }
-    - if policy([:backoffice, @catalogue]).destroy?
-      = link_to _("Delete"),
-                backoffice_catalogue_path(@catalogue.id),
-                class: "btn btn-danger",
-                data: { turbo_confirm: _("Are you sure you want to remove this catalogue?"), turbo_method: :delete }
+  .service-box.p-4.mt-3.backoffice-form
+    .logo-wrapper
+      %span.helper
+      - if @catalogue.logo.attached? && @catalogue.logo.variable?
+        = image_tag @catalogue.logo.variant(resize: "100x67"), class: "align-self-center mr-4 float-left img-responsive"
+      - else
+        = image_tag("catalogue_logo.svg", size: "100x45", class: "align-self-center mr-4 float-left img-responsive")
+    %hr.bottom-hr.mt-5.mb-4
+    .btn-group
+      - if policy([:backoffice, @catalogue]).edit?
+        = unescaped_link_to _("Edit"),
+                  edit_backoffice_catalogue_path(@catalogue),
+                  class: "btn btn-primary"
 
   = link_to _("<- Back to Catalogues"), backoffice_catalogues_path, class: "backoffice-back-link mt-3"

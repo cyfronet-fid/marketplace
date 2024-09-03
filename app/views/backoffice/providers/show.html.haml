@@ -3,7 +3,11 @@
 
 .container.p-0.backoffice
   %h1.mb-3= @provider.name
-  = render "status", status: @provider.status
+  = render Presentable::StatusActionsComponent.new(object: @provider,
+    publish: policy([:backoffice, @provider]).publish?,
+    suspend: policy([:backoffice, @provider]).suspend?,
+    unpublish: policy([:backoffice, @provider]).unpublish?,
+    destroy: policy([:backoffice, @provider]).destroy?)
 
   .service-box.p-4.mt-3.backoffice-form
     .logo-wrapper
@@ -19,5 +23,9 @@
         - @provider.sources.each do |source|
           %li "#{source.source_type}: #{source.eid}"
     %hr.bottom-hr.mt-5.mb-4
-    = render "actions", provider: @provider
+      #actions.btn-group
+        - if policy([:backoffice, @provider]).edit?
+          = link_to _("Edit"),
+                edit_backoffice_provider_path(@provider),
+                class: "btn btn-primary"
   = link_to _("<- Back to Providers"), backoffice_providers_path, class: "backoffice-back-link mt-3"
