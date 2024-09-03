@@ -50,7 +50,7 @@ RSpec.feature "Providers in backoffice", manager_frontend: true do
       stub_website_check(provider)
 
       visit edit_backoffice_provider_path(provider)
-      expect(page).to have_text("Edit Provider")
+      expect(page).to have_text("Edit #{provider.name} Provider")
 
       click_on "Admins", match: :first
       expect(page).to have_css("#data-administrator-delete-0")

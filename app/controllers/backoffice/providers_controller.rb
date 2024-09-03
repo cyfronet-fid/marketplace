@@ -78,11 +78,9 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
       if Provider::Delete.call(@provider)
         notice = "Provider removed successfully"
         format.html { redirect_to backoffice_providers_path, notice: notice }
-        format.turbo_stream { flash.now[:notice] = notice }
       else
         alert = "This Provider has services connected to it, therefore is not possible to remove it."
         format.html { redirect_to backoffice_provider_path(@provider), alert: alert }
-        format.turbo_stream { flash.now[:alert] = alert }
       end
     end
   end
