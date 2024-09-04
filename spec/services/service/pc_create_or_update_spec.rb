@@ -49,7 +49,7 @@ RSpec.describe Service::PcCreateOrUpdate, backend: true do
   end
 
   describe "#succesfull responses" do
-    it "should create new service with new default offer" do
+    it "should create new service without new default offer" do
       provider = create(:provider, name: "Test Provider 3")
       provider_tp = create(:provider, name: "Test Provider tp")
       create(:provider_source, source_type: "eosc_registry", eid: "new.prov", provider: provider)

@@ -34,6 +34,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Back to previous button fixed (@maria-j-k)
 - Removed `no_offers` message in deleted services (@goreck888)
 - Redirect to login when unlogged user is ordering a service(@goreck888)
+- Propagation of service relationships (@goreck888)
 
 
 ## [3.57.0]
