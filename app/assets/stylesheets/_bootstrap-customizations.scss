@@ -6948,7 +6948,21 @@ abbr[title] {
     padding: 60px 0 80px;
 
     .logo-box {
-      margin-bottom: 30px;
+      margin-bottom: 15px;
+
+      img {
+        height: 40px;
+        width: auto;
+      }
+    }
+
+    .logo-beyond {
+      margin-bottom: 35px;
+
+      img {
+        height: 26px;
+        width: auto;
+      }
     }
 
     h1 {
