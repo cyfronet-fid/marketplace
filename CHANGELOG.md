@@ -15,6 +15,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Offer recommendations in project view (@wujuu)
 - Node information (@goreck888)
 - Environmental variable to hide recommendation panel (`SHOW_RECOMMENDATION_PANEL`) (@maria-j-k)
+- Unit to the constant offer parameter (@gorreck888)
 
 ### Changed
 - MarketplaceLocation renamed to ResearchActivity (@maria-j-k)
