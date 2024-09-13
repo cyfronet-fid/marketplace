@@ -22,9 +22,9 @@ class Project < ApplicationRecord
 
   PROJECT_STATUSES = { active: "active", archived: "archived" }.freeze
 
-  enum status: PROJECT_STATUSES
-  enum customer_typology: CUSTOMER_TYPOLOGIES
-  enum issue_status: ISSUE_STATUSES
+  enum :status, PROJECT_STATUSES
+  enum :customer_typology, CUSTOMER_TYPOLOGIES
+  enum :issue_status, ISSUE_STATUSES
   attr_accessor :verified_recaptcha
 
   belongs_to :user

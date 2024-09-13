@@ -36,6 +36,9 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Redirect to login when unlogged user is ordering a service(@goreck888)
 - Propagation of service relationships (@goreck888)
 
+### Security
+- Update dependencies (@goreck888)
+
 
 ## [3.57.0]
 

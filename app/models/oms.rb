@@ -11,7 +11,7 @@ class OMS < ApplicationRecord
   has_one :trigger, class_name: "OMS::Trigger", dependent: :destroy
 
   self.inheritance_column = nil
-  enum type: { global: "global", provider_group: "provider_group", resource_dedicated: "resource_dedicated" }
+  enum :type, { global: "global", provider_group: "provider_group", resource_dedicated: "resource_dedicated" }
 
   validates :name, presence: true, uniqueness: true
   validates :type, presence: true, inclusion: { in: types }

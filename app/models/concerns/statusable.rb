@@ -4,7 +4,7 @@ module Statusable
   extend ActiveSupport::Concern
 
   included do
-    enum status: STATUSES
+    enum :status, STATUSES
 
     scope :visible, -> { where(status: VISIBLE_STATUSES) }
     scope :active, -> { where(status: PUBLIC_STATUSES) }

@@ -14,7 +14,8 @@
         .card-body.p-0.pt-5
           .col-12.col-lg-12.pl-0.additional-information.technical
             - property_values.each do |attr|
-              = f.simple_fields_for "bundled_property_values[o#{offer.id}]", attr do |field|
-                = render "services/configurations/attributes/#{attr.type}", attr: attr, field: field
+              = f.fields_for "bundled_property_values" do |ff|
+                = ff.fields_for "o#{offer.id}", attr do |field|
+                  = render "services/configurations/attributes/#{attr.type}", attr: attr, field: field
               - rescue StandardError => e
                 = e.message
