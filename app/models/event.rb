@@ -15,7 +15,7 @@ class Event < ApplicationRecord
              foreign_key: "eventable_id",
              optional: true
 
-  enum action: { create: "create", update: "update" }, _prefix: true
+  enum :action, { create: "create", update: "update" }, prefix: true
 
   validates :action, presence: true
   validates :updates, presence: true, if: :action_update?

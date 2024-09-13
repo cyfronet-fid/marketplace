@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CatalogueSource < ApplicationRecord
-  enum source_type: { eosc_registry: "eosc_registry" }
+  enum :source_type, { eosc_registry: "eosc_registry" }
   belongs_to :catalogue, inverse_of: :sources
 
   validates :eid, presence: true

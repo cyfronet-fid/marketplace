@@ -4,7 +4,7 @@ module Statusable
   extend ActiveSupport::Concern
 
   included do
-    enum status: STATUSES
+    enum :status, STATUSES
 
     validates :status, presence: true, inclusion: { in: STATUSES.values }
   end
