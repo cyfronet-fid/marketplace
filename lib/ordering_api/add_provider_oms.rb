@@ -3,7 +3,7 @@
 module OrderingApi
   class AddProviderOMS
     def initialize(oms_name, provider_pid, authentication_token)
-      @oms_name = oms_name.snakecase
+      @oms_name = oms_name.downcase
       @provider_pid = provider_pid
       @authentication_token = authentication_token
     end

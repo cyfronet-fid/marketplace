@@ -3,9 +3,9 @@
 class Message < ApplicationRecord
   include Eventable
 
-  enum author_role: { user: "user", provider: "provider", mediator: "mediator" }, _prefix: :role
+  enum :author_role, { user: "user", provider: "provider", mediator: "mediator" }, prefix: :role
 
-  enum scope: { public: "public", internal: "internal", user_direct: "user_direct" }, _suffix: true
+  enum :scope, { public: "public", internal: "internal", user_direct: "user_direct" }, suffix: true
 
   belongs_to :author, class_name: "User", optional: true
   belongs_to :messageable, polymorphic: true
