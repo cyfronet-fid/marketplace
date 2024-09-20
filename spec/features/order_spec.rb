@@ -803,12 +803,14 @@ RSpec.feature "Service ordering", end_user_frontend: true do
       user = build(:user)
       stub_checkin(user)
 
-      visit service_offers_path(service)
+      visit service_path(service)
 
       expect do
         # If new user is logged in using checkin new user record is created
-        click_on "Next", match: :first
+        click_on "Access the service", match: :first
       end.to change { User.count }.by(1)
+
+      click_on "Next", match: :first
 
       expect(page).to have_current_path(service_summary_path(service))
       expect(User.last.full_name).to eq(user.full_name)

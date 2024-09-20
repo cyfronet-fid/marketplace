@@ -20,6 +20,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Fixed
 
 - Fitting to EOSC SQA requirements (@goreck888)
+- Log in in the ordering scope (@goreck888)
 
 ### Security
 
