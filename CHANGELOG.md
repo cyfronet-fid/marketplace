@@ -5,7 +5,43 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
-## [3.57.0-milestone]
+
+
+## [3.58.0]
+
+### Added
+- Environmental variable to hide recommendation panel (`SHOW_RECOMMENDATION_PANEL`) (@maria-j-k)
+- Unit to the constant offer parameter (@gorreck888)
+
+### Changed
+- MarketplaceLocation renamed to ResearchActivity (@maria-j-k)
+- Remove suggested services (@maria-j-k)
+- Unlock unpublish/suspend and delete actions for active providers and catalogues (@goreck888)
+- New backoffice view (@jarekzet, goreck888)
+- Organisation name on service detail and list view links to provider detail page (@maria-j-k)
+- Other settings tab should be visible only for users with service portfolio manager role (@maria-j-k)
+- Logo in catalogues, services, providers is not required. Set default logo for each (@maria-j-k)
+- Status bar with actions buttons in detail and edit views for services, catalogues and providers (@maria-j-k)
+- Postgres update from 14.1 to 16.4 (@goreck888)
+
+### Fixed
+- Number of requests handling data_administrators scope (@goreck888)
+- Show pop-up on add to favourites (@maria-j-k)
+- Pre-fill administrator data in catalogues creation form (@maria-j-k)
+- Bundle status changes to draft if any of its offers changes the status from public to other (@maria-j-k)
+- Fix access_type validator in offer (@maria-j-k)
+- Compare/Favourite icons on the service page (@jarekzet)
+- Back to previous button fixed (@maria-j-k)
+- Removed `no_offers` message in deleted services (@goreck888)
+- Redirect to login when unlogged user is ordering a service(@goreck888)
+
+
+## [3.57.0]
+
+### Added
+- Handling data administrator scope in the backoffice (@goreck888)
+- Statuses changes for providers and catalogues (@goreck888)
+- Delete button for services (@goreck888)
 
 ### Changed
 - New design for bundles (@jarekzet, @goreck888)

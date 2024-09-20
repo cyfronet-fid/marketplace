@@ -11,12 +11,7 @@ module OrderNavHelper
         "data-probe": "",
         onclick:
           if state == :next
-            "
-                      const form = document.getElementById('order-form');
-                      if (typeof(form) != 'undefined' && form != null) {
-                        form.submit();
-                      }
-                    "
+            go_to_next_step
           else
             ""
           end
@@ -34,5 +29,14 @@ module OrderNavHelper
         end
       end
     end
+  end
+
+  def go_to_next_step
+    "
+                      const form = document.getElementById('order-form');
+                      if (typeof(form) != 'undefined' && form != null) {
+                        form.submit();
+                      }
+                    "
   end
 end
