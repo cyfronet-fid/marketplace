@@ -15,8 +15,7 @@
                                                           "service-id": @service.id,
                                                           "turbo-method": :delete }
           .ml-3.d-inline
-            %button.btn.btn-primary{ form: "order-form", type: "submit",
-                                     data: { probe: "summary", turbo: false } }= next_title
+            %button.btn.btn-primary{ form: "order-form", onclick: go_to_next_step }= next_title
       #flash-messages.flash
         = render "layouts/flash"
       = turbo_frame_tag "modal"
@@ -29,8 +28,7 @@
           = link_to prev_title, url_for([@service, prev_visible_step_key]),
           class: "text-uppercase", "data-probe": "" if prev_visible_step_key
         .ml-3.d-inline
-          %button.btn.btn-primary{ form: "order-form", type: "submit",
-            "data-probe": "summary", "data-service-id": @service.id, "data-turbo": false }= next_title
+          %button.btn.btn-primary{ form: "order-form", onclick: go_to_next_step }= next_title
 
   = render "layouts/eosc_commons_footer"
   = render "layouts/recommendation"
