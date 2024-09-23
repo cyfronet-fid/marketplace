@@ -62,10 +62,7 @@ module ApplicationHelper
     if policy(%i[backoffice backoffice]).show?
       links.push({ href: backoffice_path, caption: _("Backoffice"), "data-e2e": "backoffice" })
     end
-    if policy(%i[admin admin]).show?
-      links.push({ href: admin_path, caption: _("Admin") })
-      links.push({ href: executive_path, caption: _("Executive") }) if policy(%i[executive executive]).show?
-    end
+    links.push({ href: admin_path, caption: _("Admin") }) if policy(%i[admin admin]).show?
     links.to_json
   end
 
