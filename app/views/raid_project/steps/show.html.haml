@@ -1,0 +1,8 @@
+- content_for :title, _(wizard_title)
+- breadcrumb :project_new
+.container
+  #form-container{ "data-controller" => "raid-project", "data-raid-project-url-value": ror_autocomplete_url }
+    .mb-5.pb-2.border-header
+      %h1.mr-auto.my-auto= _(wizard_title)
+    = turbo_frame_tag dom_id(@raid_project) do
+      = render_next_step(params[:id], @raid_project)

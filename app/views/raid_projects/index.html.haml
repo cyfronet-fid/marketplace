@@ -1,0 +1,12 @@
+.container
+  .row
+    .col-sm-3.mb-5
+      = render "projects/nav/raid_projects", raid_projects: @raid_projects
+    .col-sm-9
+      .container
+        %h2 My RAiD projects
+        - if @raid_projects.present?
+          - @raid_projects.each do |project|
+            = render "raid_projects/index_item_card", raid_project: project
+          .col-md-5
+        = render "raid_projects/index_empty_card" unless @raid_projects.present?
