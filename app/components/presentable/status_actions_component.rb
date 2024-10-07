@@ -5,11 +5,15 @@ class Presentable::StatusActionsComponent < ApplicationComponent
   def initialize(object:, publish: false, unpublish: false, suspend: false, destroy: false)
     super()
     @object = object
-    @object_type = object.class.name.downcase
+    @object_type = object_type
     @publish = publish
     @unpublish = unpublish
     @suspend = suspend
     @destroy = destroy
+  end
+
+  def object_type
+    @object.class.name.downcase == "datasource" ? "service" : @object.class.name.downcase
   end
 
   def suspend_path
