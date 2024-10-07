@@ -21,9 +21,6 @@ class Catalogue < ApplicationRecord
   has_many :provider_catalogues, dependent: :destroy
   has_many :providers, through: :provider_catalogues
 
-  has_many :datasource_catalogues, dependent: :destroy
-  has_many :datasources, through: :datasource_catalogues
-
   has_many :catalogue_scientific_domains, autosave: true, dependent: :destroy
   has_many :scientific_domains, through: :catalogue_scientific_domains
 

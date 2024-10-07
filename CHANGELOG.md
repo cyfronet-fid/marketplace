@@ -23,6 +23,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Logo in catalogues, services, providers is not required. Set default logo for each (@maria-j-k)
 - Status bar with actions buttons in detail and edit views for services, catalogues and providers (@maria-j-k)
 - Postgres update from 14.1 to 16.4 (@goreck888)
+- Remove most of services from database (@maria-j-k)
 
 ### Fixed
 - Number of requests handling data_administrators scope (@goreck888)

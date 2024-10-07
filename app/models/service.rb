@@ -45,7 +45,7 @@ class Service < ApplicationRecord
          other: "other"
        }
 
-  has_many :service_alternative_identifiers
+  has_many :service_alternative_identifiers, dependent: :destroy
   has_many :alternative_identifiers, through: :service_alternative_identifiers
 
   has_many :offers, dependent: :restrict_with_error
@@ -131,7 +131,7 @@ class Service < ApplicationRecord
 
   has_many :sources, class_name: "ServiceSource", dependent: :destroy
 
-  has_many :service_guidelines, dependent: :destroy
+  has_many :service_guidelines, dependent: :delete_all
   has_many :guidelines, through: :service_guidelines
 
   accepts_nested_attributes_for :sources,
