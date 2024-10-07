@@ -12,6 +12,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Fixed
 - Overflow of select list in forms (@jarekzet)
+- Fix access_type validator in offer (@maria-j-k)
 
 ### Security
 - Update ruby to 3.3.0 and rails to 7.3.1.4 (@goreck888)
