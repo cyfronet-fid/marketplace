@@ -23,6 +23,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Changed
 - New design for bundles (@jarekzet, @goreck888)
+- Add Exit button to offers form (@maria-j-k)
 
 ### Fixed
 - Overflow of select list in forms (@jarekzet)

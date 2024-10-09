@@ -42,14 +42,16 @@
     .d-none{ data: { "offer-target": "section", section: "summary" } }
       -# Render summary section here, from the backend
 
-
   .row.new-offer-form-controls
-    .col-6
+    .col-4
       .btn.btn-back.d-none{ data: { action: "click->offer#prevSection", "offer-target": "prevButton" } }
         <- Back
-    .col-6.text-right
+    .col-4.text-right
+      = link_to _("Exit"), backoffice_service_path(service), class: "btn btn-back"
+    .col-4.text-right
       .btn.btn-primary{ data: { action: "click->offer#nextSection", "offer-target": "nextButton" } }
         Next ->
+
 
       .submit.d-none{ "data-offer-target": "submitRow" }
         = f.button :submit, class: "btn btn-primary pl-5 pr-5 mobile-bottom-margin", "data-e2e": "create-offer-btn"
