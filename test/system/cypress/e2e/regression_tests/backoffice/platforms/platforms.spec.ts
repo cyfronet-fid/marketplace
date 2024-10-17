@@ -53,6 +53,7 @@ describe("Platform", () => {
   it("should delete platform", () => {
     cy.visit("/backoffice/other_settings/platforms");
     cy.get("[data-e2e='backoffice-platforms-list'] li").eq(0).find("a.delete-icon").click();
+    cy.get("[data-e2e='confirm-accept']").click();
     cy.contains("div.alert-success", message.successDeletionMessage).should("be.visible");
   });
 });

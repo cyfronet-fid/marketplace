@@ -107,6 +107,10 @@ Rails.application.routes.draw do
 
   resource :backoffice, only: :show
   namespace :backoffice do
+    namespace :statuses do
+      resources :providers, only: %i[create]
+      resources :catalogues, only: %i[create]
+    end
     resources :services, controller: "services", constraints: { id: pid_format_constraint } do
       scope module: :services do
         resource :logo_preview, only: :show

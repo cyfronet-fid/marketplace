@@ -1,0 +1,33 @@
+= form_with url: form_path, method: :post,
+  html: { data: { e2e: "backoffice-providers-list", controller: "form list",
+  form_target: "form", turbo_frame: "checkbox_form", turbo: true } } do |f|
+  = render Presentable::ListComponent.new(collection: collection)
+  = (pagy_bootstrap_nav pagy).html_safe
+  .d-none
+    - type = collection.model.name.underscore
+    = f.hidden_field :page, value: pagy.page
+    = f.button _("Publish selected"),
+          id: "publish-btn",
+          name: "commit",
+          value: "Publish",
+          class: "dropdown-item",
+          data: { action: "list#reset", turbo_method: :post, turbo_confirm: _("Confirm to publish"),
+            confirm_details: publish_message(type, singular: false), confirm_button: _("Publish #{type}s") }
+    = f.button _("Suspend selected"),
+          id: "suspend-btn",
+          name: "commit",
+          value: "Suspend",
+          class: "dropdown-item",
+          data: { action: "list#reset", turbo_method: :post,
+          turbo_confirm: _("Confirm to suspend"),
+          confirm_details: suspend_message(type, singular: false),
+          confirm_button: _("Suspend #{type}s") }
+    = f.button _("Unpublish selected"),
+          id: "unpublish-btn",
+          name: "commit",
+          value: "Unpublish",
+          class: "dropdown-item",
+          data: { action: "list#reset", turbo_method: :post,
+          turbo_confirm: _("Confirm to unpublish"),
+          confirm_details: unpublish_message(type, singular: false),
+          confirm_button: _("Unpublish #{type}s") }

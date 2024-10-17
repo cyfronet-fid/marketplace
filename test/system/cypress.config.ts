@@ -2,8 +2,8 @@ import { defineConfig } from "cypress";
 
 export default defineConfig({
   defaultCommandTimeout: 20000,
-  pageLoadTimeout: 100000,
-  responseTimeout: 100000,
+  pageLoadTimeout: 50000,
+  responseTimeout: 50000,
   viewportWidth: 1400,
   viewportHeight: 1200,
   fileServerFolder: "./",

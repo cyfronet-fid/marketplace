@@ -40,7 +40,8 @@ RSpec.feature "Marketplace lead builder", manager_frontend: true do
 
       visit admin_leads_path
 
-      accept_confirm { find("#delete-lead-section-#{section.id}").click }
+      find("#delete-lead-section-#{section.id}").click
+      find("#confirm-accept").click
 
       expect(page).to have_current_path(admin_leads_path)
       expect(page).to_not have_content(section.title)
@@ -86,7 +87,8 @@ RSpec.feature "Marketplace lead builder", manager_frontend: true do
 
       visit admin_leads_path
 
-      accept_confirm { find("#delete-lead-#{item.id}").click }
+      find("#delete-lead-#{item.id}").click
+      find("#confirm-accept").click
 
       expect(page).to have_current_path(admin_leads_path)
       expect(page).to_not have_content(item.header)

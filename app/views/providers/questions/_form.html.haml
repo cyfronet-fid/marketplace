@@ -19,3 +19,4 @@
   - content_for(:buttons) do
     = f.button :submit, _("SEND"), id: "form-modal-action-btn",
     class: "btn btn-primary pl-5 pr-5 float-left", type: "submit", form: "modal-form"
+    = render "common_parts/close_button"
