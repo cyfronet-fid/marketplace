@@ -49,6 +49,9 @@ application.register("form", FormController);
 import HomePageController from "./home_page_controller";
 application.register("home-page", HomePageController);
 
+import ListController from "./list_controller";
+application.register("list", ListController);
+
 import MapController from "./map_controller";
 application.register("map", MapController);
 

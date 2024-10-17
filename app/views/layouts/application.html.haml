@@ -17,6 +17,7 @@
       = render "layouts/flash"
     = render "layouts/welcome_modal"
     = turbo_frame_tag "modal"
+    = render "layouts/confirm_modal"
     %header
       = render "layouts/navbar",
         categories: @siblings || @root_categories,
