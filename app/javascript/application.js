@@ -11,5 +11,8 @@ import "./controllers";
 
 import jquery from "jquery";
 import "@hotwired/turbo-rails";
+import TC from "@rolemodel/turbo-confirm";
 
 window.$ = window.jQuery = jquery;
+
+TC.start({ activeClass: "d-flex" });

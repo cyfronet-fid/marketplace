@@ -86,6 +86,7 @@ describe("Scientific Domain", () => {
   it("shouldn't delete scientific domain with successors connected to it", () => {
     cy.visit("/backoffice/other_settings/scientific_domains");
     cy.get("[data-e2e='backoffice-scientific-domains-list'] li").eq(0).find("a.delete-icon").click();
+    cy.get("[data-e2e='confirm-accept']").click();
     cy.contains(".alert-danger", message.alertDeletionMessageSuccessors).should("be.visible");
   });
 
@@ -96,6 +97,7 @@ describe("Scientific Domain", () => {
       .parent()
       .find("a.delete-icon")
       .click();
+    cy.get("[data-e2e='confirm-accept']").click();
     cy.contains(".alert-danger", message.alertDeletionMessageResource).should("be.visible");
   });
 
@@ -109,6 +111,7 @@ describe("Scientific Domain", () => {
       .then((value) => {
         cy.visit("/backoffice/other_settings/scientific_domains");
         cy.contains(value).parent().find("a.delete-icon").click();
+        cy.get("[data-e2e='confirm-accept']").click();
         cy.contains(".alert-success", message.successDeletionMessage).should("be.visible");
       });
   });

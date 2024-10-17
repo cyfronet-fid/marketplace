@@ -21,10 +21,10 @@
             = link_to _("Services"), backoffice_services_path, class: "nav-link", data: { e2e: "owned-services" }
           - if policy([:backoffice, Provider]).index?
             = nav_link controller: :providers, html_options: { class: "nav-item" } do
-              = link_to _("Providers"), backoffice_providers_path, class: "nav-link", data: { e2e: "providers" }
+              = link_to _("Providers"), backoffice_providers_path(page: nil), class: "nav-link", data: { e2e: "providers" }
           - if policy([:backoffice, Catalogue]).index?
             = nav_link controller: :catalogues, html_options: { class: "nav-item" } do
-              = link_to _("Catalogues"), backoffice_catalogues_path, class: "nav-link", data: { e2e: "catalogues" }
+              = link_to _("Catalogues"), backoffice_catalogues_path(page: nil), class: "nav-link", data: { e2e: "catalogues" }
           = nav_link controller: :statistics, html_options: { class: "nav-item" } do
             = link_to _("Statistics"), backoffice_statistics_path, class: "nav-link", data: { e2e: "statistics" }
           - if current_user&.service_portfolio_manager?
