@@ -1,20 +1,23 @@
-%li.list-group-item.providers{ id: "provider-#{provider.id}" }
-  .row
-    .col-12.col-md-8
-      = link_to provider.name, backoffice_provider_path(provider,
-            params: { page: params[:page] } || {}), class: "provider-name"
-    .col-12.col-md-2.text-center
-      %span.status{ class: provider.status }
-        = provider.status
-    .col-12.col-md-2
-      .actions
-        - if policy([:backoffice, provider]).destroy?
-          = link_to backoffice_provider_path(provider.id),
-                    data: { "turbo-confirm": action_prompt("provider", "remove"), "turbo-method": :delete },
-                    class: "delete-icon float-right" do
-            %i.far.fa-trash-alt
+= turbo_frame_tag provider do
+  %li.list-group-item.providers{ id: "provider-#{provider.id}" }
+    .row
+      .col-12.col-md-8
+        = link_to provider.name, backoffice_provider_path(provider,
+              params: { page: params[:page] } || {}), class: "#{provider}-name",
+              data: { turbo_frame: "_top" }
+      .col-12.col-md-2.text-center
+        %span.status{ class: provider.status }
+          = provider.status
+      .col-12.col-md-2
+        .actions
+          - if policy([:backoffice, provider]).destroy?
+            = link_to backoffice_provider_path(provider.id),
+                      data: { "turbo-confirm": action_prompt("provider", "remove"), "turbo-method": :delete },
+                      class: "delete-icon float-right" do
+              %i.far.fa-trash-alt
 
-        - if policy([:backoffice, provider]).edit?
-          = link_to _("Edit"),
-                    edit_backoffice_provider_path(provider),
-                    class: "edit-btn float-right mr-4"
+          - if policy([:backoffice, provider]).edit?
+            = link_to _("Edit"),
+                      edit_backoffice_provider_path(provider),
+                      data: { turbo_frame: "_top" },
+                      class: "edit-btn float-right mr-4"

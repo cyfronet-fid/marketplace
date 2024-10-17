@@ -35,7 +35,7 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
     authorize(@provider)
 
     if valid_model_and_urls? && @provider.save(validate: false)
-      redirect_to backoffice_provider_path(@provider), notice: "New provider created successfully"
+      redirect_to backoffice_provider_path(@provider, page: params[:page]), notice: "New provider created successfully"
     else
       catalogue_scope
       render :new, status: :unprocessable_entity
@@ -76,10 +76,13 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
   def destroy
     respond_to do |format|
       if Provider::Delete.call(@provider)
+        @provider.reload
         notice = "Provider removed successfully"
-        format.html { redirect_to backoffice_providers_path, notice: notice }
+        format.turbo_stream { flash.now[:notice] = notice }
+        format.html { redirect_to backoffice_providers_path(page: params[:page]), notice: notice }
       else
         alert = "This Provider has services connected to it, therefore is not possible to remove it."
+        format.turbo_stream { flash.now[:alert] = alert }
         format.html { redirect_to backoffice_provider_path(@provider), alert: alert }
       end
     end

@@ -43,4 +43,4 @@
               data: { turbo_method: :delete, e2e: "logout" }
           - else
             %li
-              %strong= link_to _("Login"), user_checkin_omniauth_authorize_path, data_e2e: "login-btn"
+              %strong= link_to _("Login"), user_checkin_omniauth_authorize_path, "data-e2e": "login-btn"

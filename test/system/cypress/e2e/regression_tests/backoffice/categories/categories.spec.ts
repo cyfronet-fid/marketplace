@@ -15,7 +15,7 @@ describe("Category", () => {
     cy.loginAs(user);
   });
 
-  it("should create new category without parent", () => {
+  it("should create new categories without parent", () => {
     cy.openUserDropdown();
     cy.get("[data-e2e='backoffice']").click();
     cy.location("href").should("contain", "/backoffice");
@@ -29,7 +29,7 @@ describe("Category", () => {
     cy.contains("div.alert-success", message.successCreationMessage);
   });
 
-  it("should create new category with parent", () => {
+  it("should create new categories with parent", () => {
     cy.visit("/backoffice/other_settings/categories/new");
     cy.fillFormCreateCategory({ ...category1, parent: "Sharing & Discovery" }, correctLogo);
     cy.get("[data-e2e='create-category-btn']").click();
@@ -46,14 +46,14 @@ describe("Category", () => {
       });
   });
 
-  it("should add new category without logo", () => {
+  it("should add new categories without logo", () => {
     cy.visit("/backoffice/other_settings/categories/new");
     cy.fillFormCreateCategory(category2, false);
     cy.get("[data-e2e='create-category-btn']").click();
     cy.contains("div.alert-success", message.successCreationMessage);
   });
 
-  it("shouldn't create new category", () => {
+  it("shouldn't create new categories", () => {
     cy.visit("/backoffice/other_settings/categories/new");
     cy.fillFormCreateCategory({ ...category3, name: "" }, wrongLogo);
     cy.get("[data-e2e='create-category-btn']").click();
@@ -61,19 +61,21 @@ describe("Category", () => {
     cy.contains("div.invalid-feedback", message.alertNameValidation).should("be.visible");
   });
 
-  it("shouldn't delete category with successors connected to it", () => {
+  it("shouldn't delete categories with successors connected to it", () => {
     cy.visit("/backoffice/other_settings/categories");
     cy.get("[data-e2e='backoffice-categories-list'] li").eq(0).find("a.delete-icon").click();
+    cy.get("[data-e2e='confirm-accept']").click();
     cy.contains(".alert-danger", message.alertDeletionMessageSuccessors).should("be.visible");
   });
 
-  it("shouldn't delete category with services connected to it", () => {
+  it("shouldn't delete categories with services connected to it", () => {
     cy.visit("/backoffice/other_settings/categories");
     cy.get("[data-e2e='backoffice-categories-list'] li").eq(2).find("a.delete-icon").click();
+    cy.get("[data-e2e='confirm-accept']").click();
     cy.contains(".alert-danger", message.alertDeletionMessageResource).should("be.visible");
   });
 
-  it("should delete category without services", () => {
+  it("should delete categories without services", () => {
     cy.visit("/backoffice/other_settings/categories/new");
     cy.fillFormCreateCategory(category4, correctLogo);
     cy.get("[data-e2e='create-category-btn']").click();
@@ -83,16 +85,17 @@ describe("Category", () => {
       .then((value) => {
         cy.visit("/backoffice/other_settings/categories");
         cy.contains(value).parent().find("a.delete-icon").click();
+        cy.get("[data-e2e='confirm-accept']").click();
         cy.contains(".alert-success", message.successDeletionMessage).should("be.visible");
       });
   });
 
-  it("should edit category", () => {
+  it("should edit categories", () => {
     cy.visit("/backoffice/other_settings/categories");
     cy.get("[data-e2e='backoffice-categories-list'] li").eq(0).find("a").contains("Edit").click();
-    cy.fillFormCreateCategory({ description: "Edited category" }, false);
+    cy.fillFormCreateCategory({ description: "Edited categories" }, false);
     cy.get("[data-e2e='create-category-btn']").click();
     cy.contains(".alert-success", message.successUpdationMessage);
-    cy.contains("p", "Edited category").should("be.visible");
+    cy.contains("p", "Edited categories").should("be.visible");
   });
 });

@@ -5,13 +5,16 @@ class Backoffice::Providers::UnpublishesController < Backoffice::ApplicationCont
 
   def create
     result = params[:suspend] ? Provider::Suspend.call(@provider) : Provider::Unpublish.call(@provider)
-    if result
-      flash[:notice] = "Provider #{params[:suspend] ? "suspended" : "unpublished"} successfully"
-    else
-      flash[:alert] = "Provider not #{params[:suspend] ? "suspended" : "unpublished"}. " +
-        "Reason: #{@provider.errors.full_messages.join(", ")}"
+    respond_to do |format|
+      if result
+        flash[:notice] = "Provider #{params[:suspend] ? "suspended" : "unpublished"} successfully"
+      else
+        flash[:alert] = "Provider not #{params[:suspend] ? "suspended" : "unpublished"}. " +
+          "Reason: #{@provider.errors.full_messages.join(", ")}"
+      end
+      format.turbo_stream
+      format.html { redirect_to backoffice_provider_path(@provider) }
     end
-    redirect_to backoffice_provider_path(@provider)
   end
 
   private

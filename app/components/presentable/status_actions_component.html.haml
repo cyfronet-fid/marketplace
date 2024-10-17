@@ -10,8 +10,10 @@
           = link_to _("Publish"),
               send("backoffice_#{@object_type}_publish_path", @object),
               class: "btn btn-primary",
-              data: { "turbo-confirm": _("Are you sure you want to publish this #{@object_type}?"),
-              e2e: "publish-btn", "turbo-method": :post }
+              data: { turbo_confirm: "Confirm to publish",
+              confirm_details: "Are you sure you want to publish this #{@object_type}?",
+              confirm_button: "Publish",
+              e2e: "publish-btn", turbo_method: :post }
         - if @suspend
           = link_to _("Suspend"),
               suspend_path,

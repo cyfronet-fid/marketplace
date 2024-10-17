@@ -3,7 +3,7 @@
   "turbo-modal-target": "modal",
   action: "turbo:submit-end->turbo-modal#submitEnd keyup@window->turbo-modal#closeWithKeyboard click@window->turbo-modal#closeBackground"
     } }
-    .modal-dialog{ role: "document" }
+    .modal-dialog{ role: "document", class: @custom_style }
       .modal-content
         .modal-header
           %h3#form-modal-title.modal-title= @title
@@ -16,6 +16,3 @@
 
         .modal-footer
           = yield_content!(:buttons) if content_for?(:buttons)
-          %button.close.close-link.pl-3.pr-3{ data: { action: "turbo-modal#hideModal" }, type: "button" }
-            %span
-              = _("Close")

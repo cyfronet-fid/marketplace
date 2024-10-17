@@ -42,6 +42,7 @@ describe("Owned services", () => {
     cy.contains("a", "Set parameters and offers").should("be.visible");
     cy.contains("span", "unpublished").should("be.visible");
     cy.get("[data-e2e='publish-btn']").click();
+    cy.get("[data-e2e='confirm-accept']").click();
     cy.contains("span", "published").should("be.visible");
     cy.get(".service-details-header h2")
       .invoke("text")

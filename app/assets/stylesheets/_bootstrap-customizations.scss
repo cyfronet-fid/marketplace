@@ -2660,7 +2660,7 @@ label[data-multicheckbox].small {
 .backoffice-list {
   .list-group-item {
     border: none;
-    padding: 0.45rem 1rem;
+    padding: 0.25rem 1rem;
 
     &:nth-child(even) {
       background: $alert-bg;
@@ -2692,6 +2692,8 @@ label[data-multicheckbox].small {
     .status {
       margin: 0;
       text-align: center;
+      width: 100%;
+      display: inline-block;
       color: $palette-white;
       font-size: 12px;
       padding: 6px 8px;
@@ -2721,6 +2723,50 @@ label[data-multicheckbox].small {
 
     &.heading-row {
       font-weight: 600;
+
+      .col {
+        &:last-child {
+          padding: 0;
+        }
+      }
+    }
+
+    &.providers {
+      .row {
+        .col {
+          &:first-child {
+            flex: 0 0 20px;
+            display: flex;
+            align-items: center;
+          }
+
+          &:nth-child(2) {
+            font-size: 14px !important;
+
+            a {
+              font-size: 14px;
+            }
+          }
+
+          &:nth-child(3) {
+            flex: 0 0 220px;
+            font-size: 14px;
+          }
+
+          &:nth-child(4) {
+            flex: 0 0 210px;
+            font-size: 14px;
+          }
+
+          &:last-child {
+            flex: 0 0 115px;
+          }
+
+          .form-check-input {
+            margin: 0;
+          }
+        }
+      }
     }
   }
 
@@ -4776,6 +4822,17 @@ label[data-multicheckbox].small {
 
 // scss-lint:disable all
 .modal-content {
+  border: none;
+  border-radius: 8px;
+
+  .backoffice-list {
+    .list-group-item {
+      .status {
+        padding: 4px 8px;
+      }
+    }
+  }
+
   .form-control,
   .project_scientific_domains {
     width: 100%;
@@ -5099,9 +5156,18 @@ abbr[title] {
 
 .modal {
   overflow-y: auto;
+  background: $modal-overlay-bg;
 
   .modal-dialog {
     max-width: 570px;
+
+    &.wide {
+      max-width: 1280px;
+    }
+
+    &.medium {
+      max-width: 825px;
+    }
 
     &.new-feature {
       max-width: 885px;
@@ -5134,16 +5200,16 @@ abbr[title] {
 
   .modal-header {
     border: none;
-    padding: 1.5rem 1rem 1rem;
+    padding: 2.4rem 1.5rem 1rem;
 
     h3 {
       margin: 0;
-      font-size: 22px;
-      font-weight: 600;
+      font-size: 24px;
+      font-weight: 500;
     }
 
     .close {
-      font-size: 45px;
+      font-size: 38px;
       padding-top: 5px;
       padding-bottom: 0;
       color: $palette-solid-100;
@@ -5151,8 +5217,28 @@ abbr[title] {
   }
 
   .modal-body {
-    padding-top: 0;
-    padding-bottom: 25px;
+    padding: 0 1.5rem 1.5rem;
+
+    .pagy-bootstrap {
+      justify-content: center;
+    }
+
+    .actions-row {
+      justify-content: space-between;
+      display: flex;
+      width: 100%;
+
+      .btn-secondary,
+      .btn-primary {
+        font-size: 1rem;
+        width: 30%;
+      }
+
+      .btn-secondary {
+        border: 1px solid $custom-16;
+        color: $custom-16;
+      }
+    }
 
     .modal-info {
       background: $border-header url("ico_eosccloud_grey.svg") 20px 50% no-repeat;
@@ -5193,6 +5279,61 @@ abbr[title] {
     float: left;
     opacity: 1;
   }
+}
+
+.confirm-modal {
+  flex-direction: column;
+  border: none;
+  border-radius: 8px;
+  width: 600px;
+  padding: 15px 24px 40px;
+  overflow: hidden;
+
+  &::backdrop {
+    background: $modal-overlay-bg-strong;
+  }
+
+  .close {
+    span {
+      font-size: 30px;
+      line-height: 20px;
+      display: inline-block;
+    }
+  }
+
+  .confirm-title {
+    font-size: 24px;
+    font-weight: 500;
+  }
+
+  .confirm-body {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 150%;
+    color: $body-color;
+  }
+
+  .modal-actions {
+    justify-content: space-between;
+    display: flex;
+    margin-top: 40px;
+    width: 100%;
+
+    .btn {
+      width: 48%;
+    }
+
+    .btn-secondary {
+      border: 1px solid $custom-16;
+      color: $custom-16;
+    }
+  }
+}
+
+.subsection {
+  margin: 0;
+  font-weight: 300;
+  padding-bottom: 0;
 }
 
 .additional-information {
@@ -8002,7 +8143,8 @@ abbr[title] {
     }
   }
 
-  .btn-primary {
+  .btn-primary,
+  .btn-secondary {
     font-size: 14px;
     padding: 0.62rem 1.3rem;
 
@@ -8666,6 +8808,26 @@ footer {
   }
 }
 // scss-lint:enable all
+
+.selected-menu {
+  height: 24px;
+  border: 1px solid $landing-01;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+
+  a {
+    max-width: 100% !important;
+    font-size: 11px;
+    width: 100%;
+    text-align: center;
+    line-height: 22px;
+  }
+
+  &:hover {
+    background: $alert-bg;
+  }
+}
 
 .searchbar {
   &.whitelabel {

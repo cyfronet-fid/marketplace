@@ -5,7 +5,7 @@ class Backoffice::CataloguesController < Backoffice::ApplicationController
 
   def index
     authorize(Catalogue)
-    @catalogues = policy_scope(Catalogue).with_attached_logo
+    @pagy, @catalogues = pagy(policy_scope(Catalogue).with_attached_logo.order(:name))
   end
 
   def show
@@ -28,13 +28,18 @@ class Backoffice::CataloguesController < Backoffice::ApplicationController
   end
 
   def destroy
-    if Catalogue::Delete.call(@catalogue)
-      flash[:notice] = "Catalogue removed successfully"
-    else
-      flash[:alert] = "This Catalogue has providers/services connected to it, " +
-        "therefore, it is not possible to remove it."
+    respond_to do |format|
+      if Catalogue::Delete.call(@catalogue)
+        notice = "Catalogue removed successfully"
+        flash.now[:notice] = notice
+        format.html { redirect_to backoffice_catalogues_path(page: params[:page]), notice: notice }
+      else
+        alert = "This Catalogue has providers/services connected to it, therefore, it is not possible to remove it."
+        flash.now[:alert] = alert
+        format.html { redirect_to backoffice_catalogue_path(@catalogue, page: params[:page], alert: alert) }
+      end
+      format.turbo_stream
     end
-    redirect_to backoffice_catalogues_path
   end
 
   def create

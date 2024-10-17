@@ -22,30 +22,6 @@
                     class: "btn btn-primary",
                     "data-e2e": "add-new-catalogue"
         .clearfix
-    %ul.list-group.backoffice-list.mt-3.mb-3{ "data-e2e": "backoffice-catalogues-list" }
-      %li.list-group-item.heading-row
-        .row
-          .col-12.col-md-8 Name
-          .col-12.col-md-2.text-center Status
-          .col-12.col-md-2
-      - @catalogues.each do |catalogue|
-        %li.list-group-item.providers
-          .row
-            .col-12.col-md-8
-              = link_to catalogue.name, backoffice_catalogue_path(catalogue,
-              params: { page: params[:page] } || {}), class: "catalogue-name"
-            .col-12.col-md-2.text-center
-              %span.status{ class: catalogue.status }
-                = catalogue.status
-            .col-12.col-md-2
-              .actions
-                - if policy([:backoffice, catalogue]).destroy?
-                  = link_to backoffice_catalogue_path(catalogue.id),
-                        data: { "turbo-confirm": action_prompt("catalogue", "remove"), "turbo-method": :delete },
-                        class: "delete-icon float-right" do
-                    %i.far.fa-trash-alt
-
-                  - if policy([:backoffice, catalogue]).edit?
-                    = link_to _("Edit"),
-                        edit_backoffice_catalogue_path(catalogue),
-                        class: "edit-btn float-right mr-4"
+    = turbo_frame_tag "checkbox_form" do
+      = render "backoffice/statuses/form", collection: @catalogues, pagy: @pagy,
+        form_path: backoffice_statuses_catalogues_path

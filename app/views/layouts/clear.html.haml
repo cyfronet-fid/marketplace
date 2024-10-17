@@ -1,7 +1,7 @@
 !!!
 %html{ lang: "en", class: "#{Rails.env}" }
   = content_for(:custom_scripts) do
-    %script{ src: "https://eosc-helpdesk.eosc-portal.eu/assets/form/form.js", id: "zammad_form_script" }
+    %script{ src: "https://helpdesk.sandbox.eosc-beyond.eu/assets/form/form.js", id: "zammad_form_script" }
   = render "layouts/head"
   .spinner-background
     .spinner
@@ -14,6 +14,7 @@
     #flash-messages.flash
       = render "layouts/flash"
     = turbo_frame_tag "modal"
+    = render "layouts/confirm_modal"
     %header
       = render "layouts/sections"
     %main

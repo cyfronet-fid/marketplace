@@ -59,12 +59,14 @@ describe("Vocabularies", () => {
   it("shouldn't delete vocabulary with successors connected to it", () => {
     cy.visit("/backoffice/other_settings/vocabularies");
     cy.get("[data-e2e='backoffice-vocabulary-list'] li").contains("Businesses").parent().find("a.delete-icon").click();
+    cy.get("#confirm-accept").click();
     cy.contains(".alert-danger", message.alertDeletionMessageSuccessors).should("be.visible");
   });
 
   it("shouldn't delete scientific domain with services connected to it", () => {
     cy.visit("/backoffice/other_settings/vocabularies");
     cy.get("[data-e2e='backoffice-vocabulary-list'] li").contains("Providers").parent().find("a.delete-icon").click();
+    cy.get("#confirm-accept").click();
     cy.contains(".alert-danger", message.alertDeletionMessageResource).should("be.visible");
   });
 
@@ -79,6 +81,7 @@ describe("Vocabularies", () => {
       .then((value) => {
         cy.visit("/backoffice/other_settings/vocabularies");
         cy.contains(value).parent().find("a.delete-icon").click();
+        cy.get("#confirm-accept").click();
         cy.contains(".alert-success", message.successDeletionMessage).should("be.visible");
       });
   });

@@ -272,6 +272,11 @@
   resolved "https://registry.yarnpkg.com/@rails/ujs/-/ujs-7.1.400.tgz#b2a76bdccb5197b9e866954536106386c87cfab5"
   integrity sha512-YwvXm3BR5tn+VCAKYGycLejMRVZE3Ionj5gFjEeGXCZnI0Rpi+7dKpmyu90kdUY7dRUFpHTdu9zZceEzFLl38w==
 
+"@rolemodel/turbo-confirm@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@rolemodel/turbo-confirm/-/turbo-confirm-2.0.2.tgz#bea18fcd79e91fe2d2c08d529113a26d4e1812f4"
+  integrity sha512-IoZw7Z1ChRT9Xt0u7C2mIltrpk6FV866aSiz8u+95tmACYmyyS0S16SHynAdEmwJyLTJr3HrOVuErftGDvFRNg==
+
 "@types/estree@^1.0.5":
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-1.0.6.tgz#628effeeae2064a1b4e79f78e81d87b7e5fc7b50"

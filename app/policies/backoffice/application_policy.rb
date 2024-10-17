@@ -55,6 +55,10 @@ class Backoffice::ApplicationPolicy < ApplicationPolicy
     actionable?
   end
 
+  def management_role?
+    service_portfolio_manager? || data_administrator?
+  end
+
   private
 
   def service_portfolio_manager?
@@ -71,9 +75,5 @@ class Backoffice::ApplicationPolicy < ApplicationPolicy
 
   def actionable?
     access? && !record.deleted?
-  end
-
-  def management_role?
-    service_portfolio_manager? || data_administrator?
   end
 end

@@ -29,7 +29,7 @@ describe("Providers", () => {
     cy.location("href").should("contain", "/backoffice");
     cy.get("[data-e2e='providers']").click();
     cy.location("href").should("contain", "/backoffice/providers");
-    cy.get("[data-e2e='backoffice-providers-list'] a").eq(0).click();
+    cy.get("[data-e2e='backoffice-providers-list'] a.provider-name").eq(0).click();
     cy.contains("a", "Edit").should("be.visible");
     cy.contains("a", "Delete").should("be.visible");
   });
@@ -109,31 +109,41 @@ describe("Providers", () => {
 
   it("should delete provider with services with deleted status", () => {
     cy.visit("/backoffice/providers");
-    cy.contains("a", providerWithResourceDeleted).parents("li.providers").find("a.delete-icon").click();
+    cy.contains("a", providerWithResourceDeleted).parents("li.providers").find("a.kebab-link svg").click();
+    cy.get(".dropdown-menu.show").find("[data-e2e='delete-menu']").click();
+    cy.get("[data-e2e='confirm-accept']").click();
     cy.contains("div.alert-success", message.successDeletionMessage).should("be.visible");
   });
 
   it("should delete provider with services with draft status", () => {
     cy.visit("/backoffice/providers");
-    cy.contains("a", providerWithResourceDraft).parents("li.providers").find("a.delete-icon").click();
+    cy.contains("a", providerWithResourceDraft).parents("li.providers").find("a.kebab-link svg").click();
+    cy.get(".dropdown-menu.show").find("[data-e2e='delete-menu']").click();
+    cy.get("[data-e2e='confirm-accept']").click();
     cy.contains("div.alert-success", message.successDeletionMessage).should("be.visible");
   });
 
   it("should delete provider with services with published status", () => {
     cy.visit("/backoffice/providers");
-    cy.contains("a", providerWithResourcePublished).parents("li.providers").find("a.delete-icon").click();
+    cy.contains("a", providerWithResourcePublished).parents("li.providers").find("a.kebab-link svg").click();
+    cy.get(".dropdown-menu.show").find("[data-e2e='delete-menu']").click();
+    cy.get("[data-e2e='confirm-accept']").click();
     cy.contains("div.alert-success", message.successDeletionMessage).should("be.visible");
   });
 
   it("should delete provider with services with errored status", () => {
     cy.visit("/backoffice/providers");
-    cy.contains("a", providerWithResourceErrored).parents("li.providers").find("a.delete-icon").click();
+    cy.contains("a", providerWithResourceErrored).parents("li.providers").find("a.kebab-link svg").click();
+    cy.get(".dropdown-menu.show").find("[data-e2e='delete-menu']").click();
+    cy.get("[data-e2e='confirm-accept']").click();
     cy.contains("div.alert-success", message.successDeletionMessage).should("be.visible");
   });
 
   it("should delete provider which is services provider for published resources", () => {
     cy.visit("/backoffice/providers");
-    cy.contains("a", resourceProviderForPublishedResource).parents("li.providers").find("a.delete-icon").click();
+    cy.contains("a", resourceProviderForPublishedResource).parents("li.providers").find("a.kebab-link svg").click();
+    cy.get(".dropdown-menu.show").find("[data-e2e='delete-menu']").click();
+    cy.get("[data-e2e='confirm-accept']").click();
     cy.contains("div.alert-success", message.successDeletionMessage).should("be.visible");
   });
 
