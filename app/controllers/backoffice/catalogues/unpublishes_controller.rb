@@ -5,13 +5,16 @@ class Backoffice::Catalogues::UnpublishesController < Backoffice::ApplicationCon
 
   def create
     result = params[:suspend] ? Catalogue::Suspend.call(@catalogue) : Catalogue::Unpublish.call(@catalogue)
-    if result
-      flash[:notice] = "Catalogue #{params[:suspend] ? "suspended" : "unpublished"} successfully"
-    else
-      flash[:alert] = "Catalogue not #{params[:suspend] ? "suspended" : "unpublished"}. " +
-        "Reason: #{@catalogue.errors.full_messages.join(", ")}"
+    respond_to do |format|
+      if result
+        flash[:notice] = "Catalogue #{params[:suspend] ? "suspended" : "unpublished"} successfully"
+      else
+        flash[:alert] = "Catalogue not #{params[:suspend] ? "suspended" : "unpublished"}. " +
+          "Reason: #{@catalogue.errors.full_messages.join(", ")}"
+      end
+      format.turbo_stream
+      format.html { redirect_to backoffice_catalogue_path(@catalogue) }
     end
-    redirect_to backoffice_catalogue_path(@catalogue)
   end
 
   private

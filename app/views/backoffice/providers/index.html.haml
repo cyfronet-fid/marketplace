@@ -3,62 +3,7 @@
 
 .container.p-0.backoffice
   - if @providers.blank?
-    .row
-      .become-provider.col-12.col-md-9.m-auto
-        %h1 Become a Provider
-        %h4
-          Share your resources to reach
-          %br
-          the Marketplace users.
-        .backoffice-arrow
-          = image_tag "backoffice-arrow.svg"
-        .row.mb-5
-          .col-12
-            = link_to _("+ Create a Provider"),
-                      new_backoffice_provider_path,
-                      class: "btn btn-primary float-right",
-                      "data-e2e": "add-new-provider"
-
-        %h2 As a Provider
-
-        %a.backoffice-item.add-tem{ href: "#" }
-          .backoffice-image
-            = image_tag "backoffice-01.svg"
-          .backoffice-item-txt
-            .backoffice-item-title Add Your Service
-            .backoffice-item-desc
-              Create, delete, and update their services at any time. Gain full control and manage your offerings with ease.
-        %a.backoffice-item.create-offer{ href: "#" }
-          .backoffice-image
-            = image_tag "backoffice-02.svg"
-          .backoffice-item-txt
-            .backoffice-item-title Create an Offer
-            .backoffice-item-desc
-              Add new offers, modify existing ones, and monitor their statuses. Stay responsive to users
-              demands and keep your offers up-to-date.
-
-        %h2.mt-5 Organise your Providers
-
-        %a.backoffice-item.add-tem{ href: "#" }
-          .backoffice-image
-            = image_tag "backoffice-03.svg"
-          .backoffice-item-txt
-            .backoffice-item-title Group Providers into Catalogues
-            .backoffice-item-desc
-              Use catalogues to manage and organise multiple providers. Add, remove, and arrange them
-              to keep your marketplace in order.
-
-        %h2.text-center Join the Marketplace
-        %h4.text-center
-          Join our Providers to explore how to onboard
-          %br
-          services and create offers.
-        .row.text-center
-          = link_to _("+ Create a Provider"),
-                      new_backoffice_provider_path,
-                      class: "btn btn-primary m-auto",
-                      "data-e2e": "add-new-provider"
-
+    = render "backoffice/providers/provider_prompt"
   - else
     %h1
       = _("Providers")
@@ -69,13 +14,6 @@
                     class: "btn btn-primary",
                     "data-e2e": "add-new-provider"
         .clearfix
-
-    %ul.list-group.backoffice-list.mt-3.mb-3{ "data-e2e": "backoffice-providers-list" }
-      %li.list-group-item.heading-row
-        .row
-          .col-12.col-md-8 Name
-          .col-12.col-md-2.text-center Status
-          .col-12.col-md-2
-      = render partial: "backoffice/providers/provider", collection: @providers, as: :provider
-
-    = (pagy_bootstrap_nav @pagy).html_safe
+    = turbo_frame_tag "checkbox_form" do
+      = render "backoffice/statuses/form", collection: @providers, pagy: @pagy,
+        form_path: backoffice_statuses_providers_path

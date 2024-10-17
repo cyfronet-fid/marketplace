@@ -1,0 +1,15 @@
+%dialog#confirm.confirm-modal
+  .row
+    .col-12.col-md-11
+    .col-12.col-md-1
+      %button.close.modal__backdrop.confirm-cancel.float-right{ type: "button" }
+        %span{ aria: { hidden: "true" } } &times;
+  .row
+    .col-12
+      .modal__content
+        %h3#confirm-title.confirm-title Are you sure?
+        #confirm-body.confirm-body
+      .modal-actions
+        %button#dismiss-btn.btn.btn-secondary.close.modal__backdrop.confirm-cancel{ type: "button" }
+          Cancel
+        %button#confirm-accept.btn.btn-primary{ "data-e2e": "confirm-accept" } Yes, I'm Sure

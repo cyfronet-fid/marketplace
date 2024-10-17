@@ -1,0 +1,15 @@
+%a.kebab-link{ "aria-expanded": "false", "aria-haspopup": "true",
+          data: { toggle: "dropdown", target: "selectedMenu" }, type: "button" }
+  %span Manage selected
+  %i.fa.fa-ellipsis-v.ml-1
+  .dropdown-menu.dropdown-unroll.dropdown-menu-right{ id: "dropdown-all" }
+    - if policy([:backoffice, :application]).management_role?
+      = link_to _("Publish selected"), "javascript:void(0);",
+        class: "dropdown-item",
+        onclick: "document.getElementById('publish-btn').click();"
+      = link_to _("Suspend selected"), "javascript:void(0);",
+        class: "dropdown-item",
+        onclick: "document.getElementById('suspend-btn').click();"
+      = link_to _("Unpublish selected"), "javascript:void(0);",
+        class: "dropdown-item",
+        onclick: "document.getElementById('unpublish-btn').click();"

@@ -1,0 +1,4 @@
+- @providers.each do |provider|
+  = turbo_stream.replace(provider, partial: "components/presentable/list_component/item_details",
+                                   locals: { obj: provider, klass: "provider" })
+= render_turbo_stream_flash

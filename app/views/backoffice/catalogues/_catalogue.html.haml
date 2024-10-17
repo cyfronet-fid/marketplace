@@ -1,0 +1,23 @@
+= turbo_frame_tag catalogue do
+  %li.list-group-item.providers
+    .row
+      .col-12.col-md-8
+        = link_to catalogue.name, backoffice_catalogue_path(catalogue,
+                params: { page: params[:page] } || {}), class: "catalogue-name",
+                data: { turbo_frame: "_top" }
+      .col-12.col-md-2.text-center
+        %span.status{ class: catalogue.status }
+          = catalogue.status
+      .col-12.col-md-2
+        .actions
+          - if policy([:backoffice, catalogue]).destroy?
+            = link_to backoffice_catalogue_path(catalogue.id),
+                          data: { "turbo-confirm": action_prompt("catalogue", "remove"), "turbo-method": :delete },
+                          class: "delete-icon float-right" do
+              %i.far.fa-trash-alt
+
+            - if policy([:backoffice, catalogue]).edit?
+              = link_to _("Edit"),
+                          edit_backoffice_catalogue_path(catalogue),
+                          data: { turbo_frame: "_top" },
+                          class: "edit-btn float-right mr-4"

@@ -1,0 +1,25 @@
+.actions-row.mt-5
+  = f.button "Suspend selected",
+    name: "commit",
+    value: "Suspend",
+    disabled: true,
+    class: "btn btn-secondary",
+    data: { turbo_confirm: "Confirm to suspend",
+    confirm_details: "Are you sure you want to suspend selected #{type}s?",
+    confirm_button: "Suspend" }
+  = f.button "Unpublish selected",
+    name: "commit",
+    value: "Unpublish",
+    disabled: true,
+    class: "btn btn-secondary",
+    data: { turbo_confirm: "Confirm to unpublish", list_target: "btn",
+    confirm_details: "Are you sure you want to unpublish selected #{type}s?",
+    confirm_button: "Unpublish" }
+  = f.button "Publish selected",
+    name: "commit",
+    value: "Publish",
+    disabled: true,
+    class: "btn btn-primary",
+    data: { turbo_confirm: "Confirm to publish", list_target: "btn",
+    confirm_details: "Are you sure you want to publish selected #{type}s?",
+    confirm_button: "Publish" }
