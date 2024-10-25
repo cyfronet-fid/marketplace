@@ -14,6 +14,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Changed
 
 ### Fixed
+- Remove old EOSC logo (@maria-j-k)
 
 ### Security
 - Update dependencies (@goreck888)
