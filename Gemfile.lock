@@ -505,7 +505,7 @@ GEM
     retriable (3.1.2)
     reverse_markdown (2.1.1)
       nokogiri
-    rexml (3.3.7)
+    rexml (3.3.9)
     role_model (0.8.2)
     rspec-core (3.13.1)
       rspec-support (~> 3.13.0)
