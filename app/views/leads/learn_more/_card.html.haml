@@ -1,11 +1,12 @@
 .col-sm-12.col-md-4
-  = yield :item_bar if content_for(:item_bar)
-  = link_to card.url, class: "learn-link" do
-    .learn-title{ "data-toggle": "tooltip", title: (card.header.size > 20 ? card.header : nil) }
-      = card.header.truncate(20)
-    -# TODO: add and style pictures of learn more card
-      - if card.picture.attached?
-        .icon.float-right
-          = image_tag card.picture.variant(resize: "40x40")
-    .learn-desc{ "data-toggle": "tooltip", title: (card.body.size > 140 ? card.body : nil) }
-      = card.body.truncate(140)
+  .lead-box.h-100
+    = yield :item_bar if content_for(:item_bar)
+    = link_to card.url, class: "learn-link" do
+      .learn-title{ "data-toggle": "tooltip", title: (card.header.size > 20 ? card.header : nil) }
+        = card.header.truncate(20)
+      -# TODO: add and style pictures of learn more card
+        - if card.picture.attached?
+          .icon.float-right
+            = image_tag card.picture.variant(resize: "40x40")
+      .learn-desc{ "data-toggle": "tooltip", title: (card.body.size > 140 ? card.body : nil) }
+        = card.body.truncate(140)

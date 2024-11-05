@@ -1,12 +1,12 @@
-.col-12.col-sm-12.col-md-12.col-lg-6
-  = yield :item_bar if content_for(:item_bar)
-  .simple-intro
+.col-sm-12.col-md-4
+  .simple-intro.lead-box.h-100
+    = yield :item_bar if content_for(:item_bar)
     .icon
       - if card.picture.attached? && card.picture.variable?
-        = image_tag card.picture.variant(resize: "86x111")
+        = image_tag card.picture.variant(resize: "86x111"), class: "intro-image"
       - else
-        = image_tag "learn-more-box-default.png"
-    = link_to card.header.truncate(60), card.url, "data-toggle": "tooltip",
-        title: (card.header.size > 60 ? card.header : nil), class: "title"
+        = image_tag "backoffice-03.svg", class: "intro-image"
+      = link_to card.header.truncate(60), card.url, "data-toggle": "tooltip",
+          title: (card.header.size > 60 ? card.header : nil), class: "learn-title"
     .description{ "data-toggle": "tooltip", title: (card.body.size > 140 ? card.body : nil) }
       = card.body.truncate(140)

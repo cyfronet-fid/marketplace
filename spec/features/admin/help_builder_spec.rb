@@ -13,7 +13,7 @@ RSpec.feature "Marketplace help builder", manager_frontend: true do
     scenario "can be created" do
       visit admin_help_path
 
-      click_on "Add new help section"
+      click_on "+ add new help section"
       fill_in "Title", with: "Ordering process"
       click_on "Create Help section"
 
@@ -38,7 +38,7 @@ RSpec.feature "Marketplace help builder", manager_frontend: true do
 
       visit admin_help_path
 
-      accept_confirm { click_on "Remove" }
+      accept_confirm { find(".delete-icon").click }
 
       expect(page).to have_current_path(admin_help_path)
       expect(page).to_not have_content(section.title)
@@ -51,7 +51,7 @@ RSpec.feature "Marketplace help builder", manager_frontend: true do
     scenario "can be created" do
       visit admin_help_path
 
-      click_on "Add new help item"
+      click_on "+ add new item"
       fill_in "Title", with: "How to order a service"
       find("trix-editor").click.set("It is quite simple")
       click_on "Create Help item"
@@ -81,7 +81,7 @@ RSpec.feature "Marketplace help builder", manager_frontend: true do
 
       visit admin_help_path
 
-      accept_confirm { within("div.accordion") { click_on "Remove" } }
+      accept_confirm { find("#delete-lead-#{section.id}").click }
 
       expect(page).to have_current_path(admin_help_path)
       expect(page).to_not have_content(item.title)

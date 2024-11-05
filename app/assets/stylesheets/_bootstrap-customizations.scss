@@ -5195,12 +5195,6 @@ abbr[title] {
   }
 }
 
-.subsection {
-  margin: 0;
-  font-weight: 300;
-  padding-bottom: 0;
-}
-
 .additional-information {
   .offer-description {
     h4 {
@@ -7669,7 +7663,7 @@ abbr[title] {
   color: $body-color;
   font-size: 20px;
   font-weight: 600;
-  margin-bottom: 20px;
+  margin-top: 20px;
   line-height: 21.6px;
 }
 
@@ -7696,10 +7690,35 @@ abbr[title] {
         font-size: 16px;
         font-weight: 600;
 
-        &:not(.collapsed) {
-          border-bottom: none;
-          border-bottom-left-radius: 0;
-          border-bottom-right-radius: 0;
+        &::after {
+          width: 20px;
+          content: "";
+          height: 12px;
+          position: absolute;
+          top: 24px;
+          right: 20px;
+          background: url("ico_chevron_down.svg");
+        }
+
+        &[aria-expanded="true"] {
+          &::after {
+            transform: rotate(180deg);
+          }
+        }
+      }
+
+      .actions-box {
+        margin-left: 10px;
+        display: inline;
+        z-index: 1000;
+        position: relative;
+
+        a {
+          color: $landing-01;
+
+          &:hover {
+            color: $custom-16;
+          }
         }
       }
     }
@@ -7713,6 +7732,29 @@ abbr[title] {
     border: 1px solid $bundle-border3;
     border-top: none;
     position: relative;
+  }
+}
+
+.faq-section-row {
+  font-size: 16px;
+  font-weight: 500;
+  padding: 18px 50px 18px 0;
+  position: relative;
+  border-bottom: 1px solid $custom-17;
+
+  .faq-section-actions {
+    position: absolute;
+    top: 19px;
+    right: 0;
+
+    a {
+      color: $landing-01;
+      margin-left: 8px;
+
+      &:hover {
+        color: $custom-16;
+      }
+    }
   }
 }
 
@@ -7854,16 +7896,129 @@ abbr[title] {
     font-weight: 500;
     margin-bottom: 20px;
     line-height: 100%; /* 50px */
+
+    &.subsection {
+      font-size: 24px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 140%; /* 33.6px */
+      color: $landing-02;
+      display: flex;
+      margin: 0 0 30px;
+    }
+  }
+
+  h3 {
+    &.subsection {
+      font-size: 20px;
+    }
   }
 
   .btn-primary {
     font-size: 14px;
     padding: 0.62rem 1.3rem;
+
+    &.btn-sm {
+      padding: 4px 25px;
+      border: 1px solid $custom-16;
+    }
+  }
+
+  .btn-secondary {
+    font-size: 14px;
+    padding: 0.62rem 1.3rem;
+    border: 1px solid $custom-16;
+    background: $alert-bg;
+    color: $custom-16;
+
+    &.btn-sm {
+      padding: 4px 25px;
+    }
+
+    &:hover {
+      background: $custom-16;
+      color: $palette-white;
+    }
   }
 
   .category-separator {
     display: none;
   }
+
+  .lead-box {
+    border-radius: 8px;
+    width: 100%;
+    padding: 15px 24px 24px;
+    background: $alert-bg url("icon-right-arrow.svg") no-repeat right 25px bottom 25px;
+
+    .actions-row {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      column-gap: 15px;
+
+      svg {
+        font-size: 16px;
+        color: $landing-01;
+        opacity: 0.7;
+
+        &:hover {
+          color: $custom-16;
+          opacity: 1;
+        }
+      }
+    }
+
+    .learn-title {
+      font-size: 24px;
+      color: $custom-16;
+      font-style: normal;
+      font-weight: 500;
+      margin-bottom: 13px;
+      line-height: 140%; /* 33.6px */
+    }
+
+    .learn-desc {
+      color: $landing-01;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      max-width: 88%;
+      line-height: 150%; /* 21px */
+    }
+
+    &:hover {
+      background: $alert-bg url("icon-right-arrow-hover.svg") no-repeat right 25px bottom 25px;
+    }
+
+    &.simple-intro {
+      background: $palette-white;
+      border: 1px solid $custom-17;
+      margin-top: 0;
+
+      .learn-title {
+        font-size: 19px;
+        margin: 0;
+      }
+
+      .icon {
+        display: flex;
+        align-items: center;
+        column-gap: 20px;
+        margin: 10px 0 20px;
+
+        .intro-image {
+          width: 45px;
+          height: auto;
+        }
+      }
+    }
+  }
+}
+
+.add-column {
+  display: flex;
+  align-items: flex-end;
 }
 
 .qa-button {

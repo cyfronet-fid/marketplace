@@ -1,33 +1,32 @@
 - content_for :title, _("Tour Feedback")
 - breadcrumb :admin_tour_feedbacks
 
-.container
-  %h1
-    = _("Tour Feedback")
-  .table-responsive
-    %table.table.table-hover.feedback-table
-      %thead
+%h1
+  = _("Tour Feedback")
+.table-responsive
+  %table.table.table-hover.feedback-table
+    %thead
+      %tr
+        %th
+          = _("Tour Name")
+        %th.rating-column
+          = _("Rating")
+        %th
+          = _("Comment")
+        %th
+          = _("Contact Consent/Email")
+        %th
+          = _("Received")
+    %tbody
+      - @tour_feedbacks.each do |feedback|
         %tr
-          %th
-            = _("Tour Name")
-          %th.rating-column
-            = _("Rating")
-          %th
-            = _("Comment")
-          %th
-            = _("Contact Consent/Email")
-          %th
-            = _("Received")
-      %tbody
-        - @tour_feedbacks.each do |feedback|
-          %tr
-            %td
-              = feedback.tour_name
-            %td
-              = render "admin/tour_feedbacks/rating", value: feedback.content["rating"]
-            %td
-              = feedback.content["comment"]
-            %td
-              = feedback.email.present? ? feedback.email : false
-            %td
-              = feedback.created_at
+          %td
+            = feedback.tour_name
+          %td
+            = render "admin/tour_feedbacks/rating", value: feedback.content["rating"]
+          %td
+            = feedback.content["comment"]
+          %td
+            = feedback.email.present? ? feedback.email : false
+          %td
+            = feedback.created_at

@@ -1,12 +1,12 @@
 
 = content_for :item_bar, flush: true do
-  .group-item
+  .actions-row
     = link_to edit_admin_lead_path(item), "data-turbo-method": :get,
       class: "" do
-      %i.fa.fa-pencil-alt
+      %i.fa.fa-wrench
     = link_to admin_lead_path(item),
       data: { "turbo-confirm": _("Are you sure you want to remove this lead section?"), "turbo-method": :delete },
-      class: "delete-icon btn-sm" do
+      class: "delete-icon" do
       %i.far.fa-trash-alt{ id: "delete-lead-#{item.id}" }
 
 = render "leads/#{item.template}/card", card: item

@@ -1,17 +1,19 @@
 - id = "#{parent}-#{item_counter}"
-.card.shadow-sm.rounded
+.card.rounded
   .card-header{ id: "#{id}-header" }
     %button.btn.btn-link{ type: "button",
         data: { toggle: "collapse", target: "##{id}" },
         aria: { expanded: true, controls: id } }
       = item.title
 
-    .float-right
-      = link_to _("Edit"), edit_admin_help_item_path(item),
-        class: "btn btn-sm btn-warning"
-      = link_to _("Remove"), admin_help_item_path(item),
-        class: "btn btn-sm btn-danger",
-        data: { "turbo-confirm": _("Are you sure?"), "turbo-method": :delete }
+      .actions-box
+        = link_to edit_admin_help_item_path(item), "data-turbo-method": :get,
+              class: "" do
+          %i.fa.fa-wrench
+        = link_to admin_help_item_path(item),
+          data: { "turbo-confirm": _("Are you sure?"), "turbo-method": :delete },
+          class: "delete-icon" do
+          %i.far.fa-trash-alt{ id: "delete-lead-#{item.id}" }
 
 .collapse{ id: id, "aria-labelledby": "#{id}-header", "data-parent": "##{parent}" }
   .card-body
