@@ -296,7 +296,7 @@ class Service < ApplicationRecord
   end
 
   def owned_by?(user)
-    service_user_relationships.where(user: user).count.positive?
+    service_user_relationships.where(user: user).size.positive?
   end
 
   def organisation_search_link(target, default_path = nil)

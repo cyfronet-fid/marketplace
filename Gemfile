@@ -3,7 +3,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.3.5"
+ruby "3.3.6"
 
 gem "rails", "~> 7.2.1"
 gem "pg", "~> 1.5", "< 2.0"
@@ -42,7 +42,7 @@ gem "gettext", ">=3.0.2", require: false, group: :development
 gem "ruby_parser", require: false, group: :development
 
 # turbo-charged counter caches
-gem "counter_culture", "~> 2.0"
+gem "counter_culture", "~> 3.7"
 
 # validation
 gem "valid_email2"
@@ -111,6 +111,7 @@ group :development do
   gem "overcommit", require: false
   gem "haml_lint", require: false
   gem "scss_lint", require: false
+  gem "mdl"
 end
 
 group :test do

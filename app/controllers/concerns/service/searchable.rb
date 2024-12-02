@@ -18,18 +18,15 @@ module Service::Searchable
     services =
       Service.search(
         query,
-        **common_params.merge(
-          where: filter_constr(filters, scope_constr(scope, category_constr)),
-          page: params[:page],
-          per_page: "#{per_page(additionals_size)}",
-          order: ordering,
-          highlight: {
-            tag: "<mark>"
-          },
-          scope_results: ->(r) do
-            r.includes(:scientific_domains, :providers, :target_users, :offers).with_attached_logo
-          end
-        )
+        **common_params,
+        where: filter_constr(filters, scope_constr(scope, category_constr)),
+        page: params[:page],
+        per_page: "#{per_page(additionals_size)}",
+        order: ordering,
+        highlight: {
+          tag: "<mark>"
+        },
+        scope_results: ->(r) { r.includes(:scientific_domains, :providers, :target_users, :offers).with_attached_logo }
       )
 
     offers =
@@ -53,18 +50,20 @@ module Service::Searchable
     filters -= [current_filter]
     Service.search(
       query,
-      **common_params.merge(
-        where: filter_constr(filters, scope_constr(scope, category_constr)),
-        aggs: [current_filter.index],
-        load: false
-      )
+      **common_params,
+      where: filter_constr(filters, scope_constr(scope, category_constr)),
+      aggs: [current_filter.index],
+      load: false
     )
   end
 
   def search_for_categories(scope, filters)
     Service.search(
       query,
-      **common_params.merge(where: filter_constr(filters, scope_constr(scope)), aggs: [:categories], load: false)
+      **common_params,
+      where: filter_constr(filters, scope_constr(scope)),
+      aggs: [:categories],
+      load: false
     )
   end
 

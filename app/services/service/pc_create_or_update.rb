@@ -64,7 +64,8 @@ class Service::PcCreateOrUpdate
     Rails.logger.warn error_message
     validatable_service = Service.new(service_hash)
     service_errors = validatable_service&.errors&.to_hash if validatable_service.invalid?
-    mp_service&.sources&.first&.update(eid: service_hash["pid"], errored: service_errors)
+    source = mp_service&.sources&.first
+    source&.update(eid: service_hash["pid"], errored: service_errors)
   end
 
   def self.create_service(service_hash, logo)

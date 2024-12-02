@@ -14,7 +14,7 @@ module CataloguesHelper
   end
 
   def format_main_contact_name(catalogue)
-    if catalogue.main_contact&.first_name && catalogue.main_contact&.last_name
+    if catalogue.main_contact&.first_name && catalogue.main_contact.last_name
       return catalogue.main_contact.first_name + " " + catalogue.main_contact.last_name
     end
 

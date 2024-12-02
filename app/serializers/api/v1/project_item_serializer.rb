@@ -18,7 +18,7 @@ class Api::V1::ProjectItemSerializer < ActiveModel::Serializer
 
   def attribute_extractor
     hash = {
-      category: object.service&.categories&.first&.name,
+      category: object.service.present? ? object.service.categories&.first&.name : nil,
       service: object.service&.name,
       offer: object.name,
       offer_properties: object.properties || [],

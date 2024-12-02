@@ -74,7 +74,7 @@ class ProjectItem::Wizard
     delegate :created?, :bundled_parameters, to: :project_item
 
     def visible?
-      offer.nil? || (bundle.present? && bundle&.all_offers&.map(&:parameters)&.any?(&:present?)) ||
+      offer.nil? || (bundle.present? && bundle.all_offers&.map(&:parameters)&.any?(&:present?)) ||
         project_item.property_values.count.positive? || voucherable?
     end
 

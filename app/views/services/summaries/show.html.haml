@@ -18,7 +18,7 @@
   .additional-information.mb-4
     .card.offer-description.mb-4
       .card-body.pb-2.pt-4.pl-4.pr-4
-        - if @offer.voucherable || @step.bundle&.all_offers&.select(&:voucherable)&.size&.positive?
+        - if @offer.voucherable || (@step.bundle.present? && @step.bundle.all_offers.select(&:voucherable)&.size&.positive?)
           %h4
             = _("Voucher")
           %dl.mb-4
