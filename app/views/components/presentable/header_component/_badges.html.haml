@@ -3,6 +3,6 @@
   %span.pin-value.resource-type= type.upcase_first
   %span.pin-value.resource-type= object.scientific_domains&.first&.name_with_parent(separator: " - ")
   - if object.respond_to?(:categories) && object.categories.present?
-    %span.pin-value.resource-type= object&.categories&.first&.name_with_parent(separator: " - ")
+    %span.pin-value.resource-type= object.categories&.first&.name_with_parent(separator: " - ")
   - if object.respond_to?(:horizontal) && object.horizontal
     %span.pin-value.resource-type Horizontal service

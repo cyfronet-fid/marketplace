@@ -9,7 +9,7 @@ class Ess::Add < ApplicationService
   end
 
   def call
-    @object.offers.each(&:save) if @object.is_a?(Service) && @object&.offers&.published&.size&.positive?
+    @object.offers.each(&:save) if @object.is_a?(Service) && @object.offers.published&.size&.positive?
 
     @async ? Ess::UpdateJob.perform_later(payload) : Ess::Update.call(payload)
   end

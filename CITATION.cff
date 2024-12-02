@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: Kasztelnik
+    given-names: Marek
+    orcid: https://orcid.org/0000-0002-8473-5236
+  - family-names: Gorczyca
+    given-names: Paweł
+    orcid: https://orcid.org/0000-0002-2772-4549
+  - family-names: Kowalska
+    given-names: Maria
+    orcid: https://orcid.org/0009-0009-6054-1806
+  - family-names: Sawicki
+    given-names: Jakub
+    orcid: https://orcid.org/0000-0002-4759-8113
+title: "EOSC Marketplace"
+version: 3.56.1
+doi: 10.5281/zenodo.14623292
+date-released: 2024-04-17

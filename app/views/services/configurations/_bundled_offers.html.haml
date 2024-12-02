@@ -1,7 +1,7 @@
 - if step.bundle.present?
   - step.bundled_property_values.each do |offer, property_values|
     = render("services/configurations/voucher",
-    step: step, f: f) if step.bundle.nil? || step&.bundle&.all_offers&.select(&:voucherable?)&.size == 1
+    step: step, f: f) if step.bundle.nil? || step.bundle.all_offers&.select(&:voucherable?)&.size == 1
     .row.bundle-info
       .col-12.col-md-2
         = presentable_logo(offer.service, "align-self-center img-fluid", "180x120")

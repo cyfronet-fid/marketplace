@@ -209,7 +209,7 @@ class Provider < ApplicationRecord
   end
 
   def administered_by?(user)
-    data_administrators.where(email: user.email).count.positive?
+    data_administrators.where(email: user.email).size.positive?
   end
 
   private
@@ -238,6 +238,10 @@ class Provider < ApplicationRecord
     if national_roadmaps.uniq.length != national_roadmaps.length
       errors.add(:national_roadmaps, "has duplicates, please remove them to continue")
     end
+  end
+
+  def catalogue_published
+    errors.add(:catalogue, "must be published") if published? && catalogue.present? && !catalogue.published?
   end
 
   def logo_changed?

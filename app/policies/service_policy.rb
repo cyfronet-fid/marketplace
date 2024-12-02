@@ -30,7 +30,7 @@ class ServicePolicy < ApplicationPolicy
   private
 
   def enough_to_show?
-    record.offers? && record.offers.inclusive.size + record&.bundles&.published&.size > 1
+    record.offers.inclusive.size + record.bundles.published.size > 1
   end
 
   def any_published_bundled_offers?

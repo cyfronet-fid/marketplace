@@ -69,7 +69,7 @@ module ServiceHelper
   end
 
   def order_type(orderable)
-    types = ([orderable&.order_type] + orderable&.offers&.published&.map(&:order_type)).compact.uniq
+    types = ([orderable&.order_type] + orderable.offers&.published&.map(&:order_type)).compact.uniq
     types.size > 1 ? "various" : orderable&.order_type || "other"
   end
 
