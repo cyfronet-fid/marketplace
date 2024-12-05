@@ -44,6 +44,8 @@ class Offer < ApplicationRecord
   belongs_to :primary_oms, class_name: "OMS", optional: true
   has_many :project_items, dependent: :restrict_with_error
 
+  before_validation :set_iid
+  after_initialize :set_iid
   before_validation :set_internal
   before_validation :set_oms_details
   before_validation :sanitize_oms_params
@@ -56,17 +58,19 @@ class Offer < ApplicationRecord
   belongs_to :offer_type, class_name: "Vocabulary::ServiceCategory", optional: true
   belongs_to :offer_subtype, class_name: "Vocabulary::ServiceCategory", optional: true
 
-  validate :set_iid, on: :create
+  with_options unless: :draft? do
+    validate :proper_oms?, if: -> { primary_oms.present? }
+    validates :oms_params, absence: true, if: -> { current_oms.blank? }
+    validate :check_oms_params, if: -> { current_oms.present? }
+    validate :same_order_type_as_in_service, if: -> { service&.order_type.present? }
+  end
+
+  validate :check_main_bundles, if: -> { draft? }
   validates :service, presence: true
   validates :iid, presence: true, numericality: true
   validates :order_url, mp_url: true, if: :order_url?
 
   validate :primary_oms_exists?, if: -> { primary_oms_id.present? }
-  validate :proper_oms?, if: -> { primary_oms.present? }
-  validates :oms_params, absence: true, if: -> { current_oms.blank? }
-  validate :check_oms_params, if: -> { current_oms.present? }
-  validate :check_main_bundles, if: -> { draft? }
-  validate :same_order_type_as_in_service, if: -> { service&.order_type.present? }
 
   before_destroy :check_main_bundles
 

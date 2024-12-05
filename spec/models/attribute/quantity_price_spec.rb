@@ -5,16 +5,18 @@ require "rails_helper"
 RSpec.describe Attribute::QuantityPrice, backend: true do
   let(:price) do
     Attribute.from_json(
-      "id" => "id6",
-      "label" => "Label",
-      "description" => "Description",
-      "type" => "quantity_price",
-      "value_type" => "integer",
-      "config" => {
-        "start_price" => 100,
-        "step_price" => 1,
-        "currency" => "EUR",
-        "max" => 3
+      {
+        "id" => "id6",
+        "label" => "Label",
+        "description" => "Description",
+        "type" => "quantity_price",
+        "value_type" => "integer",
+        "config" => {
+          "start_price" => 100,
+          "step_price" => 1,
+          "currency" => "EUR",
+          "max" => 3
+        }
       }
     )
   end
