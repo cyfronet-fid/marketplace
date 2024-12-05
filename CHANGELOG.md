@@ -10,6 +10,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [3.58.0]
 
 ### Added
+- Add save as draft feature to offers form (@maria-j-k, @jarekzet)
 
 ### Changed
 
