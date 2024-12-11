@@ -6,16 +6,26 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
   before_action :load_form_data, only: %i[fetch_subtypes]
   after_action :reindex_offer, only: %i[create update destroy]
 
+  helper_method :exit_title, :save_as_draft_title, :save_title
+
   def new
     @offer = Offer.new(service: @service)
     authorize(@offer)
   end
 
   def create
-    template = offer_template
+    save_as_draft = params[:commit] == "Save as Draft"
+    template = save_as_draft ? offer_draft_template : offer_template
     authorize(template)
 
-    @offer = Offer::Create.call(template)
+    if save_as_draft
+      template.name = params["name"]
+      @offer = Offer::CreateAsDraft.call(template)
+      redirect_to backoffice_service_path(@service), notice: "New offer created successfully"
+      return
+    else
+      @offer = Offer::Create.call(template)
+    end
 
     if @offer.persisted?
       redirect_to backoffice_service_path(@service), notice: "New offer created successfully"
@@ -34,8 +44,15 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
   end
 
   def update
+    save_as_draft = params[:commit] == "Save as Draft"
     template = permitted_attributes(Offer)
-    if Offer::Update.call(@offer, transform_attributes(template, @service))
+
+    if save_as_draft
+      template[:name] = params["name"]
+      Offer::UpdateAsDraft.call(@offer, transform_attributes(template, @service))
+      redirect_to backoffice_service_path(@service), notice: "Offer updated successfully and drafted"
+      nil
+    elsif Offer::Update.call(@offer, transform_attributes(template, @service))
       redirect_to backoffice_service_path(@service), notice: "Offer updated successfully"
     else
       render :edit, status: :bad_request
@@ -68,6 +85,11 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
   def offer_template
     temp = transform_attributes(permitted_attributes(Offer), @service)
     Offer.new(temp.merge(service: @service, status: :published))
+  end
+
+  def offer_draft_template
+    temp = transform_attributes(permitted_attributes(Offer), @service)
+    Offer.new(temp.merge(service: @service, status: :draft))
   end
 
   def transform_attributes(template, service)
