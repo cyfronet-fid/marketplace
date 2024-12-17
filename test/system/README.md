@@ -23,7 +23,7 @@ Variables needed to run JIRA integration test:
 Env variables can be set as described in [enviroment variables](https://docs.cypress.io/guides/guides/environment-variables#Option-1-configuration-file).
 
 Variables needed to run PROVIDER PORTAL integration test:
-
+test
 | Name | Additional info |
 |---|---|
 | PROVIDER_PORTAL_URL        
