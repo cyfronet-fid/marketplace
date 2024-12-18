@@ -28,6 +28,9 @@ application.register("datasource", DatasourceController);
 import DetailsLoaderController from "./details_loader_controller";
 application.register("details-loader", DetailsLoaderController);
 
+import DuplicateController from "./duplicate_controller";
+application.register("duplicate", DuplicateController);
+
 import ExitController from "./exit_controller";
 application.register("exit", ExitController);
 

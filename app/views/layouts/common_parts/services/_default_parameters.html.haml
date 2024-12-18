@@ -1,5 +1,8 @@
-- technical_parameters = offer.attributes.map(&:to_json)
-- published_offers_size = offer.service.offers.published.size
+:ruby
+  technical_parameters = offer.attributes.map(&:to_json)
+  published_offers_size = offer.service.offers.published.size
+  duplicate_url = duplicate_offer_path(offer.service, offer)
+
 .col-md-6.edit-offer{ "data-e2e": "offer" }
   .card.m-0.mb-5{ class: offer.default ? "default" : nil }
     - if offer.default && published_offers_size == 2
@@ -21,6 +24,8 @@
     = render "layouts/common_parts/services/parameters", technical_parameters: technical_parameters
 
     .card-button.text-center
+      .btn.btn-back{ data: { action: "click->duplicate#showModal", duplicate_url: duplicate_url, offer_name: offer.name} }
+        Duplicate
       %label
         = link_to edit_offer_link(offer.service, offer, controller_name) do
           %span.btn.btn-outline-secondary.font-weight-bold
