@@ -47,6 +47,10 @@ class Backoffice::OfferPolicy < Backoffice::OrderablePolicy
     super && other_offers_with_service_order_type?
   end
 
+  def duplicate?
+    managed? && !service_deleted?
+  end
+
   private
 
   def managed?
