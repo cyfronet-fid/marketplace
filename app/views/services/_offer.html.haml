@@ -5,6 +5,12 @@
       technical_parameters: offer.attributes.map(&:to_json), service: offer.service
     - if policy(ServiceContext.new(offer.service, params.key?(:from) && params[:from] == "backoffice_service")).order?
       .card-button.text-center
+        .btn.btn-back{
+          data: {
+            action: "click->duplicate#showModal",
+            duplicate_url: duplicate_offer_path(offer.service, offer),
+            offer_name: offer.name } }
+          Duplicate
         %label.d-block
           = link_to service_choose_offer_path(offer.service, customizable_project_item: { offer_id: offer.iid }),
           data: { probe: "", "service-id": offer.service.id, e2e: "select-offer-btn",
