@@ -18,10 +18,18 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
   end
 
   def create
-    template = offer_template
+    save_as_draft = params[:commit] == save_as_draft_title
+    template = save_as_draft ? offer_draft_template : offer_template
     authorize(template)
 
-    @offer = Offer::Create.call(template)
+    if save_as_draft
+      template.name = params["name"]
+      @offer = Offer::CreateAsDraft.call(template)
+      redirect_to backoffice_service_offers_path(@service), notice: "New offer created successfully"
+      return
+    else
+      @offer = Offer::Create.call(template)
+    end
 
     if @offer.persisted?
       redirect_to backoffice_service_offers_path(@service), notice: "New offer created successfully"
@@ -40,8 +48,14 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
   end
 
   def update
+    save_as_draft = params[:commit] == save_as_draft_title
     template = permitted_attributes(Offer)
-    if Offer::Update.call(@offer, transform_attributes(template, @service))
+    if save_as_draft
+      template[:name] = params["name"]
+      Offer::UpdateAsDraft.call(@offer, transform_attributes(template, @service))
+      redirect_to backoffice_service_offers_path(@service), notice: "Offer updated successfully and drafted"
+      nil
+    elsif Offer::Update.call(@offer, transform_attributes(template, @service))
       redirect_to backoffice_service_offers_path(@service), notice: "Offer updated successfully"
     else
       render :edit, status: :bad_request
@@ -65,6 +79,23 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
     render json: json
   end
 
+  # POST /backoffice/services/<service_slug>/offers/:id/duplicate
+  def duplicate
+    original_offer = @service.offers.find_by(iid: params[:offer_id])
+    new_offer = original_offer.dup
+    new_offer.iid = nil
+    new_offer.id = nil
+    new_offer.name = params["custom_form"][:new_name]
+    new_offer.status = "draft"
+
+    @offer = Offer::Create.call(new_offer)
+    if @offer.persisted?
+      redirect_to backoffice_service_offers_path(@service), notice: "Offer duplicated successfully"
+    else
+      redirect_to backoffice_service_offers_path(@service), notice: "Offer duplication errored"
+    end
+  end
+
   private
 
   def reindex_offer
@@ -74,6 +105,11 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
   def offer_template
     temp = transform_attributes(permitted_attributes(Offer), @service)
     Offer.new(temp.merge(service: @service, status: :published))
+  end
+
+  def offer_draft_template
+    temp = transform_attributes(permitted_attributes(Offer), @service)
+    Offer.new(temp.merge(service: @service, status: :draft))
   end
 
   def transform_attributes(template, service)

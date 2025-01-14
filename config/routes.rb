@@ -144,6 +144,9 @@ Rails.application.routes.draw do
     end
   end
 
+  post "/backoffice/services/:service_id/offers/:offer_id/duplicate", to: "backoffice/services/offers#duplicate", 
+    as: :duplicate_offer
+
   post "/backoffice/services/:service_id/offers/fetch_subtypes", to: "backoffice/services/offers#fetch_subtypes"
 
   post "/backoffice/services/:service_id/offers/:offer_id/submit", to: "backoffice/services/offers#submit_summary"

@@ -4,12 +4,12 @@ module Offer::Parameters
   extend ActiveSupport::Concern
 
   included do
-    validates_associated :parameters
+    validates_associated :parameters, unless: :draft?
     serialize :parameters, coder: Parameter::Array
   end
 
   def attributes
-    (parameters || []).map { |param| Attribute.from_json(param.dump) }
+    (parameters || []).map { |param| Attribute.from_json(param.dump, validate: !draft?) }
   end
 
   def parameters_attributes=(attrs)

@@ -7,6 +7,11 @@
 
     .card-button.text-center
       - if policy([:backoffice, offer]).edit?
+        .btn.btn-back{ data: {
+          action: "click->duplicate#showModal",
+          duplicate_url: duplicate_offer_path(offer.service, offer),
+          offer_name: offer.name } }
+          Duplicate
         %label
           = link_to edit_offer_link(offer.service, offer, controller_name) do
             %span.btn.btn-outline-secondary.font-weight-bold

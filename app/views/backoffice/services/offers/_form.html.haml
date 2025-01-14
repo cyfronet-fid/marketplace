@@ -2,7 +2,7 @@
   https://www.figma.com/file/0F53l8h6P2Q7TpzLuFZ7qX/
   Offers%3A-Adding-and-Editing?type=design&node-id=2-73&mode=design&t=F215vnzstlg4yUqR-0
 
-= simple_form_for offer_form_source_module, html: { data: {controller: "offer", "offer-target": "form",
+= simple_form_for offer_form_source_module, html: { data: {controller: "offer exit", "offer-target": "form",
   "service-id": service.id, "offer-id": offer&.id || "new" }} do |f|
   = f.hidden_field :from, value: local_assigns[:from]
 
@@ -42,13 +42,14 @@
     .d-none{ data: { "offer-target": "section", section: "summary" } }
       -# Render summary section here, from the backend
 
-
   .row.new-offer-form-controls
+    = render "backoffice/services/offers/exit_modal", offer: offer, f: f, service: service
     .col-4
       .btn.btn-back.d-none{ data: { action: "click->offer#prevSection", "offer-target": "prevButton" } }
         <- Back
     .col-4.text-right
-      = link_to _("Exit"), backoffice_service_offers_path(service), class: "btn btn-back"
+      .btn.btn-back{ data: { action: "click->exit#showModal" } }
+        Exit
     .col-4.text-right
       .btn.btn-primary{ data: { action: "click->offer#nextSection", "offer-target": "nextButton" } }
         Next ->

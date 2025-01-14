@@ -103,7 +103,7 @@ class Attribute
     { type: "null" }
   end
 
-  def self.from_json(json)
+  def self.from_json(json, validate: true)
     JSON::Validator.validate!(ATTRIBUTE_SCHEMA, json)
 
     case json["type"]
@@ -131,7 +131,7 @@ class Attribute
     attr.config = json["config"]
     attr.description = json["description"]
     attr.value = json["value"] unless json["value"].blank?
-    attr.validate_value_type!
+    attr.validate_value_type! if validate
     attr
   end
 

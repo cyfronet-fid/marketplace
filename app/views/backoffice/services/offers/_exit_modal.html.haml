@@ -1,0 +1,19 @@
+.exit-popup.d-none{ role: "document", "data-exit-target": "modal" }
+  .modal-overlay
+    .modal-content
+      .modal-header
+        %h3#popup-modal-title.modal-title
+          Exit offer editor
+      .modal-body
+        %p
+          = _("Name your draft to save your offer draft and complete the configuration later.")
+          = f.input :name,
+            as: :custom,
+            input_html: { class: "form-control-lg", "data-exit-target": "modalNameInput"}
+      .modal-footer
+        .buttons-row
+          = link_to _(exit_title),
+            backoffice_service_offers_path(service),
+            class: "btn-sm btn-secondary",
+            "data-action": "click->exit#saveDraft"
+          = f.button :submit, save_as_draft_title, class: "btn-sm btn-primary"
