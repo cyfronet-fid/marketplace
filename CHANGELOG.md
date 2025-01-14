@@ -30,6 +30,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 
 - Simplify project creation form (@wujuu)
+- Offer recommendations in project view (@wujuu)
 - Node information (@goreck888)
 - Unit to the constant offer parameter (@goreck888)
 - `Save as draft` and `Duplicate` features for offer form (@maria-j-k) 
