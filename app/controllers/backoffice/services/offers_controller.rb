@@ -6,15 +6,13 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
   before_action :load_form_data, only: %i[fetch_subtypes]
   after_action :reindex_offer, only: %i[create update destroy]
 
-  helper_method :exit_title, :save_as_draft_title, :save_title
-
   def new
     @offer = Offer.new(service: @service)
     authorize(@offer)
   end
 
   def create
-    save_as_draft = params[:commit] == "Save as Draft"
+    save_as_draft = params[:commit] == save_as_draft_title
     template = save_as_draft ? offer_draft_template : offer_template
     authorize(template)
 
@@ -44,7 +42,7 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
   end
 
   def update
-    save_as_draft = params[:commit] == "Save as Draft"
+    save_as_draft = params[:commit] == save_as_draft_title
     template = permitted_attributes(Offer)
 
     if save_as_draft
@@ -74,6 +72,23 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
     json.merge!(subtypes: map_types(@subtypes)) unless @subtypes.nil?
     json.merge!(parameters: @parameters) if @offer_id == "new"
     render json: json
+  end
+
+  # POST /backoffice/services/<service_slug>/offers/:id/duplicate
+  def duplicate
+    original_offer = @service.offers.find_by(iid: params[:offer_id])
+    new_offer = original_offer.dup
+    new_offer.iid = nil
+    new_offer.id = nil
+    new_offer.name = params["custom_form"][:new_name]
+    new_offer.status = "draft"
+
+    @offer = Offer::Create.call(new_offer)
+    if @offer.persisted?
+      redirect_to backoffice_service_path(@service), notice: "Offer duplicated successfully"
+    else
+      redirect_to backoffice_service_path(@service), notice: "Offer duplication errored"
+    end
   end
 
   private

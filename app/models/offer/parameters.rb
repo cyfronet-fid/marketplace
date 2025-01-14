@@ -9,7 +9,7 @@ module Offer::Parameters
   end
 
   def attributes
-    (parameters || []).map { |param| Attribute.from_json(param.dump, to_validate: !draft?) }
+    (parameters || []).map { |param| Attribute.from_json(param.dump, validate: !draft?) }
   end
 
   def parameters_attributes=(attrs)

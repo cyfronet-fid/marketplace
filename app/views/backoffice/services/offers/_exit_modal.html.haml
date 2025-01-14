@@ -12,8 +12,8 @@
             input_html: { class: "form-control-lg", "data-exit-target": "modalNameInput"}
       .modal-footer
         .buttons-row
-          = link_to _("Exit without saving"),
+          = link_to _(exit_title),
             backoffice_service_path(service),
             class: "btn-sm btn-secondary",
             "data-action": "click->exit#saveDraft"
-          = f.button :submit, "Save as draft", class: "btn-sm btn-primary"
+          = f.button :submit, save_as_draft_title, class: "btn-sm btn-primary"

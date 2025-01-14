@@ -27,6 +27,10 @@ class Backoffice::OfferPolicy < ApplicationPolicy
     managed? && !service_deleted?
   end
 
+  def duplicate?
+    managed? && !service_deleted?
+  end
+
   def destroy?
     managed? && record.persisted? && orderless? && !service_deleted? && other_offers_with_service_order_type?
   end

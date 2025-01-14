@@ -13,8 +13,10 @@ jobs:
       - uses: actions/checkout@v4
       - name: Start containers
         run: docker compose -f docker-compose-x64.yml up -d
-      - name: Run VIPS
+      - name: Install VIPS
         run: sudo apt-get install libvips -y
+      - name: Install imagemagick
+        run: sudo apt update && sudo apt install imagemagick -y
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically

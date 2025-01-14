@@ -18,7 +18,8 @@
 #offers
 %h2.mb-4.mt-5.font-weight-normal
   = _("Parameters and offers")
-.row.parameters
+.row.parameters{ data: { controller: "duplicate" } }
+  = render "backoffice/services/offers/duplicate_modal", service: service
   - if offers.present?
     = render partial: "layouts/common_parts/services/default_parameters", locals: { offer: offers.manageable.first }
     = render partial: "layouts/common_parts/services/offer", collection: offers[1..], as: :offer if offers.manageable.size > 1
