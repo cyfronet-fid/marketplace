@@ -11,6 +11,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 - Add save as draft feature to offers form (@maria-j-k, @jarekzet)
+- Add duplicate offer feature to offers form (@maria-j-k)
 
 ### Changed
 

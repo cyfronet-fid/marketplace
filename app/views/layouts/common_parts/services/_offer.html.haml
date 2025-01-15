@@ -1,3 +1,4 @@
+- duplicate_url = duplicate_offer_path(offer.service, offer)
 .col-md-6.edit-offer{ id: "offer-#{offer.id}", "data-e2e": "offer" }
   .card.m-0.mb-5
     - content_for :status do
@@ -7,6 +8,8 @@
 
     .card-button.text-center
       - if policy([:backoffice, offer]).edit?
+        .btn.btn-back{ data: { action: "click->duplicate#showModal", duplicate_url: duplicate_url, offer_name: offer.name} }
+          Duplicate
         %label
           = link_to edit_offer_link(offer.service, offer, controller_name) do
             %span.btn.btn-outline-secondary.font-weight-bold
