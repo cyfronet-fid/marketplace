@@ -1,15 +1,20 @@
 .social-wrapper
   %ul
     %li
-      = mail_to "contact@eosc-portal.eu", subject: "EOSC Portal" do
-        %i.fa.fa-envelope
+      = link_to "https://www.linkedin.com/company/eosc-beyond/" do
+        = image_tag "socials-linkedin.svg", alt: "Linkedin"
     %li
-      = link_to "https://twitter.com/eoscportal" do
-        %i.fab.fa-twitter
+      = link_to "https://www.youtube.com/channel/UCWj5vLL8OJ7I8fRPW3eTzDQ" do
+        = image_tag "socials-youtube.svg", alt: "youtube"
     %li
-      = link_to "https://www.youtube.com/playlist?index=1&list=UUHsaUFy5LJ3rJ28qDg2StGA&playnext=1" do
-        %i.fab.fa-youtube
-
+      = link_to "https://bsky.app/profile/eosc-beyond.bsky.social" do
+        = image_tag "socials-bsky.svg", alt: "bsky"
+    %li
+      = link_to "https://zenodo.org/communities/eoscbeyond" do
+        = image_tag "socials-zenodo.svg", alt: "zenodo"
+    %li
+      = mail_to "eosc-beyond-po@mailman.egi.eu", subject: "EOSC Portal" do
+        = image_tag "socials-mail.svg", alt: "email"
 %nav
   %eosc-common-main-header.common-header{ username: current_user.present? ? current_user.full_name : "",
                                           "profile-links": eosc_commons_profile_links,
