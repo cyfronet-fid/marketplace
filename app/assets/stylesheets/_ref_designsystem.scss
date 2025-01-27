@@ -57,6 +57,11 @@ li {
       a {
         color: $palette-gray-80;
 
+        img {
+          max-width: 25px;
+          height: auto;
+        }
+
         &:hover {
           opacity: 0.7;
         }
