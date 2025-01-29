@@ -16,6 +16,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Publish/Suspend/Unpublish actions for multiple Providers and Catalogues (@goreck888, @jarekzet)
 
 ### Changed
+
 - MarketplaceLocation renamed to ResearchActivity (@maria-j-k)
 - Remove suggested services (@maria-j-k)
 - Unlock unpublish/suspend and delete actions for active providers and catalogues (@goreck888)
@@ -26,8 +27,10 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Status bar with actions buttons in detail and edit views for services, catalogues and providers (@maria-j-k)
 - Postgres update from 14.1 to 16.4 (@goreck888)
 - Remove most of services from database (@maria-j-k)
+- New navbar design (@jarekzet, @goreck888)
 
 ### Fixed
+
 - Number of requests handling data_administrators scope (@goreck888)
 - Show pop-up on add to favourites (@maria-j-k)
 - Pre-fill administrator data in catalogues creation form (@maria-j-k)
@@ -40,8 +43,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Propagation of service relationships (@goreck888)
 
 ### Security
-- Update dependencies (@goreck888)
 
+- Update dependencies (@goreck888)
 
 ## [3.57.0]
 

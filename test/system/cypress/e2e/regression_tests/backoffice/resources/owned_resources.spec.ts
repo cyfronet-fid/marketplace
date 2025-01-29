@@ -25,6 +25,7 @@ describe("Owned services", () => {
 
   it("should go to Owned services in Backoffice and select one of services", () => {
     cy.openUserDropdown();
+    cy.get("[data-e2e='provider-panel']").click();
     cy.get("[data-e2e='backoffice']").click();
     cy.location("href").should("contain", "/backoffice");
     cy.get("[data-e2e='owned-services']").click();

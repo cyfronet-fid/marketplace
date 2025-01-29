@@ -8104,6 +8104,95 @@ abbr[title] {
       }
     }
   }
+
+  .right-links {
+    .dropdown-menu {
+      right: 30px;
+      width: 230px;
+      border-radius: 4px;
+      border: 1px solid $custom-17;
+      padding: 0;
+      margin: 0;
+
+      .nav-tabs {
+        justify-content: space-between;
+        background: transparent;
+        border-bottom: 1px solid $custom-17;
+
+        .nav-item {
+          margin: 0;
+
+          .nav-link {
+            padding: 10px 10px 6px;
+            margin: 0;
+            border: none;
+            font-size: 14px;
+            text-transform: uppercase;
+
+            &.active {
+              border-bottom: 3px solid $custom-16;
+              color: $custom-16;
+            }
+          }
+        }
+      }
+
+      .tab-content {
+        padding: 10px 0;
+        overflow: hidden;
+
+        .tab-pane {
+          padding: 0;
+
+          ul {
+            hr {
+              float: left;
+              width: 100%;
+              margin: 0;
+            }
+
+            li {
+              margin: 0;
+              float: left;
+              width: 100%;
+
+              a {
+                padding: 6px 10px;
+                font-size: 14px;
+                font-weight: 500;
+                color: $landing-01;
+
+                &:hover {
+                  background: $alert-bg;
+                  color: $landing-01;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .tab-footer {
+        border-top: 1px solid $custom-17;
+        padding: 5px 15px;
+        overflow: hidden;
+
+        .logout-btn {
+          float: right;
+          border: none;
+          padding: 0;
+          cursor: pointer;
+          font-size: 14px;
+          color: $landing-01;
+          background: transparent;
+
+          &:hover {
+            color: $custom-16;
+          }
+        }
+      }
+    }
+  }
 }
 
 .backoffice {

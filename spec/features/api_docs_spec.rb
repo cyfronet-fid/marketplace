@@ -64,7 +64,8 @@ RSpec.feature "Api docs page", end_user_frontend: true do
       expect(page).to have_content("Successfully authenticated from Checkin account.")
 
       sleep(1)
-      find("a", id: "logout-btn").click
+      find("a", id: "dropdown-menu-button").click
+      find("button", id: "logout-btn").click
 
       expect(page).to have_content("Signed out successfully.")
       sleep(1)

@@ -5,6 +5,7 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
 
   before_action :find_and_authorize, only: %i[show edit update destroy]
   before_action :catalogue_scope
+  skip_before_action :backoffice_authorization!, only: %i[index show new create update]
 
   def index
     authorize(Provider)

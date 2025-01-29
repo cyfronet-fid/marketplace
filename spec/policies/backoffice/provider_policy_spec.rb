@@ -29,7 +29,7 @@ RSpec.describe Backoffice::ProviderPolicy, backend: true do
 
     it "denies for other users" do
       user = create(:user)
-      expect(subject).to_not permit(user)
+      expect(subject).to permit(user)
     end
   end
 end

@@ -1,12 +1,24 @@
 # frozen_string_literal: true
 
 class Backoffice::ProviderPolicy < Backoffice::ApplicationPolicy
+  def index?
+    user.present?
+  end
+
+  def show?
+    user.present?
+  end
+
   def new?
-    super || catalogue_access?
+    user.present?
   end
 
   def create?
-    super || catalogue_access?
+    user.present?
+  end
+
+  def update?
+    user.present?
   end
 
   def permitted_attributes

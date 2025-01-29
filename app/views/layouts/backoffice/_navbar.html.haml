@@ -1,5 +1,5 @@
 - other_settings = %w[scientific_domains categories platforms vocabularies]
-= render "layouts/sections"
+= render "layouts/navbar/sections"
 
 .breadcrumbs-backoffice-wrapper
   .container
@@ -14,7 +14,8 @@
                             "data-toggle" => "collapse",
                              type: "button" }
       %span.navbar-toggler-icon
-    - if controller.action_name == "index" && controller.controller_name != "offers"
+    - c = controller
+    - if policy([:backoffice, :backoffice]).show? && c.action_name == "index" && c.controller_name != "offers"
       #navbar-supported-content.collapse.navbar-collapse
         %ul.navbar-nav
           = nav_link controller: :services, html_options: { class: "nav-item" } do

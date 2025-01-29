@@ -1,0 +1,24 @@
+#provider.tab-pane{ role: "tabpanel", "aria-labelledby": "provider-panel" }
+  %ul.text-left
+    - if !current_user.service_portfolio_manager? && current_user.providers_count.zero?
+      %li.text-uppercase
+        = link_to _("Become a provider"), backoffice_providers_path, class: "dropdown-item dropdown-profile"
+    - if policy([:backoffice, :backoffice]).show?
+      %li
+        %a.dropdown-item.dropdown-profile{ href: backoffice_path, "data-e2e": "backoffice" }
+          = _("Backoffice")
+    %li
+      %a.dropdown-item.dropdown-profile{ href: "https://knowledge-hub.sandbox.eosc-beyond.eu/" }
+        = _("Knowledge Hub")
+    %li
+      %a.dropdown-item.dropdown-profile{ href: "/api_docs", "data-e2e": "marketplace-api" }
+        = _("Marketplace API")
+    - if policy([:admin, :admin]).show?
+      %li
+        %a.dropdown-item.dropdown-profile{ href: admin_path }
+          = _("Admin")
+    - if policy([:backoffice, :backoffice]).show?
+      %hr.separate
+      %li= link_to _("+ Create new service"), new_backoffice_service_path, class: "dropdown-item dropdown-profile"
+      %li= link_to _("+ Add new provider"), new_backoffice_provider_path, class: "dropdown-item dropdown-profile"
+      %li= link_to _("+ Add new catalogue"), new_backoffice_catalogue_path, class: "dropdown-item dropdown-profile"

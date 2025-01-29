@@ -14,6 +14,7 @@ describe("Vocabularies", () => {
 
   it("should create new vocabularies without parent", () => {
     cy.openUserDropdown();
+    cy.get("[data-e2e='provider-panel']").click();
     cy.get("[data-e2e='backoffice']").click();
     cy.location("href").should("contain", "/backoffice");
     cy.get("[data-e2e='other_settings']").click();

@@ -1,0 +1,13 @@
+%ul.nav.nav-tabs{ role: "tabs" }
+  %li.nav-item{ role: "presentation" }
+    %button#user-tab.nav-link.active{ type: "button", role: "tab",
+    aria: { controls: "home", selected: true },
+    data: { toggle: "tab", target: "user" } } User
+  %li.nav-item{ role: "presentation" }
+    %button#provider-tab.nav-link{ type: "button", role: "tab",
+    aria: { controls: "home", selected: false },
+    data: { toggle: "tab", target: "provider", e2e: "provider-panel" } } Provider
+  %li.nav-item{ role: "presentation" }
+    %button#order-tab.nav-link{ type: "button", role: "tab",
+    aria: { controls: "home", selected: false },
+    data: { toggle: "tab", target: "orders" } } Orders
