@@ -2,11 +2,12 @@
   = render "services/errors", service: service
 
 .container.p-0.backoffice
-  = render Presentable::StatusActionsComponent.new(object: service,
-      publish: policy([:backoffice, service]).publish?,
-      suspend: policy([:backoffice, service]).suspend?,
-      unpublish: policy([:backoffice, service]).unpublish?,
-      destroy: policy([:backoffice, service]).destroy?)
+  .title-row-wrapper.mb-0
+    = render Presentable::StatusActionsComponent.new(object: service,
+        publish: policy([:backoffice, service]).publish?,
+        suspend: policy([:backoffice, service]).suspend?,
+        unpublish: policy([:backoffice, service]).unpublish?,
+        destroy: policy([:backoffice, service]).destroy?)
 
 .container.p-0.backoffice
   .pt-3.service-box-redesign.service-detail.backoffice{ "data-shepherd-tour-target": "service-box" }

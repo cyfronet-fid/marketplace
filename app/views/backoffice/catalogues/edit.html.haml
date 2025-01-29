@@ -2,8 +2,10 @@
 - breadcrumb :backoffice_catalogue_edit, @catalogue
 
 .container.p-0.backoffice
-  %h1= _("Edit #{@catalogue.name} Catalogue")
-  .container.p-0.backoffice
+  .title-row-wrapper
+    .title-column
+      %h1= _("Edit #{@catalogue.name} Catalogue")
+
     = render Presentable::StatusActionsComponent.new(object: @catalogue,
       publish: policy([:backoffice, @catalogue]).publish?,
       suspend: policy([:backoffice, @catalogue]).suspend?,

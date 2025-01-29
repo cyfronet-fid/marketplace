@@ -2,25 +2,29 @@
 - breadcrumb :backoffice_catalogue, @catalogue
 
 .container.p-0.backoffice
-  %h1.mb-3= @catalogue.name
-  = render Presentable::StatusActionsComponent.new(object: @catalogue,
-      publish: policy([:backoffice, @catalogue]).publish?,
-      suspend: policy([:backoffice, @catalogue]).suspend?,
-      unpublish: policy([:backoffice, @catalogue]).unpublish?,
-      destroy: policy([:backoffice, @catalogue]).destroy?)
+  .title-row-wrapper
+    .title-column
+      %h1
+        %span Catalogue:
+        = @catalogue.name
+    = render Presentable::StatusActionsComponent.new(object: @catalogue,
+        publish: policy([:backoffice, @catalogue]).publish?,
+        suspend: policy([:backoffice, @catalogue]).suspend?,
+        unpublish: policy([:backoffice, @catalogue]).unpublish?,
+        destroy: policy([:backoffice, @catalogue]).destroy?)
 
-  .service-box.p-4.mt-3.backoffice-form
+  .service-box.p-4.mt-3.backoffice-form.catalogue
     .logo-wrapper
       %span.helper
       - if @catalogue.logo.attached? && @catalogue.logo.variable?
         = image_tag @catalogue.logo.variant(resize: "100x67"), class: "align-self-center mr-4 float-left img-responsive"
       - else
         = image_tag("catalogue_logo.svg", size: "100x45", class: "align-self-center mr-4 float-left img-responsive")
-    %hr.bottom-hr.mt-5.mb-4
+    %hr.bottom-hr.mt-5.mb-4.d-none
     .btn-group
       - if policy([:backoffice, @catalogue]).edit?
-        = link_to _("Edit"),
+        = link_to _("Edit catalogue"),
                   edit_backoffice_catalogue_path(@catalogue),
-                  class: "btn btn-primary"
+                  class: "btn-special edit-button"
 
-  = link_to _("<- Back to Catalogues"), backoffice_catalogues_path, class: "backoffice-back-link mt-3"
+  = link_to _("<- Back to Catalogues"), backoffice_catalogues_path, class: "backoffice-back-link mt-4 font-weight-bold"

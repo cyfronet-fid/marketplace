@@ -10,7 +10,10 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [3.58.1] 2025-03-04
 
 ### Changed
+
 - Default link to the Explore service (@goreck888)
+- Provider and catalogue backoffice view (@jarekzet)
+- Dropdown menu mods (@jarekzet)
 
 
 ## [3.58.0] 2025-01-22

@@ -2,8 +2,10 @@
 - breadcrumb :backoffice_service_edit, @service
 
 .container.p-0.backoffice
-  %h1= _("Edit #{@service.name} Service")
-  .container.p-0.backoffice
+  .title-row-wrapper
+    .title-column
+      %h1= _("Edit #{@service.name} Service")
+
     = render Presentable::StatusActionsComponent.new(object: @service,
       publish: policy([:backoffice, @service]).publish?,
       suspend: policy([:backoffice, @service]).suspend?,

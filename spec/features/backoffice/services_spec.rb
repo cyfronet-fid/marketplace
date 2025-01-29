@@ -307,7 +307,7 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       visit backoffice_service_path(service)
       expect { click_on "Publish" }.to have_enqueued_job(Ess::UpdateJob)
 
-      expect(page).to have_content("Status: published")
+      expect(page).to have_content("published")
     end
 
     scenario "I can unpublish service" do
@@ -316,7 +316,7 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       visit backoffice_service_path(service)
       expect { click_on "Unpublish" }.to have_enqueued_job(Ess::UpdateJob)
 
-      expect(page).to have_content("Status: unpublished")
+      expect(page).to have_content("unpublished")
     end
 
     scenario "I can edit any service" do

@@ -3246,6 +3246,13 @@ label[data-multicheckbox].small {
   position: relative;
   flex-wrap: wrap;
 
+  &.provider,
+  &.catalogue {
+    display: flex;
+    flex-direction: column;
+    row-gap: 40px;
+  }
+
   &:hover {
     border: 1px solid $landing-01;
   }
@@ -6608,12 +6615,7 @@ abbr[title] {
 }
 
 .status-row {
-  background: $tag-bg-color;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
-  padding: 8px 20px;
-  margin-bottom: 20px;
+  margin-left: auto;
 
   span {
     margin: 0;
@@ -9485,6 +9487,7 @@ footer {
       }
     }
   }
+
   // scss-lint:enable all
 
   .approval-requests {
@@ -9520,6 +9523,95 @@ footer {
         background: url("assets/icon-manage.svg") 0 50% no-repeat;
         background-size: 18px auto;
         font-size: 14px;
+      }
+    }
+  }
+
+  .title-row-wrapper {
+    display: flex;
+    margin-bottom: 35px;
+
+    h1 {
+      color: $custom-21;
+      font-size: 24px;
+      line-height: 34px;
+      font-weight: 400;
+      margin: 0;
+
+      span {
+        color: $palette-black;
+      }
+    }
+  }
+
+  .status-column {
+    .status {
+      margin: 0 0 0 12px;
+      text-align: center;
+      color: $custom-25;
+      font-size: 18px;
+      padding: 7px 14px;
+      font-weight: 600;
+      text-transform: capitalize;
+      border-radius: 8px;
+      line-height: 1.1;
+      background: $custom-26;
+    }
+  }
+
+  .actions-column {
+    margin-left: auto;
+    min-width: 390px;
+  }
+
+  .btn-special {
+    padding: 6px 26px;
+    border-radius: 8px;
+    border: 1px solid $custom-12;
+    color: $custom-12;
+    background: $alert-bg;
+    font-size: 14px;
+    font-weight: 400;
+
+    &:hover {
+      color: $palette-white;
+      background: $custom-12;
+      border-color: $custom-12;
+    }
+
+    &.no-border {
+      border: none;
+      background: none;
+
+      &:hover {
+        color: $custom-12;
+        background: $alert-bg;
+      }
+    }
+
+    &.delete-button {
+      line-height: 22px;
+
+      &::before {
+        font-family: "Font Awesome 6 Free";
+        content: "\f1f8";
+        display: inline-block;
+        font-size: 14px;
+        margin-right: 10px;
+        font-weight: 600;
+      }
+    }
+
+    &.edit-button {
+      line-height: 22px;
+
+      &::before {
+        font-family: "Font Awesome 6 Free";
+        content: "\f044";
+        display: inline-block;
+        font-size: 14px;
+        margin-right: 10px;
+        font-weight: 600;
       }
     }
   }

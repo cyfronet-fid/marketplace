@@ -2,14 +2,18 @@
 - breadcrumb :backoffice_provider, @provider
 
 .container.p-0.backoffice
-  %h1.mb-3= @provider.name
-  = render Presentable::StatusActionsComponent.new(object: @provider,
-    publish: policy([:backoffice, @provider]).publish?,
-    suspend: policy([:backoffice, @provider]).suspend?,
-    unpublish: policy([:backoffice, @provider]).unpublish?,
-    destroy: policy([:backoffice, @provider]).destroy?)
+  .title-row-wrapper
+    .title-column
+      %h1
+        %span Provider:
+        = @provider.name
+    = render Presentable::StatusActionsComponent.new(object: @provider,
+        publish: policy([:backoffice, @provider]).publish?,
+        suspend: policy([:backoffice, @provider]).suspend?,
+        unpublish: policy([:backoffice, @provider]).unpublish?,
+        destroy: policy([:backoffice, @provider]).destroy?)
 
-  .service-box.p-4.mt-3.backoffice-form
+  .service-box.p-4.mt-3.backoffice-form.provider
     .logo-wrapper
       %span.helper
       - if @provider.logo.attached? && @provider.logo.variable?
@@ -22,10 +26,10 @@
       %ul
         - @provider.sources.each do |source|
           %li "#{source.source_type}: #{source.eid}"
-    %hr.bottom-hr.mt-5.mb-4
+    %hr.bottom-hr.d-none
       #actions.btn-group
         - if policy([:backoffice, @provider]).edit?
-          = link_to _("Edit"),
+          = link_to _("Edit provider"),
                 edit_backoffice_provider_path(@provider),
-                class: "btn btn-primary"
-  = link_to _("<- Back to Providers"), backoffice_providers_path, class: "backoffice-back-link mt-3"
+                class: "btn-special edit-button"
+  = link_to _("<- Go back to providers list"), backoffice_providers_path, class: "backoffice-back-link mt-4 font-weight-bold"
