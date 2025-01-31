@@ -325,7 +325,7 @@ We are currently using the following ENV variables:
         or `Rails.application.credentials.checkin[:identifier]`)
 - `SHOW_RECOMMENDATION_PANEL` - Boolean (true/false) indicating
   if recommendation panel should be visible or not. Defaults to true
-
+- `BOS_URL` - URL of the Backend Ordering System backend (default: `http://localhost:8000`)
 ## Commits
 
 Running `./bin/setup` automatically installs githooks

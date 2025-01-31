@@ -112,5 +112,7 @@ module Mp
     config.enable_external_search = ActiveModel::Type::Boolean.new.cast(ENV.fetch("MP_ENABLE_EXTERNAL_SEARCH", false))
 
     config.whitelabel = ENV.fetch("MP_WHITELABEL", false)
+
+    config.bos_url = ENV["BOS_URL"].present? ? ENV["BOS_URL"] : "http://localhost:8000"
   end
 end
