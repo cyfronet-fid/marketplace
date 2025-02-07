@@ -10,39 +10,39 @@ class Backoffice::DatasourcePolicy < Backoffice::ApplicationPolicy
   MP_INTERNAL_FIELDS = [:upstream_id, [sources_attributes: %i[id source_type eid _destroy]]].freeze
 
   def index?
-    service_portfolio_manager?
+    coordinator?
   end
 
   def show?
-    service_portfolio_manager?
+    coordinator?
   end
 
   def new?
-    service_portfolio_manager?
+    coordinator?
   end
 
   def create?
-    service_portfolio_manager?
+    coordinator?
   end
 
   def edit?
-    service_portfolio_manager?
+    coordinator?
   end
 
   def update?
-    service_portfolio_manager?
+    coordinator?
   end
 
   def destroy?
-    service_portfolio_manager?
+    coordinator?
   end
 
   def publish?
-    service_portfolio_manager? && record.draft? && !record.deleted?
+    coordinator? && record.draft? && !record.deleted?
   end
 
   def draft?
-    service_portfolio_manager? && record.published? && !record.deleted?
+    coordinator? && record.published? && !record.deleted?
   end
 
   def permitted_attributes

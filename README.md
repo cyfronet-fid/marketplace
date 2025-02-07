@@ -410,7 +410,7 @@ You can test endpoints in the mp swagger
 NOTICE!
 To get the data you have to login
 or authenticate via the user's access_token
-with `service_portfolio_manager` role
+with `coordinator` role
 
 ## Statistics update rake task 
 Usage statistics are now stored in the db, 

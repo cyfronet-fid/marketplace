@@ -38,6 +38,6 @@ class ServiceContextPolicy < ApplicationPolicy
     return false if user.blank?
     service = record.service
 
-    user.service_portfolio_manager? || service.owned_by?(user)
+    user.coordinator? || service.owned_by?(user)
   end
 end

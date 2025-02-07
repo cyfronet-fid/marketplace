@@ -306,6 +306,46 @@
     }
   }
 
+  .approval-requests {
+    padding: 15px 10px 0;
+    margin-bottom: 30px;
+
+    h2 {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .backoffice-list {
+      .heading-row {
+        display: none;
+      }
+
+      .list-group-item {
+        &.providers {
+          padding: 6px 10px 10px;
+
+          .row {
+            .col:first-child {
+              flex: 0 0 100%;
+            }
+
+            .col:nth-child(2) {
+              flex: 0 0 100%;
+            }
+
+            .col:nth-child(3) {
+              flex: 0 0 60%;
+            }
+
+            .col:nth-child(4) {
+              flex: 0 0 40%;
+            }
+          }
+        }
+      }
+    }
+  }
+
   .empty-information {
     padding: 18px;
 

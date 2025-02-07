@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_07_164825) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_05_162153) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -57,6 +57,19 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_07_164825) do
     t.string "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "approval_requests", force: :cascade do |t|
+    t.string "approvable_type"
+    t.bigint "approvable_id"
+    t.bigint "user_id"
+    t.string "last_action"
+    t.string "status"
+    t.datetime "conversation_last_seen"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["approvable_type", "approvable_id"], name: "index_approval_requests_on_approvable"
+    t.index ["user_id"], name: "index_approval_requests_on_user_id"
   end
 
   create_table "bundle_categories", force: :cascade do |t|
@@ -440,6 +453,29 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_07_164825) do
     t.index ["default"], name: "index_omses_on_default"
     t.index ["service_id"], name: "index_omses_on_service_id"
     t.index ["type"], name: "index_omses_on_type"
+  end
+
+  create_table "order_changes", force: :cascade do |t|
+    t.string "status"
+    t.text "message"
+    t.bigint "order_id", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.bigint "author_id"
+    t.index ["author_id"], name: "index_order_changes_on_author_id"
+    t.index ["order_id"], name: "index_order_changes_on_order_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.string "status", null: false
+    t.bigint "service_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.integer "issue_id"
+    t.integer "issue_status", default: 2, null: false
+    t.index ["service_id"], name: "index_orders_on_service_id"
+    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "persistent_identity_system_vocabularies", force: :cascade do |t|

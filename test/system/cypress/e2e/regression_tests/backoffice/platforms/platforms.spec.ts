@@ -3,7 +3,7 @@ import { UserFactory } from "../../../../factories/user.factory";
 import { PlatformMessages } from "../../../../fixtures/messages";
 
 describe("Platform", () => {
-  const user = UserFactory.create({ roles: ["service_portfolio_manager"] });
+  const user = UserFactory.create({ roles: ["coordinator"] });
   const [platform] = [...Array(1)].map(() => PlatformFactory.create());
   const message = PlatformMessages;
 

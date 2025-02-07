@@ -7,7 +7,7 @@ RSpec.feature "Providers in backoffice", manager_frontend: true do
   include WebsiteHelper
 
   context "with JS: As a service portolio manager" do
-    let(:user) { create(:user, roles: [:service_portfolio_manager]) }
+    let(:user) { create(:user, roles: [:coordinator]) }
 
     before { checkin_sign_in_as(user) }
 
@@ -141,7 +141,7 @@ RSpec.feature "Providers in backoffice", manager_frontend: true do
   end
 
   context "As a service portolio manager" do
-    let(:user) { create(:user, roles: [:service_portfolio_manager]) }
+    let(:user) { create(:user, roles: [:coordinator]) }
     before { checkin_sign_in_as(user) }
 
     scenario "I can see all providers" do

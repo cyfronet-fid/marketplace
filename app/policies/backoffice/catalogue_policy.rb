@@ -2,7 +2,7 @@
 
 class Backoffice::CataloguePolicy < Backoffice::ApplicationPolicy
   def index?
-    service_portfolio_manager? || user&.catalogue_owner?
+    coordinator? || user&.catalogue_owner?
   end
 
   def permitted_attributes

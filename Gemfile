@@ -111,6 +111,7 @@ group :development do
   gem "overcommit", require: false
   gem "haml_lint", require: false
   gem "scss_lint", require: false
+  gem "mdl"
 end
 
 group :test do

@@ -21,7 +21,7 @@ RSpec.describe Api::V1::Ess::ServicesController, swagger_doc: "v1/ess_swagger.js
       response 200, "services found" do
         schema "$ref" => "ess/service/service_index.json"
 
-        let!(:manager) { create(:user, roles: [:service_portfolio_manager]) }
+        let!(:manager) { create(:user, roles: [:coordinator]) }
         let!(:services) { create_list(:service, 3) }
         let!(:draft) { create(:service, status: :draft) }
         let!(:deleted) { create(:service, status: :deleted) }
@@ -40,7 +40,7 @@ RSpec.describe Api::V1::Ess::ServicesController, swagger_doc: "v1/ess_swagger.js
       response 403, "user doesn't have manager role", document: false do
         schema "$ref" => "error.json"
         let(:regular_user) { create(:user) }
-        let(:manager) { create(:user, roles: [:service_portfolio_manager]) }
+        let(:manager) { create(:user, roles: [:coordinator]) }
         let(:services) { create_list(:service, 3) }
 
         let(:"X-User-Token") { regular_user.authentication_token }
@@ -74,7 +74,7 @@ RSpec.describe Api::V1::Ess::ServicesController, swagger_doc: "v1/ess_swagger.js
       %i[id pid slug].each do |id_form|
         response 200, "service found by #{id_form}" do
           schema "$ref" => "ess/service/service_read.json"
-          let!(:manager) { create(:user, roles: [:service_portfolio_manager]) }
+          let!(:manager) { create(:user, roles: [:coordinator]) }
           let!(:service) { create(:service) }
 
           let(:service_id) { service.send(id_form) }
@@ -89,7 +89,7 @@ RSpec.describe Api::V1::Ess::ServicesController, swagger_doc: "v1/ess_swagger.js
 
       response 404, "draft service not found by id" do
         schema "$ref" => "error.json"
-        let!(:manager) { create(:user, roles: [:service_portfolio_manager]) }
+        let!(:manager) { create(:user, roles: [:coordinator]) }
         let!(:service) { create(:service, status: :draft) }
 
         let(:service_id) { service.id }

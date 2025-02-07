@@ -28,7 +28,7 @@
               = link_to _("Catalogues"), backoffice_catalogues_path(page: nil), class: "nav-link", data: { e2e: "catalogues" }
           = nav_link controller: :statistics, html_options: { class: "nav-item" } do
             = link_to _("Statistics"), backoffice_statistics_path, class: "nav-link", data: { e2e: "statistics" }
-          - if current_user&.service_portfolio_manager?
+          - if current_user&.coordinator?
             = nav_link controller: :scientific_domains,
             html_options: { class: "nav-item #{"active" if controller.controller_name.in? other_settings}" } do
               = link_to _("Other settings"), backoffice_scientific_domains_path,

@@ -1,6 +1,6 @@
 #provider.tab-pane{ role: "tabpanel", "aria-labelledby": "provider-panel" }
   %ul.text-left
-    - if !current_user.service_portfolio_manager? && current_user.providers_count.zero?
+    - if !current_user.coordinator? && current_user.providers_count.zero?
       %li.text-uppercase
         = link_to _("Become a provider"), backoffice_providers_path, class: "dropdown-item dropdown-profile"
     - if policy([:backoffice, :backoffice]).show?

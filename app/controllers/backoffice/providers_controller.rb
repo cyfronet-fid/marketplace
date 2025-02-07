@@ -10,6 +10,7 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
   def index
     authorize(Provider)
     @pagy, @providers = pagy(policy_scope(Provider).order(:name))
+    @approval_requests = policy_scope(ApprovalRequest.includes(:approvable).active.order(created_at: :desc))
   end
 
   def show
@@ -36,6 +37,10 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
     authorize(@provider)
 
     if valid_model_and_urls? && @provider.save(validate: false)
+      if current_user.providers.published.empty? && !current_user.coordinator?
+        ar = ApprovalRequest.new(approvable: @provider, user: current_user, status: :published)
+        ar.save
+      end
       redirect_to backoffice_provider_path(@provider, page: params[:page]), notice: "New provider created successfully"
     else
       catalogue_scope

@@ -2,11 +2,11 @@
 
 require "rails_helper"
 
-GRANTED_USERS = %i[service_portfolio_manager owner].freeze
+GRANTED_USERS = %i[coordinator owner].freeze
 USERS = (GRANTED_USERS + %i[stranger]).freeze
 
 RSpec.describe Backoffice::OfferPolicy, backend: true do
-  let(:service_portfolio_manager) { create(:user, roles: [:service_portfolio_manager]) }
+  let(:coordinator) { create(:user, roles: [:coordinator]) }
   let(:owner) { create(:user) }
   let(:stranger) { create(:user) }
   let(:provider) { create(:provider, data_administrators: [build(:data_administrator, email: owner.email)]) }

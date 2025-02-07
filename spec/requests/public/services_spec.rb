@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Services" do
   context "as a logged in service portfolio manager" do
-    let(:user) { create(:user, roles: [:service_portfolio_manager]) }
+    let(:user) { create(:user, roles: [:coordinator]) }
     let(:provider) { create(:provider, data_administrators: [build(:data_administrator, email: user.email)]) }
     before { login_as(user) }
 

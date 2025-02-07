@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Provider < ApplicationRecord
+  include Approvable
   include LogoAttachable
   include ImageHelper
   include Publishable

@@ -3,7 +3,7 @@ import { UserFactory } from "../../../../factories/user.factory";
 import { CategoryMessages } from "../../../../fixtures/messages";
 
 describe("Category", () => {
-  const user = UserFactory.create({ roles: ["service_portfolio_manager"] });
+  const user = UserFactory.create({ roles: ["coordinator"] });
   const [category, category1, category2, category3, category4] = [...Array(5)].map(() => CategoryFactory.create());
   const message = CategoryMessages;
 

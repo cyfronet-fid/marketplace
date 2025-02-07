@@ -5249,6 +5249,108 @@ abbr[title] {
         margin: 0;
       }
     }
+
+    .select-bigger {
+      padding-top: 10px;
+
+      label {
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      select {
+        height: 53px;
+        padding: 12px;
+        border-radius: 8px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+    }
+
+    .messages-box {
+      position: relative;
+      width: 100%;
+      padding: 12px 6px 12px 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      line-height: 140%;
+      background: $alert-bg;
+      border-color: $alert-bg;
+      color: $custom-21;
+
+      .messages-scroll-wrapper {
+        height: 240px;
+        overflow-y: auto;
+        padding-right: 10px;
+      }
+
+      &::before {
+        position: absolute;
+        top: 15px;
+        z-index: 1;
+        left: 15px;
+        font-size: 15px;
+        content: "Messages sent to user email will appear here.";
+      }
+
+      .modal-dialog-scrollable {
+        width: 100%;
+        background: $alert-bg;
+      }
+
+      .list-group {
+        width: 100%;
+        z-index: 100;
+
+        .message-row {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          background: $palette-white;
+          border-radius: 8px;
+          flex-wrap: wrap;
+          padding: 8px;
+          margin-bottom: 10px;
+
+          .message-author {
+            font-weight: 500;
+            font-size: 14px;
+          }
+
+          .message-date {
+            font-weight: 400;
+            font-size: 12px;
+          }
+
+          .message-content {
+            flex-basis: 100%;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 140%;
+          }
+        }
+      }
+    }
+
+    // scss-lint:disable all
+    .approval_request_message {
+      label {
+        display: none;
+      }
+    }
+    // scss-lint:enable all
+
+    .approval-message-row {
+      input {
+        height: 42px;
+        padding: 5px 10px;
+        border-radius: 8px;
+      }
+    }
   }
 
   .modal-footer {
@@ -9384,4 +9486,41 @@ footer {
     }
   }
   // scss-lint:enable all
+
+  .approval-requests {
+    padding: 24px 24px 10px;
+    border-radius: 8px;
+    border: 1px solid $custom-17;
+    margin-bottom: 60px;
+
+    h2 {
+      font-size: 24px;
+      margin-bottom: 30px;
+    }
+
+    .backoffice-list {
+      .list-group-item.providers {
+        .row {
+          .col:first-child {
+            flex: 0 0 675px;
+            display: flex;
+            align-items: center;
+          }
+
+          .col:nth-child(3) {
+            flex: 0 0 170px;
+            display: flex;
+            align-items: center;
+          }
+        }
+      }
+
+      .btn-manage {
+        padding-left: 25px;
+        background: url("assets/icon-manage.svg") 0 50% no-repeat;
+        background-size: 18px auto;
+        font-size: 14px;
+      }
+    }
+  }
 }

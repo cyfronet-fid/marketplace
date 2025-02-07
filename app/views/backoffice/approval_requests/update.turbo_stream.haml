@@ -1,0 +1,10 @@
+= turbo_stream.update(:modal, partial: "backoffice/approval_requests/show",
+                      locals: { approval_request: @approval_request }) unless @approval_request.deleted?
+= turbo_stream.append(:messages, partial: "backoffice/approval_requests/message",
+                      locals: { message: @message })
+= turbo_stream.update(:approval_requests, partial: "backoffice/approval_requests/index",
+                      locals: { approvals: @approval_requests })
+= turbo_stream.update(@approval_request.approvable, partial: "components/presentable/list_component/item_details",
+                      locals: { obj: @approval_request.approvable,
+                                klass: @approval_request.approvable_type })
+= render_turbo_stream_flash

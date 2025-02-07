@@ -252,7 +252,7 @@ RSpec.feature "Services in ordering_configuration panel", end_user_frontend: tru
     end
   end
 
-  { no: false, service_portfolio_manager: false, admin: false, executive: false }.each do |role, authorized|
+  { no: false, coordinator: false, admin: false, executive: false }.each do |role, authorized|
     context "as an user with #{role} role" do
       let(:user) { create(:user, roles: role == :no ? [] : [role]) }
       let(:provider) { create(:provider) }
