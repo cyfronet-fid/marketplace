@@ -54,11 +54,11 @@ class Backoffice::OfferPolicy < Backoffice::OrderablePolicy
   private
 
   def managed?
-    service_portfolio_manager? || record.service.owned_by?(user) || record.service.owned_by?(user)
+    coordinator? || record.service.owned_by?(user) || record.service.owned_by?(user)
   end
 
-  def service_portfolio_manager?
-    user&.service_portfolio_manager?
+  def coordinator?
+    user&.coordinator?
   end
 
   def orderless?

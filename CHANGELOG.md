@@ -18,16 +18,14 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Unit to the constant offer parameter (@gorreck888)
 - `Save as draft` and `Duplicate` features for offer form (@maria-j-k) 
 - Publish/Suspend/Unpublish actions for multiple Providers and Catalogues (@goreck888, @jarekzet)
-
+- Approval panel for new providers (@goreck888)
 ### Changed
-- MarketplaceLocation renamed to ResearchActivity (@maria-j-k)
-- Remove suggested services (@maria-j-k)
+ 
 - Unlock unpublish/suspend and delete actions for active providers and catalogues (@goreck888)
 - New backoffice view (@jarekzet, goreck888)
 - Other settings tab visible only for users with service portfolio manager role (@maria-j-k)
 - Logo in catalogues, services, providers is not required. Set default logo for each (@maria-j-k)
 - Status bar with actions buttons in detail and edit views for services, catalogues and providers (@maria-j-k)
-- Postgres update from 14.1 to 16.4 (@goreck888)
 
 ### Fixed
 
@@ -39,10 +37,13 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Compare/Favourite icons on the service page (@jarekzet)
 - Back to previous button fixed (@maria-j-k)
 - Removed `no_offers` message in deleted services (@goreck888)
+- Redirect to login when unlogged user is ordering a service(@goreck888)
 - Propagation of service relationships (@goreck888)
 
 ### Security
+
 - Update dependencies (@goreck888)
+- Postgres update from 14.1 to 16.4 (@goreck888)
 
 ## [3.58.1]
 

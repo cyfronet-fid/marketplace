@@ -3,7 +3,7 @@ import { UserFactory } from "../../../../factories/user.factory";
 import { ProviderMessages } from "../../../../fixtures/messages";
 
 describe("Providers", () => {
-  const user = UserFactory.create({ roles: ["service_portfolio_manager"] });
+  const user = UserFactory.create({ roles: ["coordinator"] });
   const [provider, provider2, provider3] = [...Array(3)].map(() => ProvidersFactory.create());
   const [providerExtented] = [...Array(1)].map(() => ProvidersFactoryExtended.create());
   const message = ProviderMessages;

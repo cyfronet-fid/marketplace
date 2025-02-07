@@ -3,7 +3,7 @@
 class Backoffice::OrderablePolicy < Backoffice::ApplicationPolicy
   class Scope < Scope
     def resolve
-      if user.service_portfolio_manager? || user.data_administrator?
+      if user.coordinator? || user.data_administrator?
         scope.where.not(status: Statusable::INVISIBLE_STATUSES)
       else
         scope.none
@@ -50,7 +50,7 @@ class Backoffice::OrderablePolicy < Backoffice::ApplicationPolicy
   end
 
   def managed?
-    service_portfolio_manager? || record.service.owned_by?(user)
+    coordinator? || record.service.owned_by?(user)
   end
 
   def orderless?

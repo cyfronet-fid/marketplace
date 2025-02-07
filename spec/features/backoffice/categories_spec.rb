@@ -6,7 +6,7 @@ RSpec.feature "Categories in backoffice", manager_frontend: true do
   include OmniauthHelper
 
   context "As a service portolio manager" do
-    let(:user) { create(:user, roles: [:service_portfolio_manager]) }
+    let(:user) { create(:user, roles: [:coordinator]) }
 
     before { checkin_sign_in_as(user) }
 
