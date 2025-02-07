@@ -25,7 +25,7 @@ RSpec.feature "Vocabularies in backoffice", manager_frontend: true do
       meril_scientific_domain: "MERIL Scientific Domain"
     }.each do |vocabulary, humanized|
       context "For #{humanized}" do
-        let(:user) { create(:user, roles: [:service_portfolio_manager]) }
+        let(:user) { create(:user, roles: [:coordinator]) }
 
         before { checkin_sign_in_as(user) }
 

@@ -82,4 +82,8 @@ class Backoffice::ProviderPolicy < Backoffice::ApplicationPolicy
   def catalogue_access?
     service_portfolio_manager? || user&.catalogue_owner?
   end
+
+  def access?
+    coordinator? || (record&.owned_by?(user) && record&.approval_requests&.none?(&:published?))
+  end
 end

@@ -1,0 +1,21 @@
+= turbo_frame_tag "approval_requests" do
+  .approval-requests
+    %h2= _("Requests for acceptance")
+    %ul.list-group.backoffice-list.mt-3.mb-3
+      %li.list-group-item.heading-row.providers
+        .row
+          .col Provider
+          .col Request
+          .col Action required
+          .col
+      - approvals.each do |approval|
+        %li.list-group-item.providers
+          .row
+            .col= approval.approvable.name
+            .col= approval.created_at
+            .col
+              - if approval.last_action.blank?
+                %span.status.draft
+                  New request
+            .col= link_to _("Manage"), backoffice_approval_request_path(approval), class: "btn-manage",
+              data: { turbo_frame: "modal" }

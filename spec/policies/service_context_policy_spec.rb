@@ -40,7 +40,7 @@ RSpec.describe ServiceContextPolicy, backend: true do
     end
 
     it "portfolio manager is granted for draft service" do
-      allow(user).to receive(:service_portfolio_manager?).and_return(true)
+      allow(user).to receive(:coordinator?).and_return(true)
       expect(subject).to permit(user, ServiceContext.new(build(:service, status: :draft), true))
     end
 
@@ -64,7 +64,7 @@ RSpec.describe ServiceContextPolicy, backend: true do
     end
 
     it "denies for deleted service" do
-      allow(user).to receive(:service_portfolio_manager?).and_return(true)
+      allow(user).to receive(:coordinator?).and_return(true)
 
       service = build(:service, status: :draft)
       allow(service).to receive(:owned_by?).with(user).and_return(true)

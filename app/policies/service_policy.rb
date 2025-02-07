@@ -20,7 +20,7 @@ class ServicePolicy < ApplicationPolicy
   end
 
   def errors_show?
-    user.service_portfolio_manager? || data_administrator?
+    user.coordinator? || data_administrator?
   end
 
   def data_administrator?

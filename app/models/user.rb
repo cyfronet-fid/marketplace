@@ -9,7 +9,7 @@ class User < ApplicationRecord
 
   include Publishable
   include RoleModel
-  roles :admin, :service_portfolio_manager, :executive
+  roles :admin, :coordinator, :executive
 
   has_many :projects, dependent: :destroy
 

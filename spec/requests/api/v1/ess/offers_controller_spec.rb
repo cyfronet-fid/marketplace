@@ -21,7 +21,7 @@ RSpec.describe Api::V1::Ess::OffersController, swagger_doc: "v1/ess_swagger.json
       response 200, "offer found" do
         schema "$ref" => "ess/offer/offer_index.json"
 
-        let!(:manager) { create(:user, roles: [:service_portfolio_manager]) }
+        let!(:manager) { create(:user, roles: [:coordinator]) }
         let!(:offers) { create_list(:offer, 2) }
         let!(:second_offer) { create(:offer, service_id: offers.first.service_id) }
         let!(:draft_service) { create(:service, status: :draft) }
@@ -42,7 +42,7 @@ RSpec.describe Api::V1::Ess::OffersController, swagger_doc: "v1/ess_swagger.json
       response 403, "user doesn't have manager role", document: false do
         schema "$ref" => "error.json"
         let!(:regular_user) { create(:user) }
-        let!(:manager) { create(:user, roles: [:service_portfolio_manager]) }
+        let!(:manager) { create(:user, roles: [:coordinator]) }
         let!(:offers) { create_list(:offer, 3) }
         let!(:second_offer) { create(:offer, service_id: offers.first.service_id) }
         let!(:draft) { create(:offer, service_id: offers.second.service_id, status: :draft) }
@@ -78,7 +78,7 @@ RSpec.describe Api::V1::Ess::OffersController, swagger_doc: "v1/ess_swagger.json
 
       response 200, "offer found by id" do
         schema "$ref" => "ess/offer/offer_read.json"
-        let!(:manager) { create(:user, roles: [:service_portfolio_manager]) }
+        let!(:manager) { create(:user, roles: [:coordinator]) }
         let!(:offer) { create(:offer) }
 
         let(:offer_id) { offer.id }
@@ -92,7 +92,7 @@ RSpec.describe Api::V1::Ess::OffersController, swagger_doc: "v1/ess_swagger.json
 
       response 404, "draft offer not found by id" do
         schema "$ref" => "error.json"
-        let!(:manager) { create(:user, roles: [:service_portfolio_manager]) }
+        let!(:manager) { create(:user, roles: [:coordinator]) }
         let!(:offer) { create(:offer, status: :draft) }
 
         let(:offer_id) { offer.id }
