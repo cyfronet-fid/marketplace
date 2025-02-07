@@ -59,6 +59,19 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_18_120000) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "approval_requests", force: :cascade do |t|
+    t.string "approvable_type"
+    t.bigint "approvable_id"
+    t.bigint "user_id"
+    t.string "last_action"
+    t.string "status"
+    t.datetime "conversation_last_seen"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["approvable_type", "approvable_id"], name: "index_approval_requests_on_approvable"
+    t.index ["user_id"], name: "index_approval_requests_on_user_id"
+  end
+
   create_table "bundle_categories", force: :cascade do |t|
     t.bigint "bundle_id", null: false
     t.bigint "category_id", null: false
@@ -776,15 +789,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_18_120000) do
     t.index ["target_user_id"], name: "index_service_target_users_on_target_user_id"
   end
 
-  create_table "service_user_relationships", force: :cascade do |t|
-    t.bigint "service_id"
-    t.bigint "user_id"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.index ["service_id"], name: "index_service_user_relationships_on_service_id"
-    t.index ["user_id"], name: "index_service_user_relationships_on_user_id"
-  end
-
   create_table "service_vocabularies", force: :cascade do |t|
     t.bigint "service_id"
     t.bigint "vocabulary_id"
@@ -1060,8 +1064,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_18_120000) do
   add_foreign_key "service_scientific_domains", "services"
   add_foreign_key "service_target_users", "services"
   add_foreign_key "service_target_users", "target_users"
-  add_foreign_key "service_user_relationships", "services"
-  add_foreign_key "service_user_relationships", "users"
   add_foreign_key "service_vocabularies", "services"
   add_foreign_key "service_vocabularies", "vocabularies"
   add_foreign_key "services", "providers"

@@ -40,6 +40,11 @@ en:
   previous: Back
   next: Next
   cancel: Cancel
+  approval_request:
+    approved:
+      mail:
+        new_message: |
+          Your provider is approved
   project:
     mail:
       new_message: |

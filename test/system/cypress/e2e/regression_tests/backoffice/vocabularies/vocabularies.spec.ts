@@ -3,7 +3,7 @@ import { UserFactory } from "../../../../factories/user.factory";
 import { VocabularyMessages } from "../../../../fixtures/messages";
 
 describe("Vocabularies", () => {
-  const user = UserFactory.create({ roles: ["service_portfolio_manager"] });
+  const user = UserFactory.create({ roles: ["coordinator"] });
   const [vocabulary, vocabulary1, vocabulary2] = [...Array(3)].map(() => VocabularyFactory.create());
   const message = VocabularyMessages;
 

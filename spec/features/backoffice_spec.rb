@@ -24,7 +24,7 @@ RSpec.feature "Backoffice", manager_frontend: true do
   end
 
   context "as a service owner" do
-    let(:user) { create(:user, roles: [:service_portfolio_manager]) }
+    let(:user) { create(:user, roles: [:coordinator]) }
 
     scenario "I see Backoffice link in navbar" do
       allow(Rails.configuration).to receive(:whitelabel).and_return(true)
