@@ -7,7 +7,7 @@ RSpec.describe Backoffice::ScientificDomainPolicy, backend: true do
 
   permissions :index?, :show?, :new?, :create?, :edit?, :destroy? do
     it "grants access for service portfolio manager" do
-      expect(subject).to permit(build(:user, roles: [:service_portfolio_manager]))
+      expect(subject).to permit(build(:user, roles: [:coordinator]))
     end
 
     it "denies for other users" do

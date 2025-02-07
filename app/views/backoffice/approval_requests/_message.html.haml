@@ -1,0 +1,9 @@
+= turbo_frame_tag message do
+  %li.message-row
+    .message-author
+      = message.author
+    .message-date
+      = message.created_at
+    .message-content.mt-1
+      %p.font-weight-bolder.mb-0 Message:
+      = message.message

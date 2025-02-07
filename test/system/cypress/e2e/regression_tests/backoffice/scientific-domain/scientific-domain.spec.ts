@@ -3,7 +3,7 @@ import { UserFactory } from "../../../../factories/user.factory";
 import { ScientificDomainMessages } from "../../../../fixtures/messages";
 
 describe("Scientific Domain", () => {
-  const user = UserFactory.create({ roles: ["service_portfolio_manager"] });
+  const user = UserFactory.create({ roles: ["coordinator"] });
   const [scientificDomain, scientificDomain2, scientificDomain3, scientificDomain4, scientificDomain5] = [
     ...Array(5),
   ].map(() => ScientificDomainFactory.create());

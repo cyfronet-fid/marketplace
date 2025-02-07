@@ -21,7 +21,7 @@ RSpec.describe Api::V1::Ess::ProvidersController, swagger_doc: "v1/ess_swagger.j
       response 200, "providers found" do
         schema "$ref" => "ess/provider/provider_index.json"
 
-        let!(:manager) { create(:user, roles: [:service_portfolio_manager]) }
+        let!(:manager) { create(:user, roles: [:coordinator]) }
         let!(:providers) { create_list(:provider, 2) }
         let!(:draft) { create(:provider, status: :draft) }
         let!(:deleted) { create(:provider, status: :deleted) }
@@ -38,7 +38,7 @@ RSpec.describe Api::V1::Ess::ProvidersController, swagger_doc: "v1/ess_swagger.j
       response 403, "user doesn't have manager role", document: false do
         schema "$ref" => "error.json"
         let(:regular_user) { create(:user) }
-        let(:manager) { create(:user, roles: [:service_portfolio_manager]) }
+        let(:manager) { create(:user, roles: [:coordinator]) }
         let(:providers) { create_list(:provider, 3) }
 
         let(:"X-User-Token") { regular_user.authentication_token }
@@ -72,7 +72,7 @@ RSpec.describe Api::V1::Ess::ProvidersController, swagger_doc: "v1/ess_swagger.j
       %i[id pid].each do |id_form|
         response 200, "provider found by #{id_form}" do
           schema "$ref" => "ess/provider/provider_read.json"
-          let!(:manager) { create(:user, roles: [:service_portfolio_manager]) }
+          let!(:manager) { create(:user, roles: [:coordinator]) }
           let!(:provider) { create(:provider) }
 
           let(:provider_id) { provider.send(id_form) }
@@ -87,7 +87,7 @@ RSpec.describe Api::V1::Ess::ProvidersController, swagger_doc: "v1/ess_swagger.j
 
       response 404, "draft provider not found by id" do
         schema "$ref" => "error.json"
-        let!(:manager) { create(:user, roles: [:service_portfolio_manager]) }
+        let!(:manager) { create(:user, roles: [:coordinator]) }
         let!(:provider) { create(:provider, status: :draft) }
 
         let(:provider_id) { provider.id }

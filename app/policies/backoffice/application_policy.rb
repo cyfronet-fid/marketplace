@@ -3,7 +3,7 @@
 class Backoffice::ApplicationPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      if user&.service_portfolio_manager?
+      if user&.coordinator?
         scope.all
       elsif user&.data_administrator?
         scope.managed_by(user)
@@ -24,11 +24,11 @@ class Backoffice::ApplicationPolicy < ApplicationPolicy
   end
 
   def new?
-    service_portfolio_manager?
+    coordinator?
   end
 
   def create?
-    service_portfolio_manager?
+    coordinator?
   end
 
   def edit?
@@ -56,13 +56,13 @@ class Backoffice::ApplicationPolicy < ApplicationPolicy
   end
 
   def management_role?
-    service_portfolio_manager? || data_administrator?
+    coordinator? || data_administrator?
   end
 
   private
 
-  def service_portfolio_manager?
-    user&.service_portfolio_manager?
+  def coordinator?
+    user&.coordinator?
   end
 
   def data_administrator?
@@ -70,7 +70,7 @@ class Backoffice::ApplicationPolicy < ApplicationPolicy
   end
 
   def access?
-    service_portfolio_manager? || record&.owned_by?(user)
+    coordinator? || record&.owned_by?(user)
   end
 
   def actionable?

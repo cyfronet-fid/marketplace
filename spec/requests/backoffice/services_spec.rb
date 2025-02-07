@@ -7,7 +7,7 @@ RSpec.describe "Backoffice service", backend: true do
   include ExternalServiceDataHelper
 
   context "as a logged in service portfolio manager" do
-    let(:user) { create(:user, roles: [:service_portfolio_manager]) }
+    let(:user) { create(:user, roles: [:coordinator]) }
 
     before { login_as(user) }
 

@@ -165,7 +165,7 @@ export default class extends Controller {
       case "textarea":
         return input.val();
       default:
-        input.textContent;
+        return input.textContent;
     }
   }
 }

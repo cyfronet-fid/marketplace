@@ -55,7 +55,7 @@ RSpec.describe ServicePolicy, backend: true do
   end
 
   permissions :errors_show? do
-    let(:spm_user) { create(:user, roles: [:service_portfolio_manager]) }
+    let(:spm_user) { create(:user, roles: [:coordinator]) }
 
     it "grants access to data administrator" do
       expect(subject).to permit(user, service)

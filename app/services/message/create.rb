@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-class Message::Create
+class Message::Create < ApplicationService
   def initialize(message)
+    super()
     @message = message
   end
 

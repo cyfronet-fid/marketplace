@@ -5,7 +5,7 @@ import { ParametersFactory } from "../../../../factories/resource.factory";
 import { ResourceMessages } from "../../../../fixtures/messages";
 
 describe("Owned services", () => {
-  const user = UserFactory.create({ roles: ["service_portfolio_manager"] });
+  const user = UserFactory.create({ roles: ["coordinator"] });
   const [resource, resource2, resource3, resource4, resource5, resource6] = [...Array(6)].map(() =>
     ResourcesFactory.create(),
   );

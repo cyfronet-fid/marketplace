@@ -10,10 +10,12 @@
       - if policy([:backoffice, Provider]).new?
         .float-right
           = link_to _("+ Add new Provider"),
-                    new_backoffice_provider_path,
-                    class: "btn btn-primary",
-                    "data-e2e": "add-new-provider"
-        .clearfix
+                  new_backoffice_provider_path,
+                  class: "btn btn-primary",
+                  "data-e2e": "add-new-provider"
+
+    = render "backoffice/approval_requests/index", approvals: @approval_requests if @approval_requests.present?
+
     = turbo_frame_tag "checkbox_form" do
       = render "backoffice/statuses/form", collection: @providers, pagy: @pagy,
         form_path: backoffice_statuses_providers_path

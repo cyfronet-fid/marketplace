@@ -17,8 +17,8 @@ RSpec.feature "Executive stistics", manager_frontend: true do
     end
   end
 
-  context "as service_portfolio_manager" do
-    let(:user) { create(:user, roles: [:service_portfolio_manager]) }
+  context "as coordinator" do
+    let(:user) { create(:user, roles: [:coordinator]) }
 
     scenario "I can see executive statistics" do
       report =
