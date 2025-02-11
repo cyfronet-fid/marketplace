@@ -8231,7 +8231,7 @@ abbr[title] {
       margin: 0;
 
       .nav-tabs {
-        justify-content: space-between;
+        justify-content: flex-start;
         background: transparent;
         border-bottom: 1px solid $custom-17;
 

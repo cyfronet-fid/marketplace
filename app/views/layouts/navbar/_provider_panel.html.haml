@@ -8,9 +8,6 @@
         %a.dropdown-item.dropdown-profile{ href: backoffice_path, "data-e2e": "backoffice" }
           = _("Backoffice")
     %li
-      %a.dropdown-item.dropdown-profile{ href: "https://knowledge-hub.sandbox.eosc-beyond.eu/" }
-        = _("Knowledge Hub")
-    %li
       %a.dropdown-item.dropdown-profile{ href: "/api_docs", "data-e2e": "marketplace-api" }
         = _("Marketplace API")
     - if policy([:admin, :admin]).show?
@@ -19,6 +16,6 @@
           = _("Admin")
     - if policy([:backoffice, :backoffice]).show?
       %hr.separate
-      %li= link_to _("+ Create new service"), new_backoffice_service_path, class: "dropdown-item dropdown-profile"
+      %li= link_to _("+ Add new service"), new_backoffice_service_path, class: "dropdown-item dropdown-profile"
       %li= link_to _("+ Add new provider"), new_backoffice_provider_path, class: "dropdown-item dropdown-profile"
       %li= link_to _("+ Add new catalogue"), new_backoffice_catalogue_path, class: "dropdown-item dropdown-profile"
