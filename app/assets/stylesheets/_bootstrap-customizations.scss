@@ -42,7 +42,7 @@ header {
 
   .whitelabel-header-container {
     background: var(--Linear, linear-gradient(180deg, $palette-white 2.04%, $alert-bg 97.59%));
-    padding: 10px 15px 50px;
+    padding: 10px 15px;
 
     a {
       color: $custom-16;
@@ -7200,18 +7200,26 @@ abbr[title] {
 
   .landing-header {
     background: var(--Linear, linear-gradient(180deg, #fff 0%, #edf4ff 100%));
-    padding: 90px 0 110px;
+    padding: 25px 0 25px;
 
     .logo-box {
       margin-bottom: 30px;
     }
 
     h1 {
-      color: $palette-black;
+      color: $landing-04;
       font-weight: 500;
       font-size: 30px;
       line-height: 39px;
-      margin: 0 0 25px;
+      margin: 0 0 32px;
+    }
+
+    h2 {
+      color: $landing-04;
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 22px;
+      margin: 0 0 24px;
     }
 
     p {
@@ -7223,26 +7231,27 @@ abbr[title] {
       margin: 0 auto 48px;
     }
 
-    .searchbar {
+    .research-top-space {
+      margin-top: 65px;
+    }
+
+    .research-wrapper {
+      display: flex;
       justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--16, 16px);
 
-      .searchbar__input {
-        width: 80%;
-      }
+      a {
+        padding: 5px 15px 6px;
+        border-radius: 32px;
+        font-weight: 500;
+        background: $palette-white;
+        border: 1px solid $palette-white;
+        transition: all 0.3s ease;
 
-      input {
-        border-radius: 8px 0 0 8px;
-        border: 1px solid $landing-01;
-        border-right: 0;
-      }
-
-      button {
-        border-radius: 0 8px 8px 0;
-        border: 1px solid $landing-01;
-        border-left: 0;
-
-        svg {
-          font-size: 20px;
+        &:hover {
+          border: 1px solid $landing-01;
         }
       }
     }
@@ -7494,7 +7503,7 @@ abbr[title] {
   }
 
   .questions {
-    padding: 0 0 75px;
+    padding: 80px 0 0;
 
     .accordion {
       .collapse {
@@ -7540,7 +7549,12 @@ abbr[title] {
       font-size: 24px;
       line-height: 30px;
       font-weight: 500;
-      margin: 0 0 22px;
+      margin: 0 0 18px;
+    }
+
+    p {
+      font-size: 14px;
+      font-weight: 600;
     }
 
     .lead {
@@ -8197,7 +8211,7 @@ abbr[title] {
 
 .backoffice {
   .top {
-    background: var(--Linear, linear-gradient(180deg, $palette-white 2.04%, $alert-bg 97.59%)) !important;
+    background: $palette-white;
   }
 
   h1 {
@@ -8416,6 +8430,7 @@ abbr[title] {
   border-radius: 8px;
   border: 1px solid $custom-17;
   padding: 24px;
+  transition: all 0.3s ease;
 
   &:hover {
     border: 1px solid $landing-01;
@@ -8919,6 +8934,8 @@ footer {
 }
 
 .searchbar {
+  justify-content: center;
+
   &.whitelabel {
     justify-content: center;
     margin: 0;
@@ -8927,25 +8944,41 @@ footer {
       width: 80%;
     }
 
+    input {
+      border-radius: 8px 0 0 8px;
+      padding: 11px 25px 10px 10px;
+      border: 1px solid $landing-01;
+      border-right: 0;
+      font-size: 14px;
+
+      &::placeholder {
+        color: $landing-01 !important;
+        opacity: 1;
+        font-style: normal !important;
+      }
+    }
+
     .searchbar__select {
       border-top: 1px solid $landing-01;
       border-bottom: 1px solid $landing-01;
-    }
-
-    input {
-      border-radius: 8px 0 0 8px;
-      padding: 12px 25px 12px 10px;
-      border: 1px solid $landing-01;
-      border-right: 0;
+      border-right: 1px solid $landing-01;
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+      width: 200px;
     }
 
     button {
-      border-radius: 0 8px 8px 0;
-      border: 1px solid $landing-01;
-      border-left: 0;
+      border-radius: 8px;
+      border: 1px solid $custom-16;
+      background: $custom-16;
+      color: $palette-white;
+      font-size: 14px;
+      padding: 10px 30px;
+      margin-left: 10px;
 
-      svg {
-        font-size: 20px;
+      &:hover {
+        border: 1px solid $custom-15;
+        background: $custom-15;
       }
     }
   }
@@ -9260,4 +9293,95 @@ footer {
 .backoffice-back-link {
   display: block;
   margin-top: 25px;
+}
+
+.be-provider {
+  padding: 65px 0 100px;
+
+  .become-provider-box {
+    width: 100%;
+    height: 375px;
+    padding: 120px 30px 0 0;
+    border-radius: 8px;
+    color: $palette-white;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    background-image: url("become-provider.jpg");
+    background-size: cover;
+
+    h4 {
+      font-size: 40px;
+      font-weight: 700;
+      padding: 0;
+      border: 0;
+      margin: 0 0 20px;
+      color: $palette-white;
+    }
+
+    .subtitle {
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 140%;
+      text-align: right;
+      color: $palette-white;
+    }
+
+    .btn {
+      width: 320px;
+      background: $alert-bg;
+      color: $landing-04;
+      font-size: 14px;
+      margin-top: 20px;
+      padding: 12px 0;
+      text-align: center;
+
+      &:hover {
+        background: $landing-04;
+        color: $palette-white;
+      }
+    }
+  }
+
+  // scss-lint:disable all
+  .provider-simple-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    row-gap: 30px;
+
+    .provider-simple-box {
+      display: flex;
+      flex-direction: column;
+      width: 48%;
+      border-radius: 8px;
+      border: 1px solid $custom-17;
+      padding: 24px;
+      transition: all 0.3s ease;
+
+      h5 {
+        font-size: 24px;
+        font-weight: 500;
+        margin-bottom: 17px;
+        color: $custom-12;
+      }
+
+      .subtitle {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 150%;
+      }
+
+      &.special {
+        width: 100%;
+        background: $alert-bg;
+        border-color: $alert-bg;
+      }
+
+      &:hover {
+        border: 1px solid $custom-12;
+      }
+    }
+  }
+  // scss-lint:enable all
 }

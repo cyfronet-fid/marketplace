@@ -2,38 +2,59 @@
   %section.text-center.heading
     .container
       .row.py-lg-3
-        .col-md-8.col-sm-12.mx-auto
+        .col-md-7.col-sm-12.mx-auto
           %h1 Browse Marketplace
           = render "services/search",
           categories: @siblings || @root_categories,
           query_params: @query_params || {}
-%section.research-activity
-  .container
-    .activity-wrapper
-      - @research_activities.each do |location|
-        %a.activity{ href: services_path(research_activities: location.id) }
-          .activity-icon
-            - logo = location.logo
-            - logo = logo.attached? && logo.persisted? ? logo.variant(resize: "84x84") : "landing_page/ico-01.svg"
-            = image_tag logo, alt: location.name
-          .activity-texts
-            .activity-title= location.name
-            .activity-subtitle= location.description
 
-    .activity-wrapper
-      .text-wrapper
-        Browse
-        %span all resources
-        in one place:
-      .text-wrapper
-        %a.btn{ href: services_path } Browse All Resources
+          %h2.research-top-space Browse by specific research activity:
+
+          .row.justify-content-center
+            .col-md-10.col-sm-12.research-wrapper
+              %a{ href: "/services?sort=_score&research_activities%5B%5D=778" }  Research Data
+              %a{ href: "/services?sort=_score&research_activities%5B%5D=771" }  Research Infrastructures
+              %a{ href: "/services?sort=_score&research_activities%5B%5D=776" }  Instruments and Equipment
+              %a{ href: "/services?research_activities=780" }  Sharing & Discovery
+              %a{ href: "/services?sort=_score&research_activities%5B%5D=776" }  Instruments and Equipment
+
+%section.be-provider
+  .container
+    .row
+      .col-md-6.col-sm-12
+        .become-provider-box
+          %h4 Become provider
+          .subtitle
+            Share your resources to reach the
+            %br
+            Marketplace users.
+          %a.btn{ href: "/backoffice/providers/new" } Become a provider
+      .col-md-6.col-sm-12.provider-simple-wrapper
+        .provider-simple-box
+          %h5 Add Your Service
+          .subtitle
+            Create, delete, and update their services at any time. Gain full control and manage your offerings with
+            ease.
+        .provider-simple-box
+          %h5 Create Offers
+          .subtitle
+            Add new offers, modify existing ones, and monitor their statuses. Stay responsive to users demands and
+            keep your offers up-to-date.
+        .provider-simple-box.special
+          %h5 Group Providers into Catalogues
+          .subtitle
+            Use catalogues to manage and organise multiple providers. Add, remove, and arrange them to keep your
+            marketplace in order.
+
+%section.learn
+  = render_sections("learn-more")
 
 %section.questions
   .container
     .questions-wrapper
       .row
         .col-md-4.col-sm-12
-          %h3 Q&A
+          %h3 FAQ
           %p
             Check out our Q&A guide to find answers to your questions. It's designed to help you understand and solve
             common issues. If you still have questions after reading the guide, don’t worry:
@@ -53,8 +74,7 @@
                            "data-parent": "#accordion-qa" }
                   = help_item.content
 
-%section.learn
-  = render_sections("learn-more")
+
 
 -# Here should be = render_sections("use-cases") - below is a placeholder
 %section.research

@@ -17,7 +17,7 @@
   .searchbar__input
     %label.sr-only{ for: "search" }= _("Search")
     = text_field_tag :q, params[:q],  class: "autocomplete-input",
-                                     placeholder: "Find resource...",
+                                     placeholder: "Find resource",
                                      data: { autocomplete_target: "input",
                                              external_target: "query",
                                              toggle: "dropdown",
@@ -43,8 +43,8 @@
       = options_for_select categories.partition { |cat|  cat.name != "Other" }.flatten(1).map { |cat| [cat.name,
         cat.slug] }, params[:category]
   .input-group-append
-    %button#query-submit.input-group-text.bg-white{ "data-e2e": "query-submit-btn" }
-      %i.fas.fa-search
+    %button#query-submit.input-group-text{ "data-e2e": "query-submit-btn" }
+      Browse all resources
 
 .browse.d-flex.whitelabel
   .browse-label
