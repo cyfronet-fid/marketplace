@@ -39,13 +39,28 @@ asdf install
 in marketplace root directory. Ruby and nodejs versions will be set in automatic
 way.
 
-### Setup
+### Fast Setup Guide
 Before running `./bin/setup` you need to:
   * create file `config/master.key` with appropriate content in order to make `config/credentials.yml.enc` decryptable.
   * run docker services (i.e. postgresql, redis and elasticsearch) (see [docker compose](#docker-compose)).
 
-To set up the environment run `./bin/setup`. It will install bundler, foreman, 
+To set up the rest of the environment run `./bin/setup`. It will install bundler, foreman, 
 dependencies and setup databases (development and test).
+
+### Manual Setup Guide
+* create file `config/master.key` with appropriate content in order to make `config/credentials.yml.enc` decryptable.
+* run docker services (i.e. postgresql, redis and elasticsearch) (see [docker compose](#docker-compose)).
+* run `bundle install`
+* create and seed databases (mp_development and mp_test):
+    * `rake db:create`
+    * `rake db:seed`
+* run reindexation `rake searchkick:reindex:all`
+* run the application `./bin/server`
+* build styles 
+  * `yarn build`
+  * `yarn build:css`
+* if `./bin/server` starts but fails and due to missing assets 
+`RAILS_ENV=development bin/rails assets:precompile`
 
 ### Generating DB entries for development
 Filling the database is done by parsing yaml: `db/data.yml`.

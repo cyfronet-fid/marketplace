@@ -14,6 +14,8 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Unit to the constant offer parameter (@gorreck888)
 - `Save as draft` and `Duplicate` features for offer form (@maria-j-k) 
 - Publish/Suspend/Unpublish actions for multiple Providers and Catalogues (@goreck888, @jarekzet)
+- Landing page (@jarekzet, @Michal-Kolomanski)
+- Readme section about manual dev setup (@Michal-Kolomanski)
 
 ### Changed
 
