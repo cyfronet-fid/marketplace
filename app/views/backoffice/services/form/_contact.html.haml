@@ -25,7 +25,19 @@
               = main_contact_form.input :first_name, disabled: service.upstream_id.present?
               = main_contact_form.input :last_name, disabled: service.upstream_id.present?
               = main_contact_form.input :email, disabled: service.upstream_id.present?
-              = main_contact_form.input :phone, disabled: service.upstream_id.present?
+              .row
+                .col-2
+                  - c = service.resource_organisation&.country.presence
+                  - sel = "#{c.iso_short_name} #{c.emoji_flag} (+#{c.country_code})" if c.present?
+                  = main_contact_form.input :country_phone_code,
+                    label: "Dialing Code",
+                    collection: dial_codes,
+                    selected: sel,
+                    input_html: { multiple: false, data: { form_target: "mcCode", choice: true } }
+                .col-6
+                  = main_contact_form.input :phone,
+                    label: "Phone Number",
+                    input_html: { "data-form-target": "mcPhone" }
               = main_contact_form.input :organisation, disabled: service.upstream_id.present?
               = main_contact_form.input :position, disabled: service.upstream_id.present?
       .row.service-contact-emails{ "data-service-target": "publicContacts" }

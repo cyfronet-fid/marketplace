@@ -249,6 +249,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_18_120000) do
     t.bigint "contactable_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "country_phone_code"
     t.index ["contactable_id"], name: "index_contacts_on_contactable_id"
     t.index ["id", "contactable_id", "contactable_type"], name: "index_contacts_on_id_and_contactable_id_and_contactable_type", unique: true
   end
@@ -645,7 +646,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_18_120000) do
   end
 
   create_table "providers", force: :cascade do |t|
-    t.text "name", null: false
+    t.string "name", null: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.string "pid"
@@ -787,6 +788,15 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_18_120000) do
     t.index ["service_id", "target_user_id"], name: "index_service_target_users_on_service_id_and_target_user_id", unique: true
     t.index ["service_id"], name: "index_service_target_users_on_service_id"
     t.index ["target_user_id"], name: "index_service_target_users_on_target_user_id"
+  end
+
+  create_table "service_user_relationships", force: :cascade do |t|
+    t.bigint "service_id"
+    t.bigint "user_id"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["service_id"], name: "index_service_user_relationships_on_service_id"
+    t.index ["user_id"], name: "index_service_user_relationships_on_user_id"
   end
 
   create_table "service_vocabularies", force: :cascade do |t|
@@ -1064,6 +1074,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_18_120000) do
   add_foreign_key "service_scientific_domains", "services"
   add_foreign_key "service_target_users", "services"
   add_foreign_key "service_target_users", "target_users"
+  add_foreign_key "service_user_relationships", "services"
+  add_foreign_key "service_user_relationships", "users"
   add_foreign_key "service_vocabularies", "services"
   add_foreign_key "service_vocabularies", "vocabularies"
   add_foreign_key "services", "providers"

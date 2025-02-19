@@ -31,6 +31,7 @@ gem "friendly_id", "~> 5.5"
 gem "acts-as-taggable-on"
 gem "countries"
 gem "i18n_data"
+gem "humanize"
 
 gem "activestorage-validator"
 gem "image_processing", ">= 1.2"

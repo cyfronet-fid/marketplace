@@ -46,6 +46,9 @@ application.register("filter", FilterController);
 import FormController from "./form_controller";
 application.register("form", FormController);
 
+import FormRedirectController from "./form_redirect_controller";
+application.register("form-redirect", FormRedirectController);
+
 import HomePageController from "./home_page_controller";
 application.register("home-page", HomePageController);
 

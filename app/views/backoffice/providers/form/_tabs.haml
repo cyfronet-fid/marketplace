@@ -1,0 +1,6 @@
+%ul.nav.nav-tabs.row.pl-3{ role: "tabs" }
+  - extended_steps.each do |step|
+    %li.nav-item{ role: "presentation" }
+      %button.nav-link{ id: "#{step}-tab", type: "button", role: "tab", class: "#{"active" if step == active_tab}",
+          aria: { controls: "provider-edit-form" },
+          data: { action: "click->form#toggleTab", toggle: "tab", target: "#{step}" } }= _(step.capitalize)

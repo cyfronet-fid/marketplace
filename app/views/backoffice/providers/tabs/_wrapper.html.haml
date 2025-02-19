@@ -1,0 +1,13 @@
+= turbo_frame_tag "tab_content" do
+  .service-box-redesign
+    = render "backoffice/providers/tabs", provider: provider, current_tab: tab
+  .row.justify-content-between
+    %main.col-12.col-xl-9.pr-4.pt-4
+      = render "backoffice/providers/tabs/#{tab}", provider: provider
+    %sidebar.col-12.col-xl-3.pt-4
+      #actions
+        - if policy([:backoffice, provider]).edit?
+          = link_to _("Edit #{tab.capitalize}"),
+                      edit_backoffice_provider_path(provider, step: tab),
+                      class: "btn btn-primary edit-button d-flex justify-content-center",
+                      data: tab.in?(basic_steps) ? { turbo_frame: "_top" } : {}
