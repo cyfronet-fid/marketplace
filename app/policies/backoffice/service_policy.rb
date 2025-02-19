@@ -3,7 +3,7 @@
 class Backoffice::ServicePolicy < Backoffice::ApplicationPolicy
   class Scope < Backoffice::ApplicationPolicy::Scope
     def resolve
-      if user&.service_portfolio_manager? || user&.data_administrator?
+      if user&.coordinator? || user&.data_administrator?
         super
       elsif user&.service_owner?
         scope.includes(:service_user_relationships).where(service_user_relationships: { user: user })
@@ -26,7 +26,7 @@ class Backoffice::ServicePolicy < Backoffice::ApplicationPolicy
   ].freeze
 
   def index?
-    service_portfolio_manager? || service_owner? || data_administrator?
+    coordinator? || service_owner? || data_administrator?
   end
 
   def show?
@@ -34,7 +34,7 @@ class Backoffice::ServicePolicy < Backoffice::ApplicationPolicy
   end
 
   def new?
-    service_portfolio_manager? || user&.data_administrator?
+    coordinator? || user&.data_administrator?
   end
 
   def create?
@@ -155,9 +155,21 @@ class Backoffice::ServicePolicy < Backoffice::ApplicationPolicy
       [persistent_identity_systems_attributes: %i[id entity_type_id entity_type_scheme_ids _destroy]],
       [link_research_product_license_urls_attributes: %i[id url name _destroy]],
       [link_research_product_metadata_license_urls_attributes: %i[id url name _destroy]],
-      [main_contact_attributes: %i[id first_name last_name email phone organisation position]],
+      [main_contact_attributes: %i[id first_name last_name email phone country_phone_code organisation position]],
       [sources_attributes: %i[id source_type eid _destroy]],
-      [public_contacts_attributes: %i[id first_name last_name email phone organisation position _destroy]],
+      [
+        public_contacts_attributes: %i[
+          id
+          first_name
+          last_name
+          email
+          phone
+          country_phone_code
+          organisation
+          position
+          _destroy
+        ]
+      ],
       [alternative_identifiers_attributes: %i[id identifier_type value _destroy]]
     ]
 

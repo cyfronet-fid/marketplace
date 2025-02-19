@@ -33,8 +33,20 @@ class Backoffice::CataloguePolicy < Backoffice::ApplicationPolicy
       [affiliations: []],
       [network_ids: []],
       [sources_attributes: %i[id source_type eid _destroy]],
-      [main_contact_attributes: %i[id first_name last_name email phone organisation position]],
-      [public_contacts_attributes: %i[id first_name last_name email phone organisation position _destroy]],
+      [main_contact_attributes: %i[id first_name last_name email phone country_phone_code organisation position]],
+      [
+        public_contacts_attributes: %i[
+          id
+          first_name
+          last_name
+          email
+          phone
+          country_phone_code
+          organisation
+          position
+          _destroy
+        ]
+      ],
       [data_administrators_attributes: %i[id first_name last_name email _destroy]],
       [link_multimedia_urls_attributes: %i[id name url _destroy]]
     ]

@@ -1,0 +1,39 @@
+.tab-pane{ id: "contacts", class: "#{"active" if active}", "aria-labelledby": "contact-header", role: "tabpanel",
+        "data-form-target": "tab" }
+  .card-body
+    .row
+      .col-lg-7.pl-0
+        %h3
+          = _("Main Contact")
+        .contact
+          = f.fields_for :main_contact do |main_contact_form|
+            = main_contact_form.hidden_field :id, disabled: provider.upstream_id.present?
+            = main_contact_form.input :first_name, disabled: provider.upstream_id.present?
+            = main_contact_form.input :last_name, disabled: provider.upstream_id.present?
+            = main_contact_form.input :email, disabled: provider.upstream_id.present?
+            .row
+              .col-3
+                - c = provider.country
+                = main_contact_form.input :country_phone_code,
+                  label: "Dialing Code",
+                  collection: dial_codes,
+                  selected:  ("#{c.iso_short_name} #{c.emoji_flag} (+#{c.country_code})" if c.present?),
+                  input_html: { multiple: false, data: { form_target: "pcCode", choice: true } }
+              .col-6
+                = main_contact_form.input :phone, disabled: provider.upstream_id.present?
+            = main_contact_form.input :position, disabled: provider.upstream_id.present?
+        .row.service-contact-emails{ "data-service-target": "publicContacts" }
+          .col-12
+            %h3
+              = _("Public contacts")
+            = f.error :public_contacts, class: "invalid-feedback d-block"
+            = f.fields_for :public_contacts, disabled: provider.upstream_id.present?, multiple: true, as: :array,
+                    wrapper_html: { "data-form-target" => "publicContact" } do |public_contact_form|
+              = render_public_contact(public_contact_form, provider)
+            = link_to _("Add additional public contact"), "#", class: "btn btn-primary disablable",
+              data: { form: { target: "addField" },
+              action: "click->form#addField",
+              value: "publicContacts",
+              fields: f.fields_for(:public_contacts, PublicContact.new,
+              child_index: "new_field") { |pcf| render_public_contact(pcf, provider) } }
+      = render "backoffice/providers/more_information"

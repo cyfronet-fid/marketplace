@@ -1,24 +1,12 @@
-.card.shadow-sm.rounded
-  %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(provider,
-    [:street_name_and_number, :postal_code, :city, :region, :country])),
-              data: { toggle: "collapse", target: "#location" },
-              aria: { expanded: true, controls: "location" } }
-    .card-header.text-left{ id: "location-header" }
-      .row
-        .col-10
-          = _("Location")
-        .col-2.text-right
-          .collapse-icon
-            %i.fas.fa-chevron-down
-            %i.fas.fa-chevron-up
-.collapse{ id: "location", "aria-labelledby": "location-header",
-          "data-parent": "#accordion-form",
-          class: ("show" unless collapsed?(provider, [:street_name_and_number, :postal_code,
-                                                      :city, :region, :country])) }
+.tab-pane{ id: "location", class: "#{"active" if active}", "aria-labelledby": "location-header", role: "tabpanel",
+          "data-form-target": "tab" }
   .card-body
-    = f.input :street_name_and_number, disabled: cant_edit(:street_name_and_number)
-    = f.input :postal_code, disabled: cant_edit(:postal_code)
-    = f.input :city, disabled: cant_edit(:city)
-    = f.input :region, disabled: cant_edit(:region)
-    = f.input :country, disabled: cant_edit(:country), as: :select,
-              collection: Country.options.map { |c| [ c.iso_short_name, "value" => c.alpha2 ] }
+    .row
+      .col-lg-7.pl-0
+        = f.input :street_name_and_number, disabled: cant_edit(:street_name_and_number)
+        = f.input :postal_code, disabled: cant_edit(:postal_code)
+        = f.input :city, disabled: cant_edit(:city)
+        = f.input :region, disabled: cant_edit(:region)
+        = f.input :country, disabled: cant_edit(:country), as: :select,
+                  collection: Country.options.map { |c| [ c.iso_short_name, "value" => c.alpha2 ] }
+      = render "backoffice/providers/more_information"

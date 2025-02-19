@@ -1,25 +1,19 @@
 = simple_form_for [:backoffice, provider],
-  html: { "data-controller" => "form", "data-form-target": "form",
-  "data-disabled": provider.upstream_id.present? } do |f|
+  html: { data: { controller: "form", form_target: "form",
+  disabled: provider.upstream_id.present? } } do |f|
   = f.error_notification
   .row
-    .col-12.col-md-2
-      = render "backoffice/providers/form/menu_panel"
-    .col-12.col-md-10
-      #accordion-form.accordion
-        = render "backoffice/providers/form/basic", f: f, provider: provider
-        = render "backoffice/providers/form/marketing", f: f, provider: provider
-        = render "backoffice/providers/form/classification", f: f, provider: provider
-        = render "backoffice/providers/form/location", f: f, provider: provider
-        = render "backoffice/providers/form/contact", f: f, provider: provider
-        = render "backoffice/providers/form/maturity", f: f, provider: provider
-        = render "backoffice/providers/form/dependencies", f: f, provider: provider, catalogues: catalogues
-        = render "backoffice/providers/form/other", f: f, provider: provider
-        = render "backoffice/providers/form/admins", f: f, provider: provider
-
+    .col-12
+      #provider-edit
+        = render "backoffice/providers/form/tabs", active_tab: tab
+        .tab-content{ role: "tablist" }
+          - extended_steps.each do |step|
+            = render "backoffice/providers/form/#{step}", f: f, provider: provider, catalogues: catalogues,
+            active: step == tab
       %hr.bottom-hr.mt-5.mb-4
       .row.mt-5
         .col-12
           = f.button :submit, class: "btn btn-primary pl-5 pr-5 mr-5 mobile-bottom-margin",
-          "data-e2e": "create-provider-btn"
-          = link_to "Cancel and back to previous page", :back, class: "text-left flex-grow-1 text-uppercase mobile-bottom-margin"
+          data: { e2e: "create-provider-btn" }
+          - link = provider.persisted? ? backoffice_provider_path(provider) : backoffice_providers_path
+          = link_to "Go back to provider", link, class: "text-left flex-grow-1 text-uppercase mobile-bottom-margin"
