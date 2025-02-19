@@ -840,6 +840,15 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_06_112106) do
     t.index ["target_user_id"], name: "index_service_target_users_on_target_user_id"
   end
 
+  create_table "service_user_relationships", force: :cascade do |t|
+    t.bigint "service_id"
+    t.bigint "user_id"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["service_id"], name: "index_service_user_relationships_on_service_id"
+    t.index ["user_id"], name: "index_service_user_relationships_on_user_id"
+  end
+
   create_table "service_vocabularies", force: :cascade do |t|
     t.bigint "service_id"
     t.bigint "vocabulary_id"
@@ -1122,6 +1131,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_06_112106) do
   add_foreign_key "service_scientific_domains", "services"
   add_foreign_key "service_target_users", "services"
   add_foreign_key "service_target_users", "target_users"
+  add_foreign_key "service_user_relationships", "services"
+  add_foreign_key "service_user_relationships", "users"
   add_foreign_key "service_vocabularies", "services"
   add_foreign_key "service_vocabularies", "vocabularies"
   add_foreign_key "services", "providers"
