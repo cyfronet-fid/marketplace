@@ -79,4 +79,8 @@ module FormsHelper
         "all dependent %{published}%{entities}.\n\n%{warning}"
     _(message % { action: _(action), entities: entities, object: object, published: published, warning: warning })
   end
+
+  def dial_codes
+    Country.all.map { |c| ["#{c.iso_short_name} #{c.emoji_flag} (+#{c.country_code})", "value" => c.country_code] }
+  end
 end

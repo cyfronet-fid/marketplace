@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_05_162153) do
+ActiveRecord::Schema[7.2].define(version: 2025_04_14_024423) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -249,6 +249,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_05_162153) do
     t.bigint "contactable_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "country_phone_code"
     t.index ["contactable_id"], name: "index_contacts_on_contactable_id"
     t.index ["id", "contactable_id", "contactable_type"], name: "index_contacts_on_id_and_contactable_id_and_contactable_type", unique: true
   end
@@ -364,6 +365,16 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_05_162153) do
     t.index ["scope"], name: "index_messages_on_scope"
   end
 
+  create_table "observed_user_offers", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "offer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["offer_id"], name: "index_observed_user_offers_on_offer_id"
+    t.index ["user_id", "offer_id"], name: "index_observed_user_offers_on_user_id_and_offer_id", unique: true
+    t.index ["user_id"], name: "index_observed_user_offers_on_user_id"
+  end
+
   create_table "offer_vocabularies", force: :cascade do |t|
     t.bigint "offer_id"
     t.bigint "vocabulary_id"
@@ -397,6 +408,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_05_162153) do
     t.integer "offer_category_id"
     t.integer "offer_type_id"
     t.integer "offer_subtype_id"
+    t.boolean "limited_availability", default: false
+    t.bigint "availability_count", default: 0
     t.index ["iid"], name: "index_offers_on_iid"
     t.index ["primary_oms_id"], name: "index_offers_on_primary_oms_id"
     t.index ["service_id", "iid"], name: "index_offers_on_service_id_and_iid", unique: true
@@ -453,29 +466,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_05_162153) do
     t.index ["default"], name: "index_omses_on_default"
     t.index ["service_id"], name: "index_omses_on_service_id"
     t.index ["type"], name: "index_omses_on_type"
-  end
-
-  create_table "order_changes", force: :cascade do |t|
-    t.string "status"
-    t.text "message"
-    t.bigint "order_id", null: false
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.bigint "author_id"
-    t.index ["author_id"], name: "index_order_changes_on_author_id"
-    t.index ["order_id"], name: "index_order_changes_on_order_id"
-  end
-
-  create_table "orders", force: :cascade do |t|
-    t.string "status", null: false
-    t.bigint "service_id", null: false
-    t.bigint "user_id", null: false
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.integer "issue_id"
-    t.integer "issue_status", default: 2, null: false
-    t.index ["service_id"], name: "index_orders_on_service_id"
-    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "persistent_identity_system_vocabularies", force: :cascade do |t|
@@ -648,7 +638,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_05_162153) do
   end
 
   create_table "providers", force: :cascade do |t|
-    t.text "name", null: false
+    t.string "name", null: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.string "pid"
@@ -1025,6 +1015,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_05_162153) do
   add_foreign_key "catalogue_vocabularies", "vocabularies"
   add_foreign_key "catalogues", "catalogue_sources", column: "upstream_id", on_delete: :nullify
   add_foreign_key "data_administrators", "users"
+  add_foreign_key "observed_user_offers", "offers"
+  add_foreign_key "observed_user_offers", "users"
   add_foreign_key "offer_vocabularies", "offers"
   add_foreign_key "offer_vocabularies", "vocabularies"
   add_foreign_key "offers", "omses", column: "primary_oms_id"

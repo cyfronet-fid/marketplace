@@ -93,9 +93,21 @@ class Backoffice::ServicePolicy < Backoffice::ApplicationPolicy
       [persistent_identity_systems_attributes: %i[id entity_type_id entity_type_scheme_ids _destroy]],
       [link_research_product_license_urls_attributes: %i[id url name _destroy]],
       [link_research_product_metadata_license_urls_attributes: %i[id url name _destroy]],
-      [main_contact_attributes: %i[id first_name last_name email phone organisation position]],
+      [main_contact_attributes: %i[id first_name last_name email phone country_phone_code organisation position]],
       [sources_attributes: %i[id source_type eid _destroy]],
-      [public_contacts_attributes: %i[id first_name last_name email phone organisation position _destroy]],
+      [
+        public_contacts_attributes: %i[
+          id
+          first_name
+          last_name
+          email
+          phone
+          country_phone_code
+          organisation
+          position
+          _destroy
+        ]
+      ],
       [alternative_identifiers_attributes: %i[id identifier_type value _destroy]]
     ]
   end

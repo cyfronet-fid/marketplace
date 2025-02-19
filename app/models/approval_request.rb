@@ -30,6 +30,14 @@ class ApprovalRequest < ApplicationRecord
     approvable_type == "Provider" ? approvable_id : nil
   end
 
+  def eventable_identity
+    { approval_request_id: id }
+  end
+
+  def eventable_attributes
+    Set.new(%i[status last_action])
+  end
+
   def eventable_omses
     []
   end

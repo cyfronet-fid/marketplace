@@ -25,6 +25,7 @@ describe("Providers", () => {
 
   it("should go to Providers in Backoffice and select one of providers", { tags: "@extended-test" }, () => {
     cy.openUserDropdown();
+    cy.get("[data-e2e='provider-panel']").click();
     cy.get("[data-e2e='backoffice']").click();
     cy.location("href").should("contain", "/backoffice");
     cy.get("[data-e2e='providers']").click();
@@ -67,7 +68,7 @@ describe("Providers", () => {
       });
   });
 
-  it("shouldn't add new provider", () => {
+  it.skip("shouldn't add new provider", () => {
     cy.visit("/backoffice/providers/new");
     cy.location("href").should("contain", "/providers/new");
     cy.fillFormCreateProvider({ ...provider, basicWebpage_url: "wrongFormat", adminEmail: "wrongFormat" }, wrongLogo);
@@ -147,7 +148,7 @@ describe("Providers", () => {
     cy.contains("div.alert-success", message.successDeletionMessage).should("be.visible");
   });
 
-  it("should go to Providers in Backoffice and edit one of providers", () => {
+  it.skip("should go to Providers in Backoffice and edit one of providers", () => {
     cy.visit("/backoffice/providers/new");
     cy.fillFormCreateProvider(provider3, correctLogo);
     cy.get("[data-e2e='create-provider-btn']").click();

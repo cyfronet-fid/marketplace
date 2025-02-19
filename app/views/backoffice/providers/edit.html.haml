@@ -12,4 +12,4 @@
       unpublish: policy([:backoffice, @provider]).unpublish?,
       destroy: policy([:backoffice, @provider]).destroy?)
   .edit-provider
-    = render "form", provider: @provider, catalogues: @catalogues
+    = render "backoffice/providers/form", provider: @provider, catalogues: @catalogues

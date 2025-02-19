@@ -98,9 +98,21 @@ RSpec.describe Backoffice::ServicePolicy, backend: true do
           :upstream_id,
           :version,
           :resource_organisation_id,
-          [main_contact_attributes: %i[id first_name last_name email phone organisation position]],
+          [main_contact_attributes: %i[id first_name last_name email phone country_phone_code organisation position]],
           [sources_attributes: %i[id source_type eid _destroy]],
-          [public_contacts_attributes: %i[id first_name last_name email phone organisation position _destroy]],
+          [
+            public_contacts_attributes: %i[
+              id
+              first_name
+              last_name
+              email
+              phone
+              country_phone_code
+              organisation
+              position
+              _destroy
+            ]
+          ],
           [link_multimedia_urls_attributes: %i[id name url _destroy]],
           [link_use_cases_urls_attributes: %i[id name url _destroy]],
           [alternative_identifiers_attributes: %i[id identifier_type value _destroy]]

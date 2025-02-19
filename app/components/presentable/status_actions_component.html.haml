@@ -1,5 +1,5 @@
 .status-column
-  .status= @object.status
+  .status{ class: "#{@object.status}" }= @object.status
 .actions-column
   .service-buttons
     .btn-group.float-right
@@ -8,14 +8,12 @@
               send("backoffice_#{@object_type}_path", @object.id),
               class: "btn-special no-border delete-button",
               data: { turbo_confirm: action_prompt(@object_type, "remove"), turbo_method: :delete }
-
       - if @unpublish
         = link_to _("Unpublish"),
               unpublish_path,
               class: "btn-special ml-3",
               data: { turbo_confirm: action_prompt(@object_type, "unpublish"),
               turbo_method: :post }
-
       - if @publish
         = link_to _("Publish"),
               send("backoffice_#{@object_type}_publish_path", @object),

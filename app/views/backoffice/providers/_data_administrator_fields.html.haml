@@ -7,4 +7,4 @@
     = data_administrator_form.hidden_field :_destroy, "data-provider-target": "destroy"
     .text-right
       = link_to _("Delete administrator"), "#", id: "data-administrator-delete-#{data_administrator_form.index}",
-      class: "btn-sm disablable btn-danger", "data-action": "click->administrator#removeAdmin"
+      class: "remove-button", "data-action": "click->administrator#removeAdmin"

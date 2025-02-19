@@ -1,0 +1,24 @@
+= simple_form_for [:backoffice, provider],
+  url: backoffice_provider_wizard_path(params[:provider_id]),
+  html: { "data-controller": "administrator", "data-form-target": "form" },
+  method: :put do |f|
+  = render "backoffice/providers/steps/simple_navbar", provider: provider, f: f
+  .new-offer-form
+    .row
+      .col-lg-7.pl-0
+        .row.service-contact-emails{ data: { controller: "administrator", administrator_target: "dataAdministrators" } }
+          .col-12
+            %h4
+              = _("Provider's manager")
+            .offer-section-wrapper
+              = f.error :data_administrators, class: "invalid-feedback d-block"
+              = f.fields_for :data_administrators, disabled: provider.upstream_id.present?, multiple: true, as: :array,
+                wrapper_html: { "data-provider-target" => "dataAdministrator" } do |data_administrator_form|
+                = render_data_administrator(data_administrator_form, provider)
+              = link_to _("+ Add additional data administrator"), "#", class: "btn-simple",
+                      data: { provider_target: "addAdmin" ,
+                      action: "click->administrator#addAdmin",
+                      fields: f.fields_for(:data_administrators, DataAdministrator.new,
+                      child_index: "new_field") { |da_form| render_data_administrator(da_form, provider) } }
+        = render "backoffice/providers/steps/buttons", f: f
+      = render "backoffice/providers/more_information"

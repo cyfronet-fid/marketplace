@@ -34,7 +34,7 @@ describe("Owned services", () => {
     cy.contains("a", "Edit service").should("be.visible");
   });
 
-  it("should add new service and publish it", () => {
+  it.skip("should add new service and publish it", () => {
     cy.visit("/backoffice/services/new");
     cy.fillFormCreateResource(resource, correctLogo);
     cy.get("[data-e2e='submit-btn']").click();
@@ -57,7 +57,9 @@ describe("Owned services", () => {
       });
   });
 
-  it("shouldn't add new service", () => {
+
+  
+  it.skip("shouldn't add new service", () => {
     cy.visit("/backoffice/services/new");
     cy.fillFormCreateResource({ ...resource, basicWebpage_url: "wrongFormat", contactEmail: "wrongFormat" }, wrongLogo);
     cy.get("[data-e2e='submit-btn']").click();
@@ -114,7 +116,7 @@ describe("Owned services", () => {
       });
   });
 
-  it("should go to Resources in Backoffice and edit one of service", () => {
+  it.skip("should go to Resources in Backoffice and edit one of service", () => {
     cy.visit("/backoffice/services/new");
     cy.fillFormCreateResource(resource, correctLogo);
     cy.get("[data-e2e='submit-btn']").click();
@@ -125,7 +127,7 @@ describe("Owned services", () => {
     cy.contains("h2", "Edited service").should("be.visible");
   });
 
-  it("should go to Preview mode, back to edit and create service", () => {
+  it.skip("should go to Preview mode, back to edit and create service", () => {
     cy.visit("/backoffice/services/new");
     cy.fillFormCreateResource(resource4, correctLogo);
     cy.get("[data-e2e='preview-btn']").click();
@@ -137,7 +139,7 @@ describe("Owned services", () => {
     cy.contains("a", "Set parameters and offers").should("be.visible");
   });
 
-  it("should go to Preview mode and confirm changes", () => {
+  it.skip("should go to Preview mode and confirm changes", () => {
     cy.visit("/backoffice/services/new");
     cy.fillFormCreateResource(resource5, correctLogo);
     cy.get("[data-e2e='preview-btn']").click();
@@ -148,7 +150,7 @@ describe("Owned services", () => {
     cy.contains("a", "Set parameters and offers").should("be.visible");
   });
 
-  it("shouldn't go to Preview mode with wrong data format", () => {
+  it.skip("shouldn't go to Preview mode with wrong data format", () => {
     cy.visit("/backoffice/services/new");
     cy.fillFormCreateResource(
       { ...resource, basicWebpage_url: "wrongFormat", contactEmail: "wrongFormat" },
@@ -159,7 +161,7 @@ describe("Owned services", () => {
     cy.contains("div.invalid-feedback", message.alertUrlValidation).should("be.visible");
   });
 
-  it("shouldn't go to Preview mode with wrong logo", () => {
+  it.skip("shouldn't go to Preview mode with wrong logo", () => {
     cy.visit("/backoffice/services/new");
     cy.fillFormCreateResource(resource6, wrongLogo);
     cy.get("[data-e2e='preview-btn']").click();

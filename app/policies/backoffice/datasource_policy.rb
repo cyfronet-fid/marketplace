@@ -126,8 +126,20 @@ class Backoffice::DatasourcePolicy < Backoffice::ApplicationPolicy
       # Other
       :upstream_id,
       [sources_attributes: %i[id source_type eid _destroy]],
-      [main_contact_attributes: %i[id first_name last_name email phone organisation position]],
-      [public_contacts_attributes: %i[id first_name last_name email phone organisation position _destroy]],
+      [main_contact_attributes: %i[id first_name last_name email phone country_phone_code organisation position]],
+      [
+        public_contacts_attributes: %i[
+          id
+          first_name
+          last_name
+          email
+          phone
+          country_phone_code
+          organisation
+          position
+          _destroy
+        ]
+      ],
       [
         persistent_identity_systems_attributes: [
           :id,

@@ -129,6 +129,8 @@ Rails.application.routes.draw do
     resources :providers, constraints: { id: %r{[^/]+} } do
       resource :publish, controller: "providers/publishes", only: :create
       resource :unpublish, controller: "providers/unpublishes", only: :create
+      resource :wizard, controller: "providers/steps", only: %i[show update]
+      post :exit
     end
     resources :catalogues do
       resource :publish, controller: "catalogues/publishes", only: :create

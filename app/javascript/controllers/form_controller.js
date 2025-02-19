@@ -7,6 +7,7 @@ export default class extends Controller {
     "form",
     "input",
     "publicContact",
+    "mainContact",
     "destroy",
     "multimedia",
     "useCase",
@@ -29,6 +30,19 @@ export default class extends Controller {
     "national_roadmaps",
     "fixme",
     "tag_list",
+    "mcFirstName",
+    "mcLastName",
+    "mcEmail",
+    "mcPhone",
+    "mcPosition",
+    "mcCode",
+    "pcFirstName",
+    "pcLastName",
+    "pcEmail",
+    "pcPhone",
+    "pcPosition",
+    "pcCode",
+    "tab",
   ];
 
   initialize() {
@@ -51,6 +65,25 @@ export default class extends Controller {
     } else {
       this.fixmeTarget.style.position = "static";
     }
+  }
+
+  toggleTab(event) {
+    event.preventDefault();
+    this.tabTargets.forEach((el) => {
+      el.classList.remove("active");
+    });
+    const toDisplay = document.getElementById(event.target.dataset.target);
+    toDisplay.classList.add("active");
+  }
+
+  duplicateContact(event) {
+    event.preventDefault();
+    this.pcFirstNameTarget.value = this.mcFirstNameTarget.value;
+    this.pcLastNameTarget.value = this.mcLastNameTarget.value;
+    this.pcCodeTarget.value = this.mcCodeTarget.value;
+    this.pcPhoneTarget.value = this.mcPhoneTarget.value;
+    this.pcEmailTarget.value = this.mcEmailTarget.value;
+    this.pcPositionTarget.value = this.mcPositionTarget.value;
   }
 
   updateForm() {
@@ -155,6 +188,11 @@ export default class extends Controller {
 
     const child = this.formTarget.querySelector("[class*=" + childId + "]");
     this._hasInputValue(event.target) ? child.classList.remove("d-none") : child.classList.add("d-none");
+  }
+
+  goToSummary(event) {
+    console.log("DZIALA");
+    document.getElementById("summary-step-link").click();
   }
 
   _hasInputValue(input) {

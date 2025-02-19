@@ -6,7 +6,7 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
   include OmniauthHelper
   include ExternalServiceDataHelper
 
-  context "As a service portolio manager" do
+  context "As a coordinator" do
     let(:user) { create(:user, roles: [:coordinator]) }
 
     before { checkin_sign_in_as(user) }
@@ -382,8 +382,8 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
 
       fill_in "Name", with: "Offer"
       fill_in "Description", with: "desc"
-      select "order_required", from: "Order type"
 
+      click_on "Next"
       click_on "Create Offer"
 
       expect(page).to have_text("must be the same as in the service: open_access")
@@ -465,7 +465,7 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
         expect(offer.order_url).to_not eq("http://google.com")
       end
 
-      visit backoffice_service_path(service)
+      visit backoffice_service_offers_path(service)
 
       click_on "Edit service"
 
@@ -475,6 +475,8 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       fill_in "Order url", with: "http://google.com"
 
       click_on "Update Service"
+
+      sleep(1)
 
       service.reload
       service.offers.each do |offer|
@@ -609,7 +611,7 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
 
       visit edit_backoffice_service_offer_path(service, offer)
 
-      find("#summary-button").click
+      find("#step-five-button").click
 
       click_on "Delete Offer"
 
@@ -719,6 +721,7 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       expect(page).to have_field "service_main_contact_attributes_first_name", disabled: true
       expect(page).to have_field "service_main_contact_attributes_last_name", disabled: true
       expect(page).to have_field "service_main_contact_attributes_email", disabled: true
+      expect(page).to have_field "service_main_contact_attributes_country_phone_code", disabled: true
       expect(page).to have_field "service_main_contact_attributes_phone", disabled: true
       expect(page).to have_field "service_main_contact_attributes_organisation", disabled: true
       expect(page).to have_field "service_main_contact_attributes_position", disabled: true

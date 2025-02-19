@@ -45,6 +45,7 @@ RSpec.describe "Backoffice: manage providers", backend: true do
 
     it "should call permitted_attributes with provider with form upstream_id" do
       provider = create(:provider)
+
       new_params = { name: "test1111111", abbreviation: "test 111111" }
       put backoffice_provider_path(provider), params: { provider: { upstream_id: nil, **new_params } }
 

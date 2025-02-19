@@ -280,6 +280,7 @@ GEM
       mutex_m
       nkf
       rack (>= 2.0, < 4)
+    humanize (3.1.0)
     i18n (1.14.6)
       concurrent-ruby (~> 1.0)
     i18n_data (1.1.0)
@@ -763,6 +764,7 @@ DEPENDENCIES
   gretel
   haml-rails
   haml_lint
+  humanize
   i18n_data
   image_processing (>= 1.2)
   jira-ruby

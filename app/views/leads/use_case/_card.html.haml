@@ -3,7 +3,7 @@
     = yield :item_bar if content_for(:item_bar)
     .icon
       - if card.picture.attached? && card.picture.variable?
-        = image_tag card.picture.variant(resize: "86x111"), class: "intro-image"
+        // = image_tag card.picture.variant(resize: "86x111"), class: "intro-image"
       - else
         = image_tag "backoffice-03.svg", class: "intro-image"
       = link_to card.header.truncate(60), card.url, "data-toggle": "tooltip",
