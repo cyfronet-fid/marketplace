@@ -25,7 +25,7 @@ describe("Resources", () => {
     cy.location("href").should("contain", `/services/${openAccessResource.toLocaleLowerCase()}/summary`);
     cy.get("[data-e2e='add-new-project-btn']").click();
     cy.fillFormProject(project);
-    cy.checkCaptcha(1);
+    // cy.checkCaptcha(1);
     cy.contains("input", "Create new project").click();
     cy.contains("h3", "Project details").should("be.visible");
     cy.contains("button", "Pin!").click();
@@ -40,7 +40,7 @@ describe("Resources", () => {
     cy.get('[data-e2e="access-service-btn"]').click();
     cy.contains("a", "Pin to a project").click();
     cy.location("href").should("contain", "/summary");
-    cy.checkCaptcha();
+    // cy.checkCaptcha();
     cy.contains("button", "Pin!").click();
     cy.contains("div", "Project already pinned with this offer").should("be.visible");
   });
@@ -55,7 +55,7 @@ describe("Resources", () => {
     cy.location("href").should("contain", "/summary");
     cy.get("[data-e2e='add-new-project-btn']").click();
     cy.fillFormProject(project2);
-    cy.checkCaptcha(1);
+    // cy.checkCaptcha(1);
     cy.contains("input", "Create new project").click();
     cy.contains("h3", "Project details").should("be.visible");
     cy.contains("button", "Send access request").click();
@@ -71,7 +71,7 @@ describe("Resources", () => {
     cy.get('[data-e2e="access-service-btn"]').click();
     cy.contains("a", "Final details").click();
     cy.location("href").should("contain", "/summary");
-    cy.checkCaptcha();
+    // cy.checkCaptcha();
     cy.contains("button", "Send access request").click();
     cy.contains(".alert-success", "Offer ordered successfully").should("be.visible");
   });
@@ -94,7 +94,7 @@ describe("Resources", () => {
     cy.location("href").should("contain", `/services/${resourceWithFewOffer.toLocaleLowerCase()}/summary`);
     cy.get("[data-e2e='add-new-project-btn']").click();
     cy.fillFormProject(project2);
-    cy.checkCaptcha(1);
+    // cy.checkCaptcha(1);
     cy.get("input[name='commit']").click("bottom");
     cy.contains("h3", "Project details").should("be.visible");
     cy.contains("button", "Send access request").click();

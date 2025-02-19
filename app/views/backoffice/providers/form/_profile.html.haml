@@ -1,0 +1,37 @@
+.tab-pane{ id: "profile", class: "#{"active" if active}", role: "tabpanel", "aria-labelledby": "profile-header", "data-form-target": "tab" }
+  .card-body
+    .row
+      .col-lg-7.pl-0
+        = f.input :name, disabled: cant_edit(:name)
+        = f.input :abbreviation, disabled: cant_edit(:abbreviation)
+        = f.input :website, disabled: cant_edit(:website)
+        = f.input :logo
+        = f.input :legal_entity, as: :boolean, include_hidden: true,
+                    disabled: cant_edit(:legal_entity),
+                    boolean_style: :inline,
+                    input_html: {  data: { action: "change->form#refreshRelatedFields", "child-field": "legal_status" } }
+        = f.input :legal_status, disabled: cant_edit([legal_status_ids: []]),
+          collection: Vocabulary.where(type: "Vocabulary::LegalStatus"),
+          label_method: :name, value_method: :id,
+          input_html: { multiple: false, data: { choice: true } }
+        .row
+          .col-12
+            = hosting_legal_entity_input(f)
+        .row.service-contact-emails
+          -# rubocop:disable Style/BlockDelimiters
+          .col-12
+            %h3= _("Alternative Identifiers")
+            = f.error :alternative_identifiers, class: "invalid-feedback d-block"
+            = f.fields_for :alternative_identifiers, disabled: provider.upstream_id.present?, multiple: true, as: :array,
+                        wrapper_html: { "data-form-target" => "alternativeIdentifier" } do |identifier_form|
+              = render "backoffice/common_parts/form/alternative_identifier_fields",
+                      identifier_form: identifier_form, object: provider
+            = link_to _("Add additional Alternative Identifier"), "#", class: "btn btn-primary disablable",
+                      data: { "form-target": "addField",
+                      action: "click->form#addField",
+                      value: "alternativeIdentifier",
+                      fields: f.fields_for(:alternative_identifiers, AlternativeIdentifier.new,
+                      child_index: "new_field") { |idf| render "backoffice/common_parts/form/alternative_identifier_fields",
+                      identifier_form: idf, object: provider } }
+          -# rubocop:enable Style/BlockDelimiters
+      = render "backoffice/providers/more_information"

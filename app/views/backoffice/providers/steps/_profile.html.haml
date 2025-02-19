@@ -1,0 +1,21 @@
+= simple_form_for [:backoffice, provider],
+  url: backoffice_provider_wizard_path(params[:provider_id]),
+  html: { "data-form-target": "form" },
+  method: :put do |f|
+  = render "backoffice/providers/steps/simple_navbar", provider: provider, f: f
+  .new-offer-form
+    .row
+      .col-lg-7.pl-0
+        %h4 Provider's profile
+        .offer-section-wrapper
+          = f.input :name, label: "Provider's name"
+          = f.input :abbreviation
+          = f.input :description, rows: 10
+          = f.input :website, label: "Website URL"
+          = f.input :logo, label: "Logo"
+          = f.input :legal_entity, as: :boolean, include_hidden: true,
+                    disabled: cant_edit(:legal_entity),
+                    boolean_style: :inline,
+                    label: "Is the provider a legal entity?"
+        = render "backoffice/providers/steps/buttons", f: f
+      = render "backoffice/providers/more_information"

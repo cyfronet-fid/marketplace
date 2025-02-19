@@ -1,35 +1,21 @@
-.card.shadow-sm.rounded
-  %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(provider,
-              [:participating_countries, :affiliations, :networks])),
-                data: { toggle: "collapse", target: "#dependencies" },
-                aria: { expanded: true, controls: "dependencies" } }
-    .card-header.text-left{ id: "dependencies-header" }
-      .row
-        .col-10
-          = _("Dependencies")
-        .col-2.text-right
-          .collapse-icon
-            %i.fas.fa-chevron-down
-            %i.fas.fa-chevron-up
-.collapse{ id: "dependencies", "aria-labelledby": "dependencies-header",
-          "data-parent": "#accordion-form",
-          class: ("show" unless collapsed?(provider,
-              [:participating_countries, :affiliations, :networks])) }
+.tab-pane{ id: "dependencies", class: "#{"active" if active}", "aria-labelledby": "dependencies-header", role: "tabpanel",
+          "data-form-target": "tab" }
   .card-body
     .row
-      .col-12
+      .col-lg-7.pl-0
         = f.input :participating_countries, disabled: cant_edit([participating_countries: []]), as: :select,
                   collection: Country.options.map { |c| [ c.iso_short_name, "value" => c.alpha2 ] },
                   input_html: { data: { choice: true },  multiple: true }
-    .row
-      .col-12
-        = f.input :affiliations, multiple: true, input_html: { class: "form-control text optional" },
-              wrapper_html: { "data-form-target" => "affiliations" },
-              disabled: cant_edit([affiliations: []]), as: :array
-        = link_to_add_array_field("provider", "affiliations")
-        .mt-4
-        = f.association :networks, disabled: cant_edit([network_ids: []]),
-              input_html: { multiple: true, data: { choice: true } }
-        = f.input :catalogue_id, disabled: cant_edit(:catalogue_id),
-        input_html: { multiple: false, data: { choice: true } },
-        collection: catalogues, selected: provider.catalogue&.id || nil
+        .row
+          .col-12
+            = f.input :affiliations, multiple: true, input_html: { class: "form-control text optional" },
+                  wrapper_html: { "data-form-target" => "affiliations" },
+                  disabled: cant_edit([affiliations: []]), as: :array
+            = link_to_add_array_field("provider", "affiliations")
+            .mt-4
+            = f.association :networks, disabled: cant_edit([network_ids: []]),
+                  input_html: { multiple: true, data: { choice: true } }
+            = f.input :catalogue_id, disabled: cant_edit(:catalogue_id),
+            input_html: { multiple: false, data: { choice: true } },
+            collection: catalogues, selected: provider.catalogue&.id || nil
+      = render "backoffice/providers/more_information"

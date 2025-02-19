@@ -1,34 +1,37 @@
 # frozen_string_literal: true
 
 class Backoffice::ProviderPolicy < Backoffice::ApplicationPolicy
-  MP_INTERNAL_FIELDS = [:upstream_id, [sources_attributes: %i[id source_type eid _destroy]]].freeze
+  def index?
+    user.present?
+  end
 
   def show?
-    actionable?
+    user.present?
   end
 
   def new?
-    catalogue_access?
+    user.present?
   end
 
   def create?
-    catalogue_access?
+    user.present?
   end
 
   def edit?
-    access? && !record.deleted?
+    edit_permissions?
   end
 
   def update?
-    access? && !record.deleted?
+    edit_permissions?
   end
 
-  def destroy?
-    access? && !record.deleted?
+  def exit?
+    user.present?
   end
 
   def permitted_attributes
     attrs = [
+      :current_step,
       :name,
       :abbreviation,
       :website,
@@ -67,8 +70,20 @@ class Backoffice::ProviderPolicy < Backoffice::ApplicationPolicy
       [societal_grand_challenge_ids: []],
       [national_roadmaps: []],
       [sources_attributes: %i[id source_type eid _destroy]],
-      [main_contact_attributes: %i[id first_name last_name email phone organisation position]],
-      [public_contacts_attributes: %i[id first_name last_name email phone organisation position _destroy]],
+      [main_contact_attributes: %i[id first_name last_name email phone country_phone_code organisation position]],
+      [
+        public_contacts_attributes: %i[
+          id
+          first_name
+          last_name
+          email
+          phone
+          country_phone_code
+          organisation
+          position
+          _destroy
+        ]
+      ],
       [data_administrators_attributes: %i[id first_name last_name email _destroy]],
       [link_multimedia_urls_attributes: %i[id name url _destroy]],
       [alternative_identifiers_attributes: %i[id identifier_type value _destroy]]
@@ -80,7 +95,11 @@ class Backoffice::ProviderPolicy < Backoffice::ApplicationPolicy
   private
 
   def catalogue_access?
-    service_portfolio_manager? || user&.catalogue_owner?
+    user&.catalogue_owner?
+  end
+
+  def edit_permissions?
+    !record.deleted? && (coordinator? || record&.owned_by?(user))
   end
 
   def access?

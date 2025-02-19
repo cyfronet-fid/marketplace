@@ -1,26 +1,15 @@
-.card.shadow-sm.rounded
-  %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(provider, [:scientific_domains,
-                                                                                     :tag_list, :structure_types])),
-              data: { toggle: "collapse", target: "#classification" },
-              aria: { expanded: true, controls: "classification" } }
-    .card-header.text-left{ id: "classification-header" }
-      .row
-        .col-10
-          = _("Classification")
-        .col-2.text-right
-          .collapse-icon
-            %i.fas.fa-chevron-down
-            %i.fas.fa-chevron-up
 - sds = ScientificDomain.child_names.filter_map { |name, sd| [name, sd.id] if sd.parent.present? }
-.collapse{ id: "classification", "aria-labelledby": "classification-header",
-          "data-parent": "#accordion-form",
-          class: ("show" unless collapsed?(provider, [:scientific_domains, :tag_list, :structure_types])) }
+.tab-pane{ id: "classification", class: "#{"active" if active}",
+           "aria-labelledby": "classification-header", "data-form-target": "tab" }
   .card-body
-    = f.association :scientific_domains, disabled: cant_edit([scientific_domain_ids: []]),
-              input_html: { data: { choice: true } },
-              collection: sds,
-              label_method: :first, value_method: :second
-    = f.input :tag_list, input_html: { value: provider.tag_list.to_s, data: { choice: true } },
-    disabled: cant_edit(:tag_list)
-    = f.association :structure_types, disabled: cant_edit([structure_type_ids: []]),
-            input_html: { multiple: true, data: { choice: true } }
+    .row
+      .col-lg-7.pl-0
+        = f.association :scientific_domains, disabled: cant_edit([scientific_domain_ids: []]),
+                  input_html: { data: { choice: true } },
+                  collection: sds,
+                  label_method: :first, value_method: :second
+        = f.input :tag_list, input_html: { value: provider.tag_list.to_s, data: { choice: true } },
+        disabled: cant_edit(:tag_list)
+        = f.association :structure_types, disabled: cant_edit([structure_type_ids: []]),
+                input_html: { multiple: true, data: { choice: true } }
+      = render "backoffice/providers/more_information"
