@@ -12,13 +12,13 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 
 - Simplify project creation form (@wujuu)
-- Offer recommendations in project view (@wujuu)
 - Node information (@goreck888)
 - Environmental variable to hide recommendation panel (`SHOW_RECOMMENDATION_PANEL`) (@maria-j-k)
 - Unit to the constant offer parameter (@gorreck888)
 - `Save as draft` and `Duplicate` features for offer form (@maria-j-k) 
 - Publish/Suspend/Unpublish actions for multiple Providers and Catalogues (@goreck888, @jarekzet)
 - Approval panel for new providers (@goreck888)
+
 ### Changed
  
 - Unlock unpublish/suspend and delete actions for active providers and catalogues (@goreck888)
@@ -26,6 +26,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Other settings tab visible only for users with service portfolio manager role (@maria-j-k)
 - Logo in catalogues, services, providers is not required. Set default logo for each (@maria-j-k)
 - Status bar with actions buttons in detail and edit views for services, catalogues and providers (@maria-j-k)
+- role name `service_portfolio_manager` to `coordinator` (@goreck888)
 
 ### Fixed
 
@@ -44,6 +45,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 - Update dependencies (@goreck888)
 - Postgres update from 14.1 to 16.4 (@goreck888)
+- Remove most of services from database (@maria-j-k)
 
 ## [3.58.1]
 

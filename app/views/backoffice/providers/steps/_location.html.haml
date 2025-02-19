@@ -1,0 +1,21 @@
+= simple_form_for [:backoffice, provider],
+  url: backoffice_provider_wizard_path(params[:provider_id]),
+  html: { "data-form-target": "form" },
+  method: :put do |f|
+  = render "backoffice/providers/steps/simple_navbar", provider: provider, f: f
+  .new-offer-form
+    .row
+      .col-lg-7.pl-0
+        %h4 Address details
+        .offer-section-wrapper
+          = f.input :street_name_and_number, disabled: cant_edit(:street_name_and_number)
+          .row
+            .col-lg-7
+              = f.input :postal_code, disabled: cant_edit(:postal_code)
+            .col-lg-5
+              = f.input :city, disabled: cant_edit(:city)
+          = f.input :region, disabled: cant_edit(:region)
+          = f.input :country, disabled: cant_edit(:country), as: :select,
+              collection: Country.options.map { |c| [ c.iso_short_name, "value" => c.alpha2 ] }
+        = render "backoffice/providers/steps/buttons", f: f
+      = render "backoffice/providers/more_information"

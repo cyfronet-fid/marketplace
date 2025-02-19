@@ -1,25 +1,8 @@
-.card.shadow-sm.rounded
-  %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(provider,
-              [:esfri_types, :esfri_domains, :meril_scientific_domains, :areas_of_activity,
-              :societal_grand_challenges, :national_roadmaps])),
-                data: { toggle: "collapse", target: "#other" },
-                aria: { expanded: true, controls: "other" } }
-    .card-header.text-left{ id: "other-header" }
-      .row
-        .col-10
-          = _("Other")
-        .col-2.text-right
-          .collapse-icon
-            %i.fas.fa-chevron-down
-            %i.fas.fa-chevron-up
-.collapse{ id: "other", "aria-labelledby": "other-header",
-          "data-parent": "#accordion-form",
-          class: ("show" unless collapsed?(provider,
-              [:esfri_types, :esfri_domains, :meril_scientific_domains, :areas_of_activity,
-              :societal_grand_challenges, :national_roadmaps, :"sources.eid"])) }
+.tab-pane{ id: "other", class: "#{"active" if active}", "aria-labelledby": "other-header", role: "tabpanel",
+          "data-form-target": "tab" }
   .card-body
     .row
-      .col-12
+      .col-lg-7.pl-0
         .mt-4
         = f.association :esfri_domains, disabled: cant_edit([esfri_domain_ids: []]),
               input_html: { multiple: true, data: { choice: true } }
@@ -41,6 +24,7 @@
               input_html: { class: "form-control text optional" },
               wrapper_html: { "data-form-target" => "national_roadmaps" }, as: :array
         = link_to_add_array_field("provider", "national_roadmaps")
-    .row
-      .col-12.col-md-4.mt-4
-        = f.input :synchronized_at, as: :date_time_picker, disabled: true
+        .row
+          .col-12.col-md-4.mt-4
+            = f.input :synchronized_at, as: :date_time_picker, disabled: true
+      = render "backoffice/providers/more_information"

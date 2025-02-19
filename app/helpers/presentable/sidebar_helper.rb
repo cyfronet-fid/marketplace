@@ -6,7 +6,7 @@ module Presentable::SidebarHelper
   end
 
   def provider_sidebar_fields
-    [pid("Provider"), provider_scientific_categorisation, multimedia, address, provider_contacts]
+    [pid("Provider"), provider_managers, main_contact, provider_contacts]
   end
 
   private
@@ -42,11 +42,37 @@ module Presentable::SidebarHelper
     { name: "#{type} Identifiers", template: "object", clazz: "alternative_identifiers", fields: %w[value] }
   end
 
+  def main_contact
+    {
+      name: "main_contact",
+      template: "object",
+      fields: %w[first_name last_name email],
+      type: "object",
+      clazz: "main_contact",
+      nested: {
+        email: "email"
+      }
+    }
+  end
+
   def provider_contacts
     {
       name: "contact",
       template: "object",
-      fields: %w[full_name email phone position],
+      fields: %w[first_name last_name email],
+      type: "array",
+      clazz: "public_contacts",
+      nested: {
+        email: "email"
+      }
+    }
+  end
+
+  def provider_managers
+    {
+      name: "provider_managers",
+      template: "object",
+      fields: %w[first_name last_name email],
       type: "array",
       clazz: "public_contacts",
       nested: {

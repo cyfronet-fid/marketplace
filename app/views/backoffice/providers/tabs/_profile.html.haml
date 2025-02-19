@@ -1,0 +1,7 @@
+.new-offer-form
+  .row
+    .col-lg-7.pl-0
+      .offer-section-wrapper
+        = render Presentable::DescriptionComponent.new(object: provider,
+                                    question: nil,
+                                    preview: provider.suspended? || local_assigns[:preview])

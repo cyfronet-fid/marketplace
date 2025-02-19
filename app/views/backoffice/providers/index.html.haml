@@ -12,7 +12,7 @@
           = link_to _("+ Add new Provider"),
                   new_backoffice_provider_path,
                   class: "btn btn-primary",
-                  "data-e2e": "add-new-provider"
+                  data: { e2e: "add-new-provider" }
 
     = render "backoffice/approval_requests/index", approvals: @approval_requests if @approval_requests.present?
 
