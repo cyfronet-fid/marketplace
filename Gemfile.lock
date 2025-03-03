@@ -153,6 +153,7 @@ GEM
     crass (1.0.6)
     cssbundling-rails (1.4.1)
       railties (>= 6.0.0)
+    csv (3.3.2)
     database_cleaner (2.1.0)
       database_cleaner-active_record (>= 2, < 3)
     database_cleaner-active_record (2.2.0)
@@ -297,6 +298,8 @@ GEM
     irb (1.14.3)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
+    iso-639 (0.3.8)
+      csv
     jira-ruby (2.3.0)
       activesupport
       atlassian-jwt
@@ -734,8 +737,12 @@ GEM
       base64
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
+    wicked (2.0.0)
+      railties (>= 3.0.7)
     xpath (3.2.0)
       nokogiri (~> 1.8)
+    yajl-ffi (0.1.2)
+      ffi (~> 1.9)
     zeitwerk (2.7.1)
 
 PLATFORMS
@@ -774,6 +781,7 @@ DEPENDENCIES
   haml_lint
   i18n_data
   image_processing (>= 1.2)
+  iso-639
   jira-ruby
   jsbundling-rails
   json-schema
@@ -811,6 +819,7 @@ DEPENDENCIES
   rswag-specs
   rswag-ui
   ruby_parser
+  rubyzip
   savon (~> 2.15)
   scss_lint
   searchkick
@@ -837,6 +846,8 @@ DEPENDENCIES
   view_component (~> 2.83)
   web-console (~> 4.2)
   webmock
+  wicked
+  yajl-ffi (~> 0.1.2)
 
 RUBY VERSION
    ruby 3.3.6p108

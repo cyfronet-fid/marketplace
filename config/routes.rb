@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   end
 
   get "service_autocomplete", to: "services#autocomplete", as: :service_autocomplete
+  get "ror_autocomplete", to: "rors#autocomplete", as: :ror_autocomplete
+  get "rors", to: "rors#index", as: :rors
   get "/robots.txt" => "home#robots"
   post "user_action", to: "user_action#create"
   if ActiveModel::Type::Boolean.new.cast(ENV.fetch("MP_ENABLE_EXTERNAL_SEARCH", false))
@@ -208,6 +210,14 @@ as: :duplicate_offer
     service_path(service, params)
   end
 
+
+  resource :raid_project do
+    scope module: :raid_project do
+      resource :steps, only: [:update, :show], controller: "steps"
+    end
+  end
+
+  get "raid_projects", to: "raid_projects#index"
   get "errors/not_found"
   get "errors/unprocessable"
   get "errors/internal_server_error"

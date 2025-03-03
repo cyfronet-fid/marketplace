@@ -1,0 +1,25 @@
+%div
+= link_to _("+ Add main description"), "#", class: "add-link mt-4",
+        data: { "raid-project-target": "mainDescription", action: "click->raid-project#addDescription" }
+
+%div{ class: ("d-none" unless obj.main_description.text || obj.main_description.language), id: "main-description" }
+  = link_to "DELETE",  "#",
+    data: {  action: "click->raid-project#removeDescription" }
+  = f.fields_for :main_description do |main_description_f|
+    = main_description_f.input :text, label: "Main Description",
+      input_html: { "data-raid-project-target": "descriptionText" }
+    = main_description_f.input :language, as: :select,
+                  required: true,
+                  collection: Raid::Language.all,
+                  label_method: :english_name,
+                  value_method: :alpha3,
+                  include_hidden: true,
+                  input_html: { data: { choice: true },  multiple: false, "data-raid-project-target": "descriptionLanguage" }
+    = f.fields_for :alternative_descriptions, multiple: true, as: :array,
+            wrapper_html: { "data-raid-project-target" => "alternativeDescription" }  do |alternative_description_f|
+      = render_alternative_description_fields(alternative_description_f)
+    = link_to _("+ Add alternative description"), "#", class: "add-link mt-4",
+        data: { raid_project: { target: "addField" }, action: "click->raid-project#addField",
+        value: "alternativeDescriptions",
+        fields: f.fields_for(:alternative_descriptions, Raid::AlternativeDescription.new,
+        child_index:"new_field") { |ad_f| render_alternative_description_fields(ad_f) } }

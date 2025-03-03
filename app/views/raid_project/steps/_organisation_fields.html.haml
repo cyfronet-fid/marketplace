@@ -1,0 +1,22 @@
+%div{ "data-raid-project-target": "raidOrganisation" }
+  .contact
+    = organisation_f.hidden_field :id
+    = organisation_f.input :name,  placeholder: "Search your organisation...", label: "Organisation name",
+                            input_html: { "data-raid-project-target": "rorInput",
+                            "data-action": "keydown->raid-project#autocomplete" }
+    %ul.autocomplete-results{ "data-raid-project-target": "results" }
+    = organisation_f.input :pid, label: "ROR", readonly: true,
+                           input_html: { "data-raid-project-target": "rorValue"}
+    %h5
+      Position
+    = organisation_f.fields_for :position do |position_f|
+      = position_f.hidden_field :id
+      = position_f.input :pid, as: :select,
+          collection: set_organisation_roles.map { |k, v| [ k.capitalize, v ] },
+          input_html: { data: { choice: true },  multiple: false }, include_hidden: false
+      = position_f.input :start_date,  as: :date, html5: true
+      = position_f.input :end_date,  as: :date, html5: true
+    = organisation_f.hidden_field :_destroy, "data-raid-project-target": "destroy"
+    .text-right
+      = link_to _("Delete organisation"), "#", id: "organisation-delete-#{organisation_f.index}",
+      class: "delete-link", "data-action": "click->raid-project#removeField"

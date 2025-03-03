@@ -2,7 +2,7 @@ inherit_gem:
   prettier: rubocop.yml
 
 AllCops:
-  TargetRubyVersion: 3.3.0
+  TargetRubyVersion: 3.3.1
   NewCops: enable
   SuggestExtensions: true
   Exclude:
