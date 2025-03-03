@@ -7981,3 +7981,140 @@ abbr[title] {
   background: url("chevron-up.svg");
   transform: rotate(-180deg);
 }
+
+// scss-lint:disable all
+.new-form-style {
+  h4 {
+    color: $custom-form-16;
+    border: none;
+    text-transform: uppercase;
+    padding: 0;
+    margin: 0 0 13px;
+  }
+
+  h5 {
+    color: $custom-form-16;
+    border: none;
+    text-transform: uppercase;
+    padding: 0 0 5px;
+    margin: 30px 0 13px;
+    border-bottom: 1px solid $custom-form-16;
+  }
+  .raid-info-tooltip {
+    font-size: 100%;
+    background-color: grey;
+  }
+
+  .raid-error-tooltip {
+    font-size: 100%;
+    background-color: rgb(224, 126, 126);
+    color: red;
+  }
+
+  .offer-section-wrapper {
+    border: 1px solid $custom-form-17;
+    border-radius: 8px;
+    padding: 20px 24px 15px;
+
+    &.bottom-margin {
+      margin-bottom: 52px;
+    }
+
+    .buttons-selector {
+      &.bottom-margin {
+        margin-bottom: 40px;
+      }
+
+      fieldset {
+        display: flex;
+        row-gap: 20px;
+        margin: 0;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        legend {
+          width: 100%;
+          padding-bottom: 14px;
+        }
+
+        .form-check {
+          border-radius: 8px;
+          padding: 0;
+          border: 1px solid $custom-form-17;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          flex: 0 0 48.5%;
+
+          input {
+            display: none;
+          }
+
+          label {
+            margin: 0;
+            height: 62px;
+            text-align: center;
+            cursor: pointer;
+            color: $custom-form-16;
+            line-height: 62px;
+            font-size: 16px;
+            width: 100%;
+          }
+
+          &.active {
+            border: 1px solid $custom-12;
+            background: $secondary;
+          }
+        }
+      }
+    }
+
+    label,
+    legend {
+      font-weight: 600;
+    }
+
+    .choices.is-disabled .choices__inner {
+      background: $custom-form-18;
+    }
+
+    .choices__inner,
+    .form-control {
+      border-radius: 8px;
+      min-height: 53px;
+      margin-left: 0 !important;
+      background: $palette-white;
+    }
+
+    .form-control {
+      &.text {
+        padding-top: 10px;
+      }
+    }
+
+    .add-link {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 20px;
+      display: block;
+      margin: 0 0 20px 0;
+    }
+
+    .delete-link {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 20px;
+      display: block;
+      margin: 15px 0 20px 0;
+      background: url("icon-delete.svg") no-repeat;
+      padding: 0 0 0 26px;
+      float: right;
+    }
+  }
+
+  .raid_project_contributors_contact {
+    margin-right: 25px;
+  }
+}
+// scss-lint:enable all
