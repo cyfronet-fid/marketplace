@@ -6,7 +6,8 @@
       = render "projects/nav/raid_projects", raid_projects: @raid_projects
     .col-sm-9
       .container
-        %h2 My RAiD projects
+        .mb-4.pb-1.border-header
+          %h1 My RAiD projects
         - if @raid_projects.present?
           - @raid_projects.each do |project|
             = render "raid_projects/index_item_card", raid_project: project
