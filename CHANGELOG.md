@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.58.1] 2025-03-04
+
+### Changed
+- Default link to the Explore service (@goreck888)
+
+
 ## [3.58.0] 2025-01-22
 
 ### Added

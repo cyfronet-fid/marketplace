@@ -1,6 +1,6 @@
 default: &default
   tags: <%= ENV["EOSC_EXPLORE_TAGS"]&.split(",") || ["EOSC::Jupyter Notebook", "EOSC::Galaxy Workflow", "EOSC::Twitter Data"] %>
-  base_url: <%= ENV["EOSC_EXPLORE_BASE_URL"] || "https://beta.search.marketplace.eosc-portal.eu/" %>
+  base_url: <%= ENV["EOSC_EXPLORE_BASE_URL"] || "https://explore.sandbox.eosc-beyond.eu/" %>
   search_url: <%= ENV["EOSC_EXPLORE_SEARCH_URL"] || "\"search/all_collection?q=*&fq=eosc_if:\"" %>
   datasource_search_url: <%= ENV["EOSC_EXPLORE_DATASOURCE_SEARCH_URL"] || "\"search/all_collection?q=*&fq=datasource_pids:\"" %>
 
