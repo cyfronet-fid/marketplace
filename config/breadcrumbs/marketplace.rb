@@ -111,6 +111,21 @@ crumb :project_new do
   parent :projects
 end
 
+crumb :raid_projects do
+  link "RAiD projects", raid_projects_path
+  parent :marketplace_root
+end
+
+crumb :raid_project_new do
+  link "New RAiD project", new_raid_project_path
+  parent :raid_projects
+end
+
+crumb :raid_project_edit do |raid_project|
+  link "Update RAiD project", edit_raid_project_path(raid_project)
+  parent :raid_projects
+end
+
 crumb :project do |project|
   link project.name, project_path(project)
   parent :projects

@@ -1,0 +1,22 @@
+%div{ "data-raid-project-target": "alternativeTitle" }
+  .contact
+    = alternative_title_f.hidden_field :id
+    = alternative_title_f.input :text, label: "Alternative Title"
+    = alternative_title_f.input :language, as: :select,
+                  required: true,
+                  collection: Raid::Language.all,
+                  label_method: :english_name,
+                  value_method: :alpha3,
+                  include_hidden: true,
+                  input_html: { data: { choice: true },  multiple: false }
+    .row
+      .col-6
+        = alternative_title_f.input :start_date,  as: :date, html5: true, label: "Enter Project Title Start Date"
+        = alternative_title_f.error :start_date, id: "wrong date"
+      .col-6
+        = alternative_title_f.input :end_date,  as: :date, html5: true, label: "Predicted End Date"
+
+    = alternative_title_f.hidden_field :_destroy, "data-raid-project-target": "destroy"
+    .text-right
+      = link_to _("Delete title"), "#", id: "alternative-title-delete-#{alternative_title_f.index}",
+      class: "delete-link", "data-action": "click->raid-project#removeField"

@@ -1,0 +1,8 @@
+- content_for :title, _(wizard_title)
+- breadcrumb session[:wizard_action] == "create" ? :raid_project_new : :raid_project_edit
+.container
+  #form-container{ "data-controller" => "raid-project", "data-raid-project-url-value": ror_autocomplete_url }
+    .mb-5.pb-2.border-header
+      %h1.mr-auto.my-auto= _(wizard_title)
+    = turbo_frame_tag "raid-form" do
+      = render_next_step(step, @raid_project)

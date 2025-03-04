@@ -1,0 +1,24 @@
+= f.fields_for :main_title do |main_title_f|
+  = main_title_f.input :text, label: "Project Main Title"
+  = main_title_f.input :language, as: :select,
+                  required: true,
+                  collection: Raid::Language.all,
+                  label_method: :english_name,
+                  value_method: :alpha3,
+                  include_hidden: true,
+                  input_html: { data: { choice: true },  multiple: false }
+  .row
+    .col-6
+      = main_title_f.input :start_date,  as: :date, html5: true, label: "Enter Project Title Start Date"
+      = main_title_f.error :start_date, id: "wrong date"
+    .col-6
+      = main_title_f.input :end_date,  as: :date, html5: true, label: "Predicted End Date"
+  = f.fields_for :alternative_titles, multiple: true, as: :array,
+                wrapper_html: { "data-raid-project-target" => "alternativeTitle" }  do |alternative_title_f|
+    = render_alternative_title_fields(alternative_title_f)
+  = link_to _("+ Add alternative title"), "#", class: "add-link mt-2",
+            data: { raid_project: { target: "addField" },
+            action: "click->raid-project#addField",
+            value: "alternativeTitles",
+            fields: f.fields_for(:alternative_titles, Raid::AlternativeTitle.new,
+            child_index: "new_field") { |at_f| render_alternative_title_fields(at_f) } }
