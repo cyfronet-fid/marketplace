@@ -1,8 +1,8 @@
-.pt-4.pl-3.pr-3.rounded.service-box.service-detail.mb-4.project-heading
+.py-3.pl-4.pr-3.rounded.service-box.service-detail.mb-4.project-heading.raid-box
   .row
-    .col-md-9.d-flex.align-items-center
+    .col-md-11.d-flex.align-items-center
       .box-wrapper
-        %h1.flex-grow-1.text-break
+        %h3.flex-grow-1.text-break
           = link_to raid_project.main_title.text, edit_raid_project_path(id: raid_project.pid)
         .details-row
           - if raid_project.end_date

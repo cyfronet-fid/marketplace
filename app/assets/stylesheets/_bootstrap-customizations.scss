@@ -8001,16 +8001,16 @@ abbr[title] {
     padding: 0 0 5px;
     margin: 30px 0 13px;
     border-bottom: 1px solid $custom-form-16;
-  }
-  .raid-info-tooltip {
-    font-size: 100%;
-    background-color: grey;
+
+    &.grey-border {
+      border-bottom: 1px solid $custom-17;
+    }
   }
 
-  .raid-error-tooltip {
+  .raid-info-tooltip {
     font-size: 100%;
-    background-color: rgb(224, 126, 126);
-    color: red;
+    background-color: $custom-8;
+    border-radius: 8px;
   }
 
   .offer-section-wrapper {
@@ -8113,10 +8113,33 @@ abbr[title] {
       padding: 0 0 0 26px;
       float: right;
     }
+
+    .edit-link {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 20px;
+      display: block;
+      transition: all 0.24s ease;
+      margin: 0;
+      background: url("icon-edit.svg") no-repeat;
+      padding: 0 0 0 26px;
+      background-size: contain;
+      float: right;
+
+      &:hover {
+        padding-left: 24px;
+      }
+    }
   }
 
   .raid_project_contributors_contact {
     margin-right: 25px;
+  }
+}
+
+.raid-box {
+  &:hover {
+    background: $alert-bg;
   }
 }
 // scss-lint:enable all

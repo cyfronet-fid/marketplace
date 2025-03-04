@@ -3,7 +3,7 @@
     .col-6
       %h4 PROJECT LIFETIME
     .col-6
-      = link_to "EDIT", raid_project_steps_path(step: "step1")
+      = link_to "Edit", raid_project_steps_path(step: "step1"), class: "edit-link"
   - if raid_project.end_date.present?
     .row
       .col-6
@@ -21,10 +21,11 @@
     .col-6
       %h4 PROJECT TITLES
     .col-6
-      = link_to "EDIT", raid_project_steps_path(step: "step1")
+      = link_to "Edit", raid_project_steps_path(step: "step1"), class: "edit-link"
   .row
+    .col-12
+      %h5.mt-3.grey-border Main Title
     .col-6
-      %h5 Main Title
   = render "raid_project/steps/summary_titles_section", title: raid_project.main_title
   - if raid_project.alternative_titles.present?
     .row
@@ -38,10 +39,10 @@
       .col-6
         %h4 DESCRIPTION
       .col-6
-        = link_to "EDIT", raid_project_steps_path(step: "step1")
+        = link_to "Edit", raid_project_steps_path(step: "step1"), class: "edit-link"
     .row
-      .col-6
-        %h5 Main Description
+      .col-12
+        %h5.mt-3.grey-border Main Description
     = render "raid_project/steps/summary_description_section", description: raid_project.main_description
     - if raid_project.alternative_descriptions.present?
       .row
@@ -55,7 +56,7 @@
     .col-6
       %h4 CONTRIBUTORS
     .col-6
-      = link_to "EDIT", raid_project_steps_path(step: "step2")
+      = link_to "Edit", raid_project_steps_path(step: "step2"), class: "edit-link"
   - raid_project.contributors.each do |contributor|
     .offer-section-wrapper
       .row
@@ -104,7 +105,7 @@
       .col-6
         %h4 ORGANISATIONS
       .col-6
-        = link_to "EDIT", raid_project_steps_path(step: "step3")
+        = link_to "Edit", raid_project_steps_path(step: "step3"), class: "edit-link"
     - raid_project.raid_organisations.each do |organisation|
       .offer-section-wrapper
         .row
@@ -135,7 +136,7 @@
     .col-6
       %h4 ACCESS
     .col-6
-      = link_to "EDIT", raid_project_steps_path(step: "step4")
+      = link_to "Edit", raid_project_steps_path(step: "step4"), class: "edit-link"
   .row
     .col-6
       Access Type
