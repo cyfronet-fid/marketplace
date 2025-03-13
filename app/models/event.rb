@@ -24,24 +24,6 @@ class Event < ApplicationRecord
 
   after_commit :call_triggers, on: :create
 
-  def omses
-    default = OMS.find_by(default: true)
-    other = eventable.eventable_omses
-    default.blank? || other.any? { |oms| oms.id == default.id } ? other : other.push(default)
-  end
-
-  private
-
-  def updates_schema?
-    JSON::Validator.validate!(UPDATES_SCHEME, updates)
-  rescue JSON::Schema::ValidationError => e
-    errors.add(:updates, e.message)
-  end
-
-  def call_triggers
-    Event::CallTriggers.new(self).call
-  end
-
   UPDATES_SCHEME = {
     type: "array",
     items: {
@@ -60,4 +42,22 @@ class Event < ApplicationRecord
       required: %i[field before after]
     }
   }.freeze
+
+  def omses
+    default = OMS.find_by(default: true)
+    other = eventable.eventable_omses
+    default.blank? || other.any? { |oms| oms.id == default.id } ? other : other.push(default)
+  end
+
+  private
+
+  def updates_schema?
+    JSON::Validator.validate!(UPDATES_SCHEME, updates)
+  rescue JSON::Schema::ValidationError => e
+    errors.add(:updates, e.message)
+  end
+
+  def call_triggers
+    Event::CallTriggers.new(self).call
+  end
 end

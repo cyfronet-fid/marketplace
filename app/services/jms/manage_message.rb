@@ -99,7 +99,7 @@ class Jms::ManageMessage < ApplicationService
     warn "[WARN] eid #{e} for #{resource_type} has a wrong format - update disabled"
   end
 
-  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity:
+  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
   private
 

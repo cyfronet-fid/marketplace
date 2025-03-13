@@ -29,6 +29,35 @@ class OMS < ApplicationRecord
 
   validates_associated :trigger
 
+  CUSTOM_PARAMS_SCHEMA = {
+    type: "object",
+    oneOf: [
+      {
+        properties: {
+          mandatory: {
+            type: "boolean",
+            enum: [true]
+          },
+          default: {
+            type: "string"
+          }
+        },
+        additionalProperties: false,
+        required: %i[mandatory default]
+      },
+      {
+        properties: {
+          mandatory: {
+            type: "boolean",
+            enum: [false]
+          }
+        },
+        additionalProperties: false,
+        required: [:mandatory]
+      }
+    ]
+  }.freeze
+
   def mandatory_defaults
     custom_params&.filter { |_, v| v["mandatory"] }&.transform_values { |v| v["default"] }
   end
@@ -96,33 +125,4 @@ class OMS < ApplicationRecord
       )
     end
   end
-
-  CUSTOM_PARAMS_SCHEMA = {
-    type: "object",
-    oneOf: [
-      {
-        properties: {
-          mandatory: {
-            type: "boolean",
-            enum: [true]
-          },
-          default: {
-            type: "string"
-          }
-        },
-        additionalProperties: false,
-        required: %i[mandatory default]
-      },
-      {
-        properties: {
-          mandatory: {
-            type: "boolean",
-            enum: [false]
-          }
-        },
-        additionalProperties: false,
-        required: [:mandatory]
-      }
-    ]
-  }.freeze
 end

@@ -4,6 +4,8 @@ class ProjectsController < ApplicationController
   before_action :authenticate_user!
   before_action :find_and_authorize, only: %i[show edit update destroy]
 
+  IGNORED_ATTRIBUTES = %w[id name issue_key issue_status issue_key].freeze
+
   def index
     @projects = policy_scope(Project)
     redirect_to project_services_path(@projects.first) if @projects.count.positive?
@@ -60,7 +62,6 @@ class ProjectsController < ApplicationController
     Project.new(attributes.merge(status: :active))
   end
 
-  IGNORED_ATTRIBUTES = %w[id name issue_key issue_status issue_key].freeze
   def attributes
     source = params[:source] && current_user.projects.find_by(id: params[:source])
     if source
