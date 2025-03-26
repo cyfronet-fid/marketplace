@@ -565,6 +565,7 @@ RSpec.feature "Service ordering", end_user_frontend: true do
         fill_in "Reason to request access to the EOSC resources", with: "To pass test"
         within ".project_scientific_domains" do
           find("label", text: "Scientific domains").click
+          sleep(0.5)
           find("div", class: "choices__item", text: scientific_domain.name).click
         end
 

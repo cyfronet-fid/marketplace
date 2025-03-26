@@ -126,10 +126,9 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: ENV.fetch("ROOT_URL", nil) }
   config.action_mailer.delivery_method = :smtp
 
-  raise "Missing ASSET_HOST" if ENV["ASSET_HOST"].blank?
-  raise "Missing ASSET_PROTOCOL" if ENV["ASSET_PROTOCOL"].blank?
-  config.action_controller.asset_host = "#{ENV.fetch("ASSET_HOST", nil)}"
-  config.action_mailer.asset_host = "#{ENV.fetch("ASSET_PROTOCOL", nil)}://#{ENV.fetch("ASSET_HOST", nil)}"
+  host = "#{ENV.fetch("ASSET_HOST", "localhost")}"
+  config.action_controller.asset_host = host
+  config.action_mailer.asset_host = "#{ENV.fetch("ASSET_PROTOCOL", "http")}://#{host}"
 
   # SMTP settings
   config.action_mailer.smtp_settings = {

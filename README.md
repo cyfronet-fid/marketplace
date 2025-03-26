@@ -41,14 +41,28 @@ way.
 
 ### Fast Setup Guide
 Before running `./bin/setup` you need to:
-  * create file `config/master.key` with appropriate content in order to make `config/credentials.yml.enc` decryptable.
+  * create file `config/master.key` OR set delivered key in `RAILS_MASTER_KEY` ENV variable
+    with appropriate content in order to make `config/credentials.yml.enc` decryptable.
+  * If you don't have the master key, you need to generate a secret key for cookie encryption.
+    You can do this by running rails secret and setting the output as the value of the 
+    `SECRET_KEY_BASE` environment variable.
+  * If you don't have the master key, you will need to obtain credentials for Check-In 
+    or set up your own instance of Keycloak. 
+    Afterward, configure the `CHECKIN_HOST`, `CHECKIN_IDENTIFIER`, and `CHECKIN_SECRET` environment variables.
   * run docker services (i.e. postgresql, redis and elasticsearch) (see [docker compose](#docker-compose)).
 
 To set up the rest of the environment run `./bin/setup`. It will install bundler, foreman, 
 dependencies and setup databases (development and test).
 
 ### Manual Setup Guide
-* create file `config/master.key` with appropriate content in order to make `config/credentials.yml.enc` decryptable.
+* create file `config/master.key` OR set delivered key in `RAILS_MASTER_KEY` ENV variable
+  with appropriate content in order to make `config/credentials.yml.enc` decryptable.
+* If you don't have the master key, you need to generate a secret key for cookie encryption.
+  You can do this by running rails secret and setting the output as the value of the
+  `SECRET_KEY_BASE` environment variable.
+* If you don't have the master key, you will need to obtain credentials for Check-In
+  or set up your own instance of Keycloak.
+  Afterward, configure the `CHECKIN_HOST`, `CHECKIN_IDENTIFIER`, and `CHECKIN_SECRET` environment variables.
 * run docker services (i.e. postgresql, redis and elasticsearch) (see [docker compose](#docker-compose)).
 * run `bundle install`
 * create and seed databases (mp_development and mp_test):
@@ -57,8 +71,8 @@ dependencies and setup databases (development and test).
 * run reindexation `rake searchkick:reindex:all`
 * run the application `./bin/server`
 * build styles 
-  * `yarn build`
-  * `yarn build:css`
+    * `yarn build`
+    * `yarn build:css`
 * if `./bin/server` starts but fails and due to missing assets 
 `RAILS_ENV=development bin/rails assets:precompile`
 
@@ -113,9 +127,9 @@ Docker compose is used to manage background services: postgresql, Elasticsearch 
 The service containers are named `db`, `el` and `redis`, accordingly.
 Inspect the `docker-compose.yml` file for their configuration.
 
-- postgresql is used to store data,
-- Elasticsearch is used for full text resource search,
-- Redis is used to pass state to sidekiq (for running background jobs).
+* postgresql is used to store data,
+* Elasticsearch is used for full text resource search,
+* Redis is used to pass state to sidekiq (for running background jobs).
 
 To run all the services at once `$ docker compose up -d` (remove `-d` to run in foreground).
 You can later inspect logs `$ docker compose logs`.
@@ -166,11 +180,12 @@ Default period is 1 month,
 
 ## ReCaptcha
 
-ReCaptcha is now used in the ask resource question form. To work it needs to set 2 
-[env variables](#environmental-variables):
-`RECAPTCHA_SITE_KEY` and `RECAPTCHA_SECRET_KEY`. For test, development and internal docker instances
-values of these variables are stored in encrypted credentials.
-
+ReCaptcha is now used for verification in several forms.
+You can enable it by setting the `RECAPTCHA_ENABLED` environment variable to `true`.
+Then, if you want ReCaptcha to work, you need to set two environment variables:
+`RECAPTCHA_SITE_KEY` and `RECAPTCHA_SECRET_KEY`.
+For testing, development, and internal Docker instances,
+the values of these variables are stored in encrypted credentials (but you will need the master key).
 ## For Admins
 
 If you are an admin, who wants to integrate production instance of JIRA go to
@@ -211,71 +226,76 @@ ENV[VAR]
 
 We are currently using the following ENV variables:
 
-  * `MP_VERSION` (Optional) - the application's version (default taken from the file `./VERSION`)
-  * `PORT` (Optional) - http server port (default 5000)
-  * `CHECKIN_HOST` (Optional) - checkin IDP host (default `aai-dev.egi.eu`)
-  * `CHECKIN_SCOPE` (Optional) - checkin IDP scope (default `["openid", "profile", "email", "refeds_edu"]`)
-    multiple scopes separated by `,`, e.g `CHECKIN_SCOPE=openid,email`
-  * `CHECKIN_IDENTIFIER` (Optional) - checkin IDP identifier (default taken from
-    encrypted properties)
-  * `CHECKIN_SECRET` (Optional) - checkin IDP secret (default taken from
-    encrypted properties)
-  * `OIDC_AAI_NEW_API` - if you want to use old AAI endpoints, set it to false
-  * `ROOT_URL` (Optional) - root application URL (default
-    `http://localhost:#{ENV["PORT"] || 3000}` (when foreman is used to start
-    application 5000 ENV variable is set)
-  * `ELASTICSEARCH_URL` - elasticsearch url
-  * `RECOMMENDER_HOST` - address of the recommender system. For example: `http://127.0.0.1:5001`
-  * `RECOMMENDATION_ENGINE` - the name of the engine that is requested to serve recommendations when a request from MP is sent to the RS `/recommendations` endpoint. We currently support RL and NCF.
-  * `STORAGE_DIR` - active storage local dir (default set to
-    `RAILS_ROOT/storage`)
-  * `S3_STORAGE` - set true to change ActiveStorage to S3
-  * `S3_BUCKET` - active storage S3 bucket
-  * `S3_ENDPOINT` - active storage S3 endpoint
-  * `S3_ACCESS_KEY_ID` - active storage S3 access key
-  * `S3_SECRET_ACCESS_KEY` - active storage S3 secret access key
-  * `SMTP_ADDRESS` - smtp mail server address
-  * `SMTP_USERNAME` - smtp user name or email address
-  * `SMTP_PASSWORD` - smtp password
-  * `FROM_EMAIL` - from email (if not set `from@example.com` will be used)
-  * `GOOGLE_ANALYTICS` - google analytics key for GMT (if present than analytics
-    script is added into head section)
-  * `PORTAL_BASE_URL` - portal base URL used to generate footer and other static
-    links to EOSC portal
-  * `PROVIDERS_DASHBOARD_URL` - Provider's Dashboard URL used to create links to the provider's dashboard
-  * `USER_DASHBOARD_URL` User Dashboard URL for links in the landing page. Default is `https://my.eosc-portal.eu/`
-  * `ASSET_HOST` and `ASSET_PROTOCOL` - assets mailer config is mandatory
-    (e.g. ASSET_HOST = marketplace.eosc-portal.eu/ and ASSET_PROTOCOL = https )
-  * `RATE_AFTER_PERIOD` - number of days after which user can rate resource (default is set to 90 days)
-  * `ATTRIBUTES_DOCS_URL` - offer attributes definition documentation (external link)
-  * `AUTOLOGIN_DOMAIN` - parent domain in which the autologin scheme should work (see [autologin](#autologin-across-eosc-portaleu-domains))
-  * `EOSC_COMMONS_ENV` - EOSC commons environment type enum: 'production' | 'development'
-  * `EOSC_COMMONS_BASE_URL` - EOSC commons base URL: s3 instance + bucket 
-  * ENV Variables connected to JIRA integration are described in [JIRA integration manual](./docs/jira_integration.md)
-  * `MP_STOMP_CLIENT_NAME` (Optional) - stomp client name (default `MPClient`)
-  * `MP_STOMP_LOGIN` (Optional) - stomp client login (default from `credentials.stomp.login`)
-  * `MP_STOMP_PASS` (Optional) - stomp client password (default from `credentials.stomp.password`)
-  * `MP_STOMP_HOST` (Optional) - stomp client host (default from `credentials.stomp.host`)
-  * `MP_STOMP_DESTINATION` (Optional) - stomp client destination (default from `credentials.stomp.subscriber.destination`)
-  * `MP_STOMP_SSL` (Optional) - stomp connection SSL (default `false`)
-  * `MP_STOMP_PUBLISHER_ENABLED` (Optional) - turn on publishing with JMS if set to `true` (default `false`)
-  * `MP_STOMP_PUBLISHER_LOGGER_PATH` (Optional) - path to the JMS log file (default `"RAILS_ROOT/log/jms.publisher.log"`)
-  * `MP_STOMP_PUBLISHER_TOPIC` (Optional) - topic of a new message to be published (default `credentials.stomp.publisher.topic`)
-  * `MP_STOMP_PUBLISHER_MP_DB_EVENTS_TOPIC` (Optional) - topic for publishing database create, update and destroy events (default `mp_db_events`)
-  * `MP_STOMP_PUBLISHER_USER_ACTIONS_TOPIC` (Optional) - topic for publishing user actions events(default `user_actions`)
-  * `MP_ENABLE_EXTERNAL_SEARCH` - should be set to `1` if external search is used. If set top bars will be replaced
-  * `SEARCH_SERVICE_BASE_URL` - default: `https://search.marketplace.eosc-portal.eu`
-  * `USER_ACTIONS_TARGET` (Optional) - target to which user_actions should be published (options: `all, recommender, databus`) (default `all`)
-    * For the `databus` target to work you must also enable JMS publishing, i.e. set `MP_STOMP_PUBLISHER_ENABLED=true`.  
-  * `ESS_UPDATE_ENABLED` (Optional) - turn on updating ESS if set to `true` (default `false`)
-  * `ESS_UPDATE_URL` (Optional) - URL to which service updates will be sent (default `http://localhost:8983/solr/marketplace/update`)
-  * `ESS_UPDATE_TIMEOUT` (Optional) - ESS update HTTP client timeout in seconds (default `1`)
-  * `ESS_RESOURCE_CACHE_TTL` (Optional) - TTL for caching resources for `ess/` API endpoints (default `60` (seconds))
-  * **Provider importer**
-    * `IMPORTER_AAI_BASE_URL` (Optional) - Base URL used to generate access token from a refresh token (default `ENV["CHECKIN_HOST"]` or "aai.eosc-portal.eu")
-    * `IMPORTER_AAI_REFRESH_TOKEN` - The refresh token generated for specific instance of AAI
-    * `IMPORTER_AAI_CLIENT_ID` (Optional) - The client id for the generated refresh token (default `ENV["CHECKIN_IDENTIFIER"]` or `Rails.application.credentials.checkin[:identifier]`)
-  * `SHOW_RECOMMENDATION_PANEL` - Boolean (true/false) indicating if recommendation panel should be visible or not. Defaults to true
+* `RAILS_MASTER_KEY` (Optional) - if you want to use encrypted credentials in development, 
+  you need to set the provided value
+* `MP_VERSION` (Optional) - the application's version (default taken from the file `./VERSION`)
+* `PORT` (Optional) - http server port (default 5000)
+* `CHECKIN_HOST` (Optional) - checkin IDP host (default `aai-dev.egi.eu`)
+* `CHECKIN_SCOPE` (Optional) - checkin IDP scope (default `["openid", "profile", "email", "refeds_edu"]`)
+  multiple scopes separated by `,`, e.g `CHECKIN_SCOPE=openid,email`
+* `CHECKIN_IDENTIFIER` (Optional if you have master key) - checkin IDP identifier (default taken from
+  encrypted properties)
+* `CHECKIN_SECRET` (Optional if you have master key) - checkin IDP secret (default taken from
+  encrypted properties)
+* `OIDC_AAI_NEW_API` - if you want to use old AAI endpoints, set it to false
+* `ROOT_URL` (Optional) - root application URL (default
+  `http://localhost:#{ENV["PORT"] || 3000}` (when foreman is used to start
+  application 5000 ENV variable is set)
+* `ELASTICSEARCH_URL` - elasticsearch url
+* `RECOMMENDER_HOST` - address of the recommender system. For example: `http://127.0.0.1:5001`
+* `RECOMMENDATION_ENGINE` - the name of the engine that is requested to serve recommendations when a request from MP is sent to the RS `/recommendations` endpoint. We currently support RL and NCF.
+* `STORAGE_DIR` - active storage local dir (default set to
+  `RAILS_ROOT/storage`)
+* `S3_STORAGE` - set true to change ActiveStorage to S3
+* `S3_BUCKET` - active storage S3 bucket
+* `S3_ENDPOINT` - active storage S3 endpoint
+* `S3_ACCESS_KEY_ID` - active storage S3 access key
+* `S3_SECRET_ACCESS_KEY` - active storage S3 secret access key
+* `SMTP_ADDRESS` - smtp mail server address
+* `SMTP_USERNAME` - smtp user name or email address
+* `SMTP_PASSWORD` - smtp password
+* `FROM_EMAIL` - from email (if not set `from@example.com` will be used)
+* `GOOGLE_ANALYTICS` - google analytics key for GMT (if present than analytics
+  script is added into head section)
+* `PORTAL_BASE_URL` - portal base URL used to generate footer and other static
+  links to EOSC portal
+* `PROVIDERS_DASHBOARD_URL` - Provider's Dashboard URL used to create links to the provider's dashboard
+* `USER_DASHBOARD_URL` User Dashboard URL for links in the landing page. Default is `https://my.eosc-portal.eu/`
+* `ASSET_HOST` and `ASSET_PROTOCOL` - assets mailer config is mandatory
+  (e.g. ASSET_HOST = marketplace.eosc-portal.eu/ and ASSET_PROTOCOL = https )
+* `RATE_AFTER_PERIOD` - number of days after which user can rate resource (default is set to 90 days)
+* `ATTRIBUTES_DOCS_URL` - offer attributes definition documentation (external link)
+* `AUTOLOGIN_DOMAIN` - parent domain in which the autologin scheme should work (see [autologin](#autologin-across-eosc-portaleu-domains))
+* `EOSC_COMMONS_ENV` - EOSC commons environment type enum: 'production' | 'development'
+* `EOSC_COMMONS_BASE_URL` - EOSC commons base URL: s3 instance + bucket 
+* ENV Variables connected to JIRA integration are described in [JIRA integration manual](./docs/jira_integration.md)
+* `MP_STOMP_CLIENT_NAME` (Optional) - stomp client name (default `MPClient`)
+* `MP_STOMP_LOGIN` (Optional) - stomp client login (default from `credentials.stomp.login`)
+* `MP_STOMP_PASS` (Optional) - stomp client password (default from `credentials.stomp.password`)
+* `MP_STOMP_HOST` (Optional) - stomp client host (default from `credentials.stomp.host`)
+* `MP_STOMP_DESTINATION` (Optional) - stomp client destination (default from `credentials.stomp.subscriber.destination`)
+* `MP_STOMP_SSL` (Optional) - stomp connection SSL (default `false`)
+* `MP_STOMP_PUBLISHER_ENABLED` (Optional) - turn on publishing with JMS if set to `true` (default `false`)
+* `MP_STOMP_PUBLISHER_LOGGER_PATH` (Optional) - path to the JMS log file (default `"RAILS_ROOT/log/jms.publisher.log"`)
+* `MP_STOMP_PUBLISHER_TOPIC` (Optional) - topic of a new message to be published (default `credentials.stomp.publisher.topic`)
+* `MP_STOMP_PUBLISHER_MP_DB_EVENTS_TOPIC` (Optional) - topic for publishing database create, update and destroy events (default `mp_db_events`)
+* `MP_STOMP_PUBLISHER_USER_ACTIONS_TOPIC` (Optional) - topic for publishing user actions events(default `user_actions`)
+* `MP_ENABLE_EXTERNAL_SEARCH` - should be set to `1` if external search is used. If set top bars will be replaced
+* `SEARCH_SERVICE_BASE_URL` - default: `https://search.marketplace.eosc-portal.eu`
+* `USER_ACTIONS_TARGET` (Optional) - target to which user_actions should be published (options: `all, recommender, databus`) (default `all`)
+  * For the `databus` target to work you must also enable JMS publishing, i.e. set `MP_STOMP_PUBLISHER_ENABLED=true`.  
+* `ESS_UPDATE_ENABLED` (Optional) - turn on updating ESS if set to `true` (default `false`)
+* `ESS_UPDATE_URL` (Optional) - URL to which service updates will be sent (default `http://localhost:8983/solr/marketplace/update`)
+* `ESS_UPDATE_TIMEOUT` (Optional) - ESS update HTTP client timeout in seconds (default `1`)
+* `ESS_RESOURCE_CACHE_TTL` (Optional) - TTL for caching resources for `ess/` API endpoints (default `60` (seconds))
+* `SHOW_RECOMMENDATION_PANEL` - Boolean (true/false) indicating if recommendation panel should be visible or not. Defaults to true
+
+**Provider importer**
+
+* `IMPORTER_AAI_BASE_URL` (Optional) - Base URL used to generate access token from a refresh token (default `ENV["CHECKIN_HOST"]` or "aai.eosc-portal.eu")
+* `IMPORTER_AAI_REFRESH_TOKEN` - The refresh token generated for specific instance of AAI
+* `IMPORTER_AAI_CLIENT_ID` (Optional) - The client id for the generated refresh token (default `ENV["CHECKIN_IDENTIFIER"]` or `Rails.application.credentials.checkin[:identifier]`)
+
 
 ## Commits
 

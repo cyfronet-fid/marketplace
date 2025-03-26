@@ -478,6 +478,7 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
 
       service.reload
       service.offers.each do |offer|
+        offer.reload
         expect(offer.order_type).to eq("open_access")
         expect(offer.order_url).to eq("http://google.com")
       end

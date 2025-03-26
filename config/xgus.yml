@@ -1,7 +1,7 @@
 default: &default
-  username: <%= ENV["MP_XGUS_USERNAME"] || Rails.application.credentials.xgus.dig(:username) || "''" %>
-  password: <%= ENV["MP_XGUS_PASSWORD"] || Rails.application.credentials.xgus.dig(:password) || "''" %>
-  wsdl: <%= ENV["MP_XGUS_WSDL"] || Rails.application.credentials.xgus.dig(:wsdl) || "''" %>
+  username: <%= ENV.fetch("MP_XGUS_USERNAME", "''") %>
+  password: <%= ENV.fetch("MP_XGUS_PASSWORD", "''") %>
+  wsdl: <%= ENV.fetch("MP_XGUS_WSDL", "''") %>
 
 test:
   <<: *default

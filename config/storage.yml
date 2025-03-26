@@ -8,10 +8,10 @@ local:
 
 s3:
   service: S3
-  endpoint: <%= ENV["S3_ENDPOINT"] || "https://s3.cloud.cyfronet.pl/" %>
-  access_key_id: <%= ENV["S3_ACCESS_KEY_ID"] || Rails.application.credentials.dig(:s3, :access_key_id) %>
-  secret_access_key: <%= ENV["S3_SECRET_ACCESS_KEY"] || Rails.application.credentials.dig(:s3, :secret_access_key) %>
-  bucket: <%= ENV["S3_BUCKET"] || "marketplace-dev" %>
+  endpoint: <%= ENV.fetch("S3_ENDPOINT", "https://s3.cloud.cyfronet.pl/") %>
+  access_key_id: <%= ENV.fetch("S3_ACCESS_KEY_ID", nil) %>
+  secret_access_key: <%= ENV.fetch("S3_SECRET_ACCESS_KEY", nil) %>
+  bucket: <%= ENV.fetch("S3_BUCKET", "marketplace-dev") %>
   region: ack-cyfronet
 
 # Use rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)

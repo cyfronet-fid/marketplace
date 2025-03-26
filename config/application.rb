@@ -68,15 +68,13 @@ module Mp
     config.providers_dashboard_url = ENV.fetch("PROVIDERS_DASHBOARD_URL", "https://beta.providers.eosc-portal.eu")
     config.google_api_key_path = ENV.fetch("GOOGLE_AUTH_KEY_FILEPATH", "config/google_api_key.json")
     config.monitoring_data_host = ENV.fetch("MONITORING_DATA_URL", "https://api.devel.argo.grnet.gr/api")
-    config.monitoring_data_token = ENV.fetch("MONITORING_DATA_TOKEN",
-                                             Rails.application.credentials.monitoring_data[:access_token])
-    config.monitoring_data_ui_url = ENV.fetch("MONITORING_DATA_UI_URL", "https://eosc.ui.devel.argo.grnet.gr")
-    config.monitoring_data_path = ENV.fetch("MONITORING_DATA_UI_PATH",
-                                            "eosc/report-ar-group-details/Default/SERVICEGROUPS/")
-    config.similar_services_host = ENV.fetch("SIMILAR_SERVICES_HOST", "http://149.156.182.238:8081")
+    config.monitoring_data_token = ENV.fetch("MONITORING_DATA_TOKEN", nil)
+    config.monitoring_data_ui_url = ENV.fetch("MONITORING_DATA_UI_URL", nil)
+    config.monitoring_data_path = ENV.fetch("MONITORING_DATA_UI_PATH", nil)
+    config.similar_services_host = ENV.fetch("SIMILAR_SERVICES_HOST", nil)
     config.recommender_host = ENV.fetch("RECOMMENDER_HOST", nil)
     config.recommendation_engine = ENV.fetch("RECOMMENDATION_ENGINE", "RL")
-    config.auth_mock = ENV.fetch("AUTH_MOCK", nil)
+    config.auth_mock = ENV.fetch("AUTH_MOCK", false)
     config.eosc_commons_base_url = ENV.fetch("EOSC_COMMONS_BASE_URL",
                                              "https://s3.cloud.cyfronet.pl/eosc-portal-common/")
     config.eosc_commons_env = ENV.fetch("EOSC_COMMONS_ENV", "production")

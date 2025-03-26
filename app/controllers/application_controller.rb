@@ -107,4 +107,9 @@ class ApplicationController < ActionController::Base
       []
     end
   end
+
+  def verify_recaptcha(options = {})
+    return true unless Rails.application.config.recaptcha_enabled
+    super
+  end
 end

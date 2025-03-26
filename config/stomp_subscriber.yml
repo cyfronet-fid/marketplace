@@ -1,9 +1,9 @@
 default: &default
   client-name: <%= ENV["MP_STOMP_CLIENT_NAME"] || "'MPClient'" %>
-  login: <%= ENV["MP_STOMP_LOGIN"] || Rails.application.credentials.stomp.dig(:login) || "''" %>
-  password: <%= ENV["MP_STOMP_PASS"] || Rails.application.credentials.stomp.dig(:password) || "''" %>
-  host: <%= ENV["MP_STOMP_HOST"] || Rails.application.credentials.stomp.dig(:host) || "''" %>
-  destination: <%= ENV["MP_STOMP_DESTINATION"] || Rails.application.credentials.stomp.dig(:subscriber, :destination) || "''" %>
+  login: <%= ENV["MP_STOMP_LOGIN"] || "''" %>
+  password: <%= ENV["MP_STOMP_PASS"] || "''" %>
+  host: <%= ENV["MP_STOMP_HOST"] || "''" %>
+  destination: <%= ENV["MP_STOMP_DESTINATION"] || "''" %>
   mp-db-events-destination: <%= ENV["MP_STOMP_PUBLISHER_MP_DB_EVENTS_TOPIC"] || "mp_db_events" %>
   user-actions-destination: <%= ENV["MP_STOMP_PUBLISHER_USER_ACTIONS_TOPIC"] || "user_actions" %>
   ssl-enabled: <%= ENV["MP_STOMP_SSL"] || false %>

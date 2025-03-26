@@ -9,7 +9,7 @@ Devise.setup do |config|
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
   # config.secret_key = 'a6d3c687f41d5ba8b5f84d17b444ef4af8b4cc1bc2463cac9b1dcd4296f8c3dd86352bee5477c6c6eaf99855726432486d267139cbfc10207409994238f54ca4'
-  config.secret_key = Rails.application.credentials.secret_key_base
+  config.secret_key = ENV.fetch("SECRET_KEY_BASE", Rails.application.credentials.secret_key_base)
 
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
@@ -259,8 +259,8 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
-  checkin_host = ENV["CHECKIN_HOST"] || "aai.eosc-portal.eu"
-  root_url = ENV["ROOT_URL"] || "http://localhost:#{ENV["PORT"] || 3000}"
+  checkin_host = ENV.fetch("CHECKIN_HOST", "aai.eosc-portal.eu")
+  root_url = ENV.fetch("ROOT_URL", "http://localhost:#{ENV["PORT"] || 3000}")
   old_endpoints = {
     issuer: "oidc",
     authorize: "/oidc/authorize",
@@ -275,27 +275,27 @@ Devise.setup do |config|
     userinfo: "/auth/realms/core/protocol/openid-connect/userinfo",
     jwk: "/auth/realms/core/protocol/openid-connect/certs"
   }
+  creds = Rails.application.credentials
   endpoints = ENV.fetch("OIDC_AAI_NEW_API", true) ? new_endpoints : old_endpoints
   scope = ENV["CHECKIN_SCOPE"].nil? ? %w[openid profile email aarc offline_access] : ENV["CHECKIN_SCOPE"].split(",")
   config.omniauth :openid_connect,
                   name: :checkin,
                   scope: scope,
                   response_type: :code,
-                  issuer: ENV["CHECKIN_ISSUER_URI"] || "https://#{checkin_host}/#{endpoints[:issuer]}",
+                  issuer: ENV.fetch("CHECKIN_ISSUER_URI", "https://#{checkin_host}/#{endpoints[:issuer]}"),
                   discovery: true,
                   pkce: ENV["CHECKIN_PKCE"] || false,
                   client_options: {
                     port: nil,
                     scheme: "https",
                     host: checkin_host,
-                    identifier: ENV["CHECKIN_IDENTIFIER"] || Rails.application.credentials.checkin[:identifier],
-                    secret: ENV["CHECKIN_SECRET"] || Rails.application.credentials.checkin[:secret],
+                    identifier: ENV.fetch("CHECKIN_IDENTIFIER", creds.blank? ? "" : Rails.application.credentials.checkin[:identifier]),
+                    secret: ENV.fetch("CHECKIN_SECRET", creds.blank? ? "" : Rails.application.credentials.checkin[:secret]),
                     redirect_uri: ENV["REDIRECT_URI"] ||
                                   "#{root_url}/users/auth/checkin/callback",
-                    authorization_endpoint: ENV["CHECKIN_AUTHORIZATION_ENDPOINT"] || endpoints[:authorize],
-                    token_endpoint: ENV["CHECKIN_TOKEN_ENDPOINT"] || endpoints[:token],
-                    userinfo_endpoint: ENV["CHECKIN_USERINFO_ENDPOINT"] || endpoints[:userinfo],
-                    jwks_uri: ENV["CHECKIN_JWKS_ENDPOINT"] || endpoints[:jwk]
+                    authorization_endpoint: ENV.fetch("CHECKIN_AUTHORIZATION_ENDPOINT", endpoints[:authorize]),
+                    token_endpoint: ENV.fetch("CHECKIN_TOKEN_ENDPOINT", endpoints[:token]),
+                    userinfo_endpoint: ENV.fetch("CHECKIN_USERINFO_ENDPOINT", endpoints[:userinfo]),
                   }
 
 

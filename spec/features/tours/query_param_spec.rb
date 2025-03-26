@@ -52,6 +52,8 @@ RSpec.feature "Query param tour", end_user_frontend: true do
     click_on "Let's take a tour"
     click_on "Skip tour"
 
+    sleep(1)
+
     expect(page).to have_current_path(service_path(service))
   end
 

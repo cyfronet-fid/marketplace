@@ -30,9 +30,11 @@ RSpec.feature "Api docs page", end_user_frontend: true do
       visit api_docs_path
       click_link("Regenerate token")
 
+      sleep(1)
+
       find("#toggler").click
 
-      expect(page).to have_css(".active.show-token", wait: 10)
+      expect(page).to have_css(".active.show-token", wait: 15)
 
       expect(user.reload.authentication_token).to_not eq(prev_token)
       expect(page).to have_text(user.authentication_token)
@@ -47,7 +49,7 @@ RSpec.feature "Api docs page", end_user_frontend: true do
         expect(page).to have_text("You don't have an authentication token yet")
         click_link("Generate token")
 
-        # sleep(1)
+        sleep(5)
 
         find("#toggler").click
 

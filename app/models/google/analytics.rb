@@ -12,7 +12,7 @@ class Google::Analytics
     @view_id = google_view_id
     login if @credentials.present?
   rescue StandardError => e
-    print("[WARN] Cannot connect to GA API. Error: #{e}")
+    Rails.logger.warn "[WARN] Cannot connect to GA API. Error: #{e}"
   end
 
   def login
@@ -39,6 +39,6 @@ class Google::Analytics
   end
 
   def google_view_id
-    ENV["GOOGLE_VIEW_ID"] || Rails.application.credentials.google[:view_id]
+    ENV.fetch(["GOOGLE_VIEW_ID"], "")
   end
 end

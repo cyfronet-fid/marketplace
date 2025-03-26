@@ -31,7 +31,7 @@
 .byebug_history
 
 # Ignore master key for decrypting credentials and more.
-master.key
+master.key*
 google_api*.json
 /public/packs
 /public/packs-test
