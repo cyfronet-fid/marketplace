@@ -13,7 +13,7 @@ class Offer::Update < Offer::ApplicationService
     if effective_params["primary_oms_id"] && OMS.find(effective_params["primary_oms_id"])&.custom_params.blank?
       effective_params["oms_params"] = {}
     end
-    @offer.update(effective_params)
+    @offer.update!(effective_params)
     unbundle! if !@offer.published? && public_before
     @offer.service.reindex
     @offer.valid?

@@ -21,6 +21,7 @@ RSpec.feature "Help" do
     first_section = create(:help_section, position: 1)
 
     visit help_path
+    sleep(1)
 
     expect(page.body.index(first_section.title)).to be < page.body.index(second_section.title)
     expect(page.body.index(second_section.title)).to be < page.body.index(third_section.title)
@@ -34,6 +35,7 @@ RSpec.feature "Help" do
     first_item = create(:help_item, help_section: section, position: 1)
 
     visit help_path
+    sleep(1)
 
     expect(page.body.index(first_item.title)).to be < page.body.index(second_item.title)
     expect(page.body.index(second_item.title)).to be < page.body.index(third_item.title)

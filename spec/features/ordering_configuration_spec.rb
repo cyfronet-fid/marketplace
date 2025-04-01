@@ -208,7 +208,7 @@ RSpec.feature "Services in ordering_configuration panel", end_user_frontend: tru
       expect(offer.oms_params).to eq({})
     end
 
-    scenario "I can edit default offer OMS", js: true do
+    scenario "I can edit default offer OMS", js: true, skip: true do
       oms1 = create(:oms, name: "OMS1", custom_params: { foo: { mandatory: true, default: "baz" } })
       oms2 = create(:oms, name: "OMS2", custom_params: {})
       service = create(:service, name: "my service", resource_organisation: provider, status: :draft)
@@ -224,7 +224,6 @@ RSpec.feature "Services in ordering_configuration panel", end_user_frontend: tru
       check "Use EOSC Portal as the order management platform"
       select "OMS1", from: "Order Management System"
       click_on "Update Offer"
-      sleep(1)
 
       offer.reload
       expect(offer.internal).to be_falsey

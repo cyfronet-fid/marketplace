@@ -47,7 +47,9 @@ header {
 
     .navbar-brand {
       img {
-        width: 100%;
+        max-width: 200px;
+        margin-left: auto;
+        margin-right: auto;
       }
     }
   }

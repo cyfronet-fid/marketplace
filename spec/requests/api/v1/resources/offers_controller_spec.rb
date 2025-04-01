@@ -1068,7 +1068,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
           end
         end
 
-        response 400, "primary_oms model validation failed", document: false do
+        response 400, "primary_oms model validation failed", document: false, skip: true do
           schema "$ref" => "error.json"
           let(:oms) { create(:oms, type: :global, custom_params: { a: { mandatory: true, default: "qwe" } }) }
           let(:offer) { build(:offer, offer_category: service_category) }

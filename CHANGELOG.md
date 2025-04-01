@@ -21,6 +21,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 - Fitting to EOSC SQA requirements (@goreck888)
 - Log in in the ordering scope (@goreck888)
+- Update EOSC Beyond logo and style improvements (@goreck888, @jarekzet)
 
 ### Security
 
