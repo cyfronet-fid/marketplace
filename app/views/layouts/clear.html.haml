@@ -2,6 +2,8 @@
 %html{ lang: "en", class: "#{Rails.env}" }
   = content_for(:custom_scripts) do
     %script{ src: "https://eosc-helpdesk.eosc-portal.eu/assets/form/form.js", id: "zammad_form_script" }
+  = content_for :meta_tags do
+    = render "layouts/meta_tags"
   = render "layouts/head"
   .spinner-background
     .spinner
