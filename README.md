@@ -297,6 +297,7 @@ We are currently using the following ENV variables:
   scheme should work (see [autologin](#autologin-across-eosc-portaleu-domains))
 - `EOSC_COMMONS_ENV` - EOSC commons environment type enum: 'production'/'development'
 - `EOSC_COMMONS_BASE_URL` \- EOSC commons base URL: s3 instance + bucket
+- `EOSC_HELPDESK_FORM_URL` - Customizable link to the helpdesk form (default provided)
 - ENV Variables connected to JIRA integration
   are described in [JIRA integration manual](./docs/jira_integration.md)
 - `MP_STOMP_CLIENT_NAME` (Optional) - stomp client name (default `MPClient`)
