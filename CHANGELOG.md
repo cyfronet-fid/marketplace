@@ -7,7 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [3.58.0]
+## [3.58.1]
+
+### Changed
+
+- Customizable eosc helpdesk link (@goreck888)
+
+
+
+## [3.58.0] 2025-04-01
 
 ### Added
  

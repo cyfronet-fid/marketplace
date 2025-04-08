@@ -105,4 +105,8 @@ module ApplicationHelper
   def render_turbo_stream_flash
     turbo_stream.prepend "flash-messages", partial: "layouts/flash"
   end
+
+  def eosc_helpdesk_form_link
+    Rails.configuration.eosc_helpdesk_form_link
+  end
 end

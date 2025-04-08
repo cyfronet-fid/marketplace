@@ -109,6 +109,8 @@ module Mp
         Rails.env.test?
       end
 
+    config.eosc_helpdesk_form_link = ENV.fetch("EOSC_HELPDESK_FORM_URL", "https://helpdesk.sandbox.eosc-beyond.eu/assets/form/form.js")
+
     config.enable_external_search = ActiveModel::Type::Boolean.new.cast(ENV.fetch("MP_ENABLE_EXTERNAL_SEARCH", false))
 
     config.whitelabel = ENV.fetch("MP_WHITELABEL", false)
