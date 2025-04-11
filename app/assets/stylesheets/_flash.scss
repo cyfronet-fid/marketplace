@@ -3,6 +3,7 @@
   top: 0;
   left: 0;
   width: 100%;
+  z-index: 1000;
 
   &-container {
     animation: appear-fade-out 6s both;

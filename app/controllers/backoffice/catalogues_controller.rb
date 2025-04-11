@@ -94,7 +94,7 @@ class Backoffice::CataloguesController < Backoffice::ApplicationController
     end
 
     invalid_multimedia =
-      @catalogue.link_multimedia_urls.reject { |media| media.url.blank? ? true : UrlHelper.url_valid?(media.url) }
+      @catalogue.link_multimedia_urls.reject { |media| media.url.blank? || UrlHelper.url_valid?(media.url) }
     if @catalogue.link_multimedia_urls&.any?(&:changed?) && invalid_multimedia.present?
       valid = false
       @catalogue.errors.add(

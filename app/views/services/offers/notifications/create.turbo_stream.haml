@@ -1,0 +1,5 @@
+= turbo_stream.replace("#{dom_id(@offer.reload)}-action-button",
+                       partial: "services/offers/notifications/disable_notification",
+                       locals: { offer: @offer,
+                                 notification_request: @notification_request })
+= render_turbo_stream_flash

@@ -51,7 +51,7 @@ class Services::ChooseOffersController < Services::ApplicationController
   end
 
   def init_step_data
-    @offers = policy_scope(@service.offers.inclusive).order(:iid)
+    @offers = policy_scope(@service.offers.active).order(:iid)
     @bundles = policy_scope(@service.bundles.published).order(:iid)
     @bundled = policy_scope(@service.offers.published).order(:iid).select(&:bundled?).map(&:bundles)&.flatten
     @step = step(session[session_key])

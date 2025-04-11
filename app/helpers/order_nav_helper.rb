@@ -33,9 +33,9 @@ module OrderNavHelper
 
   def go_to_next_step
     "
-                      const form = document.getElementById('order-form');
-                      if (typeof(form) != 'undefined' && form != null) {
-                        form.submit();
+                      const hiddenSubmit = document.getElementById('hidden-submit');
+                      if (typeof(hiddenSubmit) != 'undefined' && form != null) {
+                        hiddenSubmit.click();
                       }
                     "
   end

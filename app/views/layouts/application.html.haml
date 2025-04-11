@@ -13,8 +13,7 @@
     - if current_page?("/")
       .main-elements
     = render "layouts/badge" if ENV["MP_INSTANCE"]
-    #flash-messages.flash
-      = render "layouts/flash"
+    = render "layouts/flash"
     = render "layouts/welcome_modal"
     = turbo_frame_tag "modal"
     = render "layouts/confirm_modal"

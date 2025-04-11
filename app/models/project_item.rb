@@ -35,9 +35,13 @@ class ProjectItem < ApplicationRecord
   belongs_to :scientific_domain, required: false
   has_one :service_opinion, dependent: :restrict_with_error
   has_many :statuses, as: :status_holder
+
   counter_culture %i[offer service], column_name: "project_items_count"
   counter_culture :offer, column_name: "project_items_count"
   counter_culture :bundle, column_name: "project_items_count"
+  counter_culture :offer,
+                  column_name: proc { |model| model.offer.limited_availability ? "availability_count" : nil },
+                  delta_magnitude: -1
 
   validates :offer, presence: true
   validates :status, presence: true

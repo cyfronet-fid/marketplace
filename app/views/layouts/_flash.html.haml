@@ -1,2 +1,4 @@
-- flash.each do |type, msg|
-  = render "layouts/message", type: type, msg: msg
+= turbo_frame_tag "flash-messages" do
+  .flash
+    - flash.each do |type, msg|
+      = render "layouts/message", type: type, msg: msg

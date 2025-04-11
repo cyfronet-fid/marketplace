@@ -220,6 +220,8 @@ namespace :dev do
         order_type: h["order_type"].blank? ? service.order_type : h["order_type"],
         order_url: effective_order_url.present? ? effective_order_url : "",
         internal: effective_order_url.blank?,
+        limited_availability: h["limited_availability"].blank? ? false : h["limited_availability"],
+        availability_count: h["availability_count"].blank? ? 0 : h["availability_count"],
         offer_category:
           service.service_categories.first || Vocabulary::ServiceCategory.find_by(eid: "service_category-other"),
         status: :published
