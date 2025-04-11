@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
-class ProjectItem::Create
+class ProjectItem::Create < ApplicationService
   def initialize(project_item, message = nil, bundle_params: nil)
+    super()
     @project_item = project_item
     @project = project_item.project
     @message = message
     @bundle_params = bundle_params.respond_to?(:[]) ? bundle_params : {}
+    @offer = @project_item.offer
   end
 
   def call
@@ -13,7 +15,7 @@ class ProjectItem::Create
     bundled_project_items = []
 
     ProjectItem.transaction do
-      status = @project_item.offer.orderable? ? "created" : "ready"
+      status = @offer.orderable? ? "created" : "ready"
       unless @project_item.update(status: status, status_type: status)
         rolled_back = true
         raise ActiveRecord::Rollback
@@ -53,7 +55,7 @@ class ProjectItem::Create
       persisted_project_items = [non_customizable_project_item] + bundled_project_items
 
       persisted_project_items.each do |project_item|
-        if orderable?(project_item)
+        if @offer.orderable?
           ProjectItem::RegisterJob.perform_later(project_item, @message)
           ProjectItemMailer.created(project_item).deliver_later
         else
@@ -63,6 +65,7 @@ class ProjectItem::Create
       end
 
       updated_project = Project.find_by(id: @project.id)
+      notify_providers
       ProjectItem::OnCreated::PublishAddition.call(updated_project, persisted_project_items)
       ProjectItem::OnCreated::PublishCoexistence.call(updated_project)
     end
@@ -72,7 +75,16 @@ class ProjectItem::Create
 
   private
 
-  def orderable?(project_item)
-    project_item.offer.orderable?
+  def notify_providers
+    @offer.reload
+    if @offer.limited_availability? && @offer.availability_count.zero?
+      @offer
+        .service
+        .resource_organisation
+        .data_administrators
+        .map(&:user)
+        .compact
+        .each { |manager| OfferMailer.notify_provider(@offer, manager).deliver_later }
+    end
   end
 end

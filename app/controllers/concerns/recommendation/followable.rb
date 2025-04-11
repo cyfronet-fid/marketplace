@@ -18,8 +18,8 @@ module Recommendation::Followable
       cookies[:client_uid] = { value: SecureRandom.uuid, expires: 1.week.from_now }
     end
 
-    @recommendation_previous = cookies[:source]
-    @recommendation_source_id = cookies[:targetId]
+    @recommendation_previous = cookies.fetch(:source, "{}")
+    @recommendation_source_id = cookies.fetch(:targetId, "")
     @last_page_id = cookies[:lastPageId]
   end
 end

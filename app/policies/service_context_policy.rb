@@ -13,7 +13,7 @@ class ServiceContextPolicy < ApplicationPolicy
 
   def order?
     permitted? && record.service.status.in?(Statusable::PUBLIC_STATUSES) && record.service.offers? &&
-      (record.service.offers.inclusive.any?(&:published?) || record.service.bundles.any?(&:published?))
+      (!record.service.offers.active.empty? || record.service.bundles.any?(&:active?))
   end
 
   private

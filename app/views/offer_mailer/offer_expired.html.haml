@@ -1,0 +1,8 @@
+%p Dear #{@provider.full_name},
+%p We would like to inform you that your offer #{@offer.name} has expired.
+%p If you wish to manage this resource, please click the button below:
+
+= link_to edit_backoffice_service_offer_url(@offer.service.friendly_id, @offer.iid) do
+  %span.btn.btn-secondary.font-weight-bolder
+    = _("Manage your offer")
+%p Should you have any questions, please do not hesitate to contact us.

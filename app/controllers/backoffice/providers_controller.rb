@@ -157,7 +157,7 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
     end
 
     invalid_multimedia =
-      @provider.link_multimedia_urls.reject { |media| media.url.blank? ? true : UrlHelper.url_valid?(media.url) }
+      @provider.link_multimedia_urls.reject { |media| media.url.blank? || UrlHelper.url_valid?(media.url) }
     if @provider.link_multimedia_urls&.any?(&:changed?) && invalid_multimedia.present?
       valid = false
       @provider.errors.add(

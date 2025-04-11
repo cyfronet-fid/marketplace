@@ -26,6 +26,8 @@ class User < ApplicationRecord
   has_many :catalogue_data_administrators, through: :data_administrators
   has_many :providers, through: :provider_data_administrators
   has_many :catalogues, through: :catalogue_data_administrators
+  has_many :observed_user_offers, dependent: :destroy
+  has_many :observed_offers, through: :observed_user_offers
 
   validates :first_name, presence: true
   validates :last_name, presence: true

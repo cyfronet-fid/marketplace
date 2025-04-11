@@ -27,8 +27,18 @@ class Offer < ApplicationRecord
             bundle_exclusive: false,
             status: :published,
             services: {
-              status: %i[published suspended errored]
+              status: Statusable::PUBLIC_STATUSES
             }
+          )
+        end
+  scope :active,
+        -> do
+          where(
+            "offers.status = ? AND bundle_exclusive = ? AND (limited_availability = ? OR availability_count > ?)",
+            :published,
+            false,
+            false,
+            0
           )
         end
   scope :accessible, -> { joins(:service).where(status: :published, services: { status: Statusable::PUBLIC_STATUSES }) }
@@ -54,6 +64,8 @@ class Offer < ApplicationRecord
   has_many :bundles, through: :bundle_offers, dependent: :destroy
   has_many :main_bundles, class_name: "Bundle", foreign_key: "main_offer_id", dependent: :restrict_with_error
   has_many :offer_vocabularies
+  has_many :observed_user_offers, dependent: :destroy
+  has_many :users, through: :observed_user_offers
   belongs_to :offer_category, class_name: "Vocabulary::ServiceCategory"
   belongs_to :offer_type, class_name: "Vocabulary::ServiceCategory", optional: true
   belongs_to :offer_subtype, class_name: "Vocabulary::ServiceCategory", optional: true
@@ -61,6 +73,11 @@ class Offer < ApplicationRecord
   validates :service, presence: true
   validates :iid, presence: true, numericality: true
   validates :order_url, mp_url: true, if: :order_url?
+  validates :availability_count,
+            numericality: {
+              greater_than_or_equal_to: 0,
+              message: "Quantity must be greater than or equal to 0"
+            }
 
   validate :primary_oms_exists?, if: -> { primary_oms_id.present? }
   validate :check_main_bundles, if: -> { draft? }

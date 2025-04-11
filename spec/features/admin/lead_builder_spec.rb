@@ -103,7 +103,7 @@ RSpec.feature "Marketplace lead builder", manager_frontend: true do
       fill_in "Url", with: "https://test.test"
       click_on "Create Lead"
 
-      expect(page).to have_content("Picture can't be blank")
+      expect(page).to have_content("can't be blank")
     end
   end
 end

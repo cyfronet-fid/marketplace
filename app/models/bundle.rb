@@ -101,8 +101,12 @@ class Bundle < ApplicationRecord
     true
   end
 
+  def limited_availability
+    false
+  end
+
   def active?
-    all_offers.none? { |o| o.limited && o.available_count.zero? }
+    all_offers.none? { |o| o.limited_availability && o.availability_count.zero? }
   end
 
   private

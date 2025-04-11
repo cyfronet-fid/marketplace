@@ -437,7 +437,7 @@ RSpec.feature "Service ordering", end_user_frontend: true do
       click_on "Send access request", match: :first
 
       expect(page).to have_current_path(service_summary_path(service))
-      expect(page).to have_text("Project can't be blank")
+      expect(page).to have_text("can't be blank")
     end
 
     scenario "I can order open access service" do

@@ -410,6 +410,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_14_024423) do
     t.integer "offer_subtype_id"
     t.boolean "limited_availability", default: false
     t.bigint "availability_count", default: 0
+    t.string "availability_unit", default: "piece"
     t.index ["iid"], name: "index_offers_on_iid"
     t.index ["primary_oms_id"], name: "index_offers_on_primary_oms_id"
     t.index ["service_id", "iid"], name: "index_offers_on_service_id_and_iid", unique: true

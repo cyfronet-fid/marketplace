@@ -40,6 +40,15 @@
               Order Type
             .col-6
               = offer.order_type.titleize
+          .row.mb-1
+            .col-6
+              Availability type
+            .col-6
+              = offer.limited_availability ? "Countable" : "Unlimited"
+          - if offer.limited_availability
+            .row.mb-1
+              .col-6 Quantity
+              .col-6 #{offer.availability_count} #{offer.availability_unit.pluralize(offer.availability_count)}
       - if offer.order_type == "order_required"
         .offer-info-box
           %h6 Order management

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Backoffice::Services::OffersController < Backoffice::ApplicationController
+  include Backoffice::OffersHelper
+
   before_action :find_service
   before_action :find_offer_and_authorize, only: %i[edit update]
   before_action :load_form_data, only: %i[fetch_subtypes]

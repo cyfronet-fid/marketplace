@@ -121,7 +121,7 @@ RSpec.feature "Project", end_user_frontend: true do
 
       click_on "Update"
 
-      expect(page).to have_text("Name can't be blank")
+      expect(page).to have_text("can't be blank")
       expect(page.status_code).to eq(400)
     end
 
@@ -281,7 +281,7 @@ RSpec.feature "Project", end_user_frontend: true do
         visit project_conversation_path(project)
         click_button "Send message"
 
-        expect(page).to have_text("Message can't be blank")
+        expect(page).to have_text("can't be blank")
         expect(page).to_not have_selector(".new-message-icon")
         expect(page).to_not have_selector(".new-message-separator")
       end

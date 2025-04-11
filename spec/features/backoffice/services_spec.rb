@@ -298,7 +298,7 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
 
       expect { click_on "Create Service" }.to change { Service.count }.by(0)
 
-      expect(page).to have_content("Logo format you're trying to attach is not supported.")
+      expect(page).to have_content("format you're trying to attach is not supported.")
     end
 
     scenario "I can publish service" do

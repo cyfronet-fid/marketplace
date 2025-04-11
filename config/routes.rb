@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     delete "users/logout", to: "devise/sessions#destroy", as: :destroy_user_session
   end
 
+  get "health_check", to: "rails/health#show", as: :rails_health_check
   get "service_autocomplete", to: "services#autocomplete", as: :service_autocomplete
   get "/robots.txt" => "home#robots"
   post "user_action", to: "user_action#create"
@@ -24,7 +25,11 @@ Rails.application.routes.draw do
 
   resources :services, only: %i[index show], constraints: { id: %r{[^/]+} } do
     scope module: :services do
-      resources :offers, only: %i[index]
+      resources :offers, only: %i[index] do
+        scope module: :offers do
+          resources :notifications, only: %i[create destroy]
+        end
+      end
       resource :choose_offer, only: %i[show update]
       resource :configuration, only: %i[show update]
       resource :information, only: %i[show update]
