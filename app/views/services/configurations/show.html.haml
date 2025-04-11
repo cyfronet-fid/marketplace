@@ -23,3 +23,5 @@
         = render "services/configurations/voucher", step: @step, f: f
         .row.bundle-info
           = render "services/configurations/attributes", step: @step, service: @service, form: f
+  - content_for :submit do
+    = render "services/submit_form_button", f: f
