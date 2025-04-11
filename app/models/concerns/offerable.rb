@@ -4,7 +4,15 @@ module Offerable
   extend ActiveSupport::Concern
 
   included do
-    scope :orderable, -> { where(order_type: :order_required, internal: true) }
+    scope :orderable,
+          -> do
+            where(
+              "#{table_name}.status = ? AND #{table_name}.order_type = ? AND #{table_name}.internal = ?",
+              :published,
+              :order_required,
+              true
+            )
+          end
 
     enum :order_type,
          {
@@ -24,6 +32,10 @@ module Offerable
 
     def orderable?
       order_required? && internal
+    end
+
+    def active?
+      published? && internal && (!limited_availability || availability_count.positive?)
     end
   end
 end

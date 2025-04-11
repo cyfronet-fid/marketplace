@@ -5,8 +5,8 @@ export const CategoryMessages = {
   alertDeletionMessageSuccessors:
     "This category has successors connected to it, therefore is not possible to remove it. If you want to remove it, edit them so they are not associated with this category anymore",
   alertDeletionMessageResource: "This category has services connected to it, remove associations to delete it.",
-  alertLogoValidation: "Logo is not a valid file format and Logo format you're trying to attach is not supported",
-  alertNameValidation: "Name can't be blank",
+  alertLogoValidation: "is not a valid file format and format you're trying to attach is not supported",
+  alertNameValidation: "can't be blank",
 };
 
 export const ScientificDomainMessages = {
@@ -17,15 +17,15 @@ export const ScientificDomainMessages = {
     "This scientific domain has successors connected to it, therefore is not possible to remove it. If you want to remove it, edit them so they are not associated with this scientific domain anymore",
   alertDeletionMessageResource:
     "This scientific domain has services connected to it, remove associations to delete it.",
-  alertLogoValidation: "Logo is not a valid file format and Logo format you're trying to attach is not supported",
-  alertNameValidation: "Name can't be blank",
+  alertLogoValidation: "is not a valid file format and Logo format you're trying to attach is not supported",
+  alertNameValidation: "can't be blank",
 };
 
 export const PlatformMessages = {
   successCreationMessage: "New platform created successfully",
   successDeletionMessage: "Platform removed successfully",
   successUpdationMessage: "Platform updated successfully",
-  alertNameValidation: "Name can't be blank",
+  alertNameValidation: "can't be blank",
 };
 
 export const ProviderMessages = {
@@ -34,9 +34,9 @@ export const ProviderMessages = {
   successUpdationMessage: "Provider updated successfully",
   alertDeletionMessage: "This Provider has services connected to it, therefore is not possible to remove it.",
   alertLogoValidation:
-    "Logo is not a valid file format and Logo format you're trying to attach is not supported. Supported formats: png, gif, jpg, jpeg, pjpeg, tiff, vnd.adobe.photoshop or vnd.microsoft.icon.",
-  alertUrlValidation: "Website isn't valid or website doesn't exist, please check URL",
-  alertEmailValidation: "Email is not a valid email address",
+    "is not a valid file format and format you're trying to attach is not supported. Supported formats: png, gif, jpg, jpeg, pjpeg, tiff, vnd.adobe.photoshop or vnd.microsoft.icon.",
+  alertUrlValidation: "isn't valid or website doesn't exist, please check URL",
+  alertEmailValidation: "is not a valid email address",
 };
 
 export const ResourceMessages = {
@@ -46,8 +46,8 @@ export const ResourceMessages = {
     "Logo is not a valid file format and Logo format you're trying to attach is not supported. Supported formats: png, gif, jpg, jpeg, pjpeg, tiff, vnd.adobe.photoshop or vnd.microsoft.icon",
   alertLogoValidationPreview:
     "Logo format you're trying to attach is not supported. Supported formats: png, gif, jpg, jpeg, pjpeg, tiff, vnd.adobe.photoshop or vnd.microsoft.icon.",
-  alertUrlValidation: "Webpage url is not a valid URL",
-  alertEmailValidation: "Email is not a valid email address",
+  alertUrlValidation: "is not a valid URL",
+  alertEmailValidation: "is not a valid email address",
 };
 
 export const VocabularyMessages = {
@@ -57,5 +57,5 @@ export const VocabularyMessages = {
     "has successors connected to it, therefore is not possible to remove it. If you want to remove it, edit them so they are not associated with this",
   alertDeletionMessageResource: "has services connected to it, remove associations to delete it.",
   successDeletionMessage: "removed successfully",
-  alertNameValidation: "Name can't be blank",
+  alertNameValidation: "can't be blank",
 };

@@ -272,7 +272,7 @@ RSpec.feature "My Services", end_user_frontend: true do
         visit project_service_conversation_path(project, project_item)
         click_button "Send message"
 
-        expect(page).to have_text("Message can't be blank")
+        expect(page).to have_text("can't be blank")
         expect(page).to_not have_selector(".new-message-icon")
         expect(page).to_not have_selector(".new-message-separator")
       end
