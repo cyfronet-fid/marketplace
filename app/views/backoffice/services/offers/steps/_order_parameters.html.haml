@@ -6,8 +6,31 @@
         -# change this to custom radio buttons (compare to vouchers in service order wizard)
         = f.input :order_type, as: :radio_buttons, collection: Offer.order_types.keys.map { |ot| [ot, ot.titleize] },
           checked: offer.order_type || offer.service.order_type, value_method: :first, label_method: :second,
-          input_html: { "data-offer-target": "radioButton", "data-ordering-target": "orderType",
-                        "data-action": "ordering#updateVisibility offer#toggleRadioButton" }
+          input_html: { data: { offer_target: "radioButton", ordering_target: "orderType",
+                        action: "ordering#updateVisibility offer#toggleRadioButton" } }
+      .buttons-selector.pt-3
+        = f.input :limited_availability, as: :radio_buttons, label: "Availability type",
+        collection: [["Countable", true], ["Unlimited", false]],
+        input_html: { data: { offer_target: "radioButton", action: "offer#toggleRadioButton ordering#toggleCounter" } }
+      .buttons-selector.pt-3{ class: "#{"d-none" unless offer.limited_availability}", data: { ordering_target: "counter" } }
+        .row.mb-1
+          .col-8
+            = f.input :availability_count, label: "Quantity"
+          .col-4
+            = f.input :availability_unit, label: "Unit", disabled: true
+            .tip-box.mb-4{ "data-ordering-target": "internalDescription" }
+      .tip-box.mb-4
+        %p.frame
+          %strong Countable offers
+          \- you can define a specific quantity and enter this data into the system.
+          This allows users to see how much of the resource has already been used.
+
+        %p.frame
+          %strong Uncountable offers
+          on the other hand, are those where specifying a quantity is not possible or the resource does not run out.
+          \- we will notify you about the placed order and its status.
+
+
 
     %h4 Order Managment
     .offer-section-wrapper

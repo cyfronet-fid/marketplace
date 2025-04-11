@@ -20,8 +20,7 @@ class Services::SummariesController < Services::ApplicationController
       do_create(@step.project_item, @bundle_params)
     else
       setup_show_variables!
-      flash[:alert] = @step.error
-      render "show", status: :unprocessable_entity
+      render :show, status: :unprocessable_entity, alert: @step.error
     end
   end
 
@@ -41,9 +40,11 @@ class Services::SummariesController < Services::ApplicationController
       session.delete(:selected_project)
       send_user_action
       Matomo::SendRequestJob.perform_later(project_item, "AddToProject")
-      redirect_to project_service_path(project_item.project, project_item),
-                  notice: project_item.orderable? ? "Offer ordered successfully" : "Offer pinned successfully"
+      notice = project_item.orderable? ? "Offer ordered successfully" : "Offer pinned successfully"
+      flash[:notice] = notice
+      redirect_to project_service_path(project_item.project, project_item)
     else
+      flash[:alert] = "Service request configuration is invalid"
       redirect_to url_for([@service, prev_visible_step_key]), alert: "Service request configuration is invalid"
     end
   end

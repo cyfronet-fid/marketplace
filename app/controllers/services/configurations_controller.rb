@@ -29,8 +29,7 @@ class Services::ConfigurationsController < Services::ApplicationController
       save_in_session(@step)
       redirect_to url_for([@service, next_step_key])
     else
-      flash.now[:alert] = @step.error
-      render :show
+      render :show, status: :unprocessable_entity, alert: @step.error
     end
   end
 

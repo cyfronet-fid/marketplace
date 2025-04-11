@@ -25,7 +25,7 @@
           %li.nav-item
             = link_to _("Offers"), offers_link(service, go_to_search_query_params(params)),
               class: "nav-link #{"active" if controller.controller_name == "offers" }", role: "tab",
-              data: { probe: "", "service-id": service.id, e2e: "service-about-btn" }
+              data: { probe: "", "service-id": service.id, e2e: "service-offers-btn" }
         %li.nav-item
           = link_to _("About"), about_link(service, go_to_search_query_params(params)),
             class: "nav-link #{"active" if about_active }", role: "tab",

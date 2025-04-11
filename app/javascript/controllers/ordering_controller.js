@@ -3,6 +3,7 @@ import initChoices from "../app/choices";
 
 export default class extends Controller {
   static targets = [
+    "counter",
     "orderType",
     "internal",
     "internalDescription",
@@ -37,6 +38,11 @@ export default class extends Controller {
         this.suggestionTarget.classList.add("d-none");
       }
     }
+  }
+
+  toggleCounter(event) {
+    const target = this.counterTarget;
+    event.target.value == "true" ? target.classList.remove("d-none") : target.classList.add("d-none");
   }
 
   updateVisibility() {

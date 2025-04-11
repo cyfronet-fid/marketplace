@@ -10,9 +10,9 @@ module AttributesHelper
       if parameter["value"]
         parameter["value"] # .to_s if needed
       elsif parameter["type"] == "input"
-        (parameter["value_type"]).to_s
+        parameter["value_type"].to_s
       elsif parameter["type"] == "date"
-        (parameter["type"]).to_s
+        parameter["type"].to_s
       elsif parameter["config"]
         config = parameter["config"]
         if config["minimum"] || config["maximum"]

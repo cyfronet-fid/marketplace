@@ -1572,6 +1572,8 @@ services:
           and it allows in particular to discover data that is stored through the B2SAFE and B2SHARE services.
           Features: Public service supporting cross disciplinary research, No registration required.
           Ideal for: Researchers seeking interesting datasets.
+        limited_availability: true
+        availability_count: 1000
       2:
         name: B2FIND For Data Providers
         description: |
