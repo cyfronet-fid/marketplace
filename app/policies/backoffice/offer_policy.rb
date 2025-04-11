@@ -21,6 +21,8 @@ class Backoffice::OfferPolicy < Backoffice::OrderablePolicy
       :restrictions,
       :primary_oms_id,
       :tag_list,
+      :limited_availability,
+      :availability_count,
       oms_params: {
       },
       parameters_attributes: %i[

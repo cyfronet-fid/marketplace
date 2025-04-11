@@ -3,9 +3,7 @@ import { Controller } from "@hotwired/stimulus";
 export default class extends Controller {
   static targets = ["modal", "modalNameInput", "formNameInput"];
 
-  connect() {
-    console.log("exit modal controller connected");
-  }
+  connect() {}
 
   showModal(event) {
     event.preventDefault();

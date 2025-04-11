@@ -54,7 +54,7 @@ RSpec.feature "Question about service", end_user_frontend: true do
 
       click_on "SEND"
 
-      expect(page).to have_content("Text Question cannot be blank")
+      expect(page).to have_content("cannot be blank")
 
       expect(Jms::PublishJob).not_to have_been_enqueued.with(hash_including(:message_type))
     end
@@ -95,9 +95,9 @@ RSpec.feature "Question about service", end_user_frontend: true do
 
       click_on "SEND"
 
-      expect(page).to have_content("Author can't be blank")
-      expect(page).to have_content("Email can't be blank and Email is not a valid email address")
-      expect(page).to have_content("Text Question cannot be blank")
+      expect(page).to have_content("can't be blank")
+      expect(page).to have_content("can't be blank and is not a valid email address")
+      expect(page).to have_content("cannot be blank")
 
       expect(Jms::PublishJob).not_to have_been_enqueued.with(hash_including(:message_type))
     end

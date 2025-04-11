@@ -191,7 +191,6 @@ export default class extends Controller {
   }
 
   goToSummary(event) {
-    console.log("DZIALA");
     document.getElementById("summary-step-link").click();
   }
 

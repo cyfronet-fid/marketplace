@@ -9,7 +9,16 @@
     = t("offers.type.#{offer.order_type}")
     -# TODO: refactor dynamic translation
   = yield_content!(:status) if content_for?(:status)
-  %h4.card-title= offer.name
+  - if offer.limited_availability && offer.availability_count.zero?
+    %span.badge.badge-draft.badge-left
+      Out of stock
+  %h4.card-title
+    = offer.name
+    - if offer.limited_availability
+      .x-small{ data: { e2e: "offer-counter", quantity: offer.availability_count } }
+        (#{offer.availability_count} #{"pc".pluralize(offer.availability_count)}.)
+    - else
+      .x-small (Unlimited)
 
   .card-text.mb-2{ "data-controller" => "parameter" }
     - if offer.description.squish.size > 200

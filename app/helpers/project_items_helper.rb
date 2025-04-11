@@ -39,15 +39,11 @@ module ProjectItemsHelper
 
   def project_item_status(project_item)
     if project_item.in_progress?
-      content_tag(
-        :div,
-        t("project_items.status.#{project_item.status_type}".to_s),
-        class: "status-box status-bg-progress"
-      )
+      content_tag(:div, t("project_items.status.#{project_item.status_type}"), class: "status-box status-bg-progress")
     else
       content_tag(
         :div,
-        t("project_items.status.#{project_item.status_type}".to_s),
+        t("project_items.status.#{project_item.status_type}"),
         class: "status-box status-bg-#{project_item.status_type}"
       )
     end

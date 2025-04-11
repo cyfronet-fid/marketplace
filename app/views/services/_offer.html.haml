@@ -3,17 +3,18 @@
     = render "services/offers/description", offer: offer
     = render "services/offers/parameters", id: offer.id,
       technical_parameters: offer.attributes.map(&:to_json), service: offer.service
-    - if policy(ServiceContext.new(offer.service, params.key?(:from) && params[:from] == "backoffice_service")).order?
-      .card-button.text-center
-        .btn.btn-back{
-          data: {
-            action: "click->duplicate#showModal",
-            duplicate_url: duplicate_offer_path(offer.service, offer),
-            offer_name: offer.name } }
-          Duplicate
-        %label.d-block
-          = link_to service_choose_offer_path(offer.service, customizable_project_item: { offer_id: offer.iid }),
-          data: { probe: "", "service-id": offer.service.id, e2e: "select-offer-btn",
-          "preview-target": local_assigns[:preview] ? "link" : "", "turbo-method": :put } do
-            %span.btn.btn-secondary.font-weight-bolder
-              = _("Select an offer")
+    .card-button.text-center
+      %label.d-block
+        = turbo_frame_tag "#{dom_id(offer)}-action-button" do
+          - if policy(offer).order?
+            = link_to service_choose_offer_path(offer.service,
+            customizable_project_item: { offer_id: offer.iid }),
+            data: { probe: "", "service-id": offer.service.id, e2e: "select-offer-btn",
+            "preview-target": local_assigns[:preview] ? "link" : "", "turbo-method": :put, "turbo-frame": "_top" } do
+              %span.btn.btn-secondary.font-weight-bolder
+                = _("Select an offer")
+          - elsif policy(offer).disable_notification?
+            = render "services/offers/notifications/disable_notification", offer: offer,
+            notification_request: offer.observed_user_offers.find_by(user_id: current_user.id)
+          - else
+            = render "services/offers/notifications/enable_notification", offer: offer

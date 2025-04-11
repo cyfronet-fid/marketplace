@@ -14,4 +14,12 @@ class OfferPolicy < ApplicationPolicy
   def index?
     true
   end
+
+  def order?
+    record.published? && (!record.limited_availability || record.availability_count.positive?)
+  end
+
+  def disable_notification?
+    record.published? && !order? && user&.id.in?(record.user_ids)
+  end
 end

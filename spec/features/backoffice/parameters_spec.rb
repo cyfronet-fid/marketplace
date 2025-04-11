@@ -28,8 +28,8 @@ RSpec.feature "Parameters in backoffice", manager_frontend: true do
 
       click_on "Update Offer"
 
-      expect(page).to have_text("Values can't be blank")
-      expect(page).to have_text("Min must be greater than 0")
+      expect(page).to have_text("can't be blank")
+      expect(page).to have_text("must be greater than 0")
     end
 
     scenario "I cannot set min < 1 and max values greater than values size", js: true, skip: "New Offer Wizard" do

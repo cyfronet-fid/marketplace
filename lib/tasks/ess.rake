@@ -24,7 +24,7 @@ namespace :ess do
     else
       keys = options[:collections].split.map(&:to_sym)
 
-      dump(COLLECTIONS.select { |k, _v| keys.include?(k) })
+      dump(COLLECTIONS.slice(*keys))
     end
   end
 

@@ -44,6 +44,27 @@ document.addEventListener("turbo:load", async function (event) {
   initBadgeState();
   initMasonry();
   await initProbes();
+  // This is a hack for a correct behavior of dropdown menu, hope we'll migrate to the newer bootstrap version
+  const menu = document.getElementById("main-menu");
+
+  if (menu) {
+    menu.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const target = e.target;
+      const navLinks = menu.getElementsByClassName("nav-link");
+      const tabs = menu.getElementsByClassName("tab-pane");
+      let removeActive = (e) => {
+        e.classList.remove("active");
+      };
+      const tab = this.getElementById(target.dataset.target);
+      if (tab) {
+        Array.from(navLinks).forEach((e) => removeActive(e));
+        target.classList.add("active");
+        Array.from(tabs).forEach((e) => removeActive(e));
+        tab.classList.add("active");
+      }
+    });
+  }
 });
 
 document.addEventListener("ajax:success", function (event) {
