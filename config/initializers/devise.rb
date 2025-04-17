@@ -275,7 +275,7 @@ Devise.setup do |config|
     userinfo: "/auth/realms/core/protocol/openid-connect/userinfo",
     jwk: "/auth/realms/core/protocol/openid-connect/certs"
   }
-  creds = Rails.application.credentials
+  creds = Rails.application.credentials.checkin
   endpoints = ENV.fetch("OIDC_AAI_NEW_API", true) ? new_endpoints : old_endpoints
   scope = ENV["CHECKIN_SCOPE"].nil? ? %w[openid profile email aarc offline_access] : ENV["CHECKIN_SCOPE"].split(",")
   config.omniauth :openid_connect,
@@ -289,8 +289,8 @@ Devise.setup do |config|
                     port: nil,
                     scheme: "https",
                     host: checkin_host,
-                    identifier: ENV.fetch("CHECKIN_IDENTIFIER", creds.blank? ? "" : Rails.application.credentials.checkin[:identifier]),
-                    secret: ENV.fetch("CHECKIN_SECRET", creds.blank? ? "" : Rails.application.credentials.checkin[:secret]),
+                    identifier: ENV.fetch("CHECKIN_IDENTIFIER", creds.blank? ? "" : creds[:identifier]),
+                    secret: ENV.fetch("CHECKIN_SECRET", creds.blank? ? "" : creds[:secret]),
                     redirect_uri: ENV["REDIRECT_URI"] ||
                                   "#{root_url}/users/auth/checkin/callback",
                     authorization_endpoint: ENV.fetch("CHECKIN_AUTHORIZATION_ENDPOINT", endpoints[:authorize]),
