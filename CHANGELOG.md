@@ -13,6 +13,10 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 - New provider wizard form (@maria-j-k, @goreck888, @jarekzet)
 
+### Deprecated
+
+- `ASSET_HOST` and `ASSET_PROTOCOL` environment variables (@goreck888)
+
 ## [3.58.2]
 
 ### Removed

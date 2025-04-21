@@ -261,8 +261,6 @@ We are currently using the following ENV variables:
   links to EOSC portal
 * `PROVIDERS_DASHBOARD_URL` - Provider's Dashboard URL used to create links to the provider's dashboard
 * `USER_DASHBOARD_URL` User Dashboard URL for links in the landing page. Default is `https://my.eosc-portal.eu/`
-* `ASSET_HOST` and `ASSET_PROTOCOL` - assets mailer config is mandatory
-  (e.g. ASSET_HOST = marketplace.eosc-portal.eu/ and ASSET_PROTOCOL = https )
 * `RATE_AFTER_PERIOD` - number of days after which user can rate resource (default is set to 90 days)
 * `ATTRIBUTES_DOCS_URL` - offer attributes definition documentation (external link)
 * `AUTOLOGIN_DOMAIN` - parent domain in which the autologin scheme should work (see [autologin](#autologin-across-eosc-portaleu-domains))
