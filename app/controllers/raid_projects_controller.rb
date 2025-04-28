@@ -5,6 +5,7 @@ class RaidProjectsController < ApplicationController
   before_action :authenticate_user!
 
   def index
+    return head 404 unless Rails.configuration.raid_on
     token = RaidProject::RaidLogin.new.call
     response = RaidProject::GetRaids.new(token).call
 
@@ -21,9 +22,11 @@ class RaidProjectsController < ApplicationController
   end
 
   def show
+    head 404 unless Rails.configuration.raid_on
   end
 
   def new
+    return head 404 unless Rails.configuration.raid_on
     raid_builder_key = Random.urlsafe_base64(6)
     session[:raid_project_id] = raid_builder_key
     session[:wizard_action] = "create"
@@ -44,6 +47,7 @@ class RaidProjectsController < ApplicationController
   end
 
   def edit
+    return head 404 unless Rails.configuration.raid_on
     pid = params[:id]
     token = RaidProject::RaidLogin.new.call
     response = RaidProject::GetRaid.new(token, pid).call
@@ -60,14 +64,6 @@ class RaidProjectsController < ApplicationController
       redirect_to raid_project_path(@raid_project), notice: "RAiD Project updated successfully"
     else
       render :edit, status: :bad_request
-    end
-  end
-
-  def destroy
-    @raid_project.destroy
-
-    respond_to do |format|
-      format.html { redirect_to raid_projects_url, notice: "RAiD Project was successfully destroyed." }
     end
   end
 
