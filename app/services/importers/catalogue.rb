@@ -12,7 +12,6 @@ class Importers::Catalogue < ApplicationService
 
   # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
   def call
-    format_data_for_source
     {
       name: @data["name"],
       pid: @data["id"],
@@ -26,8 +25,16 @@ class Importers::Catalogue < ApplicationService
       networks: map_networks(Array(@data["networks"])),
       hosting_legal_entities: map_hosting_legal_entity(@data["hostingLegalEntity"]),
       participating_countries: @data["participatingCountries"] || [],
+      nodes: map_nodes(@data["node"]) || [],
       tags: Array(@data["tags"]) || [],
-      scientific_domains: map_scientific_domains(@data["scientificDomains"].map { |sd| sd["scientificSubdomain"] }),
+      scientific_domains:
+        (
+          if @data["scientificDomains"].blank?
+            []
+          else
+            map_scientific_domains(@data["scientificDomains"].map { |sd| sd["scientificSubdomain"] })
+          end
+        ),
       public_contacts: Array(@data["publicContacts"]).map { |c| PublicContact.new(map_contact(c)) },
       main_contact: @data["mainContact"] ? MainContact.new(map_contact(@data["mainContact"])) : nil,
       street_name_and_number: @data.dig("location", "streetNameAndNumber") || "",
@@ -43,22 +50,6 @@ class Importers::Catalogue < ApplicationService
       status: :published,
       synchronized_at: @synchronized_at
     }
-  end
-
-  def format_data_for_source
-    return unless @source == "jms"
-
-    @data["multimedia"] = Array.wrap(@data.dig("multimedia", "multimedia")) || []
-    @data["affiliations"] = Array(@data.dig("affiliations", "affiliation")) || []
-    @data["networks"] = Array(@data.dig("networks", "network")) || []
-    @data["hostingLegalEntity"] = Array(@data["hostingLegalEntity"]) || []
-    @data["participatingCountries"] = Array(@data.dig("participatingCountries", "participatingCountry")) || []
-    @data["tags"] = Array(@data.dig("tags", "tag")) || []
-    @data["publicContacts"] = Array.wrap(@data.dig("publicContacts", "publicContact"))
-    @data["scientificDomains"] = Array
-      .wrap(@data.dig("scientificDomains", "scientificDomain"))
-      .map { |sd| sd["scientificSubdomain"] } || []
-    @data["users"] = Array.wrap(@data.dig("users", "user")) || []
   end
   # rubocop:enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
 end

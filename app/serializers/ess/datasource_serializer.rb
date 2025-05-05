@@ -13,4 +13,5 @@ class Ess::DatasourceSerializer < Ess::ServiceSerializer
   attribute :submission_policy_url, if: :datasource?
   attribute :preservation_policy_url, if: :datasource?
   attribute :version_control, if: :datasource?
+  attribute :node
 end

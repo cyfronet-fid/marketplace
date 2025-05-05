@@ -24,6 +24,7 @@ RSpec.describe Backoffice::ServicePolicy, backend: true do
           :description,
           :tagline,
           :order_type,
+          [node_ids: []],
           [provider_ids: []],
           [geographical_availabilities: []],
           [language_availability: []],

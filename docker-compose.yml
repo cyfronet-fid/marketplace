@@ -27,7 +27,7 @@ services:
     networks:
       - mp-local
   active_mq:
-    image: rmohr/activemq
+    image: apache/activemq-artemis:latest
     ports:
       - "127.0.0.1:61613:61613"
     networks:

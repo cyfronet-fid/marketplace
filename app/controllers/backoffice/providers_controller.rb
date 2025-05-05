@@ -2,6 +2,7 @@
 
 class Backoffice::ProvidersController < Backoffice::ApplicationController
   include UrlHelper
+  include ApplicationHelper
 
   before_action :find_and_authorize, only: %i[show edit update destroy]
 

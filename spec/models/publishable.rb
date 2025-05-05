@@ -7,9 +7,7 @@ shared_examples "publishable" do
       @client = Stomp::Client.new(stomp_config["login"], stomp_config["password"], stomp_config["host"])
       @received = []
 
-      @client.subscribe("/topic/#{stomp_config["mp-db-events-destination"]}") do |msg|
-        @received.push(JSON.parse(msg.body))
-      end
+      @client.subscribe("/topic/#{stomp_config["mp-db-events-destination"]}") { |msg| JSON.parse(msg.body) }
     end
 
     after(:all) { @client.close }

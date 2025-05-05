@@ -26,7 +26,7 @@
                   %i.far.fa-trash-alt
 
                 - if policy([:backoffice, catalogue]).edit?
-                  = link_to _("Edit"),
+                  = unescaped_link_to _("Edit"),
                       edit_backoffice_catalogue_path(catalogue),
                       class: "btn-sm btn-warning float-right mr-4"
 

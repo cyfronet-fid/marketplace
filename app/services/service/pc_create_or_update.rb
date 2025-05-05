@@ -20,7 +20,6 @@ class Service::PcCreateOrUpdate
         "service_sources.source_type": @source_type,
         "service_sources.eid": [eosc_registry_service["id"]]
       )
-    eosc_registry_service["status"] = @status
     @service_hash = Importers::Service.call(eosc_registry_service, modified_at, eosc_registry_base_url, token)
     @new_update_available = Service::PcCreateOrUpdate.new_update_available(@mp_service, modified_at)
   end

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  pid_format_constraint = %r{[^/]+(?:/[^/]+)?}
+
   ############################## IMPORTANT!!! ################################
   # !!! Code of high security risk impact !!!
   # AAI service authentication is skipped for tests purpose
@@ -22,7 +24,7 @@ Rails.application.routes.draw do
   get "/datasources/:id", to: redirect("/services/%{id}")
   get "backoffice/datasources/:id", to: redirect("backoffice/services/%{id}")
 
-  resources :services, only: %i[index show], constraints: { id: %r{[^/]+} } do
+  resources :services, only: %i[index show], constraints: { id: pid_format_constraint } do
     scope module: :services do
       resource :offers, only: %i[show update]
       resource :configuration, only: %i[show update]
@@ -86,7 +88,7 @@ Rails.application.routes.draw do
 
   resource :profile, only: %i[show edit update destroy]
 
-  resources :providers, only: %i[index show], constraints: { id: %r{[^/]+} } do
+  resources :providers, only: %i[index show], constraints: { id: pid_format_constraint } do
     scope module: :providers do
       resource :question, only: %i[new create]
       resources :details, only: :index
@@ -103,7 +105,7 @@ Rails.application.routes.draw do
 
   resource :backoffice, only: :show
   namespace :backoffice do
-    resources :services, controller: "services", constraints: { id: %r{[^/]+} } do
+    resources :services, controller: "services", constraints: { id: pid_format_constraint } do
       scope module: :services do
         resource :logo_preview, only: :show
         resources :offers do
@@ -122,7 +124,7 @@ Rails.application.routes.draw do
     get "services/c/:category_id" => "services#index", :as => :category_services
     resources :scientific_domains
     resources :categories
-    resources :providers, constraints: { id: %r{[^/]+} }
+    resources :providers, constraints: { id: pid_format_constraint }
     resources :catalogues
     resources :platforms
     get "vocabularies", to: "vocabularies#index", type: "target_user", as: :vocabularies
@@ -157,7 +159,7 @@ as: :duplicate_offer
     end
 
     namespace :v1 do
-      resources :resources, only: %i[index show], constraints: { id: %r{[^/]+} } do
+      resources :resources, only: %i[index show], constraints: { id: pid_format_constraint } do
         resources :offers, only: %i[index create show destroy update], module: :resources
       end
       resources :oms, controller: :omses, only: %i[index show update] do
@@ -168,8 +170,8 @@ as: :duplicate_offer
         end
       end
       namespace :ess do
-        resources :services, only: %i[index show], constraints: { id: %r{[^/]+} }
-        resources :datasources, only: %i[index show], constraints: { id: %r{[^/]+} }
+        resources :services, only: %i[index show], constraints: { id: pid_format_constraint }
+        resources :datasources, only: %i[index show], constraints: { id: pid_format_constraint }
         resources :providers, only: %i[index show]
         resources :catalogues, only: %i[index show]
         resources :offers, only: %i[index show]

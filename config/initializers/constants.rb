@@ -32,6 +32,11 @@ VOCABULARY_TYPES = {
     klass: "Vocabulary::FundingProgram",
     route: :funding_programs
   },
+  node: {
+    name: "Node",
+    klass: "Vocabulary::Node",
+    route: :nodes
+  },
   trl: {
     name: "TRL",
     klass: "Vocabulary::Trl",

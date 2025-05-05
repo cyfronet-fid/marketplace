@@ -26,4 +26,5 @@ class Ess::CatalogueSerializer < ApplicationSerializer
   attribute :legal_statuses, key: :legal_status
   attribute :website, key: :webpage_url
   attribute :pid, key: :slug
+  attribute :node
 end

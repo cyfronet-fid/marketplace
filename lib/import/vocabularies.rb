@@ -15,6 +15,7 @@ class Import::Vocabularies
     # TODO: Add order_type as vocabulary
     # ORDER_TYPE: Vocabulary::OrderType,
     FUNDING_BODY: Vocabulary::FundingBody,
+    NODE: Vocabulary::Node,
     FUNDING_PROGRAM: Vocabulary::FundingProgram,
     LIFE_CYCLE_STATUS: Vocabulary::LifeCycleStatus,
     PROVIDER_AREA_OF_ACTIVITY: Vocabulary::AreaOfActivity,

@@ -10,64 +10,23 @@ class Importers::Provider
   end
 
   def call
-    case @source
-    when "jms"
-      alternative_identifiers =
-        if @data.dig("alternativeIdentifiers", "alternativeIdentifier").is_a?(Array)
-          Array(@data.dig("alternativeIdentifiers", "alternativeIdentifier")) || []
-        else
-          [@data.dig("alternativeIdentifiers", "alternativeIdentifier")] || []
-        end
-      multimedia =
-        if @data.dig("multimedia", "multimedia").is_a?(Array)
-          Array(@data.dig("multimedia", "multimedia")) || []
-        else
-          [@data.dig("multimedia", "multimedia")]
-        end
-      scientific_domains =
-        if @data.dig("scientificDomains", "scientificDomain").is_a?(Array)
-          @data.dig("scientificDomains", "scientificDomain").map { |sd| sd["scientificSubdomain"] }
-        else
-          @data.dig("scientificDomains", "scientificDomain", "scientificSubdomain")
-        end
-      tag_list = Array(@data.dig("tags", "tag")) || []
-      public_contacts =
-        Array.wrap(@data.dig("publicContacts", "publicContact")).map { |c| PublicContact.new(map_contact(c)) } || []
-      certifications = Array(@data.dig("certifications", "certification"))
-      participating_countries = Array(@data.dig("participatingCountries", "participatingCountry")) || []
-      affiliations = Array(@data.dig("affiliations", "affiliation"))
-      networks = Array(@data.dig("networks", "network"))
-      structure_types = Array(@data.dig("structureTypes", "structureType"))
-      esfri_domains = Array(@data.dig("esfriDomains", "esfriDomain"))
-      meril_scientific_domains =
-        if @data.dig("merilScientificDomains", "merilScientificDomain").is_a?(Array)
-          @data.dig("merilScientificDomains", "merilScientificDomain").map { |sd| sd["merilScientificSubdomain"] }
-        else
-          @data.dig("merilScientificDomains", "merilScientificDomain", "merilScientificSubdomain")
-        end
-      areas_of_activity = Array(@data.dig("areasOfActivity", "areaOfActivity"))
-      societal_grand_challenges = Array(@data.dig("societalGrandChallenges", "societalGrandChallenge"))
-      national_roadmaps = Array(@data.dig("nationalRoadmaps", "nationalRoadmap"))
-      data_administrators =
-        Array.wrap(@data.dig("users", "user")).map { |da| DataAdministrator.new(map_data_administrator(da)) } || []
-    when "rest"
-      alternative_identifiers = Array(@data["alternativeIdentifiers"]) || []
-      multimedia = Array(@data["multimedia"]) || []
-      scientific_domains = @data["scientificDomains"]&.map { |sd| sd["scientificSubdomain"] } || []
-      tag_list = Array(@data["tags"]) || []
-      public_contacts = Array(@data["publicContacts"])&.map { |c| PublicContact.new(map_contact(c)) } || []
-      certifications = Array(@data["certifications"])
-      participating_countries = Array(@data["participatingCountries"]) || []
-      affiliations = Array(@data["affiliations"])
-      networks = Array(@data["networks"])
-      structure_types = Array(@data["structureTypes"])
-      esfri_domains = Array(@data["esfriDomains"])
-      meril_scientific_domains = @data["merilScientificDomains"]&.map { |sd| sd["merilScientificSubdomain"] } || []
-      areas_of_activity = @data["areasOfActivity"]
-      societal_grand_challenges = Array(@data["societalGrandChallenges"])
-      national_roadmaps = Array(@data["nationalRoadmaps"])
-      data_administrators = Array(@data["users"])&.map { |da| DataAdministrator.new(map_data_administrator(da)) } || []
-    end
+    alternative_identifiers = Array(@data["alternativeIdentifiers"]) || []
+    multimedia = Array(@data["multimedia"]) || []
+    scientific_domains = @data["scientificDomains"]&.map { |sd| sd["scientificSubdomain"] } || []
+    tag_list = Array(@data["tags"]) || []
+    public_contacts = Array(@data["publicContacts"])&.map { |c| PublicContact.new(map_contact(c)) } || []
+    certifications = Array(@data["certifications"])
+    participating_countries = Array(@data["participatingCountries"]) || []
+    affiliations = Array(@data["affiliations"])
+    networks = Array(@data["networks"])
+    structure_types = Array(@data["structureTypes"])
+    esfri_domains = Array(@data["esfriDomains"])
+    meril_scientific_domains = @data["merilScientificDomains"]&.map { |sd| sd["merilScientificSubdomain"] } || []
+    areas_of_activity = @data["areasOfActivity"]
+    societal_grand_challenges = Array(@data["societalGrandChallenges"])
+    national_roadmaps = Array(@data["nationalRoadmaps"])
+    data_administrators = Array(@data["users"])&.map { |da| DataAdministrator.new(map_data_administrator(da)) } || []
+    location = @data["location"]
 
     main_contact = MainContact.new(map_contact(@data["mainContact"])) if @data["mainContact"]
 
@@ -80,6 +39,7 @@ class Importers::Provider
       abbreviation: @data["abbreviation"],
       website: @data["website"],
       legal_entity: @data["legalEntity"],
+      nodes: map_nodes(@data["node"]),
       legal_statuses: map_legal_statuses(Array(@data["legalStatus"])),
       hosting_legal_entity_string: @data["hostingLegalEntity"],
       hosting_legal_entities: map_hosting_legal_entity(@data["hostingLegalEntity"]),
@@ -90,11 +50,11 @@ class Importers::Provider
       scientific_domains: map_scientific_domains(scientific_domains),
       tag_list: tag_list,
       # Location
-      street_name_and_number: @data.dig("location", "streetNameAndNumber"),
-      postal_code: @data.dig("location", "postalCode"),
-      city: @data.dig("location", "city"),
-      region: @data.dig("location", "region"),
-      country: Country.for(@data.dig("location", "country"))&.alpha2,
+      street_name_and_number: location["streetNameAndNumber"],
+      postal_code: location["postalCode"],
+      city: location["city"],
+      region: location["region"],
+      country: Country.for(location["country"])&.alpha2,
       # Contact
       main_contact: main_contact,
       public_contacts: public_contacts,

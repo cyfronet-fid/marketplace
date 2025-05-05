@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "nori"
-
 class Jms::Publish
   def initialize(message, destination = nil)
     @message = message

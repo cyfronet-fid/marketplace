@@ -50,5 +50,5 @@
         class: "btn btn-success pl-5 pr-5",
         data: { "turbo-confirm": _("Confirm and publish the Bundle. It will be accessible on the website."),
                 "turbo-method": :post }
-      = link_to _("cancel and back to previous page"), back_link,
+      = unescaped_link_to _("cancel and back to previous page"), back_link,
       class: "btn btn-link text-uppercase mobile-bottom-margin"

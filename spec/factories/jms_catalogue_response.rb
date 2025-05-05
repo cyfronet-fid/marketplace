@@ -23,13 +23,7 @@ FactoryBot.define do
         "active" => true,
         "suspended" => false,
         "logo" => "https://www.cyfronet.pl/zalacznik/8437",
-        "users" => {
-          "user" => {
-            "email" => "test@mail.pl",
-            "name" => "test",
-            "surname" => "test"
-          }
-        },
+        "users" => [{ "email" => "test@mail.pl", "name" => "test", "surname" => "test" }],
         "location" => {
           "streetNameAndNumber" => "street",
           "postalCode" => "00-000",
@@ -37,9 +31,7 @@ FactoryBot.define do
           "region" => "WW",
           "country" => "N/E"
         },
-        "publicContacts" => {
-          "publicContact" => [{ "email" => "test@mail.pl" }]
-        }
+        "publicContacts" => [{ "email" => "test@mail.pl" }]
       }
     end
   end
