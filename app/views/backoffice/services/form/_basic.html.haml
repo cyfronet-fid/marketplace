@@ -18,6 +18,8 @@
     .card-body
       = f.input :name, disabled: cant_edit(:name)
       = f.input :abbreviation, disabled: cant_edit(:abbreviation)
+      = f.association :nodes, label: "Node", collection: Vocabulary::Node.all,
+        input_html: { multiple: false, data: { choice: true } }
       = f.association :resource_organisation, disabled: cant_edit(:resource_organisation_id),
                               label: "Service organisation",
                               collection: Provider.active.sort_by { |e| e.name.strip.downcase }

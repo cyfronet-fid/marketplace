@@ -26,7 +26,7 @@
                 class: "delete-icon float-right" do
               %i.far.fa-trash-alt
           - if policy([:backoffice, category]).edit?
-            = link_to _("Edit"),
+            = unescaped_link_to _("Edit"),
                 edit_backoffice_category_path(category),
                 class: "btn-sm btn-warning float-right mr-4"
   -# haml-lint:enable InlineStyles

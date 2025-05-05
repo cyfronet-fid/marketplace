@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe Importers::Provider, backend: true do
   let(:provider_hash_instance) { double("Importers::Provider") }
-  let(:parser) { Nori.new(strip_namespaces: true) }
+  let(:parser) { JSON }
   let(:legal_status) { create(:legal_status, eid: "provider_legal_status-public_legal_entity") }
   let(:area_of_activity) { create(:area_of_activity, eid: "provider_area_of_activity-applied_research") }
   let(:esfri_domain) { create(:esfri_domain, eid: "provider_esfri_domain-energy") }
@@ -40,10 +40,11 @@ RSpec.describe Importers::Provider, backend: true do
   end
 
   it "should return provider hash from jms" do
-    response = create(:jms_xml_provider)
-    resource = parser.parse(response["resource"])
+    response = create(:jms_json_provider)
+    response = parser.parse(response)
+    resource = response["resource"]
     current_time = 1_613_193_818_577
-    provider_mapper = described_class.new(resource["providerBundle"]["provider"], current_time)
+    provider_mapper = described_class.new(resource["provider"], current_time)
 
     correct_hash = {
       pid: "eosc.cyfronet",

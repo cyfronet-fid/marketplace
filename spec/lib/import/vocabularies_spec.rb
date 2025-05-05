@@ -20,7 +20,7 @@ describe Import::Vocabularies, backend: true do
 
   def expect_responses(test_url, vocabularies_response = nil)
     unless vocabularies_response.nil?
-      allow_any_instance_of(Faraday::Connection).to receive(:get).with("#{test_url}/vocabulary/byType/").and_return(
+      allow_any_instance_of(Faraday::Connection).to receive(:get).with("#{test_url}/vocabulary/byType").and_return(
         vocabularies_response
       )
     end

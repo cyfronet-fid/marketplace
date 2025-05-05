@@ -40,6 +40,7 @@ class Ess::ProviderSerializer < ApplicationSerializer
     0
   end
   attribute :usage_counts_views
+  attribute :node
 
   def tag_list
     object.tag_list

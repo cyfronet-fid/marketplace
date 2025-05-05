@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "nori"
-
 class Jms::ManageMessageJob < ApplicationJob
   queue_as :pc_subscriber
 

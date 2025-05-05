@@ -3,16 +3,15 @@
 require "rails_helper"
 require "jms/subscriber"
 require "stomp"
-require "nori"
 
 describe Jms::Subscriber, backend: true do
   let(:eosc_registry_base) { "localhost" }
   let(:logger) { Logger.new($stdout) }
-  let(:parser) { Nori.new(strip_namespaces: true) }
+  let(:parser) { JSON }
   let(:client) { double("Stomp::Client", config_hash) }
   let(:client_stub) { class_double(Stomp::Client).as_stubbed_const(transfer_nested_constants: true) }
-  let(:service_resource) { create(:jms_xml_service) }
-  let(:provider_resource) { create(:jms_xml_provider) }
+  let(:service_resource) { create(:jms_json_service) }
+  let(:provider_resource) { create(:jms_json_provider) }
   let(:json_service) { double(body: service_resource.to_json) }
   let(:json_provider) { double(body: provider_resource.to_json) }
   let(:connection) do

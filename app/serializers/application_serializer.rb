@@ -100,6 +100,10 @@ class ApplicationSerializer < ActiveModel::Serializer
     [object&.catalogue&.pid].compact
   end
 
+  def node
+    object.nodes.first&.name
+  end
+
   def eosc_if
     object.tag_list&.select { |tag| tag.downcase.start_with?("eosc::") }&.map { |tag| tag.split("::").last }
   end

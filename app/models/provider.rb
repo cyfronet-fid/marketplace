@@ -44,6 +44,7 @@ class Provider < ApplicationRecord
   has_many :scientific_domains, through: :provider_scientific_domains
   has_many :data_administrators, through: :provider_data_administrators, dependent: :destroy, autosave: true
   has_many :provider_vocabularies, dependent: :destroy
+  has_many :nodes, through: :provider_vocabularies, source: :vocabulary, source_type: "Vocabulary::Node"
   has_many :hosting_legal_entities,
            through: :provider_vocabularies,
            source: :vocabulary,

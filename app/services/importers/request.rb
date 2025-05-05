@@ -6,7 +6,7 @@ class Importers::Request
   def initialize(eosc_registry_base_url, suffix, faraday: Faraday, token: nil, id: nil)
     @eosc_registry_base_url = eosc_registry_base_url
     @suffix = suffix
-    @token = token
+    @token = "Bearer #{token}"
     @id = id
     @conn = api_client_connection(faraday, @token)
   end
@@ -22,7 +22,9 @@ class Importers::Request
   def all
     command = @suffix == "vocabulary/byType" ? nil : "all?quantity=10000&from=0"
     command = "all?catalogue_id=all" if @suffix == "resourceInteroperabilityRecord"
-    @conn.get("#{@eosc_registry_base_url}/#{@suffix}/#{command}")
+    url = "#{@eosc_registry_base_url}/#{@suffix}"
+    url += "/#{command}" if command.present?
+    @conn.get(url)
   end
 
   def specific

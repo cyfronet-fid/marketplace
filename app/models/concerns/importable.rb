@@ -22,6 +22,10 @@ module Importable
     Category.where(eid: categories)
   end
 
+  def map_nodes(nodes)
+    Vocabulary::Node.where(eid: nodes)
+  end
+
   def map_marketplace_location_ids(marketplace_locations)
     marketplace_locations.present? ? Vocabulary::MarketplaceLocation.where(eid: marketplace_locations).map(&:id) : []
   end

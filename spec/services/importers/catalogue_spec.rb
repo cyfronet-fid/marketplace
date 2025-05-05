@@ -4,16 +4,17 @@ require "rails_helper"
 
 RSpec.describe Importers::Catalogue, backend: true do
   let(:catalogue_hash_instance) { double("Importers::Catalogue") }
-  let(:parser) { Nori.new(strip_namespaces: true) }
+  let(:parser) { JSON }
 
   it "should return catalogue hash from jms" do
-    response = create(:jms_xml_catalogue)
-    resource = parser.parse(response["resource"])
+    response = create(:jms_json_catalogue)
+    response = parser.parse(response)
+    resource = response["resource"]
     current_time = 1_613_193_818_577
-    catalogue_mapper = described_class.new(resource["catalogueBundle"]["catalogue"], current_time)
+    catalogue_mapper = described_class.new(resource["catalogue"], current_time)
 
-    main_contact = MainContact.new(first_name: "Krzysztof", last_name: "Marszalek", email: "ymmarsza@cyf-kr.edu.pl")
-    public_contact = PublicContact.new(email: "ymmarsza@cyf-kr.edu.pl")
+    main_contact = MainContact.new(first_name: "Test", last_name: "user", email: "a.user@cyfronet.pl")
+    public_contact = PublicContact.new(email: "a.user@cyfronet.pl")
 
     correct_hash = {
       pid: "test_dev_km",

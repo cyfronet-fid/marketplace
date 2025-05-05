@@ -19,7 +19,7 @@
       - object.send(field).map do |element|
         %li.links
           %i.arrow-right
-          = link_to(element.name, service_path(element), "data-probe": "",
+          = unescaped_link_to(element.name, service_path(element), "data-probe": "",
             "data-preview-target": local_assigns[:preview] ? "link" : "")
     - else
       %li.links

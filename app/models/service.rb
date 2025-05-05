@@ -54,6 +54,7 @@ class Service < ApplicationRecord
   has_many :link_use_cases_urls, as: :linkable, dependent: :destroy, autosave: true, class_name: "Link::UseCasesUrl"
   has_many :link_multimedia_urls, as: :linkable, dependent: :destroy, autosave: true, class_name: "Link::MultimediaUrl"
   has_many :service_vocabularies, dependent: :destroy
+  has_many :nodes, through: :service_vocabularies, source: :vocabulary, source_type: "Vocabulary::Node"
   has_many :service_categories,
            through: :service_vocabularies,
            source: :vocabulary,
@@ -244,6 +245,7 @@ class Service < ApplicationRecord
             }
   validates :trls, length: { maximum: 1 }
   validates :life_cycle_statuses, length: { maximum: 1 }
+  validates :nodes, length: { maximum: 1 }
   validates :geographical_availabilities,
             presence: true,
             length: {

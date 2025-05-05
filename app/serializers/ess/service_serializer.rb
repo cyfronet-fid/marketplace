@@ -11,6 +11,7 @@ class Ess::ServiceSerializer < ApplicationSerializer
              :pid,
              :catalogues,
              :guidelines,
+             :nodes,
              :eosc_if,
              :abbreviation,
              :name,
@@ -76,6 +77,7 @@ class Ess::ServiceSerializer < ApplicationSerializer
   attribute :rating, unless: :datasource?
   attribute :activate_message, unless: :datasource?
   attribute :phase, unless: :datasource?
+  attribute :node
 
   #TODO: to remove
   attribute :related_platforms, unless: :datasource?

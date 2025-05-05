@@ -19,6 +19,8 @@
   .card-body
     = f.input :name, disabled: cant_edit(:name)
     = f.input :abbreviation, disabled: cant_edit(:abbreviation)
+    = f.association :nodes, label: "Node", collection: Vocabulary::Node.all,
+      input_html: { multiple: false, data: { choice: true } }
     = f.input :website, disabled: cant_edit(:website)
     = f.input :legal_entity, as: :boolean, include_hidden: true,
                 disabled: cant_edit(:legal_entity),

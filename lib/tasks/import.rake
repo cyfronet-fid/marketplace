@@ -13,7 +13,7 @@ namespace :import do
 
   task resources: :environment do
     Import::Resources.new(
-      ENV.fetch("MP_IMPORT_EOSC_REGISTRY_URL", "https://beta.providers.eosc-portal.eu/api"),
+      ENV.fetch("MP_IMPORT_EOSC_REGISTRY_URL", "https://integration.providers.sandbox.eosc-beyond.eu/api"),
       dry_run: ActiveModel::Type::Boolean.new.cast(ENV.fetch("DRY_RUN", false)),
       default_upstream: ENV.fetch("UPSTREAM", "eosc_registry").to_sym,
       ids: ENV.fetch("IDS", "").split(","),
@@ -25,7 +25,7 @@ namespace :import do
 
   task providers: :environment do
     Import::Providers.new(
-      ENV.fetch("MP_IMPORT_EOSC_REGISTRY_URL", "https://beta.providers.eosc-portal.eu/api"),
+      ENV.fetch("MP_IMPORT_EOSC_REGISTRY_URL", "https://integration.providers.sandbox.eosc-beyond.eu/api"),
       dry_run: ActiveModel::Type::Boolean.new.cast(ENV.fetch("DRY_RUN", false)),
       default_upstream: ENV.fetch("UPSTREAM", "eosc_registry").to_sym,
       ids: ENV.fetch("IDS", "").split(","),
@@ -37,7 +37,7 @@ namespace :import do
 
   task vocabularies: :environment do
     Import::Vocabularies.new(
-      ENV.fetch("MP_IMPORT_EOSC_REGISTRY_URL", "https://beta.providers.eosc-portal.eu/api"),
+      ENV.fetch("MP_IMPORT_EOSC_REGISTRY_URL", "https://integration.providers.sandbox.eosc-beyond.eu/api"),
       dry_run: ActiveModel::Type::Boolean.new.cast(ENV.fetch("DRY_RUN", false)),
       filepath: ENV.fetch("OUTPUT", nil),
       token: ENV.fetch("MP_IMPORT_TOKEN", nil)
@@ -46,7 +46,7 @@ namespace :import do
 
   task catalogues: :environment do
     Import::Catalogues.new(
-      ENV.fetch("MP_IMPORT_EOSC_REGISTRY_URL", "https://beta.providers.eosc-portal.eu/api"),
+      ENV.fetch("MP_IMPORT_EOSC_REGISTRY_URL", "https://integration.providers.sandbox.eosc-beyond.eu/api"),
       dry_run: ActiveModel::Type::Boolean.new.cast(ENV.fetch("DRY_RUN", false)),
       ids: ENV.fetch("IDS", "").split(","),
       filepath: ENV.fetch("OUTPUT", nil),
@@ -56,7 +56,7 @@ namespace :import do
 
   task datasources: :environment do
     Import::Datasources.new(
-      ENV.fetch("MP_IMPORT_EOSC_REGISTRY_URL", "https://beta.providers.eosc-portal.eu/api"),
+      ENV.fetch("MP_IMPORT_EOSC_REGISTRY_URL", "https://integration.providers.sandbox.eosc-beyond.eu/api"),
       dry_run: ActiveModel::Type::Boolean.new.cast(ENV.fetch("DRY_RUN", false)),
       ids: ENV.fetch("IDS", "").split(","),
       default_upstream: ENV.fetch("UPSTREAM", "eosc_registry").to_sym,
@@ -67,7 +67,7 @@ namespace :import do
 
   task guidelines: :environment do
     Import::Guidelines.new(
-      ENV.fetch("MP_IMPORT_EOSC_REGISTRY_URL", "https://beta.providers.eosc-portal.eu/api"),
+      ENV.fetch("MP_IMPORT_EOSC_REGISTRY_URL", "https://integration.providers.sandbox.eosc-beyond.eu/api"),
       dry_run: ActiveModel::Type::Boolean.new.cast(ENV.fetch("DRY_RUN", false)),
       filepath: ENV.fetch("OUTPUT", nil),
       token: ENV.fetch("MP_IMPORT_TOKEN", nil)
