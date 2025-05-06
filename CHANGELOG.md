@@ -10,13 +10,12 @@ Please view this file on the master branch, on stable branches it's out of date.
 ## [Unreleased]
 
 ### Added
-
+- Simplify project creation form (@wujuu)
 - Offer recommendations in project view (@wujuu)
 
 ## [3.59.0]
 
 ### Added
-
 - New provider wizard form (@maria-j-k, @goreck888, @jarekzet)
 
 ### Deprecated

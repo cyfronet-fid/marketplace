@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_04_14_024423) do
+ActiveRecord::Schema[7.2].define(version: 2025_05_10_072744) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -556,7 +556,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_14_024423) do
     t.text "reason_for_access"
     t.string "customer_typology"
     t.string "user_group_name"
-    t.string "project_name"
+    t.string "project_owner"
     t.string "project_website_url"
     t.string "company_name"
     t.string "company_website_url"

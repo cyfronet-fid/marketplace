@@ -46,33 +46,50 @@ class Project < ApplicationRecord
               scope: :user,
               message: "Project name need to be unique"
             }
-  validates :email, email: true, presence: true
+  validates :email, email: true, presence: true, if: :show_additional_fields?
 
-  validates :country_of_origin, presence: true, if: :single_user_or_private_company?, inclusion: { in: Country.all }
+  validates :country_of_origin,
+            presence: true,
+            inclusion: {
+              in: Country.all
+            },
+            if: %i[single_user_or_private_company? show_additional_fields?]
   validates :customer_typology, presence: true
 
-  validates :organization, length: { maximum: 255 }, presence: true, if: :single_user_or_community?
-  validates :webpage, presence: true, mp_url: true, length: { maximum: 255 }, if: :single_user_or_community?
+  validates :organization, length: { maximum: 255 }, unless: :research?
+  validates :webpage,
+            presence: true,
+            mp_url: true,
+            length: {
+              maximum: 255
+            },
+            if: %i[single_user_or_community? show_additional_fields?]
 
   validates :user_group_name, length: { maximum: 255 }, presence: true, if: :research?
 
-  validates :project_name, length: { maximum: 255 }, presence: true, if: :project?
-  validates :project_website_url, mp_url: true, length: { maximum: 255 }, presence: true, if: :project?
+  validates :project_owner, length: { maximum: 255 }, presence: true, if: :project?
+  validates :project_website_url, mp_url: true, allow_blank: true, length: { maximum: 255 }, if: :project?
 
   validates :company_name, presence: true, length: { maximum: 255 }, if: :private_company?
   validates :countries_of_partnership,
             presence: true,
-            if: :research_or_project?,
             multiselect_choices: {
               collection: Country.all
-            }
-  validates :company_website_url, mp_url: true, length: { maximum: 255 }, presence: true, if: :private_company?
+            },
+            if: %i[research_or_project? show_additional_fields?]
+
+  validates :company_website_url, mp_url: true, allow_blank: true, length: { maximum: 255 }, if: :private_company?
 
   validates :issue_id, presence: true, if: :require_jira_issue?
   validates :issue_key, presence: true, if: :require_jira_issue?
   validates :status, presence: true
 
   validates :department, length: { maximum: 255 }
+
+  def show_additional_fields?
+    # Change to true or delete if necessary. Ref: https://github.com/cyfronet-fid/marketplace/issues/3418
+    false
+  end
 
   def single_user_or_community?
     single_user? || research?

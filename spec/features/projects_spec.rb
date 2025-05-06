@@ -17,12 +17,9 @@ RSpec.feature "Project", end_user_frontend: true do
       click_on "Create new project"
 
       fill_in "project_name", with: "First test"
-      select "Single user", from: "Customer typology"
-      fill_in "Email", with: "john@doe.com"
-      fill_in "Reason to request access to the EOSC resources", with: "because I'm testing"
-      select "Non-European", from: "Origin country"
-      fill_in "Organization", with: "Home corp."
-      fill_in "Webpage", with: "http://home.corp.com"
+      select "Single user", from: "User type"
+      fill_in "Project overview", with: "testing testing testing"
+      fill_in "Affiliated organisation", with: "Home corp."
 
       expect { click_on "Create" }.to change { user.projects.count }.by(1)
       new_project = Project.last
@@ -59,12 +56,8 @@ RSpec.feature "Project", end_user_frontend: true do
       click_on "Create new project"
 
       fill_in "project_name", with: "Second test"
-      fill_in "Email", with: "john@doe.com"
-      fill_in "Reason to request access to the EOSC resources", with: "because I'm testing"
-      select "Non-European", from: "Origin country"
-      select "Single user", from: "Customer typology"
-      fill_in "Organization", with: "Home corp."
-      fill_in "Webpage", with: "http://home.corp.com"
+      fill_in "Project overview", with: "testing testing testing"
+      select "Single user", from: "User type"
       click_on "Create"
 
       expect(current_url).to eq(project_url(Project.last))

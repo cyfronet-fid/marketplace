@@ -3,22 +3,22 @@
           data: { controller: "project", action: "submit->project#filterFields", turbo: turbo_enabled } } do |f|
   %h4
     = _("Usage")
+  = f.input :customer_typology, label: "User type", collection: Project.customer_typologies.keys.map(&:to_sym),
+    input_html: { "data-project-target" => "customer",
+                  "data-action" => "change->project#showSelectedSection", class: "col-lg-5 form-control-lg" }
   = f.input :name, input_html: { class: "col-lg-6 form-control-lg" }
-  = f.input :reason_for_access, input_html: { class: "col-lg-8 form-control-lg textarea-lg" }
+  = render "customer_typology_fields", f: f
   = f.association :scientific_domains,
                   multiple: true,
                   wrapper_html: { class: "col-lg-8 pl-0 pr-0" },
                   input_html: { data: { choice: true } },
                   collection: ScientificDomain.child_names.map { |name, sd| [name, sd.id] },
                   label_method: :first, value_method: :second
-  = f.input :additional_information,
-  input_html: { class: "col-lg-8 form-control-lg textarea-md" }
+  = f.input :reason_for_access, label: "Project overview",
+            input_html: { class: "col-lg-8 form-control-lg textarea-lg", "data-project-target" => "reasonForAccess" }
+  = f.input :additional_information, label: "Other details",
+            input_html: { class: "col-lg-8 form-control-lg textarea-md", "data-project-target" => "additionalInformation" }
   %h4
-    = _("Customer details")
-  = f.input :customer_typology, collection: Project.customer_typologies.keys.map(&:to_sym),
-    input_html: { "data-project-target" => "customer",
-                  "data-action" => "change->project#showSelectedSection", class: "col-lg-5 form-control-lg" }
-  = render "customer_typology_fields", f: f
   - if show_recaptcha
     #recaptcha= recaptcha_tags noscript: false
   = f.error :verified_recaptcha, class: "invalid-feedback d-block"
