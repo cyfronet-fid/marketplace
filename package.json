@@ -32,7 +32,7 @@
     "sass": "^1.77",
     "sass-loader": "^14.2",
     "shepherd.js": "8.3.1",
-    "trix": "^2.1.5",
+    "trix": "^2.1.15",
     "uuid": "^9.0.1",
     "webpack": "^5.94.0",
     "webpack-assets-manifest": "^5.2.1",
