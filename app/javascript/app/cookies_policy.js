@@ -14,7 +14,7 @@ export default function initCookiesPolicy() {
     content: {
       dismiss: "I agree",
       link: "privacy policy.",
-      href: "https://eosc-portal.eu/privacy-policy-summary",
+      href: "https://www.eosc-beyond.eu/privacy-notice",
     },
     elements: {
       dismiss:
@@ -26,7 +26,7 @@ export default function initCookiesPolicy() {
             please check our
             <a aria-label="learn more about cookies" role=button tabindex="0"
                class="cc-link" href="{{href}}"
-               rel="noopener noreferrer nofollow" target="{{target}}">
+               rel="noopener noreferrer nofollow" target="{{target}}" style="color:#fff !important; text-decoration: underline">
                {{link}}
             </a>
             By browsing this website you automatically consent to us recording
