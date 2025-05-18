@@ -1,38 +1,44 @@
 = f.input :email,
+  as: :hidden,
   wrapper_html: { class: "hidden-fields",
   "data-project-target" => "input research project singleUser privateCompany" },
   input_html: { class: "col-lg-6 form-control-lg" }
-= f.input :user_group_name,
+= f.input :user_group_name, label: "Research group/community",
   wrapper_html: { class: "hidden-fields", "data-project-target" => "research input" },
   input_html: { "data-project-target" => "userGroupName", class: "col-lg-6 form-control-lg" }
 = f.input :organization,
-  wrapper_html: { class: "hidden-fields", "data-project-target" => "singleUser research input" },
+  label: "Affiliated organisation",
+  wrapper_html: { class: "hidden-fields", "data-project-target" => "singleUser research project input" },
   input_html: { "data-project-target" => "organization", class: "col-lg-6 form-control-lg" }
 = f.input :department,
+  as: :hidden,
   wrapper_html: { class: "hidden-fields", "data-project-target" => "singleUser research input" },
   input_html: { "data-project-target" => "department", class: "col-lg-6 form-control-lg" }
-= f.input :project_name,
+= f.input :project_owner,
   wrapper_html: { class: "hidden-fields", "data-project-target" => "project input" },
   input_html: { "data-project-target" => "projectName", class: "col-lg-6 form-control-lg" }
-= f.input :company_name,
+= f.input :company_name, label: "Private company",
   wrapper_html: { class: "hidden-fields", "data-project-target" => "privateCompany input" },
   input_html: { "data-project-target" => "companyName", class: "col-lg-6 form-control-lg" }
 = f.input :country_of_origin, collection: Country.all.map { |c| [ c.iso_short_name, "value" => c.alpha2 ] },
+  as: :hidden,
   wrapper_html: { class: "hidden-fields",
   "data-project-target" => "singleUser privateCompany input" },
   input_html: { "data-project-target" => "originCountry", class: "col-lg-6 form-control-lg" }
-= f.input :countries_of_partnership, as: :select,
-  collection: Country.all.map { |c| [ c.iso_short_name, "value" => c.alpha2 ] }, include_blank: false,
-  wrapper_html: { class: "hidden-fields col-lg-8 pl-0 pr-0",
-  "data-project-target" => "partnershipCountries input research project" },
-  input_html: { class: "choices-multiple-no-sorting col-lg-6 form-control-lg", data: { choice: true },
-  "data-project-target" => "partnershipCountries", "multiple" => "true" }
-= f.input :project_website_url,
+-# Uncomment if this field is needed. For some reason when I put as: :hidden it breaks down the select field below.
+  = f.input :countries_of_partnership, as: :select,
+    collection: Country.all.map { |c| [ c.iso_short_name, "value" => c.alpha2 ] }, include_blank: false,
+    wrapper_html: { class: "hidden-fields col-lg-8 pl-0 pr-0",
+    "data-project-target" => "partnershipCountries input research project" },
+    input_html: { class: "choices-multiple-no-sorting col-lg-6 form-control-lg", data: { choice: true },
+    "data-project-target" => "partnershipCountries", "multiple" => "true" }
+= f.input :project_website_url, as: :hidden,
   wrapper_html: { class: "hidden-fields", "data-project-target" => "project input" },
   input_html: { "data-project-target" => "projectWebsiteUrl", class: "col-lg-6 form-control-lg" }
 = f.input :webpage,
+  as: :hidden,
   wrapper_html: { class: "hidden-fields", "data-project-target" => "singleUser research input" },
   input_html: { "data-project-target" => "webpage", class: "col-lg-6 form-control-lg" }
-= f.input :company_website_url,
+= f.input :company_website_url, label: "Webpage",
   wrapper_html: { class: "hidden-fields", "data-project-target" => "privateCompany input" },
   input_html: { "data-project-target" => "companyWebsiteUrl", class: "col-lg-6 form-control-lg" }
