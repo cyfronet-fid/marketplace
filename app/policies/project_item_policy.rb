@@ -31,7 +31,7 @@ class ProjectItemPolicy < ApplicationPolicy
       :access_reason,
       :additional_information,
       :user_group_name,
-      :project_name,
+      :project_owner,
       :project_website_url,
       :company_name,
       :scientific_domain_id,

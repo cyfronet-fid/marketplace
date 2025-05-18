@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_03_06_071515) do
+ActiveRecord::Schema[7.2].define(version: 2025_05_18_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -350,6 +350,16 @@ ActiveRecord::Schema[7.2].define(version: 2024_03_06_071515) do
     t.index ["scope"], name: "index_messages_on_scope"
   end
 
+  create_table "offer_categories", force: :cascade do |t|
+    t.bigint "offer_id"
+    t.bigint "category_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_offer_categories_on_category_id"
+    t.index ["offer_id", "category_id"], name: "index_offer_categories_on_offer_id_and_category_id", unique: true
+    t.index ["offer_id"], name: "index_offer_categories_on_offer_id"
+  end
+
   create_table "offer_links", force: :cascade do |t|
     t.bigint "source_id", null: false
     t.bigint "target_id", null: false
@@ -538,7 +548,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_03_06_071515) do
     t.text "reason_for_access"
     t.string "customer_typology"
     t.string "user_group_name"
-    t.string "project_name"
+    t.string "project_owner"
     t.string "project_website_url"
     t.string "company_name"
     t.string "company_website_url"

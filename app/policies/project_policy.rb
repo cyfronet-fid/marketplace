@@ -39,7 +39,7 @@ class ProjectPolicy < ApplicationPolicy
       :organization,
       :department,
       :webpage,
-      :project_name,
+      :project_owner,
       :project_website_url,
       :company_name,
       :company_website_url,
