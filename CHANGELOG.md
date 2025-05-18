@@ -11,6 +11,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ### Added
 
+- Simplify project creation form (@wujuu)
 - Offer recommendations in project view (@wujuu)
 
 ## [3.58.1]

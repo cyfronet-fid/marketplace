@@ -12,6 +12,9 @@ export default class extends Controller {
     "project",
     "privateCompany",
     "input",
+    "organization",
+    "additionalInformation",
+    "reasonForAccess",
   ];
 
   connect() {
@@ -26,33 +29,33 @@ export default class extends Controller {
       project: "project",
     };
     this.showSelectedSection();
+    this._createHint(this.additionalInformationTarget.parentElement, "Other details you'd like to note for yourself.");
+    this._createHint(
+      this.reasonForAccessTarget.parentElement,
+      "Write a short overview of what this project is about, e.g., AI for climate change models.",
+    );
   }
 
   showSelectedSection() {
     const customer = this.customerTarget.value;
+    const organizationTargetHint =
+      "This field is optional, but it helps us better understand our users and support diverse research needs.";
 
     this._hideCustomerTypologieFields();
     if (customer === this.CUSTOMER_TYPOLOGIES.single_user) {
       this._showFields(this.singleUserTargets);
-      this._createHint(this.originCountryTarget.parentElement, "In which country is your institution located?");
+      this._createHint(this.organizationTarget.parentElement, organizationTargetHint);
     }
     if (customer === this.CUSTOMER_TYPOLOGIES.research) {
       this._showFields(this.researchTargets);
-      this._createHint(
-        this.partnershipCountriesTarget,
-        "Which countries are involved in this community? Please select those you are aware of",
-      );
+      this._createHint(this.organizationTarget.parentElement, organizationTargetHint);
     }
     if (customer === this.CUSTOMER_TYPOLOGIES.project) {
       this._showFields(this.projectTargets);
-      this._createHint(
-        this.partnershipCountriesTarget,
-        "Which countries are involved in these projects? Please select those you are aware of",
-      );
+      this._createHint(this.organizationTarget.parentElement, organizationTargetHint);
     }
     if (customer === this.CUSTOMER_TYPOLOGIES.private_company) {
       this._showFields(this.privateCompanyTargets);
-      this._createHint(this.originCountryTarget.parentElement, "Where is it located?");
     }
   }
 
