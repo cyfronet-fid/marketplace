@@ -34,6 +34,10 @@
             collection: @other_items,
             locals: { project: @project })
 
+    %h3.mt-4.mb-3.heading= _("Recommended offers")
+    .row
+      = render partial: "services/offer", collection: @recommended_offers, as: :offer
+
     - unless @project.archived?
       - if external_search_enabled
         = link_to _("Add resource to this project"), project_add_external_link,
