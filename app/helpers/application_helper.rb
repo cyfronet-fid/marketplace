@@ -102,6 +102,10 @@ module ApplicationHelper
     Rails.configuration.whitelabel
   end
 
+  def raid_on
+    Rails.configuration.raid_on
+  end
+
   def render_turbo_stream_flash
     turbo_stream.prepend "flash-messages", partial: "layouts/flash"
   end

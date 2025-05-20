@@ -81,6 +81,7 @@ module Mp
     config.recommender_host = ENV.fetch("RECOMMENDER_HOST", nil)
     config.recommendation_engine = ENV["RECOMMENDATION_ENGINE"] || "RL"
     config.auth_mock = ENV.fetch("AUTH_MOCK", nil)
+    config.raid_on = ENV.fetch("RAID_ON", false)
     config.eosc_commons_base_url =
       if ENV["EOSC_COMMONS_BASE_URL"].present?
         ENV["EOSC_COMMONS_BASE_URL"]
