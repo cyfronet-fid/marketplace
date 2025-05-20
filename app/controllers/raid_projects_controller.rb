@@ -8,10 +8,10 @@ class RaidProjectsController < ApplicationController
     return head 404 unless Rails.configuration.raid_on
     token = RaidProject::RaidLogin.new.call
     response = RaidProject::GetRaids.new(token).call
-
     if response[:status] > 399
       @raid_projects = []
-      render :index, notice: "RAiD service is temporary unavailable. Please try again later."
+      flash.now[:error] = "RAiD service is temporary unavailable. Please try again later."
+      render :index
     else
       @raid_projects = response[:data].map { |project| deserialize(project) }
       respond_to do |format|
@@ -51,12 +51,17 @@ class RaidProjectsController < ApplicationController
     pid = params[:id]
     token = RaidProject::RaidLogin.new.call
     response = RaidProject::GetRaid.new(token, pid).call
-    render :index if response[:status] > 399
-    local_raid = RaidProject.translate_incoming_json(response[:data])
-    session[:current_raid] = local_raid
-    session[:raid_project_id] = pid
-    session[:wizard_action] = "update"
-    redirect_to raid_project_steps_path
+    if response[:status] > 399
+      @raid_projects = []
+      flash.now[:error] = "RAiD service is temporary unavailable. Please try again later."
+      redirect_to raid_projects_path
+    else
+      local_raid = RaidProject.translate_incoming_json(response[:data])
+      session[:current_raid] = local_raid
+      session[:raid_project_id] = pid
+      session[:wizard_action] = "update"
+      redirect_to raid_project_steps_path
+    end
   end
 
   def update

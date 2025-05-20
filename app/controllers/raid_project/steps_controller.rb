@@ -34,9 +34,16 @@ class RaidProject::StepsController < ApplicationController
   }.freeze
 
   def show
-    step_to_set = params[:step] || (session[:wizard_action] == "update" ? "step5" : step)
-    step_state(step_to_set)
-    render template: "raid_project/steps/show", locals: { step: step_to_set }
+    @token ||= RaidProject::RaidLogin.new.call
+    if @token.empty?
+      @raid_projects = []
+      flash.now[:error] = "RAiD service is temporary unavailable. Please try again later."
+      redirect_to raid_projects_path
+    else
+      step_to_set = params[:step] || (session[:wizard_action] == "update" ? "step5" : step)
+      step_state(step_to_set)
+      render template: "raid_project/steps/show", locals: { step: step_to_set }
+    end
   end
 
   def update
@@ -87,7 +94,7 @@ class RaidProject::StepsController < ApplicationController
   end
 
   def finish_wizard_path
-    token = RaidProject::RaidLogin.new.call
+    @token ||= RaidProject::RaidLogin.new.call
     raid_id = session[:raid_project_id]
     saved_params = session[:current_raid]
     session.delete raid_id
@@ -95,11 +102,11 @@ class RaidProject::StepsController < ApplicationController
     if @raid_project.valid?
       serialized_raid_project = serialize(@raid_project)
       if session[:wizard_action] == "create"
-        response = RaidProject::PostRaid.new(serialized_raid_project, token).call
+        response = RaidProject::PostRaid.new(serialized_raid_project, @token).call
         notice =
           response[:status] < 400 ? "RAiD project was successfully created." : "RAiD project is currently unavailable."
       else
-        response = RaidProject::UpdateRaid.new(serialized_raid_project, token, raid_id).call
+        response = RaidProject::UpdateRaid.new(serialized_raid_project, @token, raid_id).call
         notice =
           response[:status] < 400 ? "RAiD project was successfully updated." : "RAiD project is currently unavailable."
       end
