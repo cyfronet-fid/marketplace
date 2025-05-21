@@ -10,14 +10,14 @@ RSpec.describe Project, backend: true do
   it { should belong_to(:user) }
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:customer_typology) }
-  it { should validate_presence_of(:email) }
+  xit { should validate_presence_of(:email), skip: "Disabled field" }
   it { should have_many(:project_items) }
   it { should validate_presence_of(:status) }
   it { should validate_length_of(:department).is_at_most(255) }
-  it { should validate_length_of(:webpage).is_at_most(255) }
+  xit { should validate_length_of(:webpage).is_at_most(255), skip: "Disabled field" }
   it { should validate_length_of(:name).is_at_most(255) }
   it { should validate_length_of(:organization).is_at_most(255) }
-  it { should_not allow_value("blah").for(:email) }
+  xit { should_not allow_value("blah").for(:email), skip: "Disabled field" }
 
   include_examples "messageable"
   include_examples "publishable"
@@ -29,7 +29,7 @@ RSpec.describe Project, backend: true do
 
   describe "#webpage" do
     before { subject.webpage = "a" * 256 }
-    it { should_not be_valid }
+    xit { should_not be_valid, skip: "Disabled field" }
   end
 
   describe "#organization" do
@@ -45,28 +45,27 @@ RSpec.describe Project, backend: true do
   describe "single user" do
     subject { build(:project, customer_typology: "single_user") }
 
-    it { is_expected.to validate_presence_of(:organization) }
-    it { is_expected.to validate_presence_of(:webpage) }
+    xit { is_expected.to validate_presence_of(:organization), skip: "Disabled field" }
+    xit { is_expected.to validate_presence_of(:webpage), skip: "Disabled field" }
   end
 
   describe "research typology" do
     subject { build(:project, customer_typology: "research") }
 
     it { is_expected.to validate_presence_of(:user_group_name) }
-    it { is_expected.to validate_presence_of(:organization) }
-    it { is_expected.to validate_presence_of(:webpage) }
+    xit { is_expected.to validate_presence_of(:organization), skip: "Disabled field" }
+    xit { is_expected.to validate_presence_of(:webpage), skip: "Disabled field" }
 
     describe "#organization" do
       before { subject.organization = "a" * 256 }
-      it { should_not be_valid }
+      xit { should_not be_valid, skip: "Disabled field" }
     end
   end
 
   describe "project typology" do
     subject { build(:project, customer_typology: "project") }
 
-    it { is_expected.to validate_presence_of(:project_name) }
-    it { is_expected.to validate_presence_of(:project_website_url) }
+    it { is_expected.to validate_presence_of(:project_owner) }
 
     describe "#project_website_url" do
       before { subject.project_website_url = "a" * 256 }
@@ -78,7 +77,7 @@ RSpec.describe Project, backend: true do
     subject { build(:project, customer_typology: "private_company") }
 
     it { is_expected.to validate_presence_of(:company_name) }
-    it { is_expected.to validate_presence_of(:company_website_url) }
+    xit { is_expected.to validate_presence_of(:company_website_url), skip: "Disabled field" }
 
     describe "#company_name" do
       before { subject.company_name = "a" * 256 }

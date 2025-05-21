@@ -10,7 +10,7 @@ FactoryBot.define do
     sequence(:department) { |n| "department #{n}" }
     sequence(:webpage) { "http://webpage.pl" }
     sequence(:user_group_name) { |n| "User group #{n}" }
-    sequence(:project_name) { |n| "Project name #{n}" }
+    sequence(:project_owner) { |n| "Project owner #{n}" }
     sequence(:scientific_domains) { |_n| [create(:scientific_domain)] }
     sequence(:country_of_origin) { Country.all.sample }
     sequence(:countries_of_partnership) { [Country.all.sample] }
