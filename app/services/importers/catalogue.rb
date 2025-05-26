@@ -3,11 +3,10 @@
 class Importers::Catalogue < ApplicationService
   include Importable
 
-  def initialize(data, synchronized_at, source = "jms")
+  def initialize(data, synchronized_at)
     super()
     @data = data
     @synchronized_at = synchronized_at
-    @source = source
   end
 
   # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity

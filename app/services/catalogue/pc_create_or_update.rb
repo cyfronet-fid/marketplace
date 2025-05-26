@@ -13,7 +13,7 @@ class Catalogue::PcCreateOrUpdate < ApplicationService
     @status = status
     @source_type = "eosc_registry"
     @mp_catalogue = Catalogue.find_by(pid: eosc_registry_catalogue["id"])
-    @catalogue_hash = Importers::Catalogue.new(eosc_registry_catalogue, modified_at).call
+    @catalogue_hash = Importers::Catalogue.call(eosc_registry_catalogue, modified_at)
     @catalogue_hash[:status] = @status
     @new_update_available = Catalogue::PcCreateOrUpdate.new_update_available(@mp_catalogue, modified_at)
     @logo = eosc_registry_catalogue["logo"]

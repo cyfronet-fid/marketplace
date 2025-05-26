@@ -59,7 +59,7 @@ class Import::Datasources
           datasource_data&.dig("identifiers", "alternativeIdentifiers")&.find { |id| id["type"] == "PID" }&.[]("value")
         output.append(datasource_data)
 
-        datasource = Importers::Datasource.call(datasource, "rest")
+        datasource = Importers::Datasource.call(datasource)
         datasource["type"] = "Datasource"
         if (datasource_source = ServiceSource.find_by(eid: eid(datasource_data), source_type: "eosc_registry")).nil?
           log "[WARN] Service id #{eid(datasource_data)} (PID: #{ppid}) doesn't exist."

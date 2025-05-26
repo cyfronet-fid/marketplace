@@ -10,7 +10,7 @@ class Provider::PcCreateOrUpdate < ApplicationService
   end
 
   def call
-    provider_hash = Importers::Provider.new(@eosc_registry_provider, @modified_at).call
+    provider_hash = Importers::Provider.call(@eosc_registry_provider, @modified_at)
     mapped_provider =
       Provider.joins(:sources).find_by("provider_sources.source_type": "eosc_registry", "provider_sources.eid": [@eid])
     if mapped_provider.nil?

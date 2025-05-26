@@ -3,10 +3,9 @@
 class Importers::Datasource < ApplicationService
   include Importable
 
-  def initialize(data, source = "jms")
+  def initialize(data)
     super()
     @data = data
-    @source = source
   end
 
   # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
@@ -34,7 +33,7 @@ class Importers::Datasource < ApplicationService
       preservation_policy_url: @data["preservationPolicyURL"] || "",
       version_control: @data["versionControl"] || false,
       persistent_identity_systems:
-        persistent_identity_systems&.map { |s| map_persistent_identity_system(s, @source) }&.compact || [],
+        persistent_identity_systems&.map { |s| map_persistent_identity_system(s, "rest") }&.compact || [],
       # Datasource content
       jurisdiction: map_jurisdiction(@data["jurisdiction"]) || nil,
       datasource_classification: map_datasource_classification(@data["datasourceClassification"]) || nil,

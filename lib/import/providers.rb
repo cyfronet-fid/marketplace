@@ -16,6 +16,7 @@ class Import::Providers
     token: nil,
     rescue_mode: false
   )
+    super()
     @eosc_registry_base_url = eosc_registry_base_url
     @dry_run = dry_run
     @faraday = faraday
@@ -38,7 +39,7 @@ class Import::Providers
     @request_providers.each do |external_data|
       external_provider_data = external_data["provider"]
       eid = external_provider_data["id"]
-      parsed_provider_data = Importers::Provider.new(external_provider_data, Time.now.to_i, "rest").call
+      parsed_provider_data = Importers::Provider.call(external_provider_data, Time.now.to_i)
       parsed_provider_data["status"] = object_status(external_data["active"], external_data["suspended"])
       eosc_registry_provider =
         Provider.joins(:sources).find_by("provider_sources.source_type": "eosc_registry", "provider_sources.eid": eid)

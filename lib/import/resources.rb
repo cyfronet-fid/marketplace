@@ -57,15 +57,15 @@ class Import::Resources
 
         synchronized_at = service_data["metadata"]["modifiedAt"].to_i
         image_url = service["logo"]
-        service = Importers::Service.new(service, synchronized_at, @eosc_registry_base_url, @token, "rest").call
-        service[:status] = object_status(service_data["service"]["active"], service_data["service"]["suspended"])
+        service = Importers::Service.call(service, synchronized_at, @eosc_registry_base_url, @token)
+        service[:status] = object_status(service_data["active"], service_data["suspended"])
         if (service_source = ServiceSource.find_by(eid: service[:pid], source_type: "eosc_registry")).nil?
           created += 1
           log "Adding [NEW] service: #{service[:name]}, eid: #{service[:pid]}"
           unless @dry_run
             service = Service.new(service)
             if service.valid?
-              Importers::Logo.new(service, image_url).call unless @rescue_mode
+              Importers::Logo.call(service, image_url) unless @rescue_mode
               service = Service::Create.call(service)
               service_source =
                 ServiceSource.create!(service_id: service.id, eid: service.pid, source_type: "eosc_registry")
