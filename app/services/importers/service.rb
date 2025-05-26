@@ -3,11 +3,10 @@
 class Importers::Service < ApplicationService
   include Importable
 
-  def initialize(data, synchronized_at, eosc_registry_base_url, token = nil, source = "jms")
+  def initialize(data, synchronized_at, eosc_registry_base_url, token = nil)
     super()
     @data = data
     @synchronized_at = synchronized_at
-    @source = source
     @eosc_registry_base_url = eosc_registry_base_url
     @token = token
   end

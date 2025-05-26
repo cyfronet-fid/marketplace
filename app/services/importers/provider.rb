@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-class Importers::Provider
+class Importers::Provider < ApplicationService
   include Importable
 
-  def initialize(data, synchronized_at, source = "jms")
+  def initialize(data, synchronized_at)
+    super()
     @data = data
     @synchronized_at = synchronized_at
-    @source = source
   end
 
   def call
@@ -26,7 +26,7 @@ class Importers::Provider
     societal_grand_challenges = Array(@data["societalGrandChallenges"])
     national_roadmaps = Array(@data["nationalRoadmaps"])
     data_administrators = Array(@data["users"])&.map { |da| DataAdministrator.new(map_data_administrator(da)) } || []
-    location = @data["location"]
+    location = @data["location"].to_h
 
     main_contact = MainContact.new(map_contact(@data["mainContact"])) if @data["mainContact"]
 
@@ -50,11 +50,11 @@ class Importers::Provider
       scientific_domains: map_scientific_domains(scientific_domains),
       tag_list: tag_list,
       # Location
-      street_name_and_number: location["streetNameAndNumber"],
-      postal_code: location["postalCode"],
-      city: location["city"],
-      region: location["region"],
-      country: Country.for(location["country"])&.alpha2,
+      street_name_and_number: location["streetNameAndNumber"] || "",
+      postal_code: location["postalCode"] || "",
+      city: location["city"] || "",
+      region: location["region"] || "",
+      country: Country.for(location["country"])&.alpha2 || "",
       # Contact
       main_contact: main_contact,
       public_contacts: public_contacts,
