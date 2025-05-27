@@ -33,7 +33,7 @@ class Import::Providers
   end
 
   def call
-    log "Importing providers from EOSC Registry #{@eosc_registry_base_url}..."
+    log "Importing providers from EOSC Registry #{@eosc_registry_base_url}... Rescue mode: #{@rescue_mode}"
     @request_providers = external_providers_data.select { |pro| @ids.empty? || @ids.include?(pro["provider"]["id"]) }
 
     @request_providers.each do |external_data|

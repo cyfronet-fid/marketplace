@@ -123,7 +123,7 @@ class Provider < ApplicationRecord
   validates :postal_code, presence: true
   validates :city, presence: true
   validates :country, presence: true
-  validates :logo, presence: true, blob: { content_type: :image }
+  validates :logo, blob: { content_type: :image }
   validates :provider_life_cycle_statuses, length: { maximum: 1 }
   validates :public_contacts, presence: true, length: { minimum: 1, message: "are required. Please add at least one" }
   validates :data_administrators,
@@ -200,13 +200,13 @@ class Provider < ApplicationRecord
 
   def set_default_logo
     assets_path = File.join(File.dirname(__FILE__), "../assets/images")
-    default_logo_name = "provider_logo.svg"
-    extension = ".svg"
+    default_logo_name = "provider_logo.png"
+    extension = ".png"
     io = File.open(assets_path + "/" + default_logo_name)
 
     # This should be fixed by allowing svg extension in the db
-    image = convert_to_png(io, extension)
-    logo.attach(io: image, filename: SecureRandom.uuid + extension, content_type: "image/#{extension.delete(".", "")}")
+    # image = convert_to_png(io, extension)
+    logo.attach(io: io, filename: SecureRandom.uuid + extension, content_type: "image/#{extension.delete(".", "")}")
   end
 
   def administered_by?(user)
