@@ -42,6 +42,7 @@ Rails.application.routes.draw do
           resources :offers, only: %i[new edit create update destroy] do
             resource :publish, controller: "offers/publishes", only: :create
             resource :draft, controller: "offers/drafts", only: :create
+            resource :summary, controller: "offers/summaries", only: %i[create update]
           end
           resources :bundles, only: %i[new edit create update destroy] do
             resource :publish, controller: "bundles/publishes", only: :create
@@ -111,6 +112,7 @@ Rails.application.routes.draw do
         resources :offers do
           resource :publish, controller: "offers/publishes", only: :create
           resource :draft, controller: "offers/drafts", only: :create
+          resource :summary, controller: "offers/summaries", only: %i[create update]
         end
         resources :bundles do
           resource :publish, controller: "bundles/publishes", only: :create
@@ -136,9 +138,6 @@ Rails.application.routes.draw do
   end
 
   post "/backoffice/services/:service_id/offers/fetch_subtypes", to: "backoffice/services/offers#fetch_subtypes"
-
-  post "/backoffice/services/:service_id/offers/:offer_id/submit", to: "backoffice/services/offers#submit_summary"
-  patch "/backoffice/services/:service_id/offers/:offer_id/submit", to: "backoffice/services/offers#submit_summary"
 
   post "/backoffice/services/:service_id/offers/:offer_id/duplicate", to: "backoffice/services/offers#duplicate", 
 as: :duplicate_offer
