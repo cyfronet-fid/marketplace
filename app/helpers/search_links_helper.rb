@@ -74,6 +74,18 @@ module SearchLinksHelper
       end
   end
 
+  def node_link(object, preview: false)
+    target = object.nodes.first
+    preview_options = preview ? { "data-preview-target": "link" } : {}
+    collection = object.is_a?(Datasource) ? "data_source" : object.class.name.downcase
+    link_to_unless(
+      object.suspended?,
+      target.name,
+      search_link(target.name, "node", collection, services_path(nodes: target.id)),
+      preview_options
+    )
+  end
+
   def services_geographical_availabilities_link(service, gcap)
     service.geographical_availabilities_link(gcap)
   end
@@ -134,5 +146,16 @@ module SearchLinksHelper
 
   def show_banner?(tags)
     matching_tags(tags).present?
+  end
+
+  def search_link(target_name, filter_query, collection = nil, default_path = nil)
+    search_base_url = Mp::Application.config.search_service_base_url
+    enable_external_search = Mp::Application.config.enable_external_search
+    collection = "service" if collection.nil?
+    if enable_external_search
+      search_base_url + "/search/#{collection}?q=*&fq=#{filter_query}:(%22#{target_name}%22)"
+    else
+      default_path
+    end
   end
 end

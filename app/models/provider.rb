@@ -16,7 +16,7 @@ class Provider < ApplicationRecord
   searchkick word_middle: [:provider_name]
 
   def search_data
-    { provider_id: id, provider_name: name, service_ids: service_ids }
+    { provider_id: id, provider_name: name, service_ids: service_ids, node_names: nodes.map(&:name) }
   end
 
   before_save { self.catalogue = Catalogue.find(catalogue_id) if catalogue_id.present? }

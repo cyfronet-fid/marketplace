@@ -7,7 +7,15 @@ module Service::Search
     # ELASTICSEARCH
     # scope :search_import working with should_indexe?
     # and define which services are indexed in elasticsearch
-    searchkick word_middle: %i[name tagline description offer_names resource_organisation_name provider_names],
+    searchkick word_middle: %i[
+                 name
+                 tagline
+                 description
+                 offer_names
+                 resource_organisation_name
+                 provider_names
+                 node_names
+               ],
                highlight: %i[name tagline resource_organisation_name provider_names]
   end
 
@@ -35,7 +43,8 @@ module Service::Search
       source: upstream&.source_type,
       offers: offers.ids,
       offer_names: offers.map(&:name),
-      provider_names: [resource_organisation.name] << providers.map(&:name)
+      provider_names: [resource_organisation.name] << providers.map(&:name),
+      node_names: nodes.map(&:name)
     }
   end
 

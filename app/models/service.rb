@@ -302,20 +302,24 @@ class Service < ApplicationRecord
   end
 
   def organisation_search_link(target, default_path = nil)
-    _provider_search_link(target, "resource_organisation", default_path)
+    _search_link(target, "resource_organisation", default_path)
+  end
+
+  def node_search_link(target, default_path = nil)
+    _search_link(target, "node", default_path)
   end
 
   def provider_search_link(target, default_path = nil)
-    _provider_search_link(target, "providers", default_path)
+    _search_link(target, "providers", default_path)
   end
 
   def geographical_availabilities_link(gcap)
-    _provider_search_link(gcap, "geographical_availabilities", services_path(geographical_availabilities: gcap))
+    _search_link(gcap, "geographical_availabilities", services_path(geographical_availabilities: gcap))
   end
 
   private
 
-  def _provider_search_link(target_name, filter_query, default_path = nil)
+  def _search_link(target_name, filter_query, default_path = nil)
     search_base_url = Mp::Application.config.search_service_base_url
     enable_external_search = Mp::Application.config.enable_external_search
     if enable_external_search

@@ -81,7 +81,7 @@ class Backoffice::ServicePolicy < ApplicationPolicy
       :description,
       :tagline,
       :order_type,
-      [node_ids: []],
+      :node_ids,
       [provider_ids: []],
       [geographical_availabilities: []],
       [language_availability: []],
