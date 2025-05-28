@@ -3,6 +3,7 @@
 module Service::Monitorable
   extend ActiveSupport::Concern
   def fetch_status(service_pid)
+    return "UNKNOWN" unless Mp::Application.config.monitoring_data_enabled
     response =
       MonitoringData::Request.call(
         Mp::Application.config.monitoring_data_host,
