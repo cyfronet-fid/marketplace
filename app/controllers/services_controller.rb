@@ -56,7 +56,7 @@ class ServicesController < ApplicationController
 
   def show
     @service = Service.includes(:offers).friendly.find(params[:id])
-    @service.store_analytics
+    @service.store_analytics unless Mp::Application.config.analytics_enabled
     @service.monitoring_status = fetch_status(@service.pid)
 
     authorize(ServiceContext.new(@service, params.key?(:from) && params[:from] == "backoffice_service"))

@@ -68,6 +68,7 @@ module Mp
 
     config.providers_dashboard_url = ENV.fetch("PROVIDERS_DASHBOARD_URL", "https://beta.providers.eosc-portal.eu")
     config.google_api_key_path = ENV.fetch("GOOGLE_AUTH_KEY_FILEPATH", "config/google_api_key.json")
+    config.monitoring_data_enabled = ActiveModel::Type::Boolean.new.cast(ENV.fetch("MONITORING_DATA_ENABLED", false))
     config.monitoring_data_host = ENV.fetch("MONITORING_DATA_URL", "https://api.devel.argo.grnet.gr/api")
     config.monitoring_data_token = ENV.fetch("MONITORING_DATA_TOKEN", nil)
     config.monitoring_data_ui_url = ENV.fetch("MONITORING_DATA_UI_URL", nil)
@@ -96,7 +97,7 @@ module Mp
       ENV.fetch("MP_STOMP_PUBLISHER_ENABLED", Rails.env.test?))
 
     config.enable_external_search = ActiveModel::Type::Boolean.new.cast(ENV.fetch("MP_ENABLE_EXTERNAL_SEARCH", false))
-
-    config.whitelabel = ActiveModel::Type::Boolean.new.cast(ENV.fetch("MP_WHITELABEL", true))
+    config.analytics_enabled = ActiveModel::Type::Boolean.new.cast(ENV.fetch("ANALYTICS_ENABLED", false))
+    config.whitelabel = ENV.fetch("MP_WHITELABEL", true)
   end
 end
