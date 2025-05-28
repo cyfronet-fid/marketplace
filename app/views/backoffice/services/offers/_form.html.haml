@@ -3,7 +3,7 @@
   Offers%3A-Adding-and-Editing?type=design&node-id=2-73&mode=design&t=F215vnzstlg4yUqR-0
 
 = simple_form_for offer_form_source_module, html: { data: {controller: "offer exit", "offer-target": "form",
-  "service-id": service.id, "offer-id": offer&.id || "new" }} do |f|
+  "service-id": service.id, "offer-id": offer&.iid || "new" }} do |f|
   = f.hidden_field :from, value: local_assigns[:from]
 
   .steps-row

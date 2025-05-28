@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Backoffice::Services::OffersController < Backoffice::ApplicationController
+  include Backoffice::OffersHelper
+
   before_action :find_service
   before_action :find_offer_and_authorize, only: %i[edit update]
   before_action :load_form_data, only: %i[fetch_subtypes]
@@ -30,12 +32,6 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
     else
       render :new, status: :bad_request
     end
-  end
-
-  def submit_summary
-    template = offer_template
-    authorize(template)
-    render partial: "backoffice/services/offers/steps/summary", locals: { offer: template }
   end
 
   def edit
