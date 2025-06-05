@@ -35,6 +35,7 @@
             locals: { project: @project })
 
     %h3.mt-4.mb-3.heading= _("Recommended offers")
+    -# TODO: Modify below to match figma: https://www.figma.com/design/knvUcOE9obIotrVjOOihTJ/Composability?node-id=9080-3718&t=DhzrVoZnNiNkm78W-0
     .row
       = render partial: "services/offer", collection: @recommended_offers, as: :offer
 
