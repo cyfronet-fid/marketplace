@@ -34,8 +34,8 @@
             collection: @other_items,
             locals: { project: @project })
 
-    %h3.mt-4.mb-3.heading= _("Recommended offers")
-    -# TODO: Modify below to match figma: https://www.figma.com/design/knvUcOE9obIotrVjOOihTJ/Composability?node-id=9080-3718&t=DhzrVoZnNiNkm78W-0
+    %h3.mt-4.mb-3.heading= _("Recommended offers for your project")
+
     .row
       = render partial: "services/offer", collection: @recommended_offers, as: :offer
 
@@ -45,5 +45,5 @@
           class: "btn btn btn-primary pl-5 pr-5 mr-5 mt-5"
       - else
         = link_to _("Add resource to this project"), project_add_path(@project),
-          class: "btn btn btn-primary pl-5 pr-5 mr-5 mt-5",
+          class: "btn btn btn-primary pl-5 pr-5 mr-5 mt-2",
           "data-turbo-method": :post
