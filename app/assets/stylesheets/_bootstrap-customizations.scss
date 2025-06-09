@@ -1680,10 +1680,18 @@ Service detail
   .card {
     padding-bottom: 2.5rem;
 
+    .resource-logo {
+      padding: 0.8rem 1rem 0;
+    }
+
     .card-body {
       overflow: hidden;
       padding-bottom: 8px;
       min-height: 150px;
+
+      .card-title {
+        padding-top: 0;
+      }
 
       table {
         margin-bottom: 8px;
@@ -4009,7 +4017,7 @@ label[data-multicheckbox].small {
   margin-top: 45px;
 
   .heading {
-    font-size: 18px;
+    font-size: 20px;
   }
   // scss-lint:disable all
   .resource_type {

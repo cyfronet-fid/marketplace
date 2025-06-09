@@ -1,5 +1,7 @@
 .col-md-6.d-flex.align-items-stretch.resource-offers{ id: "offer-#{offer.id}" }
   .card.m-0.mb-5.w-100.d-block
+    .resource-logo
+      = image_tag(offer.service.logo)
     = render "services/offers/description", offer: offer
     = render "services/offers/parameters", id: offer.id,
       technical_parameters: offer.attributes.map(&:to_json), service: offer.service
