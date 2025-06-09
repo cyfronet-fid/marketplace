@@ -1,15 +1,24 @@
 - shepherd_target = local_assigns[:tour_overview_9_target] ? "overview_9" : nil
 .media.mb-3.service-box{ "data-shepherd-tour-target": shepherd_target, class: ("horizontal" if service.horizontal) }
+  .info-icons
+    - if service.horizontal
+      %span.badge.horizontal-badge.fa-pull-right.badge-right Horizontal service
+
+    .badge.access-information.fa-pull-right.badge-right.style_order_required{ class: service.order_type }
+      %i.ordertype.order_required
+      = service.order_type.humanize
+
   .media-body.pt-4{ class: ("backoffice" if request.fullpath.include?("backoffice")) }
     .pl-4.pr-4.mb-3
-      %h2.mb-3{ "data-probe" => "", "data-service-id" => service.id, "data-e2e" => "service-id" }
+      %h2{ "data-probe" => "", "data-service-id" => service.id, "data-e2e" => "service-id" }
         = yield
-        - if service.horizontal
-          %span.badge.badge-blue Horizontal service
         .abbreviation.list
           = service.abbreviation
-      %p.mb-3= highlighted_for(:tagline, service, highlights)
-      = render "components/presentable/header_component/categorization", service: service, highlights: highlights
+      %p.mb-2= highlighted_for(:tagline, service, highlights)
+      = render "components/presentable/header_component/categorization",
+        service: service,
+        highlights: highlights,
+        backoffice: request.fullpath.include?("backoffice")
       = yield_content!(:comparison_checkbox) if content_for(:comparison_checkbox)
       = yield_content!(:favourite_checkbox) if content_for(:favourite_checkbox)
     - if service_offers&.any?
@@ -23,10 +32,6 @@
           = render "services/offers_box", service_offers: service_offers,
             service: service
   .right-extra-info
-    .text-center.badge.text-uppercase
-      %i{ class: "ordertype #{order_type(service)}" }
-      -# TODO: refactor dynamic translation
-      = t("offers.type.#{order_type(service)}")
     .service-logo
       = presentable_logo(service, "align-center mx-4 service-logo", "120x120")
   .backoffice-button-row.d-none{ class: ("d-block" if request.fullpath.include?("backoffice")) }

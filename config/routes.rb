@@ -157,9 +157,6 @@ Rails.application.routes.draw do
 
   post "/backoffice/services/:service_id/offers/fetch_subtypes", to: "backoffice/services/offers#fetch_subtypes"
 
-  post "/backoffice/services/:service_id/offers/:offer_id/duplicate", to: "backoffice/services/offers#duplicate",
-as: :duplicate_offer
-
 
   resource :executive, only: :show
   namespace :executive do

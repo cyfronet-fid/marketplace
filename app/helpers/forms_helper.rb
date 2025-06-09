@@ -69,4 +69,18 @@ module FormsHelper
            object: object,
            provider_form: object.is_a?(Provider)
   end
+
+  def action_prompt(object, action)
+    entities = object == "catalogue" ? "providers, services, offers and bundles" : "services, offers and bundles"
+    warning = "CAUTION!\nThis action cannot be undone." if action == "remove"
+    published = "published " if action != "remove"
+    message =
+      "Are you sure you want to %{action} this %{object}? It will %{action} " +
+        "all dependent %{published}%{entities}.\n\n%{warning}"
+    _(message % { action: _(action), entities: entities, object: object, published: published, warning: warning })
+  end
+
+  def dial_codes
+    Country.all.map { |c| ["#{c.iso_short_name} #{c.emoji_flag} (+#{c.country_code})", "value" => c.country_code] }
+  end
 end
