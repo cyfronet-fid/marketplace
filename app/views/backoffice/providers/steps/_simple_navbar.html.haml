@@ -1,0 +1,13 @@
+- csi = current_step_index
+.steps-row
+  = link_to backoffice_provider_wizard_path(params[:provider_id], step: "profile") do
+    .offer-step.active-button
+      Provider's profile
+  - basic_steps[1..-2].each_with_index do |step, idx|
+    .offer-step{ id: "step-#{(idx+2).humanize}-button", class: ("active-button" if csi > idx) }
+      - if csi < idx + 1
+        = f.button :submit, step.capitalize
+      - else
+        = link_to step.capitalize, backoffice_provider_wizard_path(params[:provider_id], step: step)
+  #step-five-button.offer-step{ class: ("active-button" if csi > 3) }
+    = f.button :submit, "Summary", id: "summary-step-link"

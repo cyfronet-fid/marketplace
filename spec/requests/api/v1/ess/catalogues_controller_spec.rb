@@ -21,7 +21,7 @@ RSpec.describe Api::V1::Ess::CataloguesController, swagger_doc: "v1/ess_swagger.
       response 200, "catalogues found" do
         schema "$ref" => "ess/catalogue/catalogue_index.json"
 
-        let!(:manager) { create(:user, roles: [:service_portfolio_manager]) }
+        let!(:manager) { create(:user, roles: [:coordinator]) }
         let!(:catalogues) { create_list(:catalogue, 2) }
         let!(:draft) { create(:catalogue, status: :draft) }
         let!(:deleted) { create(:catalogue, status: :deleted) }
@@ -38,7 +38,7 @@ RSpec.describe Api::V1::Ess::CataloguesController, swagger_doc: "v1/ess_swagger.
       response 403, "user doesn't have manager role", document: false do
         schema "$ref" => "error.json"
         let(:regular_user) { create(:user) }
-        let(:manager) { create(:user, roles: [:service_portfolio_manager]) }
+        let(:manager) { create(:user, roles: [:coordinator]) }
         let(:catalogues) { create_list(:catalogue, 3) }
 
         let(:"X-User-Token") { regular_user.authentication_token }
@@ -72,7 +72,7 @@ RSpec.describe Api::V1::Ess::CataloguesController, swagger_doc: "v1/ess_swagger.
       %i[id pid].each do |id_form|
         response 200, "catalogue found by #{id_form}" do
           schema "$ref" => "ess/catalogue/catalogue_read.json"
-          let!(:manager) { create(:user, roles: [:service_portfolio_manager]) }
+          let!(:manager) { create(:user, roles: [:coordinator]) }
           let!(:catalogue) { create(:catalogue) }
 
           let(:catalogue_id) { catalogue.send(id_form) }
@@ -87,7 +87,7 @@ RSpec.describe Api::V1::Ess::CataloguesController, swagger_doc: "v1/ess_swagger.
 
       response 404, "draft catalogue not found by id" do
         schema "$ref" => "error.json"
-        let!(:manager) { create(:user, roles: [:service_portfolio_manager]) }
+        let!(:manager) { create(:user, roles: [:coordinator]) }
         let!(:catalogue) { create(:catalogue, status: :draft) }
 
         let(:catalogue_id) { catalogue.id }

@@ -3,10 +3,6 @@
 module Presentable
   extend ActiveSupport::Concern
 
-  def administered_by?(user)
-    resource_organisation.administered_by?(user)
-  end
-
   def geographical_availabilities=(value)
     super(value&.map { |v| Country.for(v) })
   end

@@ -13,8 +13,8 @@
           "data-action" => "change->details-loader#changed",
           "data-details-loader-target" => "idSource"
         .input-group-append.ml-4
-          = link_to _("Add new project"), new_project_path, "data-turbo": true,
-            "data-e2e": "add-new-project-btn", "data-turbo-frame": "modal",
+          = link_to _("Add new project"), new_project_path, data: { turbo: true,
+            e2e: "add-new-project-btn", turbo_frame: "modal" },
             class: "btn btn-primary"
 
   %div{ "data-details-loader-target" => "details" }

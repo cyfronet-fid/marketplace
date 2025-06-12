@@ -1,0 +1,20 @@
+- state = current_step_index + 1 < total_steps
+.container
+  .row.new-offer-form-controls
+    .col-5.back-link-wrapper
+      = link_to back_title, backoffice_provider_wizard_path(params[:provider_id], step: prev_step) unless current_step_index.zero?
+    .col-2
+      = link_to "Exit", backoffice_provider_exit_path(params[:provider_id].present? ? params[:provider_id] : params[:id]),
+            data: { turbo_confirm: "Exit provider editor",
+            confirm_details: exit_confirm_details,
+            confirm_button: "Exit", turbo_method: :post, turbo_frame: "_top" }, class: "btn btn-back"
+    .col-2
+      - if current_step_index == 4 && params[:provider_id] != "new"
+        = link_to _("Delete"),
+          backoffice_provider_path(params[:provider_id]),
+          class: "btn btn-danger",
+          data: { turbo_confirm: action_prompt("provider", "remove"), turbo_method: :delete }
+    .col-3.text-right
+      - title = state ? next_title : submit_title
+      = f.button :submit, title, class: "btn btn-primary pl-5 pr-5"
+      -# data: state ? {} : { controller: "form-redirect", action: "turbo:submit-end->form-redirect#next" }

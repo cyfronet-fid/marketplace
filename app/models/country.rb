@@ -5,6 +5,8 @@ class Country
 
   REGIONS = %w[WW EO EU EZ AH].freeze
 
+  ISO3166::Data.reset
+
   ISO3166::Data.register(alpha2: "WW", iso_short_name: "World", translations: { "en" => "Worldwide" })
 
   ISO3166::Data.register(alpha2: "EO", iso_short_name: "Europe", translations: { "en" => "Europe" })
@@ -19,30 +21,12 @@ class Country
 
   ISO3166::Data.register(alpha2: "OT", iso_short_name: "Other", translations: { "en" => "Other" })
 
+  ISO3166::Data.register(ISO3166::Country.new("GB").data.except("alpha2").merge(alpha2: "UK"))
+
+  ISO3166::Data.register(ISO3166::Country.new("GR").data.except("alpha2").merge(alpha2: "EL"))
+
   ISO3166::Data.unregister("GB")
   ISO3166::Data.unregister("GR")
-
-  ISO3166::Data.register(
-    alpha2: "UK",
-    iso_short_name: "United Kingdom of Great Britain and Northern Ireland",
-    region: "Europe",
-    eu_member: false,
-    eea_member: false,
-    translations: {
-      "en" => "United Kingdom of Great Britain and Northern Ireland"
-    }
-  )
-
-  ISO3166::Data.register(
-    alpha2: "EL",
-    iso_short_name: "Greece",
-    region: "Europe",
-    eu_member: true,
-    eea_member: true,
-    translations: {
-      "en" => "Greece"
-    }
-  )
 
   class << self
     def for(value)
@@ -141,6 +125,11 @@ class Country
         regions.push(convert_name_to_code("Europe"))
       end
       regions.map { |r| r }
+    end
+
+    def get_country_phone_code(value)
+      country = find_by_name(value)
+      "+#{country.country_code}"
     end
   end
 

@@ -1,0 +1,26 @@
+- content_for :title, @vocabulary.name
+- breadcrumb :backoffice_vocabulary, @vocabulary, @type
+= render "layouts/backoffice/other_settings_wrapper" do
+  .container.p-0.backoffice
+    %h1= @vocabulary.name
+    .service-box.p-4.mt-3.backoffice-form
+      %h2
+        = _("Description") + ":"
+      %p= @vocabulary.description
+      %h2
+        = _("eID") + ":"
+      %p= @vocabulary.eid
+      %h2= @vocabulary.parent ? _("Parent: %{sdpn}") % { sdpn: @vocabulary.parent.name } : "Root element"
+
+      %hr.bottom-hr.mt-5.mb-4
+      .btn-group
+        - if policy([:backoffice, @vocabulary]).edit?
+          = link_to _("Edit"),
+                    send("edit_backoffice_other_settings_#{snake_cased(@type)}_path", @vocabulary),
+                    class: "btn btn-primary"
+        - if policy([:backoffice, @vocabulary]).destroy?
+          = link_to _("Delete"),
+                    send("backoffice_other_settings_#{snake_cased(@type)}_path", @vocabulary),
+                    data: { "turbo-confirm": _("Are you sure you want to remove this #{@type}?"), "turbo-method": :delete },
+                    class: "btn btn-danger"
+    = link_to _("<- Back to Vocabularies"), backoffice_other_settings_vocabularies_path, class: "backoffice-back-link mt-3"

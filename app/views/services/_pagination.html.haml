@@ -1,4 +1,4 @@
-.col-md-12
+.col-md-12{ class: ("backoffice" if request.path.include?("backoffice")) }
   %hr.category-separator
 .col-md-3
   %i.control-label.search-results

@@ -33,12 +33,6 @@ RSpec.describe ServicePolicy, backend: true do
 
       expect(resolve.count).to eq(1)
     end
-
-    it "allows unverified services" do
-      create(:service, status: :unverified)
-
-      expect(resolve.count).to eq(1)
-    end
   end
 
   permissions :offers_show? do
@@ -48,11 +42,11 @@ RSpec.describe ServicePolicy, backend: true do
       expect(subject).to permit(user, service.reload)
     end
 
-    it "denies when there is only one offer" do
+    it "grants when there is only one offer" do
       service = create(:service)
       create(:offer, service: service)
 
-      expect(subject).to_not permit(user, service.reload)
+      expect(subject).to permit(user, service.reload)
     end
 
     it "denies when there is not offers" do
@@ -61,7 +55,7 @@ RSpec.describe ServicePolicy, backend: true do
   end
 
   permissions :errors_show? do
-    let(:spm_user) { create(:user, roles: [:service_portfolio_manager]) }
+    let(:spm_user) { create(:user, roles: [:coordinator]) }
 
     it "grants access to data administrator" do
       expect(subject).to permit(user, service)

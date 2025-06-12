@@ -9,10 +9,10 @@
       #flash-messages.flash
         = render "layouts/flash"
       = turbo_frame_tag "modal"
+      = render "layouts/confirm_modal"
       = render "layouts/backoffice/navbar"
     %main
       .container
-        = render "layouts/breadcrumb"
         = yield
   = render "layouts/eosc_commons_footer"
 

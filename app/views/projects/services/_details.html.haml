@@ -1,7 +1,7 @@
 %dl
   %dt
     = _("Service name") + ":"
-  %dd= link_to project_item.service.name, project_item.service
+  %dd= link_to project_item.service.name, service_offers_path(project_item.service)
 - if project_item.service.offers_count > 1
   %dl
     %dt

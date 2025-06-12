@@ -13,7 +13,7 @@ class ServiceContextPolicy < ApplicationPolicy
 
   def order?
     permitted? && record.service.status.in?(Statusable::PUBLIC_STATUSES) && record.service.offers? &&
-      record.service.offers.any?(&:published?)
+      (record.service.offers.inclusive.any?(&:published?) || record.service.bundles.any?(&:published?))
   end
 
   private
@@ -38,6 +38,6 @@ class ServiceContextPolicy < ApplicationPolicy
     return false if user.blank?
     service = record.service
 
-    user.service_portfolio_manager? || service.owned_by?(user) || service.administered_by?(user)
+    user.coordinator? || service.owned_by?(user)
   end
 end

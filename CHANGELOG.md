@@ -12,8 +12,40 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Added
 
 - Simplify project creation form (@wujuu)
-- Offer recommendations in project view (@wujuu)
 - Node information (@goreck888)
+- Environmental variable to hide recommendation panel (`SHOW_RECOMMENDATION_PANEL`) (@maria-j-k)
+- Unit to the constant offer parameter (@gorreck888)
+- `Save as draft` and `Duplicate` features for offer form (@maria-j-k) 
+- Publish/Suspend/Unpublish actions for multiple Providers and Catalogues (@goreck888, @jarekzet)
+- Approval panel for new providers (@goreck888)
+
+### Changed
+ 
+- Unlock unpublish/suspend and delete actions for active providers and catalogues (@goreck888)
+- New backoffice view (@jarekzet, goreck888)
+- Other settings tab visible only for users with service portfolio manager role (@maria-j-k)
+- Logo in catalogues, services, providers is not required. Set default logo for each (@maria-j-k)
+- Status bar with actions buttons in detail and edit views for services, catalogues and providers (@maria-j-k)
+- role name `service_portfolio_manager` to `coordinator` (@goreck888)
+
+### Fixed
+
+- Number of requests handling data_administrators scope (@goreck888)
+- Show pop-up on add to favourites (@maria-j-k)
+- Pre-fill administrator data in catalogues creation form (@maria-j-k)
+- Bundle status changes to draft if any of its offers changes the status from public to other (@maria-j-k)
+- Fix access_type validator in offer (@maria-j-k)
+- Compare/Favourite icons on the service page (@jarekzet)
+- Back to previous button fixed (@maria-j-k)
+- Removed `no_offers` message in deleted services (@goreck888)
+- Redirect to login when unlogged user is ordering a service(@goreck888)
+- Propagation of service relationships (@goreck888)
+
+### Security
+
+- Update dependencies (@goreck888)
+- Postgres update from 14.1 to 16.4 (@goreck888)
+- Remove most of services from database (@maria-j-k)
 
 ## [3.58.1]
 
@@ -29,7 +61,10 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Add duplicate offer feature to offers form (@maria-j-k)
 - Readme section about manual dev setup (@Michal-Kolomanski)
 
-### Changed
+### Added
+- Handling data administrator scope in the backoffice (@goreck888)
+- Statuses changes for providers and catalogues (@goreck888)
+- Delete button for services (@goreck888)
 
 ### Fixed
 

@@ -1,0 +1,6 @@
+.fixme{ "data-form-target": "fixme", "data-action": "scroll@window->form#onScroll" }
+  %ul.add-new-menu
+    - types.each do |name, path|
+      %li
+        = link_to _(name.pluralize), polymorphic_path([:backoffice, :other_settings, path]),
+          class: "#{"active" if type == name}"

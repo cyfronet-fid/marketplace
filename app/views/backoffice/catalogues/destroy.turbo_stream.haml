@@ -1,0 +1,4 @@
+= turbo_stream.replace(@catalogue.reload,
+                       partial: "components/presentable/list_component/item_details",
+                       locals: { obj: @catalogue, klass: "catalogue" })
+= render_turbo_stream_flash

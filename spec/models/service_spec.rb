@@ -54,8 +54,8 @@ RSpec.describe Service, backend: true do
   it "has related services" do
     s1, s2, s3 = create_list(:service, 3)
 
-    ServiceRelationship.create(source: s1, target: s2, type: "ServiceRelationship")
-    ServiceRelationship.create(source: s1, target: s3, type: "ServiceRelationship")
+    ServiceRelationship.create!(source: s1, target: s2, type: "ServiceRelationship")
+    ServiceRelationship.create!(source: s1, target: s3, type: "ServiceRelationship")
 
     expect(s1.related_services).to contain_exactly(s2, s3)
   end

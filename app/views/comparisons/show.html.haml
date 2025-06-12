@@ -28,7 +28,7 @@
               %i.far.fa-trash-alt
             .service-title
               = link_to service.name.truncate(30, separator: " "),
-                service_path(service, fromc: params[:fromc], comp_link: true),
+                service_offers_path(service, fromc: params[:fromc], comp_link: true),
                 "data-probe": "", "data-service-id": service.id
             .service-description
               = service.description.truncate(80, separator: " ")

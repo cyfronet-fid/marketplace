@@ -4,13 +4,13 @@ class RemovePhaseFromService < ActiveRecord::Migration[6.0]
   def up
     production_id = execute(<<~SQL)
         INSERT INTO vocabularies(name, type, eid, created_at, updated_at)
-        VALUES ('Production', 'LifeCycleStatus', 'life_cycle_status-production', '#{Time.now}', '#{Time.now}')
+        VALUES ('Production', 'Vocabulary::LifeCycleStatus', 'life_cycle_status-production', '#{Time.now}', '#{Time.now}')
         RETURNING id;
       SQL
 
     beta_id = execute(<<~SQL)
         INSERT INTO vocabularies(name, type, eid, created_at, updated_at)
-        VALUES ('Beta', 'LifeCycleStatus', 'life_cycle_status-beta', '#{Time.now}', '#{Time.now}')
+        VALUES ('Beta', 'Vocabulary::LifeCycleStatus', 'life_cycle_status-beta', '#{Time.now}', '#{Time.now}')
         RETURNING id;
       SQL
 
@@ -19,12 +19,12 @@ class RemovePhaseFromService < ActiveRecord::Migration[6.0]
       when "production"
         execute(<<~SQL)
             INSERT INTO service_vocabularies(service_id, vocabulary_id, vocabulary_type, created_at, updated_at)
-            VALUES ( #{d["id"]}, #{production_id[0]["id"]}, 'LifeCycleStatus', '#{Time.now}', '#{Time.now}')
+            VALUES ( #{d["id"]}, #{production_id[0]["id"]}, 'Vocabulary::LifeCycleStatus', '#{Time.now}', '#{Time.now}')
             SQL
       when "beta"
         execute(<<~SQL)
             INSERT INTO service_vocabularies(service_id, vocabulary_id, vocabulary_type, created_at, updated_at)
-            VALUES ( #{d["id"]}, #{beta_id[0]["id"]}, 'LifeCycleStatus', '#{Time.now}', '#{Time.now}')
+            VALUES ( #{d["id"]}, #{beta_id[0]["id"]}, 'Vocabulary::LifeCycleStatus', '#{Time.now}', '#{Time.now}')
             SQL
       end
     end

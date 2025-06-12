@@ -21,10 +21,8 @@ en:
         link: Decommission
       publish:
         link: Publish
-      publish_as_unverified:
-        link: Publish as unverified Service
       draft:
-        link: Stop showing in the MP
+        link: Unpublish
       offers:
         parameters:
           link: Edit parameters

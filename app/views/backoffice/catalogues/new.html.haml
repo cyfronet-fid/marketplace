@@ -1,6 +1,6 @@
 - content_for :title, _("New Catalogue")
 - breadcrumb :backoffice_catalogue_new, @catalogue
 
-.container
-  %h1#title.mb-3= _("New Catalogue")
+.container.p-0.backoffice
+  %h1= _("New Catalogue")
   = render "form", catalogue: @catalogue

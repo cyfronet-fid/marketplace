@@ -30,6 +30,19 @@ module Presentable::HeaderHelper
     end
   end
 
+  def offers_link(service, query_params)
+    query_params ||= {}
+    from = query_params[:from]
+    case from
+    when "ordering_configuration"
+      service_ordering_configuration_offers_path(service, query_params)
+    when "backoffice_service"
+      backoffice_service_offers_path(service, query_params)
+    else
+      service_offers_path(service, query_params)
+    end
+  end
+
   def datasource_about_link(datasource, from)
     case from
     when "backoffice_datasource"

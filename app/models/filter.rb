@@ -25,6 +25,10 @@ class Filter
     values.present?
   end
 
+  def blank?
+    !present?
+  end
+
   def visible?
     true
   end

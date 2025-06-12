@@ -26,7 +26,8 @@ Rails.application.routes.draw do
 
   resources :services, only: %i[index show], constraints: { id: pid_format_constraint } do
     scope module: :services do
-      resource :offers, only: %i[show update]
+      resources :offers, only: %i[index]
+      resource :choose_offer, only: %i[show update]
       resource :configuration, only: %i[show update]
       resource :information, only: %i[show update]
       resource :summary, only: %i[show create]
@@ -39,11 +40,12 @@ Rails.application.routes.draw do
       resources :bundles, only: :show
       resource :ordering_configuration, only: :show do
         scope module: :ordering_configuration do
-          resources :offers, only: %i[new edit create update destroy] do
+          resources :offers, only: %i[index new edit create update destroy] do
             resource :publish, controller: "offers/publishes", only: :create
             resource :draft, controller: "offers/drafts", only: :create
+            resource :summary, controller: "offers/summaries", only: %i[create update]
           end
-          resources :bundles, only: %i[new edit create update destroy] do
+          resources :bundles, only: %i[index new edit create update destroy] do
             resource :publish, controller: "bundles/publishes", only: :create
             resource :draft, controller: "bundles/drafts", only: :create
           end
@@ -105,12 +107,17 @@ Rails.application.routes.draw do
 
   resource :backoffice, only: :show
   namespace :backoffice do
+    namespace :statuses do
+      resources :providers, only: %i[create]
+      resources :catalogues, only: %i[create]
+    end
     resources :services, controller: "services", constraints: { id: pid_format_constraint } do
       scope module: :services do
         resource :logo_preview, only: :show
         resources :offers do
           resource :publish, controller: "offers/publishes", only: :create
           resource :draft, controller: "offers/drafts", only: :create
+          resource :summary, controller: "offers/summaries", only: %i[create update]
         end
         resources :bundles do
           resource :publish, controller: "bundles/publishes", only: :create
@@ -122,27 +129,37 @@ Rails.application.routes.draw do
     end
     get "service_autocomplete", to: "services#autocomplete", as: :service_autocomplete
     get "services/c/:category_id" => "services#index", :as => :category_services
-    resources :scientific_domains
-    resources :categories
-    resources :providers, constraints: { id: pid_format_constraint }
-    resources :catalogues
-    resources :platforms
-    get "vocabularies", to: "vocabularies#index", type: "target_user", as: :vocabularies
-    scope "/vocabularies" do
-      VOCABULARY_TYPES.each do |type, opts|
-        resources opts[:route], controller: "vocabularies", type: type.to_s
+    resources :approval_requests, only: %i[index show edit update]
+    resources :providers, constraints: { id: %r{[^/]+} } do
+      resource :publish, controller: "providers/publishes", only: :create
+      resource :unpublish, controller: "providers/unpublishes", only: :create
+      resource :wizard, controller: "providers/steps", only: %i[show update]
+      post :exit
+    end
+    resources :catalogues do
+      resource :publish, controller: "catalogues/publishes", only: :create
+      resource :unpublish, controller: "catalogues/unpublishes", only: :create
+    end
+    resources :statistics, only: :index
+    get "other_settings", to: "other_settings/scientific_domains#index", as: :scientific_domains
+    namespace :other_settings do
+      resources :scientific_domains
+      resources :categories
+      resources :platforms
+      get "vocabularies", to: "vocabularies#index", type: "target_user", as: :vocabularies
+      scope "/vocabularies" do
+        VOCABULARY_TYPES.each do |type, opts|
+          resources opts[:route], controller: "vocabularies", type: type.to_s
+        end
       end
     end
   end
 
+  post "/backoffice/services/:service_id/offers/:offer_id/duplicate", to: "backoffice/services/offers#duplicate", 
+    as: :duplicate_offer
+
   post "/backoffice/services/:service_id/offers/fetch_subtypes", to: "backoffice/services/offers#fetch_subtypes"
 
-  post "/backoffice/services/:service_id/offers/:offer_id/submit", to: "backoffice/services/offers#submit_summary"
-  patch "/backoffice/services/:service_id/offers/:offer_id/submit", to: "backoffice/services/offers#submit_summary"
-
-  post "/backoffice/services/:service_id/offers/:offer_id/duplicate", to: "backoffice/services/offers#duplicate", 
-as: :duplicate_offer
-  
 
   resource :executive, only: :show
   namespace :executive do

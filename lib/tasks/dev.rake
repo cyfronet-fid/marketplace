@@ -265,7 +265,7 @@ namespace :dev do
       catalogue.networks = Vocabulary::Network.where(eid: hash["networks"])
       catalogue.legal_statuses = Vocabulary::LegalStatus.where(eid: hash["legal_statuses"])
       catalogue.hosting_legal_entities = Vocabulary::HostingLegalEntity.where(eid: hash["hosting_legal_entities"])
-      catalogue.tags = hash["tags"]
+      catalogue.tag_list = hash["tags"]
       catalogue.street_name_and_number = hash["street"]
       catalogue.postal_code = hash["postal_code"]
       catalogue.city = hash["city"]

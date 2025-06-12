@@ -1,0 +1,55 @@
+= simple_form_for [:backoffice, provider],
+  url: backoffice_provider_wizard_path(params[:provider_id]),
+  html: { "data-form-target": "form" },
+  method: :put do |f|
+  = render "backoffice/providers/steps/simple_navbar", provider: provider, f: f
+  .new-offer-form
+    .row
+      .col-lg-7.pl-0
+        .service-contact-emails
+          %h4
+            = _("Main Contact")
+          .contact.offer-section-wrapper
+            = f.fields_for :main_contact do |main_contact_form|
+              = main_contact_form.hidden_field :id, disabled: provider.upstream_id.present?
+              = main_contact_form.input :first_name, disabled: provider.upstream_id.present?,
+                  input_html: { "data-form-target": "mcFirstName" }
+              = main_contact_form.input :last_name, disabled: provider.upstream_id.present?,
+                  input_html: { "data-form-target": "mcLastName" }
+              = main_contact_form.input :email, disabled: provider.upstream_id.present?,
+                  input_html: { "data-form-target": "mcEmail" }
+              .row
+                .col-5
+                  - c = provider.country.presence
+                  - sel = "#{c.iso_short_name} #{c.emoji_flag} (+#{c.country_code})" if c.present?
+                  = main_contact_form.input :country_phone_code,
+                      label: "Dialing Code",
+                      collection: dial_codes,
+                      selected: sel,
+                      input_html: { multiple: false, data: { form_target: "mcCode", choice: true } }
+                .col-7
+                  = main_contact_form.input :phone,
+                      label: "Phone Number",
+                      input_html: { "data-form-target": "mcPhone" }
+              = main_contact_form.input :position, disabled: provider.upstream_id.present?,
+                  input_html: { "data-form-target": "mcPosition" }
+
+        .service-contact-emails{ "data-service-target": "publicContacts" }
+          %h4.mt-5
+            = _("Public contacts")
+          .offer-section-wrapper
+            = link_to "Copy data form the main contact", "javascript:",
+                    class: "btn btn-primary pl-5 pr-5 d-flex justify-content-center mb-4",
+                    data: { action: "click->form#duplicateContact" }
+            = f.error :public_contacts, class: "invalid-feedback d-block"
+            = f.fields_for :public_contacts, disabled: provider.upstream_id.present?, multiple: true, as: :array,
+                      wrapper_html: { "data-form-target" => "publicContact" } do |public_contact_form|
+              = render_public_contact(public_contact_form, provider)
+            = link_to _("+ Add additional public contact"), "javascript:", class: "btn-simple disablable",
+              data: { form: { target: "addField" },
+              action: "click->form#addField",
+              value: "publicContacts",
+              fields: f.fields_for(:public_contacts, PublicContact.new,
+              child_index: "new_field") { |pcf| render_public_contact(pcf, provider) } }
+        = render "backoffice/providers/steps/buttons", f: f, current_step: provider.current_step
+      = render "backoffice/providers/more_information"

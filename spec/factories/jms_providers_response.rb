@@ -159,6 +159,11 @@ FactoryBot.define do
           "region" => "WW",
           "country" => "N/E"
         },
+        "mainContact" => {
+          "firstName" => "Test",
+          "lastName" => "Provider",
+          "email" => "test@mail.pl"
+        },
         "publicContacts" => {
           "publicContact" => {
             "email" => "test@mail.pl"
@@ -200,6 +205,11 @@ FactoryBot.define do
           "city" => "test",
           "region" => "WW",
           "country" => "N/E"
+        },
+        "mainContact" => {
+          "firstName" => "Test",
+          "lastName" => "Provider",
+          "email" => "test@mail.pl"
         },
         "publicContacts" => {
           "publicContact" => {

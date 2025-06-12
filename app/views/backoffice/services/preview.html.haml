@@ -9,7 +9,7 @@
         - if @service.persisted?
           = link_to _("Go back to edit"), edit_backoffice_service_path(@service),
             class: "btn btn-warning", "data-turbo": false
-          = link_to _("Confirm changes"), backoffice_service_path(@service),
+          = link_to _("Confirm changes"), backoffice_service_offers_path(@service),
             class: "btn btn-success", method: :put, "data-turbo": false
         - else
           = link_to _("Go back to edit"), new_backoffice_service_path,
@@ -18,28 +18,16 @@
           = link_to _("Confirm changes"), backoffice_services_path,
             class: "btn btn-success", type: :submit,
             data: { e2e: "confirm-changes-btn", "turbo-method": :post }
-.container{ "data-controller": "preview" }
-  .container.preview
-    .pt-4.pl-3.pr-3.shadow-sm.rounded.service-box.service-detail
-      = render Presentable::HeaderComponent.new(object: @service,
-                            title: @service.name,
-                            abbreviation: @service.abbreviation,
-                            subtitle: @service.tagline,
-                            comparison_enabled: @comparison_enabled,
-                            preview: true,
-                            favourite_services: @favourite_services) do |c|
-        - c.buttons do
-          = render "components/presentable/header_component/order_buttons", service: @service, preview: true
-      = render "services/tabs", service: @service, preview: true
-
-  .tab-content
-    #about{ "data-preview-target": "content" }
-      = render Presentable::DescriptionComponent.new(object: @service,
-      similar_services: @similar_services, related_services: @related_services, preview: true) do |c|
-        - c.description_panels do
-          - if policy(@service).order? && (policy(@service).offers_show? || policy(@service).bundles_show?)
-            = render "services/offers", offers: @offers, service: @service,
-                                        bundles: @bundles, bundled: @bundled, preview: local_assigns[:preview]
-      = render "taggable/details_section", taggable: @service, preview: true
-    #details.d-none{ "data-preview-target": "content" }
-      = render Presentable::DetailsComponent.new(@service, preview: true)
+= render "services/wrapper", service: @service, category: @category,
+  comparison_enabled: @comparison_enabled, compare_services: @compare_services,
+  favourite_services: @favourite_services, question: @question, tab_id: "desc", preview: true do
+  #about{ "data-preview-target": "content" }
+    = render Presentable::DescriptionComponent.new(object: @service,
+    similar_services: @similar_services, related_services: @related_services, preview: true) do |c|
+      - c.description_panels do
+        - if policy(@service).order? && (policy(@service).offers_show? || policy(@service).bundles_show?)
+          = render "services/offers", offers: @offers, service: @service,
+                                      bundles: @bundles, bundled: @bundled, preview: true
+    = render "taggable/details_section", taggable: @service, preview: true
+  #details.d-none{ "data-preview-target": "content" }
+    = render Presentable::DetailsComponent.new(@service, preview: true)

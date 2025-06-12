@@ -12,6 +12,8 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   before_action :find_and_authorize, only: %i[show edit update destroy]
   before_action :sort_options, :favourites
   before_action :load_query_params_from_session, only: :index
+  before_action :provider_scope
+  before_action :catalogue_scope
   prepend_before_action(only: [:index]) { authorize(Service) }
   helper_method :cant_edit
 
@@ -24,12 +26,12 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
                       anchor: ("offer-#{params["anchor"]}" if params["anchor"].present?)
                     )
       when "service"
-        redirect_to backoffice_service_path(
+        redirect_to backoffice_service_offers_path(
                       Service.friendly.find(params["object_id"]),
                       anchor: ("offer-#{params["anchor"]}" if params["anchor"].present?)
                     )
       when "datasource"
-        redirect_to backoffice_service_path(Datasource.friendly.find(params["object_id"]))
+        redirect_to backoffice_service_offers_path(Datasource.friendly.find(params["object_id"]))
       end
     end
     @services, @offers = search(scope)
@@ -56,6 +58,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
   def new
     @service = Service.new(temp_attrs || {})
+
     remove_temp_data!(save_logo: true)
     add_missing_nested_models(@service)
     authorize(@service)
@@ -71,17 +74,19 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
 
     @service = Service::Create.call(Service.new(**attrs, status: :unpublished), temp_logo)
     if @service.invalid?
+      provider_scope
       add_missing_nested_models(@service)
       render :new, status: :bad_request unless @service.persisted?
       return
     end
 
     remove_temp_data!
-    redirect_to backoffice_service_path(@service), notice: "New service created successfully"
+    redirect_to backoffice_service_offers_path(@service), notice: "New service created successfully"
   end
 
   def edit
     @service.assign_attributes(temp_attrs || {})
+    provider_scope
     remove_temp_data!(save_logo: true)
     add_missing_nested_models(@service)
   end
@@ -93,19 +98,26 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
       perform_preview(:edit)
       return
     end
-
+    if @service.published? && !@service&.resource_organisation&.published?
+      attrs.merge(status: @service.resource_organisation.status)
+    end
     unless Service::Update.call(@service, attrs, temp_logo)
-      render :edit, status: :bad_request
+      provider_scope
+      render :edit, status: :unprocessable_entity
       return
     end
     @service.store_analytics
     remove_temp_data!
-    redirect_to backoffice_service_path(@service), notice: "Service updated successfully"
+    redirect_to backoffice_service_offers_path(@service), notice: "Service updated successfully"
   end
 
   def destroy
-    Service::Destroy.new(@service).call
-    redirect_to backoffice_services_path, notice: "Service removed successfully"
+    if Service::Delete.new(@service).call
+      redirect_to backoffice_services_path, notice: "Service removed successfully"
+    else
+      redirect_to backoffice_service_offers_path(@service),
+                  alert: "Could not remove service. Reason: #{@service.errors.full_messages}"
+    end
   end
 
   def cant_edit(attribute)
@@ -191,7 +203,11 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   end
 
   def provider_scope
-    policy_scope(Provider).with_attached_logo
+    @providers = policy_scope(Provider.associable)
+  end
+
+  def catalogue_scope
+    @catalogues = policy_scope(Catalogue.associable)
   end
 
   def datasource_scope

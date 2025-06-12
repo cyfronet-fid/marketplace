@@ -1,6 +1,6 @@
 .row{ id: "box-#{service.id}", "data-favourite-target": "result", "data-e2e": "favourite-result" }
   = render "service_details", service: service do
-    = link_to service.name, service_path(service)
+    = link_to service.name, service_offers_path(service)
     .row
       - content_for :comparison_checkbox do
         .mt-3.compare

@@ -1,0 +1,4 @@
+%ul.list-group.backoffice-list.mt-3.mb-3
+  = render "components/presentable/list_component/list_header", klass: @klass, form: @form
+  - @collection.each do |obj|
+    = render "components/presentable/list_component/list_item", obj: obj, klass: @klass

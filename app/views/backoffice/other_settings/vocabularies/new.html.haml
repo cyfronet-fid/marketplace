@@ -1,0 +1,9 @@
+- content_for :title, _("New #{@type}")
+- breadcrumb :backoffice_vocabulary_new, @type
+= render "layouts/backoffice/other_settings_wrapper" do
+  .container.p-0.backoffice
+    %h1= _("New #{@type}")
+    = render "form", vocabulary: @vocabulary,
+             url: url_for(action: "create", controller: "backoffice/other_settings/vocabularies",
+             type: @vocabulary.model_name.element),
+             button_name: "Create #{@type}", type: @type

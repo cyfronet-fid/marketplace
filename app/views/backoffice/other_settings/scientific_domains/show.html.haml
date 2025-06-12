@@ -1,0 +1,28 @@
+- content_for :title, @scientific_domain.name
+- breadcrumb :backoffice_scientific_domain, @scientific_domain
+= render "layouts/backoffice/other_settings_wrapper" do
+  .container.p-0.backoffice
+    %h1= @scientific_domain.name
+    .service-box.p-4.mt-3.backoffice-form
+      %h2
+        = _("Description") + ":"
+      %p= @scientific_domain.description
+      %h2
+        = _("eID") + ":"
+      %p= @scientific_domain.eid
+      %h2= @scientific_domain.parent ? _("Parent: %{sdpn}") % { sdpn: @scientific_domain.parent.name } : "Root element"
+      - has_logo = @scientific_domain.logo.attached? && @scientific_domain.logo.variable?
+      = image_tag @scientific_domain.logo.variant(resize: "200x200") if has_logo
+
+      %hr.bottom-hr.mt-5.mb-4
+      .btn-group
+        - if policy([:backoffice, @scientific_domain]).edit?
+          = link_to _("Edit"),
+                    edit_backoffice_other_settings_scientific_domain_path(@scientific_domain),
+                    class: "btn btn-primary"
+        - if policy([:backoffice, @scientific_domain]).destroy?
+          = link_to _("Delete"),
+                    backoffice_other_settings_scientific_domain_path(@scientific_domain),
+                    data: { "turbo-confirm": _("Are you sure you want to remove this scientific domain?"), "turbo-method": :delete },
+                    class: "btn btn-danger"
+    = link_to _("<- Back to Scientific Domains"), backoffice_other_settings_scientific_domains_path, class: "backoffice-back-link mt-3"

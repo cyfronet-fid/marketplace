@@ -26,7 +26,7 @@
             %i.fas.fa-tachometer-alt
             = _("Technical Parameters")
           .card-text{ "data-controller" => "paragraph" }
-            = render "services/offers/bundle_parameters", id: offer.id,
+            = render "services/choose_offers/bundle_parameters", id: offer.id,
                      technical_parameters: offer.attributes.map(&:to_json)
 
       .bundle-offer-order-type.badge.access-information.badge-right.style_order_required{ class: offer.order_type }

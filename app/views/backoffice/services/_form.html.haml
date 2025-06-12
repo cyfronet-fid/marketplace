@@ -11,7 +11,7 @@
       input_html: { "data-form-target": "serviceType", "data-action": "change->form#updateForm" }
 
       #accordion-form.accordion
-        = render "backoffice/services/form/basic", f: f, service: service
+        = render "backoffice/services/form/basic", f: f, service: service, providers: providers
         = render "backoffice/services/form/marketing", f: f, service: service
         = render "backoffice/services/form/classification", f: f, service: service
         = render "backoffice/services/form/availability", f: f, service: service

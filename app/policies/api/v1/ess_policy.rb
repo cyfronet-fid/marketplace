@@ -2,10 +2,10 @@
 
 class Api::V1::EssPolicy < ApplicationPolicy
   def index?
-    user&.service_portfolio_manager?
+    user&.coordinator?
   end
 
   def show?
-    user&.service_portfolio_manager?
+    user&.coordinator?
   end
 end

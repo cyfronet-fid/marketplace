@@ -3,6 +3,7 @@
 class Message < ApplicationRecord
   include Eventable
 
+  # TODO: probably we should change mediator to coordinator
   enum :author_role, { user: "user", provider: "provider", mediator: "mediator" }, prefix: :role
 
   enum :scope, { public: "public", internal: "internal", user_direct: "user_direct" }, suffix: true
@@ -15,6 +16,10 @@ class Message < ApplicationRecord
              optional: true
   belongs_to :project,
              -> { where(messages: { messageable_type: "Project" }).includes(:messages) },
+             foreign_key: "messageable_id",
+             optional: true
+  belongs_to :approval_request,
+             -> { where(messages: { messageable_type: "ApprovalRequest" }).includes(:messages) },
              foreign_key: "messageable_id",
              optional: true
 
@@ -57,7 +62,8 @@ class Message < ApplicationRecord
   end
 
   def dispatch_create_email
-    MessageMailer.new_message(self).deliver_later
+    action = approval_request.present? ? approval_request.last_action : nil
+    MessageMailer.new_message(self, action: action).deliver_later
   end
 
   def dispatch_update_email

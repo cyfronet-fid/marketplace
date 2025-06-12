@@ -18,7 +18,7 @@
   %h2.mb-4.mt-5.font-weight-bolder
     = _("Services")
   .row
-    = render partial: "services/offer", collection: offers, as: :offer, locals: { preview: local_assigns[:preview] }
+    = render partial: "services/offer", collection: offers, as: :offer, locals: { preview: preview }
 - if policy(service).bundles_show?
   %h2.mb-3.mt-4.font-weight-bolder
     = _("Bundles")
@@ -28,9 +28,9 @@
               "of research. The bundle is configured to make your research easier and done more efficiently.") |
     -# haml-lint:enable MultilinePipe
   .row
-    = render partial: "services/bundle_box", collection: bundles, as: :bundle, locals: { bundled: false }
+    = render partial: "services/bundle_box", collection: bundles, as: :bundle, locals: { bundled: false, preview: preview}
     - if bundled.present?
       .col-md-12
         %h2.mb-4.font-weight-bolder
           = _("This service is included in bundles:")
-      = render partial: "services/bundle_box", collection: bundled, as: :bundle, locals: { bundled: true }
+      = render partial: "services/bundle_box", collection: bundled, as: :bundle, locals: { bundled: true, preview: preview }

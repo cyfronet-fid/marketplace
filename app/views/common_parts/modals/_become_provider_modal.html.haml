@@ -1,0 +1,17 @@
+.exit-popup.d-none{ role: "document", "data-exit-target": "modal" }
+  .modal-overlay
+    .modal-content
+      .modal-header
+        %h3#popup-modal-title.modal-title
+          Congratulations!!! You've completed
+          all required fields
+      .modal-body
+        %p
+          = _("Help users get to know you better by adding more details.")
+
+      .modal-footer
+        .buttons-row
+          %button.btn.btn-primary.btn-sm.mt-2
+            = _("Skip for now")
+          %button.btn.btn-primary.btn-sm.mt-2
+            = _("Complete profile")

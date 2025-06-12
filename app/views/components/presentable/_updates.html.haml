@@ -1,12 +1,12 @@
-%h5
-  = _("Updates")
-  %ul
-    - if object.synchronized_at.present?
-      %li.list-group-item
-        %span
-          = _("Synchronized at") + ":"
-        %strong.text-dark= l object.synchronized_at, format: :short
+%h4.mb-3
+  = _("Updates:")
+%ul
+  - if object.synchronized_at.present?
     %li.list-group-item
       %span
-        = _("Updated at") + ":"
-      %strong.text-dark= l object.updated_at, format: :short
+        = _("Synchronized at") + ":"
+      %strong.text-dark= l object.synchronized_at, format: :short
+  %li.list-group-item
+    %span
+      = _("Updated at") + ":"
+    %strong.text-dark= l object.updated_at, format: :short

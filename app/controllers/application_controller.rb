@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   include Recommendation::Followable
   include Tourable
 
-  before_action :welcome_popup, :load_root_categories!, :report, :set_locale, :set_gettext_locale
+  before_action :welcome_popup, :load_root_categories!, :report, :set_locale, :set_gettext_locale, :action
 
   helper_method :turbo_frame_request?
 
@@ -87,5 +87,23 @@ class ApplicationController < ActionController::Base
 
   def turbo_frame_request?
     request.headers["Turbo-Frame"].present?
+  end
+
+  def action
+    @action ||= action_name
+  end
+
+  def bundled
+    if @service.offers.published.select(&:bundled?).present?
+      @service
+        .offers
+        .published
+        .select(&:bundled?)
+        .map { |o| policy_scope(o.bundles).reject { |b| b.service.status.in?(Statusable::HIDEABLE_STATUSES) } }
+        .flatten
+        .uniq
+    else
+      []
+    end
   end
 end

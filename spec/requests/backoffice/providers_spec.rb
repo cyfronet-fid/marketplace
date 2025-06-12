@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Backoffice: manage providers", backend: true do
   context "as a logged in service portfolio manager" do
-    let(:user) { create(:user, roles: [:service_portfolio_manager]) }
+    let(:user) { create(:user, roles: [:coordinator]) }
 
     before { login_as(user) }
 
@@ -29,13 +29,6 @@ RSpec.describe "Backoffice: manage providers", backend: true do
 
     it "I can't delete provider having service with status different than deleted" do
       provider = create(:provider)
-      create(:service, status: :unverified, resource_organisation: provider)
-
-      expect { delete backoffice_provider_path(provider) }.to change { Provider.where.not(status: :deleted).count }.by(
-        0
-      )
-
-      provider = create(:provider)
       create(:service, status: :errored, resource_organisation: provider)
 
       expect { delete backoffice_provider_path(provider) }.to change { Provider.where.not(status: :deleted).count }.by(
@@ -52,6 +45,7 @@ RSpec.describe "Backoffice: manage providers", backend: true do
 
     it "should call permitted_attributes with provider with form upstream_id" do
       provider = create(:provider)
+
       new_params = { name: "test1111111", abbreviation: "test 111111" }
       put backoffice_provider_path(provider), params: { provider: { upstream_id: nil, **new_params } }
 

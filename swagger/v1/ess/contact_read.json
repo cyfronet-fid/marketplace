@@ -19,6 +19,10 @@
       "type": "string",
       "nullable": true
     },
+    "country_phone_code": {
+      "type": "string",
+      "nullable": true
+    },
     "position": {
       "type": "string",
       "nullable": true

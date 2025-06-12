@@ -1,0 +1,15 @@
+= simple_form_for [:backoffice, :other_settings, category] do |f|
+  = f.input :logo
+  = f.input :name
+  = f.input :description
+  = f.input :parent_id,
+    collection: ancestry_id_tree(category.potential_parents),
+    label_method: :first, value_method: :last, as: :select, include_blank: true
+  = f.input :eid
+
+  %hr.bottom-hr.mt-5.mb-4
+  .row.mt-5
+    .col-12
+      = f.button :submit, class: "btn btn-primary pl-5 pr-5 mr-5 mobile-bottom-margin",
+      "data-e2e": "create-category-btn"
+      = link_to "Cancel and back to previous page", :back, class: "text-left flex-grow-1 text-uppercase mobile-bottom-margin"

@@ -5,7 +5,7 @@ class Backoffice::CataloguesController < Backoffice::ApplicationController
 
   def index
     authorize(Catalogue)
-    @catalogues = policy_scope(Catalogue).with_attached_logo
+    @pagy, @catalogues = pagy(policy_scope(Catalogue).with_attached_logo.order(:name))
   end
 
   def show
@@ -14,6 +14,11 @@ class Backoffice::CataloguesController < Backoffice::ApplicationController
   def new
     @catalogue = Catalogue.new
     @catalogue.sources.build source_type: "eosc_registry"
+    @catalogue.data_administrators << DataAdministrator.new(
+      first_name: current_user.first_name,
+      last_name: current_user.last_name,
+      email: current_user.email
+    )
     add_missing_nested_models
     authorize(@catalogue)
   end
@@ -23,21 +28,28 @@ class Backoffice::CataloguesController < Backoffice::ApplicationController
   end
 
   def destroy
-    if Catalogue::Delete.call(@catalogue.id)
-      redirect_to backoffice_catalogues_path, notice: "Catalogue removed successfully"
-    else
-      redirect_to backoffice_catalogues_path,
-                  alert: "This Catalogue has services connected to it, therefore is not possible to remove it."
+    respond_to do |format|
+      if Catalogue::Delete.call(@catalogue)
+        notice = "Catalogue removed successfully"
+        flash.now[:notice] = notice
+        format.html { redirect_to backoffice_catalogues_path(page: params[:page]), notice: notice }
+      else
+        alert = "This Catalogue has providers/services connected to it, therefore, it is not possible to remove it."
+        flash.now[:alert] = alert
+        format.html { redirect_to backoffice_catalogue_path(@catalogue, page: params[:page], alert: alert) }
+      end
+      format.turbo_stream
     end
   end
 
   def create
     permitted_attributes = permitted_attributes(Catalogue)
-    @catalogue = Catalogue.new(permitted_attributes)
+    @catalogue = Catalogue.new(**permitted_attributes, status: :unpublished)
     authorize(@catalogue)
 
     if valid_model_and_urls? && @catalogue.save(validate: false)
-      redirect_to backoffice_catalogue_path(@catalogue), notice: "New catalogue created successfully"
+      flash[:notice] = "New catalogue created successfully"
+      redirect_to backoffice_catalogue_path(@catalogue)
     else
       add_missing_nested_models
       render :new, status: :bad_request
@@ -49,7 +61,8 @@ class Backoffice::CataloguesController < Backoffice::ApplicationController
     @catalogue.assign_attributes(permitted_attributes)
 
     if valid_model_and_urls? && @catalogue.save(validate: false)
-      redirect_to backoffice_catalogue_path(@catalogue), notice: "Catalogue updated successfully"
+      flash[:notice] = "Catalogue updated successfully"
+      redirect_to backoffice_catalogue_path(@catalogue)
     else
       if @catalogue.public_contacts.present? && @catalogue.public_contacts.all?(&:marked_for_destruction?)
         @catalogue.public_contacts[0].reload

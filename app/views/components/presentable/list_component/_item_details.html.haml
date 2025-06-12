@@ -1,0 +1,24 @@
+= turbo_frame_tag obj do
+  .row
+    .col
+      - unless obj.deleted?
+        = check_box_tag "#{klass}_ids[]", obj.id,
+                          id: "#{klass}-#{obj.id}",
+                          class: "form-check-input",
+                          data: { list_target: "checkbox", action: "click->list#toggleActions click->list#checkIndetermination" }
+    .col
+      = link_to obj.name, polymorphic_path([:backoffice, obj],
+                  params: { page: params[:page] } || {}), class: "#{klass}-name",
+                  data: { turbo_frame: "_top" }
+    .col
+      = obj.created_at
+    .col.text-center
+      %span.status{ class: obj.status }
+        = obj.status
+    .col
+      - if policy([:backoffice, obj]).edit?
+        = link_to _("Edit"),
+                    polymorphic_path([:edit, :backoffice, obj]),
+                    data: { turbo_frame: "_top" },
+                    class: "edit-btn mr-4"
+        = render "components/presentable/list_component/item_menu", obj: obj

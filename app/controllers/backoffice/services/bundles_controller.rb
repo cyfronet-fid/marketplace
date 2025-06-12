@@ -17,7 +17,7 @@ class Backoffice::Services::BundlesController < Backoffice::ApplicationControlle
     @bundle = Bundle::Create.call(template)
 
     if @bundle.persisted?
-      redirect_to backoffice_service_path(@service), notice: "New bundle created successfully"
+      redirect_to backoffice_service_offers_path(@service), notice: "New bundle created successfully"
     else
       render :new, status: :unprocessable_entity
     end
@@ -29,7 +29,7 @@ class Backoffice::Services::BundlesController < Backoffice::ApplicationControlle
   def update
     template = permitted_attributes(Bundle.new)
     if Bundle::Update.call(@bundle, transform_attributes(template))
-      redirect_to backoffice_service_path(@service), notice: "Bundle updated successfully"
+      redirect_to backoffice_service_offers_path(@service), notice: "Bundle updated successfully"
     else
       render :edit, status: :unprocessable_entity
     end

@@ -5,21 +5,20 @@ require "rails_helper"
 RSpec.feature "Bundles in backoffice", manager_frontend: true do
   include OmniauthHelper
 
-  let!(:service_portfolio_manager) { create(:user, roles: [:service_portfolio_manager]) }
-  let!(:owner) { create(:user) }
+  let!(:coordinator) { create(:user, roles: [:coordinator]) }
   let!(:data_manager) { create(:user) }
   let!(:provider) { build(:provider, data_administrators: [build(:data_administrator, email: data_manager.email)]) }
-  let!(:service) { create(:service_with_offers, owners: [owner], resource_organisation: provider) }
+  let!(:service) { create(:service_with_offers, resource_organisation: provider) }
   let!(:offer) { create(:offer) }
   let!(:bundle) { build(:bundle, main_offer: service.offers.first, offers: [offer], service: service) }
   let!(:scientific_domain) { bundle.scientific_domains.first }
 
-  %i[service_portfolio_manager owner].each do |user|
+  %i[coordinator data_manager].each do |user|
     context "As a #{user}" do
       before { checkin_sign_in_as(send(user)) }
 
       scenario "I can create new bundle" do
-        visit backoffice_service_path(service)
+        visit backoffice_service_offers_path(service)
         click_on "Add new bundle", match: :first
 
         fill_in "Name", with: bundle.name
@@ -40,7 +39,7 @@ RSpec.feature "Bundles in backoffice", manager_frontend: true do
       scenario "I can update bundle" do
         bundle.save
         second_offer = create(:offer)
-        visit backoffice_service_path(service)
+        visit backoffice_service_offers_path(bundle.service)
 
         within("#bundle-#{bundle.iid}") { click_on "Edit" }
 

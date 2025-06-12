@@ -13,7 +13,7 @@
       .modal-footer
         .buttons-row
           = link_to _(exit_title),
-            backoffice_service_path(service),
+            backoffice_service_offers_path(service),
             class: "btn-sm btn-secondary",
             "data-action": "click->exit#saveDraft"
           = f.button :submit, save_as_draft_title, class: "btn-sm btn-primary"

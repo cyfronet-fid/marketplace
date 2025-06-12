@@ -42,7 +42,7 @@ RSpec.describe Bundle::Update, backend: true do
       expect do
         described_class.call(
           bundle,
-          { offers: [bundled_offer1, bundled_offer2, bundled_offer3, bundled_offer4, bundled_offer5] }.stringify_keys
+          { offers: [bundled_offer1, bundled_offer2, bundled_offer3, bundled_offer4, bundled_offer5] }
         )
       end.to change { ActionMailer::Base.deliveries.count }.by(3)
     end
@@ -56,7 +56,7 @@ RSpec.describe Bundle::Update, backend: true do
       bundle_offer = create(:offer, service: build(:service, resource_organisation: provider2))
       bundle = build(:bundle, main_offer: bundle_offer, offers: [bundled_offer1])
 
-      expect { described_class.call(bundle, { offers: [bundled_offer2] }.stringify_keys) }.to change {
+      expect { described_class.call(bundle, { offers: [bundled_offer2] }) }.to change {
         ActionMailer::Base.deliveries.count
       }.by(2)
     end

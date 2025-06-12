@@ -1,0 +1,31 @@
+- content_for :title, _("Platforms")
+- breadcrumb :backoffice_platforms
+
+= render "layouts/backoffice/other_settings_wrapper" do
+  .container.p-0.backoffice
+    %h1
+      Platforms
+      - if policy([:backoffice, Platform]).new?
+        .float-right
+          = link_to _("+ Add new Platform"),
+                    new_backoffice_other_settings_platform_path,
+                    class: "btn btn-primary",
+                    "data-e2e": "add-new-platform-btn"
+        .clearfix
+    %ul.list-group.backoffice-list.mt-3.mb-3{ "data-e2e": "backoffice-platforms-list" }
+      - @platforms.each do |platform|
+        %li.list-group-item
+          = link_to platform.name, backoffice_other_settings_platform_path(platform)
+          .buttons-box
+            - if policy([:backoffice, platform]).destroy?
+              = link_to backoffice_other_settings_platform_path(platform.id),
+                  data: { "turbo-confirm": _("Are you sure you want to remove this platform?"), "turbo-method": :delete },
+                  class: "delete-icon float-right" do
+                %i.far.fa-trash-alt
+
+            - if policy([:backoffice, platform]).edit?
+              = link_to _("Edit"),
+                  edit_backoffice_other_settings_platform_path(platform),
+                  class: "edit-btn float-right mr-4"
+
+    = (pagy_bootstrap_nav @pagy).html_safe

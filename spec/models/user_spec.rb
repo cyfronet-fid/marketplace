@@ -47,6 +47,81 @@ RSpec.describe User, backend: true do
     end
   end
 
+  %i[catalogue provider].each do |model|
+    context "#{model}_owner?" do
+      it "connects created user to #{model} through user hooks" do
+        user = build(:user)
+        data_administrators = build_list(:data_administrator, 2, email: user.email)
+        data_administrators.each { |data_administrator| create(model, data_administrators: [data_administrator]) }
+        user.save
+        user.reload
+        data_administrators.each do |data_administrator|
+          data_administrator.reload
+          expect(data_administrator.user_id).to eq(user.id)
+        end
+        expect(user.send("#{model}s_count")).to eq(2)
+      end
+
+      it "connects created data administrator to existing user" do
+        user = create(:user)
+        data_administrators = build_list(:data_administrator, 2, email: user.email)
+        data_administrators.each { |data_administrator| create(model, data_administrators: [data_administrator]) }
+        user.reload
+        data_administrators.each { |data_administrator| expect(data_administrator.user_id).to eq(user.id) }
+        expect(user.send("#{model}s_count")).to eq(2)
+      end
+
+      it "connects updated data administrator to existing user" do
+        user = create(:user)
+        data_administrators = build_list(:data_administrator, 3)
+        data_administrators.each { |data_administrator| create(model, data_administrators: [data_administrator]) }
+
+        expect(user.send("#{model}s_count")).to eq(0)
+
+        data_administrators.each do |data_administrator|
+          data_administrator.update(email: user.email)
+          data_administrator.reload
+          expect(data_administrator.user_id).to eq(user.id)
+        end
+        user.reload
+        expect(user.send("#{model}s_count")).to eq(3)
+      end
+
+      it "removes connection for #{model}'s updated data_administrator" do
+        user = create(:user)
+        data_administrators = build_list(:data_administrator, 3, email: user.email)
+        data_administrators.each do |data_administrator|
+          create(model, data_administrators: [data_administrator])
+          data_administrator.reload
+          expect(data_administrator.user_id).to eq(user.id)
+        end
+        user.reload
+        expect(user.send("#{model}s_count")).to eq(3)
+
+        last = data_administrators.last
+        last.update(email: "some@mail.com")
+        last.reload
+        expect(last.user_id).to eq(nil)
+        user.reload
+        expect(user.send("#{model}s_count")).to eq(2)
+      end
+
+      it "removes connection for #{model}'s removed data_administrator" do
+        user = create(:user)
+        data_administrators = build_list(:data_administrator, 2)
+        user_data_administrator = build(:data_administrator, email: user.email)
+        managed = create(model, data_administrators: data_administrators << user_data_administrator)
+
+        expect(managed.data_administrators.map(&:user_id)).to include(user.id)
+        user.reload
+        expect(user.send("#{model}s_count")).to eq(1)
+        user_data_administrator.destroy
+        user.reload
+        expect(user.send("#{model}s_count")).to eq(0)
+      end
+    end
+  end
+
   # This is relevant for users who where created before introducing simple_token_authentication, they will have null
   # authentication_tokens.
   context "#valid_token?" do

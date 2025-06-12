@@ -10,43 +10,39 @@ class Backoffice::DatasourcePolicy < ApplicationPolicy
   MP_INTERNAL_FIELDS = [:upstream_id, [sources_attributes: %i[id source_type eid _destroy]]].freeze
 
   def index?
-    service_portfolio_manager?
+    coordinator?
   end
 
   def show?
-    service_portfolio_manager?
+    coordinator?
   end
 
   def new?
-    service_portfolio_manager?
+    coordinator?
   end
 
   def create?
-    service_portfolio_manager?
+    coordinator?
   end
 
   def edit?
-    service_portfolio_manager?
+    coordinator?
   end
 
   def update?
-    service_portfolio_manager?
+    coordinator?
   end
 
   def destroy?
-    service_portfolio_manager?
+    coordinator?
   end
 
   def publish?
-    service_portfolio_manager? && (record.draft? || record.unverified?) && !record.deleted?
-  end
-
-  def publish_unverified?
-    service_portfolio_manager? && (record.draft? || record.published?) && !record.deleted?
+    coordinator? && record.draft? && !record.deleted?
   end
 
   def draft?
-    service_portfolio_manager? && (record.published? || record.unverified?) && !record.deleted?
+    coordinator? && record.published? && !record.deleted?
   end
 
   def permitted_attributes
@@ -130,8 +126,20 @@ class Backoffice::DatasourcePolicy < ApplicationPolicy
       # Other
       :upstream_id,
       [sources_attributes: %i[id source_type eid _destroy]],
-      [main_contact_attributes: %i[id first_name last_name email phone organisation position]],
-      [public_contacts_attributes: %i[id first_name last_name email phone organisation position _destroy]],
+      [main_contact_attributes: %i[id first_name last_name email phone country_phone_code organisation position]],
+      [
+        public_contacts_attributes: %i[
+          id
+          first_name
+          last_name
+          email
+          phone
+          country_phone_code
+          organisation
+          position
+          _destroy
+        ]
+      ],
       [
         persistent_identity_systems_attributes: [
           :id,
@@ -152,7 +160,7 @@ class Backoffice::DatasourcePolicy < ApplicationPolicy
   end
 
   def data_administrator?
-    record.administered_by?(user)
+    record.owned_by?(user)
   end
 
   private

@@ -70,7 +70,9 @@ class Bundle < ApplicationRecord
             }
   validates :order_type, presence: true
   validates :main_offer, presence: true
-  validates :offers, presence: true, length: { minimum: 1, message: "are required. Please add at least one" }
+  unless draft
+    validates :offers, presence: true, length: { minimum: 1, message: "are required. Please add at least one" }
+  end
   validate :offers_correct
   validates :related_training_url, mp_url: true, if: :related_training?
   validates :helpdesk_url, mp_url: true, presence: true

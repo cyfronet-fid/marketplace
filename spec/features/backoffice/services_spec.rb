@@ -6,8 +6,8 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
   include OmniauthHelper
   include ExternalServiceDataHelper
 
-  context "As a service portolio manager" do
-    let(:user) { create(:user, roles: [:service_portfolio_manager]) }
+  context "As a coordinator" do
+    let(:user) { create(:user, roles: [:coordinator]) }
 
     before { checkin_sign_in_as(user) }
 
@@ -24,12 +24,12 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
     scenario "I can see any service" do
       service = create(:service, name: "service1")
 
-      visit backoffice_service_path(service)
+      visit backoffice_service_offers_path(service)
 
       expect(page).to have_content("service1")
     end
 
-    scenario "I can create new service with default offer" do
+    scenario "I can create new service without default offer" do
       category = create(:category)
       provider = create(:provider)
       scientific_domain = create(:scientific_domain)
@@ -45,7 +45,10 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       access_mode = create(:access_mode)
       service_category = create(:service_category)
 
+      Service.reindex
+
       visit backoffice_services_path
+
       click_on "Create new Service"
 
       fill_in "service_name", with: "service name"
@@ -94,14 +97,13 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       # TODO: uncomment when Resource Profile 4.0 will be released
       # select platform.name, from: "Platforms"
       select category.name, from: "Categories"
-      select user.to_s, from: "Owners"
       fill_in "Version", with: "2.2.2"
 
       fill_in "service_sources_attributes_0_eid", with: "12345a"
 
-      expect { click_on "Create Service" }.to change { user.owned_services.count }.by(1).and change { Offer.count }.by(
-              1
-            ).and have_enqueued_job(Ess::UpdateJob).exactly(2).times
+      expect { click_on "Create Service" }.to have_enqueued_job(Ess::UpdateJob).exactly(1).times
+
+      click_on "About"
 
       expect(page).to have_content("service name")
       expect(page).to have_content("service description")
@@ -155,6 +157,8 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       click_on "Create Service"
 
       expect(page).to have_content("New service created successfully")
+
+      click_on "About"
 
       expect(page).to have_content("service name")
       expect(page).to have_content("service description")
@@ -210,17 +214,6 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       expect(page).to_not have_content(public_contacts.second.email)
     end
 
-    scenario "I can see warning about no offers" do
-      service = create(:service)
-
-      visit backoffice_service_path(service)
-
-      expect(page).to have_content(
-        "This service has no offers. " \
-          "Add one offer to make possible for a user to Access the service."
-      )
-    end
-
     scenario "I can preview service before create" do
       provider = create(:provider)
       scientific_domain = create(:scientific_domain)
@@ -258,7 +251,7 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       click_on "Go back to edit"
       expect { click_on "Create Service" }.to change { Service.count }.by(1).and have_enqueued_job(
               Ess::UpdateJob
-            ).exactly(2).times
+            ).exactly(1).times
       expect(page).to have_content("service name")
     end
 
@@ -303,7 +296,7 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       select scientific_domain.name, from: "Scientific domains"
       select provider.name, from: "Providers"
 
-      expect { click_on "Create Service" }.to change { user.owned_services.count }.by(0)
+      expect { click_on "Create Service" }.to change { Service.count }.by(0)
 
       expect(page).to have_content("Logo format you're trying to attach is not supported.")
     end
@@ -317,20 +310,11 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       expect(page).to have_content("Status: published")
     end
 
-    scenario "I can publish as unverified service" do
-      service = create(:service, status: :draft)
-
-      visit backoffice_service_path(service)
-      expect { click_on "Publish as unverified service" }.to have_enqueued_job(Ess::UpdateJob)
-
-      expect(page).to have_content("Status: unverified")
-    end
-
     scenario "I can unpublish service" do
       service = create(:service, status: :published)
 
       visit backoffice_service_path(service)
-      expect { click_on "Stop showing in the MP" }.to have_enqueued_job(Ess::UpdateJob)
+      expect { click_on "Unpublish" }.to have_enqueued_job(Ess::UpdateJob)
 
       expect(page).to have_content("Status: unpublished")
     end
@@ -342,7 +326,7 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       click_on "Edit"
 
       fill_in "service_name", with: "updated name"
-      expect { click_on "Update Service" }.to have_enqueued_job(Ess::UpdateJob).exactly(2).times
+      expect { click_on "Update Service" }.to have_enqueued_job(Ess::UpdateJob).exactly(1).times
 
       expect(page).to have_content("updated name")
     end
@@ -398,8 +382,8 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
 
       fill_in "Name", with: "Offer"
       fill_in "Description", with: "desc"
-      select "order_required", from: "Order type"
 
+      click_on "Next"
       click_on "Create Offer"
 
       expect(page).to have_text("must be the same as in the service: open_access")
@@ -439,7 +423,8 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
     end
 
     scenario "I can add new offer", js: true, skip: "New Offer Wizard" do
-      service = create(:service, name: "my service", owners: [user])
+      provider = create(:provider, data_administrators: [build(:data_administrator, email: user.email)])
+      service = create(:service, name: "my service", resource_organisation: provider)
 
       visit backoffice_service_path(service)
       click_on "Add new offer"
@@ -467,8 +452,9 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       expect(service.offers.last.name).to eq("new offer 1")
     end
 
-    scenario "I can update default offer through service", js: true, skip: true do
-      service = create(:service, name: "my service", owners: [user])
+    scenario "I can update default offer through service", js: true do
+      provider = create(:provider, data_administrators: [build(:data_administrator, email: user.email)])
+      service = create(:service, name: "my service", resource_organisation: provider)
       create(:offer, service: service)
 
       service.reload
@@ -479,7 +465,7 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
         expect(offer.order_url).to_not eq("http://google.com")
       end
 
-      visit backoffice_service_path(service)
+      visit backoffice_service_offers_path(service)
 
       click_on "Edit service"
 
@@ -490,10 +476,16 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
 
       click_on "Update Service"
 
-      expect(page).to have_content("Open Access")
+      sleep(1)
+
+      service.reload
+      service.offers.each do |offer|
+        expect(offer.order_type).to eq("open_access")
+        expect(offer.order_url).to eq("http://google.com")
+      end
     end
 
-    pending "I can update offer's order_type from service by removing second offer" do
+    scenario "I can update offer's order_type from service by removing second offer" do
       service = create(:service, order_type: :other)
       other_offer = create(:offer, order_type: :other, service: service)
       offer_to_update = create(:offer, order_type: :order_required, service: service)
@@ -509,12 +501,12 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       expect(offer_to_update.order_type).to eq("other")
     end
 
-    scenario "I can see warning about no published offers", js: true do
-      service = create(:service)
+    scenario "I don't see warning about published offers in the deleted service", js: true do
+      service = create(:service, status: :deleted)
 
       visit backoffice_service_path(service)
 
-      expect(page).to have_content(
+      expect(page).to_not have_content(
         "This service has no offers. " \
           "Add one offer to make possible for a user to Access the service."
       )
@@ -534,7 +526,8 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
     end
 
     scenario "I cannot add invalid offer", js: true, skip: "New Offer Wizard" do
-      service = create(:service, name: "my service", owners: [user], offers: [create(:offer)])
+      provider = create(:provider, data_administrators: [build(:data_administrator, email: user.email)])
+      service = create(:service, name: "my service", resource_organisation: provider, offers: [create(:offer)])
 
       visit backoffice_service_path(service)
       click_on "Add new offer"
@@ -617,29 +610,18 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
 
       visit edit_backoffice_service_offer_path(service, offer)
 
-      find("#summary-button").click
+      find("#step-five-button").click
 
       click_on "Delete Offer"
 
       expect(page).to have_content("Offer removed successfully")
     end
 
-    scenario "I can see info if service has no offer" do
-      service = create(:service, name: "my service")
-
-      visit backoffice_service_path(service)
-
-      expect(page).to have_content(
-        "This service has no offers. " \
-          "Add one offer to make possible for a user to Access the service."
-      )
-    end
-
     scenario "I can change service status from publish to draft" do
       service = create(:service, name: "my service")
 
       visit backoffice_service_path(service)
-      click_on("Stop showing in the MP")
+      click_on("Unpublish")
 
       expect(page).to have_selector(:link_or_button, "Publish")
     end
@@ -692,7 +674,6 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       # expect(page).to have_field "Platforms", disabled: false
       expect(page).to have_field "Scientific domains", disabled: false
       expect(page).to have_field "Dedicated For", disabled: false
-      expect(page).to have_field "Owners", disabled: false
       expect(page).to have_field "Funding bodies", disabled: false
       expect(page).to have_field "Funding programs", disabled: false
       expect(page).to have_field "Language availability", disabled: false
@@ -738,6 +719,7 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       expect(page).to have_field "service_main_contact_attributes_first_name", disabled: true
       expect(page).to have_field "service_main_contact_attributes_last_name", disabled: true
       expect(page).to have_field "service_main_contact_attributes_email", disabled: true
+      expect(page).to have_field "service_main_contact_attributes_country_phone_code", disabled: true
       expect(page).to have_field "service_main_contact_attributes_phone", disabled: true
       expect(page).to have_field "service_main_contact_attributes_organisation", disabled: true
       expect(page).to have_field "service_main_contact_attributes_position", disabled: true
@@ -765,7 +747,6 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       expect(page).to have_field "Funding bodies", disabled: true
       expect(page).to have_field "Funding programs", disabled: true
       expect(page).to have_field "service_grant_project_names_0", disabled: true
-      expect(page).to have_field "Owners", disabled: false
       expect(page).to have_field "Language availability", disabled: true
       expect(page).to have_field "Geographical availabilities", disabled: true
       expect(page).to have_field "Service geographic locations", disabled: true
@@ -885,11 +866,12 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
 
   context "as a service owner" do
     let(:user) { create(:user) }
+    let(:provider) { create(:provider, data_administrators: [build(:data_administrator, email: user.email)]) }
 
     before { checkin_sign_in_as(user) }
 
     scenario "I can edit service draft" do
-      service = create(:service, owners: [user], status: :draft)
+      service = create(:service, resource_organisation: provider, status: :draft)
 
       visit backoffice_service_path(service)
       click_on "Edit"
@@ -902,7 +884,7 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
     end
 
     scenario "I can create new offer", skip: "New Offer Wizard" do
-      service = create(:service, owners: [user])
+      service = create(:service, resource_organisation: provider)
       create(:offer, service: service)
 
       visit backoffice_service_path(service)
@@ -917,9 +899,9 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
 
     ["EOSC::Jupyter Notebook", "EOSC::Galaxy Workflow", "EOSC::Twitter Data"].each do |tag|
       scenario "I can see EOSC explore integration for EGI Notebooks" do
-        notebook_service = create(:service, tag_list: [tag], pid: "egi-fed.notebook", owners: [user])
-        other_service_with_pid = create(:service, pid: "other.pid", owners: [user])
-        other_service_without_pid = create(:service, pid: nil, owners: [user])
+        notebook_service = create(:service, tag_list: [tag], pid: "egi-fed.notebook", resource_organisation: provider)
+        other_service_with_pid = create(:service, pid: "other.pid", resource_organisation: provider)
+        other_service_without_pid = create(:service, pid: nil, resource_organisation: provider)
 
         visit backoffice_service_path(notebook_service)
         expect(page).to have_text("Explore Compatible Research Products")

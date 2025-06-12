@@ -96,7 +96,7 @@ class HomeController < ApplicationController
     @opinion =
       ServiceOpinion
         .joins(project_item: { offer: :service })
-        .where(project_item: { offer: { services: { status: %i[published unverified errored] } } })
+        .where(project_item: { offer: { services: { status: %i[published errored] } } })
         .sample
   end
 end

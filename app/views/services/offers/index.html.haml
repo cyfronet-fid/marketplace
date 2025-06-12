@@ -1,0 +1,13 @@
+- content_for :title, @service.name
+- id = h(@service&.main_source&.eid) || h(@service&q.slug)
+:javascript
+  _paq.push(['trackEvent', 'Service', 'Visit', '#{id}']);
+- breadcrumb :service, @service
+= render "services/errors", service: @service
+= render "services/wrapper", service: @service, category: @category,
+  comparison_enabled: @comparison_enabled, compare_services: @compare_services,
+  favourite_services: @favourite_services, question: @question, tab_id: "desc", preview: false do
+  - if policy(@service).offers_show? || policy(@service).bundles_show?
+    = render "services/offers", offers: @offers, service: @service,
+                                      bundles: @bundles, bundled: @bundled,
+                                      preview: local_assigns[:preview] || @service.suspended?

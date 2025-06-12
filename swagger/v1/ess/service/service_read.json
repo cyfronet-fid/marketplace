@@ -31,7 +31,7 @@
     },
     "status": {
       "type": "string",
-      "enum": ["published", "unverified"]
+      "enum": ["published"]
     },
     "order_type": {
       "type": "string",

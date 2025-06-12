@@ -6,12 +6,15 @@ module Statusable
   included do
     enum :status, STATUSES
 
+    scope :visible, -> { where(status: VISIBLE_STATUSES) }
+    scope :active, -> { where(status: PUBLIC_STATUSES) }
+    scope :associable, -> { where.not(status: INVISIBLE_STATUSES) }
+
     validates :status, presence: true, inclusion: { in: STATUSES.values }
   end
 
   STATUSES = {
     published: "published",
-    unverified: "unverified",
     suspended: "suspended",
     unpublished: "unpublished",
     draft: "draft",
@@ -19,8 +22,8 @@ module Statusable
     deleted: "deleted"
   }.freeze
 
-  PUBLIC_STATUSES = %w[published unverified errored].freeze
-  VISIBLE_STATUSES = %w[published unverified suspended errored].freeze
+  PUBLIC_STATUSES = %w[published errored].freeze
+  VISIBLE_STATUSES = %w[published suspended errored].freeze
   INVISIBLE_STATUSES = %w[deleted].freeze
   HIDEABLE_STATUSES = %w[suspended deleted].freeze
   MANAGEABLE_STATUSES = (STATUSES.values - INVISIBLE_STATUSES).freeze

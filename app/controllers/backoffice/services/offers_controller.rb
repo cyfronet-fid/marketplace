@@ -1,10 +1,18 @@
 # frozen_string_literal: true
 
 class Backoffice::Services::OffersController < Backoffice::ApplicationController
+  include Backoffice::OffersHelper
+
   before_action :find_service
   before_action :find_offer_and_authorize, only: %i[edit update]
   before_action :load_form_data, only: %i[fetch_subtypes]
   after_action :reindex_offer, only: %i[create update destroy]
+
+  def index
+    @offers = policy_scope(@service.offers)
+    @bundles = policy_scope(@service.bundles)
+    @question = Service::Question.new(service: @service)
+  end
 
   def new
     @offer = Offer.new(service: @service)
@@ -19,23 +27,17 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
     if save_as_draft
       template.name = params["name"]
       @offer = Offer::CreateAsDraft.call(template)
-      redirect_to backoffice_service_path(@service), notice: "New offer created successfully"
+      redirect_to backoffice_service_offers_path(@service), notice: "New offer created successfully"
       return
     else
       @offer = Offer::Create.call(template)
     end
 
     if @offer.persisted?
-      redirect_to backoffice_service_path(@service), notice: "New offer created successfully"
+      redirect_to backoffice_service_offers_path(@service), notice: "New offer created successfully"
     else
       render :new, status: :bad_request
     end
-  end
-
-  def submit_summary
-    template = offer_template
-    authorize(template)
-    render partial: "backoffice/services/offers/steps/summary", locals: { offer: template }
   end
 
   def edit
@@ -48,10 +50,10 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
     if save_as_draft
       template[:name] = params["name"]
       Offer::UpdateAsDraft.call(@offer, transform_attributes(template, @service))
-      redirect_to backoffice_service_path(@service), notice: "Offer updated successfully and drafted"
+      redirect_to backoffice_service_offers_path(@service), notice: "Offer updated successfully and drafted"
       nil
     elsif Offer::Update.call(@offer, transform_attributes(template, @service))
-      redirect_to backoffice_service_path(@service), notice: "Offer updated successfully"
+      redirect_to backoffice_service_offers_path(@service), notice: "Offer updated successfully"
     else
       render :edit, status: :bad_request
     end
@@ -59,8 +61,8 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
 
   def destroy
     @offer = @service.offers.find_by(iid: params[:id])
-    if Offer::Destroy.call(@offer)
-      redirect_to backoffice_service_path(@service), notice: "Offer removed successfully"
+    if Offer::Delete.call(@offer)
+      redirect_to backoffice_service_offers_path(@service), notice: "Offer removed successfully"
     else
       render :edit, status: :bad_request
     end
@@ -85,9 +87,9 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
 
     @offer = Offer::Create.call(new_offer)
     if @offer.persisted?
-      redirect_to backoffice_service_path(@service), notice: "Offer duplicated successfully"
+      redirect_to backoffice_service_offers_path(@service), notice: "Offer duplicated successfully"
     else
-      redirect_to backoffice_service_path(@service), notice: "Offer duplication errored"
+      redirect_to backoffice_service_offers_path(@service), notice: "Offer duplication errored"
     end
   end
 

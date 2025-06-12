@@ -1,15 +1,10 @@
 # frozen_string_literal: true
 
 class Service::Publish < Service::ApplicationService
-  def initialize(service, verified: true)
-    super(service)
-    @status = verified ? "published" : "unverified"
-  end
-
   def call
     Offer::Publish.call(@service.offers.first) if @service.offers.size == 1
     public_before = @service.public?
-    notify_bundled_offers! if @service.update(status: @status) && !public_before
+    notify_bundled_offers! if @service.update(status: :published) && !public_before
     Service::Mailer::SendToSubscribers.new(@service).call
   end
 

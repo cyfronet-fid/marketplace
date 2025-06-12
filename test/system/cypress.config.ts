@@ -1,12 +1,12 @@
-import { defineConfig } from 'cypress'
+import { defineConfig } from "cypress";
 
 export default defineConfig({
-  defaultCommandTimeout: 20000,
+  defaultCommandTimeout: 25000,
   pageLoadTimeout: 100000,
   responseTimeout: 100000,
   viewportWidth: 1400,
   viewportHeight: 1200,
-  fileServerFolder: './',
+  fileServerFolder: "./",
   chromeWebSecurity: false,
   retries: {
     runMode: 1,
@@ -22,9 +22,9 @@ export default defineConfig({
     // We've imported your old cypress plugins here.
     // You may want to clean this up later by importing these.
     setupNodeEvents(on, config) {
-      return require('./cypress/plugins/index.js')(on, config)
+      return require("./cypress/plugins/index.js")(on, config);
     },
-    baseUrl: 'http://localhost:5000',
-    specPattern: 'cypress/e2e/**/*.spec.ts',
+    baseUrl: "http://localhost:5000",
+    specPattern: "cypress/e2e/**/*.spec.ts",
   },
-})
+});

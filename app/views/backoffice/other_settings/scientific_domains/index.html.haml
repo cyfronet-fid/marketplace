@@ -1,0 +1,34 @@
+- content_for :title, _("Scientific Domains")
+- breadcrumb :backoffice_scientific_domains
+
+= render "layouts/backoffice/other_settings_wrapper" do
+  .container.p-0.backoffice
+    %h1
+      = _("Scientific Domains")
+      - if policy([:backoffice, ScientificDomain]).new?
+        .float-right
+          = link_to _("+ Add new Scientific Domain"),
+                    new_backoffice_other_settings_scientific_domain_path,
+                    class: "btn btn-primary",
+                    "data-e2e": "add-new-scientific-domain"
+        .clearfix
+    -# haml-lint:disable InlineStyles
+    %ul.list-group.backoffice-list.indent-list.mb-3{ "data-e2e": "backoffice-scientific-domains-list" }
+      - ancestry_tree(@scientific_domains).each do |record|
+        - sd = record[1]
+        %li.list-group-item{ class: "#{"subcategory" if sd.ancestry_depth.positive?}",
+        style: style_indentation_variables(sd) }
+          = link_to backoffice_other_settings_scientific_domain_path(record.last) do
+            = image_tag sd.logo.variant(resize: "32x32") if sd.logo.attached? && sd.logo.variable?
+            = record.first
+          .buttons-box
+            - if policy([:backoffice, sd]).destroy?
+              = link_to backoffice_other_settings_scientific_domain_path(sd),
+                    data: { "turbo-confirm": _("Are you sure you want to remove this scientific domain?"), "turbo-method": :delete },
+                    class: "delete-icon float-right" do
+                %i.far.fa-trash-alt
+            - if policy([:backoffice, sd]).edit?
+              = link_to _("Edit"),
+                        edit_backoffice_other_settings_scientific_domain_path(sd),
+                        class: "edit-btn float-right mr-4"
+    -# haml-lint:enable InlineStyles

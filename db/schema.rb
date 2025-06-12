@@ -59,6 +59,19 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_18_120000) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "approval_requests", force: :cascade do |t|
+    t.string "approvable_type"
+    t.bigint "approvable_id"
+    t.bigint "user_id"
+    t.string "last_action"
+    t.string "status"
+    t.datetime "conversation_last_seen"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["approvable_type", "approvable_id"], name: "index_approval_requests_on_approvable"
+    t.index ["user_id"], name: "index_approval_requests_on_user_id"
+  end
+
   create_table "bundle_categories", force: :cascade do |t|
     t.bigint "bundle_id", null: false
     t.bigint "category_id", null: false
@@ -236,6 +249,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_18_120000) do
     t.bigint "contactable_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "country_phone_code"
     t.index ["contactable_id"], name: "index_contacts_on_contactable_id"
     t.index ["id", "contactable_id", "contactable_type"], name: "index_contacts_on_id_and_contactable_id_and_contactable_type", unique: true
   end
@@ -246,6 +260,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_18_120000) do
     t.string "email", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
     t.index ["email"], name: "index_data_administrators_on_email"
     t.index ["first_name"], name: "index_data_administrators_on_first_name"
     t.index ["last_name"], name: "index_data_administrators_on_last_name"
@@ -631,7 +646,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_18_120000) do
   end
 
   create_table "providers", force: :cascade do |t|
-    t.text "name", null: false
+    t.string "name", null: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.string "pid"
@@ -991,6 +1006,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_18_120000) do
     t.boolean "scientific_domains_updates", default: false, null: false
     t.boolean "show_welcome_popup", default: false, null: false
     t.string "authentication_token", limit: 30
+    t.integer "providers_count", default: 0, null: false
+    t.integer "catalogues_count", default: 0, null: false
     t.index ["authentication_token"], name: "index_users_on_authentication_token", unique: true
     t.index ["email"], name: "index_users_on_email"
   end
@@ -1015,6 +1032,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_18_120000) do
   add_foreign_key "catalogue_vocabularies", "catalogues"
   add_foreign_key "catalogue_vocabularies", "vocabularies"
   add_foreign_key "catalogues", "catalogue_sources", column: "upstream_id", on_delete: :nullify
+  add_foreign_key "data_administrators", "users"
   add_foreign_key "offer_links", "offers", column: "source_id"
   add_foreign_key "offer_links", "offers", column: "target_id"
   add_foreign_key "offer_vocabularies", "offers"

@@ -21,9 +21,8 @@ RSpec.describe Api::V1::Ess::DatasourcesController, swagger_doc: "v1/ess_swagger
       response 200, "datasources found" do
         schema "$ref" => "ess/datasource/datasource_index.json"
 
-        let!(:manager) { create(:user, roles: [:service_portfolio_manager]) }
-        let!(:datasources) { create_list(:datasource, 2) }
-        let!(:unverified) { create(:datasource, status: :unverified) }
+        let!(:manager) { create(:user, roles: [:coordinator]) }
+        let!(:datasources) { create_list(:datasource, 3) }
         let!(:draft) { create(:datasource, status: :draft) }
         let!(:deleted) { create(:datasource, status: :deleted) }
         let!(:service) { create(:service) }
@@ -31,7 +30,7 @@ RSpec.describe Api::V1::Ess::DatasourcesController, swagger_doc: "v1/ess_swagger
         let(:"X-User-Token") { manager.authentication_token }
 
         run_test! do |response|
-          expected = datasources << unverified
+          expected = datasources
           data = JSON.parse(response.body)
 
           expect(data.length).to eq(expected.size)
@@ -42,7 +41,7 @@ RSpec.describe Api::V1::Ess::DatasourcesController, swagger_doc: "v1/ess_swagger
       response 403, "user doesn't have manager role", document: false do
         schema "$ref" => "error.json"
         let(:regular_user) { create(:user) }
-        let(:manager) { create(:user, roles: [:service_portfolio_manager]) }
+        let(:manager) { create(:user, roles: [:coordinator]) }
         let!(:datasources) { create_list(:datasource, 3) }
 
         let(:"X-User-Token") { regular_user.authentication_token }
@@ -76,7 +75,7 @@ RSpec.describe Api::V1::Ess::DatasourcesController, swagger_doc: "v1/ess_swagger
       %i[id pid slug].each do |id_form|
         response 200, "datasource found by #{id_form}" do
           schema "$ref" => "ess/datasource/datasource_read.json"
-          let!(:manager) { create(:user, roles: [:service_portfolio_manager]) }
+          let!(:manager) { create(:user, roles: [:coordinator]) }
           let!(:datasource) { create(:datasource) }
 
           let(:datasource_id) { datasource.send(id_form) }

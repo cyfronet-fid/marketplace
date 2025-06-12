@@ -1,0 +1,33 @@
+- content_for :title, _("Categories")
+- breadcrumb :backoffice_categories
+= render "layouts/backoffice/other_settings_wrapper" do
+  .container.p-0.backoffice
+    %h1
+      = _("Categories")
+      - if policy([:backoffice, Category]).new?
+        .float-right
+          = link_to _("+ Add new Category"),
+                    new_backoffice_other_settings_category_path,
+                    class: "btn btn-primary",
+                    "data-e2e": "add-new-category"
+        .clearfix
+    -# haml-lint:disable InlineStyles
+    %ul.list-group.backoffice-list.indent-list.mt-3.mb-{ "data-e2e": "backoffice-categories-list" }
+      - ancestry_tree(@categories).each do |record|
+        - category = record[1]
+        %li.list-group-item{ class: "#{"subcategory" if category.ancestry_depth.positive?}",
+        style: style_indentation_variables(category) }
+          = link_to backoffice_other_settings_category_path(record.last) do
+            = image_tag category.logo.variant(resize: "32x32") if category.logo.attached? && category.logo.variable?
+            = record.first
+          .buttons-box
+            - if policy([:backoffice, category]).destroy?
+              = link_to backoffice_other_settings_category_path(category.id),
+                  data: { "turbo-confirm": _("Are you sure you want to remove this category?"), "turbo-method": :delete },
+                  class: "delete-icon float-right" do
+                %i.far.fa-trash-alt
+            - if policy([:backoffice, category]).edit?
+              = link_to _("Edit"),
+                  edit_backoffice_other_settings_category_path(category),
+                  class: "edit-btn float-right mr-4"
+    -# haml-lint:enable InlineStyles

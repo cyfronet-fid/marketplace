@@ -21,7 +21,7 @@ RSpec.describe Api::V1::Ess::BundlesController, swagger_doc: "v1/ess_swagger.jso
       response 200, "bundle found" do
         schema "$ref" => "ess/bundle/bundle_index.json"
 
-        let!(:manager) { create(:user, roles: [:service_portfolio_manager]) }
+        let!(:manager) { create(:user, roles: [:coordinator]) }
         let!(:bundles) { create_list(:bundle, 2) }
         let!(:second_bundle) { create(:bundle, service_id: bundles.first.service_id) }
         let!(:draft) { create(:bundle, service_id: bundles.second.service_id, status: :draft) }
@@ -32,6 +32,7 @@ RSpec.describe Api::V1::Ess::BundlesController, swagger_doc: "v1/ess_swagger.jso
         run_test! do |response|
           expected = bundles << second_bundle
           data = JSON.parse(response.body)
+
           expect(data.length).to eq(expected.size)
           expect(data).to match_array(expected&.map { |s| Ess::BundleSerializer.new(s).as_json.deep_stringify_keys })
         end
@@ -40,7 +41,7 @@ RSpec.describe Api::V1::Ess::BundlesController, swagger_doc: "v1/ess_swagger.jso
       response 403, "user doesn't have manager role", document: false do
         schema "$ref" => "error.json"
         let!(:regular_user) { create(:user) }
-        let!(:manager) { create(:user, roles: [:service_portfolio_manager]) }
+        let!(:manager) { create(:user, roles: [:coordinator]) }
         let!(:bundles) { create_list(:bundle, 3) }
         let!(:second_bundle) { create(:bundle, service_id: bundles.first.service_id) }
         let!(:draft) { create(:bundle, service_id: bundles.second.service_id, status: :draft) }
@@ -76,7 +77,7 @@ RSpec.describe Api::V1::Ess::BundlesController, swagger_doc: "v1/ess_swagger.jso
 
       response 200, "bundle found by id" do
         schema "$ref" => "ess/bundle/bundle_read.json"
-        let!(:manager) { create(:user, roles: [:service_portfolio_manager]) }
+        let!(:manager) { create(:user, roles: [:coordinator]) }
         let!(:bundle) { create(:bundle) }
 
         let(:bundle_id) { bundle.id }
@@ -84,13 +85,14 @@ RSpec.describe Api::V1::Ess::BundlesController, swagger_doc: "v1/ess_swagger.jso
 
         run_test! do |response|
           data = JSON.parse(response.body)
+
           expect(data).to eq(Ess::BundleSerializer.new(bundle).as_json.deep_stringify_keys)
         end
       end
 
       response 404, "draft bundle not found by id" do
         schema "$ref" => "error.json"
-        let!(:manager) { create(:user, roles: [:service_portfolio_manager]) }
+        let!(:manager) { create(:user, roles: [:coordinator]) }
         let!(:bundle) { create(:bundle, status: :draft) }
 
         let(:bundle_id) { bundle.id }

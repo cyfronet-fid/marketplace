@@ -1,44 +1,37 @@
 # frozen_string_literal: true
 
-class Backoffice::ProviderPolicy < ApplicationPolicy
-  class Scope < Scope
-    def resolve
-      scope
-    end
-  end
-
-  MP_INTERNAL_FIELDS = [:upstream_id, [sources_attributes: %i[id source_type eid _destroy]]].freeze
-
+class Backoffice::ProviderPolicy < Backoffice::ApplicationPolicy
   def index?
-    service_portfolio_manager?
+    user.present?
   end
 
   def show?
-    service_portfolio_manager?
+    user.present?
   end
 
   def new?
-    service_portfolio_manager?
+    user.present?
   end
 
   def create?
-    service_portfolio_manager?
+    user.present?
   end
 
   def edit?
-    service_portfolio_manager? && !record.deleted?
+    edit_permissions?
   end
 
   def update?
-    service_portfolio_manager? && !record.deleted?
+    edit_permissions?
   end
 
-  def destroy?
-    service_portfolio_manager? && !record.deleted?
+  def exit?
+    user.present?
   end
 
   def permitted_attributes
     attrs = [
+      :current_step,
       :name,
       :abbreviation,
       :website,
@@ -54,7 +47,7 @@ class Backoffice::ProviderPolicy < ApplicationPolicy
       :logo,
       [multimedia: []],
       [scientific_domain_ids: []],
-      [tag_list: []],
+      :tag_list,
       :street_name_and_number,
       :postal_code,
       :city,
@@ -77,8 +70,20 @@ class Backoffice::ProviderPolicy < ApplicationPolicy
       [societal_grand_challenge_ids: []],
       [national_roadmaps: []],
       [sources_attributes: %i[id source_type eid _destroy]],
-      [main_contact_attributes: %i[id first_name last_name email phone organisation position]],
-      [public_contacts_attributes: %i[id first_name last_name email phone organisation position _destroy]],
+      [main_contact_attributes: %i[id first_name last_name email phone country_phone_code organisation position]],
+      [
+        public_contacts_attributes: %i[
+          id
+          first_name
+          last_name
+          email
+          phone
+          country_phone_code
+          organisation
+          position
+          _destroy
+        ]
+      ],
       [data_administrators_attributes: %i[id first_name last_name email _destroy]],
       [link_multimedia_urls_attributes: %i[id name url _destroy]],
       [alternative_identifiers_attributes: %i[id identifier_type value _destroy]]
@@ -89,7 +94,15 @@ class Backoffice::ProviderPolicy < ApplicationPolicy
 
   private
 
-  def service_portfolio_manager?
-    user&.service_portfolio_manager?
+  def catalogue_access?
+    user&.catalogue_owner?
+  end
+
+  def edit_permissions?
+    !record.deleted? && (coordinator? || record&.owned_by?(user))
+  end
+
+  def access?
+    coordinator? || (record&.owned_by?(user) && record&.approval_requests&.none?(&:published?))
   end
 end

@@ -2,5 +2,5 @@
   - service_offers.each do |offer, h|
     %li
       %span= link_to highlighted_for(:offer_name, offer, h),
-        service_path(service, anchor: "offer-#{ offer.id }"),
+        service_offers_path(service, anchor: "offer-#{ offer.id }"),
         "data-probe": "", "data-service-id": service.id

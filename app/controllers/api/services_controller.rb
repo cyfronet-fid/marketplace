@@ -4,7 +4,7 @@ class Api::ServicesController < ActionController::API
   def index
     @json =
       Service
-        .where(status: %i[published unverified])
+        .where(status: :published)
         .map do |s|
           {
             "Service Unique ID": s.id,

@@ -1,0 +1,20 @@
+
+= simple_form_for [:backoffice, approval], method: :patch do |f|
+  .row
+    .col-12.font-weight-bolder.select-bigger
+      = f.input :current_action, value: "",
+      label: _("Select action"), collection: ApprovalRequest.last_actions.invert
+  .row
+    .col-12.details-box.select-bigger
+      %h3 Messages
+      .messages-box
+        .messages-scroll-wrapper
+          = render "backoffice/approval_requests/messages", messages: approval.messages
+  .row.approval-message-row
+    .col-md-9
+      = f.input :message, value: ""
+    .col-md-3
+      = f.button :submit, _("Send message"), class: "btn btn-primary btn-sm float-right pl-3 pr-3"
+
+- content_for(:buttons) do
+  = render "common_parts/close_button"

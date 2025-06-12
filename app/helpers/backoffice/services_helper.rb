@@ -5,9 +5,8 @@ module Backoffice::ServicesHelper
 
   BADGES = {
     "published" => "badge-success",
-    "unverified" => "badge-warning",
     "draft" => "badge-draft",
-    "errored" => "badge-error",
+    "errored" => "badge-warning",
     "deleted" => "badge-error"
   }.freeze
 

@@ -57,7 +57,7 @@ module Service::Recommendable
 
     ids = body["recommendations"] || []
 
-    Service.where(id: ids, status: %i[published unverified])
+    Service.where(id: ids, status: :published)
   rescue StandardError
     Sentry.capture_message("Similar services recommendation, similar services endpoint response error")
     Service.find(service_id).target_relationships.take(quantity)
@@ -88,7 +88,7 @@ module Service::Recommendable
     response = Faraday.post(url, body.to_json, { "Content-Type": "application/json", Accept: "application/json" })
     ids = JSON.parse(response.body)["recommendations"]
 
-    services = Service.where(id: ids, status: %i[published unverified]).sort_by { |s| ids.index(s.id) }.take(size)
+    services = Service.where(id: ids, status: :published).sort_by { |s| ids.index(s.id) }.take(size)
     services.empty? ? [] : services
   rescue StandardError
     Sentry.capture_message("Recommendation service, recommendation endpoint response error")

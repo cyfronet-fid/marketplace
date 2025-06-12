@@ -96,23 +96,16 @@ describe Import::Resources, backend: true do
       mock_access_token
     end
 
-    it "should create an offer for a new services" do
+    it "shouldn't create an offer for a new services" do
       expect { eosc_registry.call }.to output(
         /PROCESSED: 3, CREATED: 3, UPDATED: 0, NOT MODIFIED: 0$/
-      ).to_stdout.and change { Service.count }.by(3).and change { Offer.count }.by(3)
+      ).to_stdout.and change { Service.count }.by(3)
       service = Service.first
 
-      expect(service.offers).to_not be_nil
+      expect(service.offers).to be_empty
 
-      offer = service.offers.first
-
-      expect(offer.name).to eq("Offer")
-      expect(offer.description).to eq("#{service.name} Offer")
-      expect(offer.order_type).to eq("other")
-      expect(offer.status).to eq("published")
-
-      expect(Service.find_by(name: "MetalPDB").offers).to_not be_nil
-      expect(Service.find_by(name: "PDB_REDO server").offers).to_not be_nil
+      expect(Service.find_by(name: "MetalPDB").offers).to be_empty
+      expect(Service.find_by(name: "PDB_REDO server").offers).to be_empty
     end
 
     it "should not update service which has upstream to null" do

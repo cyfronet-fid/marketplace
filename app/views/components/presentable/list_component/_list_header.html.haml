@@ -1,0 +1,12 @@
+%li.list-group-item.heading-row.providers
+  .row
+    .col= check_box_tag "#{klass}_ids[]", nil,
+                      id: "#{klass}",
+                      class: "form-check-input",
+                      data: { action: "click->list#toggleAll click->list#toggleActions", list_target: "checkAll" }
+    .col Name
+    .col Creation date
+    .col.text-center Status
+    .col
+      .d-none.selected-menu{ data: { list_target: "selectedMenu" } }
+        = render "components/presentable/list_component/selected_menu", type: klass, f: form

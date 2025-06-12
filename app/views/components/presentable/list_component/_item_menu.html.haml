@@ -1,0 +1,24 @@
+%a.kebab-link{ "aria-expanded": "false", "aria-haspopup": "true",
+          data: { toggle: "dropdown", target: "dropdown-#{obj.id}", list_target: "itemMenu" },
+          type: "button" }
+  %i.fa.fa-ellipsis-v
+  .dropdown-menu.dropdown-unroll.dropdown-menu-right{ id: "dropdown-#{obj.id}" }
+    - type = obj.class.name.downcase
+    - if policy([:backoffice, obj]).publish?
+      = link_to _("Publish"), polymorphic_path([:backoffice, obj, :publish]), class: "dropdown-item",
+            data: { turbo_method: :post, turbo_confirm: _("Confirm to publish"),
+            confirm_details: publish_message(type), confirm_button: _("Publish #{type}") }
+    - if policy([:backoffice, obj]).suspend?
+      = link_to _("Suspend"), polymorphic_path([:backoffice, obj, :unpublish], suspend: true),
+            class: "dropdown-item", data: { turbo_method: :post, turbo_confirm: _("Confirm to suspend"),
+            confirm_details: suspend_message(type), confirm_button: _("Suspend #{type}") }
+    - if policy([:backoffice, obj]).unpublish?
+      = link_to _("Unpublish"), polymorphic_path([:backoffice, obj, :unpublish]),
+            class: "dropdown-item", data: { turbo_method: :post, turbo_confirm: _("Confirm to unpublish"),
+            confirm_details: unpublish_message(type), confirm_button: _("Unpublish #{type}") }
+    - if policy([:backoffice, obj]).destroy?
+      .dropdown-divider
+      = link_to _("Delete"), polymorphic_path([:backoffice, obj]), class: "dropdown-item",
+            data: { e2e: "delete-menu", turbo_method: :delete,
+            turbo_confirm: _("This action cannot be undone"),
+            confirm_details: delete_message(type), confirm_button: _("Delete #{type}") }

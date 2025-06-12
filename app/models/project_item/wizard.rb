@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ProjectItem::Wizard
-  STEPS = %i[offers information configuration summary].freeze
+  STEPS = %i[choose_offer information configuration summary].freeze
 
   def initialize(service)
     @service = service
@@ -48,7 +48,7 @@ class ProjectItem::Wizard
     end
   end
 
-  class OffersStep < Base
+  class ChooseOfferStep < Base
     validates :offer, presence: true, unless: :bundle
     validates :bundle, presence: true, unless: :offer
 
@@ -61,13 +61,13 @@ class ProjectItem::Wizard
     end
   end
 
-  class InformationStep < OffersStep
+  class InformationStep < ChooseOfferStep
     def visible?
       true
     end
   end
 
-  class ConfigurationStep < OffersStep
+  class ConfigurationStep < ChooseOfferStep
     include ProjectItem::Customization
     include ProjectItem::VoucherValidation
 

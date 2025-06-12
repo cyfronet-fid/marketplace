@@ -3,15 +3,16 @@
     = render "services/bundles/description", bundle: bundle
     = render "services/bundle", bundled_offers: bundle.all_offers, parent: bundle.main_offer
     .d-flex.pb-3.pt-3
-      = render "services/offers/bundle_links",
+      = render "services/choose_offers/bundle_links",
          contact_email: bundle.contact_email || "",
          related_training: bundle.related_training_url || "",
          helpdesk_url: bundle.helpdesk_url || ""
       - if policy(ServiceContext.new(bundle.service,params.key?(:from) && params[:from] == "backoffice_service")).order?
         .card-button.text-center.add-bundle
           %label
-            = link_to service_offers_path(bundle.service,
+            = link_to service_choose_offer_path(bundle.service,
                     customizable_project_item: { offer_id: bundle.main_offer.iid, bundle_id: bundle.iid }),
-                    data: { probe: "", service_id: bundle.service.id, turbo_method: :put } do
+                    data: { preview_target: "#{"link" if preview}", probe: "",
+                    service_id: bundle.service.id, turbo_method: :put } do
               %span.btn.btn-secondary.font-weight-bolder.mt-2
                 = _("Select bundle")

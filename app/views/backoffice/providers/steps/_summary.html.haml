@@ -1,0 +1,100 @@
+-# = render "common_parts/modals/become_provider_modal", f: f
+= simple_form_for [:backoffice, provider],
+  url: backoffice_provider_wizard_path(params[:provider_id]),
+  html: { "data-controller": "administrator", "data-form-target": "form"  },
+  method: :put, data: { turbo_frame: :_top }  do |f|
+  = render "backoffice/providers/steps/simple_navbar", provider: provider, f: f
+  .new-offer-form
+    %h4 Summary
+
+    .container
+      .row
+        .col-lg-6.pl-0
+          .offer-section-wrapper.bottom-margin
+            .offer-info-box
+              %h6 PROVIDER PROFILE
+              .offer-info-data
+                .row
+                  .col-6
+                    Name
+                  .col-6
+                    = provider.name
+                .row
+                  .col-6
+                    Abbreviation
+                  .col-6
+                    = provider.abbreviation
+                .row
+                  .col-6
+                    Description
+                  .col-6
+                    = provider.description
+                .row
+                  .col-6
+                    Website URL
+                  .col-6
+                    = provider.website
+                .row
+                  .col-6
+                    Logo
+                  .col-6
+                    - if local_assigns[:logo]&.key?("base64")
+                      = image_tag "#{logo["base64"]}", class: "logo-preview"
+                    - else
+                      = presentable_logo(preloaded(provider))
+
+                .row
+                  .col-6
+                    Is the provider a legal entity?
+                  .col-6
+                    = provider.legal_entity
+
+            .offer-info-box
+              %h6 LOCATION
+              .offer-info-data
+                .row
+                  .col-6
+                    Street name and number
+                  .col-6
+                    = provider.street_name_and_number
+                .row
+                  .col-6
+                    Postal Code
+                  .col-6
+                    = provider.postal_code
+                .row
+                  .col-6
+                    City
+                  .col-6
+                    = provider.city
+                .row
+                  .col-6
+                    Region
+                  .col-6
+                    = provider.region
+                .row
+                  .col-6
+                    Country
+                  .col-6
+                    = provider.country
+
+            .offer-info-box
+              %h6 MAIN CONTACT
+              .offer-info-data
+                = render "backoffice/providers/steps/summary_contact_section", contact: provider.main_contact
+
+            .offer-info-box.mb-0
+              %h6 PUBLIC CONTACTS
+              .offer-info-data
+                - provider.public_contacts.each do |contact|
+                  = render "backoffice/providers/steps/summary_contact_section", contact: contact
+
+        .col-lg-6.pl-0
+          .offer-section-wrapper.bottom-margin
+            .offer-info-box.mb-0
+              %h6 PROVIDER'S MANAGER
+              .offer-info-data
+                - provider.data_administrators.each do |manager|
+                  = render "backoffice/providers/steps/summary_manager_section", manager: manager
+
+      = render "backoffice/providers/steps/buttons", f: f

@@ -48,7 +48,7 @@ module MonitoringData
       File.open("log/monitoring.json", "w") { |file| file << JSON.pretty_generate(results) }
 
       Service
-        .where(status: %i[published unverified])
+        .where(status: :published)
         .find_each do |service|
           log "Trying to find monitoring data for the service #{service.pid}"
           log "Looking under key #{service.pid.to_s.partition(".").last}"

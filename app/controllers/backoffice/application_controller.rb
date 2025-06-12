@@ -4,7 +4,7 @@ class Backoffice::ApplicationController < ApplicationController
   before_action :authenticate_user!
   before_action :backoffice_authorization!
 
-  layout "backoffice"
+  layout -> { turbo_frame_request? ? "turbo_rails/frame" : "backoffice" }
 
   def policy_scope(scope)
     super([:backoffice, scope])

@@ -3,19 +3,23 @@
 require "rails_helper"
 
 RSpec.describe Backoffice::ServicePolicy, backend: true do
-  let(:service_portfolio_manager) { create(:user, roles: [:service_portfolio_manager]) }
-  let(:service_owner) do
-    create(:user).tap do |user|
-      service = create(:service)
-      ServiceUserRelationship.create!(user: user, service: service)
-    end
+  let(:coordinator) { create(:user, roles: [:coordinator]) }
+  let!(:provider_data_administrator) { create(:user) }
+  let!(:provider) do
+    create(:provider, data_administrators: [build(:data_administrator, email: provider_data_administrator&.email)])
   end
+  let!(:catalogue_data_administrator) { create(:user) }
+  let!(:catalogue) do
+    create(:catalogue, data_administrators: [build(:data_administrator, email: catalogue_data_administrator&.email)])
+  end
+
+  let(:basic_user) { create(:user) }
 
   subject { described_class }
 
   context "permitted_attributes" do
     it "should return attrs if service has no upstream or is not persisted" do
-      policy = described_class.new(service_owner, create(:service))
+      policy = described_class.new(coordinator, create(:service))
       expect(policy.permitted_attributes).to match_array(
         [
           :type,
@@ -91,14 +95,25 @@ RSpec.describe Backoffice::ServicePolicy, backend: true do
           [persistent_identity_systems_attributes: %i[id entity_type_id entity_type_scheme_ids _destroy]],
           [link_research_product_license_urls_attributes: %i[id url name _destroy]],
           [link_research_product_metadata_license_urls_attributes: %i[id url name _destroy]],
-          [owner_ids: []],
           :status,
           :upstream_id,
           :version,
           :resource_organisation_id,
-          [main_contact_attributes: %i[id first_name last_name email phone organisation position]],
+          [main_contact_attributes: %i[id first_name last_name email phone country_phone_code organisation position]],
           [sources_attributes: %i[id source_type eid _destroy]],
-          [public_contacts_attributes: %i[id first_name last_name email phone organisation position _destroy]],
+          [
+            public_contacts_attributes: %i[
+              id
+              first_name
+              last_name
+              email
+              phone
+              country_phone_code
+              organisation
+              position
+              _destroy
+            ]
+          ],
           [link_multimedia_urls_attributes: %i[id name url _destroy]],
           [link_use_cases_urls_attributes: %i[id name url _destroy]],
           [alternative_identifiers_attributes: %i[id identifier_type value _destroy]]
@@ -110,7 +125,7 @@ RSpec.describe Backoffice::ServicePolicy, backend: true do
       service = create(:service)
       source = create(:service_source, source_type: :eosc_registry, service: service)
       service.update!(upstream: source)
-      policy = described_class.new(service_owner, service)
+      policy = described_class.new(coordinator, service)
       expect(policy.permitted_attributes).to match_array(
         [
           :type,
@@ -130,72 +145,83 @@ RSpec.describe Backoffice::ServicePolicy, backend: true do
   context "service draft" do
     permissions :index? do
       it "grants access for service portfolio manager" do
-        expect(subject).to permit(service_portfolio_manager, build(:service, status: :draft))
+        expect(subject).to permit(coordinator, build(:service, status: :draft))
       end
 
       it "grants access for service owner" do
         expect(subject).to permit(service_owner, build(:service, status: :draft))
       end
+
+      it "grants access for provider data administrator" do
+        provider_data_administrator.reload
+        expect(subject).to permit(
+          provider_data_administrator,
+          build(:service, resource_organisation: provider, status: :draft)
+        )
+      end
+
+      it "grants access for catalogue data administrator" do
+        catalogue_data_administrator.reload
+        expect(subject).to permit(catalogue_data_administrator, build(:service, catalogue: catalogue, status: :draft))
+      end
+
+      it "denies access for basic user" do
+        expect(subject).to_not permit(basic_user, build(:service, status: :draft))
+      end
     end
 
     permissions :show? do
       it "grants access for service portfolio manager" do
-        expect(subject).to permit(service_portfolio_manager, build(:service, status: :draft))
+        expect(subject).to permit(coordinator, build(:service, status: :draft))
       end
 
-      it "grants access for owned service" do
-        expect(subject).to permit(service_owner, service_owner.owned_services.first)
+      it "grants access for provider data administrator" do
+        expect(subject).to permit(provider_data_administrator, build(:service, resource_organisation: provider))
+      end
+
+      it "denies access for provider data administrator of other service" do
+        expect(subject).to_not permit(provider_data_administrator, build(:service, status: :draft))
+      end
+
+      it "grants access for catalogue data administrator" do
+        expect(subject).to permit(catalogue_data_administrator, build(:service, catalogue: catalogue))
       end
 
       it "denies access for not owned service" do
-        expect(subject).to_not permit(service_owner, build(:service, status: :draft))
+        expect(subject).to_not permit(basic_user, build(:service, status: :draft))
       end
     end
 
     permissions :new?, :create?, :update? do
       it "grants access for service portfolio manager" do
-        expect(subject).to permit(service_portfolio_manager, build(:service, status: :draft))
+        expect(subject).to permit(coordinator, build(:service, status: :draft))
       end
 
-      it "denies access for service owner" do
-        expect(subject).to_not permit(service_owner, build(:service, status: :draft))
+      it "grants access for provider data administrator" do
+        provider_data_administrator.reload
+        expect(subject).to permit(provider_data_administrator, build(:service, resource_organisation: provider))
+      end
+
+      it "grants access for catalogue data administrator" do
+        catalogue_data_administrator.reload
+        expect(subject).to permit(catalogue_data_administrator, build(:service, catalogue: catalogue))
       end
 
       it "grants access for service portfolio manager" do
-        expect(subject).to permit(service_portfolio_manager, build(:service, status: :draft))
-      end
-    end
-
-    permissions :update? do
-      let(:owner) { create(:user) }
-
-      it "grants access for service owner when service is a draft" do
-        service = create(:service, owners: [owner], status: :draft)
-
-        expect(subject).to permit(owner, service)
-      end
-
-      it "allows access for service owner when service is published" do
-        service = create(:service, owners: [owner], status: :published)
-
-        expect(subject).to permit(owner, service)
+        expect(subject).to permit(coordinator, build(:service, status: :draft))
       end
     end
 
     permissions :destroy? do
       it "grants access for service portfolio manager" do
-        expect(subject).to permit(service_portfolio_manager, build(:service, status: :draft))
+        expect(subject).to permit(coordinator, build(:service, status: :draft))
       end
 
-      it "denies access for service owner" do
-        expect(subject).to_not permit(service_owner, build(:service, status: :draft))
-      end
-
-      it "denies when service has project_items attached" do
+      it "allows when service has project_items attached" do
         service = create(:service, status: :draft)
         create(:project_item, offer: create(:offer, service: service))
 
-        expect(subject).to_not permit(service_portfolio_manager, service)
+        expect(subject).to permit(coordinator, service)
       end
     end
   end
@@ -203,52 +229,44 @@ RSpec.describe Backoffice::ServicePolicy, backend: true do
   context "Service published" do
     permissions :index? do
       it "grants access for service portfolio manager" do
-        expect(subject).to permit(service_portfolio_manager, build(:service))
-      end
-
-      it "grants access for service owner" do
-        expect(subject).to permit(service_owner, build(:service))
+        expect(subject).to permit(coordinator, build(:service))
       end
     end
 
     permissions :show? do
       it "grants access for service portfolio manager" do
-        expect(subject).to permit(service_portfolio_manager, build(:service))
-      end
-
-      it "grants access for owned service" do
-        expect(subject).to permit(service_owner, service_owner.owned_services.first)
+        expect(subject).to permit(coordinator, build(:service))
       end
 
       it "denies access for not owned service" do
-        expect(subject).to_not permit(service_owner, build(:service))
+        expect(subject).to_not permit(basic_user, build(:service))
       end
     end
 
     permissions :update? do
       it "denies access for service portfolio manager" do
-        expect(subject).to permit(service_portfolio_manager, build(:service))
+        expect(subject).to permit(coordinator, build(:service))
       end
 
       it "denies access for service owner" do
-        expect(subject).to_not permit(service_owner, build(:service))
+        expect(subject).to_not permit(basic_user, build(:service))
       end
     end
 
     permissions :destroy? do
-      it "denies access for service portfolio manager" do
-        expect(subject).to_not permit(service_portfolio_manager, build(:service))
+      it "allows access for service portfolio manager" do
+        expect(subject).to permit(coordinator, build(:service))
       end
 
-      it "denies access for service owner" do
-        expect(subject).to_not permit(service_owner, build(:service))
+      it "denies access for user" do
+        expect(subject).to_not permit(basic_user, build(:service))
       end
 
-      it "denies when service has project_items attached" do
+      it "allows when service has project_items attached" do
         service = create(:service)
         create(:project_item, offer: create(:offer, service: service))
 
-        expect(subject).to_not permit(service_portfolio_manager, service)
+        expect(subject).to permit(coordinator, service)
       end
     end
   end
@@ -257,17 +275,9 @@ RSpec.describe Backoffice::ServicePolicy, backend: true do
     it "returns all services for service portfolio manager" do
       create_list(:service, 2)
 
-      scope = described_class::Scope.new(service_portfolio_manager, Service.all)
+      scope = described_class::Scope.new(coordinator, Service.all)
 
       expect(scope.resolve.count).to eq(2)
-    end
-
-    it "returns only owned services for service owner" do
-      _not_owned = create(:service)
-
-      scope = described_class::Scope.new(service_owner, Service.all)
-
-      expect(scope.resolve).to contain_exactly(*service_owner.owned_services)
     end
 
     it "returns nothing for normal user" do
@@ -281,60 +291,31 @@ RSpec.describe Backoffice::ServicePolicy, backend: true do
 
   permissions :publish? do
     it "grants access for service portfolio manager and not published services" do
-      expect(subject).to permit(service_portfolio_manager, build(:service, status: :draft))
-      expect(subject).to permit(service_portfolio_manager, build(:service, status: :unverified))
+      expect(subject).to permit(coordinator, build(:service, status: :draft))
+      expect(subject).to permit(coordinator, build(:service, status: :suspended))
     end
 
     it "denies access for other users" do
-      expect(subject).to_not permit(service_owner, build(:service, status: :draft))
+      expect(subject).to_not permit(basic_user, build(:service, status: :draft))
     end
 
     it "denies access for already published service" do
-      expect(subject).to_not permit(service_portfolio_manager, build(:service, status: :published))
+      expect(subject).to_not permit(coordinator, build(:service, status: :published))
     end
   end
 
-  permissions :publish_unverified? do
-    it "grants access for service portfolio manager and not published unverified services" do
-      expect(subject).to permit(service_portfolio_manager, build(:service, status: :draft))
-      expect(subject).to permit(service_portfolio_manager, build(:service, status: :published))
-    end
-
-    it "denies access for other users" do
-      expect(subject).to_not permit(service_owner, build(:service, status: :draft))
-    end
-
-    it "denies access for already published unverified service" do
-      expect(subject).to_not permit(service_portfolio_manager, build(:service, status: :unverified))
-    end
-  end
-
-  permissions :draft? do
+  permissions :unpublish? do
     it "grants access for service portfolio manager and not draft services" do
-      expect(subject).to permit(service_portfolio_manager, build(:service, status: :published))
-      expect(subject).to permit(service_portfolio_manager, build(:service, status: :unverified))
+      expect(subject).to permit(coordinator, build(:service, status: :published))
+      expect(subject).to permit(coordinator, build(:service, status: :errored))
     end
 
     it "denies access for other users" do
-      expect(subject).to_not permit(service_owner, build(:service, status: :published))
+      expect(subject).to_not permit(basic_user, build(:service, status: :published))
     end
 
-    it "denies access fo service in draft state" do
-      expect(subject).to_not permit(service_portfolio_manager, build(:service, status: :draft))
-    end
-  end
-
-  context "When offer is draft and service is deleted" do
-    let(:service) { create(:service, owners: [service_owner], status: :deleted) }
-
-    permissions :edit?, :update?, :destroy?, :publish?, :draft?, :publish_unverified? do
-      it "danies access to service portfolio manager" do
-        expect(subject).to_not permit(service_portfolio_manager, service)
-      end
-
-      it "danies access to service owner" do
-        expect(subject).to_not permit(service_owner, service)
-      end
+    it "denies access fo service in unpublished state" do
+      expect(subject).to_not permit(coordinator, build(:service, status: :unpublished))
     end
   end
 end

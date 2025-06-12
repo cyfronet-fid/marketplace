@@ -8,7 +8,7 @@ RSpec.feature "Services in ordering_configuration panel", end_user_frontend: tru
 
   context "As a data_administrator" do
     let(:user) { create(:user) }
-    let(:data_administrator) { create(:data_administrator, email: user.email) }
+    let(:data_administrator) { build(:data_administrator, email: user.email) }
     let(:provider) { create(:provider, data_administrators: [data_administrator]) }
     let(:service) { create(:service, resource_organisation: provider, offers: [create(:offer)]) }
 
@@ -112,7 +112,7 @@ RSpec.feature "Services in ordering_configuration panel", end_user_frontend: tru
     scenario "I cannot delete offer if it's only one" do
       visit service_ordering_configuration_path(service)
 
-      click_on "Edit parameters"
+      click_on "Edit"
 
       expect(page).to_not have_link("Delete Offer")
     end
@@ -251,7 +251,7 @@ RSpec.feature "Services in ordering_configuration panel", end_user_frontend: tru
     end
   end
 
-  { no: false, service_portfolio_manager: false, admin: false, executive: false }.each do |role, authorized|
+  { no: false, coordinator: false, admin: false, executive: false }.each do |role, authorized|
     context "as an user with #{role} role" do
       let(:user) { create(:user, roles: role == :no ? [] : [role]) }
       let(:provider) { create(:provider) }

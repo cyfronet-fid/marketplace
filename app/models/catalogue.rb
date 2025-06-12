@@ -8,6 +8,8 @@ class Catalogue < ApplicationRecord
 
   friendly_id :pid
 
+  acts_as_taggable
+
   has_one_attached :logo
 
   serialize :participating_countries, coder: Country::Array
@@ -47,10 +49,11 @@ class Catalogue < ApplicationRecord
   has_many :nodes, through: :catalogue_vocabularies, source: :vocabulary, source_type: "Vocabulary::Node"
   has_many :catalogue_data_administrators
   has_many :data_administrators, through: :catalogue_data_administrators, dependent: :destroy, autosave: true
-  accepts_nested_attributes_for :data_administrators, allow_destroy: true
 
   scope :active, -> { where.not(status: %i[deleted draft]) }
+  scope :managed_by, ->(user) { joins(:data_administrators).where(data_administrators: { user_id: user&.id }) }
 
+  accepts_nested_attributes_for :data_administrators, allow_destroy: true
   accepts_nested_attributes_for :main_contact, allow_destroy: true
   accepts_nested_attributes_for :public_contacts, allow_destroy: true
   accepts_nested_attributes_for :link_multimedia_urls, reject_if: :all_blank, allow_destroy: true
@@ -86,10 +89,6 @@ class Catalogue < ApplicationRecord
     super(Country.for(value))
   end
 
-  def tags=(value)
-    super(value.compact_blank)
-  end
-
   def affiliations=(value)
     super(value.compact_blank)
   end
@@ -108,6 +107,10 @@ class Catalogue < ApplicationRecord
     return nil if legal_statuses.blank?
 
     legal_statuses[0].id
+  end
+
+  def owned_by?(user)
+    data_administrators.map(&:user_id).include?(user.id)
   end
 
   def legal_status=(status_id)

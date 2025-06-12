@@ -1,0 +1,14 @@
+- content_for :title, @service.name
+- breadcrumb :backoffice_service_offers, @service
+
+= render "backoffice/services/wrapper", service: @service, comparison_enabled: @comparison_enabled,
+  favourite_services: @favourite_services, question: @question, preview: false do
+  - if @offers.manageable.any?
+    = render "layouts/common_parts/services/offers", offers: @offers, service: @service, bundles: @bundles
+  - else
+    %h2 Showcase your service
+    %p
+      You added your service without creating an offer. It has appeared in our catalog for informational purposes only.
+      Users can find your service and see its details, but they can’t order or interact with it directly.
+    = render "backoffice/services/blank_prompt", title: _("Unlock the full potential of your service"),
+      prompt: new_offer_prompt, link_text: _("Create an offer"), link_path: new_backoffice_service_offer_path(@service)

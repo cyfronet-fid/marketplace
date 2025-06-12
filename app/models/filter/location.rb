@@ -16,7 +16,7 @@ class Filter::Location < Filter
   def fetch_options
     [{ name: "Any", id: "" }] +
       Service
-        .where(status: %i[published unverified])
+        .where(status: :published)
         .pluck(:geographical_availabilities)
         .flatten
         .uniq

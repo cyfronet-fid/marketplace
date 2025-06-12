@@ -1,51 +1,10 @@
 - content_for :title, @service.name
 - breadcrumb :resource_details, @service
-.container{ "data-controller": "comparison" }
-  - header_class = params[:from] == "backoffice_service" ? "backoffice" : nil
-  .pt-4.service-box-redesign.service-detail{ class: header_class }
-    = render Presentable::HeaderComponent.new(object: @service,
-                        title: @service.name,
-                        subtitle: @service.tagline,
-                        comparison_enabled: @comparison_enabled,
-                        preview: local_assigns[:preview],
-                        show_checkboxes: params[:from].blank?,
-                        favourite_services: @favourite_services) do |c|
-      - c.buttons do
-        - case params[:from]
-        - when "ordering_configuration"
-          = render "components/presentable/header_component/ordering_configuration_buttons", service: @service
-        - when "backoffice_service"
-          = render "components/presentable/header_component/backoffice_service_buttons", service: @service
-        - else
-          = render "components/presentable/header_component/order_buttons", service: @service
-
-    = render "services/tabs", service: @service
-    - comparison_bar_class = (session[:comparison]&.size || 0).positive? ? "d-block" : "d-none"
-    #comparison-bar.comparison-bar.fixed-bottom{ class: comparison_bar_class, "data-comparison-target": "bar" }
-      = render "comparisons/bar", services: @compare_services, category: @category
-
-.tab-content
+= render "services/wrapper", service: @service, category: @category,
+  comparison_enabled: @comparison_enabled, compare_services: @compare_services,
+  favourite_services: @favourite_services, question: @question, tab_id: "opinions", preview: false do
   - if @service.guidelines.blank?
-    #opinions.tab-pane.container.active{ "aria-labelledby": "opinions-tab", role: "tabpanel",
-                                          "data-shepherd-tour-target": "service-details-content" }
-      .row
-        %main.col-12.col-xl-9.pr-4.mb-4.pt-4
-          This service has no Interoperability Guidelines
-
-        %sidebar.col-12.col-xl-3{ "data-shepherd-tour-target": "service-classification" }
-          = render "components/presentable/explore_links", object: @service
-          .right-panel-links
-            - if !@service.public_contacts.empty? && (@question || @preview)
-              = render "components/presentable/header_component/ask_question",
-                question_link: new_question_link(@service),
-                question: @question,
-                prompt: new_question_prompt,
-                preview: @preview
-            = render Presentable::LinksComponent.new(object: @service, preview: @preview)
-          - if @service.respond_to?(:resource_organisation)
-            .provider-panel
-              = render Presentable::ProviderInfoComponent.new(base: @service, preview: @preview)
-
+    This service has no Interoperability Guidelines
   - else
     = render Presentable::DetailsComponent.new(@service, guidelines: true)
 

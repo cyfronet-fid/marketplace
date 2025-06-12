@@ -16,6 +16,7 @@ RSpec.describe Api::V1::OfferSerializer, backend: true do
       )
 
     serialized = JSON.parse(described_class.new(offer).to_json)
+    parameter = offer.parameters.first
 
     expected = {
       id: offer.iid,
@@ -24,12 +25,13 @@ RSpec.describe Api::V1::OfferSerializer, backend: true do
       offer_category: offer.offer_category.eid,
       parameters: [
         {
-          id: offer.parameters.first.id,
-          label: offer.parameters.first.name,
-          description: offer.parameters.first.hint,
-          type: offer.parameters.first.type,
-          value_type: offer.parameters.first.value_type,
-          value: offer.parameters.first.value
+          id: parameter.id,
+          label: parameter.name,
+          description: parameter.hint,
+          type: parameter.type,
+          value_type: parameter.value_type,
+          unit: parameter.unit,
+          value: parameter.value
         }
       ],
       order_type: offer.order_type,
@@ -46,6 +48,7 @@ RSpec.describe Api::V1::OfferSerializer, backend: true do
     offer = create(:offer, parameters: [build(:constant_parameter)], order_type: :order_required, internal: false)
 
     serialized = JSON.parse(described_class.new(offer).to_json)
+    parameter = offer.parameters.first
 
     expected = {
       id: offer.iid,
@@ -54,12 +57,13 @@ RSpec.describe Api::V1::OfferSerializer, backend: true do
       offer_category: offer.offer_category.eid,
       parameters: [
         {
-          id: offer.parameters.first.id,
-          label: offer.parameters.first.name,
-          description: offer.parameters.first.hint,
-          type: offer.parameters.first.type,
-          value_type: offer.parameters.first.value_type,
-          value: offer.parameters.first.value
+          id: parameter.id,
+          label: parameter.name,
+          description: parameter.hint,
+          type: parameter.type,
+          value_type: parameter.value_type,
+          unit: parameter.unit,
+          value: parameter.value
         }
       ],
       order_type: offer.order_type,

@@ -96,4 +96,16 @@ namespace :migration do
       service.update(pid: value)
     end
   end
+
+  desc "Add user_id to Data Administrators"
+  task user_id: :environment do
+    User.find_each do |user|
+      puts "Find data administrators for user #{user.email}"
+      administrators = DataAdministrator.where(email: user.email)
+      puts "Found #{administrators.size} DataAdministrators. Updating all"
+      administrators.update_all(user_id: user.id)
+      puts "Updated #{administrators.size} DataAdministrators"
+    end
+    DataAdministrator.counter_culture_fix_counts
+  end
 end

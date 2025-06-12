@@ -1,0 +1,18 @@
+.tab-pane{ id: "managers", class: "#{"active" if active}",
+           role: "tabpanel", "aria-labelledby": "managers-header", "data-form-target": "tab" }
+  .card-body
+    .row.service-contact-emails{ data: { controller: "administrator", administrator_target: "dataAdministrators" } }
+      .col-lg-7.pl-0
+        %h4
+          = _("Provider's manager")
+        .offer-section-wrapper
+          = f.error :data_administrators, class: "invalid-feedback d-block"
+          = f.fields_for :data_administrators, disabled: provider.upstream_id.present?, multiple: true, as: :array,
+            wrapper_html: { "data-provider-target" => "dataAdministrator" } do |data_administrator_form|
+            = render_data_administrator(data_administrator_form, provider)
+          = link_to _("+ Add additional data administrator"), "#", class: "btn-simple",
+                  data: { provider_target: "addAdmin" ,
+                  action: "click->administrator#addAdmin",
+                  fields: f.fields_for(:data_administrators, DataAdministrator.new,
+                  child_index: "new_field") { |da_form| render_data_administrator(da_form, provider) } }
+      = render "backoffice/providers/more_information"
