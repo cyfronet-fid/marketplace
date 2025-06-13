@@ -3,7 +3,7 @@
 class Backoffice::BundlePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      if user.service_portfolio_manager? || user.service_owner? || user.data_administrator?
+      if user.coordinator? || user.service_owner? || user.data_administrator?
         scope.where.not(status: Statusable::INVISIBLE_STATUSES)
       else
         Service.none
@@ -12,7 +12,7 @@ class Backoffice::BundlePolicy < ApplicationPolicy
   end
 
   def new?
-    (service_portfolio_manager? || record.service.owned_by?(user)) && !service_deleted?
+    (coordinator? || record.service.owned_by?(user)) && !service_deleted?
   end
 
   def create?
@@ -88,11 +88,11 @@ class Backoffice::BundlePolicy < ApplicationPolicy
   private
 
   def managed?
-    service_portfolio_manager? || record.service.owned_by?(user)
+    coordinator? || record.service.owned_by?(user)
   end
 
-  def service_portfolio_manager?
-    user&.service_portfolio_manager?
+  def coordinator?
+    user&.coordinator?
   end
 
   def orderless?
