@@ -165,7 +165,7 @@ class Backoffice::DatasourcePolicy < ApplicationPolicy
 
   private
 
-  def service_portfolio_manager?
-    user&.service_portfolio_manager?
+  def coordinator?
+    user&.coordinator?
   end
 end

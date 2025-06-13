@@ -8,27 +8,27 @@ class Backoffice::PlatformPolicy < ApplicationPolicy
   end
 
   def index?
-    service_portfolio_manager?
+    coordinator?
   end
 
   def show?
-    service_portfolio_manager?
+    coordinator?
   end
 
   def new?
-    service_portfolio_manager?
+    coordinator?
   end
 
   def create?
-    service_portfolio_manager?
+    coordinator?
   end
 
   def update?
-    service_portfolio_manager?
+    coordinator?
   end
 
   def destroy?
-    service_portfolio_manager?
+    coordinator?
   end
 
   def permitted_attributes
@@ -37,7 +37,7 @@ class Backoffice::PlatformPolicy < ApplicationPolicy
 
   private
 
-  def service_portfolio_manager?
-    user&.service_portfolio_manager?
+  def coordinator?
+    user&.coordinator?
   end
 end
