@@ -1,8 +1,10 @@
-%li.list-group-item
+.faq-section-row
   = link_to section.title, admin_help_path(anchor: section.slug)
-  .float-right
-    = link_to _("Edit"), edit_admin_help_section_path(section),
-      class: "btn btn-sm btn-warning"
-    = link_to _("Remove"), admin_help_section_path(section),
-      class: "btn btn-sm btn-danger",
-      data: { "turbo-confirm": _("Are you sure?"), "turbo-method": :delete }
+  .faq-section-actions
+    = link_to edit_admin_help_section_path(section), "data-turbo-method": :get,
+      class: "" do
+      %i.fa.fa-wrench
+    = link_to admin_help_section_path(section),
+          data: { "turbo-confirm": _("Are you sure?"), "turbo-method": :delete },
+          class: "delete-icon" do
+      %i.far.fa-trash-alt

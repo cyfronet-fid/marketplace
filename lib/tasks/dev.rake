@@ -43,31 +43,31 @@ namespace :dev do
     end
   end
 
-  # rubocop:disable Metrics/AbcSize
-
   def create_providers(providers_hash)
     puts "Generating providers:"
     Provider.skip_callback :validation, :before, :assign_analytics
     providers_hash.each_value do |hash|
       provider = Provider.find_or_initialize_by(name: hash["name"])
-      provider.abbreviation = hash["abbreviation"]
-      provider.catalogue = Catalogue.find_by(name: hash["catalogue"])
-      provider.website = hash["website"]
-      provider.legal_entity = hash["legal_entity"]
-      provider.description = hash["description"]
-      provider.link_multimedia_urls = hash["multimedia"].map { |h| Link::MultimediaUrl.new(url: h) }
-      provider.tag_list = hash["tags"]
-      provider.street_name_and_number = hash["street_name_and_number"]
-      provider.postal_code = hash["postal_code"]
-      provider.city = hash["city"]
-      provider.region = hash["region"]
-      provider.country = Country.for(hash["country_alpha2"])
-      provider.certifications = %w[ISO AES VESA].sample(rand(1..3))
-      provider.hosting_legal_entity_string = ["Lorem ipsum", "Test", "Some Entity"].sample(rand(1..3))
-      provider.affiliations = ["Affiliation A", "Affiliation test", "Affiliation 1"].sample(rand(1..3))
-      provider.national_roadmaps = ["Roadmap 1", "Roadmap 2", "Roadmap 3"].sample(rand(1..3))
-      provider.pid = provider.abbreviation
-      provider.status = hash["status"]
+      provider.assign_attributes(
+        abbreviation: hash["abbreviation"],
+        catalogue: Catalogue.find_by(name: hash["catalogue"]),
+        website: hash["website"],
+        legal_entity: hash["legal_entity"],
+        description: hash["description"],
+        link_multimedia_urls: hash["multimedia"].map { |h| Link::MultimediaUrl.new(url: h) },
+        tag_list: hash["tags"],
+        street_name_and_number: hash["street_name_and_number"],
+        postal_code: hash["postal_code"],
+        city: hash["city"],
+        region: hash["region"],
+        country: Country.for(hash["country_alpha2"]),
+        certifications: %w[ISO AES VESA].sample(rand(1..3)),
+        hosting_legal_entity_string: ["Lorem ipsum", "Test", "Some Entity"].sample(rand(1..3)),
+        affiliations: ["Affiliation A", "Affiliation test", "Affiliation 1"].sample(rand(1..3)),
+        national_roadmaps: ["Roadmap 1", "Roadmap 2", "Roadmap 3"].sample(rand(1..3)),
+        pid: hash["abbreviation"],
+        status: hash["status"]
+      )
       assign_sample_associations_to_provider(provider)
 
       io, extension = ImageHelper.base_64_to_blob_stream(hash["image_base_64"])
@@ -83,28 +83,32 @@ namespace :dev do
     end
   end
 
-  # rubocop:enable Metrics/AbcSize
-
   def samples_of(vocabulary, max_size = 3)
     vocabulary.all.sample(rand(1..max_size))
   end
 
   def assign_sample_associations_to_provider(provider)
-    provider.provider_life_cycle_status = Vocabulary::ProviderLifeCycleStatus.all.sample.id
-    provider.networks = samples_of(Vocabulary::Network)
-    provider.structure_types = samples_of(Vocabulary::StructureType)
-    provider.esfri_domains = samples_of(Vocabulary::EsfriDomain)
-    provider.esfri_type = Vocabulary::EsfriType.all.sample.id
-    provider.meril_scientific_domains = samples_of(Vocabulary::MerilScientificDomain)
-    provider.areas_of_activity = samples_of(Vocabulary::AreaOfActivity)
-    provider.societal_grand_challenges = samples_of(Vocabulary::SocietalGrandChallenge)
-    provider.scientific_domains = samples_of(ScientificDomain)
-    provider.legal_status = Vocabulary::LegalStatus.all.sample.id
-    provider.participating_countries = samples_of(Country)
-    provider.public_contacts = [PublicContact.new(email: "example#{provider.id}@mail.com")]
-    provider.data_administrators = [
-      DataAdministrator.new(first_name: "John#{provider.id}", last_name: "Doe", email: "example#{provider.id}@mail.com")
-    ]
+    provider.assign_attributes(
+      provider_life_cycle_status: Vocabulary::ProviderLifeCycleStatus.all.sample.id,
+      networks: samples_of(Vocabulary::Network),
+      structure_types: samples_of(Vocabulary::StructureType),
+      esfri_domains: samples_of(Vocabulary::EsfriDomain),
+      esfri_type: Vocabulary::EsfriType.all.sample.id,
+      meril_scientific_domains: samples_of(Vocabulary::MerilScientificDomain),
+      areas_of_activity: samples_of(Vocabulary::AreaOfActivity),
+      societal_grand_challenges: samples_of(Vocabulary::SocietalGrandChallenge),
+      scientific_domains: samples_of(ScientificDomain),
+      legal_status: Vocabulary::LegalStatus.all.sample.id,
+      participating_countries: samples_of(Country),
+      public_contacts: [PublicContact.new(email: "example#{provider.id}@mail.com")],
+      data_administrators: [
+        DataAdministrator.new(
+          first_name: "John#{provider.id}",
+          last_name: "Doe",
+          email: "example#{provider.id}@mail.com"
+        )
+      ]
+    )
 
     provider
   end
@@ -228,6 +232,8 @@ namespace :dev do
       )
       puts "    - #{h["name"]} offer generated"
     end
+  rescue ActiveRecord::RecordInvalid => e
+    puts "    - #{e.record.errors.messages}"
   end
 
   def create_relations(relations_hash)
@@ -251,34 +257,35 @@ namespace :dev do
     Rake::Task["rdt:add_internal_vocabularies"].invoke
   end
 
-  # rubocop:disable Metrics/AbcSize
   def create_catalogues(catalogue_hash)
     puts "Generating catalogue:"
     catalogue_hash.each_value do |hash|
       catalogue = Catalogue.find_or_initialize_by(name: hash["name"])
-      catalogue.pid = hash["pid"]
-      catalogue.abbreviation = hash["abbreviation"]
-      catalogue.description = hash["description"]
-      catalogue.website = hash["website"]
-      catalogue.legal_entity = hash["legal_entity"]
-      catalogue.scientific_domains = ScientificDomain.where(name: hash["domains"])
-      catalogue.participating_countries = hash["participating_countries"]&.map { |c| Country.for(c) }
-      catalogue.affiliations = hash["affiliations"]
-      catalogue.networks = Vocabulary::Network.where(eid: hash["networks"])
-      catalogue.legal_statuses = Vocabulary::LegalStatus.where(eid: hash["legal_statuses"])
-      catalogue.hosting_legal_entities = Vocabulary::HostingLegalEntity.where(eid: hash["hosting_legal_entities"])
-      catalogue.tag_list = hash["tags"]
-      catalogue.street_name_and_number = hash["street"]
-      catalogue.postal_code = hash["postal_code"]
-      catalogue.city = hash["city"]
-      catalogue.region = hash["region"]
-      catalogue.country = Country.for(hash["country_alpha2"])
-      catalogue.main_contact = MainContact.new(first_name: "John", last_name: "Doe", email: "john@example.org")
-      catalogue.public_contacts = [PublicContact.new(email: "example#{catalogue.id}@mail.com")]
-      catalogue.link_multimedia_urls = hash["multimedia"].map { |h| Link::MultimediaUrl.new(url: h) }
-      catalogue.end_of_life = hash["end_of_life"]
-      catalogue.validation_process = hash["validation_process"]
-      catalogue.inclusion_criteria = hash["inclusion_criteria"]
+      catalogue.assign_attributes(
+        pid: hash["pid"],
+        abbreviation: hash["abbreviation"],
+        description: hash["description"],
+        website: hash["website"],
+        legal_entity: hash["legal_entity"],
+        scientific_domains: ScientificDomain.where(name: hash["domains"]),
+        participating_countries: hash["participating_countries"]&.map { |c| Country.for(c) },
+        affiliations: hash["affiliations"],
+        networks: Vocabulary::Network.where(eid: hash["networks"]),
+        legal_statuses: Vocabulary::LegalStatus.where(eid: hash["legal_statuses"]),
+        hosting_legal_entities: Vocabulary::HostingLegalEntity.where(eid: hash["hosting_legal_entities"]),
+        tag_list: hash["tags"],
+        street_name_and_number: hash["street"],
+        postal_code: hash["postal_code"],
+        city: hash["city"],
+        region: hash["region"],
+        country: Country.for(hash["country_alpha2"]),
+        main_contact: MainContact.new(first_name: "John", last_name: "Doe", email: "john@example.org"),
+        public_contacts: [PublicContact.new(email: "example#{catalogue.id}@mail.com")],
+        link_multimedia_urls: hash["multimedia"].map { |h| Link::MultimediaUrl.new(url: h) },
+        end_of_life: hash["end_of_life"],
+        validation_process: hash["validation_process"],
+        inclusion_criteria: hash["inclusion_criteria"]
+      )
 
       io, extension = ImageHelper.base_64_to_blob_stream(hash["image_base_64"])
       catalogue.logo.attach(
@@ -291,5 +298,4 @@ namespace :dev do
       puts "  - #{hash["name"]} catalogue generated"
     end
   end
-  # rubocop:enable Metrics/AbcSize
 end

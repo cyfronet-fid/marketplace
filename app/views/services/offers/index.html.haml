@@ -11,3 +11,13 @@
     = render "services/offers", offers: @offers, service: @service,
                                       bundles: @bundles, bundled: @bundled,
                                       preview: local_assigns[:preview] || @service.suspended?
+  .related-container
+    .row
+      .col-12
+        = render "services/related", related_services: @similar_services, title: similar_services_title,
+              preview: @preview
+    - unless @service.suspended?
+      .row
+        .col-12
+          = render "services/related", related_services: @related_services, title: related_services_title,
+          preview: @preview

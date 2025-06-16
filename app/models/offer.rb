@@ -57,6 +57,8 @@ class Offer < ApplicationRecord
   before_validation :set_internal
   before_validation :set_oms_details
   before_validation :sanitize_oms_params
+  before_validation :set_iid, on: :create
+  before_create :set_iid, if: -> { iid.blank? }
 
   has_many :bundle_offers
   has_many :bundles, through: :bundle_offers, dependent: :destroy
@@ -87,7 +89,6 @@ class Offer < ApplicationRecord
     validate :same_order_type_as_in_service, if: -> { service&.order_type.present? }
   end
 
-  validate :set_iid, on: :create
   validate :check_main_bundles, if: -> { draft? }
   validates :service, presence: true
   validates :iid, presence: true, numericality: true

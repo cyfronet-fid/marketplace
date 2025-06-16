@@ -9,8 +9,13 @@ crumb :admin_jobs do
   parent :admin_root
 end
 
+crumb :admin_help do
+  link "Help builder", admin_help_path
+  parent :admin_root
+end
+
 crumb :admin_lead do
-  link "Lead manager", admin_leads_path
+  link "Lead creator", admin_leads_path
   parent :admin_root
 end
 
@@ -36,5 +41,10 @@ end
 
 crumb :admin_tour_feedbacks do
   link "Tour Feedback", admin_tour_feedbacks_path
+  parent :admin_root
+end
+
+crumb :admin_features do
+  link "Features", admin_features_path
   parent :admin_root
 end
