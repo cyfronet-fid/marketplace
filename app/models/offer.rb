@@ -89,7 +89,6 @@ class Offer < ApplicationRecord
     validate :same_order_type_as_in_service, if: -> { service&.order_type.present? }
   end
 
-  validate :set_iid, on: :create
   validate :check_main_bundles, if: -> { draft? }
   validates :service, presence: true
   validates :iid, presence: true, numericality: true
