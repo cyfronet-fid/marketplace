@@ -76,7 +76,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     if @service.invalid?
       provider_scope
       add_missing_nested_models(@service)
-      render :new, status: :bad_request unless @service.persisted?
+      render :new, status: :unprocessable_entity
       return
     end
 

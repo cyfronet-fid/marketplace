@@ -10,7 +10,7 @@ RSpec.feature "Marketplace help builder", manager_frontend: true do
   before { checkin_sign_in_as(admin) }
 
   context "help section" do
-    scenario "can be created" do
+    scenario "can be created", js: true do
       visit admin_help_path
 
       click_on "+ add new help section"
