@@ -33,10 +33,10 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
       @offer = Offer::Create.call(template)
     end
 
-    if @offer.persisted?
-      redirect_to backoffice_service_offers_path(@service), notice: "New offer created successfully"
-    else
+    if @offer.invalid?
       render :new, status: :bad_request
+    else
+      redirect_to backoffice_service_offers_path(@service), notice: "New offer created successfully"
     end
   end
 

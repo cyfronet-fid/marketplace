@@ -1,10 +1,16 @@
-.container
-  %h1.mb-3
-    = _("Frequently Asked Questions Builder")
-  = link_to _("Add new help section"),
-              new_admin_help_section_path,
-              class: "btn btn-sm btn-success mb-3 float-right"
-  %ul.list-group.w-100
-    = render partial: "toc", collection: @sections, as: :section
+- content_for :title, _("Frequently Asked Questions Builder")
+- breadcrumb :admin_help
 
-  = render partial: "section", collection: @sections
+%h1
+  = _("Frequently Asked Questions Builder")
+
+.row
+  .col-sm-12.col-md-3
+    = render partial: "toc", collection: @sections, as: :section
+    = link_to _("+ add new help section"),
+              new_admin_help_section_path,
+              class: "btn btn-secondary w-100 mt-4"
+  .col-sm-12.col-md-9
+    %ul.list-group.w-100
+
+      = render partial: "section", collection: @sections

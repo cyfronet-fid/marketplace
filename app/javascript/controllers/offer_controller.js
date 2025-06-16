@@ -173,7 +173,7 @@ export default class extends Controller {
     const url = `/backoffice/services/${serviceId}/offers/${offerId}/summary`;
 
     fetch(url, {
-      method: offerId === "new" ? "POST" : "PATCH",
+      method: this.formTarget.method,
       body: formData,
       headers: {
         "X-CSRF-Token": document.querySelector('[name="csrf-token"]').content,
