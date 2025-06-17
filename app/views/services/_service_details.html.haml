@@ -3,11 +3,9 @@
   .info-icons
     - if service.horizontal
       %span.badge.horizontal-badge.fa-pull-right.badge-right Horizontal service
-
     .badge.access-information.fa-pull-right.badge-right.style_order_required{ class: service.order_type }
       %i.ordertype.order_required
       = service.order_type.humanize
-
   .media-body.pt-4{ class: ("backoffice" if request.fullpath.include?("backoffice")) }
     .pl-4.pr-4.mb-3
       %h2{ "data-probe" => "", "data-service-id" => service.id, "data-e2e" => "service-id" }
@@ -33,6 +31,6 @@
             service: service
   .right-extra-info
     .service-logo
-      = presentable_logo(service, "align-center mx-4 service-logo", "120x120")
+      = presentable_logo(service, "align-center mx-4 service-logo", [120, 120])
   .backoffice-button-row.d-none{ class: ("d-block" if request.fullpath.include?("backoffice")) }
     = link_to "Manage service and offers", backoffice_service_offers_path(service), class: "btn btn-primary"

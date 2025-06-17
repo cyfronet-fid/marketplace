@@ -20,7 +20,7 @@
           %th.title-col
             .logo-wrapper
               %span.helper
-              = image_tag service.logo.variant(resize: "100x100") if service.logo.attached? && service.logo.variable?
+              = image_tag service.logo.variant(resize_to_limit: [100, 100]) if service.logo.attached? && service.logo.variable?
             = button_to comparisons_services_path(slug: service.slug, fromc: params[:fromc], params: @query_params),
               method: :delete, class: "image-replaced",
               data: { e2e: "delete-service-btn", probe: "", "service-id": service.id, turbo: false,

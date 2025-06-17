@@ -2,7 +2,7 @@
   .service.border
     .logo.float-left
       %span.helper
-      = image_tag service.logo.variant(resize: "40x40") if service.logo.attached? && service.logo.variable?
+      = image_tag service.logo.variant(resize_to_limit: [40, 40]) if service.logo.attached? && service.logo.variable?
     .float-left.service-title
       %span.middle
         = service.name.truncate(25, separator: " ")
