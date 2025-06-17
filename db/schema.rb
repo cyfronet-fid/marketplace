@@ -375,16 +375,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_18_120000) do
     t.index ["user_id"], name: "index_observed_user_offers_on_user_id"
   end
 
-  create_table "offer_categories", force: :cascade do |t|
-    t.bigint "offer_id"
-    t.bigint "category_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["category_id"], name: "index_offer_categories_on_category_id"
-    t.index ["offer_id", "category_id"], name: "index_offer_categories_on_offer_id_and_category_id", unique: true
-    t.index ["offer_id"], name: "index_offer_categories_on_offer_id"
-  end
-
   create_table "offer_links", force: :cascade do |t|
     t.bigint "source_id", null: false
     t.bigint "target_id", null: false
