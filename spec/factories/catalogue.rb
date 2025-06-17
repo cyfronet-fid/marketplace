@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "image_processing/mini_magick"
+require "image_processing/vips"
 
 FactoryBot.define do
   factory :catalogue do
@@ -28,7 +28,7 @@ FactoryBot.define do
 
     after(:build) do |catalogue|
       image =
-        MiniMagick::Image.read(
+        Vips::Image.new_from_buffer(
           Base64.decode64(
             "iVBORw0KGgoAAAANSUhEUgAAALQAAAB4CAYAAABb59j9AAAABGdBTUEAALGPC
           /xhBQAAB19JREFUeAHtnYlPIlkQxh9egIj36KizJrPZZP//f2eT2R3HWzw4vEBh9n0de1LTAaSRPqr6q8Tw
@@ -62,11 +62,12 @@ FactoryBot.define do
           ggFCLQQg0X9ChBo/TGkB0IBAi3EYFG/AgRafwzpgVCAQAsxWNSvAIHWH0N6IBQg0EIMFvUrQKD1x5AeCAUI
           tBCDRf0KEGj9MaQHQgECLcRgUb8CBFp/DOmBUIBACzFY1K8AgdYfQ3ogFCDQQgwW9StAoPXHkB4IBQi0EIN
           F/QoQaP0xpAdCAQItxGBRvwIEWn8M6YFQ4H/g4U11p2PhtgAAAABJRU5ErkJggg=="
-          )
+          ),
+          ""
         )
       logo = StringIO.new
-      logo.write(image.to_blob)
-      logo.seek(0)
+      logo.write(image.write_to_buffer(".png"))
+      logo.rewind
 
       catalogue.logo.attach(io: logo, filename: catalogue.pid + ".png", content_type: "image/png")
     end

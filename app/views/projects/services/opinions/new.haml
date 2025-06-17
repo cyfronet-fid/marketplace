@@ -54,7 +54,7 @@
     .col-md-3.order-md-2.col-12.order-1
       .comment-log-frame.shadow-sm.rounded
         - if @project_item.service.logo.attached?
-          = image_tag @project_item.service.logo.variant(resize: "170x112")
+          = image_tag @project_item.service.logo.variant(resize_to_limit: [170, 112])
         - else
           = image_tag "eosc-img.png"
         %h2.mt-2

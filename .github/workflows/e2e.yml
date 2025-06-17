@@ -15,9 +15,7 @@ jobs:
     - name: Start containers
       run: docker compose -f docker-compose-x64.yml -f docker-compose-e2e.yml up -d
     - name: Install VIPS
-      run: sudo apt-get update && sudo apt-get install libvips42 -y
-    - name: Install imagemagick
-      run: sudo apt update && sudo apt install imagemagick -y
+      run: sudo apt-get update && sudo apt-get install libvips42 -y --no-install-recommends
     - uses: ruby/setup-ruby@v1
       with:
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically

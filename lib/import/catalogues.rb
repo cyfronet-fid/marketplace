@@ -44,21 +44,21 @@ class Import::Catalogues
       if current_catalogue.blank?
         log "[INFO] Adding [NEW] catalogue: #{parsed_catalogue_data[:name]}, eid: #{parsed_catalogue_data[:pid]}"
         catalogue = Catalogue.new(parsed_catalogue_data)
-        set_logo(catalogue, external_data["logo"])
+        set_logo(catalogue, external_data.dig("catalogue", "logo"))
         catalogue.save!
         log "[INFO] Catalogue: #{parsed_catalogue_data[:name]}, eid: #{parsed_catalogue_data[:pid]} added successfully"
       else
         log "[INFO] Updating [EXISTING] catalogue: #{parsed_catalogue_data[:name]}, eid: #{parsed_catalogue_data[:pid]}"
         current_catalogue.update!(parsed_catalogue_data)
-        set_logo(current_catalogue, external_data["logo"])
+        set_logo(current_catalogue, external_data.dig("catalogue", "logo"))
         current_catalogue.save!
         log "[INFO] Catalogue: #{parsed_catalogue_data[:name]}, " +
               "eid: #{parsed_catalogue_data[:pid]} updated successfully"
       end
-    rescue ActiveRecord::RecordInvalid => e
+    rescue ActiveRecord::RecordInvalid
       log "[WARN] Catalogue #{parsed_catalogue_data[:name]},
             eid: #{parsed_catalogue_data[:pid]} cannot be updated.
-            Errors: #{e.errors.full_messages.join(", ")}"
+            Errors: #{catalogue.errors.full_messages.join(", ")}"
     rescue StandardError => e
       log "[WARN] Unexpected #{e}! Catalogue #{parsed_catalogue_data[:name]},
                 eid: #{parsed_catalogue_data[:pid]} cannot be updated"

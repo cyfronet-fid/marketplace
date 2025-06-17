@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "image_processing/mini_magick"
+require "image_processing/vips"
 
 desc "Add an extension to the images that has lack of them"
 task :add_extension_to_images, [:root_url] => :environment do |_, args|
@@ -38,19 +38,15 @@ def rename_img(attachment, filename)
   extension = Rack::Mime::MIME_TYPES.invert[logo_content_type]
 
   unless %w[.jpg .jpeg .pjpeg .png .gif .tiff].include?(extension)
-    img = MiniMagick::Image.read(logo, extension)
-    img.format "png" do |convert|
-      convert.args.unshift "800x800"
-      convert.args.unshift "-resize"
-      convert.args.unshift "1200"
-      convert.args.unshift "-density"
-      convert.args.unshift "none"
-      convert.args.unshift "-background"
-    end
+    img = Vips::Image.new_from_buffer(logo, "")
+    logo.rewind
+
+    img = Vips::Image.thumbnail(img, 800, height: 800, size: :down)
+    img.write_to_buffer(".png")
+
     logo = StringIO.new
-    logo.write(img.to_blob)
-    logo.seek(0)
-    logo_content_type = "image/png"
+    logo.write(img)
+    logo.rewind
   end
   if logo.present? && logo_content_type.start_with?("image")
     attachment.attach(io: logo, filename: filename + extension, content_type: logo_content_type)

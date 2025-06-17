@@ -10,7 +10,7 @@
         = render "services/configurations/voucher", step: @step, f: f
         .row.bundle-info
           .col-12.col-md-2
-            = presentable_logo(@step.bundle.service, "align-self-center img-fluid", "180x120")
+            = presentable_logo(@step.bundle.service, "align-self-center img-fluid", [180, 120])
           .col-12.col-md-10
             %h3.bundle-configuration-title
               = @step.bundle.main_offer.name
