@@ -35,6 +35,7 @@ gem "humanize"
 
 gem "activestorage-validator"
 gem "image_processing", ">= 1.2"
+gem "marcel"
 
 # translations
 gem "fast_gettext"

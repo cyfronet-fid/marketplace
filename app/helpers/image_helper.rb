@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require "image_processing/mini_magick"
+require "image_processing/vips"
+require "marcel/mime_type"
 
 module ImageHelper
   PERMITTED_EXT_MESSAGE =
@@ -19,7 +20,7 @@ module ImageHelper
   end
 
   def self.to_base64(path)
-    content_type = MiniMagick::Image.open(path).mime_type
+    content_type = Marcel::MimeType.for(Pathname.new(path))
     File.open(path, "rb") { |img| "data:" + content_type + ";base64," + Base64.strict_encode64(img.read) }
   rescue StandardError
     "Not recognized or not permitted file type"
@@ -27,13 +28,12 @@ module ImageHelper
 
   def self.binary_to_blob_stream(file_path)
     File.open(file_path, "rb") do |binary_img|
-      extension = ImageHelper.get_file_extension(file_path)
       encoded_image = Base64.strict_encode64(binary_img.read)
       decoded_image = Base64.decode64(encoded_image)
-      blob = MiniMagick::Image.read(decoded_image, extension).to_blob
+      blob = Vips::Image.new_from_buffer(decoded_image, "")
+
       logo = StringIO.new
       logo.write(blob)
-      logo.seek(0)
       logo
     end
   end
@@ -41,7 +41,7 @@ module ImageHelper
   def self.base_64_to_blob_stream(base64)
     extension = ImageHelper.base_64_extension(base64)
     decoded_image = Base64.decode64(base64[(base64.index("base64,") + "base64,".size)..])
-    blob = MiniMagick::Image.read(decoded_image, extension).to_blob
+    blob = Vips::Image.new_from_buffer(decoded_image, "")
     logo = StringIO.new
     logo.write(blob)
     logo.seek(0)

@@ -7,7 +7,7 @@
       .col-12.col-lg-9.row
         .col-12.col-sm-3.d-flex.img-service-detail
           - has_logo = @catalogue.logo.attached? && @catalogue.logo.variable?
-          = image_tag @catalogue.logo.variant(resize: "200x200") if has_logo
+          = image_tag @catalogue.logo.variant(resize_to_limit: [200, 200]) if has_logo
           = image_tag("catalogue_logo.svg", size: "100x67") unless has_logo
         .col-12.col-sm-9.service-details-header
           %h2.font-weight-bolder.mb-1= @catalogue.name

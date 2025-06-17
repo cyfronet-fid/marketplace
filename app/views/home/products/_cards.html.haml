@@ -12,7 +12,7 @@
         - else
           .branch-icon
             - if card.logo.attached? && card.logo.variable?
-              = image_tag card.logo.variant(resize: "84x84"), alt: card.name
+              = image_tag card.logo.variant(resize_to_limit: [84, 84]), alt: card.name
             - else
               = image_tag(default_logo, alt: "#{card.name}")
           .branch-name

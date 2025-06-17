@@ -288,7 +288,7 @@ namespace :dev do
       )
 
       io, extension = ImageHelper.base_64_to_blob_stream(hash["image_base_64"])
-      catalogue.logo.attach(
+      catalogue.logo.attach!(
         io: io,
         filename: catalogue.pid + extension,
         content_type: "image/#{extension.delete!(".", "")}"

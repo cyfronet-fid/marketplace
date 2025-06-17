@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "image_processing/mini_magick"
+require "image_processing/vips"
 
 class Datasource::PcCreateOrUpdate
   class ConnectionError < StandardError
