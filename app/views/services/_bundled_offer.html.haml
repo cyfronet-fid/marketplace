@@ -4,7 +4,7 @@
       .d-flex
         - if offer.service.logo.attached? && offer.service.logo.variable?
           .bundle-offer-pic.pr-3
-            = image_tag offer.service.logo.variant(resize: "84x84")
+            = image_tag offer.service.logo.variant(resize_to_limit: [84, 84])
         - else
           .bundle-offer-pic
             = image_tag("eosc-img.png")

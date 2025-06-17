@@ -25,7 +25,7 @@ class Importers::Catalogue < ApplicationService
       hosting_legal_entities: map_hosting_legal_entity(@data["hostingLegalEntity"]),
       participating_countries: @data["participatingCountries"] || [],
       nodes: map_nodes(@data["node"]) || [],
-      tags: Array(@data["tags"]) || [],
+      tag_list: Array(@data["tags"]) || [],
       scientific_domains:
         (
           if @data["scientificDomains"].blank?

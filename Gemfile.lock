@@ -780,6 +780,7 @@ DEPENDENCIES
   jsbundling-rails
   json-schema
   listen
+  marcel
   mdl
   nori
   omniauth
