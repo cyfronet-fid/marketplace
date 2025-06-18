@@ -7,14 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [Unreleased]
+## [3.59.0] 2025-06-18
 
 ### Added
 
 - Simplify project creation form (@wujuu)
 - Node information (@goreck888)
-- Environmental variable to hide recommendation panel (`SHOW_RECOMMENDATION_PANEL`) (@maria-j-k)
-- Unit to the constant offer parameter (@gorreck888)
+- Unit to the constant offer parameter (@goreck888)
 - `Save as draft` and `Duplicate` features for offer form (@maria-j-k) 
 - Publish/Suspend/Unpublish actions for multiple Providers and Catalogues (@goreck888, @jarekzet)
 - Approval panel for new providers (@goreck888)
@@ -26,7 +25,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Other settings tab visible only for users with service portfolio manager role (@maria-j-k)
 - Logo in catalogues, services, providers is not required. Set default logo for each (@maria-j-k)
 - Status bar with actions buttons in detail and edit views for services, catalogues and providers (@maria-j-k)
-- role name `coordinator` to `coordinator` (@goreck888)
+- role name `service_portfolio_manager` to `coordinator` (@goreck888)
 
 ### Fixed
 
