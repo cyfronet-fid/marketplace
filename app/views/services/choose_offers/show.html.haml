@@ -17,5 +17,3 @@
     .card-deck.row
       = render partial: "services/choose_offers/bundle_box",
         collection: @bundles, as: :bundle, locals: { f: f, project_item: @step }
-  - content_for :submit do
-    = render "services/submit_form_button", f: f
