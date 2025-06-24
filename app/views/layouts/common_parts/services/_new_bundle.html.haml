@@ -1,13 +1,12 @@
-.col-md-6.parameters
-  .card.m-0.mb-5
-    .row
-      %p
-        = image_tag "icon-tag.png", class: "icon-tag"
-        You can add a dedicated bundle for
-        %br your service
+.col-md-12.parameters
+  .card.m-0.mb-5.tip-card
+    %h5 You can add a dedicated bundle for your service
+    %p
+      If you want to customize your service further, you can create a dedicated bundle. In the EOSC Marketplace,
+      you can combine one or more offers to create a bundle. Bundle offers can include only your offers or a
+      combination of offers from both you and other providers.
 
-    .card-button.text-center
-      %label
-        = link_to new_bundle_link(service, controller_name), "data-e2e": "add-new-bundle-offer-btn" do
-          %span.btn.btn-outline-secondary.font-weight-bold
-            = _("Add new bundle")
+    .card-button.col-md-3.offset-9.pr-0
+      = link_to new_bundle_link(service, controller_name), "data-e2e": "add-new-bundle-offer-btn" do
+        %span.btn.btn-outline-secondary.font-weight-bold
+          = _("Add new bundle")

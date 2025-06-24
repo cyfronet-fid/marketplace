@@ -25,7 +25,7 @@
 .tab-content
   #desc.tab-pane.container.active.desc{ "aria-labelledby" => "home-tab", role: "tabpanel" }
     .row.justify-content-between
-      %main.col-12.col-xl-9.pr-4.pt-4{ "data-shepherd-tour-target": "service-about" }
+      %main.col-12.col-xl-9.pr-4.pl-0.pt-4{ "data-shepherd-tour-target": "service-about" }
         = yield
       %sidebar.col-12.col-xl-3{ "data-shepherd-tour-target": "service-classification" }
         = render "components/presentable/explore_links", object: service
@@ -36,7 +36,7 @@
               prompt: new_question_prompt(service),
               preview: local_assigns[:preview]
           = render Presentable::LinksComponent.new(object: service, preview: local_assigns[:preview])
-          .right-panel-links.pt-4.pb-4
+          .update-info.pt-4.pb-4
             = render "components/presentable/updates", object: service
         = render Presentable::ProviderInfoComponent.new(base: service,
         preview: local_assigns[:preview]) if service.respond_to?(:resource_organisation)
