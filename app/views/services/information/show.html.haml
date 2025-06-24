@@ -9,6 +9,5 @@
                                                                offer: @offer)
     .col-md-7.access-image
 
-= simple_form_for @step, url: service_information_path(@service), method: :put, html: { id: "order-form" } do |f|
-  - content_for(:submit) do
-    = render "services/submit_form_button", f: f
+= simple_form_for @step, url: service_information_path(@service), method: :put, html: { id: "order-form" } do
+  -# empty block
