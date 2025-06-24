@@ -38,5 +38,3 @@
         = f.input :additional_comment, as: :text, class: "form-control"
         #recaptcha= recaptcha_tags noscript: false
         = f.error :verified_recaptcha, class: "invalid-feedback d-block"
-  - content_for :submit do
-    = render "services/submit_form_button", f: f
