@@ -8,7 +8,7 @@
       = service.order_type.humanize
   .media-body.pt-4{ class: ("backoffice" if request.fullpath.include?("backoffice")) }
     .pl-4.pr-4.mb-3
-      %h2{ "data-probe" => "", "data-service-id" => service.id, "data-e2e" => "service-id" }
+      %h3{ "data-probe" => "", "data-service-id" => service.id, "data-e2e" => "service-id" }
         = yield
         .abbreviation.list
           = service.abbreviation
@@ -21,8 +21,8 @@
       = yield_content!(:favourite_checkbox) if content_for(:favourite_checkbox)
     - if service_offers&.any?
       .offers-box.clearfix
-        .pl-4.pr-4
-          %span.x-small.text-uppercase
+        .pl-4.pr-4.mb-4
+          %span.font-weight-bolder.mb-1.d-block
             - if service_offers.size == 1
               = _("The service has 1 offer that matches your search criteria")
             - else
@@ -31,6 +31,7 @@
             service: service
   .right-extra-info
     .service-logo
-      = presentable_logo(service, "align-center mx-4 service-logo", [120, 120])
+      = presentable_logo(service, "align-center service-logo", [120, 120])
   .backoffice-button-row.d-none{ class: ("d-block" if request.fullpath.include?("backoffice")) }
-    = link_to "Manage service and offers", backoffice_service_offers_path(service), class: "btn btn-primary"
+    .container.mb-3
+      = link_to "Manage service and offers", backoffice_service_offers_path(service), class: "btn btn-primary"

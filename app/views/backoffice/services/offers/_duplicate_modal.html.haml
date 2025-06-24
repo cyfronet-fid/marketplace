@@ -11,7 +11,7 @@
             The duplicated offer will have a draft status.
           = f.input :new_name, label: "Name your new offer.",
             input_html: { class: "form-control-lg", "data-duplicate-target": "modalNameInput"}
-        .modal-footer
+        .modal-footer.full-width
           .buttons-row
-            = link_to  _("Go back"), backoffice_service_offers_path(service)
-            = f.button :submit, "Submit", class: "btn btn-outline-secondary font-weight-bold"
+            = link_to  _("Go back"), backoffice_service_offers_path(service), class: "btn btn-outline-primary"
+            = f.button :submit, "Duplicate offer", class: "btn btn-primary"
