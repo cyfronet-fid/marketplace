@@ -1668,6 +1668,11 @@ Service detail
 
     .resource-logo {
       padding: 0.8rem 1rem 0;
+
+      img {
+        max-width: 190px;
+        max-height: 50px;
+      }
     }
 
     .card-body {
