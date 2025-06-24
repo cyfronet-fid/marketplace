@@ -2742,6 +2742,12 @@ label[data-multicheckbox].small {
     &.subcategory {
       padding-left: var(--pl-level);
       background: $palette-white url("tree-indent.png") no-repeat var(--bg-level) 0 !important;
+
+      a {
+        &:hover {
+          font-weight: 600;
+        }
+      }
     }
 
     a {
@@ -2751,8 +2757,21 @@ label[data-multicheckbox].small {
       }
 
       &.provider-name,
+      &.catalogue-name,
       &.datasource-name {
         max-width: 100%;
+
+        &:hover {
+          font-weight: 600;
+        }
+      }
+
+      &:hover {
+        font-weight: 600;
+      }
+
+      &:focus {
+        outline: 1px solid $btn-primary-hover !important;
       }
     }
 
@@ -2943,7 +2962,7 @@ label[data-multicheckbox].small {
         margin-bottom: 0;
         font-weight: 500;
         color: $palette-blue;
-        border-bottom: 1px solid $palette-blue;
+        border-bottom: 3px solid $palette-blue;
       }
 
       &:focus {
@@ -3181,6 +3200,12 @@ label[data-multicheckbox].small {
         mask-image: url("icon-contact.svg");
         -webkit-mask-image: url("icon-contact.svg");
       }
+    }
+  }
+
+  .update-info {
+    h4 {
+      padding-bottom: 5px;
     }
   }
 }
@@ -3688,6 +3713,55 @@ label[data-multicheckbox].small {
           }
         }
       }
+    }
+  }
+
+  .media-body {
+    float: left;
+    width: 78%;
+    flex: none;
+
+    h3 {
+      margin-top: 35px;
+    }
+
+    .badge {
+      position: absolute;
+      top: 20px;
+      left: 24px;
+      padding: 7px 12px;
+      font-size: 12px;
+      text-transform: capitalize;
+    }
+
+    dl {
+      font-size: 12px;
+
+      p {
+        margin: 0;
+      }
+    }
+  }
+
+  .right-extra-info {
+    width: 19%;
+    float: right;
+    text-align: right;
+
+    img {
+      max-width: 100px;
+      max-height: 100px;
+      margin: 80px 0 0 0;
+      float: right;
+    }
+  }
+
+  .backoffice-button-row {
+    width: 100%;
+
+    .btn-primary {
+      font-size: 14px;
+      width: 100%;
     }
   }
 }
@@ -5608,6 +5682,7 @@ abbr[title] {
 .btn-outline-primary {
   border-width: 1px;
   border-style: solid;
+  background: $alert-bg;
 }
 
 .lead-error {
@@ -6681,7 +6756,7 @@ abbr[title] {
   .edit-offer {
     .card {
       border: 1px solid $bundle-border;
-      padding: 15px 0 0;
+      padding: 70px 0 0;
 
       &:not(.default) {
         min-height: 250px;
@@ -6695,6 +6770,73 @@ abbr[title] {
             margin: 10px 0;
           }
         }
+
+        .badge-left {
+          top: 16px;
+          left: 1rem;
+          padding: 8px 20px;
+          border-radius: 8px;
+          border: none;
+          text-transform: capitalize;
+          font-weight: bold;
+          color: $custom-25;
+          font-size: 12px;
+        }
+
+        .card-title {
+          display: flex;
+          column-gap: 10px;
+          border: none;
+          align-items: center;
+
+          .x-small {
+            font-weight: 400;
+          }
+        }
+      }
+
+      .card-button {
+        padding: 0 1rem 1rem;
+        display: flex;
+        justify-content: space-between;
+
+        a,
+        .btn-outline-primary {
+          width: 49%;
+          font-size: 14px;
+        }
+
+        .btn-outline-secondary {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
+  .tip-card {
+    background: $alert-bg;
+    padding: 20px 24px;
+    border: none;
+
+    h5 {
+      color: $landing-02;
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 17px;
+    }
+
+    p {
+      color: $landing-01;
+      font-size: 12px;
+      font-weight: 300;
+    }
+
+    .card-button {
+      margin-top: 10px;
+
+      .btn-outline-secondary {
+        font-size: 14px;
+        width: 100%;
       }
     }
   }
@@ -6948,6 +7090,19 @@ abbr[title] {
           &:hover {
             color: $palette-white !important;
           }
+        }
+      }
+    }
+
+    &.full-width {
+      .buttons-row {
+        margin: 0;
+        display: flex;
+        column-gap: 20px;
+
+        .btn {
+          width: 49%;
+          font-size: 14px;
         }
       }
     }
@@ -7500,7 +7655,7 @@ abbr[title] {
   }
 
   .research-activity {
-    padding: 100px 0;
+    padding: 100px 0 35px;
     background: linear-gradient(180deg, #edf3fa 0%, rgba(237, 243, 250, 0) 100%);
 
     h2 {
@@ -7550,27 +7705,29 @@ abbr[title] {
     .activity {
       display: flex;
       flex-direction: row;
-      border-radius: 8px;
       min-height: 185px;
-      margin-bottom: 2%;
-      padding: 24px;
-      border: 1px solid var(--Stroke-LightStroke, $custom-17);
+      margin-bottom: 0;
+      padding: 10px 15px;
       background: url(icon-right-arrow.svg) no-repeat bottom 24px right 24px;
       transition: all 0.5s ease;
 
       .activity-icon {
         margin-right: 15px;
+        margin-top: 0;
         transition: all 0.5s ease;
 
         img {
-          width: 31px;
+          width: 45px;
           height: auto;
         }
       }
 
       &:hover {
-        border: 1px solid var(--Stroke-LightStroke, $landing-01);
         background: url(icon-right-arrow-hover.svg) no-repeat bottom 24px right 24px;
+
+        .activity-icon {
+          margin-top: 6px;
+        }
       }
 
       .activity-texts {
@@ -9739,40 +9896,47 @@ footer {
 }
 
 .status-column {
+  display: flex;
+  padding: 8px;
+  width: 100%;
+  border-radius: 8px;
+  background: $landing-03;
+  align-items: center;
+  margin-bottom: 25px;
+
+  &.published {
+    background: $green;
+    color: $custom-25;
+  }
+
+  &.unpublished {
+    background: $landing-03;
+    color: $landing-01;
+  }
+
+  &.suspend {
+    background: $landing-01;
+    color: $landing-03;
+  }
+
   .status {
     margin: 0 0 0 12px;
     text-align: center;
-    color: $custom-25;
-    font-size: 18px;
-    padding: 7px 14px;
+    font-size: 12px;
     font-weight: 600;
     text-transform: capitalize;
-    border-radius: 8px;
     line-height: 1.1;
-    background: $custom-26;
-
-    &.published {
-      background: $custom-26;
-      color: $custom-25;
-    }
-
-    &.unpublished {
-      background: $error;
-    }
-
-    &.draft {
-      background: $warning;
-    }
-
-    &.deleted {
-      background: $danger;
-    }
   }
 }
 
 .actions-column {
   margin-left: auto;
   min-width: 390px;
+
+  .btn-special,
+  .btn-primary {
+    padding: 4px 30px;
+  }
 }
 
 .btn-special {

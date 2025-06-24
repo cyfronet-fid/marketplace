@@ -22,10 +22,10 @@
           = render "common_parts/show_more_link", id: "providers"
         - else
           = markdown(safe_join(active_providers, ", "))
-%dl.mb-0.research
+%dl.mb-0.research.d-flex
   %dt
-    %span
-      = _("Scientific domain") + ":"
+    %span.pr-1
+      = _("Scientific domain") + ": "
   %dd
     .categorization-content= safe_join(scientific_domains_text(service), ", ")
 %span.clearfix
