@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Services::ChooseOffersController < Services::ApplicationController
-  skip_before_action :authenticate_user!
-
   def show
     init_step_data
 

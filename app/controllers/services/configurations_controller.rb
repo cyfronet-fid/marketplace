@@ -2,7 +2,6 @@
 
 class Services::ConfigurationsController < Services::ApplicationController
   before_action :ensure_in_session!
-  skip_before_action :authenticate_user!
 
   def show
     @project_item = CustomizableProjectItem.new(session[session_key])
