@@ -12,6 +12,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 ### Fixed
 
 - Styles in backoffice and landing page (@jarekzet)
+- Login prompt in ordering scope (@goreck888)
 
 ## [3.59.0] 2025-06-18
 
