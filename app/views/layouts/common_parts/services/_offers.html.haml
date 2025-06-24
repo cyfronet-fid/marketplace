@@ -16,20 +16,13 @@
           -# haml-lint:enable MultilinePipe
 
 #offers
-%h2.mb-4.mt-5.font-weight-normal
-  = _("Parameters and offers")
 .row.parameters{ data: { controller: "duplicate" } }
   = render "backoffice/services/offers/duplicate_modal", service: service
   = render partial: "layouts/common_parts/services/offer", collection: offers, as: :offer if offers.present?
   = render "layouts/common_parts/services/new_offer", service: service
 .row.parameters
-%h2.mb-4.mt-5.font-weight-normal
+%h2.mb-4.mt-3.font-weight-bolder
   = _("Bundles")
-%p.mb-5
-  -# haml-lint:disable MultilinePipe
-  = _("You can order this resource in a bundle, with resources connected by scientific domain or type " + |
-            "of research. The bundle is configured to make your research easier and done more efficiently.") |
-  -# haml-lint:enable MultilinePipe
 .row
   = render partial: "layouts/common_parts/services/bundle_box", collection: bundles, as: :bundle
   = render "layouts/common_parts/services/new_bundle", service: service if policy([:backoffice, service]).edit?

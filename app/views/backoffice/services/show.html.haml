@@ -7,5 +7,5 @@
     similar_services: @similar_services, related_services: @related_services,
     from: "backoffice_service") do |c|
     - c.additional_backoffice_info do
-      .right-panel-links.pt-4.pb-4
+      .update-info.pt-4.pb-4
         = render "components/presentable/updates", object: @service

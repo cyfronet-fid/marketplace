@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.59.1]
+
+### Fixed
+
+- Styles in backoffice and landing page (@jarekzet)
+
 ## [3.59.0] 2025-06-18
 
 ### Added
