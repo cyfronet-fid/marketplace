@@ -56,7 +56,7 @@ describe("Integration with JIRA", { tags: "@extended-test" }, () => {
             cy.location("search").should("include", "order_type=open_access");
             cy.get(".service-box").first().find("h2").find("a").click();
             cy.location("pathname").should("include", "/services/");
-            cy.get(".access-type").contains("a", "Access the service", { matchCase: false }).click({ force: true });
+            cy.get(".access-type").contains("a", "See service offers", { matchCase: false }).click({ force: true });
             cy.contains("a", "Access instructions").should("be.visible");
             cy.contains("Next").first().click({ force: true });
             cy.location("pathname").should("include", "/summary");
@@ -99,7 +99,7 @@ describe("Integration with JIRA", { tags: "@extended-test" }, () => {
             cy.location("search").should("include", "order_type=order_required");
             cy.get(".service-box").first().find("h2").find("a").click();
             cy.location("pathname").should("include", "/services/");
-            cy.get(".access-type").contains("a", "Access the service", { matchCase: false }).click({ force: true });
+            cy.get(".access-type").contains("a", "See service offers", { matchCase: false }).click({ force: true });
             cy.contains("a", "Access instructions").should("be.visible");
             cy.contains("Next").first().click();
             cy.location("pathname").should("include", "/summary");

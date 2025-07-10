@@ -15,8 +15,8 @@
               "best offer for their needs.") |
           -# haml-lint:enable MultilinePipe
 - if policy(service).offers_show?
-  %h2.mb-4.mt-5.font-weight-bolder
-    = _("Services")
+  %h2#offers.mb-4.mt-5.font-weight-bolder
+    = _("Offers")
   .row
     = render partial: "services/offer", collection: offers, as: :offer, locals: { preview: preview }
 - if policy(service).bundles_show?
