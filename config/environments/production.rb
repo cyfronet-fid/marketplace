@@ -134,11 +134,11 @@ Rails.application.configure do
   # SMTP settings
   config.action_mailer.smtp_settings = {
       address: ENV.fetch("SMPT_ADDRESS", nil),
-      port: 587,
+      port: ENV.fetch("SMTP_PORT", 587),
       user_name: ENV.fetch("SMPT_USERNAME", nil),
       password: ENV.fetch("SMPT_PASSWORD", nil),
-      authentication: "plain",
-      enable_starttls_auto: true
+      authentication: ENV.fetch("SMTP_AUTHENTICATION", "plain"),
+      enable_starttls_auto: ENV.fetch("SMTP_STARTTLS", true)
   }
 
   # custom error pages with webpage layout
