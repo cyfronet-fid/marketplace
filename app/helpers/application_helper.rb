@@ -54,16 +54,16 @@ module ApplicationHelper
     render "layouts/placeholder", text: text, link: link, variant: variant
   end
 
-  def eosc_commons_profile_links
+  def eosc_commons_custom_tabs
     links = []
 
-    # if show_administrative_sections?
-    #   .border-top
     if policy(%i[backoffice backoffice]).show?
       links.push({ href: backoffice_path, caption: _("Backoffice"), "data-e2e": "backoffice" })
     end
     links.push({ href: admin_path, caption: _("Admin") }) if policy(%i[admin admin]).show?
-    links.to_json
+    links.push({ href: api_docs_path, caption: "Marketplace API" })
+
+    [{ id: "provider", name: "Provider", links: links }].to_json
   end
 
   def meta_og_title_content
