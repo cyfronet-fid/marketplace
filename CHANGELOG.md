@@ -9,10 +9,21 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 ## [3.59.1]
 
+### Added
+
+- Possibility to run concurrent tests (@goreck888)
+
 ### Fixed
 
 - Styles in backoffice and landing page (@jarekzet)
 - Login prompt in ordering scope (@goreck888)
+- Category selection in the backoffice search (@goreck888)
+- Github actions on workflow dispatch (@goreck888)
+- Optimization of categories query (@goreck888)
+
+### Deprecated
+
+- environment variable `HOME_PAGE_EXTERNAL_LINKS_ENABLED` (@goreck888)
 
 ## [3.59.0] 2025-06-18
 

@@ -21,7 +21,6 @@ FactoryBot.define do
             service: {
               horizontalService: true,
               serviceCategories: ["service-category-compute"],
-              categories: ["aggregator"],
               changeLog: [],
               description:
                 "&lt;p style=\"text-align: justify;\"&gt;A catalogue of corpora (datasets) made up of mainly " +

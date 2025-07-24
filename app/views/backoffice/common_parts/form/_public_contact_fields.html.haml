@@ -1,11 +1,11 @@
 %div{ "data-form-target": "publicContact" }
   .contact
-    = public_contact_form.hidden_field :id, disabled: object.present? ? object&.upstream_id.present? : nil
-    = public_contact_form.input :first_name, disabled: object.present? ? object&.upstream_id.present? : nil,
+    = public_contact_form.hidden_field :id, disabled: object&.upstream_id.present?
+    = public_contact_form.input :first_name, disabled: object&.upstream_id.present?,
       input_html: { "data-form-target": "pcFirstName" }
-    = public_contact_form.input :last_name, disabled: object.present? ? object&.upstream_id.present? : nil,
+    = public_contact_form.input :last_name, disabled: object&.upstream_id.present?,
       input_html: { "data-form-target": "pcLastName" }
-    = public_contact_form.input :email, disabled: object.present? ? object&.upstream_id.present? : nil,
+    = public_contact_form.input :email, disabled: object&.upstream_id.present?,
       input_html: { "data-form-target": "pcEmail" }
     .row
       .col-5
@@ -13,16 +13,17 @@
         = public_contact_form.input :country_phone_code,
           label: "Dialing Code",
           collection: dial_codes,
+          disabled: object&.upstream_id.present?,
           selected:  ("#{c.iso_short_name} #{c.emoji_flag} (+#{c.country_code})" if c.present?),
           input_html: { multiple: false, data: { form_target: "pcCode", choice: true } }
       .col-7
         = public_contact_form.input :phone,
           label: "Phone Number",
+          disabled: object&.upstream_id.present?,
           input_html: { "data-form-target": "pcPhone" }
-    = public_contact_form.input :position, disabled: object.present? ? object&.upstream_id.present? : nil,
+    = public_contact_form.input :position, disabled: object&.upstream_id.present?,
       input_html: { "data-form-target": "pcPosition" }
-    - unless provider_form
-      = public_contact_form.input :organisation, disabled: object.present? ? object&.upstream_id.present? : nil
+    = public_contact_form.input :organisation, disabled: object&.upstream_id.present? unless provider_form
     = public_contact_form.hidden_field :_destroy, "data-form-target": "destroy"
     .text-right
       = link_to _("Delete contact"), "#", id: "public-contact-delete-#{public_contact_form.index}",

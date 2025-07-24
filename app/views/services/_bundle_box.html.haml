@@ -13,6 +13,6 @@
             = link_to service_choose_offer_path(bundle.service,
                     customizable_project_item: { offer_id: bundle.main_offer.iid, bundle_id: bundle.iid }),
                     data: { preview_target: "#{"link" if preview}", probe: "",
-                    service_id: bundle.service.id, turbo_method: :put } do
+                    service_id: bundle.service.id, turbo_frame: "_top" } do
               %span.btn.btn-secondary.font-weight-bolder.mt-2
                 = _("Select bundle")

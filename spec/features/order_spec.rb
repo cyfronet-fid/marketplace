@@ -505,15 +505,15 @@ RSpec.feature "Service ordering", end_user_frontend: true do
       click_on "Next", match: :first
 
       click_on "Add new project"
+
       within("#form-modal") do
+        select "Single user", from: "User type"
         fill_in "Project name", with: "New project"
-        select "Single user", from: "Customer typology"
-        fill_in "Email", with: "john@doe.com"
-        fill_in "Organization", with: "Home corp."
-        fill_in "Webpage", with: "http://home.corp.com"
-        fill_in "Reason to request access to the EOSC resources", with: "Some reason"
-        select "Non-European", from: "Origin country"
+        fill_in "Affiliated organisation", with: "Home corp."
+        fill_in "Project overview", with: "Some reason"
+        fill_in "Other details", with: "No details"
       end
+
       click_on "Create new project"
 
       expect(page).to have_select("customizable_project_item_project_id", selected: "New project")
@@ -560,23 +560,21 @@ RSpec.feature "Service ordering", end_user_frontend: true do
       click_on "Access the service"
       click_on "Next", match: :first
       click_on "Add new project"
+
       within("#form-modal") do
+        select "Representing a private company", from: "User type"
         fill_in "Project name", with: "New project"
-        fill_in "Reason to request access to the EOSC resources", with: "To pass test"
+        fill_in "Private company", with: "New company name"
+        fill_in "Webpage", with: "https://www.company.name"
         within ".project_scientific_domains" do
           find("label", text: "Scientific domains").click
           find("div", class: "choices__item", text: scientific_domain.name).click
         end
+        fill_in "Project overview", with: "Some reason"
+        fill_in "Other details", with: "No details"
 
-        select "Representing a private company", from: "Customer typology"
-        fill_in "Email", with: "john@doe.com"
-        select "Non-European", from: "Origin country"
-
-        expect(page).to have_field("Company name")
-        expect(page).to have_field("Company website url")
-
-        fill_in "Company name", with: "New company name"
-        fill_in "Company website url", with: "https://www.company.name"
+        expect(page).to have_field("Private company")
+        expect(page).to have_field("Webpage")
 
         click_on "Create new project"
       end
@@ -584,7 +582,6 @@ RSpec.feature "Service ordering", end_user_frontend: true do
       expect(page).to have_text(scientific_domain.name)
       expect(page).to have_text("New company name")
       expect(page).to have_text("https://www.company.name")
-      expect(page).to have_text("Non-European")
 
       new_project = Project.all.last
       expect(new_project.name).to eq("New project")
@@ -803,14 +800,14 @@ RSpec.feature "Service ordering", end_user_frontend: true do
       user = build(:user)
       stub_checkin(user)
 
-      visit service_choose_offer_path(service)
+      visit service_offers_path(service)
 
       expect do
         # If new user is logged in using checkin new user record is created
-        click_on "Next", match: :first
+        click_on "Access the service", match: :first
       end.to change { User.count }.by(1)
 
-      expect(page).to have_current_path(service_summary_path(service))
+      expect(page).to have_current_path(service_information_path(service))
       expect(User.last.full_name).to eq(user.full_name)
     end
 
