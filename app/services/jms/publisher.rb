@@ -39,8 +39,7 @@ class Jms::Publisher
       max_reconnect_attempts: 5,
       connect_headers: {
         "accept-version": "1.2", # mandatory
-        host: "localhost", # mandatory
-        "heart-beat": "0,20000"
+        host: "localhost" # mandatory
       }
     }
   end

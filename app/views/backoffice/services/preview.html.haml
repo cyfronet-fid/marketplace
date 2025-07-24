@@ -7,17 +7,22 @@
     .col.text-right
       .btn-group
         - if @service.persisted?
-          = link_to _("Go back to edit"), edit_backoffice_service_path(@service),
-            class: "btn btn-warning", "data-turbo": false
-          = link_to _("Confirm changes"), backoffice_service_offers_path(@service),
-            class: "btn btn-success", method: :put, "data-turbo": false
+          = button_to _("Go back to edit"), edit_backoffice_service_path(@service),
+            class: "btn btn-warning", data: { e2e: "go-back-edit-btn", turbo_frame: "_top" }
+          = form_with url: backoffice_service_path(@service), method: :put, local: true,
+            data: { turbo_frame: "_top" }, class: "d-inline" do |form|
+            = form.hidden_field :commit, value: "Update"
+            = form.submit _("Confirm changes"), class: "btn btn-success",
+              data: { e2e: "confirm-changes-btn" }
         - else
           = link_to _("Go back to edit"), new_backoffice_service_path,
             class: "btn btn-warning",
-             data: { e2e: "go-back-edit-btn", turbo: false }
-          = link_to _("Confirm changes"), backoffice_services_path,
-            class: "btn btn-success", type: :submit,
-            data: { e2e: "confirm-changes-btn", "turbo-method": :post }
+             data: { e2e: "go-back-edit-btn", turbo_frame: "_top" }
+          = form_with url: backoffice_services_path, method: :post, local: true,
+            data: { turbo_frame: "_top" }, class: "d-inline" do |form|
+            = form.hidden_field :commit, value: "Create"
+            = form.submit _("Confirm changes"), class: "btn btn-success",
+              data: { e2e: "confirm-changes-btn" }
 = render "services/wrapper", service: @service, category: @category,
   comparison_enabled: @comparison_enabled, compare_services: @compare_services,
   favourite_services: @favourite_services, question: @question, tab_id: "desc", preview: true do

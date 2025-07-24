@@ -2,24 +2,23 @@
 
 shared_examples "publishable" do
   context "publishable integration tests" do
-    before(:all) do
+    before(:each) do
       stomp_config = Mp::Application.config_for(:stomp_subscriber)
       @client = Stomp::Client.new(stomp_config["login"], stomp_config["password"], stomp_config["host"])
       @received = []
 
-      @client.subscribe("/topic/#{stomp_config["mp-db-events-destination"]}") { |msg| JSON.parse(msg.body) }
-    end
-
-    after(:all) { @client.close }
-
-    before(:each) do
+      @client.subscribe("/topic/#{stomp_config["mp-db-events-destination"]}") do |msg|
+        @received << JSON.parse(msg.body)
+      end
       # mock the Time.now call for consistency
       allow(Time).to receive(:current).and_return(Time.new(1997, 3, 9))
     end
 
     after(:each) { clear_enqueued_jobs }
 
-    it "should enqueue JMS job after create", retry: 5, retry_wait: 10 do
+    after(:all) { @client&.close }
+
+    it "should enqueue JMS job after create", retry: 5, retry_wait: 5 do
       perform_enqueued_jobs { create(described_class.name.underscore.to_sym) }
 
       # Sadly there's no way to synchronously wait for messages
@@ -29,7 +28,7 @@ shared_examples "publishable" do
       # Since the active MQ should be run on the same host as the test
       # I'm expecting the message to be able to be received during that time
       @client.join(2)
-      sleep(2)
+      Timeout.timeout(5) { sleep 0.1 until @received.size.positive? }
       expect(@received).to include(
         hash_including(
           "record",

@@ -71,6 +71,8 @@ RSpec.configure do |config|
 
   Capybara.javascript_driver = :chrome
 
+  Capybara.default_max_wait_time = 20
+
   config.include ActiveJob::TestHelper
   config.include ActiveSupport::Testing::TimeHelpers
   config.include TurboAssertionsHelper

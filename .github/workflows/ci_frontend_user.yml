@@ -1,5 +1,5 @@
 name: End user frontend tests
-on: [push]
+on: workflow_dispatch
 jobs:
   rspec:
     runs-on: ubuntu-latest

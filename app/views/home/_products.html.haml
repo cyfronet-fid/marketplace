@@ -24,6 +24,6 @@
 
 .row.d-flex.justify-content-center.mt-4
   = link_to "Browse all services",
-      home_page_external_links_enabled? ? "#{search_service_base_url}/search/all?q=*": services_path,
+      enable_external_search? ? "#{search_service_base_url}/search/all?q=*": services_path,
       class: "button button--primary",
       "data-shepherd-tour-target": "overview_4"

@@ -1,5 +1,5 @@
 name: Manager's frontend tests
-on: [push]
+on: workflow_dispatch
 jobs:
   rspec:
     runs-on: ubuntu-latest

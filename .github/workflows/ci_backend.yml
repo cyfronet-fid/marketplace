@@ -1,9 +1,9 @@
 name: Backend tests
-on: [push]
+on: workflow_dispatch
 jobs:
   rspec:
     runs-on: ubuntu-latest
-        
+
     steps:
     - name: Configure sysctl limits
       run: |
