@@ -13,10 +13,6 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 - Possibility to run concurrent tests (@goreck888)
 
-### Added
-
-- Possibility to run concurrent tests (@goreck888)
-
 ### Fixed
 
 - Styles in backoffice and landing page (@jarekzet)
@@ -48,7 +44,7 @@ Please view this file on the master branch, on stable branches it's out of date.
 - Other settings tab visible only for users with service portfolio manager role (@maria-j-k)
 - Logo in catalogues, services, providers is not required. Set default logo for each (@maria-j-k)
 - Status bar with actions buttons in detail and edit views for services, catalogues and providers (@maria-j-k)
-- role name `coordinator` to `coordinator` (@goreck888)
+- role name `service_portfolio_manager` to `coordinator` (@goreck888)
 
 ### Fixed
 

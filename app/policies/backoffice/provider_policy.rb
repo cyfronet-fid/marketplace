@@ -105,8 +105,4 @@ class Backoffice::ProviderPolicy < Backoffice::ApplicationPolicy
   def access?
     coordinator? || (record&.owned_by?(user) && record&.approval_requests&.none?(&:published?))
   end
-
-  def access?
-    coordinator? || (record&.owned_by?(user) && record&.approval_requests&.none?(&:published?))
-  end
 end
