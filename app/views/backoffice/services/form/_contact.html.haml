@@ -33,10 +33,12 @@
                     label: "Dialing Code",
                     collection: dial_codes,
                     selected: sel,
+                    disabled: service.upstream_id.present?,
                     input_html: { multiple: false, data: { form_target: "mcCode", choice: true } }
                 .col-6
                   = main_contact_form.input :phone,
                     label: "Phone Number",
+                    disabled: service.upstream_id.present?,
                     input_html: { "data-form-target": "mcPhone" }
               = main_contact_form.input :organisation, disabled: service.upstream_id.present?
               = main_contact_form.input :position, disabled: service.upstream_id.present?

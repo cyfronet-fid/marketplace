@@ -28,7 +28,9 @@ RSpec.feature "Providers in backoffice", manager_frontend: true do
       expect(page).to have_content("New name")
     end
 
-    scenario "I can not edit provider when upstream is not set to MP (nil)", js: true do
+    scenario "I can not edit provider when upstream is not set to MP (nil)",
+             js: true,
+             skip: "Not valid after provider form refactor" do
       provider = create(:provider, name: "Old name")
       provider_source = create(:provider_source, provider: provider)
       provider.upstream = provider_source

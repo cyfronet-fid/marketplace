@@ -32,7 +32,12 @@
       input_html: { multiple: false, data: { choice: true } }
     .row
       .col-12
-        = hosting_legal_entity_input(f)
+        = f.input :hosting_legal_entity,
+                 collection: Vocabulary.where(type: "Vocabulary::HostingLegalEntity"),
+                 disabled: cant_edit(:hosting_legal_entity),
+                 label_method: :name,
+                 value_method: :id,
+                 input_html: { multiple: false, data: { choice: true } }
     .row.service-contact-emails
       -# rubocop:disable Style/BlockDelimiters
       .col-12
@@ -49,4 +54,4 @@
                   fields: f.fields_for(:alternative_identifiers, AlternativeIdentifier.new,
                   child_index: "new_field") { |idf| render "backoffice/common_parts/form/alternative_identifier_fields",
                   identifier_form: idf, object: provider } }
-      -# rubocop:enable Style/BlockDelimiters:
+      -# rubocop:enable Style/BlockDelimiters

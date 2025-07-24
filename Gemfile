@@ -101,6 +101,7 @@ group :development, :test do
   gem "dotenv-rails"
   gem "webmock"
   gem "foreman"
+  gem "brakeman"
 end
 
 group :development do
@@ -117,6 +118,7 @@ group :development do
 end
 
 group :test do
+  gem "parallel_tests"
   gem "factory_bot_rails"
   gem "shoulda-matchers"
   gem "capybara"

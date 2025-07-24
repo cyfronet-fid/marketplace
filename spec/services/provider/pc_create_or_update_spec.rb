@@ -38,7 +38,7 @@ RSpec.describe Provider::PcCreateOrUpdate, backend: true do
 
     expect do
       described_class.new(
-        create(:jms_published_provider_response, eid: "new.provider", name: "Supper new name for updated  provider"),
+        create(:jms_published_provider_response, eid: "new.provider", name: "Supper new name for updated provider"),
         :published,
         Time.now.to_i
       ).call
@@ -46,7 +46,7 @@ RSpec.describe Provider::PcCreateOrUpdate, backend: true do
 
     updated_provider = Provider.find(provider.id)
 
-    expect(updated_provider.name).to eq("Supper new name for updated  provider")
+    expect(updated_provider.name).to eq("Supper new name for updated provider")
     expect(updated_provider.sources.length).to eq(1)
     expect(updated_provider.sources[0].eid).to eq("new.provider")
     expect(updated_provider.upstream_id).to eq(updated_provider.sources[0].id)

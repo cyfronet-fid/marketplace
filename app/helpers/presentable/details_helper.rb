@@ -37,12 +37,7 @@ module Presentable::DetailsHelper
     [
       [provider_maturity_information, provider_classification, esfri_types, esfri_domains, meril_scientific_domains],
       [networks, areas_of_activity, affiliations, certifications, catalogue],
-      [
-        resource_profile_4? ? hosting_legal_entity : hosting_legal_entity_string,
-        structure_types,
-        societal_grand_challenges,
-        national_roadmaps
-      ]
+      [hosting_legal_entity, structure_types, societal_grand_challenges, national_roadmaps]
     ]
   end
 
@@ -135,7 +130,7 @@ module Presentable::DetailsHelper
     {
       name: "dependencies",
       template: "array",
-      fields: dependencies_fields,
+      fields: %w[required_services related_services catalogue],
       with_desc: true,
       nested: {
         required_services: "service",
@@ -145,11 +140,6 @@ module Presentable::DetailsHelper
       },
       active_when_suspended: true
     }
-  end
-
-  def dependencies_fields
-    platforms = resource_profile_4? ? "platforms" : "related_platforms"
-    ["required_services", "related_services", platforms, "catalogue"]
   end
 
   def esfri_domains

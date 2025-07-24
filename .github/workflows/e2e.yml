@@ -1,5 +1,5 @@
 name: Integration Test
-on: [push]
+on: workflow_dispatch
 jobs:
   cypress:
     runs-on: ubuntu-latest

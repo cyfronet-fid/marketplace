@@ -164,18 +164,8 @@ FactoryBot.define do
           "lastName" => "Provider",
           "email" => "test@mail.pl"
         },
-        "publicContacts" => {
-          "publicContact" => {
-            "email" => "test@mail.pl"
-          }
-        },
-        "users" => {
-          "user" => {
-            "email" => "test@mail.pl",
-            "name" => "test",
-            "surname" => "test"
-          }
-        }
+        "publicContacts" => [{ "email" => "test@mail.pl" }],
+        "users" => [{ "email" => "test@mail.pl", "name" => "test", "surname" => "test" }]
       }
     end
   end
@@ -211,18 +201,8 @@ FactoryBot.define do
           "lastName" => "Provider",
           "email" => "test@mail.pl"
         },
-        "publicContacts" => {
-          "publicContact" => {
-            "email" => "test@mail.pl"
-          }
-        },
-        "users" => {
-          "user" => {
-            "email" => "test@mail.pl",
-            "name" => "test",
-            "surname" => "test"
-          }
-        }
+        "publicContacts" => [{ "email" => "test@mail.pl" }],
+        "users" => [{ "email" => "test@mail.pl", "name" => "test", "surname" => "test" }]
       }
     end
   end

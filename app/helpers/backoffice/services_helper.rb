@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 module Backoffice::ServicesHelper
-  PROFILE_4_ENABLED = Rails.configuration.profile_4_enabled.freeze
-
   BADGES = {
     "published" => "badge-success",
     "draft" => "badge-draft",
@@ -28,9 +26,5 @@ module Backoffice::ServicesHelper
 
   def offer_missing?(param, param_options)
     param_options["mandatory"] && @offer.errors[:oms_params].present? && @offer.oms_params[param].blank?
-  end
-
-  def resource_profile_4?
-    PROFILE_4_ENABLED
   end
 end
