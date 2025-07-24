@@ -13,6 +13,10 @@ Please view this file on the master branch, on stable branches it's out of date.
 
 - Possibility to run concurrent tests (@goreck888)
 
+### Added
+
+- Possibility to run concurrent tests (@goreck888)
+
 ### Fixed
 
 - Styles in backoffice and landing page (@jarekzet)
