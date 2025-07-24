@@ -63,14 +63,10 @@ module Mp
         Dir[Pathname.new(ENV["CUSTOMIZATION_PATH"]).join("config", "locales", "**", "*.{rb,yml}")]
     end
 
-    config.portal_base_url = ENV["PORTAL_BASE_URL"].present? ? ENV["PORTAL_BASE_URL"] : "https://eosc-portal.eu"
+    config.portal_base_url = ENV.fetch("PORTAL_BASE_URL", "https://eosc-portal.eu")
 
-    config.providers_dashboard_url =
-      if ENV["PROVIDERS_DASHBOARD_URL"].present?
-        ENV["PROVIDERS_DASHBOARD_URL"]
-      else
-        "https://beta.providers.eosc-portal.eu"
-      end
+    config.providers_dashboard_url = ENV.fetch("PROVIDERS_DASHBOARD_URL", "https://integration.providers.sandbox.eosc-beyond.eu/")
+
     config.google_api_key_path = ENV.fetch("GOOGLE_AUTH_KEY_FILEPATH", "config/google_api_key.json")
     config.monitoring_data_enabled = ActiveModel::Type::Boolean.new.cast(ENV.fetch("MONITORING_DATA_ENABLED", false))
     config.monitoring_data_host = ENV.fetch("MONITORING_DATA_URL", "https://api.devel.argo.grnet.gr/api")
@@ -79,23 +75,18 @@ module Mp
     config.monitoring_data_ui_url = ENV.fetch("MONITORING_DATA_UI_URL", "https://eosc.ui.devel.argo.grnet.gr")
     config.monitoring_data_path = ENV.fetch("MONITORING_DATA_UI_PATH",
                                             "eosc/report-ar-group-details/Default/SERVICEGROUPS/")
+
     config.similar_services_host = ENV["SIMILAR_SERVICES_HOST"] || "http://149.156.182.238:8081"
     config.recommender_host = ENV.fetch("RECOMMENDER_HOST", nil)
     config.recommendation_engine = ENV["RECOMMENDATION_ENGINE"] || "RL"
-    config.auth_mock = ENV.fetch("AUTH_MOCK", nil)
-    config.eosc_commons_base_url =
-      if ENV["EOSC_COMMONS_BASE_URL"].present?
-        ENV["EOSC_COMMONS_BASE_URL"]
-      else
-        "https://s3.cloud.cyfronet.pl/eosc-portal-common/"
-      end
-    config.eosc_commons_env = ENV["EOSC_COMMONS_ENV"].present? ? ENV["EOSC_COMMONS_ENV"] : "beta"
+    config.auth_mock = ActiveModel::Type::Boolean.new.cast(ENV.fetch("AUTH_MOCK", false))
+
+    config.eosc_commons_enabled = ActiveModel::Type::Boolean.new.cast(ENV.fetch("EOSC_COMMONS_ENABLED", true))
+    config.eosc_commons_base_url = ENV.fetch("EOSC_COMMONS_BASE_URL", "https://s3.cloud.cyfronet.pl/eosc-portal-common/")
+    config.eosc_commons_env = ENV["EOSC_COMMONS_ENV"].present? ? ENV["EOSC_COMMONS_ENV"] : "production"
 
     config.user_actions_target = ENV["USER_ACTIONS_TARGET"].present? ? ENV["USER_ACTIONS_TARGET"] : "all"
 
-    config.profile_4_enabled = ENV["PROFILE_4_ENABLED"].present? ? ENV["PROFILE_4_ENABLED"] : false
-    config.home_page_external_links_enabled =
-      ENV["HOME_PAGE_EXTERNAL_LINKS_ENABLED"].present? ? ENV["HOME_PAGE_EXTERNAL_LINKS_ENABLED"] : true
     config.search_service_base_url = ENV.fetch("SEARCH_SERVICE_BASE_URL", "https://search.marketplace.eosc-portal.eu")
     config.search_service_research_product_endpoint = ENV.fetch("SEARCH_SERVICE_RESEARCH_PRODUCT_ENDPOINT",
                                                                 "/api/web/research-product/")
@@ -111,7 +102,8 @@ module Mp
         Rails.env.test?
       end
 
-    config.eosc_helpdesk_form_link = ENV.fetch("EOSC_HELPDESK_FORM_URL", "https://helpdesk.sandbox.eosc-beyond.eu/assets/form/form.js")
+    config.eosc_helpdesk_form_link = ENV.fetch("EOSC_HELPDESK_FORM_URL",
+                                               "https://helpdesk.sandbox.eosc-beyond.eu/assets/form/form.js")
 
     config.enable_external_search = ActiveModel::Type::Boolean.new.cast(ENV.fetch("MP_ENABLE_EXTERNAL_SEARCH", false))
     config.analytics_enabled = ActiveModel::Type::Boolean.new.cast(ENV.fetch("ANALYTICS_ENABLED", false))

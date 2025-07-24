@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class ServicesController < ApplicationController
-  EXTERNAL_SEARCH_ENABLED = Mp::Application.config.enable_external_search
-
   include Service::Searchable
   include Service::Categorable
   include Service::Autocomplete
@@ -16,7 +14,7 @@ class ServicesController < ApplicationController
   # rubocop:disable Metrics/AbcSize
   def index
     search_base_url = Mp::Application.config.search_service_base_url
-    redirect_to search_base_url + "/search/service?q=*", allow_other_host: true if external_search_enabled
+    redirect_to search_base_url + "/search/service?q=*", allow_other_host: true if external_search_enabled?
 
     if params["object_id"].present?
       case params["type"]
@@ -123,9 +121,5 @@ class ServicesController < ApplicationController
   def hide_horizontals?(init: true)
     empty_listed = init ? Service.published.horizontal.empty? : @horizontals.empty?
     empty_listed || active_filters.size.positive? || params[:q].present? || @category.present?
-  end
-
-  def external_search_enabled
-    EXTERNAL_SEARCH_ENABLED
   end
 end

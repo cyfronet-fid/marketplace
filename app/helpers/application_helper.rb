@@ -100,7 +100,7 @@ module ApplicationHelper
   end
 
   def render_turbo_stream_flash
-    turbo_stream.prepend "flash", partial: "layouts/flash"
+    turbo_stream.replace "flash-messages", partial: "layouts/flash"
   end
 
   def eosc_helpdesk_form_link

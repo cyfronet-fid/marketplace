@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  COMMONS_ENABLED = Mp::Application.config.eosc_commons_enabled
+  EXTERNAL_SEARCH_ENABLED = Mp::Application.config.enable_external_search
+
   include Pagy::Backend
   include Sentryable
   include Pundit::Authorization
@@ -9,8 +12,8 @@ class ApplicationController < ActionController::Base
   include Recommendation::Followable
   include Tourable
 
-  before_action :welcome_popup, :load_root_categories!, :report, :set_locale, :set_gettext_locale, :action
-
+  before_action :load_root_categories!, unless: :external_search_enabled?
+  before_action :welcome_popup, :report, :set_locale, :set_gettext_locale, :action
   helper_method :turbo_frame_request?
 
   protect_from_forgery
@@ -27,6 +30,10 @@ class ApplicationController < ActionController::Base
     false
   end
 
+  def load_root_categories!
+    @root_categories = Category.roots.order(:name)
+  end
+
   private
 
   def load_query_params_from_session
@@ -40,10 +47,6 @@ class ApplicationController < ActionController::Base
 
   def report
     @report = Report.new
-  end
-
-  def load_root_categories!
-    @root_categories = Category.roots.order(:name)
   end
 
   def not_authorized_message(exception)
@@ -105,5 +108,12 @@ class ApplicationController < ActionController::Base
     else
       []
     end
+  end
+  def commons_enabled?
+    COMMONS_ENABLED
+  end
+
+  def external_search_enabled?
+    EXTERNAL_SEARCH_ENABLED
   end
 end

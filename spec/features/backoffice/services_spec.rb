@@ -192,6 +192,8 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
 
       click_on "Update Service"
 
+      expect(page).to have_content("Service updated successfully")
+
       service.reload
 
       expect(service.public_contacts.map(&:email)).to contain_exactly("jane@doe.com", "johny@does.com", "john@doe.com")
@@ -301,22 +303,30 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       expect(page).to have_content("format you're trying to attach is not supported.")
     end
 
-    scenario "I can publish service" do
+    scenario "I can publish service", js: true do
       service = create(:service, status: :draft)
 
       visit backoffice_service_path(service)
-      expect { click_on "Publish" }.to have_enqueued_job(Ess::UpdateJob)
+      expect do
+        click_on "Publish"
+        find("#confirm-accept").click
+        sleep(1)
+      end.to have_enqueued_job(Ess::UpdateJob).exactly(1).times
 
-      expect(page).to have_content("Status: published")
+      expect(page).to have_content("Published")
     end
 
-    scenario "I can unpublish service" do
+    scenario "I can unpublish service", js: true do
       service = create(:service, status: :published)
 
       visit backoffice_service_path(service)
-      expect { click_on "Unpublish" }.to have_enqueued_job(Ess::UpdateJob)
+      expect do
+        click_on "Unpublish"
+        find("#confirm-accept").click
+        sleep(1)
+      end.to have_enqueued_job(Ess::UpdateJob).exactly(1).times
 
-      expect(page).to have_content("Status: unpublished")
+      expect(page).to have_content("Unpublished")
     end
 
     scenario "I can edit any service" do
@@ -419,6 +429,7 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       expect(page).to have_content("updated name")
 
       click_on "Confirm changes"
+
       expect(page).to have_content("updated name")
     end
 
@@ -714,8 +725,7 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       expect(page).to have_field "Access modes", disabled: true
       expect(page).to have_field "Providers", disabled: true
 
-      # TODO: uncomment when Resource Profile 4.0 will be released
-      # expect(page).to have_field "Platforms", disabled: false
+      expect(page).to have_field "Related platforms", disabled: true
       expect(page).to have_field "service_main_contact_attributes_first_name", disabled: true
       expect(page).to have_field "service_main_contact_attributes_last_name", disabled: true
       expect(page).to have_field "service_main_contact_attributes_email", disabled: true
@@ -739,7 +749,6 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       expect(page).to have_field "Version", disabled: true
       expect(page).to have_field "Last update", disabled: true
       expect(page).to have_field "service_changelog_0", disabled: true
-      expect(page).to have_field "service_related_platforms_0", disabled: true
       expect(page).to have_field "Required Services", disabled: true
       expect(page).to have_field "Related Services", disabled: true
       expect(page).to have_field "Scientific domains", disabled: true

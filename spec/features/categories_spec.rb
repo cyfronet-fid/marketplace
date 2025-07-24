@@ -8,6 +8,8 @@ RSpec.feature "Service categories", end_user_frontend: true do
   let(:user) { create(:user) }
 
   before do
+    allow(Mp::Application.config).to receive(:enable_external_search).and_return(false)
+
     resources_selector = "body main div:nth-child(2).container div.container div.row div.col-lg-9"
     service_selector = "div.media.mb-3.service-box"
     @services_selector = resources_selector + " " + service_selector

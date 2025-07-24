@@ -25,12 +25,219 @@
     },
     {
       "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "01b05682b31c7327aa45584d020dc9e86ff20af0ed78d3fffb187b0f63f5034c",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/admin/helps/_section.html.haml",
+      "line": 10,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "::Haml::AttributeBuilder.build_id(true, \"s-#{(Unresolved Model).new.slug}\")",
+      "render_path": [
+        {
+          "type": "template",
+          "name": "admin/helps/show",
+          "line": 16,
+          "file": "app/views/admin/helps/show.html.haml",
+          "rendered": {
+            "name": "admin/helps/_section",
+            "file": "app/views/admin/helps/_section.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "admin/helps/_section"
+      },
+      "user_input": "(Unresolved Model).new.slug",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "0438031748e80c8653ae2381ff1d020b8e7fb299e943096b0a6f0c2335244412",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/admin/helps/_item.html.haml",
+      "line": 3,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "::Haml::AttributeBuilder.build_id(true, \"#{\"#{\"s-#{(Unresolved Model).new.slug}\"}-#{item_counter}\"}-header\")",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Admin::HelpsController",
+          "method": "show",
+          "line": 6,
+          "file": "app/controllers/admin/helps_controller.rb",
+          "rendered": {
+            "name": "admin/helps/show",
+            "file": "app/views/admin/helps/show.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "admin/helps/show",
+          "line": 16,
+          "file": "app/views/admin/helps/show.html.haml",
+          "rendered": {
+            "name": "admin/helps/_section",
+            "file": "app/views/admin/helps/_section.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "admin/helps/_section",
+          "line": 11,
+          "file": "app/views/admin/helps/_section.html.haml",
+          "rendered": {
+            "name": "admin/helps/_item",
+            "file": "app/views/admin/helps/_item.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "admin/helps/_item"
+      },
+      "user_input": "(Unresolved Model).new.slug",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "046567429d1dcad0958dbedf8cda4744751cb164d9b7501e5886112e6fc484b2",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/layouts/common_parts/services/_bundle_box.html.haml",
+      "line": 1,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "::Haml::AttributeBuilder.build_id(true, \"bundle-#{(Unresolved Model).new.iid}\")",
+      "render_path": [
+        {
+          "type": "template",
+          "name": "layouts/common_parts/services/_offers",
+          "line": 27,
+          "file": "app/views/layouts/common_parts/services/_offers.html.haml",
+          "rendered": {
+            "name": "layouts/common_parts/services/_bundle_box",
+            "file": "app/views/layouts/common_parts/services/_bundle_box.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "layouts/common_parts/services/_bundle_box"
+      },
+      "user_input": "(Unresolved Model).new.iid",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "05ed6789841ff3c226158c0a831a5309e8f75be14fad8b7501c7b7b50a2b79be",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/admin/helps/_item.html.haml",
+      "line": 18,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "::Haml::AttributeBuilder.build_id(true, \"#{\"s-#{(Unresolved Model).new.slug}\"}-#{item_counter}\")",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Admin::HelpsController",
+          "method": "show",
+          "line": 6,
+          "file": "app/controllers/admin/helps_controller.rb",
+          "rendered": {
+            "name": "admin/helps/show",
+            "file": "app/views/admin/helps/show.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "admin/helps/show",
+          "line": 16,
+          "file": "app/views/admin/helps/show.html.haml",
+          "rendered": {
+            "name": "admin/helps/_section",
+            "file": "app/views/admin/helps/_section.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "admin/helps/_section",
+          "line": 11,
+          "file": "app/views/admin/helps/_section.html.haml",
+          "rendered": {
+            "name": "admin/helps/_item",
+            "file": "app/views/admin/helps/_item.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "admin/helps/_item"
+      },
+      "user_input": "(Unresolved Model).new.slug",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "05fcdf1e56c637799f778c0749fcd4c06a57bf0e100d7cc84b2b84397e1770bf",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/admin/helps/_section.html.haml",
+      "line": 4,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "::Haml::AttributeBuilder.build_id(true, (Unresolved Model).new.slug)",
+      "render_path": [
+        {
+          "type": "template",
+          "name": "admin/helps/show",
+          "line": 16,
+          "file": "app/views/admin/helps/show.html.haml",
+          "rendered": {
+            "name": "admin/helps/_section",
+            "file": "app/views/admin/helps/_section.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "admin/helps/_section"
+      },
+      "user_input": "(Unresolved Model).new.slug",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
       "warning_code": 4,
       "fingerprint": "1e0a357058fa7b3fdf06421bba24c8bd2851d14c66edc905e313f82121577272",
       "check_name": "LinkToHref",
       "message": "Potentially unsafe model attribute in `link_to` href",
       "file": "app/views/catalogues/show.html.haml",
-      "line": 162,
+      "line": 164,
       "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
       "code": "link_to(\"Website\", Catalogue.with_attached_logo.friendly.find(params[:id]).website, :target => \"_blank\", :class => \"right-panel-button website\")",
       "render_path": [
@@ -58,6 +265,126 @@
       "note": ""
     },
     {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "2b83fd20ee9da4cf05a62f7ed9b32afd02b1717b948f4e3880240aca4abf802f",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/helps/_item.html.haml",
+      "line": 9,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "::Haml::AttributeBuilder.build_id(true, \"#{\"s-#{(Unresolved Model).new.slug}\"}-#{item_counter}\")",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "HelpsController",
+          "method": "show",
+          "line": 6,
+          "file": "app/controllers/helps_controller.rb",
+          "rendered": {
+            "name": "helps/show",
+            "file": "app/views/helps/show.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "helps/show",
+          "line": 11,
+          "file": "app/views/helps/show.html.haml",
+          "rendered": {
+            "name": "helps/_section",
+            "file": "app/views/helps/_section.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "helps/_section",
+          "line": 5,
+          "file": "app/views/helps/_section.html.haml",
+          "rendered": {
+            "name": "helps/_item",
+            "file": "app/views/helps/_item.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "helps/_item"
+      },
+      "user_input": "(Unresolved Model).new.slug",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "3a969af529dad5ced54ae693ce430f4f4f0bd1e2d606196d15f63840706d59c4",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/layouts/common_parts/services/_offer.html.haml",
+      "line": 13,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "::Haml::AttributeBuilder.build_data(true, \"'\", :action => \"click->duplicate#showModal\", :duplicate_url => duplicate_offer_path((Unresolved Model).new.service, (Unresolved Model).new), :offer_name => (Unresolved Model).new.name)",
+      "render_path": [
+        {
+          "type": "template",
+          "name": "layouts/common_parts/services/_offers",
+          "line": 21,
+          "file": "app/views/layouts/common_parts/services/_offers.html.haml",
+          "rendered": {
+            "name": "layouts/common_parts/services/_offer",
+            "file": "app/views/layouts/common_parts/services/_offer.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "layouts/common_parts/services/_offer"
+      },
+      "user_input": "(Unresolved Model).new.name",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "47da5d921f227cb27fd64f47392bb764b8be3ba220fb42882b12fb7e65b7e2b9",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/providers/_service_box.html.haml",
+      "line": 5,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "::Haml::AttributeBuilder.build_class(true, \"badge access-information fa-pull-right badge-right style_order_required\", (Unresolved Model).new.order_type)",
+      "render_path": [
+        {
+          "type": "template",
+          "name": "providers/_related",
+          "line": 8,
+          "file": "app/views/providers/_related.html.haml",
+          "rendered": {
+            "name": "providers/_service_box",
+            "file": "app/views/providers/_service_box.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "providers/_service_box"
+      },
+      "user_input": "(Unresolved Model).new.order_type",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
+    },
+    {
       "warning_type": "SQL Injection",
       "warning_code": 0,
       "fingerprint": "4ee1dfaf6a90d36d68d7af44057d4e80f52d055cc48789c49e3dd9f87c639a25",
@@ -73,6 +400,49 @@
       "confidence": "Medium",
       "cwe_id": [
         89
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "53dff7776de34c405dac2ed27c540f2e0dd9ce2f90f7afd3a7b34c3fa47efd6f",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/services/_service_box.html.haml",
+      "line": 5,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "::Haml::AttributeBuilder.build_class(true, \"badge access-information fa-pull-right badge-right style_order_required\", (Unresolved Model).new.order_type)",
+      "render_path": [
+        {
+          "type": "template",
+          "name": "app/components/presentable/description_component",
+          "line": 11,
+          "file": "app/components/presentable/description_component.html.haml",
+          "rendered": {
+            "name": "services/_related",
+            "file": "app/views/services/_related.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "services/_related",
+          "line": 5,
+          "file": "app/views/services/_related.html.haml",
+          "rendered": {
+            "name": "services/_service_box",
+            "file": "app/views/services/_service_box.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "services/_service_box"
+      },
+      "user_input": "(Unresolved Model).new.order_type",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
       ],
       "note": ""
     },
@@ -115,6 +485,50 @@
       "confidence": "Medium",
       "cwe_id": [
         89
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "65b15fcc60cf186e7b65ae4dd920db4ff47e4049084696f4875aab3a5756425a",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/admin/leads/_section.html.haml",
+      "line": 2,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "::Haml::AttributeBuilder.build_id(true, LeadSection.new.slug)",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Admin::LeadsController",
+          "method": "index",
+          "line": 8,
+          "file": "app/controllers/admin/leads_controller.rb",
+          "rendered": {
+            "name": "admin/leads/index",
+            "file": "app/views/admin/leads/index.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "admin/leads/index",
+          "line": 9,
+          "file": "app/views/admin/leads/index.html.haml",
+          "rendered": {
+            "name": "admin/leads/_section",
+            "file": "app/views/admin/leads/_section.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "admin/leads/_section"
+      },
+      "user_input": "LeadSection.new.slug",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
       ],
       "note": ""
     },
@@ -183,6 +597,115 @@
       "note": ""
     },
     {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "9676279e8ac183f597b02d812af17e42327f46ee203798dc3c61375f70f69596",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/helps/_section.html.haml",
+      "line": 4,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "::Haml::AttributeBuilder.build_id(true, \"s-#{(Unresolved Model).new.slug}\")",
+      "render_path": [
+        {
+          "type": "template",
+          "name": "helps/show",
+          "line": 11,
+          "file": "app/views/helps/show.html.haml",
+          "rendered": {
+            "name": "helps/_section",
+            "file": "app/views/helps/_section.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "helps/_section"
+      },
+      "user_input": "(Unresolved Model).new.slug",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "9bcc9c074fdeb52da2b4c931d01680ec00d58749a4a42b52d56fe0dc50d27a92",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/services/_bundled_offer.html.haml",
+      "line": 33,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "::Haml::AttributeBuilder.build_class(true, \"ordertype\", (Unresolved Model).new.order_type)",
+      "render_path": [
+        {
+          "type": "template",
+          "name": "layouts/common_parts/services/_bundle_box",
+          "line": 6,
+          "file": "app/views/layouts/common_parts/services/_bundle_box.html.haml",
+          "rendered": {
+            "name": "services/_bundle",
+            "file": "app/views/services/_bundle.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "services/_bundle",
+          "line": 2,
+          "file": "app/views/services/_bundle.html.haml",
+          "rendered": {
+            "name": "services/_bundled_offer",
+            "file": "app/views/services/_bundled_offer.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "services/_bundled_offer"
+      },
+      "user_input": "(Unresolved Model).new.order_type",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "c3efad7213a3158ac052465af95ff56a2e4eade73a3ac959c470aa8561733685",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/helps/_section.html.haml",
+      "line": 2,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "::Haml::AttributeBuilder.build_id(true, (Unresolved Model).new.slug)",
+      "render_path": [
+        {
+          "type": "template",
+          "name": "helps/show",
+          "line": 11,
+          "file": "app/views/helps/show.html.haml",
+          "rendered": {
+            "name": "helps/_section",
+            "file": "app/views/helps/_section.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "helps/_section"
+      },
+      "user_input": "(Unresolved Model).new.slug",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
+    },
+    {
       "warning_type": "Mass Assignment",
       "warning_code": 70,
       "fingerprint": "d06e1c85551aa02f3f8da3a7d5c309ed69783a1fa39928ea676b0bf9646f3d0c",
@@ -202,6 +725,60 @@
       "confidence": "Medium",
       "cwe_id": [
         915
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "d97de0a83e763d22bdc7b8e1d83ca615087ea7d817032690eb6e9e677e164a4d",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/helps/_item.html.haml",
+      "line": 3,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "::Haml::AttributeBuilder.build_id(true, \"#{\"#{\"s-#{(Unresolved Model).new.slug}\"}-#{item_counter}\"}-header\")",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "HelpsController",
+          "method": "show",
+          "line": 6,
+          "file": "app/controllers/helps_controller.rb",
+          "rendered": {
+            "name": "helps/show",
+            "file": "app/views/helps/show.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "helps/show",
+          "line": 11,
+          "file": "app/views/helps/show.html.haml",
+          "rendered": {
+            "name": "helps/_section",
+            "file": "app/views/helps/_section.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "helps/_section",
+          "line": 5,
+          "file": "app/views/helps/_section.html.haml",
+          "rendered": {
+            "name": "helps/_item",
+            "file": "app/views/helps/_item.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "helps/_item"
+      },
+      "user_input": "(Unresolved Model).new.slug",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
       ],
       "note": ""
     },
@@ -332,8 +909,50 @@
         915
       ],
       "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "f4c250467d58bec54390f0f6e4e76099a9db2b3a972080168c202a1f46ec5789",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/services/_bundled_offer.html.haml",
+      "line": 32,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "::Haml::AttributeBuilder.build_class(true, \"bundle-offer-order-type badge access-information badge-right style_order_required\", (Unresolved Model).new.order_type)",
+      "render_path": [
+        {
+          "type": "template",
+          "name": "layouts/common_parts/services/_bundle_box",
+          "line": 6,
+          "file": "app/views/layouts/common_parts/services/_bundle_box.html.haml",
+          "rendered": {
+            "name": "services/_bundle",
+            "file": "app/views/services/_bundle.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "services/_bundle",
+          "line": 2,
+          "file": "app/views/services/_bundle.html.haml",
+          "rendered": {
+            "name": "services/_bundled_offer",
+            "file": "app/views/services/_bundled_offer.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "services/_bundled_offer"
+      },
+      "user_input": "(Unresolved Model).new.order_type",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
     }
   ],
-  "updated": "2024-08-08 15:26:39 +0200",
-  "brakeman_version": "6.1.2"
+  "brakeman_version": "7.1.0"
 }

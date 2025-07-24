@@ -11,7 +11,7 @@ default: &default
 test:
   <<: *default
   login: <%= ENV["TEST_STOMP_LOGIN"] || "admin" %>
-  password: <%= ENV["TEST_STOMP_PASS"] ||  "admin" %>
+  password: <%= ENV["TEST_STOMP_PASS"] || "admin" %>
   host: <%= ENV["TEST_STOMP_HOST"] || "localhost" %>
 
 development:
