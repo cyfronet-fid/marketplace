@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 module Service::Categorable
+  EXTERNAL_SEARCH_ENABLED = Mp::Application.config.enable_external_search
+
   extend ActiveSupport::Concern
 
-  included { before_action :init_categories_tree, only: :index }
+  included { before_action :init_categories_tree, only: :index, unless: :external_search_enabled? }
 
   def category_counters(scope, filters)
     services = search_for_categories(scope, filters)
@@ -17,6 +19,7 @@ module Service::Categorable
   private
 
   def init_categories_tree
+    load_root_categories!
     @siblings = siblings
     @subcategories = subcategories
     @siblings_with_counters = siblings_with_counters.partition { |_cid, c| c[:category][:name] != "Other" }.flatten(1)
@@ -33,7 +36,7 @@ module Service::Categorable
   end
 
   def siblings
-    category&.ancestry.nil? ? @root_categories : category.siblings.order(:name)
+    category.presence&.ancestry.nil? ? @root_categories : category.siblings.order(:name)
   end
 
   def subcategories
@@ -55,5 +58,9 @@ module Service::Categorable
 
   def counters
     @counters ||= category_counters(scope, all_filters)
+  end
+
+  def external_search_enabled?
+    EXTERNAL_SEARCH_ENABLED
   end
 end

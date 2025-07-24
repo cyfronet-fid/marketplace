@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module Backoffice::ProvidersHelper
-  PROFILE_4_ENABLED = Rails.configuration.profile_4_enabled.freeze
   BASIC_STEPS = %w[profile location contacts managers summary].freeze
   EXTENDED_STEPS = %w[profile classification location contacts maturity dependencies managers other].freeze
 
@@ -19,26 +18,6 @@ module Backoffice::ProvidersHelper
 
   def partial_path(step, extended_form: false)
     "backoffice/providers/#{form_directory(extended_form)}/#{step}"
-  end
-
-  def hosting_legal_entity_input(form)
-    if PROFILE_4_ENABLED
-      form.input :hosting_legal_entity,
-                 collection: Vocabulary.where(type: "Vocabulary::HostingLegalEntity"),
-                 disabled: cant_edit(:hosting_legal_entity),
-                 label_method: :name,
-                 value_method: :id,
-                 input_html: {
-                   multiple: false,
-                   data: {
-                     choice: true
-                   }
-                 }
-    else
-      form.input :hosting_legal_entity_string,
-                 label: "Hosting Legal Entity",
-                 disabled: cant_edit(:hosting_legal_entity_string)
-    end
   end
 
   def next_title

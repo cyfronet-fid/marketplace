@@ -1,6 +1,7 @@
 - active = "font-weight-bolder" if local_assigns[:current] && current == category
 %li{ class: "d-flex justify-content-between align-items-center #{active}" }
-  = link_to category.name, category_services_path(category, category_query_params.merge(page: nil).permit!),
+  = link_to category.name, category_services_path(path_params: { category_id: category.to_param },
+    **category_query_params.merge(page: nil).permit!),
   class: "mr-2",
   "data-probe": ""
   %span= counter

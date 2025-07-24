@@ -11,7 +11,7 @@
               Your token is active:
             %p.active{ "data-token-target": "content", "data-token": "#{token}" }
               = "*" * 20
-            %a#toggler.text-uppercase.underline-light.token-visibility{ "data-token-target": "button",
+            %a#toggler.text-uppercase.underline-light.token-visibility{ href: "#", "data-token-target": "button",
                       "data-action": "click->token#toggle" }
               Show token
 

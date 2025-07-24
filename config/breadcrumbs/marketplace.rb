@@ -9,9 +9,18 @@ crumb :profile do
   parent :marketplace_root
 end
 
-crumb :services do
-  link "Services & Datasources", services_path(params: (session[:query].blank? ? {} : session[:query]))
-  parent :marketplace_root
+crumb :services do |category|
+  if category
+    link category.name, backoffice_category_services_path(category_id: category)
+    if category.parent
+      parent :backoffice_services, category.parent
+    else
+      parent :backoffice_services
+    end
+  else
+    link "Services & Datasources", services_path(params: (session[:query].blank? ? {} : session[:query]))
+    parent :marketplace_root
+  end
 end
 
 crumb :service do |service|

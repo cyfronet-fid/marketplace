@@ -7,7 +7,9 @@ export default class extends Controller {
     this.hide();
   }
 
-  toggle() {
+  toggle(event) {
+    event.preventDefault();
+    event.stopPropagation();
     if (this.hasContentTarget && this.contentTarget.classList.contains("show-token")) {
       this.hide();
     } else {

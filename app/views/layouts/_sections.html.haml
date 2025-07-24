@@ -16,13 +16,13 @@
       = mail_to "eosc-beyond-po@mailman.egi.eu", subject: "EOSC Portal" do
         = image_tag "socials-mail.svg", alt: "email"
 %nav
+  = link_to "logout",
+            destroy_user_session_path,
+            data: { turbo_method: :delete, e2e: "logout" },
+            id: "hidden-logout",
+            class: "#{"d-none" unless Rails.env.test?}"
   %eosc-common-main-header.common-header{ username: current_user.present? ? current_user.full_name : "",
                                           "profile-links": eosc_commons_profile_links,
                                           "show-eosc-links": "true",
                                           "login-url": user_checkin_omniauth_authorize_url,
-                                          "(on-logout)": "document.getElementById('hidden_logout').click()" }
-  = link_to "logout",
-            destroy_user_session_path,
-            data: { turbo_method: :delete, e2e: "logout" },
-            id: "hidden_logout",
-            class: "#{"d-none" unless Rails.env.test?}"
+                                          "(on-logout)": "document.getElementById('hidden-logout').click()" }

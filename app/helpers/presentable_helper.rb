@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require "uri"
 module PresentableHelper
-  HOME_PAGE_EXTERNAL_LINKS_ENABLED = Rails.configuration.home_page_external_links_enabled.freeze
+  ENABLE_EXTERNAL_SEARCH = Rails.configuration.enable_external_search.freeze
   SEARCH_SERVICE_BASE_URL = Rails.configuration.search_service_base_url.freeze
 
   def data_for_map(geographical_availabilities)
@@ -44,7 +44,7 @@ module PresentableHelper
   end
 
   def search_link_router(object, type = "scientific_domains")
-    return external_children_search_link(object, type) if home_page_external_links_enabled?
+    return external_children_search_link(object, type) if enable_external_search?
     case type
     when "scientific_domains"
       services_path(scientific_domains: [object.to_param] + object.children&.map(&:to_param))
@@ -86,8 +86,8 @@ module PresentableHelper
     end
   end
 
-  def home_page_external_links_enabled?
-    HOME_PAGE_EXTERNAL_LINKS_ENABLED
+  def enable_external_search?
+    ENABLE_EXTERNAL_SEARCH
   end
 
   def search_service_base_url

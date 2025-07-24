@@ -1,4 +1,5 @@
-- if request.fullpath.include?("backoffice")
+- backoffice_scope = request.fullpath.include?("backoffice")
+- if backoffice_scope
   .col-12.justify-content-center.d-flex
     .col-lg-9.pl-0
       = render "backoffice/services/search", query_params: query_params || {}
@@ -17,7 +18,7 @@
   .col-md-12.mb-1
     - if category && params[:q].blank?
       %p.text-muted.mb-4.ml-1= category.description
-  - if active_filters.present?
+  - if active_filters.present? || category.present?
     .col-md-12.mb-3.pl-0
       %p.mb-1
         = _("Active filters")
@@ -28,6 +29,13 @@
               #{title}:
             = label
             = link_to(p, "data-probe": "") do
+              .fas.fa-times
+        - if category.present?
+          .filter-tag{ "data-e2e": "filter-tag" }
+            %span.text-muted
+              Category:
+            = category.name
+            = link_to send("#{"backoffice_" if backoffice_scope}services_path", **query_params) do
               .fas.fa-times
 
         - if active_filters.present?

@@ -25,6 +25,9 @@ Rails.application.routes.draw do
   get "/datasources/:id", to: redirect("/services/%{id}")
   get "backoffice/datasources/:id", to: redirect("backoffice/services/%{id}")
 
+  scope "/services" do
+    get "/c/:category_id", to: "services#index", as: :category_services
+  end
   resources :services, only: %i[index show], constraints: { id: pid_format_constraint } do
     scope module: :services do
       resources :offers, only: %i[index] do
@@ -65,7 +68,6 @@ Rails.application.routes.draw do
     end
   end
 
-  get "services/c/:category_id" => "services#index", :as => :category_services
   resources :categories, only: :show
 
   resources :catalogues, only: %i[index show] do
@@ -112,6 +114,9 @@ Rails.application.routes.draw do
 
   resource :backoffice, only: :show
   namespace :backoffice do
+    scope "/services" do
+      get "/c/:category_id", to: "services#index", as: :category_services
+    end
     namespace :statuses do
       resources :providers, only: %i[create]
       resources :catalogues, only: %i[create]
@@ -133,7 +138,6 @@ Rails.application.routes.draw do
       end
     end
     get "service_autocomplete", to: "services#autocomplete", as: :service_autocomplete
-    get "services/c/:category_id" => "services#index", :as => :category_services
     resources :approval_requests, only: %i[index show edit update]
     resources :providers, constraints: { id: pid_format_constraint } do
       resource :publish, controller: "providers/publishes", only: :create
