@@ -72,10 +72,29 @@ RSpec.configure do |config|
           }
         }
       }
+    },
+    "v1/users_swagger.json" => {
+      openapi: "3.0.1",
+      info: {
+        title: "EOSC User API",
+        version: "v1",
+        description: "API for external clients loading user configuration"
+      },
+      paths: {
+      },
+      components: {
+        securitySchemes: {
+          authentication_token: {
+            type: :apiKey,
+            name: "X-User-Token",
+            in: :header
+          }
+        }
+      }
     }
   }
 
-  # Specify the format of the output Swagger file when running 'rswag:specs:swaggerize'.
+  # Specify the format of the output Swagger file when running 'rswag:specs:swaggerize'.\
   # The swagger_docs configuration option has the filename including format in
   # the key, this may want to be changed to avoid putting yaml in json files.
   # Defaults to json. Accepts ':json' and ':yaml'.
