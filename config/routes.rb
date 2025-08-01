@@ -210,6 +210,7 @@ Rails.application.routes.draw do
         resources :bundles, only: %i[index show]
         resources :deployable_services, only: %i[index show], constraints: { id: pid_format_constraint }
       end
+      resources :users, only: :show, constraints: { id: pid_format_constraint }
     end
   end
 
