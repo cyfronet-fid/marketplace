@@ -1,0 +1,29 @@
+{
+  "type": "object",
+  "properties": {
+    "uid": {
+      "type": "string"
+    },
+    "roles": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["coordinator", "admin", "executive"]
+      }
+    },
+    "providers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "catalogues": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": ["uid", "roles", "providers", "catalogues"]
+}
