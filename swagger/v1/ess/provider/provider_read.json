@@ -10,6 +10,10 @@
     "slug": {
       "type": "string"
     },
+    "node": {
+      "type": "string",
+      "nullable": true
+    },
     "catalogues": {
       "type": "array",
       "nullable": true,

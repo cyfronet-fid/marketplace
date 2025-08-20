@@ -76,6 +76,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :deployable_services, only: %i[index show] do
+    scope module: :deployable_services do
+      resource :logo, only: :show
+    end
+  end
+
   resource :reports, only: %i[new create], constraints: lambda { |req| req.format == :js }
 
   resources :projects do
@@ -202,6 +208,7 @@ Rails.application.routes.draw do
         resources :catalogues, only: %i[index show]
         resources :offers, only: %i[index show]
         resources :bundles, only: %i[index show]
+        resources :deployable_services, only: %i[index show], constraints: { id: pid_format_constraint }
       end
     end
   end

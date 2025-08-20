@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_05_18_120000) do
+ActiveRecord::Schema[7.2].define(version: 2025_08_06_112106) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -264,6 +264,53 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_18_120000) do
     t.index ["email"], name: "index_data_administrators_on_email"
     t.index ["first_name"], name: "index_data_administrators_on_first_name"
     t.index ["last_name"], name: "index_data_administrators_on_last_name"
+  end
+
+  create_table "deployable_service_scientific_domains", force: :cascade do |t|
+    t.bigint "deployable_service_id", null: false
+    t.bigint "scientific_domain_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deployable_service_id", "scientific_domain_id"], name: "index_ds_sci_domains_on_ds_id_and_sci_domain_id", unique: true
+    t.index ["deployable_service_id"], name: "idx_on_deployable_service_id_1f2d490ad7"
+    t.index ["scientific_domain_id"], name: "idx_on_scientific_domain_id_a46aec97c5"
+  end
+
+  create_table "deployable_service_sources", force: :cascade do |t|
+    t.string "eid", null: false
+    t.string "source_type", null: false
+    t.bigint "deployable_service_id", null: false
+    t.jsonb "errored"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deployable_service_id"], name: "index_deployable_service_sources_on_deployable_service_id"
+    t.index ["eid", "source_type", "deployable_service_id"], name: "index_ds_sources_on_eid_and_source_type_and_ds_id", unique: true
+  end
+
+  create_table "deployable_services", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description", null: false
+    t.string "tagline", null: false
+    t.string "abbreviation"
+    t.string "url"
+    t.string "node"
+    t.string "version"
+    t.string "software_license"
+    t.datetime "last_update"
+    t.jsonb "creators", default: []
+    t.string "slug"
+    t.string "status"
+    t.string "pid"
+    t.integer "upstream_id"
+    t.datetime "synchronized_at"
+    t.bigint "resource_organisation_id", null: false
+    t.bigint "catalogue_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["catalogue_id"], name: "index_deployable_services_on_catalogue_id"
+    t.index ["pid"], name: "index_deployable_services_on_pid"
+    t.index ["resource_organisation_id"], name: "index_deployable_services_on_resource_organisation_id"
+    t.index ["slug"], name: "index_deployable_services_on_slug", unique: true
   end
 
   create_table "events", force: :cascade do |t|
@@ -1036,6 +1083,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_18_120000) do
   add_foreign_key "catalogue_vocabularies", "vocabularies"
   add_foreign_key "catalogues", "catalogue_sources", column: "upstream_id", on_delete: :nullify
   add_foreign_key "data_administrators", "users"
+  add_foreign_key "deployable_service_scientific_domains", "deployable_services"
+  add_foreign_key "deployable_service_scientific_domains", "scientific_domains"
+  add_foreign_key "deployable_service_sources", "deployable_services"
+  add_foreign_key "deployable_services", "catalogues"
+  add_foreign_key "deployable_services", "providers", column: "resource_organisation_id"
   add_foreign_key "observed_user_offers", "offers"
   add_foreign_key "observed_user_offers", "users"
   add_foreign_key "offer_links", "offers", column: "source_id"
