@@ -25,9 +25,7 @@
         ],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
         "parameters": [
@@ -123,9 +121,7 @@
         ],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
         "parameters": [
@@ -216,14 +212,10 @@
         ],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
-        "parameters": [
-
-        ],
+        "parameters": [],
         "responses": {
           "201": {
             "description": "message created",
@@ -315,9 +307,7 @@
         ],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
         "responses": {
@@ -370,14 +360,10 @@
         ],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
-        "parameters": [
-
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "message updated",
@@ -469,9 +455,7 @@
         ],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
         "parameters": [
@@ -575,9 +559,7 @@
         ],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
         "responses": {
@@ -630,14 +612,10 @@
         ],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
-        "parameters": [
-
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "project item updated",
@@ -710,9 +688,7 @@
         ],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
         "parameters": [
@@ -807,9 +783,7 @@
         ],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
         "responses": {
@@ -864,9 +838,7 @@
         ],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
         "responses": {
@@ -912,9 +884,7 @@
         ],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
         "responses": {

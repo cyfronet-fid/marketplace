@@ -6439,3 +6439,59 @@ relations:
 ##    both: true
 ##    source: *
 ##    target: *
+deployable_services:
+  docker_jupyterhub:
+    name: Docker JupyterHub
+    pid: docker.jupyterhub
+    abbreviation: JupyterHub
+    description: |
+      A containerized version of JupyterHub that provides multi-user Jupyter notebook environments.
+      Easy to deploy and scale for research teams and educational institutions.
+    tagline: Multi-user Jupyter notebook server in Docker
+    url: https://github.com/jupyterhub/jupyterhub-docker
+    node: docker
+    version: "4.0.2"
+    software_license: BSD-3-Clause
+    creators: ["Project Jupyter", "JupyterHub Community"]
+    resource_organisation: *egi
+    catalogue: *eosc
+    scientific_domains: ["Computer and Information Sciences"]
+    tags: ["jupyter", "docker", "multi-user", "notebooks", "python"]
+    logo: jupyter.png
+
+  tensorflow_serving:
+    name: TensorFlow Serving
+    pid: tensorflow.serving
+    abbreviation: TF-Serving
+    description: |
+      A flexible, high-performance serving system for machine learning models, 
+      designed for production environments. Supports TensorFlow models with gRPC and REST APIs.
+    tagline: High-performance ML model serving system
+    url: https://www.tensorflow.org/tfx/guide/serving
+    node: kubernetes
+    version: "2.14.0"
+    software_license: Apache-2.0
+    creators: ["Google Brain Team", "TensorFlow Community"]
+    resource_organisation: *cyfro
+    catalogue: *eosc
+    scientific_domains: ["Computer and Information Sciences", "Engineering and Technology"]
+    tags: ["machine-learning", "tensorflow", "model-serving", "api", "production"]
+
+  rstudio_server:
+    name: RStudio Server
+    pid: rstudio.server
+    abbreviation: RStudio
+    description: |
+      A web-based interface to R, providing a familiar development environment 
+      for statistical computing and data analysis accessible through a browser.
+    tagline: Web-based R development environment
+    url: https://www.rstudio.com/products/rstudio-server/
+    node: docker
+    version: "2023.12.1"
+    software_license: AGPL-3.0
+    creators: ["RStudio Team", "Posit Software"]
+    resource_organisation: *grnet
+    catalogue: *eosc
+    scientific_domains: ["Mathematics", "Computer and Information Sciences"]
+    tags: ["r", "statistics", "data-analysis", "web-interface", "research"]
+    logo: the-r-project-for-statistical-computing.png

@@ -14,9 +14,7 @@
         ],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
         "parameters": [
@@ -70,9 +68,7 @@
         ],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
         "parameters": [
@@ -88,7 +84,7 @@
         ],
         "responses": {
           "201": {
-            "description": "bundle offer created",
+            "description": "offer created",
             "content": {
               "application/json": {
                 "schema": {
@@ -157,9 +153,7 @@
         ],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
         "parameters": [
@@ -232,9 +226,7 @@
         ],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
         "parameters": [
@@ -316,9 +308,7 @@
         ],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
         "parameters": [
@@ -386,9 +376,7 @@
         ],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
         "responses": {
@@ -423,9 +411,7 @@
         ],
         "security": [
           {
-            "authentication_token": [
-
-            ]
+            "authentication_token": []
           }
         ],
         "parameters": [

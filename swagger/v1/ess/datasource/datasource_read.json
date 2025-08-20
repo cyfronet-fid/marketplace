@@ -7,6 +7,17 @@
     "pid": {
       "type": "string"
     },
+    "nodes": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "node": {
+      "type": "string",
+      "nullable": true
+    },
     "catalogues": {
       "type": "array",
       "nullable": true,

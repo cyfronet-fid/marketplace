@@ -1,0 +1,95 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "pid": {
+      "type": "string",
+      "nullable": true
+    },
+    "slug": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "abbreviation": {
+      "type": "string",
+      "nullable": true
+    },
+    "tagline": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string",
+      "nullable": true
+    },
+    "node": {
+      "type": "string",
+      "nullable": true
+    },
+    "version": {
+      "type": "string",
+      "nullable": true
+    },
+    "software_license": {
+      "type": "string",
+      "nullable": true
+    },
+    "last_update": {
+      "type": "string",
+      "nullable": true
+    },
+    "creators": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": ["published"]
+    },
+    "resource_organisation": {
+      "type": "string"
+    },
+    "catalogue": {
+      "type": "string",
+      "nullable": true
+    },
+    "scientific_domains": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "upstream_id": {
+      "type": "integer",
+      "nullable": true
+    },
+    "publication_date": {
+      "type": "string"
+    },
+    "updated_at": {
+      "type": "string"
+    },
+    "synchronized_at": {
+      "type": "string",
+      "nullable": true
+    },
+    "tag_list": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": ["id", "name", "tagline", "description", "status"]
+}

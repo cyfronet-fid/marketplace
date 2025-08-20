@@ -1,0 +1,12 @@
+- breadcrumb(:deployable_services)
+%main.pages
+  .container
+    %h1{ "data-e2e": "deployable-service-list" }
+      = _("Deployable Services")
+    .media.border-0
+      .media-body
+        %ul.special-list
+          - @deployable_services.each do |deployable_service|
+            %li.special-list-item
+              = link_to deployable_service.name, deployable_service_path(deployable_service)
+              %p.text-muted= deployable_service.tagline if deployable_service.tagline.present?
