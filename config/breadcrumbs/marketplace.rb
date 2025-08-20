@@ -150,6 +150,15 @@ crumb :catalogue do |catalogue|
   parent :catalogues
 end
 
+crumb :deployable_services do
+  link "Deployable Services", deployable_services_path
+  parent :marketplace_root
+end
+
+crumb :deployable_service do |deployable_service|
+  link deployable_service.name, deployable_service_path(deployable_service)
+  parent :deployable_services
+end
 
 crumb :communities do
   link "Communities and infrastructures", communities_path

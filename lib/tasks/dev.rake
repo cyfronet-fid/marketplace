@@ -28,6 +28,7 @@ namespace :dev do
     create_catalogues(yaml_hash["catalogues"])
     create_providers(yaml_hash["providers"])
     create_services(yaml_hash["services"])
+    create_deployable_services(yaml_hash["deployable_services"])
     create_relations(yaml_hash["relations"])
 
     OrderingApi::AddSombo.new.call
@@ -255,6 +256,45 @@ namespace :dev do
   def create_vocabularies
     Rake::Task["rdt:add_vocabularies"].invoke
     Rake::Task["rdt:add_internal_vocabularies"].invoke
+  end
+
+  def create_deployable_services(deployable_services_hash)
+    return unless deployable_services_hash
+
+    puts "Generating deployable services:"
+    deployable_services_hash.each_value do |hash|
+      resource_organisation = Provider.find_by(name: hash["resource_organisation"])
+      catalogue = Catalogue.find_by(name: hash["catalogue"])
+      scientific_domains = ScientificDomain.where(name: hash["scientific_domains"])
+
+      deployable_service = DeployableService.find_or_initialize_by(name: hash["name"])
+      deployable_service.assign_attributes(
+        pid: hash["pid"],
+        abbreviation: hash["abbreviation"],
+        description: hash["description"],
+        tagline: hash["tagline"],
+        url: hash["url"],
+        node: hash["node"],
+        version: hash["version"],
+        last_update: hash["last_update"],
+        software_license: hash["software_license"],
+        creators: hash["creators"] || [],
+        resource_organisation: resource_organisation,
+        catalogue: catalogue,
+        scientific_domains: scientific_domains,
+        tag_list: hash["tags"],
+        status: hash["status"] || :published
+      )
+
+      deployable_service.save(validate: false)
+
+      if hash["logo"]
+        deployable_service.logo.attached? && deployable_service.logo.purge_later
+        deployable_service.logo.attach(io: File.open("db/logos/#{hash["logo"]}"), filename: hash["logo"])
+      end
+
+      puts "  - #{hash["name"]} deployable service generated"
+    end
   end
 
   def create_catalogues(catalogue_hash)

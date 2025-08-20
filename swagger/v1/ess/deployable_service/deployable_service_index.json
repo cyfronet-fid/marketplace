@@ -1,0 +1,7 @@
+{
+  "type": "array",
+  "items": {
+    "$ref": "deployable_service_read.json"
+  },
+  "additionalProperties": false
+}

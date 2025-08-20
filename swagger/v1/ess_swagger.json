@@ -277,6 +277,103 @@
         }
       }
     },
+    "/api/v1/ess/deployable_services": {
+      "get": {
+        "summary": "lists deployable services",
+        "tags": ["deployable_services"],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "deployable services found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ess/deployable_service/deployable_service_index.json"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ess/deployable_services/{deployable_service_id}": {
+      "parameters": [
+        {
+          "name": "deployable_service_id",
+          "in": "path",
+          "description": "Deployable Service identifier (id or slug)",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "retrieves a deployable service by id",
+        "tags": ["deployable_services"],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "deployable service found by slug",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "ess/deployable_service/deployable_service_read.json"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "draft deployable service not found by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "deployable service not found by unpermitted user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "error.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/ess/offers": {
       "get": {
         "summary": "lists published offers",

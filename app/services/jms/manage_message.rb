@@ -21,12 +21,13 @@ class Jms::ManageMessage < ApplicationService
     Sidekiq.strict_args! false
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
   def call
     log @message
     body = JSON.parse(@message.body)
     resource_type = @message.headers["destination"].split(".")[-2]
     action = @message.headers["destination"].split(".").last
-    resource = body[resource_type]
+    resource = body[resource_type.camelize(:lower)]
 
     raise ResourceParseError, "Cannot parse resource" if resource.nil? || resource.empty?
 
@@ -74,6 +75,14 @@ class Jms::ManageMessage < ApplicationService
       elsif action == "delete"
         Datasource::DeleteJob.perform_later(hash["id"])
       end
+    when "deployable_service"
+      hash = resource.to_hash
+
+      if action != "delete"
+        DeployableService::PcCreateOrUpdateJob.perform_later(hash, object_status(body["active"], body["suspended"]))
+      elsif action == "delete"
+        DeployableService::DeleteJob.perform_later(hash["id"])
+      end
     else
       raise WrongMessageError
     end
@@ -85,6 +94,7 @@ class Jms::ManageMessage < ApplicationService
   rescue ResourceParseError => e
     warn "[WARN] Resource parse error: #{e.message}"
   end
+  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
 
   private
 
