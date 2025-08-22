@@ -7,7 +7,7 @@ shared_examples "publishable" do
       @client = Stomp::Client.new(stomp_config["login"], stomp_config["password"], stomp_config["host"])
       @received = []
 
-      @client.subscribe("/topic/#{stomp_config["mp-db-events-destination"]}") do |msg|
+      @client.subscribe("/topic/#{stomp_config["mp_db_events_destination"]}") do |msg|
         @received << JSON.parse(msg.body)
       end
       # mock the Time.now call for consistency

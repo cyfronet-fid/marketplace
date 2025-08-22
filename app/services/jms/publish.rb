@@ -36,9 +36,9 @@ class Jms::Publish
   def destination(stomp_config)
     case @destination
     when :mp_db_events
-      stomp_config["mp-db-events-topic"]
+      stomp_config["mp_db_events_topic"]
     when :user_actions
-      stomp_config["user-actions-topic"]
+      stomp_config["user_actions_topic"]
     else
       stomp_config["topic"]
     end
@@ -52,7 +52,7 @@ class Jms::Publish
       stomp_config["login"],
       stomp_config["password"],
       stomp_config["host"],
-      stomp_config["ssl-enabled"],
+      stomp_config["ssl_enabled"],
       @logger
     )
   end
