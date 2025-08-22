@@ -4,13 +4,4 @@ APP_ROOT = File.expand_path("..", __dir__)
 require_relative "../config/boot"
 require_relative "../config/environment"
 
-stomp_config = Mp::Application.config_for(:stomp_subscriber)
-
-Jms::Subscriber.new(stomp_config["destination"],
-                    stomp_config["login"],
-                    stomp_config["password"],
-                    stomp_config["host"],
-                    stomp_config["client-name"],
-                    ENV["MP_IMPORT_EOSC_REGISTRY_URL"] || "https://integration.providers.sandbox.eosc-beyond.eu/api",
-                    stomp_config["ssl-enabled"],
-                    ENV["MP_IMPORT_TOKEN"] || nil).run
+Jms::Subscriber.new(ENV.fetch("STOMP_CONFIG_FILEPATH", nil)).run
