@@ -1,21 +1,38 @@
 default: &default
-  client-name: <%= ENV["MP_STOMP_CLIENT_NAME"] || "'MPClient'" %>
+  client_name: <%= ENV["MP_STOMP_CLIENT_NAME"] || "'MPClientDev'" %>
   login: <%= ENV["MP_STOMP_LOGIN"] || Rails.application.credentials.stomp.dig(:login) || "''" %>
   password: <%= ENV["MP_STOMP_PASS"] || Rails.application.credentials.stomp.dig(:password) || "''" %>
   host: <%= ENV["MP_STOMP_HOST"] || Rails.application.credentials.stomp.dig(:host) || "''" %>
-  destination: <%= ENV["MP_STOMP_DESTINATION"] || Rails.application.credentials.stomp.dig(:subscriber, :destination) || "''" %>
-  mp-db-events-destination: <%= ENV["MP_STOMP_PUBLISHER_MP_DB_EVENTS_TOPIC"] || "mp_db_events" %>
-  user-actions-destination: <%= ENV["MP_STOMP_PUBLISHER_USER_ACTIONS_TOPIC"] || "user_actions" %>
-  ssl-enabled: <%= ENV["MP_STOMP_SSL"] || false %>
-
-test:
-  <<: *default
-  login: <%= ENV["TEST_STOMP_LOGIN"] || "admin" %>
-  password: <%= ENV["TEST_STOMP_PASS"] ||  "admin" %>
-  host: <%= ENV["TEST_STOMP_HOST"] || "localhost" %>
+  topic: <%= ENV["MP_STOMP_DESTINATION"] || Rails.application.credentials.stomp.dig(:subscriber, :destination) || "''" %>
+  mp_db_events_destination: <%= ENV["MP_STOMP_PUBLISHER_MP_DB_EVENTS_TOPIC"] || "mp_db_events" %>
+  user_actions_destination: <%= ENV["MP_STOMP_PUBLISHER_USER_ACTIONS_TOPIC"] || "user_actions" %>
+  ssl_enabled: <%= ENV["MP_STOMP_SSL"] || false %>
+  port: 61613
 
 development:
-  <<: *default
+  eosc_registry_base_url: <%= ENV["MP_IMPORT_EOSC_REGISTRY_URL"] || "https://integration.providers.sandbox.eosc-beyond.eu/api" %>
+  token: <%= ENV["MP_IMPORT_TOKEN"] || nil %>
+
+  subscriptions:
+    - <<: *default
 
 production:
-  <<: *default
+  eosc_registry_base_url: <%= ENV["MP_IMPORT_EOSC_REGISTRY_URL"] || "https://integration.providers.sandbox.eosc-beyond.eu/api" %>
+  token: <%= ENV["MP_IMPORT_TOKEN"] || nil %>
+
+  subscriptions:
+    - <<: *default
+
+test:
+  eosc_registry_base_url: "http://localhost/api"
+  token: "test_token"
+
+  subscriptions:
+    - host: <%= ENV["TEST_STOMP_HOST"] || "localhost" %>
+      port: 61613
+      login: <%= ENV["TEST_STOMP_LOGIN"] || "admin" %>
+      password: <%= ENV["TEST_STOMP_PASS"] ||  "admin" %>
+      client_name: "mp_test_subscriber"
+      ssl_enabled: false
+      topics:
+        - "test.topic"
