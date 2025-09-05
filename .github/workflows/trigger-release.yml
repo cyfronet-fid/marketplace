@@ -1,0 +1,81 @@
+on: workflow_dispatch
+
+name: trigger-release
+jobs:
+  create-release-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Check if there are changes between development and master
+        id: check_changes
+        run: |
+          git fetch origin master development
+          CHANGES=$(git diff --name-only origin/master...origin/development)
+          if [ -z "$CHANGES" ]; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "No changes found between development and master"
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "Changes found:"
+            echo "$CHANGES"
+          fi
+      
+      - name: Generate changelog
+        if: steps.check_changes.outputs.has_changes == 'true'
+        id: changelog
+        run: |
+          CHANGELOG=$(git log origin/master..origin/development --pretty=format:"- %s (%h)" --no-merges)
+          echo "changelog<<EOF" >> $GITHUB_OUTPUT
+          echo "$CHANGELOG" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+      
+      - name: Check if PR already exists
+        if: steps.check_changes.outputs.has_changes == 'true'
+        id: check_pr
+        run: |
+          PR_EXISTS=$(gh pr list --base master --head development --state open --json number --jq length)
+          echo "pr_exists=$PR_EXISTS" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Create Pull Request from development to master
+        if: steps.check_changes.outputs.has_changes == 'true' && steps.check_pr.outputs.pr_exists == '0'
+        run: |
+          gh pr create \
+            --base master \
+            --head development \
+            --title "Release: Merge development to master" \
+            --body "## Release Pull Request
+
+          This PR contains changes from the \`development\` branch ready for release to \`master\`.
+
+          ### Changes in this release:
+          ${{ steps.changelog.outputs.changelog }}
+
+          ### What will happen after merge:
+          - Automatic creation of a new release
+          - Application version bump
+          - Changelog generation
+
+          ---
+          *This PR was created automatically by GitHub Actions*" \
+            --label "release"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: PR already exists
+        if: steps.check_changes.outputs.has_changes == 'true' && steps.check_pr.outputs.pr_exists != '0'
+        run: |
+          echo "::notice::A pull request from development to master already exists."
+          gh pr list --base master --head development --state open
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: No changes found
+        if: steps.check_changes.outputs.has_changes == 'false'
+        run: |
+          echo "::notice::No changes found between development and master. PR was not created."
