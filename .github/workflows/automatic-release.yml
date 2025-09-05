@@ -1,0 +1,30 @@
+on:
+  push:
+    branches:
+      - master
+
+name: automatic-release
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: google-github-actions/release-please-action@v4
+        id: release
+        with:
+          release-type: simple
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+        if: ${{ steps.release.outputs.release_created }}
+      - name: Set Git bot config
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+        if: ${{ steps.release.outputs.release_created }}
+      - name: Master to development auto merge
+        run: |
+          git checkout development
+          git pull
+          git merge --no-ff origin/master -m "chore: auto-merge master to development"
+          git push
+        if: ${{ steps.release.outputs.release_created }}
