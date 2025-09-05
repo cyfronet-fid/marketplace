@@ -7,6 +7,58 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.60.0](https://github.com/cyfronet-fid/marketplace/compare/3.59.0...3.60.0) (2025-09-05)
+
+### Features
+
+* [[#101](https://github.com/cyfronet-fid/marketplace/issues/101)] Add unit to the constant parameter ([d282d28](https://github.com/cyfronet-fid/marketplace/commit/d282d28c8cc21d208d2aa79fdc8fc5d138a16792))
+* [[#129](https://github.com/cyfronet-fid/marketplace/issues/129)] Provider creation wizard form ([968d6c0](https://github.com/cyfronet-fid/marketplace/commit/968d6c077883f708f077f107ed1170425f676a5f))
+* [[#132](https://github.com/cyfronet-fid/marketplace/issues/132)] Add panel for accept providers ([38f8467](https://github.com/cyfronet-fid/marketplace/commit/38f84679e760e4f1b6d179c3ac275ed077c75c95))
+* [[#157](https://github.com/cyfronet-fid/marketplace/issues/157)] Availability counters in Offers ([348b1c7](https://github.com/cyfronet-fid/marketplace/commit/348b1c71db2b717b592d3acd26b39878aef29ef9))
+* [[#215](https://github.com/cyfronet-fid/marketplace/issues/215)] Subscription on multiple Catalogues ([4d5b00e](https://github.com/cyfronet-fid/marketplace/commit/4d5b00e9631ae0024b57a0f7a11c3968c7a2cd82))
+* [[#3214](https://github.com/cyfronet-fid/marketplace/issues/3214)] Add new offer design ([7c4d003](https://github.com/cyfronet-fid/marketplace/commit/7c4d0038fd06389e90a55efc0b55c25e271b46d2))
+* [[#3228](https://github.com/cyfronet-fid/marketplace/issues/3228)] Add meta tags to the application's header ([51c2d22](https://github.com/cyfronet-fid/marketplace/commit/51c2d22177c359c8624c4caef0da0898ce132de1))
+* [[#3230](https://github.com/cyfronet-fid/marketplace/issues/3230)] Help section syles ([0e0a957](https://github.com/cyfronet-fid/marketplace/commit/0e0a9574bac8e9dde7e26de323efb81c0ba6a6e6))
+* [[#3414](https://github.com/cyfronet-fid/marketplace/issues/3414)] Add node field and fix integration ([43ec869](https://github.com/cyfronet-fid/marketplace/commit/43ec869214bac22044e122412c1c7aa46ba5bafa))
+* [[#3418](https://github.com/cyfronet-fid/marketplace/issues/3418)] Hide additional fields in the project creation form ([258d051](https://github.com/cyfronet-fid/marketplace/commit/258d051a5c79948c7868f81f822364c0b33f0613))
+* [[#3423](https://github.com/cyfronet-fid/marketplace/issues/3423)] Add recommended offers to the project view ([734380b](https://github.com/cyfronet-fid/marketplace/commit/734380b8deb4dc8402d6f79884a985bb0e480a5d))
+* [[#3441](https://github.com/cyfronet-fid/marketplace/issues/3441)] Add node information to the frontend ([6ed2d18](https://github.com/cyfronet-fid/marketplace/commit/6ed2d18decd62edf6eca81d9f6e8556510dec296))
+* [[#3484](https://github.com/cyfronet-fid/marketplace/issues/3484)] Add deployable services ([#3495](https://github.com/cyfronet-fid/marketplace/issues/3495)) ([b1a4cea](https://github.com/cyfronet-fid/marketplace/commit/b1a4ceaf3c228484cf3c5618e138a764ac6e2a9a))
+* [[#3493](https://github.com/cyfronet-fid/marketplace/issues/3493)] Add user roles API endpoint ([113d7a6](https://github.com/cyfronet-fid/marketplace/commit/113d7a6c05cde3421a879b9e6ee3b62ca380d0ee))
+* [[#37](https://github.com/cyfronet-fid/marketplace/issues/37)] New backoffice's design ([9a54aac](https://github.com/cyfronet-fid/marketplace/commit/9a54aaca419033ebaae3be6ee205bf126816b0e4))
+* [[#4](https://github.com/cyfronet-fid/marketplace/issues/4)] Add statuses changes to providers and catalogues ([78ceb9a](https://github.com/cyfronet-fid/marketplace/commit/78ceb9a0af8cbf02e5f9c485601c266403d0b43f))
+* [[#5](https://github.com/cyfronet-fid/marketplace/issues/5)] Add delete action for services ([7ec2302](https://github.com/cyfronet-fid/marketplace/commit/7ec2302da061b95e91af8c35ad213ddaf0bc05c6))
+* [[#65](https://github.com/cyfronet-fid/marketplace/issues/65)] Add multiple status changes to objects ([e3c8d84](https://github.com/cyfronet-fid/marketplace/commit/e3c8d841730298192e735719485f474ad159e98e))
+* [[#83](https://github.com/cyfronet-fid/marketplace/issues/83)] Remove default offer ([feb4443](https://github.com/cyfronet-fid/marketplace/commit/feb4443b247a5a7c4d5cedf7a53ff08577ab138f))
+* []Add logos endpoint for catalogues ([362d3b8](https://github.com/cyfronet-fid/marketplace/commit/362d3b8f35b7bb2ac5e315db66feb82c224b2447))
+* [3480] Apply new tab feature to header ([7fb7b1c](https://github.com/cyfronet-fid/marketplace/commit/7fb7b1ce9facc5909ae7b7319a816f6665f1b7b7))
+
+
+### Bug Fixes
+
+* [[#3187](https://github.com/cyfronet-fid/marketplace/issues/3187), [#3188](https://github.com/cyfronet-fid/marketplace/issues/3188), [#3189](https://github.com/cyfronet-fid/marketplace/issues/3189), [#3191](https://github.com/cyfronet-fid/marketplace/issues/3191)] New design fixes ([da85e12](https://github.com/cyfronet-fid/marketplace/commit/da85e12cf0ac4cb3c3b4a95e893f30fac989ee48))
+* [[#3193](https://github.com/cyfronet-fid/marketplace/issues/3193)-3195] Fix the ordering configuration panel ([c8650f8](https://github.com/cyfronet-fid/marketplace/commit/c8650f8d3e2b5e84c1b1a1111ce415d765eff70c))
+* [[#3247](https://github.com/cyfronet-fid/marketplace/issues/3247)] CUD catalogues actions for ESS transformer ([4749ff6](https://github.com/cyfronet-fid/marketplace/commit/4749ff615741f8ab14a3c1c7d6b7c9af8d9a42c4))
+* [[#3254](https://github.com/cyfronet-fid/marketplace/issues/3254)] Fixes for offers feature ([ebd29f8](https://github.com/cyfronet-fid/marketplace/commit/ebd29f85ee8ba15dd6dc0d86fdda748baa8e3a25))
+* [[#3292](https://github.com/cyfronet-fid/marketplace/issues/3292)] Fix ruby upgrade ([0a881d9](https://github.com/cyfronet-fid/marketplace/commit/0a881d924ec67891735e61885fef1dbea1524470))
+* [[#3299](https://github.com/cyfronet-fid/marketplace/issues/3299)] overflow accordion fix ([236dcb3](https://github.com/cyfronet-fid/marketplace/commit/236dcb3725aa8590f77edf70b6c8c58b0a91838c))
+* [[#3300](https://github.com/cyfronet-fid/marketplace/issues/3300)] Fix service opinion form ([b8ad897](https://github.com/cyfronet-fid/marketplace/commit/b8ad897ebe1bb7729538d128aa53bdebc3cdd817))
+* [[#3337](https://github.com/cyfronet-fid/marketplace/issues/3337)] Fix login in ordering ([409d4c2](https://github.com/cyfronet-fid/marketplace/commit/409d4c29ac3ddeb6bc27f7b8e57b1f88b8af7b45))
+* [[#3404](https://github.com/cyfronet-fid/marketplace/issues/3404)] Update eosc beyond logo ([135c5d8](https://github.com/cyfronet-fid/marketplace/commit/135c5d869ca4dbd5a03e189a2c1a171f37024bf7))
+* [[#3415](https://github.com/cyfronet-fid/marketplace/issues/3415)] removal of FAQ link on LP ([52f363e](https://github.com/cyfronet-fid/marketplace/commit/52f363e76086e6b0dfdb4203b75b5389a5b47ee7))
+* [[#47](https://github.com/cyfronet-fid/marketplace/issues/47)] Remove `no_offers` message form delete services ([f0c5c58](https://github.com/cyfronet-fid/marketplace/commit/f0c5c58e02bfc237d88574f8126984ed8dd26729))
+* [[#73](https://github.com/cyfronet-fid/marketplace/issues/73)] add to favourites title fix ([e2a42e1](https://github.com/cyfronet-fid/marketplace/commit/e2a42e1b41c0995b80080e19d243dceaa5f20b4d))
+* [[#95](https://github.com/cyfronet-fid/marketplace/issues/95)] Fix adding a new offer ([ec9e1db](https://github.com/cyfronet-fid/marketplace/commit/ec9e1dbaf9fdea53e44a4623be65a0db8ecc1a82))
+* [] Add meta tags to the main page ([f0eddf6](https://github.com/cyfronet-fid/marketplace/commit/f0eddf62f4f38448495d34d1b16b104bda264e46))
+* [] Customizable link for the main page helpdesk form ([ba9340c](https://github.com/cyfronet-fid/marketplace/commit/ba9340c67bb13e603a1a0f667e04ed30fa7b3bc2))
+* [#HOTFIX] Collapse all filters by default ([b9f2b41](https://github.com/cyfronet-fid/marketplace/commit/b9f2b419251865bf60efa6c83acad5e94bae3f58))
+* [#HOTFIX] Fix executive internal server error ([50327ef](https://github.com/cyfronet-fid/marketplace/commit/50327efaa4a348b0ff8efe27da4e398615bb3bf3))
+* [#HOTFIX] Propagation of service relationships ([731fd19](https://github.com/cyfronet-fid/marketplace/commit/731fd198d285275247e47089f0b06ba6c0c14726))
+* [#HOTFIX] Propagation of service relationships ([c12509f](https://github.com/cyfronet-fid/marketplace/commit/c12509f4c2aff6b7ad792090f43e11e7ac6656d8))
+* [#HOTFIX] Propagation of service relationships ([2867b69](https://github.com/cyfronet-fid/marketplace/commit/2867b6922adac00c667638c847e1ead1b1475db3))
+* [HOTFIX] Bundle view ([70aabd2](https://github.com/cyfronet-fid/marketplace/commit/70aabd24d4af8c65fa0239c2788f2ec8eecb75b9))
+
+
 ## [3.59.1] 2025-07-24
 
 ### Added
