@@ -55,7 +55,12 @@ class ProjectItem::Create < ApplicationService
       persisted_project_items = [non_customizable_project_item] + bundled_project_items
 
       persisted_project_items.each do |project_item|
-        if @offer.orderable?
+        if project_item.offer.deployable_service.present?
+          # DeployableService offers - skip JIRA, mark as in_progress for deployment
+          project_item.update!(status: "Deployment in progress", status_type: :in_progress)
+          # Trigger deployment processing
+          DeployableService::DeploymentJob.perform_later(project_item)
+        elsif project_item.offer.orderable?
           ProjectItem::RegisterJob.perform_later(project_item, @message)
           ProjectItemMailer.created(project_item).deliver_later
         else
@@ -70,7 +75,7 @@ class ProjectItem::Create < ApplicationService
       ProjectItem::OnCreated::PublishCoexistence.call(updated_project)
     end
 
-    @project_item
+    rolled_back ? @project_item : @project_item.reload
   end
 
   private
@@ -79,7 +84,7 @@ class ProjectItem::Create < ApplicationService
     @offer.reload
     if @offer.limited_availability? && @offer.availability_count.zero?
       @offer
-        .service
+        .parent_service
         .resource_organisation
         .data_administrators
         .map(&:user)

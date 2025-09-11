@@ -7,11 +7,35 @@ RSpec.describe Offer, backend: true do
     subject { build(:offer) }
     it { should validate_presence_of(:name) }
     it { should validate_presence_of(:description) }
-    it { should validate_presence_of(:service) }
     it { should validate_presence_of(:order_type) }
-    it { should belong_to(:service) }
+    it { should belong_to(:service).required(false) }
+    it { should belong_to(:deployable_service).required(false) }
 
     it { should have_many(:project_items).dependent(:restrict_with_error) }
+
+    describe "service_or_deployable_service_present validation" do
+      it "is valid with service but no deployable_service" do
+        offer = build(:offer, service: create(:service), deployable_service: nil)
+        expect(offer).to be_valid
+      end
+
+      it "is valid with deployable_service but no service" do
+        offer = build(:offer, service: nil, deployable_service: create(:deployable_service))
+        expect(offer).to be_valid
+      end
+
+      it "is invalid with neither service nor deployable_service" do
+        offer = build(:offer, service: nil, deployable_service: nil)
+        expect(offer).not_to be_valid
+        expect(offer.errors[:base]).to include("Must belong to either service or deployable service")
+      end
+
+      it "is invalid with both service and deployable_service (XOR validation)" do
+        offer = build(:offer, service: create(:service), deployable_service: create(:deployable_service))
+        expect(offer).not_to be_valid
+        expect(offer.errors[:base]).to include("Cannot belong to both service and deployable service")
+      end
+    end
   end
 
   context "OMS dependencies" do
@@ -179,6 +203,218 @@ RSpec.describe Offer, backend: true do
         ActiveRecord::RecordNotFound,
         "Couldn't find Offer with [WHERE \"offers\".\"service_id\" = $1 AND \"offers\".\"iid\" = $2]"
       )
+    end
+  end
+
+  describe "scopes with mixed Service and DeployableService offers" do
+    let!(:provider) { create(:provider) }
+    let!(:service) { create(:service, resource_organisation: provider, status: :published) }
+    let!(:deployable_service) { create(:deployable_service, resource_organisation: provider, status: :published) }
+    let!(:service_category) { create(:service_category) }
+
+    let!(:service_offer) do
+      create(
+        :offer,
+        service: service,
+        deployable_service: nil,
+        status: :published,
+        bundle_exclusive: false,
+        offer_category: service_category
+      )
+    end
+
+    let!(:deployable_service_offer) do
+      create(
+        :offer,
+        service: nil,
+        deployable_service: deployable_service,
+        status: :published,
+        bundle_exclusive: false,
+        offer_category: service_category
+      )
+    end
+
+    let!(:draft_service_offer) do
+      create(
+        :offer,
+        service: service,
+        deployable_service: nil,
+        status: :draft,
+        bundle_exclusive: false,
+        offer_category: service_category
+      )
+    end
+
+    let!(:draft_deployable_offer) do
+      create(
+        :offer,
+        service: nil,
+        deployable_service: deployable_service,
+        status: :draft,
+        bundle_exclusive: false,
+        offer_category: service_category
+      )
+    end
+
+    describe ".inclusive" do
+      it "includes published Service offers with published services" do
+        expect(Offer.inclusive).to include(service_offer)
+      end
+
+      it "includes published DeployableService offers with published deployable services" do
+        expect(Offer.inclusive).to include(deployable_service_offer)
+      end
+
+      it "excludes draft offers" do
+        expect(Offer.inclusive).not_to include(draft_service_offer)
+        expect(Offer.inclusive).not_to include(draft_deployable_offer)
+      end
+
+      it "excludes offers from unpublished services" do
+        service.update(status: :draft)
+        expect(Offer.inclusive).not_to include(service_offer)
+      end
+
+      it "excludes offers from unpublished deployable services" do
+        deployable_service.update(status: :draft)
+        expect(Offer.inclusive).not_to include(deployable_service_offer)
+      end
+
+      it "excludes bundle exclusive offers" do
+        bundle_exclusive_offer =
+          create(:offer, service: service, status: :published, bundle_exclusive: true, offer_category: service_category)
+        expect(Offer.inclusive).not_to include(bundle_exclusive_offer)
+      end
+
+      it "handles service-only offers when deployable service is missing" do
+        expect(Offer.inclusive.where(service: service)).to include(service_offer)
+      end
+
+      it "handles deployable service offers when service is missing" do
+        expect(Offer.inclusive.where(deployable_service: deployable_service)).to include(deployable_service_offer)
+      end
+    end
+
+    describe ".accessible" do
+      it "includes published Service offers with published services" do
+        expect(Offer.accessible).to include(service_offer)
+      end
+
+      it "includes published DeployableService offers with published deployable services" do
+        expect(Offer.accessible).to include(deployable_service_offer)
+      end
+
+      it "excludes draft offers" do
+        expect(Offer.accessible).not_to include(draft_service_offer)
+        expect(Offer.accessible).not_to include(draft_deployable_offer)
+      end
+
+      it "excludes offers from unpublished services" do
+        service.update(status: :draft)
+        expect(Offer.accessible).not_to include(service_offer)
+      end
+
+      it "excludes offers from unpublished deployable services" do
+        deployable_service.update(status: :draft)
+        expect(Offer.accessible).not_to include(deployable_service_offer)
+      end
+
+      it "includes bundle exclusive offers (accessible allows them)" do
+        bundle_exclusive_offer =
+          create(:offer, service: service, status: :published, bundle_exclusive: true, offer_category: service_category)
+        expect(Offer.accessible).to include(bundle_exclusive_offer)
+      end
+    end
+
+    describe ".active" do
+      let!(:limited_offer) do
+        create(
+          :offer,
+          service: service,
+          status: :published,
+          bundle_exclusive: false,
+          limited_availability: true,
+          availability_count: 5,
+          offer_category: service_category
+        )
+      end
+
+      let!(:unlimited_offer) do
+        create(
+          :offer,
+          deployable_service: deployable_service,
+          service: nil,
+          status: :published,
+          bundle_exclusive: false,
+          limited_availability: false,
+          offer_category: service_category
+        )
+      end
+
+      let!(:exhausted_offer) do
+        create(
+          :offer,
+          service: service,
+          status: :published,
+          bundle_exclusive: false,
+          limited_availability: true,
+          availability_count: 0,
+          offer_category: service_category
+        )
+      end
+
+      it "includes unlimited offers" do
+        expect(Offer.active).to include(unlimited_offer)
+        expect(Offer.active).to include(service_offer) # default limited_availability: false
+        expect(Offer.active).to include(deployable_service_offer)
+      end
+
+      it "includes limited offers with availability" do
+        expect(Offer.active).to include(limited_offer)
+      end
+
+      it "excludes exhausted offers" do
+        expect(Offer.active).not_to include(exhausted_offer)
+      end
+
+      it "excludes bundle exclusive offers" do
+        bundle_offer =
+          create(
+            :offer,
+            service: service,
+            status: :published,
+            bundle_exclusive: true,
+            limited_availability: false,
+            offer_category: service_category
+          )
+        expect(Offer.active).not_to include(bundle_offer)
+      end
+
+      it "excludes draft offers" do
+        expect(Offer.active).not_to include(draft_service_offer)
+        expect(Offer.active).not_to include(draft_deployable_offer)
+      end
+    end
+  end
+
+  describe "parent_service method" do
+    let(:service) { create(:service) }
+    let(:deployable_service) { create(:deployable_service) }
+    let(:service_category) { create(:service_category) }
+
+    it "returns service when offer belongs to service" do
+      offer = create(:offer, service: service, deployable_service: nil, offer_category: service_category)
+      expect(offer.parent_service).to eq(service)
+    end
+
+    it "returns deployable_service when offer belongs to deployable_service" do
+      offer = create(:offer, service: nil, deployable_service: deployable_service, offer_category: service_category)
+      expect(offer.parent_service).to eq(deployable_service)
+    end
+
+    it "returns nil when offer has neither service nor deployable_service" do
+      offer = build(:offer, service: nil, deployable_service: nil)
+      expect(offer.parent_service).to be_nil
     end
   end
 end

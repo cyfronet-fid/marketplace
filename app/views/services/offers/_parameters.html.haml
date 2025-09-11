@@ -1,6 +1,6 @@
 - if technical_parameters.present?
   .card-body.pt-0.collapse-group.parameters-wrapper{ "data-controller": "parameter" }
-    %h5.text-uppercase.parameters-title.mb-3{ class: "#{"suspended" if service.suspended?}" }
+    %h5.text-uppercase.parameters-title.mb-3{ class: "#{"suspended" if service&.suspended?}" }
       %i.fas.fa-tachometer-alt
       = _("Technical Parameters")
     %table.offer-params.table.table-hover

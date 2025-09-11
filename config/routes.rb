@@ -80,6 +80,13 @@ Rails.application.routes.draw do
     scope module: :deployable_services do
       resource :logo, only: :show
     end
+    # Reuse Services wizard controllers for ordering DeployableServices
+    scope module: :services do
+      resource :choose_offer, only: %i[show update]
+      resource :information, only: %i[show update]
+      resource :configuration, only: %i[show update]
+      resource :summary, only: %i[show create]
+    end
   end
 
   resource :reports, only: %i[new create], constraints: lambda { |req| req.format == :js }

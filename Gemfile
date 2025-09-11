@@ -125,6 +125,7 @@ group :test do
   gem "database_cleaner"
   gem "rack_session_access"
   gem "selenium-webdriver"
+  gem "rails-controller-testing"
 end
 
 gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]

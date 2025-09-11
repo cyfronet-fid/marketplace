@@ -22,7 +22,7 @@
               = truncate(service.tagline, length: 1000, escape: false)
           .bundle-parameters-list
             = render "services/offers/parameters",
-              technical_parameters: offer.attributes.map(&:to_json), service: offer.service, id: offer.id
+              technical_parameters: offer.attributes.map(&:to_json), service: offer.parent_service, id: offer.id
 
       .row.service-links
         .col-12.col-lg-12.row

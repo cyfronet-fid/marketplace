@@ -9,5 +9,6 @@
                                                                offer: @offer)
     .col-md-7.access-image
 
-= simple_form_for @step, url: service_information_path(@service), method: :put, html: { id: "order-form" } do
+- form_url = @service.is_a?(DeployableService) ? deployable_service_information_path(@service) : service_information_path(@service)
+= simple_form_for @step, url: form_url, method: :put, html: { id: "order-form" } do
   -# empty block

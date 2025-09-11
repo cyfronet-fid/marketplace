@@ -4,7 +4,7 @@ class Offer::ApplicationService < ApplicationService
   def initialize(offer)
     super()
     @offer = offer
-    @service = @offer.service
+    @service = @offer.parent_service
     @bundles = @offer.bundles.to_a
     @main_bundles = @offer.main_bundles.to_a
   end

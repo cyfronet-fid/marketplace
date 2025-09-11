@@ -16,4 +16,22 @@ class DeployableServicePolicy < ApplicationPolicy
     raise ActiveRecord::RecordNotFound unless has_permission
     true
   end
+
+  def offers_show?
+    any_published_offers?
+  end
+
+  def bundles_show?
+    any_published_bundled_offers?
+  end
+
+  private
+
+  def any_published_offers?
+    record.offers? && record.offers.any? { |o| !o.bundle_exclusive && o.published? }
+  end
+
+  def any_published_bundled_offers?
+    false # DeployableServices don't have bundled offers yet
+  end
 end

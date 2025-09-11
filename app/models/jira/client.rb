@@ -316,7 +316,7 @@ class Jira::Client < JIRA::Client
     when "Epic Link"
       project_item.project.issue_key
     when "CP-Platforms"
-      project_item.offer.service.platforms.pluck(:name).join(", ")
+      project_item.offer.parent_service.platforms.pluck(:name).join(", ")
     when "CP-INeedAVoucher"
       {
         "id" =>
