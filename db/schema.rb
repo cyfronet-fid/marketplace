@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_08_06_112106) do
+ActiveRecord::Schema[7.2].define(version: 2025_09_11_120720) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -446,7 +446,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_06_112106) do
     t.string "name"
     t.text "description"
     t.integer "iid", null: false
-    t.bigint "service_id", null: false
+    t.bigint "service_id"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.jsonb "parameters", default: [], null: false
@@ -468,6 +468,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_06_112106) do
     t.boolean "limited_availability", default: false
     t.bigint "availability_count", default: 0
     t.string "availability_unit", default: "piece"
+    t.bigint "deployable_service_id"
+    t.index ["deployable_service_id"], name: "index_offers_on_deployable_service_id"
     t.index ["iid"], name: "index_offers_on_iid"
     t.index ["primary_oms_id"], name: "index_offers_on_primary_oms_id"
     t.index ["service_id", "iid"], name: "index_offers_on_service_id_and_iid", unique: true
@@ -584,6 +586,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_06_112106) do
     t.integer "ancestry_depth", default: 0
     t.datetime "conversation_last_seen", precision: nil, null: false
     t.integer "bundle_id"
+    t.string "deployment_link"
     t.index ["ancestry"], name: "index_project_items_on_ancestry"
     t.index ["offer_id"], name: "index_project_items_on_offer_id"
     t.index ["project_id"], name: "index_project_items_on_project_id"
@@ -1094,6 +1097,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_06_112106) do
   add_foreign_key "offer_links", "offers", column: "target_id"
   add_foreign_key "offer_vocabularies", "offers"
   add_foreign_key "offer_vocabularies", "vocabularies"
+  add_foreign_key "offers", "deployable_services"
   add_foreign_key "offers", "omses", column: "primary_oms_id"
   add_foreign_key "oms_administrations", "omses"
   add_foreign_key "oms_administrations", "users"

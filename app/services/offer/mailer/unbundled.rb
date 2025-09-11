@@ -21,6 +21,6 @@ class Offer::Mailer::Unbundled < ApplicationService
   end
 
   def recipients
-    @bundle_offer.service.resource_organisation.data_administrators.map(&:email)
+    @bundle_offer.parent_service.resource_organisation.data_administrators.map(&:email)
   end
 end

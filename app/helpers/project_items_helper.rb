@@ -34,7 +34,11 @@ module ProjectItemsHelper
   end
 
   def webpage(project_item)
-    project_item.order_url.blank? ? project_item.service.webpage_url : project_item.order_url
+    return project_item.order_url unless project_item.order_url.blank?
+
+    # Get service from project_item - handles both Service and DeployableService via offer
+    service = project_item.service || project_item.offer&.deployable_service || project_item.bundle&.service
+    service&.webpage_url
   end
 
   def project_item_status(project_item)

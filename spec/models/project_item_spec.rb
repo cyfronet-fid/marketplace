@@ -15,6 +15,34 @@ RSpec.describe ProjectItem, backend: true do
   it { should belong_to(:project) }
   it { should belong_to(:offer) }
 
+  describe "deployment_link validation" do
+    it "accepts valid HTTP URLs" do
+      project_item = build(:project_item, deployment_link: "http://example.com")
+      expect(project_item).to be_valid
+    end
+
+    it "accepts valid HTTPS URLs" do
+      project_item = build(:project_item, deployment_link: "https://jupyter.example.com/hub")
+      expect(project_item).to be_valid
+    end
+
+    it "accepts blank deployment_link" do
+      project_item = build(:project_item, deployment_link: "")
+      expect(project_item).to be_valid
+    end
+
+    it "accepts nil deployment_link" do
+      project_item = build(:project_item, deployment_link: nil)
+      expect(project_item).to be_valid
+    end
+
+    it "rejects invalid URLs" do
+      project_item = build(:project_item, deployment_link: "not-a-url")
+      expect(project_item).not_to be_valid
+      expect(project_item.errors[:deployment_link]).to be_present
+    end
+  end
+
   include_examples "messageable"
 
   describe "#create_new_status" do

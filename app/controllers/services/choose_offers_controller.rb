@@ -3,17 +3,25 @@
 class Services::ChooseOffersController < Services::ApplicationController
   def show
     pi_init = params[:customizable_project_item]
-    update if pi_init && (pi_init[:offer_id] || pi_init[:bundle_id])
-    init_step_data
+    if pi_init && (pi_init[:offer_id] || pi_init[:bundle_id])
+      update
+      return # Prevent further processing after update call
+    end
 
-    unless step.visible?
+    # Check if step should be auto-selected before initializing step data
+    temp_step = step({}) # Create step without full initialization to check visibility
+    unless temp_step.visible?
+      init_step_data # Only init data for auto-selection
       if @offers.inclusive.size.positive?
         params[:customizable_project_item] = { offer_id: @offers.inclusive.first.iid }
       elsif @bundles.published.size.positive?
         params[:customizable_project_item] = { bundle_id: @bundles.published.first.iid }
       end
       update
+      return # Prevent further processing after update
     end
+
+    init_step_data # Normal flow - init data for visible step
   end
 
   def update
@@ -24,7 +32,8 @@ class Services::ChooseOffersController < Services::ApplicationController
       redirect_to url_for([@service, next_step_key])
     else
       init_step_data
-      flash[:alert] = @step.error
+      # Don't show validation error if step should be invisible (auto-selection case)
+      flash[:alert] = @step.error if @step.visible?
       render :show
     end
   end

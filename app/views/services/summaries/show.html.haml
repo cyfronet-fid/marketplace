@@ -14,7 +14,8 @@
   = render partial: "services/summaries/bundle_technical", collection: @bundle.offers, as: :offer,
   locals: { bundle_params: @bundle_params }
 
-= simple_form_for @step, url: service_summary_path(@service), html: { id: "order-form" } do |f|
+- form_url = @service.is_a?(DeployableService) ? deployable_service_summary_path(@service) : service_summary_path(@service)
+= simple_form_for @step, url: form_url, html: { id: "order-form" } do |f|
   .additional-information.mb-4
     .card.offer-description.mb-4
       .card-body.pb-2.pt-4.pl-4.pr-4

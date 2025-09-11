@@ -2,20 +2,20 @@
   .card.m-0.mb-5.w-100.d-block
     .resource-logo
       - if local_assigns[:preview]
-        = image_tag backoffice_service_logo_preview_path(service_id: offer.service.id || "new"),
+        = image_tag backoffice_service_logo_preview_path(service_id: offer.parent_service&.id || "new"),
           class: "align-self-center img-fluid"
       - else
-        = presentable_logo(offer.service)
+        = presentable_logo(offer.parent_service)
     = render "services/offers/description", offer: offer
     = render "services/offers/parameters", id: offer.id,
-      technical_parameters: offer.attributes.map(&:to_json), service: offer.service
+      technical_parameters: offer.attributes.map(&:to_json), service: offer.parent_service
     .card-button.text-center
       %label.d-block
         = turbo_frame_tag "#{dom_id(offer)}-action-button" do
           - if policy(offer).order?
-            = link_to service_choose_offer_path(offer.service,
+            = link_to service_choose_offer_path(offer.parent_service,
             customizable_project_item: { offer_id: offer.iid }),
-            data: { probe: "", "service-id": offer.service.id, e2e: "select-offer-btn",
+            data: { probe: "", "service-id": offer.parent_service&.id, e2e: "select-offer-btn",
             "preview-target": local_assigns[:preview] ? "link" : "", "turbo-frame": "_top" } do
               %span.btn.btn-secondary.font-weight-bolder
                 = _("Select an offer")

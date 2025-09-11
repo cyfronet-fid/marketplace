@@ -1,6 +1,7 @@
 - content_for :title, _("Configuration")
 -# TODO: refactor dynamic translation
-= simple_form_for @step, as: :customizable_project_item, url: service_configuration_path(@service), method: :put,
+- form_url = @service.is_a?(DeployableService) ? deployable_service_configuration_path(@service) : service_configuration_path(@service)
+= simple_form_for @step, as: :customizable_project_item, url: form_url, method: :put,
   html: { id: "order-form", "data-controller" => "project-item", "data-project-item-url" => projects_path } do |f|
   .row
     .col-12

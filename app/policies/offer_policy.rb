@@ -3,11 +3,9 @@
 class OfferPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.joins(:service).where(
-        "bundle_exclusive = false AND offers.status IN (?) AND services.status IN (?)",
-        Statusable::PUBLIC_STATUSES,
-        Statusable::VISIBLE_STATUSES
-      )
+      # Simple scope: just filter by offer status and bundle_exclusive
+      # Let the individual service/deployable_service scopes handle their own authorization
+      scope.where(bundle_exclusive: false).where(status: Statusable::PUBLIC_STATUSES)
     end
   end
 

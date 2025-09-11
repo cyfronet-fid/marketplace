@@ -4,12 +4,12 @@
     step: step, f: f) if step.bundle.nil? || step.bundle.all_offers&.select(&:voucherable?)&.size == 1
     .row.bundle-info
       .col-12.col-md-2
-        = presentable_logo(offer.service, "align-self-center img-fluid", [180, 120])
+        = presentable_logo(offer.parent_service, "align-self-center img-fluid", [180, 120])
       .col-12.col-md-10
         %h3.bundle-configuration-title
           = offer.name
         %span.text-muted
-          = _("Provided by #{ offer.service.resource_organisation.name}")
+          = _("Provided by #{ offer.parent_service.resource_organisation.name}")
       .col-12.offer-description
         .card-body.p-0.pt-5
           .col-12.col-lg-12.pl-0.additional-information.technical

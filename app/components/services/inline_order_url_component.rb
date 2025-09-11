@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Services::InlineOrderUrlComponent < ApplicationComponent
-  include ProjectItemsHelper
-
   def initialize(offerable:, classes: "btn btn-outline-primary mt-3")
     super()
     @offerable = offerable
@@ -14,7 +12,11 @@ class Services::InlineOrderUrlComponent < ApplicationComponent
   end
 
   def url
-    webpage(@offerable)
+    # Get URL directly from offer - prefer order_url, fallback to service webpage_url
+    return @offerable.order_url unless @offerable.order_url.blank?
+
+    service = @offerable.service || @offerable.deployable_service
+    service&.webpage_url
   end
 
   def link_name

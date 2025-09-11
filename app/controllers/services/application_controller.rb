@@ -23,17 +23,31 @@ class Services::ApplicationController < ApplicationController
   private
 
   def session_key
-    @service.id.to_s
+    @service.is_a?(DeployableService) ? "ds_#{@service.id}" : @service.id.to_s
   end
 
   def ensure_in_session!
-    redirect_to service_choose_offer_path(@service), alert: "Service request template not found" unless @saved_state
+    choose_offer_path =
+      if @service.is_a?(DeployableService)
+        deployable_service_choose_offer_path(@service)
+      else
+        service_choose_offer_path(@service)
+      end
+    redirect_to choose_offer_path, alert: "Service request template not found" unless @saved_state
   end
 
   def load_and_authenticate_service!
-    @service = Service.friendly.find(params[:service_id])
+    @service = find_service_or_deployable_service
     authorize(ServiceContext.new(@service, params.key?(:from) && params[:from] == "backoffice_service"), :order?)
     @wizard = ProjectItem::Wizard.new(@service)
+  end
+
+  def find_service_or_deployable_service
+    if params[:deployable_service_id].present?
+      DeployableService.friendly.find(params[:deployable_service_id])
+    else
+      Service.friendly.find(params[:service_id])
+    end
   end
 
   def save_in_session(step)
