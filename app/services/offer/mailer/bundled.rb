@@ -18,14 +18,14 @@ class Offer::Mailer::Bundled < ApplicationService
   end
 
   def bundle_offer_public?
-    @bundle_offer.published? && @bundle_offer.service.public?
+    @bundle_offer.published? && @bundle_offer.parent_service.public?
   end
 
   def different_resource_organisation?
-    @bundle_offer.service.resource_organisation != @bundled_offer.service.resource_organisation
+    @bundle_offer.parent_service.resource_organisation != @bundled_offer.parent_service.resource_organisation
   end
 
   def recipients
-    @bundled_offer.service.resource_organisation.data_administrators.map(&:email)
+    @bundled_offer.parent_service.resource_organisation.data_administrators.map(&:email)
   end
 end

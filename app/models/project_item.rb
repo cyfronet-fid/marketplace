@@ -47,6 +47,7 @@ class ProjectItem < ApplicationRecord
   validates :status, presence: true
   validates :status_type, presence: true
   validates :project, presence: true
+  validates :deployment_link, format: { with: URI::DEFAULT_PARSER.make_regexp(%w[http https]) }, allow_blank: true
   validate :scientific_domain_is_a_leaf
   validate :properties_not_nil
   validate :user_secrets_is_simple
@@ -62,7 +63,7 @@ class ProjectItem < ApplicationRecord
   after_commit :dispatch_emails
 
   def service
-    offer&.service || bundle&.service
+    offer&.service || offer&.deployable_service || bundle&.service
   end
 
   def public_statuses

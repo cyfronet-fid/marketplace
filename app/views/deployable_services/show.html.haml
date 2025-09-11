@@ -18,6 +18,12 @@
         = link_to "Visit URL", @deployable_service.url, target: "_blank",
           class: "btn btn-primary d-block mb-3 py-3" if @deployable_service.url.present?
 
+        - if @deployable_service.offers.accessible.any?
+          = link_to deployable_service_choose_offer_path(@deployable_service),
+            class: "btn btn-success d-block mb-3 py-3" do
+            %i.fas.fa-rocket
+            Configure & Deploy
+
     .row
       .col-12.col-xl-9.pr-5
         %ul.nav.nav-tabs.row.pl-3.mt-3

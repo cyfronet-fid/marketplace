@@ -23,13 +23,15 @@ class Offer < ApplicationRecord
   scope :bundle_exclusive, -> { where(bundle_exclusive: true, status: :published) }
   scope :inclusive,
         -> do
-          joins(:service).where(
-            bundle_exclusive: false,
-            status: :published,
-            services: {
-              status: Statusable::PUBLIC_STATUSES
-            }
-          )
+          where(bundle_exclusive: false, status: :published)
+            .joins("LEFT JOIN services ON services.id = offers.service_id")
+            .joins("LEFT JOIN deployable_services ON deployable_services.id = offers.deployable_service_id")
+            .where(
+              "(services.status IN (?) AND offers.service_id IS NOT NULL) " +
+                "OR (deployable_services.status IN (?) AND offers.deployable_service_id IS NOT NULL)",
+              Statusable::PUBLIC_STATUSES,
+              Statusable::PUBLIC_STATUSES
+            )
         end
   scope :active,
         -> do
@@ -41,7 +43,18 @@ class Offer < ApplicationRecord
             0
           )
         end
-  scope :accessible, -> { joins(:service).where(status: :published, services: { status: Statusable::PUBLIC_STATUSES }) }
+  scope :accessible,
+        -> do
+          where(status: :published)
+            .joins("LEFT JOIN services ON services.id = offers.service_id")
+            .joins("LEFT JOIN deployable_services ON deployable_services.id = offers.deployable_service_id")
+            .where(
+              "(services.status IN (?) AND offers.service_id IS NOT NULL) OR (deployable_services.status IN (?) " +
+                "AND offers.deployable_service_id IS NOT NULL)",
+              Statusable::PUBLIC_STATUSES,
+              Statusable::PUBLIC_STATUSES
+            )
+        end
   scope :manageable, -> { where(status: Statusable::MANAGEABLE_STATUSES) }
 
   counter_culture :service,
@@ -50,9 +63,15 @@ class Offer < ApplicationRecord
                     ["offers.status = ?", "published"] => "offers_count"
                   }
 
-  belongs_to :service
+  belongs_to :service, optional: true
+  belongs_to :deployable_service, optional: true
   belongs_to :primary_oms, class_name: "OMS", optional: true
   has_many :project_items, dependent: :restrict_with_error
+
+  # Return the parent service (either Service or DeployableService)
+  def parent_service
+    service || deployable_service
+  end
 
   before_validation :set_internal
   before_validation :set_oms_details
@@ -70,8 +89,8 @@ class Offer < ApplicationRecord
   belongs_to :offer_type, class_name: "Vocabulary::ServiceCategory", optional: true
   belongs_to :offer_subtype, class_name: "Vocabulary::ServiceCategory", optional: true
 
-  validates :service, presence: true
   validates :iid, presence: true, numericality: true
+  validate :service_or_deployable_service_present
   validates :order_url, mp_url: true, if: :order_url?
   validates :availability_count,
             numericality: {
@@ -90,9 +109,6 @@ class Offer < ApplicationRecord
   end
 
   validate :check_main_bundles, if: -> { draft? }
-  validates :service, presence: true
-  validates :iid, presence: true, numericality: true
-  validates :order_url, mp_url: true, if: :order_url?
 
   validate :primary_oms_exists?, if: -> { primary_oms_id.present? }
 
@@ -152,10 +168,12 @@ class Offer < ApplicationRecord
   end
 
   def same_order_type_as_in_service
-    other_services = service.offers.published.reject { |o| o&.id == id }
-    other_check = other_services.none? { |o| o.order_type == service&.order_type }
-    if (other_services.empty? || other_check) && order_type != service.order_type
-      errors.add(:order_type, "must be the same as in the service: #{service.order_type}")
+    return unless parent_service # Skip validation if no parent service
+
+    other_services = parent_service.offers.published.reject { |o| o&.id == id }
+    other_check = other_services.none? { |o| o.order_type == parent_service&.order_type }
+    if (other_services.empty? || other_check) && order_type != parent_service.order_type
+      errors.add(:order_type, "must be the same as in the service: #{parent_service.order_type}")
     end
   end
 
@@ -202,5 +220,13 @@ class Offer < ApplicationRecord
 
   def sanitize_oms_params
     oms_params.select! { |_, v| v.present? } if oms_params.present?
+  end
+
+  def service_or_deployable_service_present
+    if service.blank? && deployable_service.blank?
+      errors.add(:base, "Must belong to either service or deployable service")
+    elsif service.present? && deployable_service.present?
+      errors.add(:base, "Cannot belong to both service and deployable service")
+    end
   end
 end

@@ -15,7 +15,8 @@ class Projects::ServicesController < ApplicationController
   end
 
   def show
-    @project_item = @project.project_items.joins(offer: :service, project: :user).find_by!(iid: params[:id])
+    # Handle both Service and DeployableService offers
+    @project_item = @project.project_items.joins(:offer, project: :user).find_by!(iid: params[:id])
 
     authorize(@project_item)
   end

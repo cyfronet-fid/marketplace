@@ -1,7 +1,11 @@
 %dl
   %dt
     = _("Service name") + ":"
-  %dd= link_to project_item.service.name, service_offers_path(project_item.service)
+  %dd
+    - if project_item.offer.deployable_service.present?
+      = link_to project_item.service.name, deployable_service_path(project_item.service)
+    - else
+      = link_to project_item.service.name, service_offers_path(project_item.service)
 - if project_item.service.offers_count > 1
   %dl
     %dt
@@ -35,3 +39,24 @@
     %dt
       = _("Service Providers") + ":"
     %dd= service_providers_list(project_item)
+- if project_item.offer.deployable_service.present?
+  %dl
+    %dt
+      = _("Deployment Access") + ":"
+    %dd
+      - if project_item.deployment_link.present?
+        = link_to "Access Deployment", project_item.deployment_link,
+          target: "_blank", class: "btn btn-success", rel: "noopener"
+      - elsif project_item.rejected?
+        %span.text-danger
+          %i.fas.fa-exclamation-triangle
+          = _("Deployment failed")
+          %small.text-muted.d-block= project_item.status
+      - elsif project_item.in_progress?
+        %span.text-muted
+          %i.fas.fa-spinner.fa-spin
+          = _("Deployment in progress")
+      - else
+        %span.text-warning
+          %i.fas.fa-clock
+          = _("Deployment pending")
