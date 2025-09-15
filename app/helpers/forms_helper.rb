@@ -20,14 +20,14 @@ module FormsHelper
   end
 
   def checkbox_class(option, values)
-    enabled = values.include?(option[:id].to_s)
+    key = (option[:eid] || option[:id] || option["eid"] || option["id"]).to_s
+    enabled = values.include?(key)
     state = enabled ? "checked" : "unchecked"
-    if values && option[:children]
-      if (option[:children]&.map { |c| c[:id].to_s } & values).size.between?(1, option[:children].size - 1)
-        "indeterminate"
-      else
-        state
-      end
+
+    children = option[:children] || option["children"]
+    if values && children
+      child_keys = children&.map { |c| (c[:eid] || c[:id] || c["eid"] || c["id"]).to_s }
+      (child_keys & values).size.between?(1, children.size - 1) ? "indeterminate" : state
     end
   end
 

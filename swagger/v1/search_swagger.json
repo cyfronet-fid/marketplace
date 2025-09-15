@@ -1,0 +1,362 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "EOSC Marketplace Search API",
+    "version": "v1",
+    "description": "API for searching and filtering services with advanced Elasticsearch capabilities"
+  },
+  "paths": {
+    "/api/v1/search/services": {
+      "get": {
+        "summary": "Search services",
+        "tags": ["Search Services"],
+        "description": "Search and filter services using Elasticsearch with PID-based filtering. Supports full-text search and multiple filter criteria.",
+        "operationId": "searchServices",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "description": "Search query string. Searches in service name, tagline, description, offer names, and provider names using Elasticsearch",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "scientific_domains",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "required": false,
+            "description": "Array of scientific domain PIDs to filter by. Use persistent IDs (PIDs) from scientific domain vocabulary",
+            "schema": {
+              "type": "array"
+            }
+          },
+          {
+            "name": "providers",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "required": false,
+            "description": "Array of provider PIDs to filter by. Use persistent IDs (PIDs) from provider registry",
+            "schema": {
+              "type": "array"
+            }
+          },
+          {
+            "name": "target_users",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "required": false,
+            "description": "Array of target user PIDs to filter by. Use persistent IDs (PIDs) from target user vocabulary",
+            "schema": {
+              "type": "array"
+            }
+          },
+          {
+            "name": "platforms",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "required": false,
+            "description": "Array of platform PIDs to filter by. Use persistent IDs (PIDs) from platform vocabulary",
+            "schema": {
+              "type": "array"
+            }
+          },
+          {
+            "name": "research_activities",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "required": false,
+            "description": "Array of research activity PIDs to filter by. Use persistent IDs (PIDs) from research activity vocabulary",
+            "schema": {
+              "type": "array"
+            }
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "required": false,
+            "description": "Array of tag PIDs to filter by. Use persistent IDs (PIDs) from tag vocabulary",
+            "schema": {
+              "type": "array"
+            }
+          },
+          {
+            "name": "rating",
+            "in": "query",
+            "required": false,
+            "minimum": 1,
+            "maximum": 5,
+            "description": "Filter by minimum rating (1-5). Shows services with rating equal or higher than specified value",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "order_type",
+            "in": "query",
+            "required": false,
+            "description": "Filter by order type. Determines how the service can be accessed:\n * `open_access` \n * `fully_open_access` \n * `order_required` \n * `other` \n ",
+            "enum": ["open_access", "fully_open_access", "order_required", "other"],
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "default": 1,
+            "minimum": 1,
+            "description": "Page number for pagination. Must be a positive integer",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "required": false,
+            "default": 25,
+            "minimum": 1,
+            "maximum": 100,
+            "description": "Number of results per page. Maximum allowed is 100",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "default": "_score",
+            "description": "Sort order for results. Default is by relevance score",
+            "enum": ["_score", "name", "-name", "rating", "-rating", "created_at", "-created_at"],
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful search",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "basic_search": {
+                    "value": {
+                      "services": [
+                        {
+                          "id": 123,
+                          "eid": "ml-platform-v2.1",
+                          "name": "Machine Learning Platform",
+                          "slug": "machine-learning-platform",
+                          "tagline": "Advanced ML platform for researchers",
+                          "description": "A comprehensive machine learning platform providing tools for data analysis, model training, and deployment for research purposes.",
+                          "rating": 4.5,
+                          "score": 1.2345,
+                          "logo_url": "https://example.com/logo.png",
+                          "path": "/services/machine-learning-platform",
+                          "providers": [
+                            {
+                              "id": 456,
+                              "eid": "research-institute-eu",
+                              "name": "European Research Institute"
+                            }
+                          ],
+                          "scientific_domains": [
+                            {
+                              "id": 789,
+                              "eid": "computer-science",
+                              "name": "Computer Science"
+                            },
+                            {
+                              "id": 790,
+                              "eid": "artificial-intelligence",
+                              "name": "Artificial Intelligence"
+                            }
+                          ],
+                          "target_users": [
+                            {
+                              "id": 101,
+                              "eid": "researchers",
+                              "name": "Researchers"
+                            },
+                            {
+                              "id": 102,
+                              "eid": "data-scientists",
+                              "name": "Data Scientists"
+                            }
+                          ],
+                          "platforms": [
+                            {
+                              "id": 202,
+                              "eid": "web-platform",
+                              "name": "Web Platform"
+                            }
+                          ],
+                          "research_activities": [
+                            {
+                              "id": 303,
+                              "eid": "data-analysis",
+                              "name": "Data Analysis"
+                            }
+                          ],
+                          "tags": [
+                            {
+                              "id": 404,
+                              "eid": "machine-learning",
+                              "name": "Machine Learning"
+                            },
+                            {
+                              "id": 405,
+                              "eid": "python",
+                              "name": "Python"
+                            }
+                          ]
+                        }
+                      ],
+                      "offers": {
+                        "123": [
+                          {
+                            "id": 111,
+                            "name": "Basic ML Plan",
+                            "service_id": 123,
+                            "score": 0.9876,
+                            "highlights": [
+                              "Basic <mark>machine</mark> learning features",
+                              "<mark>ML</mark> model training"
+                            ]
+                          },
+                          {
+                            "id": 112,
+                            "name": "Premium ML Plan",
+                            "service_id": 123,
+                            "score": 0.8765,
+                            "highlights": [
+                              "Premium <mark>ML</mark> capabilities",
+                              "Advanced <mark>machine learning</mark> tools"
+                            ]
+                          }
+                        ]
+                      },
+                      "pagination": {
+                        "current_page": 1,
+                        "total_pages": 5,
+                        "total_count": 125,
+                        "per_page": 25
+                      },
+                      "highlights": {
+                        "123": [
+                          "Advanced <mark>ML</mark> platform for researchers",
+                          "<mark>Machine learning</mark> tools"
+                        ]
+                      }
+                    }
+                  },
+                  "empty_search": {
+                    "value": {
+                      "services": [],
+                      "offers": {},
+                      "pagination": {
+                        "current_page": 1,
+                        "total_pages": 0,
+                        "total_count": 0,
+                        "per_page": 25
+                      },
+                      "highlights": {}
+                    }
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/SearchResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "invalid_per_page": {
+                    "value": {
+                      "error": "Invalid per_page parameter. Maximum allowed is 100."
+                    }
+                  },
+                  "invalid_page": {
+                    "value": {
+                      "error": "Invalid page parameter. Must be a positive integer."
+                    }
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "validation_errors": {
+                    "value": {
+                      "errors": [
+                        "Invalid scientific domain PID: 'invalid-domain'",
+                        "Invalid provider PID: 'non-existent-provider'"
+                      ]
+                    }
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "server_error": {
+                    "value": {
+                      "error": "Internal server error occurred during search processing"
+                    }
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "authentication_token": {
+        "type": "apiKey",
+        "name": "X-User-Token",
+        "in": "header"
+      }
+    }
+  }
+}

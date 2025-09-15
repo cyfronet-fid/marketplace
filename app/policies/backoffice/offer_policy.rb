@@ -64,7 +64,7 @@ class Backoffice::OfferPolicy < Backoffice::OrderablePolicy
   end
 
   def orderless?
-    record.project_items.count.zero?
+    record.project_items.empty?
   end
 
   def service_deleted?

@@ -76,20 +76,20 @@ class HomeController < ApplicationController
   private
 
   def load_services
-    @providers_number = Provider.count
-    @services_number = Service.count
+    @providers_number = Provider.visible.size
+    @services_number = Service.visible.size
     @countries_number = 32
     @services = Service.popular(6)
   end
 
   def load_platforms
     @home_platforms = Platform.all.uniq.sample(10).map
-    @home_platforms_counter = Platform.all.count - @home_platforms.count
+    @home_platforms_counter = Platform.all.size - @home_platforms.size
   end
 
   def load_providers
     @home_providers = Provider.active.joins(:services).uniq.sample(5)
-    @home_providers_counter = Provider.active.count - @home_providers.count
+    @home_providers_counter = Provider.active.size - @home_providers.size
   end
 
   def load_target_users

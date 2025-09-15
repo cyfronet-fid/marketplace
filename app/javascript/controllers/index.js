@@ -111,3 +111,6 @@ application.register("tourfeedbackmodal", TourfeedbackmodalController);
 
 import TurboModalController from "./turbo_modal_controller";
 application.register("turbo-modal", TurboModalController);
+
+import FederationFiltersController from "./federation_filters_controller";
+application.register("federation-filters", FederationFiltersController);

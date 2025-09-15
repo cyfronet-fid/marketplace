@@ -91,6 +91,145 @@ RSpec.configure do |config|
           }
         }
       }
+    },
+    "v1/search_swagger.json" => {
+      openapi: "3.0.1",
+      info: {
+        title: "EOSC Marketplace Search API",
+        version: "v1",
+        description: "API for searching and filtering services with advanced Elasticsearch capabilities"
+      },
+      paths: {
+      },
+      components: {
+        securitySchemes: {
+          authentication_token: {
+            type: :apiKey,
+            name: "X-User-Token",
+            in: :header
+          }
+        },
+        schemas: {
+          SearchResponse: {
+            type: :object,
+            properties: {
+              results: {
+                type: :array,
+                items: {
+                  type: :object
+                }
+              },
+              offers: {
+                type: :object,
+                additionalProperties: {
+                  type: :array,
+                  items: {
+                    type: :object
+                  }
+                }
+              },
+              pagination: {
+                type: :object,
+                properties: {
+                  current_page: {
+                    type: :integer
+                  },
+                  total_pages: {
+                    type: :integer
+                  },
+                  total_count: {
+                    type: :integer
+                  },
+                  per_page: {
+                    type: :integer
+                  }
+                }
+              },
+              highlights: {
+                type: :object,
+                additionalProperties: {
+                  type: :array,
+                  items: {
+                    type: :string
+                  }
+                }
+              },
+              facets: {
+                type: :object,
+                properties: {
+                  categories: {
+                    type: :array,
+                    items: {
+                      type: :object
+                    }
+                  },
+                  scientific_domains: {
+                    type: :array,
+                    items: {
+                      type: :object
+                    }
+                  },
+                  providers: {
+                    type: :array,
+                    items: {
+                      type: :object
+                    }
+                  },
+                  target_users: {
+                    type: :array,
+                    items: {
+                      type: :object
+                    }
+                  },
+                  platforms: {
+                    type: :array,
+                    items: {
+                      type: :object
+                    }
+                  },
+                  research_activities: {
+                    type: :array,
+                    items: {
+                      type: :object
+                    }
+                  },
+                  rating: {
+                    type: :array,
+                    items: {
+                      type: :object
+                    }
+                  },
+                  order_type: {
+                    type: :array,
+                    items: {
+                      type: :object
+                    }
+                  }
+                }
+              }
+            }
+          },
+          ErrorResponse: {
+            type: :object,
+            properties: {
+              error: {
+                type: :string
+              }
+            }
+          },
+          ValidationErrorResponse: {
+            type: :object,
+            properties: {
+              errors: {
+                type: :array,
+                items: {
+                  type: :string
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 

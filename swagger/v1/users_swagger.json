@@ -11,24 +11,36 @@
         {
           "name": "user_id",
           "in": "path",
-          "description": "User id",
           "required": true,
+          "description": "User unique identifier",
           "schema": {
             "type": "string"
           }
         }
       ],
       "get": {
-        "summary": "retrieves user data",
-        "tags": ["roles"],
+        "summary": "Get user roles",
+        "tags": ["Users"],
+        "description": "Returns roles for a specific user",
         "security": [
           {
             "authentication_token": []
           }
         ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "description": "Unique identifier of the user",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
-            "description": "User found",
+            "description": "successful",
             "content": {
               "application/json": {
                 "schema": {
@@ -37,8 +49,8 @@
               }
             }
           },
-          "403": {
-            "description": "user not authorized",
+          "404": {
+            "description": "user not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -47,8 +59,8 @@
               }
             }
           },
-          "404": {
-            "description": "User not found",
+          "401": {
+            "description": "unauthorized",
             "content": {
               "application/json": {
                 "schema": {
