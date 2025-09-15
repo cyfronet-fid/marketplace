@@ -5,6 +5,13 @@ class Filter::Rating < Filter
     super(params: params.fetch(:params, {}), field_name: "rating", type: :select, title: "Rating", index: "rating")
   end
 
+  protected
+
+  # Accept only numeric values in the 1..5 range to avoid ES number_format_exception
+  def values
+    super.select { |v| v.to_s.match?(/\A[1-5]\z/) }.map(&:to_s)
+  end
+
   private
 
   def fetch_options
@@ -19,6 +26,9 @@ class Filter::Rating < Filter
   end
 
   def where_constraint
-    { @index.to_sym => { gte: value } }
+    v = values.first
+    return {} if v.nil?
+
+    { @index.to_sym => { gte: v.to_i } }
   end
 end

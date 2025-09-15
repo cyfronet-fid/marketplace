@@ -26,7 +26,7 @@ class UsageReport
   end
 
   def all_services_count
-    Service.where(status: %i[published errored]).count
+    Service.where(status: %i[published errored]).size
   end
 
   def providers
@@ -64,7 +64,7 @@ class UsageReport
           true
         )
         .uniq
-        .count
+        .size
     else
       Service
         .left_outer_joins(:offers)
@@ -77,7 +77,7 @@ class UsageReport
           statuses
         )
         .uniq
-        .count
+        .size
     end
   end
 end

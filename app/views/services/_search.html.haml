@@ -1,7 +1,7 @@
 = form_tag url_for, method: :get, role: "search",
            "data-autocomplete-target": "form search.form",
            "data-search-target": "form",
-           "data-controller": "search autocomplete",
+           "data-controller": "search autocomplete external",
            "data-autocomplete-url": "service_autocomplete",
            "data-search-services-path": services_path,
            "data-search-categories-path": "/services/c",
@@ -18,14 +18,19 @@
     %label.sr-only{ for: "search" }= _("Search")
     = text_field_tag :q, params[:q],  class: "autocomplete-input",
                                      placeholder: "Find service...",
-                                     "data-autocomplete-target": "input",
-                                     "data-toggle": "dropdown",
-                                     "data-e2e": "searchbar-input",
-                                     "data-probe": ""
-    - if params[:q].present? && params.permitted?
-      %a.search-clear{ href: url_for(params.except(:q, :sort, :page)), title: _("Clear search"),
-      "data-e2e": "search-clear-btn" }
-        .fas.fa-times
+                                     data: { autocomplete_target: "input",
+                                             external_target: "query",
+                                             toggle: "dropdown",
+                                             e2e: "searchbar-input",
+                                             action: "keydown.esc->external#clear input->external#toggleClear",
+                                             probe: "" }
+    %a.search-clear{ href: url_for(params.permitted? ? params.except(:q, :sort, :page) : {}),
+                            class: "#{"d-none" unless params[:q]}",
+                            title: _("Clear search"),
+                            data: { external_target: "clear",
+                                    action: "click->external#clear",
+                                    e2e: "search-clear-btn" } }
+      .fas.fa-times
     %ul.autocomplete-results{ "data-autocomplete-target": "results", "data-e2e": "autocomplete-results" }
   .searchbar__select{ "data-probe": "" }
     %span{ "data-search-target": "selected" }

@@ -1,0 +1,55 @@
+.card.mb-3.service-card
+  .card-body.d-flex
+    .service-content.flex-grow-1
+      %h5.card-title
+        - service_url = "#{service["source_node_url"]}services/#{service["pid"] || service["slug"]}"
+        %a.text-decoration-none{ href: service_url, target: "_blank", rel: "noopener" }
+          = service_highlight(service, "name", highlights || {})
+          %i.fas.fa-external-link-alt.ml-1.text-muted
+
+      - if service["tagline"].present?
+        %p.card-text.text-muted
+          = service_highlight(service, "tagline", highlights || {})
+
+      - if service["description"].present?
+        %p.card-text
+          = truncate(service_highlight(service, "description", highlights || {}).html_safe, length: 200)
+
+      .service-meta.mt-3
+        - if service["rating"].present? && service["rating"].to_i.positive?
+          .d-inline-block.mr-3
+            %span.text-warning
+              - service["rating"].to_i.times do
+                %i.fas.fa-star
+              - (5 - service["rating"].to_i).times do
+                %i.far.fa-star
+            %span.ml-1= service["rating"]
+
+        - if service["score"].present?
+          %span.badge.badge-light.mr-2
+            Score: #{number_with_precision(service["score"], precision: 2)}
+
+      - if service["providers"].present?
+        .mt-2
+          %strong Providers:
+          - service["providers"].first(5).each do |provider|
+            %span.badge.badge-info.mr-1= provider["name"]
+
+      - if service["scientific_domains"].present?
+        .mt-2
+          %strong Scientific Domains:
+          - service["scientific_domains"].first(5).each do |domain|
+            %span.badge.badge-primary.mr-1= domain["name"]
+
+      - if service["target_users"].present?
+        .mt-2
+          %strong Target Users:
+          - service["target_users"].first(5).each do |user|
+            %span.badge.badge-success.mr-1= user["name"]
+
+    .service-logo.ml-3
+      - if service["logo"].present?
+        %img.logo-img{ src: service["logo"], alt: "#{service["name"]} logo",
+                      onerror: "this.src='#{asset_path("service_logo.svg")}'; this.onerror=null;" }
+      - else
+        = image_tag "service_logo.svg", class: "logo-img", alt: "Default service logo"

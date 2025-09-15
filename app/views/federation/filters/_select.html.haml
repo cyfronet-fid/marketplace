@@ -1,0 +1,6 @@
+= render "federation/filters/wrapper", filter: filter do
+  .form-group
+    %select.panel-body.form-control.custom-select.form-control-sm{ name: filter.field_name,
+      "data-action": "change->filter#reload", "data-probe" => "", "data-e2e": "filter-select" }
+      = options_for_select(filter.options.map { |x| [x[:name], x[:eid]] },
+                           params[filter.field_name])

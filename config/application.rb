@@ -32,21 +32,20 @@ module Mp
     config.action_dispatch.return_only_request_media_type_on_content_type = false
     config.active_storage.multiple_file_field_include_hidden = true
     config.active_storage.variant_processor = :vips
-    config.active_support.cache_format_version = 7.0
+    config.active_support.cache_format_version = 7.1
     config.active_support.disable_to_s_conversion = true
 
     config.autoload_lib(ignore: %w[assets tasks])
 
-
     default_redis_url = Rails.env == "test" ? "redis://localhost:6379/1" : "redis://localhost:6379/0"
 
-    config.redis_url = ENV["REDIS_URL"] || default_redis_url
+    config.redis_url = ENV.fetch("REDIS_URL", default_redis_url)
 
     config.active_storage.queues.analysis = :active_storage_analysis
     config.active_storage.queues.purge = :active_storage_purge
 
-    config.matomo_url = ENV["MP_MATOMO_URL"] || "//providers.eosc-portal.eu/matomo/"
-    config.matomo_site_id = ENV["MP_MATOMO_SITE_ID"] || 1
+    config.matomo_url = ENV.fetch("MP_MATOMO_URL", "//providers.eosc-portal.eu/matomo/")
+    config.matomo_site_id = ENV.fetch("MP_MATOMO_SITE_ID", 1).to_i
 
     # Hierachical locales file structure
     # see https://guides.rubyonrails.org/i18n.html#configure-the-i18n-module
@@ -57,6 +56,8 @@ module Mp
     #   - views          // custom views
     #   - javascript     // custom scss files (see `config/webpack/environment.js`)
     #   - config/locales // custom locales
+
+    config.is_recommendation_panel = ActiveModel::Type::Boolean.new.cast(ENV.fetch("SHOW_RECOMMENDATION_PANEL", true))
     if ENV["CUSTOMIZATION_PATH"].present?
       config.paths["app/views"].unshift(File.join(ENV["CUSTOMIZATION_PATH"], "views"))
       config.i18n.load_path +=
@@ -78,6 +79,7 @@ module Mp
 
     config.similar_services_host = ENV["SIMILAR_SERVICES_HOST"] || "http://149.156.182.238:8081"
     config.recommender_host = ENV.fetch("RECOMMENDER_HOST", nil)
+    config.user_actions_target = ENV.fetch("USER_ACTIONS_TARGET", "all")
     config.recommendation_engine = ENV["RECOMMENDATION_ENGINE"] || "RL"
     config.auth_mock = ActiveModel::Type::Boolean.new.cast(ENV.fetch("AUTH_MOCK", false))
 
@@ -85,8 +87,8 @@ module Mp
     config.eosc_commons_base_url = ENV.fetch("EOSC_COMMONS_BASE_URL", "https://s3.cloud.cyfronet.pl/eosc-portal-common/")
     config.eosc_commons_env = ENV["EOSC_COMMONS_ENV"].present? ? ENV["EOSC_COMMONS_ENV"] : "production"
 
-    config.user_actions_target = ENV["USER_ACTIONS_TARGET"].present? ? ENV["USER_ACTIONS_TARGET"] : "all"
-
+    config.home_page_external_links_enabled = ActiveModel::Type::Boolean.new.cast(
+      ENV.fetch("HOME_PAGE_EXTERNAL_LINKS_ENABLED", false))
     config.search_service_base_url = ENV.fetch("SEARCH_SERVICE_BASE_URL", "https://search.marketplace.eosc-portal.eu")
     config.search_service_research_product_endpoint = ENV.fetch("SEARCH_SERVICE_RESEARCH_PRODUCT_ENDPOINT",
                                                                 "/api/web/research-product/")
@@ -95,12 +97,8 @@ module Mp
 
     config.resource_cache_ttl = ENV.fetch("ESS_RESOURCE_CACHE_TTL", "60").to_i.seconds
 
-    config.mp_stomp_publisher_enabled =
-      if ENV["MP_STOMP_PUBLISHER_ENABLED"].present?
-        ENV["MP_STOMP_PUBLISHER_ENABLED"]
-      else
-        Rails.env.test?
-      end
+    config.mp_stomp_publisher_enabled = ActiveModel::Type::Boolean.new.cast(
+      ENV.fetch("MP_STOMP_PUBLISHER_ENABLED", Rails.env.test?))
 
     config.eosc_helpdesk_form_link = ENV.fetch("EOSC_HELPDESK_FORM_URL",
                                                "https://helpdesk.sandbox.eosc-beyond.eu/assets/form/form.js")
@@ -108,5 +106,11 @@ module Mp
     config.enable_external_search = ActiveModel::Type::Boolean.new.cast(ENV.fetch("MP_ENABLE_EXTERNAL_SEARCH", false))
     config.analytics_enabled = ActiveModel::Type::Boolean.new.cast(ENV.fetch("ANALYTICS_ENABLED", false))
     config.whitelabel = ENV.fetch("MP_WHITELABEL", false)
+
+    config.bos_base_url = ENV.fetch("BOS_API_URL", "http://localhost:8000")
+    config.bos_api_key = ENV.fetch("BOS_API_KEY", "")
+    config.bos_enabled = ActiveModel::Type::Boolean.new.cast(ENV.fetch("BOS_ENABLED", false))
+
+    config.federation_api_base_url = ENV.fetch("FEDERATION_API_BASE_URL", "http://localhost:3015/api/v1/services")
   end
 end

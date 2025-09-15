@@ -1,0 +1,21 @@
+- if filters.present?
+  .panel-group{ id: "filters", role: "tablist", "aria-multiselectable": "true" }
+    %h5.underline-light.mb-2.pb-2.mt-4
+      .row
+        .col-7.text-uppercase
+          = _("Filters")
+
+    - filters.each do |key, elements|
+      = render "federation/filters/multiselect", name: key, elements: elements, active: params[key] || []
+
+    .row.mt-3
+      .col-12
+        .d-flex.justify-content-between
+          = button_tag "Clear Filters",
+            type: "button",
+            class: "btn btn-outline-secondary",
+            data: { action: "click->federation-filters#clearFilters" }
+
+          %button.btn.btn-primary{ type: "submit" }
+            %i.fas.fa-search.mr-2
+            Apply Filters

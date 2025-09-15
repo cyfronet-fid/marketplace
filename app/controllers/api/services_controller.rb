@@ -5,6 +5,7 @@ class Api::ServicesController < ActionController::API
     @json =
       Service
         .where(status: :published)
+        .includes(:public_contacts)
         .map do |s|
           {
             "Service Unique ID": s.id,

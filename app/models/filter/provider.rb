@@ -12,7 +12,18 @@ class Filter::Provider < Filter::Multiselect
     )
   end
 
+  def values
+    super.select { |v| v.to_s.match?(/\A\d+\z/) }.map(&:to_s)
+  end
+
   protected
+
+  def where_constraint
+    ids = values.map(&:to_i)
+    return {} if ids.empty?
+
+    { @index.to_sym => ids }
+  end
 
   def fetch_options
     @model

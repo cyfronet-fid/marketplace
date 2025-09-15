@@ -198,6 +198,10 @@ Rails.application.routes.draw do
     end
 
     namespace :v1 do
+      namespace :search do
+        resources :services, only: [:index]
+      end
+
       resources :resources, only: %i[index show], constraints: { id: pid_format_constraint } do
         resources :offers, only: %i[index create show destroy update], module: :resources
       end
@@ -259,6 +263,10 @@ Rails.application.routes.draw do
   match "communities", to: "pages#communities", via: "get", as: :communities
   match "about_projects", to: "pages#about_projects", via: "get", as: :about_projects
   match "landing_page", to: "pages#landing_page", via: "get", as: :landing_page
+
+  namespace :federation do
+    resources :services, only: [:index]
+  end
 
   if Rails.env.development?
     get "designsystem" => "designsystem#index"
