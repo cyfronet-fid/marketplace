@@ -2,6 +2,8 @@
 
 require "active_support/core_ext/integer/time"
 
+
+
 Rails.application.configure do
   # Allows to receive messages from other host (JIRA)
   config.hosts = []
@@ -82,7 +84,13 @@ Rails.application.configure do
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
 
-  config.action_mailer.default_url_options = { host: "localhost", port: ENV["PORT"] || 3000 }
+  Rails.application.routes.default_url_options[:host] = ENV.fetch("ROOT_URL",
+                                                                  "htttp://localhost:#{ENV.fetch("PORT", 3000)}")
+
+  config.action_mailer.default_url_options = {
+    host: ENV.fetch("ROOT_URL", "http://localhost"),
+    port: ENV.fetch("PORT", 3000)
+  }
   config.action_controller.asset_host = "localhost:#{config.action_mailer.default_url_options[:port]}"
   config.action_mailer.asset_host = "http://localhost:#{config.action_mailer.default_url_options[:port]}"
 

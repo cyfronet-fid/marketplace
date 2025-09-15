@@ -1,0 +1,26 @@
+%ul{ class: html_classes, id: html_id }
+  - options.each do |option|
+    :ruby
+      muted = option["count"].to_i.zero?
+      target = root ? "element item" : "item"
+      has_children = option["children"].present?
+      collapsed = !(values.include?(option["eid"].to_s) || values.intersect?(option["children"].map { |c| c["eid"] }))
+      collapse_id = "collapse_#{name}_#{option["eid"]}"
+    %li.clearfix{ "data-multicheckbox-target": target }
+      %label{ class: ("text-muted" if muted) }
+        %input.position-static{ type: "checkbox", name: "#{name}[]", multiple: true,
+          checked: values.include?(option["eid"].to_s) || values.include?(parent.to_s),
+          value: option["eid"], data: { action: "change->filter#reload", probe: "", e2e: "filter-checkbox",
+          parent: parent, class: checkbox_class(option, values) } }
+        %span= option["name"]
+      - if has_children
+        %a.float-right.mr-2{ href: "##{collapse_id}", "data-toggle": "collapse", role: "button",
+          "aria-expanded": !collapsed, "aria-controls": collapse_id, class: ("collapsed" if collapsed) }
+          .collapse-icon
+            %i.fas.fa-chevron-down
+            %i.fas.fa-chevron-up
+      %span.float-right.small.d-none{ class: ("text-muted" if muted) }= option["count"]
+      - if has_children
+        = render "federation/filters/multiselect_level",
+          options: option["children"], html_classes: "pl-3 pr-0 collapse #{"collapsed" if collapsed}",
+          name: name, values: values, root: false, parent: option["eid"], html_id: collapse_id

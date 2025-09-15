@@ -343,6 +343,6 @@ class Service < ApplicationRecord
   end
 
   def main_category_missing?
-    categorizations.where(main: true).count.zero?
+    categorizations.where(main: true).empty?
   end
 end

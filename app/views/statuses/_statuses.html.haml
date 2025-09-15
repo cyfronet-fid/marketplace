@@ -1,6 +1,6 @@
 #scrollbar.progress-box.mt-4
   %ul.step-progress.pl-5.pb-4
-    - if statuses.count.positive?
+    - if statuses.any?
       - statuses.reverse_each do |status|
         = render "statuses/status", status: status
     - else

@@ -1,0 +1,11 @@
+= render "federation/filters/wrapper", name: name, collapsed: active.blank? do
+  .form-group.panel-body{ data: { controller: "multicheckbox" } }
+    %input{ data: { "multicheckbox-target": "all" }, type: "hidden",
+      name: "#{name}-all", value: params["#{name}-all"] }
+
+    = render "federation/filters/multiselect_level",
+      options: elements, html_classes: "pl-0 pr-0", html_id: "#{name}-filter-group",
+      name: name, values: params[name.to_sym] || [], root: true, parent: params["#{name}-filter"]
+
+    %a{ data: { "multicheckbox-target": "toggler", action: "click->multicheckbox#toggle" },
+        href: "javascript:undefined" }

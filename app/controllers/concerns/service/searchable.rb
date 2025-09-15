@@ -7,11 +7,7 @@ module Service::Searchable
     include Paginable
     include Service::Sortable
     include Service::Categorable
-    before_action only: :index do
-      @filters = visible_filters
-      @active_filters = active_filters
-      store_query_params
-    end
+    before_action :initialize_filters, only: :index
   end
 
   def search(scope, filters = all_filters, additionals_size: 0)
@@ -162,5 +158,11 @@ module Service::Searchable
       Filter::Location,
       Filter::Tag
     ]
+  end
+
+  def initialize_filters
+    @filters = visible_filters
+    @active_filters = active_filters
+    store_query_params
   end
 end

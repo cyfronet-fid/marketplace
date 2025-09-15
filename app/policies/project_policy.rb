@@ -55,7 +55,7 @@ class ProjectPolicy < ApplicationPolicy
   end
 
   def any_project_item?
-    record.project_items.count.positive?
+    record.project_items.size.positive?
   end
 
   def project_items_closed?

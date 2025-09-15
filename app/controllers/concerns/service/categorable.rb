@@ -8,7 +8,7 @@ module Service::Categorable
   included { before_action :init_categories_tree, only: :index, unless: :external_search_enabled? }
 
   def category_counters(scope, filters)
-    services = search_for_categories(scope, filters)
+    services = categories_search_result(scope, filters)
     counters =
       services.aggregations["categories"]["categories"]["buckets"].each_with_object({}) do |e, h|
         h[e["key"]] = e["doc_count"]
@@ -51,9 +51,36 @@ module Service::Categorable
     subcategories&.each_with_object({}) { |cat, h| h[cat.id] = { category: cat, counter: count_services(cat) } }
   end
 
+  # Returns Searchkick result for categories search, memoized per request
+  def categories_search_result(scope, filters)
+    @categories_search_result ||= search_for_categories(scope, filters)
+  end
+
+  # Returns array of service IDs matching current filters for categories, memoized per request
+  def categories_search_service_ids
+    @categories_search_service_ids ||=
+      begin
+        result = categories_search_result(scope, all_filters)
+        list = result.respond_to?(:results) ? result.results : result
+        list.map { |s| s.id.to_i }
+      end
+  end
+
   def count_services(category)
-    services = search_for_categories(scope, all_filters).map { |s| s.id.to_i }
-    (counters[category.id] || 0) + category.descendants.map { |c| c.service_ids.to_a & services }.flatten.uniq.size
+    base_count = counters[category.id] || 0
+
+    descendant_ids = category.descendant_ids
+    return base_count if descendant_ids.blank?
+
+    # Count distinct services that are assigned to any descendant category and also match the current filters
+    descendants_count =
+      Categorization
+        .where(category_id: descendant_ids)
+        .where(service_id: categories_search_service_ids)
+        .distinct
+        .count(:service_id)
+
+    base_count + descendants_count
   end
 
   def counters
