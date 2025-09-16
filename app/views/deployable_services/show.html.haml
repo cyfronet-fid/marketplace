@@ -7,13 +7,13 @@
       .col-12.col-lg-9.row
         .col-12.col-sm-3.d-flex.img-service-detail
           - has_logo = @deployable_service.logo.attached? && @deployable_service.logo.variable?
-          = image_tag @deployable_service.logo.variant(resize_to_limit: [200, 200]) if has_logo
+          = image_tag @deployable_service.logo.variant(resize_to_limit: [200, 125]) if has_logo
           = image_tag("service_logo.svg", size: "100x67") unless has_logo
         .col-12.col-sm-9.service-details-header
           %h2.font-weight-bolder.mb-1= @deployable_service.name
           %p= @deployable_service.abbreviation || "-"
           .resource-row.row.mb-3
-            %span.pin-value.resource-type Deployable Service
+            %span.pin-value.resource-type.ready Ready-to-run service
       .col-12.col-lg-3.text-center
         = link_to "Visit URL", @deployable_service.url, target: "_blank",
           class: "btn btn-primary d-block mb-3 py-3" if @deployable_service.url.present?
@@ -28,7 +28,7 @@
       .col-12.col-xl-9.pr-5
         %ul.nav.nav-tabs.row.pl-3.mt-3
           %li.nav-item
-            .nav-link.text-uppercase.active About
+            .nav-link.active About
 
 .tab-content
   .tab-pane.container.active.desc
@@ -37,40 +37,6 @@
         .service-description-container
           %p= @deployable_service.description || "-"
         .details-box-wrapper.mt-5
-          .details-box.technical_information
-            .details-header
-              %h5 Technical Information
-            .details-content
-              %ul.list-group
-                - if @deployable_service.node.present?
-                  %li
-                    %span.list-title Node
-                    %br
-                    %span= @deployable_service.node
-                - if @deployable_service.version.present?
-                  %li
-                    %span.list-title Version
-                    %br
-                    %span= @deployable_service.version
-                - if @deployable_service.software_license.present?
-                  %li
-                    %span.list-title Software License
-                    %br
-                    %span= @deployable_service.software_license
-                - if @deployable_service.last_update.present?
-                  %li
-                    %span.list-title Last Update
-                    %br
-                    %span= @deployable_service.last_update
-
-          - if @deployable_service.creators.present?
-            .details-box.creators
-              .details-header
-                %h5 Creators
-              .details-content
-                %ul.list-group
-                  - @deployable_service.creators.each do |creator|
-                    %li= creator
 
           - if @deployable_service.resource_organisation.present?
             .details-box.organisation
@@ -104,4 +70,41 @@
 
       %sidebar.col-12.col-xl-3
         = link_to "URL", @deployable_service.url, target: "_blank", class: "right-panel-button website" if @deployable_service.url.present?
+
+        .details-box-wrapper.sidebar-box-wrapper.mt-4
+          .details-box.maturity
+            .details-header
+              %h5 Technical information
+            .details-content
+              %ul.list-group
+                - if @deployable_service.node.present?
+                  %li
+                    %span.list-title Node
+                    %br
+                    %span= @deployable_service.node
+                - if @deployable_service.version.present?
+                  %li
+                    %span.list-title Version
+                    %br
+                    %span= @deployable_service.version
+                - if @deployable_service.software_license.present?
+                  %li
+                    %span.list-title Software License
+                    %br
+                    %span= @deployable_service.software_license
+                - if @deployable_service.last_update.present?
+                  %li
+                    %span.list-title Last Update
+                    %br
+                    %span= @deployable_service.last_update
+
+          - if @deployable_service.creators.present?
+            .details-box.creators
+              .details-header
+                %h5 Creators
+              .details-content
+                %ul.list-group
+                  - @deployable_service.creators.each do |creator|
+                    %li= creator
+
 -# haml-lint:enable InlineStyles
