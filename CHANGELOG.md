@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [3.61.0](https://github.com/cyfronet-fid/marketplace/compare/3.60.0...v3.61.0) (2025-09-17)
+
+
+### Features
+
+* [#[#1556](https://github.com/cyfronet-fid/marketplace/issues/1556)] Add offer support to Deployable Services ([a748edf](https://github.com/cyfronet-fid/marketplace/commit/a748edfcd9e281579e926d1e525f3d6c10319a50))
+
 ## [3.60.0](https://github.com/cyfronet-fid/marketplace/compare/3.59.0...3.60.0) (2025-09-05)
 
 ### Features
