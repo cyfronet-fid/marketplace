@@ -20,7 +20,7 @@
           = render "services/configurations/attributes", step: @step, service: @service, form: f
         = render "services/configurations/bundled_offers", step: @step, service: @service, f: f
       - else
-        %p.mb-4= _("Please specify parameters. It is necessary to handle your request.")
+
         = render "services/configurations/voucher", step: @step, f: f
-        .row.bundle-info
+        .row.new-offer-form
           = render "services/configurations/attributes", step: @step, service: @service, form: f
