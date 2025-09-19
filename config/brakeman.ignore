@@ -353,40 +353,6 @@
     },
     {
       "warning_type": "Cross-Site Scripting",
-      "warning_code": 4,
-      "fingerprint": "3b933b9d9b9ab6414ab3d0e23606b634de21d2c5f5dd3b880e1345b19a6b82f0",
-      "check_name": "LinkToHref",
-      "message": "Potentially unsafe model attribute in `link_to` href",
-      "file": "app/views/deployable_services/show.html.haml",
-      "line": 100,
-      "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
-      "code": "link_to(\"URL\", DeployableService.with_attached_logo.friendly.find(params[:id]).url, :target => \"_blank\", :class => \"right-panel-button website\")",
-      "render_path": [
-        {
-          "type": "controller",
-          "class": "DeployableServicesController",
-          "method": "show",
-          "line": 11,
-          "file": "app/controllers/deployable_services_controller.rb",
-          "rendered": {
-            "name": "deployable_services/show",
-            "file": "app/views/deployable_services/show.html.haml"
-          }
-        }
-      ],
-      "location": {
-        "type": "template",
-        "template": "deployable_services/show"
-      },
-      "user_input": "DeployableService.with_attached_logo.friendly.find(params[:id]).url",
-      "confidence": "Weak",
-      "cwe_id": [
-        79
-      ],
-      "note": ""
-    },
-    {
-      "warning_type": "Cross-Site Scripting",
       "warning_code": 2,
       "fingerprint": "47da5d921f227cb27fd64f47392bb764b8be3ba220fb42882b12fb7e65b7e2b9",
       "check_name": "CrossSiteScripting",
@@ -637,7 +603,7 @@
       "check_name": "LinkToHref",
       "message": "Potentially unsafe model attribute in `link_to` href",
       "file": "app/views/deployable_services/show.html.haml",
-      "line": 18,
+      "line": 23,
       "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
       "code": "link_to(\"Visit URL\", DeployableService.with_attached_logo.friendly.find(params[:id]).url, :target => \"_blank\", :class => \"btn btn-primary d-block mb-3 py-3\")",
       "render_path": [
@@ -734,6 +700,40 @@
         "template": "services/_bundled_offer"
       },
       "user_input": "(Unresolved Model).new.order_type",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 4,
+      "fingerprint": "ab59c6cbd3156a3166087cf2b6573190d148fb0601ea9d8e77911e7ecedcd623",
+      "check_name": "LinkToHref",
+      "message": "Potentially unsafe model attribute in `link_to` href",
+      "file": "app/views/deployable_services/show.html.haml",
+      "line": 70,
+      "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
+      "code": "link_to(\"Deployment Template\", DeployableService.with_attached_logo.friendly.find(params[:id]).url, :target => \"_blank\", :class => \"right-panel-button configuration\")",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "DeployableServicesController",
+          "method": "show",
+          "line": 11,
+          "file": "app/controllers/deployable_services_controller.rb",
+          "rendered": {
+            "name": "deployable_services/show",
+            "file": "app/views/deployable_services/show.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "deployable_services/show"
+      },
+      "user_input": "DeployableService.with_attached_logo.friendly.find(params[:id]).url",
       "confidence": "Weak",
       "cwe_id": [
         79

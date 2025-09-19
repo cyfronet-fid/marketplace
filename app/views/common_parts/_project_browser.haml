@@ -7,7 +7,7 @@
                "Add this resource to a specific project or create a new one.") |
     -# haml-lint:enable MultilinePipe
     = f.input :project do
-      .input-group.col
+      .input-group.col.pl-0
         = f.input_field :project_id, collection: projects,
           class: "form-control custom-select #{"is-invalid" unless step.errors[:project].empty?}",
           "data-action" => "change->details-loader#changed",

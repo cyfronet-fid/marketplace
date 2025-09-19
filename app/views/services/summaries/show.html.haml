@@ -1,41 +1,46 @@
 - content_for :title, _("Final details")
-%p.mb-4
-  = _("Please select a Project and review the summary below.")
-  - if @offer.orderable?
-    = _("Once you submit the order, your request will be sent to a service provider.")
-    %br
-    = _("The order status will be visible at your Project space.")
-  - else
-    = _("Once added to the project, your service will be accessible via URL at your Project space.")
+.row
+  .col-lg-7
+    %p.mb-4
+      = _("Please select a Project and review the summary below.")
+      - if @offer.orderable?
+        = _("Once you submit the order, your request will be sent to a service provider.")
+        = _("The order status will be visible at your Project space.")
+      - else
+        = _("Once added to the project, your service will be accessible via URL at your Project space.")
 
-= render "services/summaries/technical_configuration",
-         service: @service, step: @step
-- if @bundle.present?
-  = render partial: "services/summaries/bundle_technical", collection: @bundle.offers, as: :offer,
-  locals: { bundle_params: @bundle_params }
+    = render "services/summaries/technical_configuration",
+             service: @service, step: @step
+    - if @bundle.present?
+      = render partial: "services/summaries/bundle_technical", collection: @bundle.offers, as: :offer,
+      locals: { bundle_params: @bundle_params }
 
-- form_url = @service.is_a?(DeployableService) ? deployable_service_summary_path(@service) : service_summary_path(@service)
-= simple_form_for @step, url: form_url, html: { id: "order-form" } do |f|
-  .additional-information.mb-4
-    .card.offer-description.mb-4
-      .card-body.pb-2.pt-4.pl-4.pr-4
-        - if @offer.voucherable || (@step.bundle.present? && @step.bundle.all_offers.select(&:voucherable)&.size&.positive?)
-          %h4
-            = _("Voucher")
-          %dl.mb-4
-            - if @step.request_voucher
-              %dt
-                = _("I don't have a voucher, and I would like to request for one")
-            - else
-              %dt
-                = _("Voucher ID")
-              %dd= @step.voucher_id
+    - form_url = @service.is_a?(DeployableService) ? deployable_service_summary_path(@service) : service_summary_path(@service)
+    = simple_form_for @step, url: form_url, html: { id: "order-form" } do |f|
+      .additional-information.mb-4
+        .card.offer-description.mb-4
+          .card-body.pb-2.pt-4.pl-4.pr-4
+            - if @offer.voucherable || (@step.bundle.present? && @step.bundle.all_offers.select(&:voucherable)&.size&.positive?)
+              %h4
+                = _("Voucher")
+              %dl.mb-4
+                - if @step.request_voucher
+                  %dt
+                    = _("I don't have a voucher, and I would like to request for one")
+                - else
+                  %dt
+                    = _("Voucher ID")
+                  %dd= @step.voucher_id
 
-        = render "common_parts/project_browser", step: @step, projects: @projects, f: f
-    .card.offer-description.mb-4
-      .card-body.pb-2.pt-4.pl-4.pr-4
-        %h4
-          = _("Additional information")
-        = f.input :additional_comment, as: :text, class: "form-control"
-        #recaptcha= recaptcha_tags noscript: false
-        = f.error :verified_recaptcha, class: "invalid-feedback d-block"
+            = render "common_parts/project_browser", step: @step, projects: @projects, f: f
+        .card.offer-description.mb-4
+          .card-body.pb-2.pt-4.pl-4.pr-4
+            %h4
+              = _("Additional information")
+            = f.input :additional_comment, as: :text, class: "form-control"
+            #recaptcha= recaptcha_tags noscript: false
+            = f.error :verified_recaptcha, class: "invalid-feedback d-block"
+  .col-lg-5.right-tips
+    .right-tip
+      %p
+        Ready‑to‑use research tool you can launch on cloud infrastructure in minutes, admin skills required.

@@ -1,4 +1,3 @@
--# haml-lint:disable InlineStyles
 - breadcrumb :deployable_service, @deployable_service
 
 .container{ class: "#{"suspended" if @deployable_service.suspended?}" }
@@ -15,15 +14,14 @@
           .resource-row.row.mb-3
             %span.pin-value.resource-type.ready Ready-to-run service
       .col-12.col-lg-3.text-center
-        = link_to "Visit URL", @deployable_service.url, target: "_blank",
-          class: "btn btn-primary d-block mb-3 py-3" if @deployable_service.url.present?
 
         - if @deployable_service.offers.accessible.any?
           = link_to deployable_service_choose_offer_path(@deployable_service),
-            class: "btn btn-success d-block mb-3 py-3" do
-            %i.fas.fa-rocket
-            Configure & Deploy
-
+            class: "btn btn-primary d-block mb-3 py-3" do
+            Run the service
+        - elsif @deployable_service.url.present?
+          = link_to "Visit URL", @deployable_service.url, target: "_blank",
+            class: "btn btn-primary d-block mb-3 py-3"
     .row
       .col-12.col-xl-9.pr-5
         %ul.nav.nav-tabs.row.pl-3.mt-3
@@ -69,7 +67,8 @@
                       = tag
 
       %sidebar.col-12.col-xl-3
-        = link_to "URL", @deployable_service.url, target: "_blank", class: "right-panel-button website" if @deployable_service.url.present?
+        = link_to "Deployment Template", @deployable_service.url, target: "_blank",
+          class: "right-panel-button configuration" if @deployable_service.url.present?
 
         .details-box-wrapper.sidebar-box-wrapper.mt-4
           .details-box.maturity
@@ -104,7 +103,26 @@
                 %h5 Creators
               .details-content
                 %ul.list-group
-                  - @deployable_service.creators.each do |creator|
-                    %li= creator
-
--# haml-lint:enable InlineStyles
+                  - @deployable_service.creators.first(3).each do |creator|
+                    %li
+                      %span.list-title Creator name
+                      %br
+                      %span= creator.dig("creatorNameTypeInfo", "creatorName")
+                    %li
+                      %span.list-title Name type
+                      %br
+                      %span= creator.dig("creatorNameTypeInfo", "nameType").split("-", 2).last.humanize
+                    %li
+                      %span.list-title Affiliation
+                      %br
+                      %span= creator.dig("creatorAffiliationInfo", "affiliation")
+                    %li
+                      %span.list-title Affiliation Identifier
+                      %br
+                      %span
+                        = link_to creator.dig("creatorAffiliationInfo", "affiliationIdentifier"),
+                          creator.dig("creatorAffiliationInfo", "affiliationIdentifier")
+                    %li
+                      %span.list-title Name Identifier
+                      %br
+                      %span= link_to creator["nameIdentifier"], creator["nameIdentifier"]

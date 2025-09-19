@@ -1,4 +1,3 @@
-!!!
 %html{ lang: "en" }
   = render "layouts/head"
   %body
@@ -11,7 +10,7 @@
           -# TODO: refactor dynamic translation
           = link_to @offer&.orderable? ? _("Cancel order and quit") : _("Cancel and quit"),
             service_cancel_path(@service),
-            class: "text-uppercase align-middle", data: { probe: "",
+            class: "text-uppercase align-middle mr-3", data: { probe: "",
                                                           "service-id": @service.id,
                                                           "turbo-method": :delete }
           = render "layouts/order/submit_button"
@@ -21,12 +20,13 @@
     %main.container.order-container
       = render "layouts/order/nav", service: @service, wizard: @wizard
       = yield
-      %hr.bottom-hr.mt-5.mb-4
-      .navbar.pr-0.pl-0.order-bottom-nav
-        .text-left.flex-grow-1
-          = link_to prev_title, url_for([@service, prev_visible_step_key]),
-          class: "text-uppercase", "data-probe": "" if prev_visible_step_key
-        = render "layouts/order/submit_button"
+
+      .navbar.pr-0.pl-0.order-bottom-nav.new-offer-form-controls
+        .col-lg-7.d-flex
+          .text-left.flex-grow-1
+            = link_to _("<- Back"), url_for([@service, prev_visible_step_key]),
+            class: "btn btn-back", "data-probe": "" if prev_visible_step_key
+          = render "layouts/order/submit_button"
 
   = render "layouts/eosc_commons_footer"
   = render "layouts/recommendation"
