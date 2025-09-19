@@ -52,7 +52,7 @@ header {
 
     .navbar-brand {
       img {
-        max-width: 200px;
+        max-width: 100px;
         margin-left: auto;
         margin-right: auto;
       }
@@ -3248,6 +3248,32 @@ label[data-multicheckbox].small {
       background-size: contain;
       background-repeat: no-repeat;
       background-image: url("icon-website.svg");
+    }
+
+    &:hover {
+      background: $alert-bg;
+      color: $tag-color-1;
+      border: 1px solid $tag-color-1;
+    }
+  }
+
+  &.configuration {
+    background: $palette-white;
+    border: 1px solid $palette-gray-100;
+    padding-left: 48px;
+    color: $palette-gray-100;
+    font-weight: 500;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      width: 17px;
+      height: 17px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-image: url("icon-document.svg");
     }
 
     &:hover {

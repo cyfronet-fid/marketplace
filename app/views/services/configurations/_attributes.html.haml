@@ -1,10 +1,14 @@
 - unless step.property_values.blank?
-  .card-body.p-4
-    %h4.card-title.mb-4
+  .col-lg-7
+    %h4
       = _("Parameters")
-    .col-12.col-lg-12.pl-0.additional-information.technical
+    .offer-section-wrapper
       - step.property_values.each do |attr|
         = form.simple_fields_for :property_values, attr do |field|
           = render "services/configurations/attributes/#{attr.type}", attr: attr, field: field
         - rescue StandardError => e
           = e.message
+  .col-lg-5.right-tips
+    .right-tip
+      %p
+        Ready‑to‑use research tool you can launch on cloud infrastructure in minutes, admin skills required.
