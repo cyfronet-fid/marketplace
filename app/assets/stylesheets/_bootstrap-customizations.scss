@@ -2933,6 +2933,11 @@ label[data-multicheckbox].small {
       line-height: 1.2;
       background: $alert-bg;
       color: $palette-blue;
+
+      &.ready {
+        background: $green;
+        color: $landing-01;
+      }
     }
   }
 
@@ -6603,6 +6608,16 @@ abbr[title] {
     }
 
     // scss-lint:enable all
+  }
+
+  &.sidebar-box-wrapper {
+    .details-box {
+      width: 100%;
+
+      h5 {
+        text-transform: none;
+      }
+    }
   }
 }
 
