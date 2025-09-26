@@ -1,11 +1,15 @@
 # frozen_string_literal: true
 
 class InfrastructureManager::Client < ApplicationService
+  EGI_REFRESH_TOKEN_URL = "https://aai.egi.eu/auth/realms/egi/protocol/openid-connect/token"
   BASE_URL = "https://deploy.sandbox.eosc-beyond.eu"
+  TOKEN_CACHE_KEY = "egi_access_token"
+  TOKEN_CACHE_EXPIRY = 50.minutes # Refresh before 1 hour expiry
 
-  def initialize(access_token = nil)
+  def initialize(access_token = nil, site = nil)
     super()
     @access_token = access_token
+    @site = site
     @connection = build_connection
   end
 
@@ -18,39 +22,13 @@ class InfrastructureManager::Client < ApplicationService
 
     handle_response(response)
   rescue Faraday::Error => e
-    { success: false, error: "HTTP request failed: #{e.message}", status_code: nil }
+    error_msg = "HTTP request failed: #{e.class}: #{e.message}"
+    Rails.logger.error error_msg
+    { success: false, error: error_msg, status_code: nil }
   rescue StandardError => e
-    { success: false, error: "Unexpected error: #{e.message}", status_code: nil }
-  end
-
-  def get_infrastructure_info(infrastructure_id)
-    response = @connection.get("/infrastructures/#{infrastructure_id}") { |req| req.headers.merge!(headers) }
-
-    handle_response(response)
-  rescue Faraday::Error => e
-    { success: false, error: "HTTP request failed: #{e.message}", status_code: nil }
-  rescue StandardError => e
-    { success: false, error: "Unexpected error: #{e.message}", status_code: nil }
-  end
-
-  def get_infrastructure_state(infrastructure_id)
-    response = @connection.get("/infrastructures/#{infrastructure_id}/state") { |req| req.headers.merge!(headers) }
-
-    handle_response(response)
-  rescue Faraday::Error => e
-    { success: false, error: "HTTP request failed: #{e.message}", status_code: nil }
-  rescue StandardError => e
-    { success: false, error: "Unexpected error: #{e.message}", status_code: nil }
-  end
-
-  def delete_infrastructure(infrastructure_id)
-    response = @connection.delete("/infrastructures/#{infrastructure_id}") { |req| req.headers.merge!(headers) }
-
-    handle_response(response)
-  rescue Faraday::Error => e
-    { success: false, error: "HTTP request failed: #{e.message}", status_code: nil }
-  rescue StandardError => e
-    { success: false, error: "Unexpected error: #{e.message}", status_code: nil }
+    error_msg = "Unexpected error: #{e.class}: #{e.message}"
+    Rails.logger.error error_msg
+    { success: false, error: error_msg, status_code: nil }
   end
 
   private
@@ -60,8 +38,8 @@ class InfrastructureManager::Client < ApplicationService
       conn.request :json
       conn.response :json
       conn.adapter Faraday.default_adapter
-      conn.options.timeout = 60
-      conn.options.open_timeout = 30
+      conn.options.timeout = 300 # 5 minutes for deployment operations
+      conn.options.open_timeout = 60 # 1 minute to establish connection
     end
   end
 
@@ -70,34 +48,80 @@ class InfrastructureManager::Client < ApplicationService
   end
 
   def authorization_header
-    # Use Bearer token format as this gets better response from IM API
-    "Bearer #{@access_token || demo_token}"
+    token = @access_token || fresh_access_token
+
+    auth_lines = [
+      "id = im; type = InfrastructureManager; token = #{token}",
+      # Hardcode eosc-beyond.eu as a VO for the PoC purposes.
+      "id = egi; type = EGI; vo = eosc-beyond.eu; token = #{token}#{@site ? "; host = #{@site}" : ""}"
+    ]
+
+    auth_lines.join("\\n")
   end
 
-  def demo_token
-    # In a real implementation, this would come from the user's EGI token
-    # For demo purposes, we'll use a placeholder
-    ENV.fetch("IM_DEMO_TOKEN", "demo_token_placeholder")
+  def fresh_access_token
+    cached_token = Rails.cache.read(TOKEN_CACHE_KEY)
+    return cached_token if cached_token
+
+    env_token = ENV.fetch("EGI_ACCESS_TOKEN", nil)
+    return env_token if env_token.present?
+
+    refresh_token = ENV.fetch("EGI_REFRESH_ACCESS_TOKEN", nil)
+    if refresh_token.present?
+      new_token = refresh_egi_access_token(refresh_token)
+      if new_token
+        Rails.cache.write(TOKEN_CACHE_KEY, new_token, expires_in: TOKEN_CACHE_EXPIRY)
+        return new_token
+      end
+    end
+
+    raise StandardError,
+          "No EGI access token available. Set EGI_ACCESS_TOKEN or EGI_REFRESH_ACCESS_TOKEN environment variable."
+  end
+
+  def refresh_egi_access_token(refresh_token)
+    response =
+      Faraday.post(EGI_REFRESH_TOKEN_URL) do |req|
+        req.headers["Content-Type"] = "application/x-www-form-urlencoded"
+        req.body =
+          {
+            grant_type: "refresh_token",
+            refresh_token: refresh_token,
+            client_id: "token-portal",
+            scope: "openid email profile voperson_id eduperson_entitlement"
+          }.map { |k, v| "#{k}=#{v}" }.join("&")
+      end
+
+    if response.success?
+      token_data = JSON.parse(response.body)
+      token_data["access_token"]
+    else
+      Rails.logger.error "Failed to refresh EGI access token: #{response.status} - #{response.body}"
+      nil
+    end
+  rescue StandardError => e
+    Rails.logger.error "Error refreshing EGI access token: #{e.class}: #{e.message}"
+    nil
   end
 
   def handle_response(response)
+    parsed_body = parse_response_body(response)
+
     case response.status
     when 200..299
-      # Successful response
-      { success: true, data: parse_response_body(response), status_code: response.status, headers: response.headers }
+      { success: true, data: parsed_body, status_code: response.status, headers: response.headers }
     when 400..499
-      # Client error
-      { success: false, error: "Client error: #{response.status} - #{response.body}", status_code: response.status }
+      error_msg = "Client error: #{response.status} - #{response.body}"
+      Rails.logger.error error_msg
+      { success: false, error: error_msg, status_code: response.status, data: parsed_body }
     when 500..599
-      # Server error
-      { success: false, error: "Server error: #{response.status} - #{response.body}", status_code: response.status }
+      error_msg = "Server error: #{response.status} - #{response.body}"
+      Rails.logger.error error_msg
+      { success: false, error: error_msg, status_code: response.status, data: parsed_body }
     else
-      # Unexpected response
-      {
-        success: false,
-        error: "Unexpected response: #{response.status} - #{response.body}",
-        status_code: response.status
-      }
+      error_msg = "Unexpected response: #{response.status} - #{response.body}"
+      Rails.logger.error error_msg
+      { success: false, error: error_msg, status_code: response.status, data: parsed_body }
     end
   end
 
@@ -105,15 +129,13 @@ class InfrastructureManager::Client < ApplicationService
     content_type = response.headers["content-type"]
 
     if content_type&.include?("application/json")
-      # Faraday with json middleware might already parse JSON
       response.body.is_a?(String) ? JSON.parse(response.body) : response.body
     elsif content_type&.include?("text/yaml") || content_type&.include?("application/yaml")
       YAML.safe_load(response.body)
     else
       response.body
     end
-  rescue JSON::ParserError, Psych::SyntaxError => e
-    Rails.logger.warn "Failed to parse IM response body: #{e.message}"
+  rescue JSON::ParserError, Psych::SyntaxError
     response.body
   end
 end

@@ -107,22 +107,30 @@
                     %li
                       %span.list-title Creator name
                       %br
-                      %span= creator.dig("creatorNameTypeInfo", "creatorName")
+                      %span= creator.is_a?(Hash) ? creator.dig("creatorNameTypeInfo", "creatorName") : creator
                     %li
                       %span.list-title Name type
                       %br
-                      %span= creator.dig("creatorNameTypeInfo", "nameType").split("-", 2).last.humanize
+                      %span
+                        -# rubocop:disable Style/SafeNavigationChainLength
+                        = creator.dig("creatorNameTypeInfo", "nameType")&.split("-", 2)&.last&.humanize if creator.is_a?(Hash)
+                        -# rubocop:enable Style/SafeNavigationChainLength
                     %li
                       %span.list-title Affiliation
                       %br
-                      %span= creator.dig("creatorAffiliationInfo", "affiliation")
+                      %span= creator.is_a?(Hash) ? creator.dig("creatorAffiliationInfo", "affiliation") : ""
                     %li
                       %span.list-title Affiliation Identifier
                       %br
                       %span
-                        = link_to creator.dig("creatorAffiliationInfo", "affiliationIdentifier"),
-                          creator.dig("creatorAffiliationInfo", "affiliationIdentifier")
+                        - if creator.is_a?(Hash) && creator.dig("creatorAffiliationInfo", "affiliationIdentifier").present?
+                          = link_to creator.dig("creatorAffiliationInfo", "affiliationIdentifier"),
+                            creator.dig("creatorAffiliationInfo", "affiliationIdentifier")
                     %li
                       %span.list-title Name Identifier
                       %br
-                      %span= link_to creator["nameIdentifier"], creator["nameIdentifier"]
+                      %span
+                        -# rubocop:disable Style/IfUnlessModifier
+                        - if creator.is_a?(Hash) && creator["nameIdentifier"].present?
+                          = link_to creator["nameIdentifier"], creator["nameIdentifier"]
+                        -# rubocop:enable Style/IfUnlessModifier
