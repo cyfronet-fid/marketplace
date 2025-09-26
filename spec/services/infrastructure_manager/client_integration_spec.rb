@@ -3,57 +3,58 @@
 require "rails_helper"
 
 RSpec.describe InfrastructureManager::Client, type: :service, integration: true do
-  let(:access_token) { ENV.fetch("IM_TEST_TOKEN", "demo_token_placeholder") }
-  let(:client) { described_class.new(access_token) }
+  let(:client) { described_class.new(nil, "IISAS-FedCloud") }
 
-  let(:sample_tosca_template) { File.read(Rails.root.join("config", "templates", "jupyterhub_datamount.yml")) }
+  let(:sample_tosca_template) { <<~YAML }
+      tosca_definitions_version: tosca_simple_yaml_1_0
 
-  # These tests require actual network access to the IM API
-  # Run with: bundle exec rspec spec/services/infrastructure_manager/client_integration_spec.rb
-  # Set IM_TEST_TOKEN environment variable for real testing
+      topology_template:
+        node_templates:
+          simple_compute:
+            type: tosca.nodes.indigo.Compute
+            capabilities:
+              host:
+                properties:
+                  num_cpus: 1
+                  mem_size: 1 GiB
+              os:
+                properties:
+                  distribution: ubuntu
+                  type: linux
+                  version: 22.04
+    YAML
 
-  describe "authorization header generation" do
-    it "creates proper EGI authorization header" do
-      auth_header = client.send(:authorization_header)
-      parsed_auth = JSON.parse(auth_header)
+  describe "#create_infrastructure", :integration do
+    context "when valid credentials and template provided" do
+      it "successfully creates infrastructure" do
+        # This test requires real EGI credentials and should only run in integration environment
+        skip "Integration test requires real EGI credentials" unless ENV["RUN_INTEGRATION_TESTS"]
 
-      expect(parsed_auth).to be_an(Array)
-      expect(parsed_auth.first).to include("type" => "EGI", "token" => access_token, "project_id" => "eosc-beyond")
-    end
-  end
+        result = client.create_infrastructure(sample_tosca_template)
 
-  describe "IM API connection", skip: "Requires real IM API access" do
-    it "can create infrastructure with TOSCA template" do
-      skip "Set IM_TEST_TOKEN environment variable to run integration tests" unless ENV["IM_TEST_TOKEN"]
+        expect(result[:success]).to be true
+        expect(result[:status_code]).to eq(200)
+        expect(result[:data]).to have_key("uri")
 
-      result = client.create_infrastructure(sample_tosca_template)
-
-      if result[:success]
-        infrastructure_id = result[:data]
-        expect(infrastructure_id).to be_present
-        puts "✅ Created infrastructure: #{infrastructure_id}"
-
-        # Clean up
-        delete_result = client.delete_infrastructure(infrastructure_id)
-        puts "🗑️ Cleanup result: #{delete_result[:success] ? "Success" : delete_result[:error]}"
-      else
-        puts "❌ Failed to create infrastructure: #{result[:error]}"
-        puts "💡 This might be expected if authentication is not properly configured"
+        # Clean up would require manual intervention since we removed delete method
+        if result[:success] && result[:data]["uri"]
+          infrastructure_id = result[:data]["uri"].split("/").last
+          puts "Created infrastructure: #{infrastructure_id} - manual cleanup required"
+        end
       end
     end
-  end
 
-  describe "error handling" do
-    let(:client_with_bad_token) { described_class.new("invalid_token") }
+    context "when invalid credentials provided" do
+      let(:client_with_bad_token) { described_class.new("invalid_token", "IISAS-FedCloud") }
 
-    it "handles authentication errors gracefully", skip: "Requires real IM API access" do
-      skip "Set IM_TEST_TOKEN environment variable to run integration tests" unless ENV["IM_TEST_TOKEN"]
+      it "returns authentication error" do
+        skip "Integration test requires network access" unless ENV["RUN_INTEGRATION_TESTS"]
 
-      result = client_with_bad_token.create_infrastructure(sample_tosca_template)
+        result = client_with_bad_token.create_infrastructure(sample_tosca_template)
 
-      expect(result[:success]).to be false
-      expect(result[:error]).to include("error")
-      puts "✅ Properly handled authentication error: #{result[:error]}"
+        expect(result[:success]).to be false
+        expect(result[:status_code]).to be_between(400, 499)
+      end
     end
   end
 end

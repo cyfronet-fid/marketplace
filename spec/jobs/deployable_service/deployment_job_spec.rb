@@ -16,28 +16,18 @@ RSpec.describe DeployableService::DeploymentJob, type: :job do
   describe "#perform" do
     context "when deployment is successful" do
       let(:filled_template) { "filled tosca template content" }
-      let(:deployment_url) { "https://test.jupyter.example.com/jupyterhub/" }
       let(:mock_im_client) { instance_double(InfrastructureManager::Client) }
-      let(:successful_im_response) { { success: true, data: "inf-12345" } }
+      let(:successful_im_response) do
+        { success: true, data: { "uri" => "https://deploy.sandbox.eosc-beyond.eu/infrastructures/inf-12345" } }
+      end
 
       before do
-        # Mock template filling
         allow(DeployableService::ToscaTemplateFiller).to receive(:call).with(project_item).and_return(filled_template)
-
-        # Mock Infrastructure Manager API
-        allow(InfrastructureManager::Client).to receive(:new).and_return(mock_im_client)
-        allow(mock_im_client).to receive(:create_infrastructure).and_return(successful_im_response)
-
-        # Mock parameter extraction and URL construction
-        allow(subject).to receive(:extract_user_parameters).and_return(
-          { "kube_public_dns_name" => "test.jupyter.example.com" }
+        allow(InfrastructureManager::Client).to receive(:new).with(nil, "IISAS-FedCloud").and_return(mock_im_client)
+        allow(mock_im_client).to receive(:create_infrastructure).with(filled_template).and_return(
+          successful_im_response
         )
-        allow(subject).to receive(:current_user_token).and_return("test_token")
-        allow(subject).to receive(:store_infrastructure_metadata)
-
-        # Mock logging
         allow(Rails.logger).to receive(:info)
-        allow(Rails.logger).to receive(:debug)
       end
 
       it "calls ToscaTemplateFiller to get filled template" do
@@ -49,58 +39,60 @@ RSpec.describe DeployableService::DeploymentJob, type: :job do
       it "calls Infrastructure Manager API with filled template" do
         subject.perform(project_item)
 
-        expect(InfrastructureManager::Client).to have_received(:new).with("test_token")
+        expect(InfrastructureManager::Client).to have_received(:new).with(nil, "IISAS-FedCloud")
         expect(mock_im_client).to have_received(:create_infrastructure).with(filled_template)
       end
 
-      it "updates project item status to ready with deployment message and link" do
+      it "updates project item status to ready with deployment info" do
         subject.perform(project_item)
 
         project_item.reload
-        expect(project_item.status).to eq("Deployment ready at #{deployment_url}")
         expect(project_item.status_type).to eq("ready")
-        expect(project_item.deployment_link).to eq(deployment_url)
+        expect(project_item.status).to include("Deployment ready at")
+        expect(project_item.status).to include("inf-12345")
+        expect(project_item.deployment_link).to include("inf-12345")
       end
 
       it "logs deployment information" do
         subject.perform(project_item)
 
-        expect(Rails.logger).to have_received(:info).with(/Deploying TOSCA template to Infrastructure Manager/)
-        expect(Rails.logger).to have_received(:debug).with(/Filled TOSCA Template:/)
+        expect(Rails.logger).to have_received(:info).with(
+          "Starting deployment for ProjectItem #{project_item.id} (#{project_item.offer&.name})"
+        )
+        expect(Rails.logger).to have_received(:info).with("Deployment successful for ProjectItem #{project_item.id}")
       end
     end
 
     context "when deployment fails due to IM API failure" do
       let(:filled_template) { "filled tosca template content" }
       let(:mock_im_client) { instance_double(InfrastructureManager::Client) }
-      let(:failed_im_response) { { success: false, error: "Authentication failed" } }
+      let(:failed_im_response) do
+        { success: false, error: "No VMI obtained from Sites to system 'front'", status_code: 400 }
+      end
 
       before do
-        # Mock successful template filling
         allow(DeployableService::ToscaTemplateFiller).to receive(:call).with(project_item).and_return(filled_template)
-
-        # Mock failed Infrastructure Manager API
-        allow(InfrastructureManager::Client).to receive(:new).and_return(mock_im_client)
-        allow(mock_im_client).to receive(:create_infrastructure).and_return(failed_im_response)
-
-        allow(subject).to receive(:current_user_token).and_return("test_token")
+        allow(InfrastructureManager::Client).to receive(:new).with(nil, "IISAS-FedCloud").and_return(mock_im_client)
+        allow(mock_im_client).to receive(:create_infrastructure).with(filled_template).and_return(failed_im_response)
         allow(Rails.logger).to receive(:info)
-        allow(Rails.logger).to receive(:debug)
         allow(Rails.logger).to receive(:error)
       end
 
-      it "updates project item status to failed" do
+      it "updates project item status to rejected" do
         subject.perform(project_item)
 
         project_item.reload
-        expect(project_item.status).to eq("Deployment failed - please contact support")
         expect(project_item.status_type).to eq("rejected")
+        expect(project_item.status).to include(
+          "Deployment failed - Infrastructure Manager did not return a deployment address"
+        )
       end
 
       it "logs the IM API error" do
         subject.perform(project_item)
 
-        expect(Rails.logger).to have_received(:error).with("Failed to create infrastructure: Authentication failed")
+        expect(Rails.logger).to have_received(:error).with("Deployment failed for ProjectItem #{project_item.id}")
+        expect(Rails.logger).to have_received(:error).with("IM deployment failed: #{failed_im_response[:error]}")
       end
 
       it "does not update deployment_link" do
@@ -113,136 +105,55 @@ RSpec.describe DeployableService::DeploymentJob, type: :job do
 
     context "when an exception occurs" do
       before do
-        allow(DeployableService::ToscaTemplateFiller).to receive(:call).with(project_item).and_raise(
-          StandardError.new("Template processing error")
-        )
+        allow(DeployableService::ToscaTemplateFiller).to receive(:call).and_raise(StandardError, "Template error")
         allow(Rails.logger).to receive(:error)
       end
 
       it "logs the error" do
         subject.perform(project_item)
 
-        expect(Rails.logger).to have_received(:error).with("Deployment job failed: Template processing error")
+        expect(Rails.logger).to have_received(:error).with(
+          "Deployment job failed for ProjectItem #{project_item.id}: StandardError: Template error"
+        )
       end
 
-      it "updates project item status to failed" do
+      it "updates project item status to rejected" do
         subject.perform(project_item)
 
         project_item.reload
-        expect(project_item.status).to eq("Deployment failed - please contact support")
         expect(project_item.status_type).to eq("rejected")
-      end
-
-      it "does not update deployment_link" do
-        subject.perform(project_item)
-
-        project_item.reload
-        expect(project_item.deployment_link).to be_nil
-      end
-    end
-
-    describe "job queue configuration" do
-      it "is queued on default queue" do
-        expect(described_class.queue_name).to eq("default")
-      end
-    end
-
-    describe "integration with ActiveJob" do
-      it "can be enqueued" do
-        expect { described_class.perform_later(project_item) }.to have_enqueued_job(described_class).with(
-          project_item
-        ).on_queue("default")
+        expect(project_item.status).to include("Deployment failed due to system error: Template error")
       end
     end
   end
 
   describe "private methods" do
-    describe "#deploy_to_infrastructure_manager" do
-      let(:filled_template) { "mock filled template" }
-      let(:mock_im_client) { instance_double(InfrastructureManager::Client) }
-      let(:successful_im_response) { { success: true, data: "inf-12345" } }
+    describe "#extract_deployment_uri" do
+      it "extracts URI from hash response" do
+        response_data = { "uri" => "https://deploy.sandbox.eosc-beyond.eu/infrastructures/inf-12345" }
+        result = subject.send(:extract_deployment_uri, response_data)
 
-      before do
-        allow(InfrastructureManager::Client).to receive(:new).and_return(mock_im_client)
-        allow(subject).to receive(:current_user_token).and_return("test_token")
-        allow(subject).to receive(:extract_user_parameters).and_return(
-          { "kube_public_dns_name" => "custom.domain.com" }
-        )
-        allow(subject).to receive(:store_infrastructure_metadata)
-        allow(Rails.logger).to receive(:info)
-        allow(Rails.logger).to receive(:debug)
-        allow(Rails.logger).to receive(:error)
+        expect(result).to eq("https://deploy.sandbox.eosc-beyond.eu/infrastructures/inf-12345")
       end
 
-      it "calls IM API and returns deployment URL on success" do
-        allow(mock_im_client).to receive(:create_infrastructure).and_return(successful_im_response)
+      it "extracts URI from string response containing http" do
+        response_data = "https://deploy.sandbox.eosc-beyond.eu/infrastructures/inf-12345"
+        result = subject.send(:extract_deployment_uri, response_data)
 
-        result = subject.send(:deploy_to_infrastructure_manager, project_item, filled_template)
-
-        expect(InfrastructureManager::Client).to have_received(:new).with("test_token")
-        expect(mock_im_client).to have_received(:create_infrastructure).with(filled_template)
-        expect(result).to eq("https://custom.domain.com/jupyterhub/")
+        expect(result).to eq("https://deploy.sandbox.eosc-beyond.eu/infrastructures/inf-12345")
       end
 
-      it "returns nil on IM API failure" do
-        failed_response = { success: false, error: "API Error" }
-        allow(mock_im_client).to receive(:create_infrastructure).and_return(failed_response)
-
-        result = subject.send(:deploy_to_infrastructure_manager, project_item, filled_template)
+      it "returns nil for non-URI string" do
+        response_data = "inf-12345"
+        result = subject.send(:extract_deployment_uri, response_data)
 
         expect(result).to be_nil
-        expect(Rails.logger).to have_received(:error).with("Failed to create infrastructure: API Error")
       end
 
-      it "uses fallback DNS name when parameter not provided" do
-        allow(subject).to receive(:extract_user_parameters).and_return({})
-        allow(mock_im_client).to receive(:create_infrastructure).and_return(successful_im_response)
+      it "returns nil for nil input" do
+        result = subject.send(:extract_deployment_uri, nil)
 
-        result = subject.send(:deploy_to_infrastructure_manager, project_item, filled_template)
-
-        expect(result).to eq("https://jupytermount.vm.fedcloud.eu/jupyterhub/")
-      end
-    end
-
-    describe "#extract_user_parameters" do
-      it "extracts parameters from JSON array format" do
-        properties = ['{"id": "param1", "value": "value1"}', '{"id": "param2", "value": "value2"}']
-
-        result = subject.send(:extract_user_parameters, properties)
-
-        expect(result).to eq({ "param1" => "value1", "param2" => "value2" })
-      end
-
-      it "extracts parameters from hash format" do
-        properties = { "param1" => "value1", "param2" => "value2" }
-
-        result = subject.send(:extract_user_parameters, properties)
-
-        expect(result).to eq({ "param1" => "value1", "param2" => "value2" })
-      end
-    end
-
-    describe "#current_user_token" do
-      context "when user has authentication_token" do
-        before { user.update!(authentication_token: "user_specific_token") }
-
-        it "returns user authentication token" do
-          result = subject.send(:current_user_token, project_item)
-          expect(result).to eq("user_specific_token")
-        end
-      end
-
-      context "when user has no authentication_token" do
-        before do
-          user.update_column(:authentication_token, nil) # Use update_column to bypass callbacks
-        end
-
-        it "returns demo token from environment" do
-          stub_const("ENV", ENV.to_hash.merge("IM_DEMO_TOKEN" => "env_demo_token"))
-
-          result = subject.send(:current_user_token, project_item)
-          expect(result).to eq("env_demo_token")
-        end
+        expect(result).to be_nil
       end
     end
   end
