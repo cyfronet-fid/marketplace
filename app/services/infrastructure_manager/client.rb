@@ -31,6 +31,35 @@ class InfrastructureManager::Client < ApplicationService
     { success: false, error: error_msg, status_code: nil }
   end
 
+  def get_outputs(infrastructure_id)
+    response = @connection.get("/infrastructures/#{infrastructure_id}/outputs") { |req| req.headers.merge!(headers) }
+
+    handle_response(response)
+  rescue Faraday::Error => e
+    error_msg = "HTTP request failed: #{e.class}: #{e.message}"
+    Rails.logger.error error_msg
+    { success: false, error: error_msg, status_code: nil }
+  rescue StandardError => e
+    error_msg = "Unexpected error: #{e.class}: #{e.message}"
+    Rails.logger.error error_msg
+    { success: false, error: error_msg, status_code: nil }
+  end
+
+  def get_vm_info(infrastructure_id, vm_id)
+    response =
+      @connection.get("/infrastructures/#{infrastructure_id}/vms/#{vm_id}") { |req| req.headers.merge!(headers) }
+
+    handle_response(response)
+  rescue Faraday::Error => e
+    error_msg = "HTTP request failed: #{e.class}: #{e.message}"
+    Rails.logger.error error_msg
+    { success: false, error: error_msg, status_code: nil }
+  rescue StandardError => e
+    error_msg = "Unexpected error: #{e.class}: #{e.message}"
+    Rails.logger.error error_msg
+    { success: false, error: error_msg, status_code: nil }
+  end
+
   private
 
   def build_connection
@@ -106,6 +135,7 @@ class InfrastructureManager::Client < ApplicationService
 
   def handle_response(response)
     parsed_body = parse_response_body(response)
+    parsed_body = convert_to_indifferent_access(parsed_body)
 
     case response.status
     when 200..299
@@ -137,5 +167,16 @@ class InfrastructureManager::Client < ApplicationService
     end
   rescue JSON::ParserError, Psych::SyntaxError
     response.body
+  end
+
+  def convert_to_indifferent_access(obj)
+    case obj
+    when Hash
+      obj.with_indifferent_access.transform_values { |v| convert_to_indifferent_access(v) }
+    when Array
+      obj.map { |item| convert_to_indifferent_access(item) }
+    else
+      obj
+    end
   end
 end
