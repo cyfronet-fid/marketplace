@@ -21,7 +21,7 @@ topology_template:
     fe_mem:
       type: scalar-unit.size
       description: Amount of Memory for the front-end node
-      default: 8 GiB
+      default: 8 GB
     fe_disk_size:
       type: scalar-unit.size
       description: Size of the disk to be attached to the FE instance (Set 0 if disk is not needed)
@@ -38,7 +38,7 @@ topology_template:
     wn_mem:
       type: scalar-unit.size
       description: Amount of Memory for the WNs
-      default: 8 GiB
+      default: 8 GB
     wn_disk_size:
       type: scalar-unit.size
       description: Size of the root disk of the WNs (in case of 0 disk will no be resized)

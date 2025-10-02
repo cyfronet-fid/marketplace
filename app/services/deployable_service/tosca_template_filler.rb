@@ -19,13 +19,7 @@ class DeployableService::ToscaTemplateFiller < ApplicationService
     # For demo, read from local file (in config/templates)
     # In production, this would fetch from the actual URL
     template_path = Rails.root.join("config", "templates", "jupyterhub_datamount.yml")
-
-    if File.exist?(template_path)
-      File.read(template_path)
-    else
-      # Fallback basic template if file doesn't exist
-      basic_jupyter_template
-    end
+    File.read(template_path)
   end
 
   def extract_user_parameters(properties)
@@ -65,8 +59,14 @@ class DeployableService::ToscaTemplateFiller < ApplicationService
     # Replace default values in inputs section
     inputs = parsed_template.dig("topology_template", "inputs") || {}
 
+    # DNS-related parameters that should not be overridden by users - use template defaults
+    dns_related_params = %w[kube_public_dns_name public_dns_name dns_name]
+
     parameters.each do |param_id, param_value|
       next unless inputs[param_id]
+      # Skip DNS-related parameters - use template defaults
+      next if dns_related_params.include?(param_id)
+
       case param_id
       when "dataset_ids"
         # Split comma-separated DOI list into array
@@ -74,6 +74,13 @@ class DeployableService::ToscaTemplateFiller < ApplicationService
       else
         inputs[param_id]["default"] = param_value
       end
+    end
+
+    # Generate unique DNS name for JupyterHub deployment
+    if inputs["kube_public_dns_name"]
+      generated_dns = generate_unique_dns_name
+      inputs["kube_public_dns_name"]["default"] = generated_dns
+      Rails.logger.info "Generated unique DNS for deployment: #{generated_dns}"
     end
 
     begin
@@ -84,37 +91,8 @@ class DeployableService::ToscaTemplateFiller < ApplicationService
     end
   end
 
-  def basic_jupyter_template
-    <<~YAML
-      tosca_definitions_version: tosca_simple_yaml_1_2
-      
-      topology_template:
-        inputs:
-          fe_cpus:
-            type: integer
-            default: 4
-          fe_mem:
-            type: string
-            default: "8 GiB"
-          admin_password:
-            type: string
-            default: "not_very_secret_pass"
-          kube_public_dns_name:
-            type: string
-            default: "jupytermount.vm.fedcloud.eu"
-          dataset_ids:
-            type: list
-            default: 
-              - "10.48372/84a70617-3606-499d-bbe6-2b52ccf33392"
-              - "10.48372/29290d64-a840-4ffc-accf-5bf68deef233"
-              
-        node_templates:
-          jupyter_hub:
-            type: tosca.nodes.indigo.JupyterHub
-            properties:
-              admin_password: { get_input: admin_password }
-              dns_name: { get_input: kube_public_dns_name }
-              dataset_list: { get_input: dataset_ids }
-    YAML
+  def generate_unique_dns_name
+    # Generate UUID-based DNS in format: <uuid>.vm.fedcloud.eu
+    "#{SecureRandom.uuid}.vm.fedcloud.eu"
   end
 end
