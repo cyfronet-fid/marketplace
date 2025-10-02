@@ -5,4 +5,6 @@ class Contact < ApplicationRecord
 
   validates :email, presence: true, email: true
   validates :type, presence: true
+
+  auto_strip_attributes :email
 end
