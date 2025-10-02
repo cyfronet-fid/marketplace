@@ -713,3 +713,20 @@ Service.find(16).update!(status: :draft) # the entry should be removed
 Service.find(16).update!(status: :published) # the entry should reappear
 Service.find(16).update!(tagline: "foo bar") # the entry's tagline should update
 ```
+
+## FEDERATION_API_BASE_URL
+
+Marketplaces can connect with the federation aggregator and receive data from other marketplace instances.
+To use this feature, you need to choose an aggregator instance.
+Federated search is available under `https://your_marketplace.url/federation/services`
+
+Environment variable that specifies the base address of the federated search aggregator instance (marketplace_search_aggregator). The application uses it to call federated service endpoints.
+
+Example value:
+- `FEDERATION_API_BASE_URL=https://your-aggregator.example.org/api/v1/services`
+
+Default value (if the variable is not set):
+- `http://localhost:3015/api/v1/services`
+
+Aggregator repository:
+- https://github.com/cyfronet-fid/marketplace-search-aggregator
