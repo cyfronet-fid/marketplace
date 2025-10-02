@@ -7596,8 +7596,9 @@ abbr[title] {
   }
 
   .landing-header {
-    background: url("landing_page/landing-top-bg.jpg");
+    background-image: url("landing_page/landing-top-bg.jpg");
     background-size: cover;
+    background-position: 50% 0;
     background-attachment: fixed;
     padding: 60px 0 80px;
 
@@ -7801,6 +7802,49 @@ abbr[title] {
     }
   }
 
+  .federated {
+    padding: 20px 0 110px;
+
+    .federated-media {
+      background-image: url("landing_page/media-bg.jpg");
+      background-size: 100% auto;
+      height: 407px;
+
+      h3 {
+        font-size: 32px;
+        line-height: 38px;
+        font-weight: 600;
+        color: $palette-white;
+        margin: 80px 0 10px;
+
+        span {
+          color: $custom-30;
+        }
+      }
+
+      .description {
+        font-weight: 400;
+        max-width: 330px;
+        font-size: 14px;
+        line-height: 20px;
+        color: $palette-white;
+        margin: 0 0 25px;
+      }
+
+      .btn-primary {
+        background: $palette-white;
+        color: $custom-12;
+        border: 1px solid $palette-white;
+
+        &:hover {
+          background: $landing-04;
+          color: $landing-03;
+          border-color: $palette-white;
+        }
+      }
+    }
+  }
+
   .support {
     padding: 10px 0 200px;
 
@@ -7817,11 +7861,15 @@ abbr[title] {
       line-height: 24px;
       margin: 0 0 25px;
     }
+
+    .img-fluid {
+      border-radius: 32px;
+    }
   }
 
   .eosc-navy {
     padding: 75px 0 45px;
-    background: $palette-navy;
+    background: $custom-12;
     color: $palette-white;
 
     .eosc-logo-navy {
@@ -9102,6 +9150,17 @@ footer {
         line-height: 16px;
       }
     }
+
+    .federated {
+      .federated-media {
+        height: auto;
+        background-size: cover;
+        background-position: 50% 0;
+        padding-left: 0 !important;
+        border-radius: 30px;
+        padding-bottom: 35px;
+      }
+    }
   }
 }
 
@@ -9173,7 +9232,8 @@ footer {
 
       .activity {
         width: 95%;
-        margin: 0 auto 50px;
+        margin: 0 auto 25px;
+        min-height: auto;
 
         .activity-texts {
           .activity-title {
@@ -9205,6 +9265,36 @@ footer {
           font-size: 16px;
           text-align: center;
           line-height: 28px;
+        }
+      }
+    }
+
+    .federated {
+      padding: 10px 0 70px;
+
+      .federated-media {
+        height: auto;
+        background-size: cover;
+        background-position: 50% 0;
+        padding-left: 0 !important;
+        border-radius: 30px;
+        padding-bottom: 35px;
+
+        .col-md-5 {
+          margin-left: 30px !important;
+        }
+
+        h3 {
+          font-size: 24px;
+          line-height: 30px;
+          margin: 30px 0 10px;
+        }
+
+        .description {
+          max-width: 100%;
+          font-size: 13px;
+          line-height: 20px;
+          margin: 0 0 5px;
         }
       }
     }
