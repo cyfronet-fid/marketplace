@@ -31,7 +31,7 @@ class Filter::AncestryMultiselect < Filter
     arranged.inject({}) do |counters, (record, children)|
       counters.merge(
         count(children).tap do |children_counters|
-          counters[record.id] = @counters[record.id].to_i + (children_counters&.reduce(0) { |p, (_k, v)| p + v }).to_i
+          counters[record.id] = @counters[record.id].to_i + children_counters&.reduce(0) { |p, (_k, v)| p + v }.to_i
         end
       )
     end

@@ -18,5 +18,5 @@
       = f.input :resource_geographic_locations, as: :select,
                   label: "Service geographic locations",
                   collection: Country.options.map { |c| [ c.iso_short_name, "value" => c.alpha2 ] },
-                  disabled: cant_edit([resource_geographic_locations: []]),
+                  disabled: cant_edit?([resource_geographic_locations: []]),
                   input_html: { data: { choice: true },  "multiple" => "true" }

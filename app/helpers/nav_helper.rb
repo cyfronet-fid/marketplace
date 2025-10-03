@@ -84,11 +84,11 @@ module NavHelper
       current_controller_and_action?(act, ctrl) ? active_class : ""
     else
       # Otherwise check EITHER option
-      current_controller_or_action(act, ctrl) ? active_class : ""
+      current_controller_or_action?(act, ctrl) ? active_class : ""
     end
   end
 
-  def current_controller_or_action(act, ctrl)
+  def current_controller_or_action?(act, ctrl)
     current_controller?(*ctrl) || current_action?(*act)
   end
 

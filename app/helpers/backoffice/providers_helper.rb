@@ -4,7 +4,7 @@ module Backoffice::ProvidersHelper
   BASIC_STEPS = %w[profile location contacts managers summary].freeze
   EXTENDED_STEPS = %w[profile classification location contacts maturity dependencies managers other].freeze
 
-  def cant_edit(attribute)
+  def cant_edit?(attribute)
     !policy([:backoffice, @provider]).permitted_attributes.include?(attribute)
   end
 

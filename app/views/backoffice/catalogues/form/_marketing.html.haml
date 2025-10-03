@@ -16,9 +16,9 @@
           class: ("show" unless collapsed?(catalogue, [:logo, :description, :link_multimedia_urls])) }
   .card-body
     .service-description
-      = f.input :description, disabled: cant_edit_catalogue(:description)
+      = f.input :description, disabled: cant_edit_catalogue?(:description)
     - has_logo = catalogue.logo.present? && catalogue.logo.attached? && catalogue.logo.persisted?
-    = f.input :logo, disabled: cant_edit_catalogue(:logo), as: :file,
+    = f.input :logo, disabled: cant_edit_catalogue?(:logo), as: :file,
       input_html: { value: has_logo ? url_for(catalogue.logo) : nil }
     %h3
       = _("Multimedia urls")

@@ -96,7 +96,7 @@ class Backoffice::BundlePolicy < ApplicationPolicy
   end
 
   def orderless?
-    record.project_items.count.zero?
+    record.project_items.none?
   end
 
   def service_deleted?

@@ -1,27 +1,27 @@
-.tab-pane{ id: "profile", class: "#{"active" if active}", role: "tabpanel", "aria-labelledby": "profile-header", "data-form-target": "tab" }
+#profile.tab-pane{ class: "#{"active" if active}", role: "tabpanel", "aria-labelledby": "profile-header", "data-form-target": "tab" }
   .card-body
     .row
       .col-lg-7.pl-0
-        = f.input :name, disabled: cant_edit(:name)
-        = f.input :abbreviation, disabled: cant_edit(:abbreviation)
-        = f.input :website, disabled: cant_edit(:website)
+        = f.input :name, disabled: cant_edit?(:name)
+        = f.input :abbreviation, disabled: cant_edit?(:abbreviation)
+        = f.input :website, disabled: cant_edit?(:website)
         = f.input :logo
         = f.input :legal_entity, as: :boolean, include_hidden: true,
-                    disabled: cant_edit(:legal_entity),
+                    disabled: cant_edit?(:legal_entity),
                     boolean_style: :inline,
                     input_html: {  data: { action: "change->form#refreshRelatedFields", "child-field": "legal_status" } }
-        = f.input :legal_status, disabled: cant_edit([legal_status_ids: []]),
+        = f.input :legal_status, disabled: cant_edit?([legal_status_ids: []]),
           collection: Vocabulary.where(type: "Vocabulary::LegalStatus"),
           label_method: :name, value_method: :id,
           input_html: { multiple: false, data: { choice: true } }
         .row
           .col-12
             = f.input :hosting_legal_entity,
-                     collection: Vocabulary.where(type: "Vocabulary::HostingLegalEntity"),
-                     disabled: cant_edit(:hosting_legal_entity),
-                     label_method: :name,
-                     value_method: :id,
-                     input_html: { multiple: false, data: { choice: true } }
+                 collection: Vocabulary.where(type: "Vocabulary::HostingLegalEntity"),
+                 disabled: cant_edit?(:hosting_legal_entity),
+                 label_method: :name,
+                 value_method: :id,
+                 input_html: { multiple: false, data: { choice: true } }
         .row.service-contact-emails
           -# rubocop:disable Style/BlockDelimiters
           .col-12

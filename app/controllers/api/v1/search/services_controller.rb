@@ -216,7 +216,7 @@ class Api::V1::Search::ServicesController < Api::V1::Search::ApplicationControll
 
   def load_root_categories!
     @root_categories = Category.roots.order(:name)
-    @research_activities = Vocabulary::ResearchActivity.where.not(description: nil || "")
+    @research_activities = Vocabulary::ResearchActivity.where.not(description: "")
   end
 
   # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity

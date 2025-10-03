@@ -16,9 +16,9 @@
           "data-parent": "#accordion-form",
           class: ("show" unless collapsed?(catalogue, [:scientific_domains, :tags])) }
   .card-body
-    = f.association :scientific_domains, disabled: cant_edit_catalogue([scientific_domain_ids: []]),
+    = f.association :scientific_domains, disabled: cant_edit_catalogue?([scientific_domain_ids: []]),
               input_html: { data: { choice: true } },
               collection: sds,
               label_method: :first, value_method: :second
     = f.input :tag_list, input_html: { value: catalogue.tag_list.to_s, data: { choice: true } },
-    disabled: cant_edit_catalogue(:tag_list)
+    disabled: cant_edit_catalogue?(:tag_list)

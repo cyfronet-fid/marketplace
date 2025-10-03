@@ -16,10 +16,10 @@
           class: ("show" unless collapsed) }
   .card-body
     = f.association :jurisdiction, input_html: { data: { choice: true } },
-                          disabled: cant_edit(:jurisdiction_id)
+                          disabled: cant_edit?(:jurisdiction_id)
     = f.association :datasource_classification, input_html: { data: { choice: true } },
-                              disabled: cant_edit(:datasource_classification_id)
+                              disabled: cant_edit?(:datasource_classification_id)
     = f.association :research_entity_types, input_html: { data: { choice: true } },
-                              disabled: cant_edit([research_entity_type_ids: []])
+                              disabled: cant_edit?([research_entity_type_ids: []])
     = f.input :thematic, as: :boolean, include_hidden: true
     = f.input :harvestable, as: :boolean, include_hidden: true

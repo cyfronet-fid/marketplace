@@ -14,7 +14,7 @@
           = f.input :website, label: "Website URL"
           = f.input :logo, label: "Logo"
           = f.input :legal_entity, as: :boolean, include_hidden: true,
-                    disabled: cant_edit(:legal_entity),
+                    disabled: cant_edit?(:legal_entity),
                     boolean_style: :inline,
                     label: "Is the provider a legal entity?"
         = render "backoffice/providers/steps/buttons", f: f

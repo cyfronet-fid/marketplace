@@ -35,8 +35,8 @@ describe Jira::ConsoleChecker, backend: true do
     $stderr = original_stdout
   end
 
-  it "ok! should print green OK" do
-    expect { con_checker.ok! }.to output(" OK".green << "\n").to_stdout
+  it "ok? should print green OK" do
+    expect { con_checker.ok? }.to output(" OK".green << "\n").to_stdout
   end
 
   describe "error_and_abort!" do
