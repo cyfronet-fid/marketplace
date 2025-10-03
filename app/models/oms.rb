@@ -1,6 +1,35 @@
 # frozen_string_literal: true
 
 class OMS < ApplicationRecord
+  CUSTOM_PARAMS_SCHEMA = {
+    type: "object",
+    oneOf: [
+      {
+        properties: {
+          mandatory: {
+            type: "boolean",
+            enum: [true]
+          },
+          default: {
+            type: "string"
+          }
+        },
+        additionalProperties: false,
+        required: %i[mandatory default]
+      },
+      {
+        properties: {
+          mandatory: {
+            type: "boolean",
+            enum: [false]
+          }
+        },
+        additionalProperties: false,
+        required: [:mandatory]
+      }
+    ]
+  }.freeze
+
   has_many :oms_administrations, dependent: :destroy
   has_many :administrators, through: :oms_administrations, source: :user
   has_many :oms_providers, dependent: :destroy
@@ -96,33 +125,4 @@ class OMS < ApplicationRecord
       )
     end
   end
-
-  CUSTOM_PARAMS_SCHEMA = {
-    type: "object",
-    oneOf: [
-      {
-        properties: {
-          mandatory: {
-            type: "boolean",
-            enum: [true]
-          },
-          default: {
-            type: "string"
-          }
-        },
-        additionalProperties: false,
-        required: %i[mandatory default]
-      },
-      {
-        properties: {
-          mandatory: {
-            type: "boolean",
-            enum: [false]
-          }
-        },
-        additionalProperties: false,
-        required: [:mandatory]
-      }
-    ]
-  }.freeze
 end

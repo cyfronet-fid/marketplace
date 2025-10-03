@@ -53,7 +53,7 @@ class InfrastructureManager::Client < ApplicationService
     auth_lines = [
       "id = im; type = InfrastructureManager; token = #{token}",
       # Hardcode eosc-beyond.eu as a VO for the PoC purposes.
-      "id = egi; type = EGI; vo = eosc-beyond.eu; token = #{token}#{@site ? "; host = #{@site}" : ""}"
+      "id = egi; type = EGI; vo = eosc-beyond.eu; token = #{token}#{"; host = #{@site}" if @site}"
     ]
 
     auth_lines.join("\\n")

@@ -21,7 +21,7 @@ class Backoffice::Services::LogoPreviewsController < Backoffice::ApplicationCont
 
   def show_logo_preview
     logo = session_logo
-    has_service_logo = @service&.logo && @service.logo.attached? && @service.logo.variable?
+    has_service_logo = @service&.logo&.attached? && @service.logo.variable?
     if logo.present? && !ImageHelper.image_ext_permitted?(File.extname(logo["filename"]))
       @service.errors.add(:logo, ImageHelper::PERMITTED_EXT_MESSAGE)
       redirect_to ActionController::Base.helpers.asset_url(ImageHelper::DEFAULT_LOGO_PATH)

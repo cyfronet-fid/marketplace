@@ -79,7 +79,7 @@ class DeployableService < ApplicationRecord
   end
 
   def offers?
-    offers.count.positive?
+    offers.any?
   end
 
   # Collections - return empty relations that respond to Service methods

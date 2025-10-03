@@ -17,9 +17,9 @@
           class: ("show" unless collapsed?(catalogue, [:street_name_and_number, :postal_code,
                                                       :city, :region, :country])) }
   .card-body
-    = f.input :street_name_and_number, disabled: cant_edit_catalogue(:street_name_and_number)
-    = f.input :postal_code, disabled: cant_edit_catalogue(:postal_code)
-    = f.input :city, disabled: cant_edit_catalogue(:city)
-    = f.input :region, disabled: cant_edit_catalogue(:region)
-    = f.input :country, disabled: cant_edit_catalogue(:country), as: :select,
+    = f.input :street_name_and_number, disabled: cant_edit_catalogue?(:street_name_and_number)
+    = f.input :postal_code, disabled: cant_edit_catalogue?(:postal_code)
+    = f.input :city, disabled: cant_edit_catalogue?(:city)
+    = f.input :region, disabled: cant_edit_catalogue?(:region)
+    = f.input :country, disabled: cant_edit_catalogue?(:country), as: :select,
               collection: Country.options.map { |c| [ c.iso_short_name, "value" => c.alpha2 ] }

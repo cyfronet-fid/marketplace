@@ -75,7 +75,7 @@ class ProjectItem::Wizard
 
     def visible?
       offer.nil? || (bundle.present? && bundle.all_offers&.map(&:parameters)&.any?(&:present?)) ||
-        project_item.property_values.count.positive? || voucherable?
+        project_item.property_values.any? || voucherable?
     end
 
     def error

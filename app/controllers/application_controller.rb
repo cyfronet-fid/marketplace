@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
     redirect_to root_path(anchor: ""), alert: not_authorized_message(exception)
   end
 
-  def tour_disabled
+  def tour_disabled?
     false
   end
 
@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
 
   def welcome_popup
     @show_welcome_modal = current_user&.show_welcome_popup || false
-    current_user.update(show_welcome_popup: false) if @show_welcome_modal && !tour_disabled
+    current_user.update(show_welcome_popup: false) if @show_welcome_modal && !tour_disabled?
   end
 
   def report

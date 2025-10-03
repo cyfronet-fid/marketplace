@@ -5,7 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.3.6"
 
-gem "rails", "~> 7.2.1"
+gem "rails", "~> 7.2.2.2"
 gem "pg", "~> 1.5", "< 2.0"
 gem "puma"
 gem "nori"
@@ -88,7 +88,7 @@ gem "stomp"
 gem "aws-sdk-s3", require: false
 
 group :development, :test do
-  gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
+  gem "byebug", platforms: [:mri, :windows]
 
   gem "rspec-rails", "~> 6.1"
   gem "rspec-retry"
@@ -128,7 +128,7 @@ group :test do
   gem "rails-controller-testing"
 end
 
-gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem "tzinfo-data", platforms: [:windows, :jruby]
 
 group :production do
   gem "sentry-ruby"

@@ -266,7 +266,7 @@ RSpec.feature "Services in ordering_configuration panel", end_user_frontend: tru
         checkin_sign_in_as(user)
       end
 
-      scenario "I am#{authorized ? nil : " not"} authorized to see the ordering_configuration panel" do
+      scenario "I am#{" not" unless authorized} authorized to see the ordering_configuration panel" do
         visit service_ordering_configuration_path(service)
 
         if authorized

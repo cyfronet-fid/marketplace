@@ -160,10 +160,12 @@ Metrics/ParameterLists:
   CountKeywordArgs: false
 
 # This cop makes sure that predicates are named properly
-Naming/PredicateName:
+Naming/PredicatePrefix:
   Enabled: true
   AllowedMethods: has_attribute?
 
+Naming/PredicateMethod:
+  Enabled: false
 # Disable this in spec as per https://github.com/rubocop/rubocop/issues/4222#issuecomment-290655562
 Lint/AmbiguousBlockAssociation:
   Exclude:

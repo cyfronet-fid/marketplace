@@ -25,7 +25,7 @@ end
 def add_extension_to_images
   objects_with_img = Provider.all.to_a.push(*Service.all.to_a).push(*Category.all.to_a).push(*ScientificDomain.all.to_a)
   objects_with_img.each do |object|
-    if should_rename(object.logo)
+    if should_rename?(object.logo)
       filename = object.pid.blank? ? "logo_" + to_slug(object.name) : object.pid
       rename_img(object.logo, filename)
     end
@@ -57,7 +57,7 @@ rescue StandardError => e
   log "ERROR - there was a unexpected problem processing image for #{filename} #{url_for(attachment)}: #{e}"
 end
 
-def should_rename(attachment)
+def should_rename?(attachment)
   return false if attachment.blank? || attachment.filename.blank?
 
   has_ext = attachment.filename.to_s.match(/\.(jpg|jpeg|pjpeg|png|gif|tiff")$/)

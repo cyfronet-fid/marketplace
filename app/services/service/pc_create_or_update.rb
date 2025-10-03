@@ -22,7 +22,7 @@ class Service::PcCreateOrUpdate
       )
     @service_hash = Importers::Service.call(eosc_registry_service, modified_at, eosc_registry_base_url, token)
     @service_hash["status"] = @status
-    @new_update_available = Service::PcCreateOrUpdate.new_update_available(@mp_service, modified_at)
+    @new_update_available = Service::PcCreateOrUpdate.new_update_available?(@mp_service, modified_at)
   end
 
   def call
@@ -55,7 +55,7 @@ class Service::PcCreateOrUpdate
     raise ConnectionError, "[WARN] Connection refused."
   end
 
-  def self.new_update_available(service, modified_at)
+  def self.new_update_available?(service, modified_at)
     return true unless service&.synchronized_at.present?
     modified_at >= service.synchronized_at
   end
@@ -64,8 +64,7 @@ class Service::PcCreateOrUpdate
     Rails.logger.warn error_message
     validatable_service = Service.new(service_hash)
     service_errors = validatable_service&.errors&.to_hash if validatable_service.invalid?
-    source = mp_service&.sources&.first
-    source&.update(eid: service_hash["pid"], errored: service_errors)
+    mp_service.sources&.first&.update(eid: service_hash["pid"], errored: service_errors)
   end
 
   def self.create_service(service_hash, logo)

@@ -100,7 +100,7 @@ class Jms::ManageMessage < ApplicationService
 
   def modified_at(resource)
     metadata = resource["metadata"]
-    Time.at(metadata["modifiedAt"].to_i&./ 1000)
+    Time.at(metadata["modifiedAt"].to_i / 1000)
   end
 
   def resource_extras(resource)
