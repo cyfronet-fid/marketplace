@@ -54,7 +54,7 @@ namespace :rdt do
   end
 
   def create_category_with_children(hash, parent = nil, ancestry_level = 0)
-    puts "Create #{hash["name"]} ServiceCategory. #{parent&.name ? "Parent: #{parent.name}, " : ""}" +
+    puts "Create #{hash["name"]} ServiceCategory. #{"Parent: #{parent.name}, " if parent&.name}" +
            "ancestry_level: #{ancestry_level}, eid: #{hash["eid"]}"
     current = Vocabulary::ServiceCategory.find_or_initialize_by(eid: hash["eid"])
     current.update(name: hash["name"], parent: parent)

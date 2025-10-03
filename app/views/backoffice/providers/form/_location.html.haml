@@ -3,10 +3,10 @@
   .card-body
     .row
       .col-lg-7.pl-0
-        = f.input :street_name_and_number, disabled: cant_edit(:street_name_and_number)
-        = f.input :postal_code, disabled: cant_edit(:postal_code)
-        = f.input :city, disabled: cant_edit(:city)
-        = f.input :region, disabled: cant_edit(:region)
-        = f.input :country, disabled: cant_edit(:country), as: :select,
+        = f.input :street_name_and_number, disabled: cant_edit?(:street_name_and_number)
+        = f.input :postal_code, disabled: cant_edit?(:postal_code)
+        = f.input :city, disabled: cant_edit?(:city)
+        = f.input :region, disabled: cant_edit?(:region)
+        = f.input :country, disabled: cant_edit?(:country), as: :select,
                   collection: Country.options.map { |c| [ c.iso_short_name, "value" => c.alpha2 ] }
       = render "backoffice/providers/more_information"

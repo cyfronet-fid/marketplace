@@ -59,6 +59,6 @@
           -# haml-lint:enable Style/BlockDelimiters
       .row.mt-5
         .col-12
-          = f.input :helpdesk_email, input_html: { type: "text" }, disabled: cant_edit(:helpdesk_email)
+          = f.input :helpdesk_email, input_html: { type: "text" }, disabled: cant_edit?(:helpdesk_email)
           = f.input :security_contact_email, input_html: { type: "text" },
-                    disabled: cant_edit(:security_contact_email)
+                    disabled: cant_edit?(:security_contact_email)

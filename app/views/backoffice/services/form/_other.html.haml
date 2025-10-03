@@ -18,14 +18,10 @@
     .card-body
       .row
         .col-12
-          = f.association :owners, multiple: true, input_html: { data: { choice: true } },
-                                disabled: cant_edit([owner_ids: []])
-      .row
-        .col-12
-          = f.input :restrictions, disabled: cant_edit(:restrictions)
+          = f.input :restrictions, disabled: cant_edit?(:restrictions)
       .row.service-activate-message
         .col-12
-          = f.input :activate_message, disabled: cant_edit(:activate_message)
+          = f.input :activate_message, disabled: cant_edit?(:activate_message)
       .row
         .col-12
           = f.input :upstream_id, collection: f.object.sources.reject { |source| source.id.nil? },

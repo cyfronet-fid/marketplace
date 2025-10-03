@@ -15,7 +15,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   before_action :provider_scope
   before_action :catalogue_scope
   prepend_before_action(only: [:index]) { authorize(Service) }
-  helper_method :cant_edit
+  helper_method :cant_edit?
 
   def index
     if params["object_id"].present?
@@ -120,7 +120,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     end
   end
 
-  def cant_edit(attribute)
+  def cant_edit?(attribute)
     policy([:backoffice, @service]).permitted_attributes.exclude?(attribute)
   end
 

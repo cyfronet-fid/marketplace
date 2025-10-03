@@ -16,9 +16,9 @@
           "data-parent": "#accordion-form",
           class: ("show" unless collapsed) }
     .card-body
-      = f.input :submission_policy_url, disabled: cant_edit(:submission_policy_url)
-      = f.input :preservation_policy_url, disabled: cant_edit(:preservation_policy_url)
-      = f.input :version_control, include_hidden: true, disabled: cant_edit(:version_control)
+      = f.input :submission_policy_url, disabled: cant_edit?(:submission_policy_url)
+      = f.input :preservation_policy_url, disabled: cant_edit?(:preservation_policy_url)
+      = f.input :version_control, include_hidden: true, disabled: cant_edit?(:version_control)
       %h3
         = _("Persistent identity systems")
       = f.fields_for :persistent_identity_systems,

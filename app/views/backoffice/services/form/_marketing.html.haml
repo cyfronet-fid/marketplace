@@ -18,9 +18,9 @@
              :link_use_cases_urls, :"link_multimedia_urls.url", :"link_use_cases_urls.url"])) }
     .card-body
       .service-description
-        = f.input :description, disabled: cant_edit(:description)
-      = f.input :tagline, disabled: cant_edit(:tagline)
-      = f.input :logo, disabled: cant_edit(:logo)
+        = f.input :description, disabled: cant_edit?(:description)
+      = f.input :tagline, disabled: cant_edit?(:tagline)
+      = f.input :logo, disabled: cant_edit?(:logo)
       %h3
         = _("Multimedia urls")
       = f.fields_for :link_multimedia_urls, disabled: service.upstream_id.present?, multiple: true, as: :array,

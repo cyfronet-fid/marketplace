@@ -19,8 +19,8 @@ module FederatedSearchHelper
       label: "Platform"
     },
     research_activities: {
-      model: Vocabulary::ResearchActivity,
-      label: "Research Activity"
+      model: Vocabulary::MarketplaceLocation,
+      label: "Marketplace Location"
     }
   }.freeze
 

@@ -42,7 +42,7 @@ describe Jms::ManageMessage, backend: true do
       response["service"],
       eosc_registry_base,
       :published,
-      Time.at(resource["metadata"]["modifiedAt"].to_i&./ 1000),
+      Time.at(resource["metadata"]["modifiedAt"].to_i / 1000),
       nil
     )
     expect { described_class.call(json_service, eosc_registry_base, logger) }.to_not raise_error
@@ -59,7 +59,7 @@ describe Jms::ManageMessage, backend: true do
     expect(Provider::PcCreateOrUpdateJob).to receive(:perform_later).with(
       response["provider"],
       :published,
-      Time.at(resource["metadata"]["modifiedAt"].to_i&./ 1000)
+      Time.at(resource["metadata"]["modifiedAt"].to_i / 1000)
     )
 
     expect { described_class.call(json_provider, eosc_registry_base, logger, nil) }.to_not raise_error
@@ -74,7 +74,7 @@ describe Jms::ManageMessage, backend: true do
     expect(Provider::PcCreateOrUpdateJob).to receive(:perform_later).with(
       response["provider"],
       :published,
-      Time.at(resource["metadata"]["modifiedAt"].to_i&./ 1000)
+      Time.at(resource["metadata"]["modifiedAt"].to_i / 1000)
     )
 
     expect { described_class.new(json_provider, eosc_registry_base, logger, nil).call }.to_not raise_error
@@ -84,7 +84,7 @@ describe Jms::ManageMessage, backend: true do
     expect(Provider::PcCreateOrUpdateJob).to receive(:perform_later).with(
       response["provider"],
       :unpublished,
-      Time.at(resource["metadata"]["modifiedAt"].to_i&./ 1000)
+      Time.at(resource["metadata"]["modifiedAt"].to_i / 1000)
     )
 
     expect { described_class.new(json_draft_provider, eosc_registry_base, logger, nil).call }.to_not raise_error
@@ -99,7 +99,7 @@ describe Jms::ManageMessage, backend: true do
     expect(Provider::PcCreateOrUpdateJob).to receive(:perform_later).with(
       response["provider"],
       :unpublished,
-      Time.at(resource["metadata"]["modifiedAt"].to_i&./ 1000)
+      Time.at(resource["metadata"]["modifiedAt"].to_i / 1000)
     )
 
     expect { described_class.new(json_rejected_provider, eosc_registry_base, logger, nil).call }.to_not raise_error

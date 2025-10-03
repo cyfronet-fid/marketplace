@@ -18,7 +18,7 @@
       .row
         .col-12
           = f.input :order_type, collection: Service.order_types.keys.map(&:to_sym),
-                    disabled: cant_edit(:order_type)
+                    disabled: cant_edit?(:order_type)
       .row
         .col-12
-          = f.input :order_url, disabled: cant_edit(:order_url)
+          = f.input :order_url, disabled: cant_edit?(:order_url)

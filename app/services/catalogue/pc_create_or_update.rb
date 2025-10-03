@@ -15,7 +15,7 @@ class Catalogue::PcCreateOrUpdate < ApplicationService
     @mp_catalogue = Catalogue.find_by(pid: eosc_registry_catalogue["id"])
     @catalogue_hash = Importers::Catalogue.call(eosc_registry_catalogue, modified_at)
     @catalogue_hash[:status] = @status
-    @new_update_available = Catalogue::PcCreateOrUpdate.new_update_available(@mp_catalogue, modified_at)
+    @new_update_available = Catalogue::PcCreateOrUpdate.new_update_available?(@mp_catalogue, modified_at)
     @logo = eosc_registry_catalogue["logo"]
   end
 
@@ -29,7 +29,7 @@ class Catalogue::PcCreateOrUpdate < ApplicationService
     raise ConnectionError, "[WARN] Connection refused."
   end
 
-  def self.new_update_available(catalogue, modified_at)
+  def self.new_update_available?(catalogue, modified_at)
     return false if catalogue.blank?
     return true unless catalogue&.synchronized_at.present?
     modified_at >= catalogue.synchronized_at

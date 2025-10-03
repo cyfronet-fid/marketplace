@@ -54,7 +54,7 @@ class Datasource::PcCreateOrUpdate
     raise ConnectionError, "[WARN] Connection refused."
   end
 
-  def self.new_update_available(datasource, modified_at)
+  def self.new_update_available?(datasource, modified_at)
     return true unless datasource&.synchronized_at.present? && modified_at.present?
     modified_at >= datasource.synchronized_at
   end

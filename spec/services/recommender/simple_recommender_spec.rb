@@ -35,8 +35,8 @@ RSpec.describe Recommender::SimpleRecommender, backend: true do
       end
 
       it "services in the order of the most popular" do
-        recommended_services_ids = @recommended_services[0..n - 1].map(&:id)
-        most_popular_services_ids = @services[0..n - 1].map(&:id)
+        recommended_services_ids = @recommended_services[0..(n - 1)].map(&:id)
+        most_popular_services_ids = @services[0..(n - 1)].map(&:id)
         expect(recommended_services_ids).to match_array(most_popular_services_ids)
       end
     end

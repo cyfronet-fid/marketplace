@@ -1,6 +1,25 @@
 # frozen_string_literal: true
 
 class Event < ApplicationRecord
+  UPDATES_SCHEME = {
+    type: "array",
+    items: {
+      type: "object",
+      minItems: 1,
+      properties: {
+        field: {
+          type: "string"
+        },
+        before: {
+        },
+        after: {
+        }
+      },
+      additionalProperties: false,
+      required: %i[field before after]
+    }
+  }.freeze
+
   belongs_to :eventable, polymorphic: true
   belongs_to :project,
              -> { where(events: { eventable_type: "Project" }).includes(:events) },
@@ -41,23 +60,4 @@ class Event < ApplicationRecord
   def call_triggers
     Event::CallTriggers.new(self).call
   end
-
-  UPDATES_SCHEME = {
-    type: "array",
-    items: {
-      type: "object",
-      minItems: 1,
-      properties: {
-        field: {
-          type: "string"
-        },
-        before: {
-        },
-        after: {
-        }
-      },
-      additionalProperties: false,
-      required: %i[field before after]
-    }
-  }.freeze
 end

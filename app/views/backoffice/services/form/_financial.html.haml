@@ -15,5 +15,5 @@
           "data-parent": "#accordion-form",
           class: ("show" unless collapsed?(service, [:payment_model_url, :pricing_url])) }
     .card-body
-      = f.input :payment_model_url, disabled: cant_edit(:payment_model_url)
-      = f.input :pricing_url, disabled: cant_edit(:pricing_url)
+      = f.input :payment_model_url, disabled: cant_edit?(:payment_model_url)
+      = f.input :pricing_url, disabled: cant_edit?(:pricing_url)
