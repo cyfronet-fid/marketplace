@@ -14,12 +14,9 @@
 *.local
 
 # Ruby / Rails artifacts
-log/
 log/*
-tmp/
 tmp/*
 # Active Storage local files
-storage/
 storage/*
 # Precompiled assets and packs
 public/assets/
