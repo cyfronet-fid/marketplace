@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [4.1.0](https://github.com/cyfronet-fid/marketplace/compare/3.61.0...4.1.0) (2025-10-09)
+
+
+### Features
+
+* [[#221](https://github.com/cyfronet-fid/marketplace/issues/221)] Expose search API ([f2f9491](https://github.com/cyfronet-fid/marketplace/commit/f2f9491a06763c42794a9de593c701f819f950ff))
+
+
+### Bug Fixes
+
+* add auto_strip to email field ([9120ccb](https://github.com/cyfronet-fid/marketplace/commit/9120ccbce0b143413262d45a7aee3b02747845f9))
+* Call Infrastructure Manager with proper credentials ([3687fb3](https://github.com/cyfronet-fid/marketplace/commit/3687fb3c889ea1da297aae0a090318ab4cab7407))
+
 ## [3.61.0](https://github.com/cyfronet-fid/marketplace/compare/3.60.0...v3.61.0) (2025-09-17)
 
 
