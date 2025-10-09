@@ -7,8 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
-## [4.1.0](https://github.com/cyfronet-fid/marketplace/compare/3.61.0...4.1.0) (2025-10-09)
+## [4.1.1](https://github.com/cyfronet-fid/marketplace/compare/4.1.0...4.1.1) (2025-10-09)
 
+### Bug Fixes
+
+* [HOTFIX] Federated Search API Request in Beyond Scope (92f02c60)
+
+## [4.1.0](https://github.com/cyfronet-fid/marketplace/compare/3.61.0...4.1.0) (2025-10-09)
 
 ### Features
 
