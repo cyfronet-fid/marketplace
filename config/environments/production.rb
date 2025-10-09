@@ -128,19 +128,14 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: ENV.fetch("ROOT_URL", nil) }
   config.action_mailer.delivery_method = :smtp
 
-  raise "Missing ASSET_HOST" if ENV["ASSET_HOST"].blank?
-  raise "Missing ASSET_PROTOCOL" if ENV["ASSET_PROTOCOL"].blank?
-  config.action_controller.asset_host = "#{ENV.fetch("ASSET_HOST", nil)}"
-  config.action_mailer.asset_host = "#{ENV.fetch("ASSET_PROTOCOL", nil)}://#{ENV.fetch("ASSET_HOST", nil)}"
-
   # SMTP settings
   config.action_mailer.smtp_settings = {
       address: ENV.fetch("SMPT_ADDRESS", nil),
-      port: 587,
+      port: ENV.fetch("SMTP_PORT", 587),
       user_name: ENV.fetch("SMPT_USERNAME", nil),
       password: ENV.fetch("SMPT_PASSWORD", nil),
-      authentication: "plain",
-      enable_starttls_auto: true
+      authentication: ENV.fetch("SMTP_AUTHENTICATION", "plain"),
+      enable_starttls_auto: ENV.fetch("SMTP_STARTTLS", true)
   }
 
   # custom error pages with webpage layout

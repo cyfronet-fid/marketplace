@@ -1,0 +1,54 @@
+# Ignore VCS
+.git
+.gitmodules
+.gitignore
+
+# OS/editor cruft
+.DS_Store
+.idea/
+.vscode/
+
+# Environment & secrets (do not send to build context)
+.env
+.env.*
+*.local
+
+# Ruby / Rails artifacts
+log/
+log/*
+tmp/
+tmp/*
+# Active Storage local files
+storage/
+storage/*
+# Precompiled assets and packs
+public/assets/
+public/packs/
+public/packs-test/
+public/packs-manifest.json
+
+# Node
+node_modules/
+yarn-error.log
+npm-debug.log*
+
+# Vendor caches
+vendor/bundle/
+vendor/cache/
+
+# Tests and docs (not needed for production build)
+spec/
+test/
+coverage/
+doc/
+docs/
+
+# Other
+*.swp
+*.swo
+*.tmp
+*.bak
+
+# Docker related
+docker-compose*.yml
+.dockerignore
