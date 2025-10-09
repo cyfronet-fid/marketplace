@@ -23,7 +23,7 @@ class Api::V1::Search::ServicesController < Api::V1::Search::ApplicationControll
             :categories,
             :platforms,
             :providers,
-            :research_activities,
+            :marketplace_locations,
             :scientific_domains,
             :target_users,
             :offers
@@ -96,7 +96,7 @@ class Api::V1::Search::ServicesController < Api::V1::Search::ApplicationControll
     if params[:research_activities].present?
       activity_eids =
         params[:research_activities].is_a?(Array) ? params[:research_activities] : [params[:research_activities]]
-      activity_ids = ResearchActivity.where(eid: activity_eids).pluck(:id)
+      activity_ids = Vocabulary::MarketplaceLocation.where(eid: activity_eids).pluck(:id)
       constraint[:research_activities] = activity_ids if activity_ids.any?
     end
 
@@ -312,7 +312,7 @@ class Api::V1::Search::ServicesController < Api::V1::Search::ApplicationControll
     # Research activities
     ra_buckets = extract_buckets.call(aggs, :research_activities)
     ra_counts = ra_buckets.to_h { |b| [b["key"].to_i, b["doc_count"].to_i] }
-    ra_records = Vocabulary::ResearchActivity.pluck(:id, :name, :eid)
+    ra_records = Vocabulary::MarketplaceLocation.pluck(:id, :name, :eid)
     research_activities = ra_records.map { |id, name, eid| { name: name, eid: eid, count: ra_counts[id] || 0 } }
     research_activities.sort_by! { |h| [-h[:count], h[:name].to_s.downcase] }
 

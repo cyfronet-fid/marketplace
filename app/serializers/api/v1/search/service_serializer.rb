@@ -3,6 +3,7 @@
 class Api::V1::Search::ServiceSerializer < ApplicationSerializer
   include ImageHelper
 
+  attribute :marketplace_locations, key: :research_activities
   attributes :pid,
              :name,
              :slug,
@@ -15,7 +16,6 @@ class Api::V1::Search::ServiceSerializer < ApplicationSerializer
              :scientific_domains,
              :target_users,
              :platforms,
-             :research_activities,
              :resource_organisation,
              :providers,
              :source_node_url
@@ -45,7 +45,7 @@ class Api::V1::Search::ServiceSerializer < ApplicationSerializer
     object.providers.map { |p| Api::V1::Search::ProviderSerializer.new(p).as_json }
   end
 
-  %i[scientific_domains target_users platforms research_activities].each do |relation|
+  %i[scientific_domains target_users platforms marketplace_locations].each do |relation|
     define_method(relation) do
       object.public_send(relation).map { |item| Api::V1::Search::FilterSerializer.new(item).as_json }
     end
