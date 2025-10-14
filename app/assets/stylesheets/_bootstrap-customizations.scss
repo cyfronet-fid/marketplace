@@ -10121,3 +10121,173 @@ footer {
     }
   }
 }
+
+/* Federated search */
+
+.federated-search-wrapper {
+  background: $alert-bg;
+  padding: 58px 0;
+  margin-bottom: 32px;
+
+  .federated-search-box {
+    background: $palette-white;
+    padding: 24px;
+    border-radius: 8px;
+
+    .federated-search-title {
+      color: $custom-12;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+      margin-bottom: 12px;
+    }
+
+    .form-control {
+      border: 1px solid $landing-01;
+      border-radius: 8px;
+      height: 44px;
+    }
+
+    .btn-primary {
+      font-size: 14px;
+      height: 44px;
+      border-radius: 8px;
+    }
+  }
+}
+
+.federated-search {
+  h2 {
+    color: $custom-12;
+    text-align: center;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 140%;
+    margin: 0 0 5px;
+  }
+
+  .search-results-count {
+    color: $landing-01;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    margin-left: 10px;
+    line-height: 140%; /* 19.6px */
+  }
+
+  .filters-column {
+    h3 {
+      color: $custom-12;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 600;
+      margin: 0 0 20px;
+    }
+
+    h6 {
+      margin-bottom: 0.9rem;
+    }
+
+    .btn {
+      padding: 0.4rem 1.75rem;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .btn-outline-secondary {
+      border: 1px solid $custom-12;
+    }
+  }
+
+  .federated-search-results {
+    .service-card {
+      overflow: hidden;
+
+      .card-body {
+        border-left: 5px solid $custom-31;
+        padding: 1.4rem 1.5rem;
+
+        .node-name {
+          position: absolute;
+          top: 0;
+          right: 0;
+          font-size: 14px;
+          font-weight: 400;
+          padding: 9px 25px;
+          color: $palette-white;
+          background: $custom-12;
+
+          &.federated {
+            color: $custom-12;
+            background: $custom-30;
+          }
+        }
+
+        strong {
+          font-weight: 400;
+        }
+
+        .service-logo {
+          padding: 0;
+
+          .logo-img {
+            width: 90px;
+            height: 90px;
+            border: none;
+            padding: 0;
+          }
+        }
+
+        .card-title {
+          color: $landing-02;
+          font-size: 18px;
+          font-style: normal;
+          margin: 0 0 10px;
+          font-weight: 600;
+
+          a {
+            color: $landing-02;
+          }
+        }
+
+        .card-subtitle {
+          color: $landing-01;
+          font-size: 18px;
+          font-style: normal;
+          font-weight: 400;
+        }
+
+        .service-meta {
+          padding-top: 0;
+        }
+
+        .badge-info {
+          color: $landing-04;
+          font-size: 12px;
+          font-weight: 400;
+          background: $alert-bg;
+          padding: 0.45em;
+        }
+      }
+    }
+
+    .results-media {
+      width: 100%;
+      max-height: 197px;
+      background: $alert-bg url("assets/federated-media-bg.jpg") no-repeat bottom right;
+      border-radius: 8px;
+      padding: 25px 30px;
+      color: $custom-12;
+      font-size: 22px;
+      line-height: 120%;
+      font-style: normal;
+      font-weight: 500;
+
+      span {
+        color: $custom-30;
+      }
+    }
+  }
+}
