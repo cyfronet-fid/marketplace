@@ -14,17 +14,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "cypress": "14.0.0",
-    "typescript": "^5.7.3"
+    "cypress": "^15.5.0",
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
-    "@cypress/grep": "^4.1.0",
+    "@babel/core": "^7.19.0",
+    "@cypress/grep": "^5.0.0",
     "@medv/finder": "^4.0.2",
-    "@types/node": "^20.12.7",
+    "@types/node": "^20.19.23",
     "cypress-fail-fast": "^7.1.1",
     "cypress-file-upload": "^5.0.8",
     "cypress-promise": "^1.1.0",
-    "cypress-terminal-report": "^7.1.0",
+    "cypress-terminal-report": "^7.3.3",
     "cypress-wait-until": "^3.0.2"
   }
 }

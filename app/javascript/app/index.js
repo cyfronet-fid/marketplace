@@ -15,7 +15,7 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-free/js/all";
 import "@fortawesome/fontawesome-free/css/all.css";
 import "bootstrap-datepicker";
-import Cookies from "js-cookie/src/js.cookie";
+import Cookies from "js-cookie";
 import Shepherd from "shepherd.js";
 
 window.Shepherd = Shepherd;
