@@ -69,15 +69,6 @@
     .row
       .col-md-4.col-sm-12
         %a.activity{ href: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:
-        (%22Find%20Instruments%20%5C%26%20Equipment%22)" }
-          .activity-icon
-            = image_tag "landing_page/ico-05.svg", alt: "Find Instruments & Equipment"
-          .activity-texts
-            .activity-title Find Instruments & Equipment
-            .activity-subtitle
-              Find research instruments and scientific equipment.
-      .col-md-4.col-sm-12
-        %a.activity{ href: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:
         (%22Publish%20Research%20Outputs%22)" }
           .activity-icon
             = image_tag "landing_page/ico-02.svg", alt: "Publish research outputs"
@@ -94,16 +85,6 @@
             .activity-title Access computing and storage resources
             .activity-subtitle
               Find HPC, IT centres for science, cloud computing, cloud container computing, online storage.
-    .row
-      .col-md-4.col-sm-12
-        %a.activity{ href: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:
-        (%22Process%20and%20Analyse%22)" }
-          .activity-icon
-            = image_tag "landing_page/ico-03.svg", alt: "Process and analyse"
-          .activity-texts
-            .activity-title Process and analyse
-            .activity-subtitle
-              Verify, organise, transform and integrate data, then export it in the format that works with your tools.
       .col-md-4.col-sm-12
         %a.activity{ href: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:
         (%22Access%20Training%20Material%22)" }
@@ -127,7 +108,7 @@
           %p.description
             Browse local and federated resources. Thanks to Federated Catalogues, you can also access the collections
             of other institutions from your catalogue.
-          %a.btn.btn-primary.mt-3{ href: federation_services_path } Discovery Federated Catalogues
+          %a.btn.btn-primary.mt-3{ href: federation_services_path } Discover Federated Catalogues
 
 %section.support
   .container
@@ -151,7 +132,7 @@
           data to support EU open science
     .row.mt-5
       .col-md-3.col-sm-12
-        %a.eosc-info{ href: "#{root_url}" }
+        %a.eosc-info{ href: "#{@search_base_url}/search/all_collection%3Fq%3D?q=*" }
           .eosc-info-icon
             = image_tag "landing_page/browse-marketplace.svg", alt: "Explore Discovery Hub"
           .eosc-info-texts
