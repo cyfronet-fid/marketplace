@@ -7665,8 +7665,8 @@ abbr[title] {
       .browse-label {
         font-size: 11px;
         line-height: 1.2;
-        text-align: left;
-        margin-bottom: 8px;
+        text-align: center;
+        margin-bottom: 17px;
       }
 
       .solutions-box {
@@ -7676,7 +7676,7 @@ abbr[title] {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-        justify-content: flex-start;
+        justify-content: center;
 
         a {
           font-size: 13px;
@@ -7846,7 +7846,7 @@ abbr[title] {
   }
 
   .support {
-    padding: 10px 0 200px;
+    padding: 10px 0 140px;
 
     h3 {
       font-size: 32px;
@@ -9478,7 +9478,7 @@ footer {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: center;
 
     a {
       font-size: 13px;
