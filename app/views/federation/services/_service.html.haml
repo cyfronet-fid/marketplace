@@ -1,7 +1,7 @@
 .card.mb-3.service-card
   .card-body.d-flex
 
-    .node-name.federated
+    .node-name
       = nodes.find { |n| n[:url] == service["source_node_url"] }[:name] if nodes.present?
 
     .service-logo.mr-4
