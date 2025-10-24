@@ -44,6 +44,8 @@ RSpec.describe DeployableService::ToscaTemplateFiller, type: :service do
             default: ["default_doi"]
     YAML
 
+  let(:uuid_dns_pattern) { /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\.vm\.fedcloud\.eu$/ }
+
   subject { described_class.new(project_item) }
 
   describe "#call" do
@@ -64,30 +66,9 @@ RSpec.describe DeployableService::ToscaTemplateFiller, type: :service do
 
       expect(inputs["fe_cpus"]["default"]).to eq("8")
       expect(inputs["admin_password"]["default"]).to eq("secure_pass")
-      expect(inputs["kube_public_dns_name"]["default"]).to eq("test.example.com")
+      # DNS name is auto-generated and ignores user input
+      expect(inputs["kube_public_dns_name"]["default"]).to match(uuid_dns_pattern)
       expect(inputs["dataset_ids"]["default"]).to eq(%w[doi1 doi2 doi3])
-    end
-
-    context "when template file does not exist" do
-      before do
-        allow(subject).to receive(:fetch_template).and_call_original
-        allow(File).to receive(:exist?).and_return(false)
-      end
-
-      it "uses fallback template and still fills it correctly" do
-        result = subject.call
-
-        expect(result).to include("tosca_definitions_version: tosca_simple_yaml_1_2")
-        expect(result).to include("fe_cpus")
-        expect(result).to include("dataset_ids")
-
-        # Parse result to verify parameter substitution in fallback template
-        parsed_result = YAML.safe_load(result)
-        inputs = parsed_result.dig("topology_template", "inputs")
-
-        expect(inputs["fe_cpus"]["default"]).to eq("8")
-        expect(inputs["admin_password"]["default"]).to eq("secure_pass")
-      end
     end
   end
 
@@ -257,34 +238,81 @@ RSpec.describe DeployableService::ToscaTemplateFiller, type: :service do
   end
 
   describe "#fetch_template" do
-    context "when template file exists" do
-      before do
-        allow(File).to receive(:exist?).with(
-          Rails.root.join("config", "templates", "jupyterhub_datamount.yml")
-        ).and_return(true)
-        allow(File).to receive(:read).with(
-          Rails.root.join("config", "templates", "jupyterhub_datamount.yml")
-        ).and_return(mock_template_content)
-      end
+    it "reads template from config/templates" do
+      allow(File).to receive(:read).with(Rails.root.join("config", "templates", "jupyterhub_datamount.yml")).and_return(
+        mock_template_content
+      )
 
-      it "reads template from config/templates" do
-        result = subject.send(:fetch_template, "any_url")
+      result = subject.send(:fetch_template, "any_url")
 
-        expect(result).to eq(mock_template_content)
-      end
+      expect(result).to eq(mock_template_content)
+    end
+  end
+
+  describe "#generate_unique_dns_name" do
+    it "generates a DNS name in UUID.vm.fedcloud.eu format" do
+      dns_name = subject.send(:generate_unique_dns_name)
+
+      expect(dns_name).to match(uuid_dns_pattern)
     end
 
-    context "when template file does not exist" do
-      before { allow(File).to receive(:exist?).and_return(false) }
+    it "generates unique DNS names on each call" do
+      first_dns_name = subject.send(:generate_unique_dns_name)
+      second_dns_name = subject.send(:generate_unique_dns_name)
 
-      it "returns basic jupyter template as fallback" do
-        result = subject.send(:fetch_template, "any_url")
+      expect(first_dns_name).not_to eq(second_dns_name)
+    end
 
-        expect(result).to include("tosca_definitions_version")
-        expect(result).to include("fe_cpus:")
-        expect(result).to include("dataset_ids:")
-        expect(result).to include("admin_password:")
-      end
+    it "generates DNS names ending with .vm.fedcloud.eu" do
+      dns_name = subject.send(:generate_unique_dns_name)
+
+      expect(dns_name).to end_with(".vm.fedcloud.eu")
+    end
+  end
+
+  describe "DNS parameter handling" do
+    let(:template_with_dns) do
+      {
+        "topology_template" => {
+          "inputs" => {
+            "kube_public_dns_name" => {
+              "type" => "string",
+              "default" => "old-default.example.com"
+            },
+            "admin_password" => {
+              "type" => "string",
+              "default" => "old_pass"
+            }
+          }
+        }
+      }
+    end
+
+    it "overrides DNS parameter with auto-generated value" do
+      user_parameters = { "kube_public_dns_name" => "user-provided.example.com", "admin_password" => "new_pass" }
+
+      result_yaml = subject.send(:fill_template_inputs, template_with_dns.to_yaml, user_parameters)
+      result = YAML.safe_load(result_yaml)
+
+      inputs = result.dig("topology_template", "inputs")
+      # User-provided DNS should be ignored
+      expect(inputs["kube_public_dns_name"]["default"]).not_to eq("user-provided.example.com")
+      # Should be auto-generated UUID format
+      expect(inputs["kube_public_dns_name"]["default"]).to match(uuid_dns_pattern)
+      # Non-DNS parameters should still be updated
+      expect(inputs["admin_password"]["default"]).to eq("new_pass")
+    end
+
+    it "generates DNS even when user doesn't provide kube_public_dns_name" do
+      user_parameters = { "admin_password" => "new_pass" }
+
+      result_yaml = subject.send(:fill_template_inputs, template_with_dns.to_yaml, user_parameters)
+      result = YAML.safe_load(result_yaml)
+
+      inputs = result.dig("topology_template", "inputs")
+      # Should still generate UUID-based DNS
+      expect(inputs["kube_public_dns_name"]["default"]).to match(uuid_dns_pattern)
+      expect(inputs["admin_password"]["default"]).to eq("new_pass")
     end
   end
 end

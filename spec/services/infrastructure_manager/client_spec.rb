@@ -178,6 +178,67 @@ RSpec.describe InfrastructureManager::Client, type: :service do
         expect(result[:data]).to be_a(Hash)
         expect(result[:data]["status"]).to eq("configured")
       end
+
+      it "converts response to HashWithIndifferentAccess" do
+        result = client.create_infrastructure(sample_tosca_template)
+
+        expect(result[:data]).to be_a(ActiveSupport::HashWithIndifferentAccess)
+        # Can access with both string and symbol keys
+        expect(result[:data]["status"]).to eq("configured")
+        expect(result[:data][:status]).to eq("configured")
+        expect(result[:data]["uri"]).to eq("http://example.com")
+        expect(result[:data][:uri]).to eq("http://example.com")
+      end
+    end
+
+    context "with nested hash response" do
+      let(:nested_json) do
+        { "outputs" => { "jupyterhub_url" => "https://example.vm.fedcloud.eu/jupyterhub/" } }.to_json
+      end
+
+      before do
+        stub_request(:post, "#{base_url}/infrastructures").to_return(
+          status: 200,
+          body: nested_json,
+          headers: {
+            "Content-Type" => "application/json"
+          }
+        )
+      end
+
+      it "converts nested hashes to HashWithIndifferentAccess" do
+        result = client.create_infrastructure(sample_tosca_template)
+
+        # Can access nested hash with both string and symbol keys
+        expect(result[:data]["outputs"]["jupyterhub_url"]).to eq("https://example.vm.fedcloud.eu/jupyterhub/")
+        expect(result[:data][:outputs][:jupyterhub_url]).to eq("https://example.vm.fedcloud.eu/jupyterhub/")
+        expect(result[:data]["outputs"][:jupyterhub_url]).to eq("https://example.vm.fedcloud.eu/jupyterhub/")
+        expect(result[:data][:outputs]["jupyterhub_url"]).to eq("https://example.vm.fedcloud.eu/jupyterhub/")
+      end
+    end
+
+    context "with array of hashes response" do
+      let(:array_json) { { "radl" => [{ "class" => "system", "net_interface.1.ip" => "192.168.1.1" }] }.to_json }
+
+      before do
+        stub_request(:post, "#{base_url}/infrastructures").to_return(
+          status: 200,
+          body: array_json,
+          headers: {
+            "Content-Type" => "application/json"
+          }
+        )
+      end
+
+      it "converts hashes within arrays to HashWithIndifferentAccess" do
+        result = client.create_infrastructure(sample_tosca_template)
+
+        # Can access array elements with both string and symbol keys
+        expect(result[:data]["radl"][0]["class"]).to eq("system")
+        expect(result[:data][:radl][0][:class]).to eq("system")
+        expect(result[:data]["radl"][0]["net_interface.1.ip"]).to eq("192.168.1.1")
+        expect(result[:data][:radl][0][:"net_interface.1.ip"]).to eq("192.168.1.1")
+      end
     end
   end
 end

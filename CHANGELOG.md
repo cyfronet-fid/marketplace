@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [4.1.2](https://github.com/cyfronet-fid/marketplace/compare/v4.1.1...v4.1.2) (2025-10-09)
+
+
+### Bug Fixes
+
+* Creating pidfile ([2bfbcc4](https://github.com/cyfronet-fid/marketplace/commit/2bfbcc4859ba8bb8304b02a7abc2ff26b8a278fd))
+
 ## [4.1.1](https://github.com/cyfronet-fid/marketplace/compare/4.1.0...4.1.1) (2025-10-09)
 
 ### Bug Fixes

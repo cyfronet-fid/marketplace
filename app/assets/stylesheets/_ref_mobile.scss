@@ -233,6 +233,27 @@
       text-align: left;
     }
   }
+
+  .filters-column {
+    padding-left: 15px !important;
+    margin-bottom: 40px;
+  }
+
+  .federated-search-wrapper {
+    padding: 15px 0;
+    margin-bottom: 25px;
+  }
+
+  .federated-search {
+    .federated-search-results {
+      .results-media {
+        max-height: none;
+        font-size: 17px;
+        text-align: center;
+        padding: 20px 7px 170px;
+      }
+    }
+  }
 }
 
 @media (max-width: 768px) {

@@ -1,85 +1,86 @@
 - content_for :title, "Federation Services Search"
-.container
-  .row
-    .col-12
-      %h1 Federation Services Search
+%form{ method: "get", action: federation_services_path,
+  data: { controller: "federation-filters", federation_filters_target: "form" } }
+  .row.federated-search-wrapper
+    .col-lg-7.mx-auto.federated-search-box
+      .federated-search-title Search
 
-      %form#search-form.mb-4{ method: "get", action: federation_services_path,
-      data: { controller: "federation-filters", federation_filters_target: "form" } }
+      #search-form
         .row
-          .col-md-8
+          .col-md-10
             .form-group
               %input.form-control.form-control.form-control-lg{ type: "text",
-                name: "q",
-                value: params[:q],
-                placeholder: "Search services by name, tagline or domain...",
-                "aria-label": "Search services"
-              }
-          .col-md-4
+                  name: "q",
+                  value: params[:q],
+                  placeholder: "Search services by name, tagline or domain...",
+                  "aria-label": "Search services"
+                }
+          .col-md-2
             %button.btn.btn-primary.btn-lg.btn-block{ type: "submit" }
-              %i.fas.fa-search.mr-2
-              Search Services
-
-        / Hidden inputs for nodes - będą aktualizowane przez JavaScript
+              Search
         #hidden-nodes-container
           - if params[:nodes].present?
             - Array(params[:nodes]).each do |node_name|
               %input.hidden-node-input{ type: "hidden", name: "nodes[]", value: node_name }
+  .container.federated-search
+    .row.align-items-center.mb-4
+      %h2 Your search results
+      - if @json_data["results"].present?
+        .search-results-count
+          #{@json_data["pagination"]["total_count"]} services
+          - if params[:q].present?
+            for "#{params[:q]}"
+    .row
+      .col-lg-3.col-md-12.pl-0.filters-column
+        %h3 Filters
+        #filters-collapse.mt-3
+          - if @available_nodes.present?
+            .filter-section.mb-4
+              %h6.filter-title.mb-3
+                Federation Nodes
+              .filter-options
+                - @available_nodes.each do |node|
+                  .form-check.mb-2
+                    %input.form-check-input.node-checkbox{ type: "checkbox",
+                            value: node[:name],
+                            id: "node_#{sanitize_for_id(node[:name])}",
+                            checked: Array(params[:nodes]).include?(node[:name]),
+                            data: { node_name: node[:name] }
+                          }
+                    %label.form-check-label{ for: "node_#{sanitize_for_id(node[:name])}" }
+                      = node[:name]
+          = render "federation/filters", filters: @facets
 
-        .row
-          .col-lg-3.col-md-12
-            #filters-collapse.mt-3
-              - if @available_nodes.present?
-                .filter-section.mb-4
-                  %h6.filter-title.mb-3
-                    Federation Nodes
-                  .filter-options
-                    - @available_nodes.each do |node|
-                      .form-check.mb-2
-                        %input.form-check-input.node-checkbox{ type: "checkbox",
-                          value: node[:name],
-                          id: "node_#{sanitize_for_id(node[:name])}",
-                          checked: Array(params[:nodes]).include?(node[:name]),
-                          data: { node_name: node[:name] }
-                        }
-                        %label.form-check-label{ for: "node_#{sanitize_for_id(node[:name])}" }
-                          = node[:name]
-              = render "federation/filters", filters: @facets
+      .col-lg-9.col-md-12.federated-search-results
+        - if active_filters.present?
+          .mb-3
+            .d-flex.flex-wrap.align-items-center
+              %span.mr-2.font-weight-bold Active filters:
+              - active_filters.each do |filter|
+                %span.badge.badge-secondary.mr-1.mb-1
+                  = filter[:name]
+                  %a.text-white.ml-1{ href: filter[:remove_url] }
+                    %i.fas.fa-times
 
-          .col-lg-9.col-md-12
-            - if active_filters.present?
-              .mb-3
-                .d-flex.flex-wrap.align-items-center
-                  %span.mr-2.font-weight-bold Active filters:
-                  - active_filters.each do |filter|
-                    %span.badge.badge-secondary.mr-1.mb-1
-                      = filter[:name]
-                      %a.text-white.ml-1{ href: filter[:remove_url] }
-                        %i.fas.fa-times
+        - if @json_data["results"].present?
+          .mb-3
+            = render "federation/services/pagination", pagination: @json_data["pagination"]
 
-            %h2 Search Results
+          = render partial: "federation/services/service", collection: @json_data["results"], as: :service,
+                locals: { highlights: @highlights, nodes: @available_nodes }
+          .mt-5
+            = render "federation/services/pagination", pagination: @json_data["pagination"]
 
-            - if @json_data["results"].present?
-              %h3
-                Found #{@json_data["pagination"]["total_count"]} services
-                - if params[:q].present?
-                  for "#{params[:q]}"
-
-              = render partial: "federation/services/service", collection: @json_data["results"], as: :service,
-              locals: { highlights: @highlights }
-
-              = render "federation/services/pagination", pagination: @json_data["pagination"]
-
-            - elsif params[:q].present? || active_filters?
-              .text-center.py-5
-                %i.fas.fa-search.fa-3x.text-muted.mb-3
-                %h4.text-muted No services found
-                %p.text-muted Try adjusting your search criteria or filters.
-            - else
-              .text-center.py-5
-                %i.fas.fa-rocket.fa-3x.text-primary.mb-3
-                %h4 Discover Federation Services
-                %p.text-muted Enter a search term above to find services from federated providers.
+        - elsif params[:q].present? || active_filters?
+          .text-center.py-5
+            %i.fas.fa-search.fa-3x.text-muted.mb-3
+            %h4.text-muted No services found
+            %p.text-muted Try adjusting your search criteria or filters.
+        - else
+          .text-center.py-5
+            %i.fas.fa-rocket.fa-3x.text-primary.mb-3
+            %h4 Discover Federation Services
+            %p.text-muted Enter a search term above to find services from federated providers.
 
 :css
   .service-card {

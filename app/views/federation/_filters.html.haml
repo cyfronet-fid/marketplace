@@ -11,11 +11,10 @@
     .row.mt-3
       .col-12
         .d-flex.justify-content-between
-          = button_tag "Clear Filters",
+          = button_tag "Clear filters",
             type: "button",
             class: "btn btn-outline-secondary",
             data: { action: "click->federation-filters#clearFilters" }
 
           %button.btn.btn-primary{ type: "submit" }
-            %i.fas.fa-search.mr-2
-            Apply Filters
+            Apply filters

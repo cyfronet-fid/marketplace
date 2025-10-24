@@ -43,7 +43,23 @@ class DeployableService::DeploymentJob < ApplicationJob
     result = im_client.create_infrastructure(filled_template)
 
     if result[:success]
-      extract_deployment_uri(result[:data])
+      deployment_uri = extract_deployment_uri(result[:data])
+      return nil unless deployment_uri
+
+      # Extract infrastructure ID from URI and get outputs
+      infrastructure_id = extract_infrastructure_id(deployment_uri)
+      if infrastructure_id
+        outputs_result = im_client.get_outputs(infrastructure_id)
+        if outputs_result[:success] && outputs_result[:data]
+          # Extract jupyterhub_url from outputs (contains the unique DNS)
+          outputs = outputs_result[:data]["outputs"]
+          jupyterhub_url = outputs&.dig("jupyterhub_url")
+          return jupyterhub_url if jupyterhub_url
+        end
+      end
+
+      # Fallback to deployment URI if we can't get outputs
+      deployment_uri
     else
       Rails.logger.error "IM deployment failed: #{result[:error]}"
       nil
@@ -58,11 +74,34 @@ class DeployableService::DeploymentJob < ApplicationJob
 
     case response_data
     when Hash
-      response_data["uri"] || response_data[:uri]
+      response_data["uri"]
     when String
       response_data.include?("http") ? response_data : nil
     else
       response_data.to_s if response_data.to_s.include?("http")
     end
+  end
+
+  def extract_infrastructure_id(uri)
+    # URI format: https://deploy.sandbox.eosc-beyond.eu/im-dev/infrastructures/{id}
+    return nil unless uri
+
+    match = uri.match(%r{/infrastructures/([^/]+)})
+    match&.[](1)
+  end
+
+  def extract_public_ip(vm_data)
+    # VM data is in RADL format
+    return nil unless vm_data
+
+    radl = vm_data["radl"]
+    return nil unless radl
+
+    # Find the system section
+    system = radl.find { |r| r["class"] == "system" }
+    return nil unless system
+
+    # Extract public IP from net_interface.1.ip (public interface)
+    system["net_interface.1.ip"]
   end
 end

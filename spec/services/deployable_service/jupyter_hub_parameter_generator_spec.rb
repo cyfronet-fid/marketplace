@@ -24,7 +24,7 @@ RSpec.describe DeployableService::JupyterHubParameterGenerator, backend: true do
         expect(fe_cpus).to be_a(Parameter::Select)
         expect(fe_cpus.name).to eq("Frontend CPU Cores")
         expect(fe_cpus.hint).to eq("Number of CPUs for the frontend node")
-        expect(fe_cpus.values).to eq([2, 4, 8, 16])
+        expect(fe_cpus.values).to eq([4])
         expect(fe_cpus.value_type).to eq("integer")
         expect(fe_cpus.mode).to eq("dropdown")
       end
@@ -33,14 +33,14 @@ RSpec.describe DeployableService::JupyterHubParameterGenerator, backend: true do
         expect(fe_mem).to be_a(Parameter::Select)
         expect(fe_mem.name).to eq("Frontend Memory")
         expect(fe_mem.hint).to eq("Amount of memory for the frontend node")
-        expect(fe_mem.values).to eq(["4 GiB", "8 GiB", "16 GiB", "32 GiB"])
+        expect(fe_mem.values).to eq(["4 GB", "8 GB", "16 GB", "32 GB"])
         expect(fe_mem.value_type).to eq("string")
       end
 
       it "creates frontend disk parameter with correct configuration" do
         expect(fe_disk_size).to be_a(Parameter::Select)
         expect(fe_disk_size.name).to eq("Frontend Disk Size")
-        expect(fe_disk_size.values).to eq(["50 GiB", "100 GiB", "200 GiB", "500 GiB"])
+        expect(fe_disk_size.values).to eq(["100 GiB", "200 GiB", "500 GiB"])
       end
     end
 
@@ -65,12 +65,12 @@ RSpec.describe DeployableService::JupyterHubParameterGenerator, backend: true do
 
       it "creates worker node memory parameter" do
         expect(wn_mem).to be_a(Parameter::Select)
-        expect(wn_mem.values).to eq(["4 GiB", "8 GiB", "16 GiB", "32 GiB"])
+        expect(wn_mem.values).to eq(["8 GB", "16 GB", "32 GB"])
       end
 
       it "creates worker node disk parameter" do
         expect(wn_disk_size).to be_a(Parameter::Select)
-        expect(wn_disk_size.values).to eq(["20 GiB", "50 GiB", "100 GiB", "200 GiB"])
+        expect(wn_disk_size.values).to eq(["50 GiB", "100 GiB", "200 GiB"])
       end
     end
 
@@ -93,10 +93,20 @@ RSpec.describe DeployableService::JupyterHubParameterGenerator, backend: true do
       end
 
       it "creates dataset IDs parameter" do
-        expect(dataset_ids).to be_a(Parameter::Input)
-        expect(dataset_ids.name).to eq("Dataset DOI List")
-        expect(dataset_ids.hint).to eq("Comma-separated list of dataset DOIs to mount")
+        expect(dataset_ids).to be_a(Parameter::Select)
+        expect(dataset_ids.name).to eq("Dataset DOI")
+        expect(dataset_ids.hint).to eq("Dataset DOIs to mount")
         expect(dataset_ids.value_type).to eq("string")
+        expect(dataset_ids.mode).to eq("dropdown")
+        expect(dataset_ids.values).to eq(
+          %w[
+            10.48372/84a70617-3606-499d-bbe6-2b52ccf33392
+            10.48372/29290d64-a840-4ffc-accf-5bf68deef233
+            10.48372/285eff33-55de-4d0e-8b7f-c995dc80478e
+            10.48372/98914415-765c-4650-b272-b16793231e8a
+            10.48372/30d8844e-1774-4c63-89c4-4d858f88317d
+          ]
+        )
       end
     end
 
