@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [4.1.3](https://github.com/cyfronet-fid/marketplace/compare/v4.1.2...v4.1.3) (2025-10-24)
+
+
+### Bug Fixes
+
+* Return proper deployment DNS for Deployable Service ([73f94d8](https://github.com/cyfronet-fid/marketplace/commit/73f94d873ea98b79bdbc05deb51aa4a50e171c86))
+
 ## [4.1.2](https://github.com/cyfronet-fid/marketplace/compare/v4.1.1...v4.1.2) (2025-10-09)
 
 
