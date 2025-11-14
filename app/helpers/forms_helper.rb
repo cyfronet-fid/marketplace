@@ -48,6 +48,10 @@ module FormsHelper
       .map { |item| ["#{item.service.name} > #{item.name}", item.id] }
   end
 
+  def render_alternative_identifier(form, object)
+    render "backoffice/common_parts/form/alternative_identifier_fields", identifier_form: form, object: object
+  end
+
   def render_data_administrator(form, object)
     render "backoffice/providers/data_administrator_fields", data_administrator_form: form, provider: object
   end
