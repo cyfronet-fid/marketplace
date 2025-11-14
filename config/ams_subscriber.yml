@@ -1,0 +1,38 @@
+default: &default
+  token: <%= ENV.fetch("AMS_TOKEN", Rails.application.credentials.ams[:token]) %>
+  default_poll_interval: 2
+  subscriptions:
+    - name: "EOSC Provider Portal AMS"
+      mode: "pull"
+      pull_url: "https://api-new.msg.argo.grnet.gr/v1/projects/"
+      poll_interval: 2
+      max_messages: 10
+      destination_prefix: "eosc-beyond-providers"
+      topics:
+        - mp-catalogue-create
+        - mp-catalogue-delete
+        - mp-catalogue-update
+        - mp-datasource-create
+        - mp-datasource-delete
+        - mp-datasource-update
+        - mp-deployable_service-create
+        - mp-deployable_service-delete
+        - mp-deployable_service-update
+        - mp-interoperability_record-create
+        - mp-interoperability_record-delete
+        - mp-interoperability_record-update
+        - mp-provider-create
+        - mp-provider-delete
+        - mp-provider-update
+        - mp-service-create
+        - mp-service-delete
+        - mp-service-update
+
+production:
+  <<: *default
+
+development:
+  <<: *default
+
+test:
+  <<: *default
