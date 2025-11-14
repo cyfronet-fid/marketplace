@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+APP_ROOT = File.expand_path("..", __dir__)
+
+require_relative "../config/boot"
+require_relative "../config/environment"
+
+Ams::Subscriber.new(
+  ENV.fetch("AMS_CONFIG_FILEPATH", nil),
+  poll_interval: ENV.fetch("AMS_POLL_INTERVAL", nil)
+).run

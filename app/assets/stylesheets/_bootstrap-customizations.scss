@@ -7750,7 +7750,7 @@ abbr[title] {
       min-height: 185px;
       margin-bottom: 0;
       padding: 10px 15px;
-      background: url(icon-right-arrow.svg) no-repeat bottom 24px right 24px;
+      background: url(icon-arrow-right.svg) no-repeat bottom 24px right 24px;
       transition: all 0.5s ease;
 
       .activity-icon {
@@ -7765,7 +7765,7 @@ abbr[title] {
       }
 
       &:hover {
-        background: url(icon-right-arrow-hover.svg) no-repeat bottom 24px right 24px;
+        background: url(icon-arrow-right-hover.svg) no-repeat bottom 24px right 24px;
 
         .activity-icon {
           margin-top: 6px;
@@ -8825,7 +8825,7 @@ abbr[title] {
     border-radius: 8px;
     width: 100%;
     padding: 15px 24px 24px;
-    background: $alert-bg url("icon-right-arrow.svg") no-repeat right 25px bottom 25px;
+    background: $alert-bg url("icon-arrow-right.svg") no-repeat right 25px bottom 25px;
 
     .actions-row {
       display: flex;
@@ -8864,7 +8864,7 @@ abbr[title] {
     }
 
     &:hover {
-      background: $alert-bg url("icon-right-arrow-hover.svg") no-repeat right 25px bottom 25px;
+      background: $alert-bg url("icon-arrow-right-hover.svg") no-repeat right 25px bottom 25px;
     }
 
     &.simple-intro {
@@ -8945,7 +8945,7 @@ abbr[title] {
     padding: 24px;
     display: block;
     transition: all 0.5s ease;
-    background: $alert-bg url("icon-right-arrow.svg") no-repeat bottom 24px right 24px;
+    background: $alert-bg url("icon-arrow-right.svg") no-repeat bottom 24px right 24px;
 
     .learn-title {
       color: $custom-16;
@@ -8964,7 +8964,7 @@ abbr[title] {
     }
 
     &:hover {
-      background: $alert-bg url("icon-right-arrow-hover.svg") no-repeat bottom 24px right 24px;
+      background: $alert-bg url("icon-arrow-right-hover.svg") no-repeat bottom 24px right 24px;
     }
   }
 }

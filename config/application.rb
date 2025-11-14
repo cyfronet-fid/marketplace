@@ -85,7 +85,7 @@ module Mp
 
     config.eosc_commons_enabled = ActiveModel::Type::Boolean.new.cast(ENV.fetch("EOSC_COMMONS_ENABLED", true))
     config.eosc_commons_base_url = ENV.fetch("EOSC_COMMONS_BASE_URL", "https://s3.cloud.cyfronet.pl/eosc-portal-common/")
-    config.eosc_commons_env = ENV["EOSC_COMMONS_ENV"].present? ? ENV["EOSC_COMMONS_ENV"] : "production"
+    config.eosc_commons_env = ENV.fetch("EOSC_COMMONS_ENV", "production")
 
     config.home_page_external_links_enabled = ActiveModel::Type::Boolean.new.cast(
       ENV.fetch("HOME_PAGE_EXTERNAL_LINKS_ENABLED", false))

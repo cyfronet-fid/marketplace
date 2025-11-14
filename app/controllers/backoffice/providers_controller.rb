@@ -8,7 +8,7 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
   before_action :find_and_authorize, only: %i[show edit update destroy]
   before_action :catalogue_scope
   skip_before_action :backoffice_authorization!, only: %i[index show new create update exit]
-  helper_method :current_step_index, :total_steps
+  helper_method :current_step_index, :total_steps, :cant_edit?
 
   def index
     authorize(Provider)
@@ -128,6 +128,10 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
   def exit
     clear_session_data
     redirect_to backoffice_providers_path
+  end
+
+  def cant_edit?(attribute)
+    policy([:backoffice, @provider]).permitted_attributes.exclude?(attribute)
   end
 
   private

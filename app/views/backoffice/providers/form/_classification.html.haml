@@ -4,12 +4,12 @@
   .card-body
     .row
       .col-lg-7.pl-0
-        = f.association :scientific_domains, disabled: cant_edit([scientific_domain_ids: []]),
+        = f.association :scientific_domains, disabled: cant_edit?([scientific_domain_ids: []]),
                   input_html: { data: { choice: true } },
                   collection: sds,
                   label_method: :first, value_method: :second
         = f.input :tag_list, input_html: { value: provider.tag_list.to_s, data: { choice: true } },
-        disabled: cant_edit(:tag_list)
-        = f.association :structure_types, disabled: cant_edit([structure_type_ids: []]),
+        disabled: cant_edit?(:tag_list)
+        = f.association :structure_types, disabled: cant_edit?([structure_type_ids: []]),
                 input_html: { multiple: true, data: { choice: true } }
       = render "backoffice/providers/more_information"
