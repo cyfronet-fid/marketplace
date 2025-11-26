@@ -8,6 +8,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   include Service::Searchable
   include Service::Monitorable
   include Backoffice::ServicesSessionHelper
+  include FavouriteHelper
 
   before_action :find_and_authorize, only: %i[show edit update destroy]
   before_action :sort_options, :favourites
@@ -182,8 +183,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   end
 
   def favourites
-    @favourite_services =
-      current_user&.favourite_services || Service.where(slug: Array(cookies[:favourites]&.split("&") || []))
+    @favourite_services = favourite_services_for(current_user)
   end
 
   def sort_options

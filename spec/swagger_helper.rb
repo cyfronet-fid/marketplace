@@ -230,6 +230,141 @@ RSpec.configure do |config|
           }
         }
       }
+    },
+    "v1/favourites_swagger.json" => {
+      openapi: "3.0.1",
+      info: {
+        title: "EOSC Marketplace Favourites API",
+        version: "v1",
+        description: "API for managing a user's favourite resources"
+      },
+      paths: {
+      },
+      components: {
+        securitySchemes: {
+          authentication_token: {
+            type: :apiKey,
+            name: "X-User-Token",
+            in: :header
+          },
+          bearerAuth: {
+            type: :http,
+            scheme: :bearer,
+            bearerFormat: :JWT
+          }
+        },
+        schemas: {
+          FavouriteBody: {
+            type: :object,
+            required: %i[pid type],
+            properties: {
+              pid: {
+                type: :string,
+                description: "Resource identifier"
+              },
+              type: {
+                type: :string,
+                description: "Resource class name (e.g., Service, Offer, ResearchProduct)"
+              }
+            }
+          },
+          FavouriteItem: {
+            type: :object,
+            properties: {
+              type: {
+                type: :string
+              },
+              pid: {
+                type: :string
+              },
+              name: {
+                type: :string,
+                nullable: true
+              },
+              attributes: {
+                type: :object,
+                nullable: true,
+                properties: {
+                  title: {
+                    type: :string,
+                    nullable: true
+                  },
+                  authors: {
+                    type: :array,
+                    items: {
+                      type: :string
+                    }
+                  },
+                  links: {
+                    type: :object,
+                    additionalProperties: true
+                  },
+                  resource_type: {
+                    type: :string,
+                    nullable: true
+                  },
+                  best_access_right: {
+                    type: :string,
+                    nullable: true
+                  }
+                }
+              }
+            }
+          },
+          FavouritesIndexResponse: {
+            type: :object,
+            properties: {
+              status: {
+                type: :string,
+                example: "ok"
+              },
+              favourites: {
+                type: :array,
+                items: {
+                  "$ref" => "#/components/schemas/FavouriteItem"
+                }
+              }
+            }
+          },
+          ActionResponse: {
+            type: :object,
+            properties: {
+              status: {
+                type: :string,
+                example: "ok"
+              },
+              message: {
+                type: :string,
+                example: "Added to favourites"
+              }
+            }
+          },
+          ActionErrorResponse: {
+            type: :object,
+            properties: {
+              status: {
+                type: :string,
+                example: "error"
+              },
+              message: {
+                type: :string
+              }
+            }
+          },
+          ErrorResponse: {
+            type: :object,
+            properties: {
+              error: {
+                type: :string
+              },
+              details: {
+                type: :string,
+                nullable: true
+              }
+            }
+          }
+        }
+      }
     }
   }
 

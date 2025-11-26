@@ -1,0 +1,208 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "EOSC Marketplace Favourites API",
+    "version": "v1",
+    "description": "API for managing a user's favourite resources. Authentication: preferred Bearer (OAuth2/OIDC JWT) or alternatively the X-User-Token header."
+  },
+  "paths": {
+    "/api/v1/favourites": {
+      "get": {
+        "summary": "List favourites",
+        "description": "Returns a list of all favourites for the current authenticated user.",
+        "tags": ["Favourites"],
+        "operationId": "listFavourites",
+        "security": [{ "bearerAuth": [] }, { "authentication_token": [] }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FavouritesIndexResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing/invalid token",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Add to favourites",
+        "description": "Adds the specified resource to the user's favourites. If the provided type is unknown, a ResearchProduct will be created with the given type and pid.",
+        "tags": ["Favourites"],
+        "operationId": "createFavourite",
+        "security": [{ "bearerAuth": [] }, { "authentication_token": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/FavouriteBody" },
+              "examples": {
+                "Service": { "value": { "pid": "service-slug", "type": "Service" } },
+                "Offer": { "value": { "pid": "service-slug/12", "type": "Offer" } },
+                "UnknownType": {
+                  "value": {
+                    "pid": "10.5281/zenodo.12345",
+                    "type": "ZenodoDataset",
+                    "name": "Zenodo",
+                    "links": ["https://zenodo.org/record/12345"],
+                    "best_access_right": "open_access",
+                    "authors": ["Author 1", "Author 2"]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Added to favourites",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ActionResponse" }
+              }
+            }
+          },
+          "400": {
+            "description": "Parameter validation error",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ActionErrorResponse" } } }
+          },
+          "404": {
+            "description": "Resource not found for known type",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ActionErrorResponse" } } }
+          },
+          "422": {
+            "description": "Unable to save favourite",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ActionErrorResponse" } } }
+          },
+          "401": {
+            "description": "Missing/invalid token",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } } }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Remove from favourites",
+        "description": "Removes the specified resource from the user's favourites. For unknown types, it removes the relation with an existing ResearchProduct (does not create a new one).",
+        "tags": ["Favourites"],
+        "operationId": "deleteFavourite",
+        "security": [{ "bearerAuth": [] }, { "authentication_token": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/FavouriteBody" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Removed from favourites",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ActionResponse" }
+              }
+            }
+          },
+          "404": {
+            "description": "Favourite not found",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ActionErrorResponse" } } }
+          },
+          "400": {
+            "description": "Parameter validation error",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ActionErrorResponse" } } }
+          },
+          "401": {
+            "description": "Missing/invalid token",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } } }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "authentication_token": {
+        "type": "apiKey",
+        "name": "X-User-Token",
+        "in": "header"
+      },
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "FavouriteBody": {
+        "type": "object",
+        "required": ["pid", "type"],
+        "properties": {
+          "pid": {
+            "type": "string",
+            "description": "Resource identifier. For example, 'service-slug' or 'service-slug/12' for an offer, or any external PID."
+          },
+          "type": {
+            "type": "string",
+            "description": "Resource class name, e.g., 'Service', 'Offer', 'ResearchProduct', or another unknown type (which will create a ResearchProduct)."
+          }
+        }
+      },
+      "FavouriteItem": {
+        "type": "object",
+        "properties": {
+          "type": { "type": "string" },
+          "pid": { "type": "string" },
+          "name": { "type": "string", "nullable": true },
+          "attributes": {
+            "type": "object",
+            "nullable": true,
+            "properties": {
+              "title": { "type": "string", "nullable": true },
+              "authors": { "type": "array", "items": { "type": "string" } },
+              "links": { "type": "object", "additionalProperties": true },
+              "resource_type": { "type": "string", "nullable": true },
+              "best_access_right": { "type": "string", "nullable": true }
+            }
+          }
+        }
+      },
+      "FavouritesIndexResponse": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "example": "ok" },
+          "favourites": { "type": "array", "items": { "$ref": "#/components/schemas/FavouriteItem" } }
+        }
+      },
+      "ActionResponse": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "example": "ok" },
+          "message": { "type": "string", "example": "Added to favourites" }
+        }
+      },
+      "ActionErrorResponse": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "example": "error" },
+          "message": { "type": "string" }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": { "type": "string" },
+          "details": { "type": "string", "nullable": true }
+        }
+      }
+    }
+  }
+}

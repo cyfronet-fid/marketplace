@@ -1,22 +1,67 @@
-- content_for :title, _("Favourite services")
-- breadcrumb(:favourites)
-.container{ "data-controller": "favourite comparison" }
-  %h1.mb-4
-    = _("Favourite services")
-  .row
-    .col-lg-3.mb-5
-      .favourite-icon
-        = image_tag "gfx_heart.svg"
-      .mt-4
-      - unless @favourites.blank?
-        = link_to "Go back to the services list", services_path,
-        class: "btn btn-sm btn-outline-primary d-block mb-3", "data-favourite-target": "backlink"
-    .col-lg-9.favourites{ "data-favourite-target": "serviceBox" }
-      - if @favourites.blank?
-        = render "empty_box"
-      - else
-        = render partial: "service", collection: @favourites,
-          locals: { comparison_enabled: false, remote: true, favourite_services: @favourites }
-  - display_class = (session[:comparison]&.size || 0).positive? ? "d-block" : "d-none"
-  #comparison-bar.comparison-bar.fixed-bottom{ class: display_class, "data-comparison-target": "bar" }
-    = render "comparisons/bar", services: @compare_services, category: @category
+.back-wrapper
+  %a{ href: "#" }
+    %i.fa.fa-arrow-left.mr-2
+    Go to search
+
+.container.favourites-view
+  %h1 Favourites
+
+  .subtitle
+    Your favourites give you quick access to resources you’ve saved. Search or sort to find what you need.
+
+  .row.search-row
+    = form_with url: favourites_path, method: :get, data: { turbo_frame: "favourites_table" }, html: { class: "form-inline" } do
+      .input-group
+        = text_field_tag :q, params[:q], class: "form-control",
+          placeholder: "Search favourites...", oninput: "this.form.requestSubmit()"
+        = hidden_field_tag :sort, @sort
+        = hidden_field_tag :dir, @dir
+  = turbo_frame_tag "favourites_table" do
+    .table-responsive
+      %table.table.table-hover.favourites-table
+        %thead
+          %tr
+            %th
+              - active = @sort == "name"
+              - next_dir = active && @dir == "asc" ? "desc" : "asc"
+              = link_to favourites_path(sort: "name", dir: next_dir, q: params[:q]), data: { turbo_frame: "favourites_table" } do
+                Name
+                - if active
+                  %span.ml-1= (@dir == "asc" ? "▲" : "▼")
+            %th
+              - active = @sort == "type"
+              - next_dir = active && @dir == "asc" ? "desc" : "asc"
+              = link_to favourites_path(sort: "type", dir: next_dir, q: params[:q]), data: { turbo_frame: "favourites_table" } do
+                Type
+                - if active
+                  %span.ml-1= @dir == "asc" ? "▲" : "▼"
+            %th
+              - active = @sort == "order_type"
+              - next_dir = active && @dir == "asc" ? "desc" : "asc"
+              = link_to favourites_path(sort: "order_type", dir: next_dir, q: params[:q]), data: { turbo_frame: "favourites_table" } do
+                Access type
+                - if active
+                  %span.ml-1= @dir == "asc" ? "▲" : "▼"
+            %th.text-right
+        %tbody
+          - @favourites.each do |fav|
+            :ruby
+              obj = fav.favoritable
+              name = object_name(obj)
+              type_name = obj.is_a?(ResearchProduct) ? obj.resource_type : obj.class.name
+              order_type = obj.respond_to?(:order_type) && obj.order_type.present? ? obj.order_type : "-"
+              resource_link = resource_link(obj)
+            %tr
+              %td= link_to name, resource_link, data: { turbo_frame: "_top" }
+              %td= type_name
+              %td
+                .badge.ordertype{ class: order_type(obj) }= order_type
+              %td.text-nowrap.text-right
+                = link_to "Go to the resource ->", resource_link, class: "go-to-link", data: { turbo_frame: "_top" }
+                = button_to user_favourite_path(fav),
+                  method: :delete,
+                  form: { data: { turbo_confirm: "Are you sure?", turbo_frame: "favourites_table" }, class: "d-inline" },
+                  class: "btn btn-sm btn-remove",
+                  title: "Remove" do
+                  %i.far.fa-trash-alt{ aria: { hidden: true } }
+                  %span.sr-only Remove

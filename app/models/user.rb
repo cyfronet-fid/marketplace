@@ -21,8 +21,8 @@ class User < ApplicationRecord
   has_many :scientific_domains, through: :user_scientific_domains
   has_many :oms_administrations, dependent: :destroy
   has_many :administrated_omses, through: :oms_administrations, source: :oms
-  has_many :user_service, dependent: :destroy
-  has_many :favourite_services, through: :user_service, source: :service, class_name: "Service"
+  has_many :user_favourites, dependent: :destroy
+  has_many :favourites, through: :user_favourites, as: :favoritable
   has_many :data_administrators, primary_key: :id, foreign_key: :user_id
   has_many :provider_data_administrators, through: :data_administrators
   has_many :catalogue_data_administrators, through: :data_administrators

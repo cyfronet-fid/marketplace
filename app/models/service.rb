@@ -9,6 +9,7 @@ class Service < ApplicationRecord
   include Viewable
   include Service::Search
   include Statusable
+  include Favoritable
 
   extend FriendlyId
   friendly_id :name, use: :slugged
@@ -97,9 +98,6 @@ class Service < ApplicationRecord
   accepts_nested_attributes_for :public_contacts, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :link_multimedia_urls, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :link_use_cases_urls, reject_if: :all_blank, allow_destroy: true
-
-  has_many :user_services, dependent: :destroy
-  has_many :favourite_users, through: :user_services, source: :user, class_name: "User"
 
   has_many :service_user_relationships, dependent: :destroy
   has_many :owners, through: :service_user_relationships, source: :user, class_name: "User"
@@ -264,8 +262,13 @@ class Service < ApplicationRecord
             }
   validates :resource_organisation, presence: true
   validates :public_contacts, presence: true, length: { minimum: 1, message: "are required. Please add at least one" }
+  validate :resource_organisation_published
 
   after_save :set_first_category_as_main!, if: :main_category_missing?
+
+  def resource_organisation_published
+    errors.add(:resource_organisation, "must be published") if published? && !resource_organisation.published?
+  end
 
   def self.popular(count)
     includes(:providers).where(status: :published).order(popularity_ratio: :desc, name: :asc).limit(count)

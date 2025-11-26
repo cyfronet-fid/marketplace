@@ -3,6 +3,7 @@
 class Services::GuidelinesController < ApplicationController
   include Service::Comparison
   include Service::Recommendable
+  include FavouriteHelper
   layout :choose_layout
 
   def index
@@ -12,6 +13,10 @@ class Services::GuidelinesController < ApplicationController
     @related_services = @service.related_services
     @question = Service::Question.new(service: @service)
     @favourite_services =
-      current_user&.favourite_services || Service.where(slug: Array(cookies[:favourites]&.split("&") || []))
+      if current_user.present?
+        favourite_services_for(current_user)
+      else
+        Service.where(slug: Array(cookies[:favourites]&.split("&") || []))
+      end
   end
 end

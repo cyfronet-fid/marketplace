@@ -5,6 +5,7 @@ class Services::OffersController < ApplicationController
   include Service::Comparison
   include Service::Monitorable
   include Service::Recommendable
+  include FavouriteHelper
 
   def index
     @service = Service.includes(:offers).friendly.find(params[:service_id])
@@ -26,6 +27,10 @@ class Services::OffersController < ApplicationController
     @service_opinions = ServiceOpinion.joins(project_item: :offer).where(offers: { service_id: @service })
     @question = Service::Question.new(service: @service)
     @favourite_services =
-      current_user&.favourite_services || Service.where(slug: Array(cookies[:favourites]&.split("&") || []))
+      if current_user.present?
+        favourite_services_for(current_user)
+      else
+        Service.where(slug: Array(cookies[:favourites]&.split("&") || []))
+      end
   end
 end

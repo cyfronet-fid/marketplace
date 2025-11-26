@@ -2,6 +2,8 @@
 
 class Api::V1::ApplicationController < ActionController::API
   include Pundit::Authorization
+  # OAuth2 Bearer first, then fallback to SimpleTokenAuthentication header
+  before_action :authenticate_with_bearer_token
   acts_as_token_authentication_handler_for User, fallback: :exception
 
   rescue_from Pundit::NotAuthorizedError do
@@ -43,5 +45,34 @@ class Api::V1::ApplicationController < ActionController::API
 
   def not_authorized
     { error: "You are not authorized to perform this action." }
+  end
+
+  # Try OAuth2 Bearer authentication using OIDC (same issuer as OmniAuth)
+  # If Authorization header is missing — do nothing and let SimpleTokenAuthentication handle it.
+  # If Authorization header is present but invalid — return 401.
+  def authenticate_with_bearer_token
+    auth = request.authorization
+    return unless auth&.start_with?("Bearer ")
+
+    token = auth.split(" ", 2)[1]
+    begin
+      verifier = Oidc::TokenVerifier.instance
+      claims = verifier.verify!(token)
+
+      # Prefer matching by `sub` (stable subject) which we store in `uid`.
+      user = User.find_by(uid: claims["sub"]) || (claims["email"].present? ? User.find_by(email: claims["email"]) : nil)
+
+      if user
+        # Ensure Devise knows about the user in this request
+        sign_in(user, store: false)
+      else
+        render json: { error: "User not found for provided OAuth token" }, status: :unauthorized and return
+      end
+    rescue Oidc::TokenVerifier::VerificationError => e
+      render json: { error: "Invalid OAuth token", details: e.message }, status: :unauthorized and return
+    rescue StandardError => e
+      Rails.logger.error("Bearer auth error: #{e.class}: #{e.message}")
+      render json: { error: "OAuth token verification failed" }, status: :unauthorized and return
+    end
   end
 end

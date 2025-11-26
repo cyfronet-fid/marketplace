@@ -1,31 +1,28 @@
 # frozen_string_literal: true
 
-class Favourites::ServicesController < FavouritesController
+class Favourites::ApplicationController < FavouritesController
   skip_before_action :authenticate_user!, only: :update
-  include FavouriteHelper
 
   def update
     @service = Service.where(slug: params.fetch(:favourite)).first
     cookies[:favourites] ||= []
     added = Array(cookies[:favourites].split("&"))
     if params.fetch(:update) == "true"
-      current_user.present? ? UserFavourite.new(user: current_user, favoritable: @service).save : added << @service.slug
+      current_user.present? ? UserService.new(user: current_user, service: @service).save : added << @service.slug
       respond_to { |format| format.js { render_popup_json(title, text, logged?) } } unless many?
     elsif current_user.present?
       UserFavourite.find_by(user: current_user, favoritable_id: @service.id, favoritable_type:)&.destroy
     else
       added.delete(@service.slug)
     end
-    if current_user.present? && favourite_services_for(current_user).empty?
-      respond_to { |format| format.js { render_empty_box } }
-    end
+    respond_to { |format| format.js { render_empty_box } } if current_user&.favourite_services&.empty?
     cookies[:favourites] = added.reject(&:blank?)
   end
 
   private
 
   def many?
-    (UserFavourite.where(user: current_user).size > 1) || ((cookies[:favourites]&.size || 0) > 1)
+    (UserService.where(user: current_user).size > 1) || ((cookies[:favourites]&.size || 0) > 1)
   end
 
   def text

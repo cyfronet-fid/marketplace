@@ -7,6 +7,7 @@ class ServicesController < ApplicationController
   include Service::Comparison
   include Service::Monitorable
   include Service::Recommendable
+  include FavouriteHelper
 
   before_action :sort_options
   before_action :load_query_params_from_session, only: :index
@@ -47,7 +48,11 @@ class ServicesController < ApplicationController
     @highlights = highlights(@services)
     @recommended_services = fetch_recommended
     @favourite_services =
-      current_user&.favourite_services || Service.where(slug: Array(cookies[:favourites]&.split("&") || []))
+      if current_user.present?
+        favourite_services_for(current_user)
+      else
+        Service.where(slug: Array(cookies[:favourites]&.split("&") || []))
+      end
   end
 
   # rubocop:enable Metrics/AbcSize
@@ -67,7 +72,11 @@ class ServicesController < ApplicationController
     @service_opinions = ServiceOpinion.joins(project_item: :offer).where(offers: { service_id: @service })
     @question = Service::Question.new(service: @service)
     @favourite_services =
-      current_user&.favourite_services || Service.where(slug: Array(cookies[:favourites]&.split("&") || []))
+      if current_user.present?
+        favourite_services_for(current_user)
+      else
+        Service.where(slug: Array(cookies[:favourites]&.split("&") || []))
+      end
     override_user_action_info
   end
 

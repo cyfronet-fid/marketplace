@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ResearchProduct < ApplicationRecord
+  include Favoritable
   extend FriendlyId
   friendly_id :resource_id
 
@@ -16,6 +17,10 @@ class ResearchProduct < ApplicationRecord
 
   def type=(type)
     self.resource_type = type
+  end
+
+  def order_type
+    best_access_right
   end
 
   def public_attributes

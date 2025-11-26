@@ -121,6 +121,7 @@ Rails.application.routes.draw do
   resources :research_products, only: %i[new create]
 
   resources :favourites, only: :index
+  resources :user_favourites, only: :destroy
   post "favourites/services", to: "favourites/services#update"
 
   resource :help, only: :show, path: "user_documentation"
@@ -205,6 +206,7 @@ Rails.application.routes.draw do
       resources :resources, only: %i[index show], constraints: { id: pid_format_constraint } do
         resources :offers, only: %i[index create show destroy update], module: :resources
       end
+      resources :favourites, only: %i[index create destroy]
       resources :oms, controller: :omses, only: %i[index show update] do
         resources :events, only: :index, module: :omses
         resources :messages, only: %i[index show create update], module: :omses

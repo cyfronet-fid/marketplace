@@ -3,6 +3,7 @@
 class Services::OpinionsController < ApplicationController
   include Service::Comparison
   include Service::Recommendable
+  include FavouriteHelper
   layout :choose_layout
 
   def choose_layout
@@ -28,6 +29,10 @@ class Services::OpinionsController < ApplicationController
         .includes(project_item: :project)
     @question = Service::Question.new(service: @service)
     @favourite_services =
-      current_user&.favourite_services || Service.where(slug: Array(cookies[:favourites]&.split("&") || []))
+      if current_user.present?
+        favourite_services_for(current_user)
+      else
+        Service.where(slug: Array(cookies[:favourites]&.split("&") || []))
+      end
   end
 end

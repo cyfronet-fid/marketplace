@@ -5,6 +5,7 @@ class Offer < ApplicationRecord
   include ActionView::Helpers::TextHelper
   include Offerable
   include Offer::Parameters
+  include Favoritable
   include Propagable
   include Statusable
 
