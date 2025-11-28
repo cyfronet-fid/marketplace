@@ -14,8 +14,8 @@
         = turbo_frame_tag "#{dom_id(offer)}-action-button" do
           - if policy(offer).order?
             = link_to service_choose_offer_path(offer.parent_service,
-            customizable_project_item: { offer_id: offer.iid }),
-            data: { probe: "", "service-id": offer.parent_service&.id, e2e: "select-offer-btn",
+            customizable_project_item: { offer_id: offer.iid, service_id: offer.parent_service.id }),
+            data: { probe: "", e2e: "select-offer-btn",
             "preview-target": local_assigns[:preview] ? "link" : "", "turbo-frame": "_top" } do
               %span.btn.btn-secondary.font-weight-bolder
                 = _("Select an offer")
