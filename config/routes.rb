@@ -102,6 +102,7 @@ Rails.application.routes.draw do
           resource :opinion, only: %i[new create]
           resource :conversation, only: %i[show create]
           resource :timeline, only: :show
+          resource :infrastructure, only: :destroy
         end
       end
       resource :conversation, only: %i[show create]

@@ -64,7 +64,8 @@ class ServicesController < ApplicationController
     @similar_services = fetch_similar(@service.id, current_user&.id)
     @related_services = @service.related_services
 
-    @service_opinions = ServiceOpinion.joins(project_item: :offer).where(offers: { service_id: @service })
+    @service_opinions =
+      ServiceOpinion.joins(project_item: :offer).where(offers: { orderable_type: "Service", orderable_id: @service.id })
     @question = Service::Question.new(service: @service)
     @favourite_services =
       current_user&.favourite_services || Service.where(slug: Array(cookies[:favourites]&.split("&") || []))

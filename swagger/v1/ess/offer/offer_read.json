@@ -30,6 +30,10 @@
     "service_id": {
       "type": "integer"
     },
+    "orderable_type": {
+      "type": "string",
+      "enum": ["Service", "DeployableService"]
+    },
     "status": {
       "type": "string",
       "enum": ["published", "draft", "deleted"]

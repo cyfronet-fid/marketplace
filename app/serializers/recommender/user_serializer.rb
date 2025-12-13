@@ -9,7 +9,8 @@ class Recommender::UserSerializer < ActiveModel::Serializer
 
   def accessed_services
     User
-      .joins(projects: [project_items: [offer: [:service]]])
+      .joins(projects: [project_items: :offer])
+      .joins(Offer::JOIN_SERVICE_SQL)
       .order("project_items.created_at")
       .where("users.email = ?", object.email)
       .pluck("services.id")

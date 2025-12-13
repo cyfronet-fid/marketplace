@@ -5,11 +5,29 @@ FactoryBot.define do
     sequence(:iid) { |n| n }
     sequence(:name) { |n| "offer #{n}" }
     sequence(:description) { |n| "offer #{n} description" }
-    sequence(:order_type) { :order_required }
-    sequence(:service) { |_n| create(:service, offers_count: 1, order_type: order_type) }
-    sequence(:status) { :published }
-    sequence(:internal) { true }
-    sequence(:offer_category) { |_n| create(:service_category) }
+    order_type { :order_required }
+    status { :published }
+    internal { true }
+
+    # Use orderable polymorphic association instead of direct service association
+    transient do
+      service { :not_set }
+      deployable_service { :not_set }
+    end
+
+    # Set orderable based on provided service or deployable_service
+    # Priority: service > deployable_service > default service
+    # Both transients default to :not_set; when explicitly set (even to nil), use that value
+    orderable do
+      if service != :not_set
+        service.presence || (deployable_service == :not_set ? nil : deployable_service)
+      elsif deployable_service != :not_set
+        deployable_service
+      else
+        create(:service, offers_count: 1, order_type: :order_required)
+      end
+    end
+    offer_category { create(:service_category) }
 
     factory :offer_with_parameters do
       sequence(:parameters) { [build(:input_parameter)] }
@@ -30,21 +48,21 @@ FactoryBot.define do
     end
 
     factory :open_access_offer do
-      sequence(:order_type) { :open_access }
+      order_type { :open_access }
     end
 
     factory :fully_open_access_offer do
-      sequence(:order_type) { :fully_open_access }
+      order_type { :fully_open_access }
     end
 
     factory :other_offer do
-      sequence(:order_type) { :other }
+      order_type { :other }
     end
 
     factory :external_offer do
-      sequence(:internal) { false }
-      sequence(:order_type) { :order_required }
-      sequence(:order_url) { "http://order.com" }
+      internal { false }
+      order_type { :order_required }
+      order_url { "http://order.com" }
     end
 
     factory :voucherable_offer do

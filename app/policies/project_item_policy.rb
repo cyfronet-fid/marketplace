@@ -17,6 +17,13 @@ class ProjectItemPolicy < ApplicationPolicy
     user && record.project&.user == user
   end
 
+  def destroy_infrastructure?
+    return false unless user && record.project&.user == user
+    return false unless record.infrastructure&.can_destroy?
+
+    true
+  end
+
   def permitted_attributes
     attributes =
       record.offer.attributes.map do |a|
