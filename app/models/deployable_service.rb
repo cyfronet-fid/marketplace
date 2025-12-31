@@ -26,6 +26,7 @@ class DeployableService < ApplicationRecord
   belongs_to :upstream, foreign_key: "upstream_id", class_name: "DeployableServiceSource", optional: true
   belongs_to :resource_organisation, class_name: "Provider", optional: false
   belongs_to :catalogue, optional: true
+  belongs_to :node_vocabulary, class_name: "Vocabulary::Node", foreign_key: :node, primary_key: :eid, optional: true
 
   auto_strip_attributes :name, nullify: false
   auto_strip_attributes :description, nullify: false
@@ -165,6 +166,10 @@ class DeployableService < ApplicationRecord
   # Additional collections
   def platforms
     []
+  end
+
+  def nodes
+    [node_vocabulary].compact
   end
 
   def service_categories

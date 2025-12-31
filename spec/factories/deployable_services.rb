@@ -30,5 +30,10 @@ FactoryBot.define do
     trait :with_tags do
       tag_list { %w[tag1 tag2 tag3] }
     end
+
+    trait :with_node do
+      transient { node_vocabulary { create(:node) } }
+      node { node_vocabulary.eid }
+    end
   end
 end
