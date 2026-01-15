@@ -2,7 +2,7 @@
   .card-body.d-flex
 
     .node-name
-      = nodes.find { |n| n[:url] == service["source_node_url"] }[:name] if nodes.present?
+      = nodes.find { |n| n[:url] == service["source_node_url"] }&.dig(:name) if nodes.present?
 
     .service-logo.mr-4
       - if service["logo"].present?
