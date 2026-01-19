@@ -6,7 +6,7 @@ RSpec.describe InfrastructureManager::Client, type: :service do
   let(:access_token) { "test_access_token" }
   let(:site) { "IISAS-FedCloud" }
   let(:client) { described_class.new(access_token, site) }
-  let(:base_url) { "https://deploy.sandbox.eosc-beyond.eu" }
+  let(:base_url) { "https://im.test.example.com" }
 
   let(:sample_tosca_template) { <<~YAML }
       tosca_definitions_version: tosca_simple_yaml_1_2
@@ -238,6 +238,273 @@ RSpec.describe InfrastructureManager::Client, type: :service do
         expect(result[:data][:radl][0][:class]).to eq("system")
         expect(result[:data]["radl"][0]["net_interface.1.ip"]).to eq("192.168.1.1")
         expect(result[:data][:radl][0][:"net_interface.1.ip"]).to eq("192.168.1.1")
+      end
+    end
+  end
+
+  describe "#get_state" do
+    let(:infrastructure_id) { "inf-12345" }
+
+    context "when request is successful" do
+      before do
+        stub_request(:get, "#{base_url}/infrastructures/#{infrastructure_id}/state").to_return(
+          status: 200,
+          body: { "state" => "running" }.to_json,
+          headers: {
+            "Content-Type" => "application/json"
+          }
+        )
+      end
+
+      it "returns the infrastructure state" do
+        result = client.get_state(infrastructure_id)
+
+        expect(result[:success]).to be true
+        expect(result[:data]["state"]).to eq("running")
+      end
+    end
+
+    context "when infrastructure is not found" do
+      before do
+        stub_request(:get, "#{base_url}/infrastructures/#{infrastructure_id}/state").to_return(
+          status: 404,
+          body: { "message" => "Not found" }.to_json,
+          headers: {
+            "Content-Type" => "application/json"
+          }
+        )
+      end
+
+      it "returns error response" do
+        result = client.get_state(infrastructure_id)
+
+        expect(result[:success]).to be false
+        expect(result[:status_code]).to eq(404)
+      end
+    end
+
+    context "when network request fails" do
+      before do
+        stub_request(:get, "#{base_url}/infrastructures/#{infrastructure_id}/state").to_raise(Faraday::TimeoutError)
+      end
+
+      it "handles network errors gracefully" do
+        result = client.get_state(infrastructure_id)
+
+        expect(result[:success]).to be false
+        expect(result[:error]).to include("HTTP request failed")
+      end
+    end
+  end
+
+  describe "#destroy_infrastructure" do
+    let(:infrastructure_id) { "inf-12345" }
+
+    context "when request is successful" do
+      before do
+        stub_request(:delete, "#{base_url}/infrastructures/#{infrastructure_id}").to_return(
+          status: 200,
+          body: "",
+          headers: {
+            "Content-Type" => "application/json"
+          }
+        )
+      end
+
+      it "returns success" do
+        result = client.destroy_infrastructure(infrastructure_id)
+
+        expect(result[:success]).to be true
+        expect(result[:status_code]).to eq(200)
+      end
+    end
+
+    context "when infrastructure is not found" do
+      before do
+        stub_request(:delete, "#{base_url}/infrastructures/#{infrastructure_id}").to_return(
+          status: 404,
+          body: { "message" => "Not found" }.to_json,
+          headers: {
+            "Content-Type" => "application/json"
+          }
+        )
+      end
+
+      it "returns error response" do
+        result = client.destroy_infrastructure(infrastructure_id)
+
+        expect(result[:success]).to be false
+        expect(result[:status_code]).to eq(404)
+      end
+    end
+
+    context "when permission denied" do
+      before do
+        stub_request(:delete, "#{base_url}/infrastructures/#{infrastructure_id}").to_return(
+          status: 403,
+          body: { "message" => "Forbidden" }.to_json,
+          headers: {
+            "Content-Type" => "application/json"
+          }
+        )
+      end
+
+      it "returns client error response" do
+        result = client.destroy_infrastructure(infrastructure_id)
+
+        expect(result[:success]).to be false
+        expect(result[:status_code]).to eq(403)
+        expect(result[:error]).to include("Client error")
+      end
+    end
+
+    context "when network request fails" do
+      before do
+        stub_request(:delete, "#{base_url}/infrastructures/#{infrastructure_id}").to_raise(Faraday::ConnectionFailed)
+      end
+
+      it "handles network errors gracefully" do
+        result = client.destroy_infrastructure(infrastructure_id)
+
+        expect(result[:success]).to be false
+        expect(result[:error]).to include("HTTP request failed")
+      end
+    end
+  end
+
+  describe "#get_outputs" do
+    let(:infrastructure_id) { "inf-12345" }
+
+    context "when request is successful" do
+      let(:outputs) { { "outputs" => { "jupyterhub_url" => "https://jupyter.example.com" } } }
+
+      before do
+        stub_request(:get, "#{base_url}/infrastructures/#{infrastructure_id}/outputs").to_return(
+          status: 200,
+          body: outputs.to_json,
+          headers: {
+            "Content-Type" => "application/json"
+          }
+        )
+      end
+
+      it "returns the infrastructure outputs" do
+        result = client.get_outputs(infrastructure_id)
+
+        expect(result[:success]).to be true
+        expect(result[:data]["outputs"]["jupyterhub_url"]).to eq("https://jupyter.example.com")
+      end
+    end
+
+    context "when infrastructure is not found" do
+      before do
+        stub_request(:get, "#{base_url}/infrastructures/#{infrastructure_id}/outputs").to_return(
+          status: 404,
+          body: { "message" => "Not found" }.to_json,
+          headers: {
+            "Content-Type" => "application/json"
+          }
+        )
+      end
+
+      it "returns error response" do
+        result = client.get_outputs(infrastructure_id)
+
+        expect(result[:success]).to be false
+        expect(result[:status_code]).to eq(404)
+      end
+    end
+
+    context "when outputs not yet available" do
+      before do
+        stub_request(:get, "#{base_url}/infrastructures/#{infrastructure_id}/outputs").to_return(
+          status: 200,
+          body: { "outputs" => {} }.to_json,
+          headers: {
+            "Content-Type" => "application/json"
+          }
+        )
+      end
+
+      it "returns empty outputs" do
+        result = client.get_outputs(infrastructure_id)
+
+        expect(result[:success]).to be true
+        expect(result[:data]["outputs"]).to eq({})
+      end
+    end
+
+    context "when network request fails" do
+      before do
+        stub_request(:get, "#{base_url}/infrastructures/#{infrastructure_id}/outputs").to_raise(Faraday::TimeoutError)
+      end
+
+      it "handles network errors gracefully" do
+        result = client.get_outputs(infrastructure_id)
+
+        expect(result[:success]).to be false
+        expect(result[:error]).to include("HTTP request failed")
+      end
+    end
+  end
+
+  describe "#get_vm_info" do
+    let(:infrastructure_id) { "inf-12345" }
+    let(:vm_id) { "0" }
+
+    context "when request is successful" do
+      let(:vm_info) { { "radl" => [{ "class" => "system", "net_interface.0.ip" => "192.168.1.1", "cpu.count" => 4 }] } }
+
+      before do
+        stub_request(:get, "#{base_url}/infrastructures/#{infrastructure_id}/vms/#{vm_id}").to_return(
+          status: 200,
+          body: vm_info.to_json,
+          headers: {
+            "Content-Type" => "application/json"
+          }
+        )
+      end
+
+      it "returns the VM information" do
+        result = client.get_vm_info(infrastructure_id, vm_id)
+
+        expect(result[:success]).to be true
+        expect(result[:data]["radl"][0]["class"]).to eq("system")
+        expect(result[:data]["radl"][0]["net_interface.0.ip"]).to eq("192.168.1.1")
+      end
+    end
+
+    context "when VM is not found" do
+      before do
+        stub_request(:get, "#{base_url}/infrastructures/#{infrastructure_id}/vms/#{vm_id}").to_return(
+          status: 404,
+          body: { "message" => "Not found" }.to_json,
+          headers: {
+            "Content-Type" => "application/json"
+          }
+        )
+      end
+
+      it "returns error response" do
+        result = client.get_vm_info(infrastructure_id, vm_id)
+
+        expect(result[:success]).to be false
+        expect(result[:status_code]).to eq(404)
+      end
+    end
+
+    context "when network request fails" do
+      before do
+        stub_request(:get, "#{base_url}/infrastructures/#{infrastructure_id}/vms/#{vm_id}").to_raise(
+          Faraday::ConnectionFailed
+        )
+      end
+
+      it "handles network errors gracefully" do
+        result = client.get_vm_info(infrastructure_id, vm_id)
+
+        expect(result[:success]).to be false
+        expect(result[:error]).to include("HTTP request failed")
       end
     end
   end

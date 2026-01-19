@@ -13,7 +13,12 @@ class Offer < ApplicationRecord
   searchkick word_middle: %i[offer_name description], highlight: %i[offer_name description]
 
   def search_data
-    { offer_name: name, description: description, service_id: service_id, order_type: order_type }
+    { offer_name: name, description: description, service_id: resource_id, order_type: order_type }
+  end
+
+  # Returns the resource ID (service or deployable_service) for API compatibility
+  def resource_id
+    orderable_id
   end
 
   def should_index?
@@ -21,18 +26,47 @@ class Offer < ApplicationRecord
   end
 
   scope :bundle_exclusive, -> { where(bundle_exclusive: true, status: :published) }
-  scope :inclusive,
+
+  # =============================================================================
+  # Polymorphic orderable join scopes
+  # These provide reusable joins for querying through the polymorphic orderable
+  # association. Use these instead of writing raw SQL joins in other files.
+  # =============================================================================
+
+  # INNER JOIN to services table only (excludes DeployableService offers)
+  scope :join_service, -> { joins(JOIN_SERVICE_SQL) }
+
+  # LEFT JOIN to both services and deployable_services tables (includes all offer types)
+  scope :join_orderable, -> { joins(LEFT_JOIN_SERVICE_SQL).joins(LEFT_JOIN_DEPLOYABLE_SERVICE_SQL) }
+
+  # Filter to only offers with published orderable (works with join_orderable)
+  scope :with_published_orderable,
         -> do
-          where(bundle_exclusive: false, status: :published)
-            .joins("LEFT JOIN services ON services.id = offers.service_id")
-            .joins("LEFT JOIN deployable_services ON deployable_services.id = offers.deployable_service_id")
-            .where(
-              "(services.status IN (?) AND offers.service_id IS NOT NULL) " +
-                "OR (deployable_services.status IN (?) AND offers.deployable_service_id IS NOT NULL)",
-              Statusable::PUBLIC_STATUSES,
-              Statusable::PUBLIC_STATUSES
-            )
+          where(
+            "(offers.orderable_type = 'Service' AND services.status IN (?)) " \
+              "OR (offers.orderable_type = 'DeployableService' AND deployable_services.status IN (?))",
+            Statusable::PUBLIC_STATUSES,
+            Statusable::PUBLIC_STATUSES
+          )
         end
+
+  # SQL fragments for joins (exposed as constants for use in other classes)
+  JOIN_SERVICE_SQL =
+    "INNER JOIN services ON services.id = offers.orderable_id " \
+      "AND offers.orderable_type = 'Service'"
+  LEFT_JOIN_SERVICE_SQL =
+    "LEFT JOIN services ON services.id = offers.orderable_id " \
+      "AND offers.orderable_type = 'Service'"
+  LEFT_JOIN_DEPLOYABLE_SERVICE_SQL =
+    "LEFT JOIN deployable_services ON deployable_services.id = offers.orderable_id " \
+      "AND offers.orderable_type = 'DeployableService'"
+
+  # =============================================================================
+  # Business logic scopes (use the join scopes above)
+  # =============================================================================
+
+  scope :inclusive, -> { where(bundle_exclusive: false, status: :published).join_orderable.with_published_orderable }
+
   scope :active,
         -> do
           where(
@@ -43,34 +77,58 @@ class Offer < ApplicationRecord
             0
           )
         end
-  scope :accessible,
-        -> do
-          where(status: :published)
-            .joins("LEFT JOIN services ON services.id = offers.service_id")
-            .joins("LEFT JOIN deployable_services ON deployable_services.id = offers.deployable_service_id")
-            .where(
-              "(services.status IN (?) AND offers.service_id IS NOT NULL) OR (deployable_services.status IN (?) " +
-                "AND offers.deployable_service_id IS NOT NULL)",
-              Statusable::PUBLIC_STATUSES,
-              Statusable::PUBLIC_STATUSES
-            )
-        end
+
+  scope :accessible, -> { where(status: :published).join_orderable.with_published_orderable }
+
   scope :manageable, -> { where(status: Statusable::MANAGEABLE_STATUSES) }
 
-  counter_culture :service,
-                  column_name: proc { |model| model.published? ? "offers_count" : nil },
+  # Counter cache for offers_count on Service only (DeployableService doesn't have this column)
+  # counter_culture supports polymorphic associations of one level
+  # Returns nil for DeployableService to skip the update
+  counter_culture :orderable,
+                  column_name:
+                    proc { |model| model.published? && model.orderable_type == "Service" ? "offers_count" : nil },
                   column_names: {
-                    ["offers.status = ?", "published"] => "offers_count"
+                    ["offers.status = ? AND offers.orderable_type = ?", "published", "Service"] => "offers_count"
                   }
 
-  belongs_to :service, optional: true
-  belongs_to :deployable_service, optional: true
+  # Polymorphic association for orderable resource (Service or DeployableService)
+  belongs_to :orderable, polymorphic: true
+
+  # Convenience methods for accessing orderable as Service or DeployableService
+  # These provide API compatibility after removing legacy columns
+  def service
+    orderable if orderable_type == "Service"
+  end
+
+  def service=(value)
+    self.orderable = value
+  end
+
+  def deployable_service
+    orderable if orderable_type == "DeployableService"
+  end
+
+  def deployable_service=(value)
+    self.orderable = value
+  end
+
+  # ID accessor methods for backward compatibility
+  def service_id
+    orderable_id if orderable_type == "Service"
+  end
+
+  def deployable_service_id
+    orderable_id if orderable_type == "DeployableService"
+  end
+
   belongs_to :primary_oms, class_name: "OMS", optional: true
   has_many :project_items, dependent: :restrict_with_error
 
   # Return the parent service (either Service or DeployableService)
+  # Now uses the polymorphic orderable association
   def parent_service
-    service || deployable_service
+    orderable
   end
 
   before_validation :set_internal
@@ -108,10 +166,6 @@ class Offer < ApplicationRecord
     validate :same_order_type_as_in_service, if: -> { service&.order_type.present? }
   end
 
-  validate :check_main_bundles, if: -> { draft? }
-
-  validate :primary_oms_exists?, if: -> { primary_oms_id.present? }
-
   before_destroy :check_main_bundles
 
   def current_oms
@@ -131,20 +185,22 @@ class Offer < ApplicationRecord
   end
 
   def slug_iid
-    "#{service.slug}/#{iid}"
+    # Works with both Service and DeployableService via polymorphic orderable
+    "#{parent_service&.slug}/#{iid}"
   end
 
   def self.find_by_slug_iid!(slug_iid)
     raise ArgumentError, "must be a string" unless slug_iid.is_a?(String)
     split = slug_iid.split("/")
     raise ArgumentError, "must have the two components separated with a forward slash '/'" if split.length != 2
-    Offer.find_by!(service: Service.find_by!(slug: split[0]), iid: split[1].to_i)
+    Offer.find_by!(orderable: Service.find_by!(slug: split[0]), iid: split[1].to_i)
   end
 
   private
 
   def set_iid
-    self.iid = (service&.offers&.maximum(:iid) || 0) + 1 if iid.blank?
+    # Use orderable (polymorphic) to work with both Service and DeployableService
+    self.iid = (orderable&.offers&.maximum(:iid) || 0) + 1 if iid.blank?
   end
 
   def duplicates?(list)
@@ -152,7 +208,8 @@ class Offer < ApplicationRecord
   end
 
   def offers_count
-    service&.offers_count || 0
+    # Use parent_service to work with both Service and DeployableService
+    parent_service&.offers_count || 0
   end
 
   def oms_params_match?
@@ -202,9 +259,11 @@ class Offer < ApplicationRecord
   end
 
   def proper_oms?
-    unless service.available_omses.include? primary_oms
-      errors.add(:primary_oms, "has to be available in the service scope")
-    end
+    # Only validate OMS for Service offers (DeployableService doesn't have available_omses)
+    return true unless service.present?
+
+    service.available_omses.include?(primary_oms) ||
+      errors.add(:primary_oms, "has to be available in the service scope").nil?
   end
 
   def set_internal
@@ -223,10 +282,6 @@ class Offer < ApplicationRecord
   end
 
   def service_or_deployable_service_present
-    if service.blank? && deployable_service.blank?
-      errors.add(:base, "Must belong to either service or deployable service")
-    elsif service.present? && deployable_service.present?
-      errors.add(:base, "Cannot belong to both service and deployable service")
-    end
+    errors.add(:base, "Must belong to either service or deployable service") if orderable.blank?
   end
 end

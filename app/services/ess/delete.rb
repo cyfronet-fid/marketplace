@@ -10,7 +10,9 @@ class Ess::Delete < ApplicationService
 
   def call
     if @type == ("service" || "datasource")
-      Offer.where(service_id: @object_id).each { |offer| Ess::Delete.call(offer.id, offer.class.name) }
+      Offer
+        .where(orderable_type: "Service", orderable_id: @object_id)
+        .each { |offer| Ess::Delete.call(offer.id, offer.class.name) }
     end
     @async ? Ess::UpdateJob.perform_later(payload) : Ess::Update.call(payload)
   end

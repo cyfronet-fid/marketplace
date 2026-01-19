@@ -20,6 +20,7 @@ staging:
   - default
   - pc_publisher
   - ess_update
+  - deployments
 
 :limits:
   pc_subscriber: 1

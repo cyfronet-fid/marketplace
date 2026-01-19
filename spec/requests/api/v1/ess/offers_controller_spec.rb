@@ -23,10 +23,10 @@ RSpec.describe Api::V1::Ess::OffersController, swagger_doc: "v1/ess_swagger.json
 
         let!(:manager) { create(:user, roles: [:coordinator]) }
         let!(:offers) { create_list(:offer, 2) }
-        let!(:second_offer) { create(:offer, service_id: offers.first.service_id) }
+        let!(:second_offer) { create(:offer, orderable: offers.first.orderable) }
         let!(:draft_service) { create(:service, status: :draft) }
-        let!(:published_offer_draft_service) { create(:offer, service: draft_service) }
-        let!(:draft) { create(:offer, service_id: offers.second.service_id, status: :draft) }
+        let!(:published_offer_draft_service) { create(:offer, orderable: draft_service) }
+        let!(:draft) { create(:offer, orderable: offers.second.orderable, status: :draft) }
         let!(:deleted) { create(:offer, status: :deleted) }
 
         let(:"X-User-Token") { manager.authentication_token }
@@ -44,8 +44,8 @@ RSpec.describe Api::V1::Ess::OffersController, swagger_doc: "v1/ess_swagger.json
         let!(:regular_user) { create(:user) }
         let!(:manager) { create(:user, roles: [:coordinator]) }
         let!(:offers) { create_list(:offer, 3) }
-        let!(:second_offer) { create(:offer, service_id: offers.first.service_id) }
-        let!(:draft) { create(:offer, service_id: offers.second.service_id, status: :draft) }
+        let!(:second_offer) { create(:offer, orderable: offers.first.orderable) }
+        let!(:draft) { create(:offer, orderable: offers.second.orderable, status: :draft) }
         let!(:deleted) { create(:offer, status: :deleted) }
 
         let(:"X-User-Token") { regular_user.authentication_token }

@@ -183,6 +183,6 @@ class Backoffice::ServicePolicy < Backoffice::ApplicationPolicy
   end
 
   def project_items
-    ProjectItem.joins(:offer).where(offers: { service_id: record })
+    ProjectItem.joins(:offer).where(offers: { orderable_type: "Service", orderable_id: record.id })
   end
 end

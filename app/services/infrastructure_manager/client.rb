@@ -1,17 +1,20 @@
 # frozen_string_literal: true
 
 class InfrastructureManager::Client < ApplicationService
-  EGI_REFRESH_TOKEN_URL = "https://aai.egi.eu/auth/realms/egi/protocol/openid-connect/token"
-  BASE_URL = "https://deploy.sandbox.eosc-beyond.eu"
-  TOKEN_CACHE_KEY = "egi_access_token"
-  TOKEN_CACHE_EXPIRY = 50.minutes # Refresh before 1 hour expiry
-
   def initialize(access_token = nil, site = nil)
     super()
     @access_token = access_token
-    @site = site
+    @site = site || config.dig(:cloud_providers, :default)
     @connection = build_connection
   end
+
+  class << self
+    def config
+      Rails.application.config.deployable_services.with_indifferent_access
+    end
+  end
+
+  delegate :config, to: :class
 
   def create_infrastructure(tosca_template)
     response =
@@ -60,15 +63,44 @@ class InfrastructureManager::Client < ApplicationService
     { success: false, error: error_msg, status_code: nil }
   end
 
+  def get_state(infrastructure_id)
+    response = @connection.get("/infrastructures/#{infrastructure_id}/state") { |req| req.headers.merge!(headers) }
+
+    handle_response(response)
+  rescue Faraday::Error => e
+    error_msg = "HTTP request failed: #{e.class}: #{e.message}"
+    Rails.logger.error error_msg
+    { success: false, error: error_msg, status_code: nil }
+  rescue StandardError => e
+    error_msg = "Unexpected error: #{e.class}: #{e.message}"
+    Rails.logger.error error_msg
+    { success: false, error: error_msg, status_code: nil }
+  end
+
+  def destroy_infrastructure(infrastructure_id)
+    response = @connection.delete("/infrastructures/#{infrastructure_id}") { |req| req.headers.merge!(headers) }
+
+    handle_response(response)
+  rescue Faraday::Error => e
+    error_msg = "HTTP request failed: #{e.class}: #{e.message}"
+    Rails.logger.error error_msg
+    { success: false, error: error_msg, status_code: nil }
+  rescue StandardError => e
+    error_msg = "Unexpected error: #{e.class}: #{e.message}"
+    Rails.logger.error error_msg
+    { success: false, error: error_msg, status_code: nil }
+  end
+
   private
 
   def build_connection
-    Faraday.new(BASE_URL) do |conn|
+    im_config = config[:infrastructure_manager]
+    Faraday.new(im_config[:base_url]) do |conn|
       conn.request :json
       conn.response :json
       conn.adapter Faraday.default_adapter
-      conn.options.timeout = 300 # 5 minutes for deployment operations
-      conn.options.open_timeout = 60 # 1 minute to establish connection
+      conn.options.timeout = im_config[:timeout]
+      conn.options.open_timeout = im_config[:open_timeout]
     end
   end
 
@@ -78,18 +110,22 @@ class InfrastructureManager::Client < ApplicationService
 
   def authorization_header
     token = @access_token || fresh_access_token
+    vo = config.dig(:authentication, :vo)
 
     auth_lines = [
       "id = im; type = InfrastructureManager; token = #{token}",
-      # Hardcode eosc-beyond.eu as a VO for the PoC purposes.
-      "id = egi; type = EGI; vo = eosc-beyond.eu; token = #{token}#{"; host = #{@site}" if @site}"
+      "id = egi; type = EGI; vo = #{vo}; token = #{token}#{"; host = #{@site}" if @site}"
     ]
 
     auth_lines.join("\\n")
   end
 
   def fresh_access_token
-    cached_token = Rails.cache.read(TOKEN_CACHE_KEY)
+    auth_config = config[:authentication]
+    cache_key = auth_config[:token_cache_key]
+    cache_expiry = auth_config[:token_cache_expiry_minutes].minutes
+
+    cached_token = Rails.cache.read(cache_key)
     return cached_token if cached_token
 
     env_token = ENV.fetch("EGI_ACCESS_TOKEN", nil)
@@ -99,7 +135,7 @@ class InfrastructureManager::Client < ApplicationService
     if refresh_token.present?
       new_token = refresh_egi_access_token(refresh_token)
       if new_token
-        Rails.cache.write(TOKEN_CACHE_KEY, new_token, expires_in: TOKEN_CACHE_EXPIRY)
+        Rails.cache.write(cache_key, new_token, expires_in: cache_expiry)
         return new_token
       end
     end
@@ -109,14 +145,15 @@ class InfrastructureManager::Client < ApplicationService
   end
 
   def refresh_egi_access_token(refresh_token)
+    auth_config = config[:authentication]
     response =
-      Faraday.post(EGI_REFRESH_TOKEN_URL) do |req|
+      Faraday.post(auth_config[:refresh_token_url]) do |req|
         req.headers["Content-Type"] = "application/x-www-form-urlencoded"
         req.body =
           {
             grant_type: "refresh_token",
             refresh_token: refresh_token,
-            client_id: "token-portal",
+            client_id: auth_config[:client_id],
             scope: "openid email profile voperson_id eduperson_entitlement"
           }.map { |k, v| "#{k}=#{v}" }.join("&")
       end

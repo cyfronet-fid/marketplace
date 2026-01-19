@@ -33,11 +33,14 @@ class Projects::ServicesController < ApplicationController
 
   def sample_recommended_offers
     if @project_items.present?
-      domains = @project.scientific_domains.presence || @project_items.first.service.scientific_domains
+      domains = @project.scientific_domains.presence || @project_items.first.service&.scientific_domains
+
+      return Offer.all.sample(2) if domains.blank?
 
       Offer
-        .joins(service: :scientific_domains)
-        .where(scientific_domains: { id: domains.map(&:id) })
+        .join_service
+        .joins("INNER JOIN service_scientific_domains ON service_scientific_domains.service_id = services.id")
+        .where(service_scientific_domains: { scientific_domain_id: domains.map(&:id) })
         .distinct
         .sample(2)
         .presence || Offer.all.sample(2)

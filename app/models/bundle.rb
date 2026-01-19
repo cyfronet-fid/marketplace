@@ -116,10 +116,13 @@ class Bundle < ApplicationRecord
   end
 
   def offers_correct
-    if offers.includes(:service).present?
+    if offers.present?
       errors.add(:offers, "cannot bundle main offer") if offers.include?(main_offer)
       errors.add(:offers, "must have only published offers selected") unless offers.all?(&:published?)
-      errors.add(:offers, "must have offers with public services selected") unless offers.map(&:service).all?(&:public?)
+      # Use parent_service to support both Service and DeployableService offers
+      unless offers.all? { |o| o.parent_service&.public? }
+        errors.add(:offers, "must have offers with public services selected")
+      end
     end
   end
 

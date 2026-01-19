@@ -42,10 +42,10 @@ module FormsHelper
   def other_offers(service)
     offer_ids = service.offers.map(&:id)
     Offer
-      .includes(:service)
       .accessible
+      .includes(:orderable)
       .reject { |item| item.id.in? offer_ids }
-      .map { |item| ["#{item.service.name} > #{item.name}", item.id] }
+      .map { |item| ["#{item.parent_service&.name} > #{item.name}", item.id] }
   end
 
   def render_data_administrator(form, object)
