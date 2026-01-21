@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe Ess::DeployableServiceSerializer, backend: true do
   it "properly serializes a deployable service" do
-    deployable_service = create(:deployable_service, :with_catalogue, :with_scientific_domains, :with_tags)
+    deployable_service = create(:deployable_service, :with_catalogue, :with_scientific_domains, :with_tags, :with_node)
 
     serialized = described_class.new(deployable_service).as_json
 
@@ -16,7 +16,7 @@ RSpec.describe Ess::DeployableServiceSerializer, backend: true do
     expect(serialized[:tagline]).to eq(deployable_service.tagline)
     expect(serialized[:description]).to eq(deployable_service.description)
     expect(serialized[:url]).to eq(deployable_service.url)
-    expect(serialized[:node]).to eq(deployable_service.node)
+    expect(serialized[:node]).to eq(deployable_service.nodes.first&.name)
     expect(serialized[:version]).to eq(deployable_service.version)
     expect(serialized[:software_license]).to eq(deployable_service.software_license)
     expect(serialized[:creators]).to eq(deployable_service.creators)

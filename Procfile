@@ -1,2 +1,2 @@
 web: bundle exec puma -p $PORT
-jobs: bundle exec sidekiq -q active_storage_analysis -q active_storage_purge -q pc_subscriber -q orders -q mailers -q reports -q probes -q default -q pc_publisher -q ess_update
+jobs: bundle exec sidekiq -q active_storage_analysis -q active_storage_purge -q pc_subscriber -q orders -q mailers -q reports -q probes -q default -q pc_publisher -q ess_update -q deployments

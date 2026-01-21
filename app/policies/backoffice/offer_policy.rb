@@ -56,7 +56,8 @@ class Backoffice::OfferPolicy < Backoffice::OrderablePolicy
   private
 
   def managed?
-    coordinator? || record.service.owned_by?(user) || record.service.owned_by?(user)
+    # Use parent_service to support both Service and DeployableService offers
+    coordinator? || record.parent_service&.owned_by?(user) || false
   end
 
   def coordinator?
@@ -68,12 +69,15 @@ class Backoffice::OfferPolicy < Backoffice::OrderablePolicy
   end
 
   def service_deleted?
-    record.service.deleted?
+    # Use parent_service to support both Service and DeployableService offers
+    record.parent_service&.deleted? || false
   end
 
   def other_offers_with_service_order_type?
-    service = record.service
-    offers_with_service_order_type = service.offers.published.select { |o| o.order_type == service.order_type }
+    parent = record.parent_service
+    return true unless parent # Allow destroy for offers without parent
+
+    offers_with_service_order_type = parent.offers.published.select { |o| o.order_type == parent.order_type }
     (offers_with_service_order_type - [record]).present?
   end
 end

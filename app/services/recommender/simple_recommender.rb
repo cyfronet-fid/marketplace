@@ -20,16 +20,16 @@ class Recommender::SimpleRecommender
     "" \
       "
       select Services.id from Services
-      -- Join projects
-      join Offers on Offers.service_id=Services.id
+      -- Join projects (using polymorphic orderable)
+      join Offers on Offers.orderable_id=Services.id AND Offers.orderable_type='Service'
       join Project_items on Project_items.offer_id=Offers.id
       join Projects on Projects.id=Project_items.project_id
       -- Join categories
       join Categorizations on Categorizations.service_id=Services.id
       join Categories on Categories.id=Categorizations.category_id
       where Categories.id=(select Categories.id from Services
-                          -- Join projects
-                          join Offers on Offers.service_id=Services.id
+                          -- Join projects (using polymorphic orderable)
+                          join Offers on Offers.orderable_id=Services.id AND Offers.orderable_type='Service'
                           join Project_items on Project_items.offer_id=Offers.id
                           join Projects on Projects.id=Project_items.project_id
                           -- Join categories

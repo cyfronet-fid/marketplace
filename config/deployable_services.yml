@@ -1,0 +1,51 @@
+# Configuration for Deployable Services and Infrastructure Manager integration
+#
+# Environment variables (all optional with defaults):
+#   IM_BASE_URL              - Infrastructure Manager API base URL
+#   EGI_REFRESH_TOKEN_URL    - EGI AAI token refresh endpoint
+#   EGI_VO                   - Virtual Organization for EGI
+#   EGI_CLIENT_ID            - OAuth client ID for token refresh
+#   IM_DEFAULT_CLOUD         - Default cloud site for deployments
+#   IM_TIMEOUT               - Request timeout in seconds
+#   IM_OPEN_TIMEOUT          - Connection timeout in seconds
+#   IM_TOKEN_CACHE_EXPIRY    - Token cache expiry in minutes
+
+default: &default
+  infrastructure_manager:
+    base_url: <%= ENV.fetch('IM_BASE_URL', 'https://deploy.sandbox.eosc-beyond.eu') %>
+    timeout: <%= ENV.fetch('IM_TIMEOUT', 300).to_i %>
+    open_timeout: <%= ENV.fetch('IM_OPEN_TIMEOUT', 60).to_i %>
+
+  authentication:
+    type: service_account
+    refresh_token_url: <%= ENV.fetch('EGI_REFRESH_TOKEN_URL', 'https://aai.egi.eu/auth/realms/egi/protocol/openid-connect/token') %>
+    vo: <%= ENV.fetch('EGI_VO', 'eosc-beyond.eu') %>
+    client_id: <%= ENV.fetch('EGI_CLIENT_ID', 'token-portal') %>
+    token_cache_key: egi_access_token
+    token_cache_expiry_minutes: <%= ENV.fetch('IM_TOKEN_CACHE_EXPIRY', 50).to_i %>
+
+  cloud_providers:
+    default: <%= ENV.fetch('IM_DEFAULT_CLOUD', 'IISAS-FedCloud') %>
+    # Available cloud providers can be extended here
+    # available:
+    #   - id: IISAS-FedCloud
+    #     name: "IISAS FedCloud (Slovakia)"
+    #   - id: CESNET-MCC
+    #     name: "CESNET MetaCentrum Cloud (Czech Republic)"
+
+  templates:
+    local_path: <%= Rails.root.join('config', 'templates') %>
+    fetch_timeout: 30
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+  infrastructure_manager:
+    base_url: "https://im.test.example.com"
+    timeout: 30
+    open_timeout: 10
+
+production:
+  <<: *default

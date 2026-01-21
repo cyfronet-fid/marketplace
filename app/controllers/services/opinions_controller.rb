@@ -24,7 +24,7 @@ class Services::OpinionsController < ApplicationController
     @service_opinions =
       ServiceOpinion
         .includes(project_item: :offer)
-        .where(offers: { service_id: @service })
+        .where(offers: { orderable_type: "Service", orderable_id: @service.id })
         .includes(project_item: :project)
     @question = Service::Question.new(service: @service)
     @favourite_services =

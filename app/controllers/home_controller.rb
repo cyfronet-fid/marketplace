@@ -100,8 +100,9 @@ class HomeController < ApplicationController
   def load_opinion
     @opinion =
       ServiceOpinion
-        .joins(project_item: { offer: :service })
-        .where(project_item: { offer: { services: { status: %i[published errored] } } })
+        .joins(project_item: :offer)
+        .joins(Offer::JOIN_SERVICE_SQL)
+        .where(services: { status: %i[published errored] })
         .sample
   end
 end

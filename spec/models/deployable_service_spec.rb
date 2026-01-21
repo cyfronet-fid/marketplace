@@ -398,25 +398,9 @@ RSpec.describe DeployableService, backend: true do
       end
     end
 
-    describe "method_missing behavior" do
-      it "handles boolean methods with false return" do
-        expect(deployable_service.non_existent_method?).to be false
-      end
-
-      it "handles count methods with 0 return" do
-        expect(deployable_service.non_existent_count).to eq(0)
-      end
-
-      it "handles plural methods by returning empty collection" do
-        # This should return an empty collection for plural methods
-        expect { deployable_service.non_existent_items }.not_to raise_error
-        expect(deployable_service.non_existent_items).to eq([])
-      end
-
-      it "raises NoMethodError for unhandled methods" do
-        expect { deployable_service.completely_unknown_method }.to raise_error(NoMethodError)
-      end
-    end
+    # NOTE: method_missing behavior was intentionally removed in Phase 4 refactoring
+    # DeployableService now uses explicit methods via OrderableResource concern
+    # instead of duck-typing catch-all patterns
 
     describe "#offers_count" do
       it "returns 0 when no offers" do

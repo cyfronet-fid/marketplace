@@ -32,8 +32,4 @@ class Ess::DeployableServiceSerializer < ApplicationSerializer
   def catalogue
     object.catalogue&.name
   end
-
-  def node
-    object.node
-  end
 end

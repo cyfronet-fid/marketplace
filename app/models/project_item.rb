@@ -30,13 +30,17 @@ class ProjectItem < ApplicationRecord
 
   belongs_to :offer
   belongs_to :bundle, optional: true
-  belongs_to :service, inverse_of: :project_items
   belongs_to :project
   belongs_to :scientific_domain, required: false
   has_one :service_opinion, dependent: :restrict_with_error
+  has_one :infrastructure, dependent: :destroy
   has_many :statuses, as: :status_holder
 
-  counter_culture %i[offer service], column_name: "project_items_count"
+  # Update project_items_count on Service through manual callbacks
+  # (counter_culture can't handle chained polymorphic associations)
+  after_create :increment_service_project_items_count
+  after_destroy :decrement_service_project_items_count
+
   counter_culture :offer, column_name: "project_items_count"
   counter_culture :bundle, column_name: "project_items_count"
   counter_culture :offer,
@@ -167,5 +171,17 @@ class ProjectItem < ApplicationRecord
 
   def dispatch_emails
     ProjectItem::OnStatusTypeUpdated.new(self).call if saved_change_to_status_type?
+  end
+
+  def increment_service_project_items_count
+    return unless offer&.orderable_type == "Service"
+
+    Service.where(id: offer.orderable_id).update_all("project_items_count = project_items_count + 1")
+  end
+
+  def decrement_service_project_items_count
+    return unless offer&.orderable_type == "Service"
+
+    Service.where(id: offer.orderable_id).update_all("project_items_count = project_items_count - 1")
   end
 end

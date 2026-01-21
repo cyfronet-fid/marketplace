@@ -67,6 +67,7 @@ class OrderingConfiguration::OfferPolicy < Backoffice::OfferPolicy
   private
 
   def offer_editor?
-    user&.coordinator? || record.service.owned_by?(user)
+    # Use parent_service to support both Service and DeployableService offers
+    user&.coordinator? || record.parent_service&.owned_by?(user) || false
   end
 end

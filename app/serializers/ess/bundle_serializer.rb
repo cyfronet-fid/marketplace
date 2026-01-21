@@ -28,12 +28,14 @@ class Ess::BundleSerializer < ApplicationSerializer
   attribute :project_items_count, key: :usage_counts_downloads
 
   def providers
-    (
-      [object.main_offer.service.providers.map(&:name)] + object&.offers&.map { |o| o.service.providers.map(&:name) }
-    ).flatten.uniq
+    # Use parent_service to support both Service and DeployableService offers
+    main_providers = object.main_offer.parent_service&.providers&.map(&:name) || []
+    other_providers = object&.offers&.flat_map { |o| o.parent_service&.providers&.map(&:name) || [] } || []
+    (main_providers + other_providers).flatten.uniq
   end
 
   def catalogues
-    object.all_offers.map { |o| o.service.catalogue&.pid }.compact
+    # Use parent_service to support both Service and DeployableService offers
+    object.all_offers.filter_map { |o| o.parent_service&.catalogue&.pid }
   end
 end

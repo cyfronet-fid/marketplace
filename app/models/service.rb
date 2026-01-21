@@ -9,6 +9,7 @@ class Service < ApplicationRecord
   include Viewable
   include Service::Search
   include Statusable
+  include OrderableResource
 
   extend FriendlyId
   friendly_id :name, use: :slugged
@@ -49,7 +50,7 @@ class Service < ApplicationRecord
   has_many :service_alternative_identifiers
   has_many :alternative_identifiers, through: :service_alternative_identifiers
 
-  has_many :offers, dependent: :restrict_with_error
+  has_many :offers, as: :orderable, dependent: :restrict_with_error
   has_many :bundles, dependent: :restrict_with_error
   has_many :project_items, through: :offers
   has_many :categorizations, dependent: :destroy

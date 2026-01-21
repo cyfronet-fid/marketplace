@@ -3,6 +3,7 @@
 class DeployableService < ApplicationRecord
   include Rails.application.routes.url_helpers
   include LogoAttachable
+  include OrderableResource
   include Publishable
   include Statusable
   include Viewable
@@ -20,11 +21,12 @@ class DeployableService < ApplicationRecord
   has_many :sources, class_name: "DeployableServiceSource", dependent: :destroy
   has_many :deployable_service_scientific_domains, dependent: :destroy
   has_many :scientific_domains, through: :deployable_service_scientific_domains
-  has_many :offers, dependent: :destroy
+  has_many :offers, as: :orderable, dependent: :destroy
 
   belongs_to :upstream, foreign_key: "upstream_id", class_name: "DeployableServiceSource", optional: true
   belongs_to :resource_organisation, class_name: "Provider", optional: false
   belongs_to :catalogue, optional: true
+  belongs_to :node_vocabulary, class_name: "Vocabulary::Node", foreign_key: :node, primary_key: :eid, optional: true
 
   auto_strip_attributes :name, nullify: false
   auto_strip_attributes :description, nullify: false
@@ -56,8 +58,11 @@ class DeployableService < ApplicationRecord
     url&.include?("jupyterhub_datamount.yml") || name&.downcase&.include?("jupyterhub")
   end
 
-  # AGGRESSIVE Duck-typing methods for full Service wizard compatibility
-  # Core counts and checks
+  # ============================================================================
+  # OrderableResource interface implementation
+  # ============================================================================
+
+  # Counts
   def bundles_count
     0
   end
@@ -66,36 +71,12 @@ class DeployableService < ApplicationRecord
     offers.count
   end
 
-  def project_items_count
-    offers.sum(&:project_items_count)
-  end
-
-  def service_opinion_count
-    0
-  end
-
-  def bundles?
-    false
-  end
-
-  def offers?
-    offers.any?
-  end
-
-  # Collections - return empty relations that respond to Service methods
+  # Collections
   def bundles
     Bundle.none
   end
 
-  def project_items
-    ProjectItem.joins(:offer).where(offers: { deployable_service_id: id })
-  end
-
-  def service_opinions
-    ServiceOpinion.joins(project_item: :offer).where(offers: { deployable_service_id: id })
-  end
-
-  # Ownership and access
+  # Ownership - checks resource_organisation and catalogue data administrators
   def owned_by?(user)
     return false if user.blank?
 
@@ -103,18 +84,14 @@ class DeployableService < ApplicationRecord
       (catalogue.present? && catalogue.data_administrators&.map(&:user_id)&.include?(user.id))
   end
 
-  # Service-specific attributes
+  # Order type - DeployableServices always require ordering
   def order_type
     "order_required"
   end
 
-  def type
-    "DeployableService"
-  end
-
-  def webpage_url
-    url # Use our URL field
-  end
+  # ============================================================================
+  # View compatibility methods
+  # ============================================================================
 
   def rating
     0.0
@@ -122,6 +99,55 @@ class DeployableService < ApplicationRecord
 
   def popularity_ratio
     0.0
+  end
+
+  def service_opinion_count
+    0
+  end
+
+  def horizontal
+    false
+  end
+
+  def main_contact
+    nil
+  end
+
+  def public_contacts
+    []
+  end
+
+  def categories
+    Category.none
+  end
+
+  def target_users
+    []
+  end
+
+  def geographical_availabilities
+    []
+  end
+
+  # Provider relationship (returns array to match Service interface)
+  def providers
+    [resource_organisation].compact
+  end
+
+  # ============================================================================
+  # Additional Service-compatible methods
+  # ============================================================================
+
+  def type
+    "DeployableService"
+  end
+
+  def webpage_url
+    url
+  end
+
+  def order_url
+    url
   end
 
   # Service relationships - empty collections
@@ -137,30 +163,16 @@ class DeployableService < ApplicationRecord
     Service.none
   end
 
-  # Categories and domains
-  def categories
-    Category.none
-  end
-
+  # Additional collections
   def platforms
     []
   end
 
+  def nodes
+    [node_vocabulary].compact
+  end
+
   def service_categories
-    []
-  end
-
-  def target_users
-    []
-  end
-
-  # Provider relationship (alias to match Service)
-  def providers
-    [resource_organisation].compact
-  end
-
-  # Geographical and access info
-  def geographical_availabilities
     []
   end
 
@@ -176,43 +188,37 @@ class DeployableService < ApplicationRecord
     []
   end
 
-  # Service-specific flags
-  def horizontal
-    false
+  # Project items through offers (using polymorphic orderable)
+  def project_items
+    ProjectItem.joins(:offer).where(offers: { orderable_type: "DeployableService", orderable_id: id })
   end
 
+  def project_items_count
+    offers.sum(&:project_items_count)
+  end
+
+  def service_opinions
+    ServiceOpinion.joins(project_item: :offer).where(offers: { orderable_type: "DeployableService", orderable_id: id })
+  end
+
+  # Service-specific flags
   def thematic
     false
   end
 
-  # Analytics methods
-  def store_analytics
-    # No-op for DS
+  def datasource?
+    false
   end
 
-  def monitoring_status
-    nil
+  def service?
+    false
   end
 
-  def monitoring_status=(value)
-    # No-op for DS
+  def errored?
+    status == "errored"
   end
 
-  # Contact methods
-  def main_contact
-    nil
-  end
-
-  def public_contacts
-    []
-  end
-
-  # Search and discovery
-  def search_data
-    { name: name, description: description, tagline: tagline, status: status }
-  end
-
-  # URL helpers
+  # URL methods
   def terms_of_use_url
     nil
   end
@@ -221,41 +227,6 @@ class DeployableService < ApplicationRecord
     nil
   end
 
-  def order_url
-    url
-  end
-
-  # Service type methods
-  def datasource?
-    false
-  end
-
-  def service?
-    false # We're a DeployableService, not a Service
-  end
-
-  # Validation and status methods
-  def draft?
-    status == "draft"
-  end
-
-  def published?
-    status == "published"
-  end
-
-  def suspended?
-    status == "suspended"
-  end
-
-  def errored?
-    status == "errored"
-  end
-
-  def deleted?
-    status == "deleted"
-  end
-
-  # Additional URL methods
   def helpdesk_url
     nil
   end
@@ -276,7 +247,7 @@ class DeployableService < ApplicationRecord
     nil
   end
 
-  # Additional attributes that might be accessed
+  # Safe attribute accessors
   def abbreviation
     super || ""
   end
@@ -290,101 +261,33 @@ class DeployableService < ApplicationRecord
   end
 
   # Search and indexing
+  def search_data
+    { name: name, description: description, tagline: tagline, status: status }
+  end
+
   def should_index?
     published?
   end
 
-  # Counter culture compatibility
-  def increment_counter(counter_name, by = 1)
-    # No-op for DS
+  # Analytics (no-op for DeployableService)
+  def store_analytics
   end
 
-  def decrement_counter(counter_name, by = 1)
-    # No-op for DS
+  def monitoring_status
+    nil
   end
 
-  # Search link methods (duck-typing for Service)
-  def organisation_search_link(target, default_path = nil)
-    _search_link(target, "resource_organisation", default_path)
+  def monitoring_status=(_value)
   end
 
-  def node_search_link(target, default_path = nil)
-    _search_link(target, "node", default_path)
+  # Counter culture compatibility (no-op for DeployableService)
+  def increment_counter(_counter_name, _by = 1)
   end
 
-  def provider_search_link(target, default_path = nil)
-    _search_link(target, "providers", default_path)
-  end
-
-  def geographical_availabilities_link(gcap)
-    _search_link(gcap, "geographical_availabilities", deployable_services_path(geographical_availabilities: gcap))
-  end
-
-  # Method missing fallback for any Service methods we missed
-  def method_missing(method_name, *args, &)
-    # If it's a Service method that returns a count, return 0
-    return 0 if method_name.to_s.end_with?("_count")
-
-    # If it's a Service method that returns a boolean, return false
-    return false if method_name.to_s.end_with?("?")
-
-    # If it's a Service method that returns a collection, return empty array
-    return [] if method_name.to_s.pluralize == method_name.to_s && method_name.to_s != method_name.to_s.singularize
-
-    # Otherwise call super
-    super
-  end
-
-  def respond_to_missing?(method_name, include_private = false)
-    # Be more conservative - don't claim to respond to basic attribute methods
-    # that shoulda-matchers needs to introspect properly
-    method_string = method_name.to_s
-
-    # Skip basic attributes that shoulda-matchers checks
-    return super if %w[name description tagline].include?(method_string)
-
-    # Respond to Service-like methods
-    method_string.end_with?("_count") || method_string.end_with?("?") ||
-      (method_string.pluralize == method_string && method_string != method_string.singularize) || super
-  end
-
-  # Extend offers association to support Service-like scopes
-  def offers
-    super.extend(OfferScopeExtensions)
-  end
-
-  module OfferScopeExtensions
-    def inclusive
-      published.joins(:deployable_service).where(deployable_services: { status: Statusable::PUBLIC_STATUSES })
-    end
-
-    def accessible
-      published.joins(:deployable_service).where(deployable_services: { status: Statusable::PUBLIC_STATUSES })
-    end
-
-    def active
-      where(
-        "offers.status = ? AND bundle_exclusive = ? AND (limited_availability = ? " +
-          "OR availability_count > ?) AND deployable_service_id IS NOT NULL",
-        :published,
-        false,
-        false,
-        0
-      ).joins(:deployable_service).where(deployable_services: { status: Statusable::PUBLIC_STATUSES })
-    end
+  def decrement_counter(_counter_name, _by = 1)
   end
 
   private
-
-  def _search_link(target_name, filter_query, default_path = nil)
-    search_base_url = Mp::Application.config.search_service_base_url
-    enable_external_search = Mp::Application.config.enable_external_search
-    if enable_external_search
-      search_base_url + "/search/deployable_service?q=*&fq=#{filter_query}:(%22#{target_name}%22)"
-    else
-      default_path || deployable_services_path(filter_query => target_name)
-    end
-  end
 
   def create_default_offer
     return unless jupyterhub_datamount_template?

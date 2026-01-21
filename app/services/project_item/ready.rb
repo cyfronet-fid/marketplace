@@ -53,12 +53,16 @@ class ProjectItem::Ready
   end
 
   def enqueue_rate_service!
-    ProjectItemMailer.activate_message(@project_item, @service).deliver_later if service.activate_message.present?
+    # Only send activate_message for Service offers (DeployableService has its own flow)
+    if service.present? && service.activate_message.present?
+      ProjectItemMailer.activate_message(@project_item, service).deliver_later
+    end
     ProjectItemMailer.rate_service(@project_item).deliver_later(wait_until: RATE_AFTER_PERIOD.from_now)
   end
 
   def service
-    @service ||= Service.joins(offers: :project_items).find_by(offers: { project_items: @project_item })
+    # Get the parent service - returns nil for DeployableService offers
+    @service ||= @project_item.offer&.service
   end
 
   def create_message

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_09_11_120720) do
+ActiveRecord::Schema[7.2].define(version: 2025_12_14_143117) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -361,6 +361,23 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_11_120720) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "infrastructures", force: :cascade do |t|
+    t.bigint "project_item_id", null: false
+    t.string "im_infrastructure_id"
+    t.string "im_base_url", null: false
+    t.string "cloud_site", null: false
+    t.string "state", default: "pending", null: false
+    t.datetime "last_state_check_at"
+    t.jsonb "outputs", default: {}
+    t.text "last_error"
+    t.integer "retry_count", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["im_infrastructure_id"], name: "index_infrastructures_on_im_infrastructure_id", unique: true
+    t.index ["project_item_id"], name: "index_infrastructures_on_project_item_id"
+    t.index ["state"], name: "index_infrastructures_on_state"
+  end
+
   create_table "lead_sections", force: :cascade do |t|
     t.string "slug", null: false
     t.string "title", null: false
@@ -446,7 +463,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_11_120720) do
     t.string "name"
     t.text "description"
     t.integer "iid", null: false
-    t.bigint "service_id"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.jsonb "parameters", default: [], null: false
@@ -468,12 +484,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_11_120720) do
     t.boolean "limited_availability", default: false
     t.bigint "availability_count", default: 0
     t.string "availability_unit", default: "piece"
-    t.bigint "deployable_service_id"
-    t.index ["deployable_service_id"], name: "index_offers_on_deployable_service_id"
+    t.string "orderable_type", null: false
+    t.bigint "orderable_id", null: false
     t.index ["iid"], name: "index_offers_on_iid"
+    t.index ["orderable_type", "orderable_id"], name: "index_offers_on_orderable_type_and_orderable_id"
     t.index ["primary_oms_id"], name: "index_offers_on_primary_oms_id"
-    t.index ["service_id", "iid"], name: "index_offers_on_service_id_and_iid", unique: true
-    t.index ["service_id"], name: "index_offers_on_service_id"
   end
 
   create_table "oms_administrations", force: :cascade do |t|
@@ -1091,13 +1106,13 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_11_120720) do
   add_foreign_key "deployable_service_sources", "deployable_services"
   add_foreign_key "deployable_services", "catalogues"
   add_foreign_key "deployable_services", "providers", column: "resource_organisation_id"
+  add_foreign_key "infrastructures", "project_items"
   add_foreign_key "observed_user_offers", "offers"
   add_foreign_key "observed_user_offers", "users"
   add_foreign_key "offer_links", "offers", column: "source_id"
   add_foreign_key "offer_links", "offers", column: "target_id"
   add_foreign_key "offer_vocabularies", "offers"
   add_foreign_key "offer_vocabularies", "vocabularies"
-  add_foreign_key "offers", "deployable_services"
   add_foreign_key "offers", "omses", column: "primary_oms_id"
   add_foreign_key "oms_administrations", "omses"
   add_foreign_key "oms_administrations", "users"

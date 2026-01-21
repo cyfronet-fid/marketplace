@@ -3,12 +3,21 @@
 class Api::V1::OfferPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.joins(service: [resource_organisation: [provider_data_administrators: [:data_administrator]]]).where(
-        "data_administrators.email = ? AND offers.status = ? AND services.status != ?",
-        user.email,
-        "published",
-        "deleted"
-      )
+      # Only Service offers are exposed through this API (DeployableService has its own flow)
+      scope
+        .joins(Offer::JOIN_SERVICE_SQL)
+        .joins("INNER JOIN providers ON providers.id = services.resource_organisation_id")
+        .joins("INNER JOIN provider_data_administrators ON provider_data_administrators.provider_id = providers.id")
+        .joins(
+          "INNER JOIN data_administrators " \
+            "ON data_administrators.id = provider_data_administrators.data_administrator_id"
+        )
+        .where(
+          "data_administrators.email = ? AND offers.status = ? AND services.status != ?",
+          user.email,
+          "published",
+          "deleted"
+        )
     end
   end
 
@@ -67,10 +76,12 @@ class Api::V1::OfferPolicy < ApplicationPolicy
   private
 
   def service_owned_by?
-    record.service.owned_by?(user)
+    # Use parent_service to support both Service and DeployableService
+    record.parent_service&.owned_by?(user) || false
   end
 
   def service_deleted?
-    record.service.deleted?
+    # Use parent_service to support both Service and DeployableService
+    record.parent_service&.deleted? || false
   end
 end

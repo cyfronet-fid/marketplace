@@ -50,7 +50,8 @@ class Backoffice::OrderablePolicy < Backoffice::ApplicationPolicy
   end
 
   def managed?
-    coordinator? || record.service.owned_by?(user)
+    # Use parent_service to support both Service and DeployableService offers
+    coordinator? || record.parent_service&.owned_by?(user) || false
   end
 
   def orderless?
@@ -58,6 +59,7 @@ class Backoffice::OrderablePolicy < Backoffice::ApplicationPolicy
   end
 
   def service_deleted?
-    record.service.deleted?
+    # Use parent_service to support both Service and DeployableService offers
+    record.parent_service&.deleted? || false
   end
 end

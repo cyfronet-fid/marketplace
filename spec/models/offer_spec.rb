@@ -8,32 +8,25 @@ RSpec.describe Offer, backend: true do
     it { should validate_presence_of(:name) }
     it { should validate_presence_of(:description) }
     it { should validate_presence_of(:order_type) }
-    it { should belong_to(:service).required(false) }
-    it { should belong_to(:deployable_service).required(false) }
+    it { should belong_to(:orderable) }
 
     it { should have_many(:project_items).dependent(:restrict_with_error) }
 
-    describe "service_or_deployable_service_present validation" do
-      it "is valid with service but no deployable_service" do
-        offer = build(:offer, service: create(:service), deployable_service: nil)
+    describe "orderable presence validation" do
+      it "is valid with service as orderable" do
+        offer = build(:offer, service: create(:service))
         expect(offer).to be_valid
       end
 
-      it "is valid with deployable_service but no service" do
-        offer = build(:offer, service: nil, deployable_service: create(:deployable_service))
+      it "is valid with deployable_service as orderable" do
+        offer = build(:offer, deployable_service: create(:deployable_service))
         expect(offer).to be_valid
       end
 
-      it "is invalid with neither service nor deployable_service" do
-        offer = build(:offer, service: nil, deployable_service: nil)
+      it "is invalid without orderable" do
+        offer = Offer.new(name: "test", description: "test", order_type: :order_required, orderable: nil)
         expect(offer).not_to be_valid
         expect(offer.errors[:base]).to include("Must belong to either service or deployable service")
-      end
-
-      it "is invalid with both service and deployable_service (XOR validation)" do
-        offer = build(:offer, service: create(:service), deployable_service: create(:deployable_service))
-        expect(offer).not_to be_valid
-        expect(offer.errors[:base]).to include("Cannot belong to both service and deployable service")
       end
     end
   end
@@ -92,7 +85,18 @@ RSpec.describe Offer, backend: true do
 
     it "should set internal to false and primary_oms, oms_params to nil when order_type != order_required on create" do
       oms = create(:oms, type: :global, custom_params: { a: { mandatory: true, default: "asd" } })
-      offer = create(:offer, order_type: :open_access, internal: true, primary_oms: oms, oms_params: { a: "qwe" })
+      service = create(:service, order_type: :open_access)
+      offer =
+        create(
+          :offer,
+          service: service,
+          order_type: :open_access,
+          internal: true,
+          primary_oms: oms,
+          oms_params: {
+            a: "qwe"
+          }
+        )
       expect(offer.internal).to be_falsey
       expect(offer.primary_oms).to be_nil
       expect(offer.oms_params).to be_nil
@@ -195,14 +199,8 @@ RSpec.describe Offer, backend: true do
 
     it "errors on record not found" do
       create(:offer, iid: 3, service: build(:service, slug: "test-slug"))
-      expect { Offer.find_by_slug_iid!("no-slug/1") }.to raise_error(
-        ActiveRecord::RecordNotFound,
-        "Couldn't find Service with [WHERE \"services\".\"slug\" = $1]"
-      )
-      expect { Offer.find_by_slug_iid!("test-slug/2") }.to raise_error(
-        ActiveRecord::RecordNotFound,
-        "Couldn't find Offer with [WHERE \"offers\".\"service_id\" = $1 AND \"offers\".\"iid\" = $2]"
-      )
+      expect { Offer.find_by_slug_iid!("no-slug/1") }.to raise_error(ActiveRecord::RecordNotFound)
+      expect { Offer.find_by_slug_iid!("test-slug/2") }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 
@@ -213,20 +211,12 @@ RSpec.describe Offer, backend: true do
     let!(:service_category) { create(:service_category) }
 
     let!(:service_offer) do
-      create(
-        :offer,
-        service: service,
-        deployable_service: nil,
-        status: :published,
-        bundle_exclusive: false,
-        offer_category: service_category
-      )
+      create(:offer, service: service, status: :published, bundle_exclusive: false, offer_category: service_category)
     end
 
     let!(:deployable_service_offer) do
       create(
         :offer,
-        service: nil,
         deployable_service: deployable_service,
         status: :published,
         bundle_exclusive: false,
@@ -235,20 +225,12 @@ RSpec.describe Offer, backend: true do
     end
 
     let!(:draft_service_offer) do
-      create(
-        :offer,
-        service: service,
-        deployable_service: nil,
-        status: :draft,
-        bundle_exclusive: false,
-        offer_category: service_category
-      )
+      create(:offer, service: service, status: :draft, bundle_exclusive: false, offer_category: service_category)
     end
 
     let!(:draft_deployable_offer) do
       create(
         :offer,
-        service: nil,
         deployable_service: deployable_service,
         status: :draft,
         bundle_exclusive: false,
@@ -287,11 +269,11 @@ RSpec.describe Offer, backend: true do
       end
 
       it "handles service-only offers when deployable service is missing" do
-        expect(Offer.inclusive.where(service: service)).to include(service_offer)
+        expect(Offer.inclusive.where(orderable: service)).to include(service_offer)
       end
 
       it "handles deployable service offers when service is missing" do
-        expect(Offer.inclusive.where(deployable_service: deployable_service)).to include(deployable_service_offer)
+        expect(Offer.inclusive.where(orderable: deployable_service)).to include(deployable_service_offer)
       end
     end
 
@@ -343,7 +325,6 @@ RSpec.describe Offer, backend: true do
         create(
           :offer,
           deployable_service: deployable_service,
-          service: nil,
           status: :published,
           bundle_exclusive: false,
           limited_availability: false,
@@ -403,17 +384,17 @@ RSpec.describe Offer, backend: true do
     let(:service_category) { create(:service_category) }
 
     it "returns service when offer belongs to service" do
-      offer = create(:offer, service: service, deployable_service: nil, offer_category: service_category)
+      offer = create(:offer, service: service, offer_category: service_category)
       expect(offer.parent_service).to eq(service)
     end
 
     it "returns deployable_service when offer belongs to deployable_service" do
-      offer = create(:offer, service: nil, deployable_service: deployable_service, offer_category: service_category)
+      offer = create(:offer, deployable_service: deployable_service, offer_category: service_category)
       expect(offer.parent_service).to eq(deployable_service)
     end
 
-    it "returns nil when offer has neither service nor deployable_service" do
-      offer = build(:offer, service: nil, deployable_service: nil)
+    it "returns nil when offer has no orderable" do
+      offer = Offer.new(name: "test", description: "test", order_type: :order_required)
       expect(offer.parent_service).to be_nil
     end
   end
