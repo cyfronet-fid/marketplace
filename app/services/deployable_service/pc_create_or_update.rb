@@ -84,8 +84,8 @@ class DeployableService::PcCreateOrUpdate
       deployable_service.status = "errored"
       deployable_service.save(validate: false)
     end
+    DeployableServiceSource::Create.call(deployable_service)
 
-    deployable_service.save!(validate: false)
     deployable_service
   end
 end
