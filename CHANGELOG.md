@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [4.2.0](https://github.com/cyfronet-fid/marketplace/compare/v4.1.4...v4.2.0) (2026-01-21)
+
+
+### Features
+
+* Add polymorphic orderable and infra tracking ([#3584](https://github.com/cyfronet-fid/marketplace/issues/3584)) ([62a947f](https://github.com/cyfronet-fid/marketplace/commit/62a947fbcbb1ee466a052007e4712ff9a8500863))
+
+
+### Bug Fixes
+
+* [[#3531](https://github.com/cyfronet-fid/marketplace/issues/3531)] Fix deployable services synchronization ([#3588](https://github.com/cyfronet-fid/marketplace/issues/3588)) ([64e196f](https://github.com/cyfronet-fid/marketplace/commit/64e196f3f30ede42fc1431694c297d5e038571b4))
+* [[#3581](https://github.com/cyfronet-fid/marketplace/issues/3581)] Fix the "node" in DS Serializer ([f818830](https://github.com/cyfronet-fid/marketplace/commit/f8188303d2e5a9435403e47d2e0a03dcf718aa60))
+
 ## [4.1.4](https://github.com/cyfronet-fid/marketplace/compare/v4.1.3...v4.1.4) (2025-12-05)
 
 
