@@ -29,13 +29,13 @@
           Go to service
           %i.fa.fa-arrow-right.ml-1
 
-  - if project_item.in_progress?
-    .deploy-infobox
-      %h4 Deployment in progress
-      %p
-        We are deploying your service. This process may take a few minutes. Once it is finished,
-        %br
-        you will get full access to the tool.
+    - if project_item.in_progress?
+      .deploy-infobox
+        %h4 Deployment in progress
+        %p
+          We are deploying your service. This process may take a few minutes. Once it is finished,
+          %br
+          you will get full access to the tool.
 
     %ul.nav.nav-tabs.mt-4.pl-3.row.services-menu
       %li.nav-item
