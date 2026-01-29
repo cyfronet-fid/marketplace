@@ -23,10 +23,19 @@
         - if project_item.bundle?
           .project-badge.d-inline.mb-0.ml-2.project-resource-type.mr-0
             = _("BUNDLE")
+
       .col-lg-3.col-12pr-0
         %a{ class: "btn float-right btn-primary pl-4 pr-4 mt-2 text-center" }
           Go to service
           %i.fa.fa-arrow-right.ml-1
+
+  - if project_item.in_progress?
+    .deploy-infobox
+      %h4 Deployment in progress
+      %p
+        We are deploying your service. This process may take a few minutes. Once it is finished,
+        %br
+        you will get full access to the tool.
 
     %ul.nav.nav-tabs.mt-4.pl-3.row.services-menu
       %li.nav-item

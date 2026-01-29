@@ -8362,9 +8362,37 @@ abbr[title] {
     }
 
     .table {
-      font-size: 12px;
+      font-size: 13px;
       margin-bottom: 10px !important;
     }
+  }
+}
+
+.deploy-infobox {
+  display: flex;
+  padding: 32px 35px;
+  overflow: hidden;
+  width: 100%;
+  justify-content: flex-end;
+  align-items: flex-start;
+  flex-direction: column;
+  margin-top: 25px;
+  background: url("deploy-bg.jpg") no-repeat 50% 50%;
+  border-radius: 8px;
+  color: $landing-03;
+
+  h4 {
+    font-size: 24px;
+    border: none;
+    font-weight: 600;
+    padding: 0;
+    margin: 0 0 15px;
+  }
+
+  p {
+    font-size: 16px;
+    margin: 0;
+    line-height: 1.4;
   }
 }
 
