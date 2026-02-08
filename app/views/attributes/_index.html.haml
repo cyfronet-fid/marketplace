@@ -9,7 +9,10 @@
           %td.pl-0
             = attr.label || attr["label"]
           %td
-            - begin
-              = render "attributes/#{attr.type}", attr: attr
-            - rescue StandardError
-              = render "attributes/default", attr: attr
+            - if attr.respond_to?(:sensitive) && attr.sensitive
+              = render "attributes/sensitive", attr: attr
+            - else
+              - begin
+                = render "attributes/#{attr.type}", attr: attr
+              - rescue StandardError
+                = render "attributes/default", attr: attr

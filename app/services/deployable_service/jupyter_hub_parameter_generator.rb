@@ -73,7 +73,8 @@ class DeployableService::JupyterHubParameterGenerator
         id: "admin_password",
         name: "JupyterHub Admin Password",
         hint: "Password for JupyterHub administrator user",
-        value_type: "string"
+        value_type: "string",
+        sensitive: true
       ),
       # Dataset List - Text area for DOI list
       Parameter::Select.new(
