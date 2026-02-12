@@ -6,6 +6,8 @@
   .details.mb-5
     .row.new-offer-form
       .col-lg-6.col-12
+        = render "projects/services/deployment_access", project_item: @project_item
+
         .offer-section-wrapper
           = render "attributes/index", property_values: @project_item.property_values
       .col-lg-6.col-12

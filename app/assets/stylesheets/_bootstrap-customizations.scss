@@ -2372,6 +2372,10 @@ h5 {
     display: table-cell;
     padding: 0 0 8px;
     border-bottom: 1px solid $palette-solid-10;
+
+    a {
+      text-decoration: underline;
+    }
   }
 
   dd {
@@ -4158,6 +4162,21 @@ label[data-multicheckbox].small {
   padding: 9px 20px 8px;
   background: $green;
   color: $custom-25;
+
+  &.status-rejected {
+    background: $custom-32;
+    color: $landing-02;
+  }
+
+  &.status-closed {
+    background: $landing-03;
+    color: $landing-02;
+  }
+
+  &.status-processing {
+    background: $custom-31;
+    color: $landing-02;
+  }
 }
 
 .projects-list {
@@ -8392,6 +8411,35 @@ abbr[title] {
   p {
     font-size: 16px;
     margin: 0;
+    line-height: 1.4;
+  }
+}
+
+.deploy-dangerbox {
+  display: flex;
+  padding: 24px;
+  overflow: hidden;
+  width: 100%;
+  justify-content: flex-end;
+  align-items: flex-start;
+  flex-direction: column;
+  background: $custom-32;
+  border-radius: 8px;
+  color: $landing-02;
+
+  h4 {
+    font-size: 18px;
+    border: none;
+    color: $landing-02;
+    font-weight: 600;
+    padding: 0;
+    margin: 0 0 10px;
+  }
+
+  p {
+    font-size: 13px;
+    margin: 0;
+    font-weight: 300;
     line-height: 1.4;
   }
 }

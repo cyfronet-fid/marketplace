@@ -2,20 +2,21 @@
 
 = render "projects/layout", project: project, projects: projects do
   .service-box-redesign.service-detail.mb-4.project-heading
-    .back-link.mb-4
-      %i.fa.fa-arrow-left.mr-1
-      - if project_item.is_root?
-        = link_to _("Go back to %{pn} project services") % { pn: project.name }, [project, :services]
-      - else
-        = link_to _("Go back to %{pn}") % { pn: project_item.parent.name },
-                project_service_path(project, project_item.parent)
+    // To add after creating DS list page view
+    //.back-link.mb-4
+    //    %i.fa.fa-arrow-left.mr-1
+    //    - if project_item.is_root?
+    //      = link_to _("Go back to %{pn} project services") % { pn: project.name }, [project, :services]
+    //    - else
+    //      = link_to _("Go back to %{pn}") % { pn: project_item.parent.name },
+    //              project_service_path(project, project_item.parent)
     .row
       .col-lg-9.col-12
         = render Services::InlineOrderUrlComponent.new(offerable: project_item,
             classes: "btn btn-primary float-right pl-4 pr-4")
         - if project_item.orderable?
-          .project-badge.text-secondary.project-resource-type.mr-0.mb-4
-            %span{ class: "status-#{project_item.status_type}" }= t("project_items.status.#{project_item.status_type}")
+          .project-badge.project-resource-type.mr-0.mb-4{ class: "status-#{project_item.status_type}" }
+            %span= t("project_items.status.#{project_item.status_type}")
         %h1.flex-grow-1.text-break
           #{project_item.service.name}
         = strip_tags(project_item.service.description.to_s)
@@ -25,6 +26,7 @@
             = _("BUNDLE")
 
       .col-lg-3.col-12pr-0
+      - if project_item.deployment_link.present?
         %a{ class: "btn float-right btn-primary pl-4 pr-4 mt-2 text-center" }
           Go to service
           %i.fa.fa-arrow-right.ml-1
