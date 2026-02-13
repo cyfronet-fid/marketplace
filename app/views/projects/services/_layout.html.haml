@@ -17,8 +17,20 @@
         - if project_item.orderable?
           .project-badge.project-resource-type.mr-0.mb-4{ class: "status-#{project_item.status_type}" }
             %span= t("project_items.status.#{project_item.status_type}")
-        %h1.flex-grow-1.text-break
-          #{project_item.service.name}
+        .d-flex
+          %h1.text-break
+            #{project_item.service.name}
+
+            -# haml-lint:disable LineLength
+            - if policy(project_item).destroy_infrastructure?
+              = button_to project_service_infrastructure_path(project, project_item),
+                  method: :delete,
+                  class: "btn btn-sm btn-outline-secondary ml-3",
+                  data: { turbo_confirm: _("Delete ready-to-run service<br><span style='font-size: 15px; font-weight: 300'>This action cannot be undone. Do you want to continue?</span>") } do
+                %i.fa.fa-trash-alt.me-2
+                = _("Delete Infrastructure")
+            -# haml-lint:enable LineLength
+
         = strip_tags(project_item.service.description.to_s)
 
         - if project_item.bundle?
@@ -27,7 +39,7 @@
 
       .col-lg-3.col-12pr-0
       - if project_item.deployment_link.present?
-        %a{ class: "btn float-right btn-primary pl-4 pr-4 mt-2 text-center" }
+        %a{ class: "btn float-right btn-primary pl-4 pr-4 mt-5 text-center" }
           Go to service
           %i.fa.fa-arrow-right.ml-1
 

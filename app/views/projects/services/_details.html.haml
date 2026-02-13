@@ -54,14 +54,3 @@
       %dt
         = _("Service Providers") + ":"
       %dd= service_providers_list(project_item)
-
-  - if policy(project_item).destroy_infrastructure?
-    %dl
-      %dt
-        = _("Infrastructure Management") + ":"
-      %dd
-        = button_to _("Destroy Infrastructure"),
-            project_service_infrastructure_path(project, project_item),
-            method: :delete,
-            class: "btn btn-outline-danger btn-sm",
-            data: { "turbo-confirm": _("Are you sure you want to destroy this infrastructure? This action cannot be undone.") }

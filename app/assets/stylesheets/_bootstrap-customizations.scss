@@ -2914,6 +2914,19 @@ label[data-multicheckbox].small {
     justify-content: center;
   }
 
+  .btn-outline-secondary {
+    padding: 0.22rem 1rem;
+    background: $palette-white;
+    border: 1px solid $landing-01;
+    border-radius: 4px;
+    font-size: 12px;
+    color: $landing-01;
+
+    &:hover {
+      background: $palette-solid-10;
+    }
+  }
+
   .abbreviation {
     color: $palette-solid-50;
   }
@@ -5651,6 +5664,8 @@ abbr[title] {
     .btn-secondary {
       border: 1px solid $custom-16;
       color: $custom-16;
+      font-size: 1rem;
+      text-shadow: none;
     }
   }
 }
