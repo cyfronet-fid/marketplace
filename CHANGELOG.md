@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [4.3.0](https://github.com/cyfronet-fid/marketplace/compare/v4.2.0...v4.3.0) (2026-02-16)
+
+
+### Features
+
+* [[#3444](https://github.com/cyfronet-fid/marketplace/issues/3444)] implement AMS queue ([12edc57](https://github.com/cyfronet-fid/marketplace/commit/12edc57257fdede6ebddb790bd1c58ec0b52a529))
+* [[#3444](https://github.com/cyfronet-fid/marketplace/issues/3444)] implement AMS queue ([78d1ed1](https://github.com/cyfronet-fid/marketplace/commit/78d1ed196916c784bd4520df5669c575ecb8f9e8))
+* [[#3595](https://github.com/cyfronet-fid/marketplace/issues/3595)] Fix DS plain text pass ([38b9a5b](https://github.com/cyfronet-fid/marketplace/commit/38b9a5bdebc596096f43e802939ce29bc90dc683))
+
+
+### Bug Fixes
+
+* [[#3599](https://github.com/cyfronet-fid/marketplace/issues/3599)] Fix projects view when DS is involved ([#3611](https://github.com/cyfronet-fid/marketplace/issues/3611)) ([71a2feb](https://github.com/cyfronet-fid/marketplace/commit/71a2feb4fa364e82f891b874fd907133aa7da860))
+* [#HOTFIX] Safe Node name ([0a7aea9](https://github.com/cyfronet-fid/marketplace/commit/0a7aea9122f3d6cd80742a7564ec8369fa2f4b31))
+* [#HOTFIX] Safe Node name ([cb294c4](https://github.com/cyfronet-fid/marketplace/commit/cb294c4caf3d23043430441a5d48a8528573f282))
+
 ## [4.2.0](https://github.com/cyfronet-fid/marketplace/compare/v4.1.4...v4.2.0) (2026-01-21)
 
 
