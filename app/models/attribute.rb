@@ -5,7 +5,7 @@ class Attribute
   include ActiveModel::Conversion
   include ActiveModel::Validations
 
-  attr_accessor :id, :label, :description, :value_type, :unit, :config, :value
+  attr_accessor :id, :label, :description, :value_type, :unit, :config, :value, :sensitive
   attr_writer :type
 
   validate :value_validity
@@ -66,6 +66,7 @@ class Attribute
     json["value"] = value unless value.nil?
     json["config"] = config unless config.nil?
     json["description"] = description unless description.nil?
+    json["sensitive"] = sensitive if sensitive
     json
   end
 
@@ -130,6 +131,7 @@ class Attribute
     attr.unit = json["unit"]
     attr.config = json["config"]
     attr.description = json["description"]
+    attr.sensitive = json["sensitive"]
     attr.value = json["value"] unless json["value"].blank?
     attr.validate_value_type! if validate
     attr

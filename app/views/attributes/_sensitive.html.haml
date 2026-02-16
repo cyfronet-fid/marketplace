@@ -1,0 +1,4 @@
+%span.font-weight-bold{ data: { controller: "sensitive-field", sensitive_field_real_value: "#{attr.value} #{attr.unit}".strip } }
+  %span{ data: { sensitive_field_target: "display" } } ••••••••
+  %button.btn.btn-sm.btn-link.p-0.ml-1{ type: "button", data: { action: "sensitive-field#toggle" } }
+    %i.fas.fa-eye{ data: { sensitive_field_target: "icon" } }

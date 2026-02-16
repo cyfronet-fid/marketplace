@@ -71,6 +71,40 @@ RSpec.feature "Project services", end_user_frontend: true do
     expect(page).to_not have_link("Timeline")
   end
 
+  context "with DeployableService-backed project items" do
+    let(:deployable_service) { create(:deployable_service) }
+
+    scenario "I can see the project index page with DeployableService items" do
+      offer = create(:offer, deployable_service: deployable_service, order_type: :open_access)
+      create(:project_item, offer: offer, project: project, order_type: "open_access")
+
+      visit project_services_path(project)
+
+      expect(page).to have_text(deployable_service.name)
+    end
+
+    scenario "I can see the project index page with mixed Service and DeployableService items" do
+      service_offer = create(:offer, service: service)
+      ds_offer = create(:offer, deployable_service: deployable_service, order_type: :open_access)
+      create(:project_item, offer: service_offer, project: project)
+      create(:project_item, offer: ds_offer, project: project, order_type: "open_access")
+
+      visit project_services_path(project)
+
+      expect(page).to have_text(service.name)
+      expect(page).to have_text(deployable_service.name)
+    end
+
+    scenario "recommended offers work when project has only DeployableService items" do
+      ds_with_domains = create(:deployable_service, :with_scientific_domains)
+      offer = create(:offer, deployable_service: ds_with_domains, order_type: :open_access)
+      create(:project_item, offer: offer, project: project, order_type: "open_access")
+
+      expect { visit project_services_path(project) }.not_to raise_error
+      expect(page).to have_text("Recommended offers for your project")
+    end
+  end
+
   scenario "Project service is immutable to the offer change" do
     create(:offer, service: service)
     offer = create(:offer, service: service, order_type: :open_access, order_url: "http://old.pl", voucherable: false)
