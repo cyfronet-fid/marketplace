@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [4.3.1](https://github.com/cyfronet-fid/marketplace/compare/v4.3.0...v4.3.1) (2026-02-18)
+
+
+### Bug Fixes
+
+* [] Datasources import ([b3f1fec](https://github.com/cyfronet-fid/marketplace/commit/b3f1fec21e06b7701b177cdc4c79c3396c202ad1))
+
 ## [4.3.0](https://github.com/cyfronet-fid/marketplace/compare/v4.2.0...v4.3.0) (2026-02-16)
 
 
