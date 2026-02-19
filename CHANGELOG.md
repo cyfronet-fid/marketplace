@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [4.3.2](https://github.com/cyfronet-fid/marketplace/compare/v4.3.1...v4.3.2) (2026-02-19)
+
+
+### Bug Fixes
+
+* [] Services import endpoint ([d3a0b23](https://github.com/cyfronet-fid/marketplace/commit/d3a0b23100b2020cf89ff00b35fcf85194d9b1f0))
+* [] Services import endpoint ([b685ec1](https://github.com/cyfronet-fid/marketplace/commit/b685ec17b7c809f0fe1cf6998085c10f0ef75dba))
+
 ## [4.3.1](https://github.com/cyfronet-fid/marketplace/compare/v4.3.0...v4.3.1) (2026-02-18)
 
 
