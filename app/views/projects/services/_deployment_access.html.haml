@@ -1,0 +1,15 @@
+- unless project_item.deployment_link.present?
+  - if project_item.rejected?
+    .deploy-dangerbox.mb-4
+      %h4
+        %i.fas.fa-exclamation-triangle
+        = _("Deployment failed")
+      %p= project_item.status
+  - elsif project_item.in_progress?
+    %h4
+      %i.fas.fa-spinner.fa-spin
+      = _("Deployment in progress")
+  - else
+    %h4
+      %i.fas.fa-clock
+      = _("Deployment pending")
