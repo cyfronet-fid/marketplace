@@ -2343,11 +2343,12 @@ h5 {
 
 .back-link {
   svg {
-    color: $palette-gray-30;
+    color: $palette-blue;
   }
 
   a {
-    font-size: 13px;
+    font-size: 16px;
+    font-weight: 500;
     color: $palette-blue;
   }
 }
@@ -2357,6 +2358,13 @@ h5 {
     display: table;
     width: 100%;
     margin: 0 0 8px;
+
+    &:last-child {
+      dt,
+      dd {
+        border-bottom: 0;
+      }
+    }
   }
 
   dt,
@@ -2364,6 +2372,10 @@ h5 {
     display: table-cell;
     padding: 0 0 8px;
     border-bottom: 1px solid $palette-solid-10;
+
+    a {
+      text-decoration: underline;
+    }
   }
 
   dd {
@@ -2373,11 +2385,6 @@ h5 {
   dt {
     font-weight: 300;
     width: 33%;
-  }
-
-  dt::after,
-  dd::after {
-    clear: both;
   }
 }
 
@@ -2905,6 +2912,19 @@ label[data-multicheckbox].small {
 
   .img-service-detail {
     justify-content: center;
+  }
+
+  .btn-outline-secondary {
+    padding: 0.22rem 1rem;
+    background: $palette-white;
+    border: 1px solid $landing-01;
+    border-radius: 4px;
+    font-size: 12px;
+    color: $landing-01;
+
+    &:hover {
+      background: $palette-solid-10;
+    }
   }
 
   .abbreviation {
@@ -4148,11 +4168,28 @@ label[data-multicheckbox].small {
 
 .project-resource-type {
   font-weight: 500;
+  font-size: 14px;
   display: inline-block;
   line-height: 1.3;
-  padding: 9px 10px 8px;
-  background: $alert-bg;
-  color: $alert-color;
+  border-radius: 32px;
+  padding: 9px 20px 8px;
+  background: $green;
+  color: $custom-25;
+
+  &.status-rejected {
+    background: $custom-32;
+    color: $landing-02;
+  }
+
+  &.status-closed {
+    background: $landing-03;
+    color: $landing-02;
+  }
+
+  &.status-processing {
+    background: $custom-31;
+    color: $landing-02;
+  }
 }
 
 .projects-list {
@@ -5627,6 +5664,8 @@ abbr[title] {
     .btn-secondary {
       border: 1px solid $custom-16;
       color: $custom-16;
+      font-size: 1rem;
+      text-shadow: none;
     }
   }
 }
@@ -8204,7 +8243,17 @@ abbr[title] {
   .offer-section-wrapper {
     border: 1px solid $custom-17;
     border-radius: 8px;
-    padding: 24px;
+    padding: 24px 24px 10px;
+
+    .bordered-header {
+      border-top: none;
+      text-transform: uppercase;
+      vertical-align: bottom;
+      padding-bottom: 0.65rem;
+      font-weight: bold;
+      margin-bottom: 0.65rem;
+      border-bottom: 2px solid #dee2e6;
+    }
 
     .offer-info-box {
       margin-bottom: 40px;
@@ -8345,6 +8394,68 @@ abbr[title] {
       font-weight: 600;
       line-height: 28px;
     }
+
+    .table {
+      font-size: 13px;
+      margin-bottom: 10px !important;
+    }
+  }
+}
+
+.deploy-infobox {
+  display: flex;
+  padding: 32px 35px;
+  overflow: hidden;
+  width: 100%;
+  justify-content: flex-end;
+  align-items: flex-start;
+  flex-direction: column;
+  margin-top: 25px;
+  background: url("deploy-bg.jpg") no-repeat 50% 50%;
+  border-radius: 8px;
+  color: $landing-03;
+
+  h4 {
+    font-size: 24px;
+    border: none;
+    font-weight: 600;
+    padding: 0;
+    margin: 0 0 15px;
+  }
+
+  p {
+    font-size: 16px;
+    margin: 0;
+    line-height: 1.4;
+  }
+}
+
+.deploy-dangerbox {
+  display: flex;
+  padding: 24px;
+  overflow: hidden;
+  width: 100%;
+  justify-content: flex-end;
+  align-items: flex-start;
+  flex-direction: column;
+  background: $custom-32;
+  border-radius: 8px;
+  color: $landing-02;
+
+  h4 {
+    font-size: 18px;
+    border: none;
+    color: $landing-02;
+    font-weight: 600;
+    padding: 0;
+    margin: 0 0 10px;
+  }
+
+  p {
+    font-size: 13px;
+    margin: 0;
+    font-weight: 300;
+    line-height: 1.4;
   }
 }
 
