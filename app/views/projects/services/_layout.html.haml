@@ -37,11 +37,16 @@
           .project-badge.d-inline.mb-0.ml-2.project-resource-type.mr-0
             = _("BUNDLE")
 
-      .col-lg-3.col-12pr-0
-      - if project_item.deployment_link.present?
-        %a{ class: "btn float-right btn-primary pl-4 pr-4 mt-5 text-center" }
-          Go to service
-          %i.fa.fa-arrow-right.ml-1
+      .col-lg-3.col-12.d-flex.justify-content-end.align-items-start
+        - if project_item.deployment_link.present?
+          - is_closed = project_item.closed?
+          %a{ class: "btn btn-primary pl-4 pr-4 text-center #{"disabled" if is_closed}",
+              href: is_closed ? nil : project_item.deployment_link,
+              target: "_blank",
+              aria: { disabled: is_closed ? "true" : nil },
+              tabindex: is_closed ? "-1" : nil }
+            Go to service
+            %i.fa.fa-arrow-right.ml-1
 
     - if project_item.in_progress?
       .deploy-infobox
