@@ -79,7 +79,7 @@ RUN addgroup -S app && \
     adduser -S -G app app
 
 # Creating directory structure
-RUN mkdir -p /marketplace/tmp/pids /marketplace/log /marketplace/public && \
+RUN mkdir -p /marketplace/tmp/pids /marketplace/log /marketplace/public /marketplace/storage && \
     chown -R app:app /marketplace
 
 # Setting working directory

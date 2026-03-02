@@ -59,7 +59,7 @@ class Import::Providers
       end
     rescue ActiveRecord::RecordInvalid
       log "[WARN] Provider #{name(external_data)},
-                eid: #{eid(external_data)} cannot be updated. #{current_provider.errors.full_messages}"
+                eid: #{eid(external_data)} cannot be updated. #{detailed_errors(current_provider)}"
     rescue StandardError => e
       log "[WARN] Unexpected #{e}! Provider #{name(external_data)},
                 eid: #{eid(external_data)} cannot be updated"
@@ -112,7 +112,7 @@ class Import::Providers
     if current_provider.invalid?
       provider_source.update!(errored: current_provider.errors.to_hash)
       log "Provider #{parsed_provider_data[:name]},
-              eid: #{parsed_provider_data[:pid]} saved with errors: #{current_provider.errors.full_messages}"
+              eid: #{parsed_provider_data[:pid]} saved with errors: #{detailed_errors(current_provider)}"
     end
 
     Importers::Logo.call(current_provider, image_url) unless @rescue_mode

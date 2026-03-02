@@ -65,7 +65,7 @@ class Import::DeployableServices
       end
     rescue ActiveRecord::RecordInvalid
       log "[WARN] DeployableService #{name(external_data)},
-                eid: #{eid(external_data)} cannot be updated. #{current_deployable_service.errors.full_messages}"
+                eid: #{eid(external_data)} cannot be updated. #{detailed_errors(current_deployable_service)}"
     rescue StandardError => e
       log "[WARN] Unexpected #{e}! DeployableService #{name(external_data)},
                 eid: #{eid(external_data)} cannot be updated"
@@ -141,7 +141,7 @@ class Import::DeployableServices
       source.update!(errored: deployable_service.errors.to_hash)
       log "DeployableService #{parsed_deployable_service_data[:name]},
               eid: #{parsed_deployable_service_data[:pid]}
-              saved with errors: #{deployable_service.errors.full_messages}"
+              saved with errors: #{detailed_errors(deployable_service)}"
     end
 
     set_logo(deployable_service, logo_url)

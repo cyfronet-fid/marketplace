@@ -70,7 +70,7 @@ class Import::Resources
               service_source =
                 ServiceSource.create!(service_id: service.id, eid: service.pid, source_type: "eosc_registry")
               update_from_eosc_registry(service, service_source, false)
-              log "Service #{service.name}, eid: #{service.pid} saved with errors: #{service.errors.full_messages}"
+              log "Service #{service.name}, eid: #{service.pid} saved with errors: #{detailed_errors(service)}"
 
               Importers::Logo.call(service, image_url) unless @rescue_mode
               service.save(validate: false)

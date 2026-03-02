@@ -212,4 +212,8 @@ module Importable
     Rails.logger.warn "Could not fetch Persistent Identifier EOSC PID. Return blank string"
     ""
   end
+
+  def detailed_errors(object)
+    object.errors.map { |error| "#{error.attribute}: #{error.message}" }.join(", ")
+  end
 end
