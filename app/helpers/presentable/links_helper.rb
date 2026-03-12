@@ -14,7 +14,7 @@ module Presentable::LinksHelper
   end
 
   def new_question_prompt(object = @object)
-    object.instance_of?(Provider) ? "Ask provider a question" : "Contact provider"
+    object.instance_of?(Provider) ? "Ask organisation a question" : "Contact organisation"
   end
 
   private
