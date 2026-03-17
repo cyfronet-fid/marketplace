@@ -12,7 +12,7 @@
           %h2.font-weight-bolder.mb-1= @deployable_service.name
           %p= @deployable_service.abbreviation || "-"
           .resource-row.row.mb-3
-            %span.pin-value.resource-type.ready Ready-to-run service
+            %span.pin-value.resource-type.ready Deployable Application
       .col-12.col-lg-3.text-center
 
         - if @deployable_service.offers.accessible.any?

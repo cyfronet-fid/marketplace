@@ -16,7 +16,7 @@
       = project_item_status(project_item)
   .d-block
     .project-resource-type.mt-3
-      = project_item.service.type
+      = project_item.service.type == "DeployableService" ? "DeployableApplication" : project_item.service.type
     - if project_item.children.present?
       .project-resource-type.mt-3.ml-3
         = _("Bundle")
