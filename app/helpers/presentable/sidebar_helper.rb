@@ -75,7 +75,7 @@ module Presentable::SidebarHelper
 
   def provider_managers
     {
-      name: "provider_managers",
+      name: "organisation_managers",
       template: "object",
       fields: %w[first_name last_name email],
       type: "array",
