@@ -1339,8 +1339,8 @@ target_users:
     description: "A RI Manager is a type of Project Coordinator who specializes in research infrastructures. They are responsible for things like managing researchers, making sure costs are on budget and serving as a liaison between reserach staff and project stakeholders."
     eid: "target_user-research_infrastructure_managers"
   Provider Managers:
-    name: &provider_managers "Provider Managers"
-    description: "A Provider Manager is an individual within an organisation that is responsible for the quality of the Resources provided and monitors the delivery of the Resource."
+    name: &provider_managers "Organisation Managers"
+    description: "A Organisation Manager is an individual within an organisation that is responsible for the quality of the Resources provided and monitors the delivery of the Resource."
     eid: "target_user-provider_managers"
   Resource Managers:
     name: &resource_manager "Resource Managers"
