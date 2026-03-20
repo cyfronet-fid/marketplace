@@ -267,7 +267,12 @@ module Presentable::DetailsHelper
   end
 
   def pid(type = "Service")
-    { name: "#{type} Identifiers", template: "object", clazz: "alternative_identifiers", fields: %w[value] }
+    {
+      name: "#{type == "Provider" ? "Organisation" : type} Identifiers",
+      template: "object",
+      clazz: "alternative_identifiers",
+      fields: %w[value]
+    }
   end
 
   def provider_classification
