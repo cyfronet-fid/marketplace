@@ -26,7 +26,7 @@
         - active_filters.each do |title, label, p|
           .filter-tag{ "data-e2e": "filter-tag" }
             %span.text-muted
-              #{title}:
+              #{title == "Providers" ? "Organisations" : title}:
             = label
             = link_to(p, "data-probe": "") do
               .fas.fa-times
