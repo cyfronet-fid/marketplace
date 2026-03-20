@@ -810,8 +810,8 @@ target_user:
     description: Resource Managers are typically responsible for managing Service level agreements with customers and external Providers.
     type: TARGET_USER
   - eid: target_user-resource_provider_managers
-    name: Resource Provider Managers
-    description: A Provider Manager is an individual within an organisation that is responsible for the quality of the Resources provided and monitors the delivery of the Resource.
+    name: Resource Organisation Managers
+    description: A Organisation Manager is an individual within an organisation that is responsible for the quality of the Resources provided and monitors the delivery of the Resource.
     type: TARGET_USER
   - eid: target_user-research_infrastructure_managers
     name: Research Infrastructure Managers
