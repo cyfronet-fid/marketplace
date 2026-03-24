@@ -324,3 +324,4 @@ class Federation::ServicesController < ApplicationController
     cleaned.capitalize
   end
 end
+
