@@ -32,12 +32,23 @@ class Federation::ServicesController < ApplicationController
 
       case response.code
       when "200"
-        @json_data = JSON.parse(response.body)
-        # Extract highlights from JSON response
-        @highlights = @json_data["highlights"]
-        # Extract nodes information for filtering
-        @available_nodes = extract_available_nodes
-        load_filter_options
+        begin
+          json_response = JSON.parse(response.body)
+          unless json_response.is_a?(Hash)
+            Rails.logger.error "Federation API returned unexpected format. Expected Hash, got #{json_response.class}"
+            @json_data = { error: "Unexpected response format" }
+            return respond_to_format
+          end
+          @json_data = map_federation_response(json_response)
+          # Extract highlights from JSON response
+          @highlights = @json_data["highlights"] || {}
+          # Extract nodes information for filtering
+          @available_nodes = extract_available_nodes
+        rescue StandardError => e
+          Rails.logger.error "ERROR in mapping: #{e.class} - #{e.message}\n#{e.backtrace[0..5].join("\n")}"
+          Rails.logger.error "Raw JSON keys: #{begin json_response.keys rescue StandardError; "not a hash" end}"
+          @json_data = { error: "API Mapping Failed" }
+        end
       when "404"
         @json_data = { error: "Federation API endpoint not found" }
       when "500", "502", "503", "504"
@@ -77,10 +88,59 @@ class Federation::ServicesController < ApplicationController
 
   private
 
-  def extract_available_nodes
-    return [] unless @json_data && @json_data["nodes"]
+  def map_federation_response(json)
+    per_page = 10
+    current_page = [params[:page].to_i, 1].max
+    
+    results = Array(json["results"]).map do |item|
+      {
+        "pid" => item["id"],
+        "name" => item["name"] || item["abbreviation"],
+        "slug" => item["id"],
+        "tagline" => item["tagline"],
+        "description" => item["description"],
+        "rating" => nil,
+        "score" => nil,
+        "path" => item["webpage"],
+        "logo" => item["logo"],
+        "scientific_domains" => Array(item["scientificDomains"]).map do |d|
+ { "name" => prettify(d["scientificDomain"].to_s)} end,
+        "target_users" => Array(item["targetUsers"]).map { |u| { "name" => prettify(u.to_s)} },
+        "platforms" => Array(item["relatedPlatforms"]).map { |p| { "name" => p } },
+        "resource_organisation" => { "name" => item["resourceOrganisation"], "pid" => item["resourceOrganisation"] },
+        "providers" => item["publicContacts"].map do |p|
+ p["organisation"] end.select(&:present?).map { |name| { "name" => name } },
+        "source_node_url" => item["node"],
+        "webpage" => item["webpage"] || item["userManual"] || item["order"]
+      }
+    end
 
-    @json_data["nodes"].map { |node| { name: node["name"], value: node["name"], url: node["url"] } }
+    total_count = json["total"].to_i
+    total_pages = (total_count.to_f / per_page).ceil
+
+    facets_array = json["facets"].is_a?(Array) ? json["facets"] : []
+    node_facets = facets_array.find { |f| f.is_a?(Hash) && f["field"] == "node" }
+    node_facets_values = node_facets ? Array(node_facets["values"]).map { |v | map_facet_value(v) } : []
+
+    {
+      "status" => "success",
+      "results" => results,
+      "pagination" => {
+        "current_page" => current_page,
+        "per_page" => per_page,
+        "total_count" => total_count,
+        "total_pages" => total_pages,
+        "has_next_page" => current_page < total_pages,
+        "has_prev_page" => current_page > 1
+      },
+      "facets" => { "node" => node_facets_values }
+    }
+  end
+
+  def extract_available_nodes
+    facets = @json_data.dig("facets", "node") || []
+
+    facets.map { |node| { name: node["name"], value: node["eid"], url: node["eid"] } }
   end
 
   def scope
@@ -98,7 +158,22 @@ class Federation::ServicesController < ApplicationController
     clean_base_url = base_url.to_s.strip.chomp("/")
     uri = URI.parse(clean_base_url)
     raise URI::InvalidURIError unless %w[http https].include?(uri.scheme)
-    query_string = request.query_string.present? ? "?#{request.query_string}" : ""
+    
+    api_params = {}
+    
+    quantity = 10
+    page = [params[:page].to_i, 1].max
+    api_params[:quantity] = quantity
+    api_params[:from] = (page - 1) * quantity
+    api_params[:keyword] = params[:q] if params[:q].present?
+
+    if params[:nodes].present?
+      nodes_str = "[#{Array(params[:nodes]).join(",")}]"
+      api_params[:node] = nodes_str
+    end
+    
+    query_string = api_params.to_query
+    query_string = "?#{query_string}" if query_string.present?
     "#{clean_base_url}#{query_string}"
   rescue URI::InvalidURIError => e
     Rails.logger.error "Invalid federation API base URL: #{base_url}. Message: #{e.message}"
@@ -199,9 +274,10 @@ class Federation::ServicesController < ApplicationController
   end
 
   def map_facet_value(val)
-    mapped = { "eid" => val["value"].to_s, "name" => val["label"].to_s }
+    name = val["label"].present? ? val["label"].to_s : val["value"].to_s
+    mapped = { "eid" => val["value"].to_s, "name" => name }
     mapped["count"] = val["count"] if val.key?("count")
-    mapped["children"] = Array(val["children"]).map { |child| map_facet_value(child) } if val["children"].present?
+    mapped["children"] = val["children"].present? ? Array(val["children"]).map { |child| map_facet_value(child) } : []
     mapped
   end
 
@@ -221,5 +297,16 @@ class Federation::ServicesController < ApplicationController
       end
     end
     nil
+  end
+
+  def prettify(str)
+    return "" if str.nil?
+
+    cleaned = str.to_s
+                 .sub(/^(node|scientific_domain|target_user)-/, "")
+                 .tr("_", " ")
+                 .strip
+
+    cleaned.capitalize
   end
 end

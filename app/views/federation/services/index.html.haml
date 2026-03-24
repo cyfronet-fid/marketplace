@@ -49,7 +49,7 @@
                           }
                     %label.form-check-label{ for: "node_#{sanitize_for_id(node[:name])}" }
                       = node[:name]
-          = render "federation/filters", filters: @facets
+          -# = render "federation/filters", filters: @facets
 
       .col-lg-9.col-md-12.federated-search-results
         - if active_filters.present?

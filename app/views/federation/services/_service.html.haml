@@ -12,7 +12,7 @@
         = image_tag "service_logo.svg", class: "logo-img", alt: "Default service logo"
     .service-content.flex-grow-1
       %h5.card-title
-        - service_url = "#{service["source_node_url"]}services/#{service["pid"] || service["slug"]}"
+        - service_url = service["webpage"].present? ? service["webpage"] : "#"
         %a.text-decoration-none{ href: service_url, target: "_blank", rel: "noopener" }
           = service_highlight(service, "name", highlights || {})
           %i.fas.fa-external-link-alt.ml-1.text-muted
