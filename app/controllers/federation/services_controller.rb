@@ -46,7 +46,11 @@ class Federation::ServicesController < ApplicationController
           @available_nodes = extract_available_nodes
         rescue StandardError => e
           Rails.logger.error "ERROR in mapping: #{e.class} - #{e.message}\n#{e.backtrace[0..5].join("\n")}"
-          Rails.logger.error "Raw JSON keys: #{begin json_response.keys rescue StandardError; "not a hash" end}"
+          Rails.logger.error "Raw JSON keys: #{begin begin
+                                                       json_response.keys
+                                                     rescue StandardError
+                                                       StandardError
+                                                     end; "not a hash" end}"
           @json_data = { error: "API Mapping Failed" }
         end
       when "404"
@@ -87,12 +91,9 @@ class Federation::ServicesController < ApplicationController
   # rubocop:enable Metrics/AbcSize
 
   private
-
-  def map_federation_response(json)
-    per_page = 10
-    current_page = [params[:page].to_i, 1].max
-    
-    results = Array(json["results"]).map do |item|
+  
+  def map_results(json)
+    Array(json["results"]).map do |item|
       {
         "pid" => item["id"],
         "name" => item["name"] || item["abbreviation"],
@@ -104,16 +105,20 @@ class Federation::ServicesController < ApplicationController
         "path" => item["webpage"],
         "logo" => item["logo"],
         "scientific_domains" => Array(item["scientificDomains"]).map do |d|
- { "name" => prettify(d["scientificDomain"].to_s)} end,
+          { "name" => prettify(d["scientificDomain"].to_s)} end,
         "target_users" => Array(item["targetUsers"]).map { |u| { "name" => prettify(u.to_s)} },
         "platforms" => Array(item["relatedPlatforms"]).map { |p| { "name" => p } },
         "resource_organisation" => { "name" => item["resourceOrganisation"], "pid" => item["resourceOrganisation"] },
         "providers" => item["publicContacts"].map do |p|
- p["organisation"] end.select(&:present?).map { |name| { "name" => name } },
+          p["organisation"] end.select(&:present?).map { |name| { "name" => name } },
         "source_node_url" => item["node"],
         "webpage" => item["webpage"] || item["userManual"] || item["order"]
       }
     end
+  end
+
+  def map_federation_response(json)
+    results = map_results(json)
 
     total_count = json["total"].to_i
     total_pages = (total_count.to_f / per_page).ceil
@@ -122,6 +127,8 @@ class Federation::ServicesController < ApplicationController
     node_facets = facets_array.find { |f| f.is_a?(Hash) && f["field"] == "node" }
     node_facets_values = node_facets ? Array(node_facets["values"]).map { |v | map_facet_value(v) } : []
 
+    per_page = 10
+    current_page = [params[:page].to_i, 1].max
     {
       "status" => "success",
       "results" => results,
