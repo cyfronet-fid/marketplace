@@ -94,6 +94,9 @@ application.register("removals", RemovalsController);
 import ScrollerController from "./scroller_controller";
 application.register("scroller", ScrollerController);
 
+import SensitiveFieldController from "./sensitive_field_controller";
+application.register("sensitive-field", SensitiveFieldController);
+
 import SearchController from "./search_controller";
 application.register("search", SearchController);
 

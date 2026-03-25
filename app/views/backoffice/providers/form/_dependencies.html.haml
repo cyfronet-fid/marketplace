@@ -3,19 +3,19 @@
   .card-body
     .row
       .col-lg-7.pl-0
-        = f.input :participating_countries, disabled: cant_edit([participating_countries: []]), as: :select,
+        = f.input :participating_countries, disabled: cant_edit?([participating_countries: []]), as: :select,
                   collection: Country.options.map { |c| [ c.iso_short_name, "value" => c.alpha2 ] },
                   input_html: { data: { choice: true },  multiple: true }
         .row
           .col-12
             = f.input :affiliations, multiple: true, input_html: { class: "form-control text optional" },
                   wrapper_html: { "data-form-target" => "affiliations" },
-                  disabled: cant_edit([affiliations: []]), as: :array
+                  disabled: cant_edit?([affiliations: []]), as: :array
             = link_to_add_array_field("provider", "affiliations")
             .mt-4
-            = f.association :networks, disabled: cant_edit([network_ids: []]),
+            = f.association :networks, disabled: cant_edit?([network_ids: []]),
                   input_html: { multiple: true, data: { choice: true } }
-            = f.input :catalogue_id, disabled: cant_edit(:catalogue_id),
+            = f.input :catalogue_id, disabled: cant_edit?(:catalogue_id),
             input_html: { multiple: false, data: { choice: true } },
             collection: catalogues, selected: provider.catalogue&.id || nil
       = render "backoffice/providers/more_information"

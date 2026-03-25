@@ -24,6 +24,15 @@ class Federation::ServicesController < ApplicationController
       uri = URI(api_url)
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = (uri.scheme == "https")
+      if http.use_ssl?
+        http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+        # Clear CRL check flag if it's enabled by default in the environment
+        http.cert_store = OpenSSL::X509::Store.new
+        http.cert_store.set_default_paths
+        if defined?(OpenSSL::X509::V_FLAG_CRL_CHECK)
+          http.cert_store.flags = OpenSSL::X509::V_FLAG_CRL_CHECK & ~OpenSSL::X509::V_FLAG_CRL_CHECK
+        end
+      end
       http.read_timeout = 10
       http.open_timeout = 5
 

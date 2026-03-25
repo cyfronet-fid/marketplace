@@ -56,6 +56,12 @@
 }
 
 @media (max-width: 991px) {
+  .new-offer-form {
+    .offer-section-wrapper {
+      margin: 0 0 20px !important;
+    }
+  }
+
   .eosc-common.white-label {
     .container {
       ul {

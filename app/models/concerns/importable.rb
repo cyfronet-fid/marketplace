@@ -1,6 +1,15 @@
 # frozen_string_literal: true
 
 module Importable
+  class ResourceParseError < StandardError
+  end
+
+  class WrongMessageError < StandardError
+  end
+
+  class WrongIdError < StandardError
+  end
+
   def object_status(active, suspended)
     current = active ? :published : :unpublished
     suspended && active ? :suspended : current

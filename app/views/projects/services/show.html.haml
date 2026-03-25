@@ -4,8 +4,15 @@
 = render "layout",
   project: @project, projects: @projects, project_item: @project_item do
   .details.mb-5
-    = render "details", project: @project, project_item: @project_item
-    = render "attributes/index", property_values: @project_item.property_values
+    .row.new-offer-form
+      .col-lg-6.col-12
+        = render "projects/services/deployment_access", project_item: @project_item
+
+        .offer-section-wrapper
+          = render "attributes/index", property_values: @project_item.property_values
+      .col-lg-6.col-12
+        = render "details", project: @project, project_item: @project_item
+
   - if @project_item.children.present?
     = _("This service was ordered with services below (Bundle):")
     %ul.list-group.mt-3

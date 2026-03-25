@@ -8,6 +8,12 @@
       value: "#{field.object.value}", name: "#{field.object_name}[#{attr.id}]",
       id: "parameter_#{attr.id}",
       as: :integer
+  - elsif attr.respond_to?(:sensitive) && attr.sensitive
+    = field.input_field attr.id,
+      class: "form-control #{"is-invalid" if has_errors} #{"is-valid" if valid}",
+      id: "parameter_#{attr.id}",
+      value: "#{field.object.value}", name: "#{field.object_name}[#{attr.id}]",
+      as: :password
   - else
     = field.input_field attr.id,
       class: "form-control #{"is-invalid" if has_errors} #{"is-valid" if valid}",

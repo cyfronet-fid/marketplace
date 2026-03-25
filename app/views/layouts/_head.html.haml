@@ -2,10 +2,12 @@
   %meta{ content: "text/html; charset=UTF-8", "http-equiv" => "Content-Type" }/
   %meta{ charset: "utf-8" }/
   %meta{ content: "width=device-width, initial-scale=1, shrink-to-fit=no", name: "viewport" }/
+  %meta{ name: "description", content: "Users space enables unified access to research services, data, and tools across
+   EOSC Nodes and major European infrastructures" }/
   = meta_robots
   %title
     = "#{yield :title} - " if content_for?(:title)
-    = _("EOSC Marketplace")
+    = _("Users space")
   = csrf_meta_tags
   = csp_meta_tag
   = favicon_link_tag "favicon.ico"

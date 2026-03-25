@@ -3,15 +3,6 @@
 class Jms::ManageMessage < ApplicationService
   include Importable
 
-  class ResourceParseError < StandardError
-  end
-
-  class WrongMessageError < StandardError
-  end
-
-  class WrongIdError < StandardError
-  end
-
   def initialize(message, eosc_registry_base_url, logger, token = nil)
     super()
     @message = message
@@ -29,7 +20,7 @@ class Jms::ManageMessage < ApplicationService
     action = @message.headers["destination"].split(".").last
     resource = body[resource_type.camelize(:lower)]
 
-    raise ResourceParseError, "Cannot parse resource" if resource.nil? || resource.empty?
+    raise Importable::ResourceParseError, "Cannot parse resource" if resource.nil? || resource.empty?
 
     case resource_type
     when "service", "infra_service"
@@ -84,14 +75,14 @@ class Jms::ManageMessage < ApplicationService
         DeployableService::DeleteJob.perform_later(hash["id"])
       end
     else
-      raise WrongMessageError
+      raise Importable::WrongMessageError
     end
-  rescue WrongMessageError => e
+  rescue Importable::WrongMessageError => e
     warn "[WARN] Message arrived, but the type is unknown: #{resource_type}, #{e}"
     Sentry.capture_exception(e)
-  rescue WrongIdError => e
+  rescue Importable::WrongIdError => e
     warn "[WARN] eid #{e} for #{resource_type} has a wrong format - update disabled"
-  rescue ResourceParseError => e
+  rescue Importable::ResourceParseError => e
     warn "[WARN] Resource parse error: #{e.message}"
   end
   # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/AbcSize
