@@ -1,7 +1,7 @@
 .card.mb-3.service-card
   .card-body.d-flex
 
-    .node-name #{ service["nodePID"] }
+    .node-name= service["nodePID"]
 
     .service-logo.mr-4
       - if service["logo"].present?
