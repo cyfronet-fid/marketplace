@@ -46,11 +46,16 @@ class Federation::ServicesController < ApplicationController
           @available_nodes = extract_available_nodes
         rescue StandardError => e
           Rails.logger.error "ERROR in mapping: #{e.class} - #{e.message}\n#{e.backtrace[0..5].join("\n")}"
-          Rails.logger.error "Raw JSON keys: #{begin begin
-                                                       json_response.keys
-                                                     rescue StandardError
-                                                       StandardError
-                                                     end; "not a hash" end}"
+          Rails.logger.error "Raw JSON keys: #{
+                               begin
+                                 begin
+                                   json_response.keys
+                                 rescue StandardError
+                                   StandardError
+                                 end
+                                 "not a hash"
+                               end
+                             }"
           @json_data = { error: "API Mapping Failed" }
         end
       when "404"
@@ -104,21 +109,21 @@ class Federation::ServicesController < ApplicationController
         "score" => nil,
         "path" => item["webpage"],
         "logo" => item["logo"],
-
         # prettified version as a workaround because there was no pretty name version
         # "scientific_domains" => Array(item["scientificDomains"]).map do |d|
         #   { "name" => prettify(d["scientificDomain"].to_s)} end,
         # "target_users" => Array(item["targetUsers"]).map { |u| { "name" => prettify(u.to_s)} },
-        "scientific_domains" => Array(item["scientificDomains"]).map do |d|
-          { "name" => d["scientificDomain"].to_s} end,
-        "target_users" => Array(item["targetUsers"]).map { |u| { "name" => u.to_s} },
-
+        "scientific_domains" => Array(item["scientificDomains"]).map { |d| { "name" => d["scientificDomain"].to_s } },
+        "target_users" => Array(item["targetUsers"]).map { |u| { "name" => u.to_s } },
         "platforms" => Array(item["relatedPlatforms"]).map { |p| { "name" => p } },
-        "resource_organisation" => { "name" => item["resourceOrganisation"], "pid" => item["resourceOrganisation"] },
-        "providers" => item["publicContacts"].map do |p|
-          p["organisation"] end.select(&:present?).map { |name| { "name" => name } },
+        "resource_organisation" => {
+          "name" => item["resourceOrganisation"],
+          "pid" => item["resourceOrganisation"]
+        },
+        "providers" =>
+          item["publicContacts"].map { |p| p["organisation"] }.select(&:present?).map { |name| { "name" => name } },
         "webpage" => item["webpage"] || item["userManual"] || item["order"],
-        "nodePID" => item["nodePID"],
+        "nodePID" => item["nodePID"]
       }
     end
   end
@@ -131,7 +136,7 @@ class Federation::ServicesController < ApplicationController
 
     facets_array = json["facets"].is_a?(Array) ? json["facets"] : []
     node_facets = facets_array.find { |f| f.is_a?(Hash) && f["field"] == "node" }
-    node_facets_values = node_facets ? Array(node_facets["values"]).map { |v | map_facet_value(v) } : []
+    node_facets_values = node_facets ? Array(node_facets["values"]).map { |v| map_facet_value(v) } : []
 
     per_page = 10
     current_page = [params[:page].to_i, 1].max
@@ -146,7 +151,9 @@ class Federation::ServicesController < ApplicationController
         "has_next_page" => current_page < total_pages,
         "has_prev_page" => current_page > 1
       },
-      "facets" => { "node" => node_facets_values }
+      "facets" => {
+        "node" => node_facets_values
+      }
     }
   end
 
