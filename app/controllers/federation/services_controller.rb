@@ -106,7 +106,14 @@ class Federation::ServicesController < ApplicationController
 
   private
 
+  def build_scientific_domain_map(json)
+    facet = json["facets"]&.find { |f| f["field"] == "scientific_domains" }
+    facet_values = facet ? facet["values"] : []
+    facet_values.to_h { |v| [v["value"], v["label"]] }
+  end
+
   def map_results(json)
+    value_to_label = build_scientific_domain_map(json)
     Array(json["results"]).map do |item|
       {
         "pid" => item["id"],
@@ -122,7 +129,11 @@ class Federation::ServicesController < ApplicationController
         # "scientific_domains" => Array(item["scientificDomains"]).map do |d|
         #   { "name" => prettify(d["scientificDomain"].to_s)} end,
         # "target_users" => Array(item["targetUsers"]).map { |u| { "name" => prettify(u.to_s)} },
-        "scientific_domains" => Array(item["scientificDomains"]).map { |d| { "name" => d["scientificDomain"].to_s } },
+        "scientific_domains" =>
+          Array(item["scientificDomains"]).map do |d|
+            value = d["scientificDomain"].to_s
+            { "name" => value_to_label[value] || value }
+          end,
         "target_users" => Array(item["targetUsers"]).map { |u| { "name" => u.to_s } },
         "platforms" => Array(item["relatedPlatforms"]).map { |p| { "name" => p } },
         "resource_organisation" => {
