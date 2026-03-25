@@ -20,8 +20,6 @@ class Federation::ServicesController < ApplicationController
 
     api_url = build_api_url(api_base_url)
 
-    @api_url = api_url
-
     begin
       uri = URI(api_url)
       http = Net::HTTP.new(uri.host, uri.port)
