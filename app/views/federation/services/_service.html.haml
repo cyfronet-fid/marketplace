@@ -1,8 +1,7 @@
 .card.mb-3.service-card
   .card-body.d-flex
 
-    .node-name
-      = nodes.find { |n| n[:url] == service["source_node_url"] }[:name] if nodes.present?
+    .node-name #{ service["nodePID"] }
 
     .service-logo.mr-4
       - if service["logo"].present?
