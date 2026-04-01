@@ -112,5 +112,6 @@ module Mp
     config.bos_enabled = ActiveModel::Type::Boolean.new.cast(ENV.fetch("BOS_ENABLED", false))
 
     config.federation_api_base_url = ENV.fetch("FEDERATION_API_BASE_URL", "http://localhost:3015/api/v1/services")
+    config.aggregator_type=ENV.fetch("AGGREGATOR_TYPE")
   end
 end

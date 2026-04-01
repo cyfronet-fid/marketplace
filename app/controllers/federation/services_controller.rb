@@ -112,27 +112,43 @@ class Federation::ServicesController < ApplicationController
     facet_values.to_h { |v| [v["value"], v["label"]] }
   end
 
+  def build_service_providers_map(json)
+    facet = json["facets"]&.find { |f| f["field"] == "service_providers" }
+    facet_values = facet ? facet["values"] : []
+    facet_values.to_h { |v| [v["value"], v["label"]] }
+  end
+
+  # rubocop:disable Metrics/AbcSize
   def map_results(json)
-    value_to_label = build_scientific_domain_map(json)
+    scientific_domain_map = build_scientific_domain_map(json)
+    service_providers_map = build_service_providers_map(json)
+
+    Rails.logger.debug "\n\n\t\telo"
+    Rails.logger.debug json["results"][0]["result"]["service"]["logo"]
+    Rails.logger.debug json["results"][0]["result"]["service"]["nodePID"]
+    Rails.logger.debug scientific_domain_map
+    # Rails.logger.debug json[0]["service"]
+    Rails.logger.debug "\n\n\t\tnara\n\n"
     Array(json["results"]).map do |item|
       {
-        "pid" => item["id"],
-        "name" => item["name"] || item["abbreviation"],
+        "pid" => item["result"]["id"],
+        "name" => item["result"]["service"]["name"],
         "slug" => item["id"],
-        "tagline" => item["tagline"],
-        "description" => item["description"],
-        "rating" => nil,
-        "score" => nil,
+        # "tagline" => item["tagline"],
+        "description" => item["result"]["service"]["description"],
+        # "rating" => nil,
+        "score" => item["score"],
         "path" => item["webpage"],
-        "logo" => item["logo"],
+        "logo" => item["result"]["service"]["logo"],
+        # "logo" => "https://s2.qwant.com/thumbr/474x422/4/9/117193e0027f23ed806a6d68f4e0786cacdf2a5dea9bced86033aefaf8825a/OIP.TlAS_EySp2U2IERvDZy3ugHaGm.jpg?u=https%3A%2F%2Ftse.mm.bing.net%2Fth%2Fid%2FOIP.TlAS_EySp2U2IERvDZy3ugHaGm%3Fpid%3DApi&q=0&b=1&p=0&a=0",
         # prettified version as a workaround because there was no pretty name version
         # "scientific_domains" => Array(item["scientificDomains"]).map do |d|
         #   { "name" => prettify(d["scientificDomain"].to_s)} end,
         # "target_users" => Array(item["targetUsers"]).map { |u| { "name" => prettify(u.to_s)} },
         "scientific_domains" =>
-          Array(item["scientificDomains"]).map do |d|
+          Array(item["result"]["service"]["scientificDomains"]).map do |d|
             value = d["scientificDomain"].to_s
-            { "name" => value_to_label[value] || value }
+            { "name" => scientific_domain_map[value] || value }
           end,
         "target_users" => Array(item["targetUsers"]).map { |u| { "name" => u.to_s } },
         "platforms" => Array(item["relatedPlatforms"]).map { |p| { "name" => p } },
@@ -140,13 +156,21 @@ class Federation::ServicesController < ApplicationController
           "name" => item["resourceOrganisation"],
           "pid" => item["resourceOrganisation"]
         },
+        # "providers" =>
+        #   item["publicContacts"].map { |p| p["organisation"] }.select(&:present?).map { |name| { "name" => name } },
+        #
         "providers" =>
-          item["publicContacts"].map { |p| p["organisation"] }.select(&:present?).map { |name| { "name" => name } },
+          Array(item["result"]["service"]["serviceProviders"]).map do |provider|
+            { "name" => service_providers_map[provider] || provider }
+          end,
+        #
+        # "providers" => item["result"]["service"]["resourceOwner"],
         "webpage" => item["webpage"] || item["userManual"] || item["order"],
-        "nodePID" => item["nodePID"]
+        "nodePID" => item["result"]["service"]["nodePID"]
       }
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   def map_federation_response(json)
     results = map_results(json)
