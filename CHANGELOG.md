@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [4.4.0](https://github.com/cyfronet-fid/marketplace/compare/v4.3.1...v4.4.0) (2026-04-21)
+
+
+### Features
+
+* [[#3631](https://github.com/cyfronet-fid/marketplace/issues/3631)] rename deployable services to applications ([820cbdf](https://github.com/cyfronet-fid/marketplace/commit/820cbdf95836918bdb7a2ac6599c278f2c375cbb))
+* [[#3632](https://github.com/cyfronet-fid/marketplace/issues/3632)] Rename provider to organisation ([#3639](https://github.com/cyfronet-fid/marketplace/issues/3639)) ([fc4909f](https://github.com/cyfronet-fid/marketplace/commit/fc4909f19167116edf89b04af59fc5112e42b51e))
+
+
+### Bug Fixes
+
+* [[#3438](https://github.com/cyfronet-fid/marketplace/issues/3438)] change meta descriptions ([a57a7fb](https://github.com/cyfronet-fid/marketplace/commit/a57a7fb8979bbb430127ddaf23568a3c6c04c231))
+* [[#3647](https://github.com/cyfronet-fid/marketplace/issues/3647)] fix providers redirection ([b8b1f82](https://github.com/cyfronet-fid/marketplace/commit/b8b1f821a317dbdf1d072f82c3a1fdb0a05f77f6))
+* [[#3684](https://github.com/cyfronet-fid/marketplace/issues/3684)] fix projects recommendations ([0ec51e6](https://github.com/cyfronet-fid/marketplace/commit/0ec51e6a2272e3b5596a64484a3ea8fff55041d6))
+* [] Services import endpoint ([d3a0b23](https://github.com/cyfronet-fid/marketplace/commit/d3a0b23100b2020cf89ff00b35fcf85194d9b1f0))
+* [] Services import endpoint ([b685ec1](https://github.com/cyfronet-fid/marketplace/commit/b685ec17b7c809f0fe1cf6998085c10f0ef75dba))
+* [AdHoc] DS 'Go to service' button ([#3627](https://github.com/cyfronet-fid/marketplace/issues/3627)) ([02aa994](https://github.com/cyfronet-fid/marketplace/commit/02aa9941e56adba7892115b17f523d5c332d0734))
+
 ## [4.3.1](https://github.com/cyfronet-fid/marketplace/compare/v4.3.0...v4.3.1) (2026-02-18)
 
 
