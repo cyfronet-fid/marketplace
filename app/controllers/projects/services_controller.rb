@@ -34,26 +34,27 @@ class Projects::ServicesController < ApplicationController
   def sample_recommended_offers
     return unless @project_items.present?
 
+    existing_offer_ids = @project.project_items.select(:offer_id)
+    base_query =
+      Offer
+        .join_orderable
+        .with_published_orderable
+        .where(offers: { orderable_type: "DeployableService" })
+        .where.not(id: existing_offer_ids)
+
     domains = @project.scientific_domains.presence || @project_items.first.service&.scientific_domains
-    return Offer.all.sample(2) if domains.blank?
+    return base_query.sample(2) if domains.blank?
 
     domain_ids = domains.map(&:id)
 
-    Offer
-      .join_orderable
-      .with_published_orderable
+    base_query
       .joins(
-        "LEFT JOIN service_scientific_domains ON service_scientific_domains.service_id = services.id " \
-          "LEFT JOIN deployable_service_scientific_domains " \
+        "LEFT JOIN deployable_service_scientific_domains " \
           "ON deployable_service_scientific_domains.deployable_service_id = deployable_services.id"
       )
-      .where(
-        "service_scientific_domains.scientific_domain_id IN (:ids) " \
-          "OR deployable_service_scientific_domains.scientific_domain_id IN (:ids)",
-        ids: domain_ids
-      )
+      .where("deployable_service_scientific_domains.scientific_domain_id IN (:ids)", ids: domain_ids)
       .distinct
       .sample(2)
-      .presence || Offer.all.sample(2)
+      .presence || base_query.sample(2)
   end
 end
