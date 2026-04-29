@@ -9,9 +9,14 @@ class Ess::DeployableServiceSerializer < ApplicationSerializer
              :tagline,
              :description,
              :url,
+             :urls,
              :node,
              :version,
-             :software_license,
+             :publishing_date,
+             :resource_type,
+             :public_contact_emails,
+             :license_name,
+             :license_url,
              :last_update,
              :creators,
              :status,
@@ -31,5 +36,9 @@ class Ess::DeployableServiceSerializer < ApplicationSerializer
 
   def catalogue
     object.catalogue&.name
+  end
+
+  def publishing_date
+    object.publishing_date&.as_json
   end
 end

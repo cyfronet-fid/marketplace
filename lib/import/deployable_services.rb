@@ -39,6 +39,7 @@ class Import::DeployableServices
       eid = external_data["id"]
       parsed_deployable_service_data =
         Importers::DeployableService.call(external_data, Time.now.to_i, @eosc_registry_base_url, @token)
+      parsed_deployable_service_data.delete(:logo_url)
       parsed_deployable_service_data["status"] = object_status(
         external_data["active"],
         external_data["suspended"]
@@ -117,7 +118,7 @@ class Import::DeployableServices
       rp =
         Importers::Request.new(
           @eosc_registry_base_url,
-          "public/deployableService",
+          "public/deployableApplication",
           faraday: @faraday,
           token: @token
         ).call

@@ -33,7 +33,7 @@ module Import
 
       @request_guidelines.each do |external_data|
         eid = external_data["id"]
-        title = external_data["title"]
+        title = guideline_title(external_data)
         parsed_guideline_data = { title: title, eid: eid }
         existing_guideline = Guideline.find_by(eid: eid)
 
@@ -45,7 +45,7 @@ module Import
           update_guideline(existing_guideline, parsed_guideline_data)
         end
       rescue ActiveRecord::RecordInvalid
-        log "[WARN] Guideline #{external_data["title"]},
+        log "[WARN] Guideline #{guideline_title(external_data)},
                 eid: #{external_data["id"]} cannot be updated. #{existing_guideline.errors.full_messages}"
       rescue StandardError => e
         log "[WARN] Unexpected #{e}! Provider #{name(external_data)},
@@ -85,7 +85,7 @@ module Import
           log "Service #{eid} not found but its source exists with id: #{service_source.id}"
           next
         end
-        guidelines = Guideline.where(eid: [guideline_eids])
+        guidelines = Guideline.where(eid: guideline_eids)
         service.guidelines = guidelines
         service.save!
       end
@@ -110,6 +110,10 @@ module Import
         abort("import exited with errors - could not connect to #{@eosc_registry_base_url} \n #{e.message}")
       end
       rp.body["results"]
+    end
+
+    def guideline_title(external_data)
+      external_data["name"].presence || external_data["title"]
     end
 
     def log_status(current_guideline, parsed_guideline_data)

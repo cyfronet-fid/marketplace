@@ -3,18 +3,6 @@
 module Presentable
   extend ActiveSupport::Concern
 
-  def geographical_availabilities=(value)
-    super(value&.map { |v| Country.for(v) })
-  end
-
-  def resource_geographic_locations=(value)
-    super(value&.map { |v| Country.for(v) })
-  end
-
-  def target_relationships
-    (required_services + manual_related_services + related_services).uniq
-  end
-
   def resource_organisation_and_providers
     ([resource_organisation] + Array(providers)).reject(&:blank?).uniq
   end

@@ -10,14 +10,14 @@
       "get": {
         "summary": "Search services",
         "tags": ["Search Services"],
-        "description": "Search and filter services using Elasticsearch with PID-based filtering. Supports full-text search and multiple filter criteria.",
+        "description": "Search and filter services using Elasticsearch with EID-based filtering. Supports full-text search and multiple filter criteria.",
         "operationId": "searchServices",
         "parameters": [
           {
             "name": "q",
             "in": "query",
             "required": false,
-            "description": "Search query string. Searches in service name, tagline, description, offer names, and provider names using Elasticsearch",
+            "description": "Search query string. Searches in service name, description, offer names, and provider names using Elasticsearch",
             "schema": {
               "type": "string"
             }
@@ -29,7 +29,7 @@
               "type": "string"
             },
             "required": false,
-            "description": "Array of scientific domain PIDs to filter by. Use persistent IDs (PIDs) from scientific domain vocabulary",
+            "description": "Array of scientific domain EIDs to filter by. Use external IDs (EIDs) from scientific domain vocabulary",
             "schema": {
               "type": "array"
             }
@@ -41,43 +41,19 @@
               "type": "string"
             },
             "required": false,
-            "description": "Array of provider PIDs to filter by. Use persistent IDs (PIDs) from provider registry",
+            "description": "Array of provider EIDs to filter by. Use external IDs (EIDs) from provider registry",
             "schema": {
               "type": "array"
             }
           },
           {
-            "name": "target_users",
+            "name": "jurisdiction",
             "in": "query",
             "items": {
               "type": "string"
             },
             "required": false,
-            "description": "Array of target user PIDs to filter by. Use persistent IDs (PIDs) from target user vocabulary",
-            "schema": {
-              "type": "array"
-            }
-          },
-          {
-            "name": "platforms",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "required": false,
-            "description": "Array of platform PIDs to filter by. Use persistent IDs (PIDs) from platform vocabulary",
-            "schema": {
-              "type": "array"
-            }
-          },
-          {
-            "name": "research_activities",
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "required": false,
-            "description": "Array of research activity PIDs to filter by. Use persistent IDs (PIDs) from research activity vocabulary",
+            "description": "Array of jurisdiction EIDs to filter by",
             "schema": {
               "type": "array"
             }
@@ -89,7 +65,7 @@
               "type": "string"
             },
             "required": false,
-            "description": "Array of tag PIDs to filter by. Use persistent IDs (PIDs) from tag vocabulary",
+            "description": "Array of tag EIDs to filter by. Use external IDs (EIDs) from tag vocabulary",
             "schema": {
               "type": "array"
             }
@@ -158,14 +134,13 @@
                 "examples": {
                   "basic_search": {
                     "value": {
-                      "services": [
+                      "results": [
                         {
                           "id": 123,
                           "eid": "ml-platform-v2.1",
                           "name": "Machine Learning Platform",
                           "slug": "machine-learning-platform",
-                          "tagline": "Advanced ML platform for researchers",
-                          "description": "A comprehensive machine learning platform providing tools for data analysis, model training, and deployment for research purposes.",
+                          "description": "A comprehensive machine learning platform providing tools for data analysis,  model training, and deployment for research purposes.",
                           "rating": 4.5,
                           "score": 1.2345,
                           "logo_url": "https://example.com/logo.png",
@@ -189,32 +164,11 @@
                               "name": "Artificial Intelligence"
                             }
                           ],
-                          "target_users": [
-                            {
-                              "id": 101,
-                              "eid": "researchers",
-                              "name": "Researchers"
-                            },
-                            {
-                              "id": 102,
-                              "eid": "data-scientists",
-                              "name": "Data Scientists"
-                            }
-                          ],
-                          "platforms": [
-                            {
-                              "id": 202,
-                              "eid": "web-platform",
-                              "name": "Web Platform"
-                            }
-                          ],
-                          "research_activities": [
-                            {
-                              "id": 303,
-                              "eid": "data-analysis",
-                              "name": "Data Analysis"
-                            }
-                          ],
+                          "jurisdiction": {
+                            "id": 202,
+                            "eid": "eu",
+                            "name": "European Union"
+                          },
                           "tags": [
                             {
                               "id": 404,
@@ -264,12 +218,58 @@
                           "Advanced <mark>ML</mark> platform for researchers",
                           "<mark>Machine learning</mark> tools"
                         ]
+                      },
+                      "facets": {
+                        "categories": [
+                          {
+                            "name": "Category 1",
+                            "eid": "cat-1",
+                            "count": 3,
+                            "children": []
+                          }
+                        ],
+                        "scientific_domains": [
+                          {
+                            "name": "Computer Science",
+                            "eid": "computer-science",
+                            "count": 4,
+                            "children": []
+                          }
+                        ],
+                        "providers": [
+                          {
+                            "name": "European Research Institute",
+                            "eid": "research-institute-eu",
+                            "count": 10
+                          }
+                        ],
+                        "jurisdiction": [
+                          {
+                            "name": "European Union",
+                            "eid": "eu",
+                            "count": 2
+                          }
+                        ],
+                        "rating": [
+                          {
+                            "name": "4+ stars",
+                            "eid": "4",
+                            "count": 8
+                          }
+                        ],
+                        "order_type": [
+                          {
+                            "name": "Open Access",
+                            "eid": "open_access",
+                            "count": 12
+                          }
+                        ]
                       }
                     }
                   },
                   "empty_search": {
                     "value": {
-                      "services": [],
+                      "results": [],
                       "offers": {},
                       "pagination": {
                         "current_page": 1,
@@ -277,7 +277,8 @@
                         "total_count": 0,
                         "per_page": 25
                       },
-                      "highlights": {}
+                      "highlights": {},
+                      "facets": {}
                     }
                   }
                 },
@@ -317,8 +318,8 @@
                   "validation_errors": {
                     "value": {
                       "errors": [
-                        "Invalid scientific domain PID: 'invalid-domain'",
-                        "Invalid provider PID: 'non-existent-provider'"
+                        "Invalid scientific domain EID: 'invalid-domain'",
+                        "Invalid provider EID: 'non-existent-provider'"
                       ]
                     }
                   }
@@ -356,6 +357,114 @@
         "type": "apiKey",
         "name": "X-User-Token",
         "in": "header"
+      }
+    },
+    "schemas": {
+      "SearchResponse": {
+        "type": "object",
+        "properties": {
+          "results": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "offers": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            }
+          },
+          "pagination": {
+            "type": "object",
+            "properties": {
+              "current_page": {
+                "type": "integer"
+              },
+              "total_pages": {
+                "type": "integer"
+              },
+              "total_count": {
+                "type": "integer"
+              },
+              "per_page": {
+                "type": "integer"
+              }
+            }
+          },
+          "highlights": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "facets": {
+            "type": "object",
+            "properties": {
+              "categories": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "scientific_domains": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "providers": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "research_activities": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "rating": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "order_type": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string"
+          }
+        }
+      },
+      "ValidationErrorResponse": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
       }
     }
   }

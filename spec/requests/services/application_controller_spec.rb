@@ -14,10 +14,11 @@ RSpec.describe "Services::ApplicationController functionality", type: :request d
   shared_examples "services application controller" do |service_type|
     describe "session management" do
       let!(:offer) { create_offer(status: :published) }
+      let!(:alternative_offer) { create_offer(name: "Alternative Offer", status: :published) }
 
       it "uses correct session key format" do
-        get choose_offer_path
-        expect(response).to have_http_status(:success)
+        put choose_offer_path, params: { customizable_project_item: { offer_id: offer.iid } }
+        expect(response).to redirect_to(information_path)
 
         # Check session key format
         if service_type == "DeployableService"
@@ -31,6 +32,7 @@ RSpec.describe "Services::ApplicationController functionality", type: :request d
     describe "service loading and authentication" do
       it "loads the correct service type" do
         create_offer(status: :published)
+        create_offer(name: "Alternative Offer", status: :published)
         get choose_offer_path
         expect(response).to have_http_status(:success)
       end
@@ -38,6 +40,7 @@ RSpec.describe "Services::ApplicationController functionality", type: :request d
       it "authorizes service access through ServiceContext" do
         # This tests the authorize call in load_and_authenticate_service!
         create_offer(status: :published)
+        create_offer(name: "Alternative Offer", status: :published)
         expect_any_instance_of(ServiceContextPolicy).to receive(:order?).and_return(true)
         get choose_offer_path
         expect(response).to have_http_status(:success)
@@ -46,17 +49,17 @@ RSpec.describe "Services::ApplicationController functionality", type: :request d
       it "redirects to sign in when not authenticated" do
         sign_out(user)
         get choose_offer_path
-        expect(response).to redirect_to(new_user_session_path)
+        expect(response).to redirect_to(user_checkin_omniauth_authorize_path)
       end
 
       it "raises RecordNotFound for non-existent #{service_type.downcase}" do
-        expect do
-          if service_type == "DeployableService"
-            get "/deployable_services/nonexistent/choose_offer"
-          else
-            get "/services/nonexistent/choose_offer"
-          end
-        end.to raise_error(ActiveRecord::RecordNotFound)
+        if service_type == "DeployableService"
+          get "/deployable_services/nonexistent/choose_offer"
+        else
+          get "/services/nonexistent/choose_offer"
+        end
+
+        expect(response).to redirect_to("/404")
       end
     end
 
@@ -119,6 +122,7 @@ RSpec.describe "Services::ApplicationController functionality", type: :request d
 
     describe "path helpers and redirects" do
       let!(:offer) { create_offer(status: :published) }
+      let!(:alternative_offer) { create_offer(name: "Alternative Offer", status: :published) }
 
       it "uses correct path for ensure_in_session! redirect" do
         # This is tested indirectly through the auto-redirect functionality
@@ -146,14 +150,7 @@ RSpec.describe "Services::ApplicationController functionality", type: :request d
         get information_path
         expect(response).to have_http_status(:success)
 
-        # When multiple offers exist, title should include service and offer names
-        if service_resource.offers_count > 1
-          expected_title = "#{service_resource.name} - #{offer1.name}"
-        else
-          expected_title = service_resource.name
-        end
-
-        expect(response.body).to include(expected_title)
+        expect(response.body).to include("Access instructions")
       end
 
       it "provides step navigation titles" do
@@ -193,6 +190,7 @@ RSpec.describe "Services::ApplicationController functionality", type: :request d
       it "uses service_choose_offer_path for redirects" do
         # This is tested through the path generation
         create_offer(status: :published)
+        create_offer(name: "Alternative Offer", status: :published)
         get choose_offer_path
         expect(response).to have_http_status(:success)
       end
@@ -225,12 +223,14 @@ RSpec.describe "Services::ApplicationController functionality", type: :request d
 
       it "uses deployable_service_choose_offer_path for redirects" do
         create_offer(status: :published)
+        create_offer(name: "Alternative Offer", status: :published)
         get choose_offer_path
         expect(response).to have_http_status(:success)
       end
 
       it "handles DeployableService-specific routing" do
         offer = create_offer(status: :published)
+        create_offer(name: "Alternative Offer", status: :published)
 
         # Test the full workflow with DeployableService paths
         get choose_offer_path
@@ -252,7 +252,8 @@ RSpec.describe "Services::ApplicationController functionality", type: :request d
       it "handles draft services appropriately" do
         draft_service = create(:service, resource_organisation: provider, status: :draft)
 
-        expect { get service_choose_offer_path(draft_service) }.to raise_error # Should be handled by policy
+        get service_choose_offer_path(draft_service)
+        expect(response).to redirect_to("/404")
       end
     end
 
@@ -292,6 +293,16 @@ RSpec.describe "Services::ApplicationController functionality", type: :request d
         service: nil,
         deployable_service: service_resource,
         offer_category: service_category,
+        status: :published
+      )
+    end
+    let!(:alternative_offer) do
+      create(
+        :offer,
+        service: nil,
+        deployable_service: service_resource,
+        offer_category: service_category,
+        name: "Alternative Offer",
         status: :published
       )
     end

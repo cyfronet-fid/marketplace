@@ -9,7 +9,6 @@ module OrderableResource
   REQUIRED_METHODS = %i[
     name
     description
-    tagline
     slug
     status
     order_type

@@ -31,7 +31,7 @@ class Import::Resources
     begin
       @token ||= Importers::Token.new(faraday: @faraday).receive_token
       response =
-        Importers::Request.new(@eosc_registry_base_url, "service/adminPage", faraday: @faraday, token: @token).call
+        Importers::Request.new(@eosc_registry_base_url, "public/service", faraday: @faraday, token: @token).call
     rescue Errno::ECONNREFUSED, Importers::Token::RequestError => e
       abort("import exited with errors - could not connect to #{@eosc_registry_base_url} \n #{e.message}")
     end
@@ -45,15 +45,18 @@ class Import::Resources
     log "EOSC Registry - all services #{total_service_count}"
 
     response.body["results"]
-      .select { |res| @ids.empty? || @ids.include?(res["service"]["id"]) }
+      .select { |res| @ids.empty? || @ids.include?(eid(res)) }
       .each do |service_data|
-        service = service_data["service"].merge(service_data["resourceExtras"] || {})
         output.append(service_data)
 
-        synchronized_at = service_data["metadata"]["modifiedAt"].to_i
-        image_url = service["logo"]
-        service = Importers::Service.call(service, synchronized_at, @eosc_registry_base_url, @token)
-        service[:status] = object_status(service_data["active"], service_data["suspended"])
+        synchronized_at = service_data.dig("metadata", "modifiedAt")&.to_i || Time.now.to_i
+        service_payload =
+          service_data["service"] ? service_data["service"].merge(service_data["resourceExtras"] || {}) : service_data
+        image_url = service_payload["logo"]
+        service = Importers::Service.call(service_payload, synchronized_at, @eosc_registry_base_url, @token)
+        service.delete(:logo_url)
+        service[:status] = registry_status(service_data, service_payload) || service[:status]
+        service[:status] ||= :published
         if (service_source = ServiceSource.find_by(eid: service[:pid], source_type: "eosc_registry")).nil?
           created += 1
           log "Adding [NEW] service: #{service[:name]}, eid: #{service[:pid]}"
@@ -117,11 +120,17 @@ class Import::Resources
   private
 
   def name(service_data)
-    service_data.dig("service", "name")
+    service_data["name"] || service_data.dig("service", "name")
   end
 
   def eid(service_data)
-    service_data.dig("service", "id")
+    service_data["id"] || service_data.dig("service", "id")
+  end
+
+  def registry_status(service_data, service_payload)
+    status_source = service_data.key?("active") ? service_data : service_payload
+
+    object_status(status_source["active"], status_source["suspended"]) if status_source.key?("active")
   end
 
   def update_from_eosc_registry(service, service_source, validate)

@@ -49,14 +49,44 @@ FactoryBot.define do
 
     factory :open_access_offer do
       order_type { :open_access }
+
+      orderable do
+        if service != :not_set
+          service.presence || (deployable_service == :not_set ? nil : deployable_service)
+        elsif deployable_service != :not_set
+          deployable_service
+        else
+          create(:open_access_service, offers_count: 1)
+        end
+      end
     end
 
     factory :fully_open_access_offer do
       order_type { :fully_open_access }
+
+      orderable do
+        if service != :not_set
+          service.presence || (deployable_service == :not_set ? nil : deployable_service)
+        elsif deployable_service != :not_set
+          deployable_service
+        else
+          create(:fully_open_access_service, offers_count: 1)
+        end
+      end
     end
 
     factory :other_offer do
       order_type { :other }
+
+      orderable do
+        if service != :not_set
+          service.presence || (deployable_service == :not_set ? nil : deployable_service)
+        elsif deployable_service != :not_set
+          deployable_service
+        else
+          create(:other_service, offers_count: 1)
+        end
+      end
     end
 
     factory :external_offer do

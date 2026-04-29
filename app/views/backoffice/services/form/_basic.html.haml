@@ -1,6 +1,6 @@
 .card.rounded
   %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
-              [:name, :abbreviation, :resource_organisation, :providers, :webpage_url])),
+              [:name, :resource_organisation, :providers, :webpage_url, :publishing_date])),
               data: { toggle: "collapse", target: "#basic" },
               aria: { expanded: true, controls: "basic" } }
     .card-header.text-left{ id: "basic-header" }
@@ -13,11 +13,10 @@
             %i.fas.fa-chevron-up
   .collapse{ id: "basic", "aria-labelledby": "basic-header",
             "data-parent": "#accordion-form",
-            class: ("show" unless collapsed?(service, [:name, :abbreviation, :resource_organisation,
-                                                       :providers, :webpage_url])) }
+            class: ("show" unless collapsed?(service, [:name, :resource_organisation,
+                                                       :providers, :webpage_url, :publishing_date])) }
     .card-body
       = f.input :name, disabled: cant_edit?(:name)
-      = f.input :abbreviation, disabled: cant_edit?(:abbreviation)
       = f.association :nodes, label: "Node", collection: Vocabulary::Node.all,
         input_html: { multiple: false, data: { choice: true } }
       = f.association :resource_organisation,
@@ -28,6 +27,11 @@
                       disabled: cant_edit?([provider_ids: []]),
                       collection: Provider.active.sort_by { |e| e.name.strip.downcase }
       = f.input :webpage_url, disabled: cant_edit?(:webpage_url)
+      = f.input :publishing_date, as: :date, html5: true, disabled: cant_edit?(:publishing_date)
+      = f.input :urls, as: :array, input_html: { class: "form-control text optional" },
+                wrapper_html: { "data-service-target" => "urls" },
+                disabled: cant_edit?([urls: []])
+      = link_to_add_array_field("service", "urls")
       .row.service-contact-emails
         .col-12
           %h3= _("Alternative Identifiers")

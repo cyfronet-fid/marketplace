@@ -22,7 +22,7 @@ module Service::Searchable
         highlight: {
           tag: "<mark>"
         },
-        scope_results: ->(r) { r.includes(:scientific_domains, :providers, :target_users, :offers).with_attached_logo }
+        scope_results: ->(r) { r.includes(:scientific_domains, :providers, :offers).with_attached_logo }
       )
 
     offers =
@@ -90,7 +90,7 @@ module Service::Searchable
 
   def common_params
     {
-      fields: %w[name^7 tagline^3 description offer_names provider_names resource_organisation_name],
+      fields: %w[name^7 description offer_names provider_names resource_organisation_name],
       operator: "or",
       match: :word_middle
     }
@@ -148,14 +148,11 @@ module Service::Searchable
     url_path = URI.parse(request.path).path
     backoffice = url_path.start_with?("/backoffice")
     [
-      Filter::MarketplaceLocation,
       Filter::ScientificDomain,
       backoffice ? Filter::BackofficeProvider : Filter::Provider,
-      Filter::TargetUser,
-      Filter::Platform,
+      Filter::Jurisdiction,
       Filter::Rating,
       Filter::OrderType,
-      Filter::Location,
       Filter::Tag
     ]
   end

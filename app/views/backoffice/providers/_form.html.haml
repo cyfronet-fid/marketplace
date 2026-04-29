@@ -7,7 +7,7 @@
       #provider-edit
         = render "backoffice/providers/form/tabs", active_tab: tab
         .tab-content{ role: "tablist" }
-          - extended_steps.each do |step|
+          - provider_tabs.each do |step|
             = render "backoffice/providers/form/#{step}", f: f, provider: provider, catalogues: catalogues,
             active: step == tab
       %hr.bottom-hr.mt-5.mb-4

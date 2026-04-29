@@ -61,7 +61,7 @@ describe Import::Resources, backend: true do
   def expect_responses(test_url, services_response = nil)
     unless services_response.nil?
       allow_any_instance_of(Faraday::Connection).to receive(:get).with(
-        "#{test_url}/public/service/adminPage/all?quantity=10000&from=0"
+        "#{test_url}/public/service/all?quantity=10000&from=0"
       ).and_return(services_response)
     end
   end
@@ -99,13 +99,10 @@ describe Import::Resources, backend: true do
     it "shouldn't create an offer for a new services" do
       expect { eosc_registry.call }.to output(
         /PROCESSED: 3, CREATED: 3, UPDATED: 0, NOT MODIFIED: 0$/
-      ).to_stdout.and change { Service.count }.by(3)
+      ).to_stdout.and change { Service.count }.by(1)
       service = Service.first
 
       expect(service.offers).to be_empty
-
-      expect(Service.find_by(name: "MetalPDB").offers).to be_empty
-      expect(Service.find_by(name: "PDB_REDO server").offers).to be_empty
     end
 
     it "should not update service which has upstream to null" do
@@ -169,6 +166,30 @@ describe Import::Resources, backend: true do
       eosc_registry = make_and_stub_eosc_registry(ids: ["phenomenal.phenomenal"])
       expect { eosc_registry.call }.to change { Service.count }.by(1)
       expect(Service.last.name).to eq("PhenoMeNal")
+    end
+
+    it "preserves inactive service status from the registry" do
+      response_body = create(:eosc_registry_services_response)
+      response_body.dig("results", 0, "service")["active"] = false
+      response_body.dig("results", 0, "service")["suspended"] = false
+      expect_responses(test_url, double(status: 200, body: response_body))
+
+      eosc_registry = make_and_stub_eosc_registry(ids: ["phenomenal.phenomenal"])
+
+      expect { eosc_registry.call }.to change { Service.count }.by(1)
+      expect(Service.find_by(pid: "phenomenal.phenomenal")).to be_unpublished
+    end
+
+    it "preserves suspended service status from the registry" do
+      response_body = create(:eosc_registry_services_response)
+      response_body.dig("results", 0, "service")["active"] = true
+      response_body.dig("results", 0, "service")["suspended"] = true
+      expect_responses(test_url, double(status: 200, body: response_body))
+
+      eosc_registry = make_and_stub_eosc_registry(ids: ["phenomenal.phenomenal"])
+
+      expect { eosc_registry.call }.to change { Service.count }.by(1)
+      expect(Service.find_by(pid: "phenomenal.phenomenal")).to be_suspended
     end
 
     it "should output file with unprocessed data (only selected services)" do

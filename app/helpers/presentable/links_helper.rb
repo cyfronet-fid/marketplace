@@ -23,29 +23,8 @@ module Presentable::LinksHelper
     {
       name: "links",
       template: "links",
-      fields: %w[
-        webpage_url
-        helpdesk_url
-        helpdesk_email
-        manual_url
-        pricing_url
-        training_information_url
-        privacy_policy_url
-        terms_of_use_url
-        access_policies_url
-        maintenance_url
-      ],
-      active_when_suspended: %w[
-        webpage_url
-        helpdesk_url
-        helpdesk_email
-        manual_url
-        training_information_url
-        privacy_policy_url
-        terms_of_use_url
-        access_policies_url
-        maintenance_url
-      ]
+      fields: %w[webpage_url privacy_policy_url terms_of_use_url access_policies_url],
+      active_when_suspended: %w[webpage_url privacy_policy_url terms_of_use_url access_policies_url]
     }
   end
 

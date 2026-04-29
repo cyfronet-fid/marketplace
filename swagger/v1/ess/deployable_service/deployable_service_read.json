@@ -28,6 +28,12 @@
       "type": "string",
       "nullable": true
     },
+    "urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
     "node": {
       "type": "string",
       "nullable": true
@@ -36,7 +42,25 @@
       "type": "string",
       "nullable": true
     },
-    "software_license": {
+    "publishing_date": {
+      "type": "string",
+      "nullable": true
+    },
+    "resource_type": {
+      "type": "string",
+      "nullable": true
+    },
+    "public_contact_emails": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "license_name": {
+      "type": "string",
+      "nullable": true
+    },
+    "license_url": {
       "type": "string",
       "nullable": true
     },

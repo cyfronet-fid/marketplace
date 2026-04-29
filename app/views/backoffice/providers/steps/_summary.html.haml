@@ -54,40 +54,17 @@
               .offer-info-data
                 .row
                   .col-6
-                    Street name and number
-                  .col-6
-                    = provider.street_name_and_number
-                .row
-                  .col-6
-                    Postal Code
-                  .col-6
-                    = provider.postal_code
-                .row
-                  .col-6
-                    City
-                  .col-6
-                    = provider.city
-                .row
-                  .col-6
-                    Region
-                  .col-6
-                    = provider.region
-                .row
-                  .col-6
                     Country
                   .col-6
                     = provider.country
 
-            .offer-info-box
-              %h6 MAIN CONTACT
-              .offer-info-data
-                = render "backoffice/providers/steps/summary_contact_section", contact: provider.main_contact
-
             .offer-info-box.mb-0
               %h6 PUBLIC CONTACTS
               .offer-info-data
-                - provider.public_contacts.each do |contact|
-                  = render "backoffice/providers/steps/summary_contact_section", contact: contact
+                - provider.public_contact_emails.each do |email|
+                  .row
+                    .col-12
+                      = mail_to email, email
 
         .col-lg-6.pl-0
           .offer-section-wrapper.bottom-margin

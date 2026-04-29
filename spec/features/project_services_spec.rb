@@ -18,7 +18,7 @@ RSpec.feature "Project services", end_user_frontend: true do
     visit project_service_path(project, project_item)
 
     expect(page).to have_link("Order history")
-    expect(page).to have_link("Contact with service provider")
+    expect(page).to have_link("Ask organisation a question")
     expect(page).to have_link("Details")
   end
 
