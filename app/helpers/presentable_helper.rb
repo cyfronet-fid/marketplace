@@ -25,7 +25,7 @@ module PresentableHelper
   end
 
   def any_present?(record, *fields)
-    fields.any? { |f| record.send(f).present? }
+    fields.any? { |f| record.respond_to?(f) && record.send(f).present? }
   end
 
   def field_tree(record, field)

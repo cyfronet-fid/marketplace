@@ -18,7 +18,8 @@ class Importers::Logo < ApplicationService
       logo = URI.parse(@image_url).open(ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE)
       logo_content_type = logo.content_type
       extension = Rack::Mime::MIME_TYPES.invert[logo_content_type]
-      filename = @object.abbreviation.present? ? "#{@object.id}-#{@object.abbreviation}" : to_slug(@object.name)
+      abbreviation = @object.abbreviation if @object.respond_to?(:abbreviation)
+      filename = abbreviation.present? ? "#{@object.id}-#{abbreviation}" : to_slug(@object.name)
       unless %w[.jpg .jpeg .pjpeg .png .gif .tiff].include?(extension)
         logo = convert_to_png(logo, extension)
         logo_content_type = "image/png"

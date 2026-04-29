@@ -3,8 +3,8 @@
 require "rails_helper"
 
 RSpec.feature "Comparison", js: true, end_user_frontend: true do
-  let!(:service1) { create(:open_access_service, geographical_availabilities: %w[EL]) }
-  let!(:service2) { create(:service, geographical_availabilities: %w[PL DE]) }
+  let!(:service1) { create(:open_access_service) }
+  let!(:service2) { create(:service) }
   let!(:service3) { create(:external_service, tag_list: %w[tag1 tag2 tag3]) }
 
   it "doesn't show comparison bar until I click the Add to compare checkbox" do
@@ -123,25 +123,10 @@ RSpec.feature "Comparison", js: true, end_user_frontend: true do
     expect(page).to have_selector("a[href='/services?tag=tag2']")
     expect(page).to have_selector("a[href='/services?tag=tag3']")
 
-    expect(page).to have_text("Geographical Availability")
-    expect(page).to have_text("Greece")
-    expect(page).to have_text("Poland, Germany")
-    expect(page).to have_text("European Union")
-
-    expect(page).to have_text("Language Availability")
-    expect(page).to have_text(service1.languages.join(", "))
-    expect(page).to have_text(service2.languages.join(", "))
-    expect(page).to have_text(service3.languages.join(", "))
-
     expect(page).to have_text("Technology Readiness Level")
     expect(page).to have_text(service1.trls.first.name.upcase)
     expect(page).to have_text(service2.trls.first.name.upcase)
     expect(page).to have_text(service3.trls.first.name.upcase)
-
-    expect(page).to have_text("Service Life Cycle Status")
-    expect(page).to have_text(service1.life_cycle_statuses.map(&:name).join(", "))
-    expect(page).to have_text(service2.life_cycle_statuses.map(&:name).join(", "))
-    expect(page).to have_text(service3.life_cycle_statuses.map(&:name).join(", "))
 
     expect(page).to have_text("Service Order Type")
     expect(page).to have_text("Open Access")

@@ -1,13 +1,10 @@
-describe("Filter related infrastructures and platforms", () => {
+describe("Removed related infrastructures and platforms filter", () => {
   beforeEach(() => {
     cy.visit("/services");
   });
 
-  it("should select filter", () => {
+  it("is not visible in the V6 service search", () => {
     cy.get("[data-e2e='filter-tag']").should("not.exist");
-    cy.get("#related_platforms-filter").click();
-    cy.get("#collapse_related_platforms [data-e2e='filter-checkbox']").eq(0).click();
-    cy.location("href").should("include", "/services?related_platforms");
-    cy.get("[data-e2e='filter-tag']").should("be.visible");
+    cy.get("#related_platforms-filter").should("not.exist");
   });
 });

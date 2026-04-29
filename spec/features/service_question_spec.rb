@@ -14,7 +14,7 @@ RSpec.feature "Question about service", end_user_frontend: true do
   end
 
   scenario "cannot be send when contact emails are empty" do
-    service.public_contacts = []
+    service.public_contact_emails = []
     service.save(validate: false)
     visit service_path(service)
 
@@ -26,11 +26,11 @@ RSpec.feature "Question about service", end_user_frontend: true do
 
     scenario "I can send question to contact emails", js: true do
       Capybara.page.current_window.resize_to("1600", "1024")
-      create_list(:public_contact, 2, contactable: service)
+      service.update!(public_contact_emails: %w[first@example.com second@example.com])
 
       visit service_path(service)
 
-      click_on "Contact provider"
+      click_on "Contact organisation"
 
       within("#form-modal") { fill_in("service_question_text", with: "text") }
 
@@ -39,18 +39,18 @@ RSpec.feature "Question about service", end_user_frontend: true do
         sleep(5)
         expect(page.current_path).to eq(service_path(service))
         expect(page).to have_content("Your message was successfully sent")
-      end.to change { ActionMailer::Base.deliveries.count }.by(3)
+      end.to change { ActionMailer::Base.deliveries.count }.by(2)
 
       expect(Jms::PublishJob).to have_been_enqueued.with(hash_including(message_type: "service_question"))
     end
 
     scenario "I cannot send message about service with empty message", js: true do
       Capybara.page.current_window.resize_to("1600", "1024")
-      create_list(:public_contact, 2, contactable: service)
+      service.update!(public_contact_emails: %w[first@example.com second@example.com])
 
       visit service_path(service)
 
-      click_on "Contact provider"
+      click_on "Contact organisation"
 
       click_on "SEND"
 
@@ -63,11 +63,11 @@ RSpec.feature "Question about service", end_user_frontend: true do
   context "as not logged in user" do
     scenario "I can send message about service", js: true do
       Capybara.page.current_window.resize_to("1600", "1024")
-      create_list(:public_contact, 2, contactable: service)
+      service.update!(public_contact_emails: %w[first@example.com second@example.com])
 
       visit service_path(service)
 
-      click_on "Contact provider"
+      click_on "Contact organisation"
 
       within("#form-modal") do
         fill_in("service_question_author", with: "John Doe")
@@ -80,18 +80,18 @@ RSpec.feature "Question about service", end_user_frontend: true do
         sleep(5)
         expect(page.current_path).to eq(service_path(service))
         expect(page).to have_content("Your message was successfully sent")
-      end.to change { ActionMailer::Base.deliveries.count }.by(3)
+      end.to change { ActionMailer::Base.deliveries.count }.by(2)
 
       expect(Jms::PublishJob).to have_been_enqueued.with(hash_including(message_type: "service_question"))
     end
 
     scenario "I cannot send message about service with empty fields", js: true do
       Capybara.page.current_window.resize_to("1600", "1024")
-      create_list(:public_contact, 2, contactable: service)
+      service.update!(public_contact_emails: %w[first@example.com second@example.com])
 
       visit service_path(service)
 
-      click_on "Contact provider"
+      click_on "Contact organisation"
 
       click_on "SEND"
 

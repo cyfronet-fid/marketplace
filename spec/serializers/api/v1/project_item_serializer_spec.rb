@@ -19,7 +19,7 @@ RSpec.describe Api::V1::ProjectItemSerializer, backend: true do
         service: project_item.service.name,
         offer: project_item.name,
         offer_properties: project_item.properties,
-        platforms: project_item.service.platforms.pluck(:name),
+        platforms: [],
         request_voucher: project_item.request_voucher,
         order_type: project_item.order_type
       },
@@ -47,7 +47,7 @@ RSpec.describe Api::V1::ProjectItemSerializer, backend: true do
         service: project_item.service.name,
         offer: project_item.name,
         offer_properties: project_item.properties,
-        platforms: project_item.service.platforms.pluck(:name),
+        platforms: [],
         request_voucher: project_item.request_voucher,
         order_type: project_item.order_type
       },

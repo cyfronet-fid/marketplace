@@ -14,9 +14,6 @@ export default class extends Controller {
     "serviceType",
     "datasourceFields",
     "alternativeIdentifier",
-    "researchProductLicense",
-    "researchProductMetadataLicense",
-    "persistentIdentitySystem",
     "addField",
     "multimedia",
     "changelog",
@@ -158,9 +155,6 @@ export default class extends Controller {
     this.useCases = this.useCaseTargets;
     this.multimedia = this.multimediaTargets;
     this.publicContacts = this.publicContactTargets;
-    this.persistentIdentitySystems = this.persistentIdentitySystemTargets;
-    this.researchProductLicense = this.researchProductLicenseTargets;
-    this.researchProductMetadataLicense = this.researchProductMetadataLicenseTargets;
     const quantity = this[event.target.dataset.value].length;
     event.target.insertAdjacentHTML("beforebegin", event.target.dataset.fields.replace(/new_field/g, quantity));
     initChoices();

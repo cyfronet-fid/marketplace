@@ -30,10 +30,10 @@ module ImageHelper
     File.open(file_path, "rb") do |binary_img|
       encoded_image = Base64.strict_encode64(binary_img.read)
       decoded_image = Base64.decode64(encoded_image)
-      blob = Vips::Image.new_from_buffer(decoded_image, "")
 
       logo = StringIO.new
-      logo.write(blob)
+      logo.write(decoded_image)
+      logo.rewind
       logo
     end
   end

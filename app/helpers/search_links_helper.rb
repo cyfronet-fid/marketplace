@@ -86,8 +86,8 @@ module SearchLinksHelper
     )
   end
 
-  def services_geographical_availabilities_link(service, gcap)
-    service.geographical_availabilities_link(gcap)
+  def services_geographical_availabilities_link(_service, _gcap)
+    services_path
   end
 
   def service_resource_organisation(project_item)

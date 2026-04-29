@@ -7,9 +7,9 @@ class Service::Question::Deliver
   end
 
   def call
-    @service.public_contacts.each do |contact|
+    @service.public_contact_emails.each do |email|
       ServiceMailer.new_question(
-        contact.email,
+        email,
         @service_question.author,
         @service_question.email,
         @service_question.text,

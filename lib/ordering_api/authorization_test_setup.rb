@@ -16,23 +16,23 @@ module OrderingApi
         Service.create!(
           name: "s1",
           description: "asd",
-          tagline: "asd",
           status: "published",
           providers: [provider],
           resource_organisation: provider,
           scientific_domains: [ScientificDomain.first],
-          geographical_availabilities: ["PL"]
+          categories: [Category.first],
+          order_type: "open_access"
         )
       service2 =
         Service.create!(
           name: "s2",
           description: "asd",
-          tagline: "asd",
           status: "published",
           providers: [provider],
           resource_organisation: provider,
           scientific_domains: [ScientificDomain.first],
-          geographical_availabilities: ["PL"]
+          categories: [Category.first],
+          order_type: "open_access"
         )
       offer1 =
         Offer.create!(

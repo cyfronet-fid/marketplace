@@ -12,9 +12,9 @@ class Presentable::HeaderComponent < ApplicationComponent
   def initialize(
     object:,
     title:,
-    subtitle:,
     comparison_enabled:,
     preview:,
+    subtitle: nil,
     favourites_enabled: Rails.application.config.whitelabel,
     favourite_services: [],
     abbreviation: nil,

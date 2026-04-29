@@ -2,11 +2,11 @@
 
 module Presentable::SidebarHelper
   def service_sidebar_fields
-    [monitoring_data, target_users, tags, availability]
+    [tags]
   end
 
   def provider_sidebar_fields
-    [pid("Provider"), provider_managers, main_contact, provider_contacts]
+    [pid("Provider"), provider_contacts]
   end
 
   private
@@ -63,25 +63,11 @@ module Presentable::SidebarHelper
   def provider_contacts
     {
       name: "contact",
-      template: "object",
-      fields: %w[first_name last_name email],
+      template: "array",
+      fields: %w[public_contact_emails],
       type: "array",
-      clazz: "public_contacts",
       nested: {
-        email: "email"
-      }
-    }
-  end
-
-  def provider_managers
-    {
-      name: "organisation_managers",
-      template: "object",
-      fields: %w[first_name last_name email],
-      type: "array",
-      clazz: "public_contacts",
-      nested: {
-        email: "email"
+        public_contact_emails: "email"
       }
     }
   end

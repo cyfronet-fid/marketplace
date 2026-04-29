@@ -9,7 +9,12 @@ FactoryBot.define do
     sequence(:url) { |n| "https://deployable-service-#{n}.example.com" }
     sequence(:node) { %w[docker kubernetes vm].sample }
     sequence(:version) { |n| "#{n}.0.0" }
-    sequence(:software_license) { %w[MIT Apache-2.0 GPL-3.0 BSD-3-Clause].sample }
+    sequence(:license_name) { %w[MIT Apache-2.0 GPL-3.0 BSD-3-Clause].sample }
+    sequence(:license_url) { |n| "https://licenses.example.com/#{n}" }
+    urls { [url] }
+    public_contact_emails { ["deployable@example.com"] }
+    publishing_date { Date.new(2026, 4, 15) }
+    resource_type { "DeployableApplication" }
     sequence(:pid) { |n| "deployable.service.#{n}" }
     creators { ["Creator One", "Creator Two"] }
     association :resource_organisation, factory: :provider

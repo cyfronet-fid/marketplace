@@ -83,14 +83,6 @@
                   %dd
                     %span= child
         - row_idx += 1
-      - if @services.any? { |s| s.target_users.present? }
-        %tr{ class: row_class(row_idx) }
-          %th{ "data-toggle": "tooltip",
-          title: "Type of users/customers that commissions a Provider to deliver a Service." }
-            = _("Target Users")
-          - @services.each do |service|
-            %td= service.target_users.map(&:name).join(", ")
-          - row_idx += 1
       - if @services.any? { |s| s.access_types.present? }
         %tr{ class: row_class(row_idx) }
           %th{ "data-toggle": "tooltip",
@@ -99,13 +91,12 @@
           - @services.each do |service|
             %td= service.access_types.map(&:name).join(", ")
           - row_idx += 1
-      - if @services.any? { |s| s.access_modes.present? }
+      - if @services.any? { |s| s.jurisdiction.present? }
         %tr{ class: row_class(row_idx) }
-          %th{ "data-toggle": "tooltip",
-          title: "Eligibility/criteria for granting access to users (excellence-based, free-conditionally, free etc.)" }
-            = _("Service Access Mode")
+          %th{ "data-toggle": "tooltip", title: "Jurisdiction that applies to the Service." }
+            = _("Jurisdiction")
           - @services.each do |service|
-            %td= service.access_modes.map(&:name).join(", ")
+            %td= service.jurisdiction&.name
           - row_idx += 1
       - if @services.any? { |s| s.tags.present? }
         %tr{ class: row_class(row_idx) }
@@ -117,23 +108,6 @@
               - service.tag_list.sort.each do |tag|
                 = link_to tag, services_filter_link(tag, tag), class: "badge badge-light"
           - row_idx += 1
-      - if @services.any? { |s| s.geographical_availabilities.present? }
-        %tr{ class: row_class(row_idx) }
-          %th{ "data-toggle": "tooltip", title: "Locations where the Service is offered." }
-            = _("Geographical Availability")
-          - @services.each do |service|
-            %td= service.geographical_availabilities.join(", ")
-          - row_idx += 1
-      - if @services.any? { |s| s.language_availability.present? }
-        %tr{ class: row_class(row_idx) }
-          %th{ "data-toggle": "tooltip", title: "Languages of the (user interface of the) Service." }
-            = _("Language Availability")
-          - @services.each do |service|
-            %td
-              %ul
-              - service.language_availability.each do |language|
-                %li= I18nData.languages[language.upcase] || language
-          - row_idx += 1
       - if @services.any? { |s| s.trls.present? }
         %tr{ class: row_class(row_idx) }
           %th{ "data-toggle": "tooltip",
@@ -142,14 +116,6 @@
           - @services.each do |service|
             %td{ "data-toggle": "tooltip", title: service.trls.present? ? trl_description_text(service) : nil }
               = service.trls.map { |trl| trl.name.upcase }.join(", ")
-          - row_idx += 1
-      - if @services.any? { |s| s.life_cycle_statuses.present? }
-        %tr{ class: row_class(row_idx) }
-          %th{ "data-toggle": "tooltip", title: "Phase of the Service life-cycle." }
-            = _("Service Life Cycle Status")
-          - @services.each do |service|
-            - next unless service.life_cycle_statuses.present?
-            %td= service.life_cycle_statuses.first.name
           - row_idx += 1
       %tr{ class: row_class(row_idx) }
         %th{ "data-toggle": "tooltip",

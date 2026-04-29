@@ -5,14 +5,13 @@ class Api::ServicesController < ActionController::API
     @json =
       Service
         .where(status: :published)
-        .includes(:public_contacts)
         .map do |s|
           {
             "Service Unique ID": s.id,
             SERVICE_TYPE: "eu.eosc.portal.services.url",
-            CONTACT_EMAIL: s.public_contacts.map(&:email),
+            CONTACT_EMAIL: s.public_contact_emails,
             "SITENAME-SERVICEGROUP": s.name,
-            COUNTRY_NAME: s.geographical_availabilities,
+            COUNTRY_NAME: [],
             URL: s.webpage_url
           }
         end

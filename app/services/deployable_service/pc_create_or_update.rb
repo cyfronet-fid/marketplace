@@ -20,6 +20,7 @@ class DeployableService::PcCreateOrUpdate
       )
     @deployable_service_hash =
       Importers::DeployableService.call(eosc_registry_deployable_service, Time.current, nil, nil)
+    @deployable_service_hash.delete(:logo_url)
     @deployable_service_hash["status"] = @is_active ? "published" : "draft"
 
     @new_update_available = true

@@ -13,7 +13,7 @@ namespace :ess do
     task all: :environment do
       Ess::Update.call({ delete: { query: "*:*" }, commit: {} }.to_json)
 
-      Service.all.filter(&:public?).each { |service| Service::Ess::Add.call(service, async: false) }
+      Service.all.filter(&:public?).each { |service| Ess::Add.call(service, "service", async: false) }
     end
   end
 
