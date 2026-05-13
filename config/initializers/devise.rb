@@ -273,10 +273,12 @@ Devise.setup do |config|
     authorize: "/auth/realms/core/protocol/openid-connect/auth",
     token: "/auth/realms/core/protocol/openid-connect/token",
     userinfo: "/auth/realms/core/protocol/openid-connect/userinfo",
-    jwk: "/auth/realms/core/protocol/openid-connect/certs"
+    jwk: "/auth/realms/core/protocol/openid-connect/certs",
+    become_vo_member: "https://aai.egi.eu/auth/realms/id/account/#/enroll?groupPath=/eosc-beyond.eu",
+    introspection: "/auth/realms/core/protocol/openid-connect/token/introspect"
   }
   endpoints = ENV.fetch("OIDC_AAI_NEW_API", true) ? new_endpoints : old_endpoints
-  scope = ENV["CHECKIN_SCOPE"].nil? ? %w[openid profile email aarc offline_access] : ENV["CHECKIN_SCOPE"].split(",")
+  scope = ENV["CHECKIN_SCOPE"].nil? ? %w[openid profile email aarc offline_access entitlements] : ENV["CHECKIN_SCOPE"].split(",")
   config.omniauth :openid_connect,
                   name: :checkin,
                   scope: scope,
@@ -284,6 +286,7 @@ Devise.setup do |config|
                   issuer: ENV["CHECKIN_ISSUER_URI"] || "https://#{checkin_host}/#{endpoints[:issuer]}",
                   discovery: true,
                   pkce: ENV["CHECKIN_PKCE"] || false,
+                  become_vo_member_url: ENV["BECOME_VO_MEMBER_URL"] || endpoints[:become_vo_member],
                   client_options: {
                     port: nil,
                     scheme: "https",
@@ -295,7 +298,8 @@ Devise.setup do |config|
                     authorization_endpoint: ENV["CHECKIN_AUTHORIZATION_ENDPOINT"] || endpoints[:authorize],
                     token_endpoint: ENV["CHECKIN_TOKEN_ENDPOINT"] || endpoints[:token],
                     userinfo_endpoint: ENV["CHECKIN_USERINFO_ENDPOINT"] || endpoints[:userinfo],
-                    jwks_uri: ENV["CHECKIN_JWKS_ENDPOINT"] || endpoints[:jwk]
+                    jwks_uri: ENV["CHECKIN_JWKS_ENDPOINT"] || endpoints[:jwk],
+                    introspection_uri: ENV["INTROSPECTION_ENDPOINT"] || "https://#{checkin_host}/#{endpoints[:introspection]}"
                   }
 
 
