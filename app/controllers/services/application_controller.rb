@@ -2,6 +2,7 @@
 
 class Services::ApplicationController < ApplicationController
   before_action :authenticate_user!
+  before_action :check_vo_membership!
   before_action :load_and_authenticate_service!
   before_action :saved_state
 
@@ -34,6 +35,67 @@ class Services::ApplicationController < ApplicationController
         service_choose_offer_path(@service)
       end
     redirect_to choose_offer_path, alert: "Service request template not found" unless @saved_state
+  end
+
+  def check_vo_membership!
+    token = session["token"]
+
+    unless token.present?
+      Rails.logger.warn("Missing check-in token in session")
+      redirect_to destroy_user_session_path, alert: "Your session has expired. Please sign in again."
+      return
+    end
+
+    client_options = Devise.omniauth_configs[:checkin].strategy.client_options
+    client_id = client_options[:identifier]
+    client_secret = client_options[:secret]
+
+    url = client_options[:introspection_uri]
+    uri = URI.parse(url)
+
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    http.open_timeout = 5
+    http.read_timeout = 5
+
+    request = Net::HTTP::Post.new(url)
+    request.basic_auth(client_id, client_secret)
+
+    request["Content-Type"] = "application/x-www-form-urlencoded"
+    request.set_form_data(token: token)
+
+    response = http.request(request)
+    unless response.is_a?(Net::HTTPSuccess)
+      Rails.logger.warn("Token introspection failed: #{response.code}")
+
+      redirect_to root_path, alert: "Authentication verification failed"
+      return
+    end
+
+    begin
+      body = JSON.parse(response.body)
+    rescue JSON::ParserError => e
+      Rails.logger.error("Invalid introspection response: #{e.message}")
+
+      redirect_to root_path, alert: "Authentication verification failed"
+      return
+    end
+
+    entitlements = Array(body["entitlements"])
+
+    vo_group_name = Rails.application.config.vo_group_name
+    has_vo_membership = entitlements.any? { |entitlement| entitlement.include?(vo_group_name) }
+
+    unless has_vo_membership
+      get_vo_membership_url = Devise.omniauth_configs[:checkin].options[:become_vo_member_url]
+
+      if get_vo_membership_url.present?
+        redirect_to get_vo_membership_url, allow_other_host: true
+      else
+        Rails.logger.error("Missing become_vo_member_url")
+        redirect_to root_path, alert: "VO membership URL is not configured"
+      end
+    end
   end
 
   def load_and_authenticate_service!

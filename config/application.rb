@@ -113,5 +113,7 @@ module Mp
 
     config.federation_api_base_url = ENV.fetch("FEDERATION_API_BASE_URL", "http://federatedsearch.service.eosc-beyond.eu/federation/services")
     config.aggregator_type = ENV.fetch("AGGREGATOR_TYPE", "pc")
+
+    config.vo_group_name = ENV.fetch("VO_GROUP_NAME", "eosc-beyond.eu")
   end
 end
