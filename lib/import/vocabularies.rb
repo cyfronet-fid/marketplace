@@ -2,41 +2,17 @@
 
 class Import::Vocabularies
   ACCEPTED_VOCABULARIES = {
-    SUPERCATEGORY: Category,
     CATEGORY: Category,
-    SERVICE_CATEGORY: Vocabulary::ServiceCategory,
     SUBCATEGORY: Category,
-    TRL: Vocabulary::Trl,
     SCIENTIFIC_DOMAIN: ScientificDomain,
     SCIENTIFIC_SUBDOMAIN: ScientificDomain,
-    TARGET_USER: TargetUser,
+    TRL: Vocabulary::Trl,
     ACCESS_TYPE: Vocabulary::AccessType,
-    ACCESS_MODE: Vocabulary::AccessMode,
-    # TODO: Add order_type as vocabulary
-    # ORDER_TYPE: Vocabulary::OrderType,
-    FUNDING_BODY: Vocabulary::FundingBody,
     NODE: Vocabulary::Node,
-    FUNDING_PROGRAM: Vocabulary::FundingProgram,
-    LIFE_CYCLE_STATUS: Vocabulary::LifeCycleStatus,
-    PROVIDER_AREA_OF_ACTIVITY: Vocabulary::AreaOfActivity,
-    PROVIDER_ESFRI_TYPE: Vocabulary::EsfriType,
-    PROVIDER_ESFRI_DOMAIN: Vocabulary::EsfriDomain,
     PROVIDER_LEGAL_STATUS: Vocabulary::LegalStatus,
-    PROVIDER_LIFE_CYCLE_STATUS: Vocabulary::ProviderLifeCycleStatus,
-    PROVIDER_NETWORK: Vocabulary::Network,
-    PROVIDER_SOCIETAL_GRAND_CHALLENGE: Vocabulary::SocietalGrandChallenge,
-    PROVIDER_STRUCTURE_TYPE: Vocabulary::StructureType,
-    PROVIDER_MERIL_SCIENTIFIC_DOMAIN: Vocabulary::MerilScientificDomain,
-    PROVIDER_MERIL_SCIENTIFIC_SUBDOMAIN: Vocabulary::MerilScientificDomain,
     PROVIDER_HOSTING_LEGAL_ENTITY: Vocabulary::HostingLegalEntity,
-    RELATED_PLATFORM: Platform,
-    MARKETPLACE_LOCATION: Vocabulary::MarketplaceLocation,
+    PROVIDER_NETWORK: Vocabulary::Network,
     DS_JURISDICTION: Vocabulary::Jurisdiction,
-    DS_RESEARCH_ENTITY_TYPE: Vocabulary::EntityType,
-    DS_PERSISTENT_IDENTITY_SCHEME: Vocabulary::EntityTypeScheme,
-    # rubocop:disable Naming/VariableNumber
-    DS_COAR_ACCESS_RIGHTS_1_0: Vocabulary::ResearchProductAccessPolicy,
-    # rubocop:enable Naming/VariableNumber
     DS_CLASSIFICATION: Vocabulary::DatasourceClassification
   }.freeze
 

@@ -40,27 +40,25 @@ describe Import::Vocabularies, backend: true do
       expect_responses(test_url, response)
     end
 
-    let!(:esfri_type) { create(:esfri_type, name: "TEST", eid: "provider_esfri_type-landmark") }
+    let!(:legal_status) { create(:legal_status, name: "TEST", eid: "provider_legal_status-association") }
 
     it "should create and update vocabularies" do
       eosc_registry = make_and_stub_eosc_registry(log: true)
 
-      expect { eosc_registry.call }.to output(/TOTAL: 26, CREATED: 21, UPDATED: 1, UNPROCESSED: 4$/).to_stdout.and(
-        change { Vocabulary.count }.by(15).and(
-          change { Category.count }.by(3).and(
-            change { ScientificDomain.count }.by(2).and(change { TargetUser.count }.by(1))
-          )
+      expect { eosc_registry.call }.to output(/TOTAL: 26, CREATED: 7, UPDATED: 1, UNPROCESSED: 18$/).to_stdout.and(
+        change { Vocabulary.count }.by(3).and(
+          change { Category.count }.by(2).and(change { ScientificDomain.count }.by(2))
         )
       )
 
-      esfri_type.reload
+      legal_status.reload
 
-      expect(esfri_type.name).to eq("Landmark")
+      expect(legal_status.name).to eq("Association")
     end
 
     it "should not change db if dry_run is set to true" do
       eosc_registry = make_and_stub_eosc_registry(dry_run: true, log: true)
-      expect { eosc_registry.call }.to output(/TOTAL: 26, CREATED: 21, UPDATED: 1, UNPROCESSED: 4$/).to_stdout.and(
+      expect { eosc_registry.call }.to output(/TOTAL: 26, CREATED: 7, UPDATED: 1, UNPROCESSED: 18$/).to_stdout.and(
         change { Vocabulary.count }.by(0).and(
           change { Category.count }.by(0).and(
             change { ScientificDomain.count }.by(0).and(change { TargetUser.count }.by(0))

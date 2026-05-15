@@ -59,7 +59,7 @@ describe Import::Providers, backend: true do
   def expect_responses(test_url, providers_response = nil)
     unless providers_response.nil?
       allow_any_instance_of(Faraday::Connection).to receive(:get).with(
-        "#{test_url}/public/provider/bundle/all?quantity=10000&from=0"
+        "#{test_url}/public/organisation/all?quantity=10000&from=0"
       ).and_return(providers_response)
     end
   end
@@ -89,7 +89,15 @@ describe Import::Providers, backend: true do
 
   describe "#standard responses" do
     before(:each) do
-      response = double(status: 200, body: create(:eosc_registry_providers_response))
+      body = create(:eosc_registry_providers_response)
+      body["results"] = body["results"].map do |provider_bundle|
+        provider_bundle["provider"].merge(
+          "active" => provider_bundle["active"],
+          "suspended" => provider_bundle["suspended"] || false,
+          "country" => provider_bundle.dig("provider", "location", "country")
+        )
+      end
+      response = double(status: 200, body: body)
       expect_responses(test_url, response)
       mock_access_token
     end

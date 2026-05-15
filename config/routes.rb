@@ -169,7 +169,7 @@ Rails.application.routes.draw do
       resources :scientific_domains
       resources :categories
       resources :platforms
-      get "vocabularies", to: "vocabularies#index", type: "target_user", as: :vocabularies
+      get "vocabularies", to: "vocabularies#index", type: "access_type", as: :vocabularies
       scope "/vocabularies" do
         VOCABULARY_TYPES.each do |type, opts|
           resources opts[:route], controller: "vocabularies", type: type.to_s

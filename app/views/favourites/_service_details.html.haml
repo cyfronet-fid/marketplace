@@ -1,10 +1,8 @@
-.media.mb-3.service-box{ class: ("horizontal" if service.horizontal) }
+.media.mb-3.service-box
   .media-body.pt-4
     .pl-4.pr-4.mb-3
       %h2.mb-3{ "data-probe" => "", "data-service-id" => service.id }= yield
-      - if service.horizontal
-        %span.badge.badge-blue Horizontal service
-      %p.mb-3= service.tagline
+      %p.mb-3= service.description
       = render "components/presentable/header_component/categorization", service: service, highlights: nil
       = yield_content!(:comparison_checkbox) if content_for(:comparison_checkbox)
       = yield_content!(:favourite_checkbox) if content_for(:favourite_checkbox)

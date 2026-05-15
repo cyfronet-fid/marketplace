@@ -19,7 +19,7 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
   def show
     respond_to do |format|
       current_tab = params[:tab]
-      partial = current_tab&.in?(extended_steps) ? current_tab : "profile"
+      partial = current_tab&.in?(provider_tabs) ? current_tab : "profile"
       format.turbo_stream do
         render turbo_stream:
                  turbo_stream.replace(
@@ -44,6 +44,7 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
   end
 
   def create
+    normalize_public_contact_emails
     permitted_attributes = permitted_attributes(Provider)
     @provider = Provider.new(permitted_attributes)
     authorize(@provider)
@@ -81,14 +82,15 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
   end
 
   def current_step_index
-    extended_steps.index(@provider.current_step)
+    basic_steps.index(@provider.current_step)
   end
 
   def total_steps
-    extended_steps.size
+    basic_steps.size
   end
 
   def update
+    normalize_public_contact_emails
     provider_duplicate = @provider.dup
 
     # IMPORTANT!!! Writing upstream_id from params is required to inject context to policy
@@ -146,10 +148,9 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
   end
 
   def add_missing_nested_models
-    %i[alternative_identifiers data_administrators public_contacts link_multimedia_urls].each do |association|
+    %i[alternative_identifiers data_administrators link_multimedia_urls].each do |association|
       @provider.send(association).build if @provider.send(association).empty?
     end
-    @provider.build_main_contact if @provider.main_contact.blank?
   end
 
   def valid_model_and_urls?
@@ -180,22 +181,24 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
 
   def create_provider_hash(provider)
     to_except = %i[id created_at updated_at]
-    contact_except = to_except + %i[contactable_type contactable_id]
 
     data_administrators_attributes =
       provider.data_administrators.map.with_index { |dm, i| { i.to_s => dm.as_json(except: to_except) } }
-    public_contacts_attributes =
-      provider.public_contacts.map.with_index { |pc, i| { i.to_s => pc.as_json(except: contact_except) } }
 
     provider_hash = provider.as_json(except: to_except)
     provider_hash["country"] = provider_hash["country"]["country_data_or_code"]
-    if @provider.main_contact
-      provider_hash["main_contact_attributes"] = @provider.main_contact.as_json(except: contact_except)
-    end
 
-    provider_hash["public_contacts_attributes"] = public_contacts_attributes.reduce({}, :merge)
     provider_hash["data_administrators_attributes"] = data_administrators_attributes.reduce({}, :merge)
     provider_hash
+  end
+
+  def normalize_public_contact_emails
+    return unless params.dig(:provider, :public_contact_emails).is_a?(String)
+
+    params[:provider][:public_contact_emails] = params[:provider][:public_contact_emails]
+      .split(/\r?\n/)
+      .map(&:strip)
+      .reject(&:blank?)
   end
 
   def clear_session_data

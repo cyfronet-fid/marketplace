@@ -14,16 +14,14 @@ RSpec.describe DeployableService, backend: true do
       expect(service.errors[:name]).to include("can't be blank")
     end
 
-    it "validates presence of description" do
+    it "allows missing description because V6 deployable applications may omit it" do
       service = build(:deployable_service, description: nil)
-      expect(service).not_to be_valid
-      expect(service.errors[:description]).to include("can't be blank")
+      expect(service).to be_valid
     end
 
-    it "validates presence of tagline" do
+    it "allows missing tagline because V6 deployable applications may omit it" do
       service = build(:deployable_service, tagline: nil)
-      expect(service).not_to be_valid
-      expect(service.errors[:tagline]).to include("can't be blank")
+      expect(service).to be_valid
     end
   end
 
@@ -41,7 +39,7 @@ RSpec.describe DeployableService, backend: true do
 
     it "belongs to resource_organisation" do
       expect(described_class.reflect_on_association(:resource_organisation).class_name).to eq("Provider")
-      expect(described_class.reflect_on_association(:resource_organisation).options[:optional]).to be false
+      expect(described_class.reflect_on_association(:resource_organisation).options[:optional]).to be true
     end
 
     it "belongs to catalogue" do
@@ -81,7 +79,9 @@ RSpec.describe DeployableService, backend: true do
       deployable_service.url = "  https://example.com  "
       deployable_service.node = "  docker  "
       deployable_service.version = "  1.0.0  "
-      deployable_service.software_license = "  MIT  "
+      deployable_service.license_name = "  MIT  "
+      deployable_service.license_url = "  https://licenses.example.com/mit  "
+      deployable_service.resource_type = "  DeployableApplication  "
 
       deployable_service.valid?
 
@@ -91,7 +91,16 @@ RSpec.describe DeployableService, backend: true do
       expect(deployable_service.url).to eq("https://example.com")
       expect(deployable_service.node).to eq("docker")
       expect(deployable_service.version).to eq("1.0.0")
-      expect(deployable_service.software_license).to eq("MIT")
+      expect(deployable_service.license_name).to eq("MIT")
+      expect(deployable_service.license_url).to eq("https://licenses.example.com/mit")
+      expect(deployable_service.resource_type).to eq("DeployableApplication")
+    end
+
+    it "deduplicates urls while keeping the compatibility url" do
+      deployable_service.urls = %w[https://example.com/one https://example.com]
+      deployable_service.url = "https://example.com"
+
+      expect(deployable_service.all_urls).to eq(%w[https://example.com/one https://example.com])
     end
   end
 
@@ -445,9 +454,11 @@ RSpec.describe DeployableService, backend: true do
       end
     end
 
-    describe "#public_contacts" do
-      it "returns empty array" do
-        expect(deployable_service.public_contacts).to eq([])
+    describe "#public_contact_emails" do
+      it "returns public contact email array" do
+        deployable_service.public_contact_emails = ["ops@example.com"]
+
+        expect(deployable_service.public_contact_emails).to eq(["ops@example.com"])
       end
     end
   end

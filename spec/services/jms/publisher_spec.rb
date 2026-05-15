@@ -12,8 +12,7 @@ describe Jms::Publisher, backend: true do
       max_reconnect_attempts: 5,
       connect_headers: {
         "accept-version": "1.2",
-        host: "localhost",
-        "heart-beat": "0,20000"
+        host: "localhost"
       }
     }
   end

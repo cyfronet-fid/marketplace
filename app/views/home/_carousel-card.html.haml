@@ -4,7 +4,7 @@
   %article
     %p
       = presentable_logo(service)
-      = truncate(markdown(service.tagline), length: 120, escape: false)
+      = truncate(markdown(service.description), length: 120, escape: false)
   %footer
     .column-left
       %p
@@ -15,6 +15,6 @@
     .column-right
       %p.text-right
         %small
-          = _("Dedicated for") + ":"
+          = _("Access") + ":"
         %br
-        = safe_join(dedicated_for_text(service), ", ").truncate(24)
+        = service.order_type.humanize

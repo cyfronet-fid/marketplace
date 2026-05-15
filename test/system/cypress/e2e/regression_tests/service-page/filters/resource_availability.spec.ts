@@ -1,18 +1,10 @@
-describe("Filter resource availabilities", () => {
+describe("Removed resource availability filter", () => {
   beforeEach(() => {
     cy.visit("/services");
   });
 
-  it("should select filter", () => {
+  it("is not visible in the V6 service search", () => {
     cy.get("[data-e2e='filter-tag']").should("not.exist");
-    cy.get("#geographical_availabilities-filter").click();
-    cy.get("#collapse_geographical_availabilities [data-e2e='filter-select'] > option")
-      .eq(1)
-      .invoke("text")
-      .then((value) => {
-        cy.get("#collapse_geographical_availabilities [data-e2e='filter-select']").select(value);
-      });
-    cy.location("href").should("include", "/services?geographical_availabilities");
-    cy.get("[data-e2e='filter-tag']").should("be.visible");
+    cy.get("#geographical_availabilities-filter").should("not.exist");
   });
 });

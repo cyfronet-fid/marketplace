@@ -14,32 +14,6 @@ RSpec.describe Service::PcCreateOrUpdate, backend: true do
   let!(:compute) { create(:category, name: "Compute") }
   let!(:networking) { create(:category, name: "Networking") }
   let!(:scientific_domain_other) { create(:scientific_domain, name: "Other", eid: "scientific_subdomain-other-other") }
-  let!(:funding_body) { create(:funding_body, name: "FundingBody", eid: "funding_body-fb") }
-  let!(:funding_program) { create(:funding_program, name: "FundingProgram", eid: "funding_program-fp") }
-  let!(:other_category) { create(:service_category, name: "Other") }
-  let!(:related_service) do
-    create(:service, name: "Super Service", sources: [build(:service_source, eid: "super-service")])
-  end
-  let!(:access_mode) { create(:access_mode, name: "Access Mode", eid: "access_mode-am") }
-  let!(:access_type) { create(:access_type, name: "Access Type", eid: "access_type-at") }
-  let!(:main_contact) do
-    build(
-      :main_contact,
-      first_name: "John",
-      last_name: "Doe",
-      email: "john@doe.com",
-      phone: "+41 678 888 123",
-      position: "Developer",
-      organisation: "JD company"
-    )
-  end
-  let!(:public_contacts) do
-    build_list(:public_contact, 2) do |contact, i|
-      contact.first_name = "Jane #{i}"
-      contact.last_name = "Doe"
-      contact.email = "jane#{i}@doe.com"
-    end
-  end
 
   let(:provider_eid) { "ten" }
 
@@ -96,7 +70,7 @@ RSpec.describe Service::PcCreateOrUpdate, backend: true do
   private
 
   def stub_described_class(jms_service, status: :published, modified_at: Time.now)
-    described_service = Service::PcCreateOrUpdate.new(jms_service, test_url, status, modified_at, nil)
+    described_service = Service::PcCreateOrUpdate.new(jms_service["service"], test_url, status, modified_at, nil)
 
     stub_http_file(
       described_service,

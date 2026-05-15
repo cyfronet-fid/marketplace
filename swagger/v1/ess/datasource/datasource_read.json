@@ -31,9 +31,6 @@
     "name": {
       "type": "string"
     },
-    "tagline": {
-      "type": "string"
-    },
     "description": {
       "type": "string"
     },
@@ -69,23 +66,6 @@
         "type": "string"
       }
     },
-    "multimedia_urls": {
-      "type": "array",
-      "nullable": true,
-      "items": {
-        "$ref": "../link_read.json"
-      }
-    },
-    "use_cases_urls": {
-      "type": "array",
-      "nullable": true,
-      "items": {
-        "$ref": "../link_read.json"
-      }
-    },
-    "horizontal": {
-      "type": "boolean"
-    },
     "thematic": {
       "type": "boolean"
     },
@@ -105,52 +85,7 @@
         "type": "string"
       }
     },
-
-    "access_modes": {
-      "type": "array",
-      "nullable": true,
-      "items": {
-        "type": "string"
-      }
-    },
-    "platforms": {
-      "type": "array",
-      "nullable": true,
-      "items": {
-        "type": "string"
-      }
-    },
-    "funding_programs": {
-      "type": "array",
-      "nullable": true,
-      "items": {
-        "type": "string"
-      }
-    },
-    "funding_bodies": {
-      "type": "array",
-      "nullable": true,
-      "items": {
-        "type": "string"
-      }
-    },
-    "version": {
-      "type": "string",
-      "nullable": true
-    },
     "terms_of_use_url": {
-      "type": "string",
-      "nullable": true
-    },
-    "status_monitoring_url": {
-      "type": "string",
-      "nullable": true
-    },
-    "training_information_url": {
-      "type": "string",
-      "nullable": true
-    },
-    "maintenance_url": {
       "type": "string",
       "nullable": true
     },
@@ -162,41 +97,6 @@
       "type": "string",
       "nullable": true
     },
-    "manual_url": {
-      "type": "string",
-      "nullable": true
-    },
-    "helpdesk_url": {
-      "type": "string",
-      "nullable": true
-    },
-    "helpdesk_email": {
-      "type": "string",
-      "nullable": true
-    },
-    "pricing_url": {
-      "type": "string",
-      "nullable": true
-    },
-    "payment_model_url": {
-      "type": "string",
-      "nullable": true
-    },
-    "submission_policy_url": {
-      "type": "string",
-      "nullable": true
-    },
-    "preservation_policy_url": {
-      "type": "string",
-      "nullable": true
-    },
-    "changelog": {
-      "type": "array",
-      "nullable": true,
-      "items": {
-        "type": "string"
-      }
-    },
     "tag_list": {
       "type": "array",
       "nullable": true,
@@ -204,54 +104,7 @@
         "type": "string"
       }
     },
-    "eosc_if": {
-      "type": "array",
-      "nullable": true,
-      "items": {
-        "type": "string"
-      }
-    },
     "privacy_policy_url": {
-      "type": "string",
-      "nullable": true
-    },
-    "resource_level_url": {
-      "type": "string",
-      "nullable": true
-    },
-    "security_contact_email": {
-      "type": "string",
-      "nullable": true
-    },
-    "certifications": {
-      "type": "array",
-      "nullable": true,
-      "items": {
-        "type": "string"
-      }
-    },
-    "standards": {
-      "type": "array",
-      "nullable": true,
-      "items": {
-        "type": "string"
-      }
-    },
-    "open_source_technologies": {
-      "type": "array",
-      "nullable": true,
-      "items": {
-        "type": "string"
-      }
-    },
-    "grant_project_names": {
-      "type": "array",
-      "nullable": true,
-      "items": {
-        "type": "string"
-      }
-    },
-    "last_update": {
       "type": "string",
       "nullable": true
     },
@@ -269,55 +122,6 @@
       "type": "string",
       "nullable": true
     },
-    "geographical_availabilities": {
-      "type": "array",
-      "nullable": true,
-      "items": {
-        "type": "string"
-      }
-    },
-    "language_availability": {
-      "type": "array",
-      "nullable": true,
-      "items": {
-        "type": "string"
-      }
-    },
-    "unified_categories": {
-      "type": "array",
-      "nullable": true,
-      "items": {
-        "type": "string"
-      }
-    },
-    "dedicated_for": {
-      "type": "array",
-      "nullable": true,
-      "items": {
-        "type": "string"
-      }
-    },
-    "resource_geographic_locations": {
-      "type": "array",
-      "nullable": true,
-      "items": {
-        "type": "string"
-      }
-    },
-    "public_contacts": {
-      "type": "array",
-      "items": {
-        "$ref": "../contact_read.json"
-      }
-    },
-    "trl": {
-      "type": "string",
-      "nullable": true
-    },
-    "life_cycle_status": {
-      "type": "string",
-      "nullable": true
-    },
     "datasource_classification": {
       "type": "string",
       "nullable": true
@@ -326,46 +130,11 @@
       "type": "string",
       "nullable": true
     },
-    "research_product_access_policies": {
+    "research_product_types": {
       "type": "array",
       "nullable": true,
       "items": {
         "type": "string"
-      }
-    },
-    "research_product_metadata_access_policies": {
-      "type": "array",
-      "nullable": true,
-      "items": {
-        "type": "string"
-      }
-    },
-    "research_entity_types": {
-      "type": "array",
-      "nullable": true,
-      "items": {
-        "type": "string"
-      }
-    },
-    "persistent_identity_systems": {
-      "type": "array",
-      "nullable": true,
-      "items": {
-        "$ref": "../persistent_identity_system_read.json"
-      }
-    },
-    "research_product_licensing_urls": {
-      "type": "array",
-      "nullable": true,
-      "items": {
-        "$ref": "../link_read.json"
-      }
-    },
-    "research_product_metadata_license_urls": {
-      "type": "array",
-      "nullable": true,
-      "items": {
-        "$ref": "../link_read.json"
       }
     },
     "usage_counts_downloads": {
@@ -373,8 +142,14 @@
     },
     "usage_counts_views": {
       "type": "integer"
+    },
+    "public_contact_emails": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
     }
   },
-  "additionalProperties": false,
+  "additionalProperties": true,
   "required": ["id", "name", "description", "status"]
 }

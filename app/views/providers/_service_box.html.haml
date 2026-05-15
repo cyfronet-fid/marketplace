@@ -11,9 +11,5 @@
       .card-provider
         = resource_organisation_text(service)
       .card-description
-        = service.tagline
-      .card-tagline
-        - service.target_users.map do |tu|
-          .tag
-            = link_to tu.name, services_filter_link(tu, tu.name, "dedicated_for")
+        = service.description
       .clearfix

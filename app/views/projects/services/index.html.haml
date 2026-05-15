@@ -34,16 +34,16 @@
             collection: @other_items,
             locals: { project: @project })
 
-    %h3.mt-4.mb-3.heading= _("Recommended offers for your project")
+    - if @recommended_offers.present?
+      %h3.mt-4.mb-3.heading= _("Recommended resources for your project")
+      .row
+        = render partial: "services/offer", collection: @recommended_offers, as: :offer
 
-    .row
-      = render partial: "services/offer", collection: @recommended_offers, as: :offer
-
-    - unless @project.archived?
-      - if external_search_enabled
-        = link_to _("Add resource to this project"), project_add_external_link,
-          class: "btn btn btn-primary pl-5 pr-5 mr-5 mt-5"
-      - else
-        = link_to _("Add resource to this project"), project_add_path(@project),
-          class: "btn btn btn-primary pl-5 pr-5 mr-5 mt-2",
-          "data-turbo-method": :post
+      - unless @project.archived?
+        - if external_search_enabled
+          = link_to _("Add resource to this project"), project_add_external_link,
+            class: "btn btn btn-primary pl-5 pr-5 mr-5 mt-5"
+        - else
+          = link_to _("Add resource to this project"), project_add_path(@project),
+            class: "btn btn btn-primary pl-5 pr-5 mr-5 mt-2",
+            "data-turbo-method": :post

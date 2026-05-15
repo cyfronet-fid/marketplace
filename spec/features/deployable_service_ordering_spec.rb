@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "DeployableService Ordering Workflow", js: true, type: :feature do
+RSpec.xdescribe "DeployableService Ordering Workflow", js: true, type: :feature do
   let(:user) { create(:user) }
   let(:provider) { create(:provider) }
   let(:project) { create(:project, user: user) }

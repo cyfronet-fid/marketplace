@@ -6,7 +6,7 @@
               "data-service-id" => recommendation_v1.id
   %article
     %p
-      = truncate(recommendation_v1.send(:tagline), length: 110, escape: false)
+      = truncate(recommendation_v1.send(:description), length: 110, escape: false)
   %footer
     .column-left
       %p

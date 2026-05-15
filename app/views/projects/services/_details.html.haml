@@ -13,7 +13,7 @@
     %dt
       = _("E-mail") + ":"
     %dd
-      %a{ href: "/projects/1/services/1/conversation" }Ask organisation a question
+      = link_to "Ask organisation a question", project_service_conversation_path(project, project_item)
 
 .offer-section-wrapper.mt-4
   .bordered-header Informations
@@ -44,11 +44,6 @@
     %dt
       = _("Project name") + ":"
     %dd= link_to project.name, project
-  - if project_item.service.resource_level_url.present?
-    %dl
-      %dt
-        = _("SLA") + ":"
-      %dd= link_to _("Service Level Agreement"), project_item.service.resource_level_url
   - unless service_providers_list(project_item).blank?
     %dl
       %dt

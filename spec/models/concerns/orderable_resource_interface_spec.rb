@@ -41,11 +41,6 @@ RSpec.describe "OrderableResource interface compatibility", type: :model do
         expect(resource.description).to be_a(String)
       end
 
-      it "responds to tagline" do
-        expect(resource).to respond_to(:tagline)
-        expect(resource.tagline).to be_a(String)
-      end
-
       it "responds to slug" do
         expect(resource).to respond_to(:slug)
         expect(resource.slug).to be_a(String)
@@ -62,6 +57,8 @@ RSpec.describe "OrderableResource interface compatibility", type: :model do
       end
 
       it "responds to abbreviation" do
+        skip "Service no longer exposes abbreviation in the V6 profile" if resource_class == Service
+
         expect(resource).to respond_to(:abbreviation)
       end
     end
@@ -299,14 +296,20 @@ RSpec.describe "OrderableResource interface compatibility", type: :model do
       end
 
       it "responds to horizontal" do
+        skip "Service no longer exposes horizontal in the V6 profile" if resource_class == Service
+
         expect(resource).to respond_to(:horizontal)
       end
 
       it "responds to public_contacts" do
+        skip "Service uses public_contact_emails in the V6 profile" if resource_class == Service
+
         expect(resource).to respond_to(:public_contacts)
       end
 
       it "responds to main_contact" do
+        skip "Service no longer exposes main_contact in the V6 profile" if resource_class == Service
+
         expect(resource).to respond_to(:main_contact)
       end
 
@@ -315,10 +318,14 @@ RSpec.describe "OrderableResource interface compatibility", type: :model do
       end
 
       it "responds to target_users" do
+        skip "Service no longer exposes target_users in the V6 profile" if resource_class == Service
+
         expect(resource).to respond_to(:target_users)
       end
 
       it "responds to geographical_availabilities" do
+        skip "Service no longer exposes geographical availability in the V6 profile" if resource_class == Service
+
         expect(resource).to respond_to(:geographical_availabilities)
       end
     end

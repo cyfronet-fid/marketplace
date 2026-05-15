@@ -10,14 +10,48 @@ describe Jms::ManageMessage, backend: true do
   let(:service_resource) { create(:jms_json_service) }
   let(:provider_resource) { create(:jms_json_provider) }
   let(:catalogue_resource) { create(:jms_json_catalogue) }
+  let(:deployable_application_resource) do
+    { resource: { active: true, suspended: false, deployableApplication: create(:jms_deployable_service) } }.to_json
+  end
+  let(:guideline_resource) do
+    {
+      resource: {
+        active: true,
+        suspended: false,
+        metadata: {
+          modifiedAt: 1_600_000_000_000
+        },
+        interoperabilityRecord: {
+          id: "G1",
+          title: "Rule"
+        }
+      }
+    }.to_json
+  end
   let(:draft_provider_resource) { build(:jms_json_draft_provider) }
   let(:rejected_provider_resource) { build(:jms_json_rejected_provider) }
   let(:json_service) { double(body: service_resource, headers: { "destination" => "/topic/registry.service.update" }) }
   let(:json_provider) do
     double(body: provider_resource, headers: { "destination" => "/topic/registry.provider.update" })
   end
+  let(:json_organisation) do
+    body = parser.parse(provider_resource)
+    body["resource"]["organisation"] = body["resource"].delete("provider")
+    double(body: body.to_json, headers: { "destination" => "/topic/registry.organisation.update" })
+  end
   let(:json_catalogue) do
     double(body: catalogue_resource, headers: { "destination" => "/topic/registry.catalogue.update" })
+  end
+  let(:json_deployable_application) do
+    double(
+      body: deployable_application_resource,
+      headers: {
+        "destination" => "/topic/registry.deployable_application.create"
+      }
+    )
+  end
+  let(:json_interoperability_record) do
+    double(body: guideline_resource, headers: { "destination" => "/topic/registry.interoperability_record.update" })
   end
   let(:json_create_catalogue) do
     double(body: catalogue_resource, headers: { "destination" => "/topic/registry.catalogue.create" })
@@ -39,7 +73,7 @@ describe Jms::ManageMessage, backend: true do
     $stdout = StringIO.new
 
     expect(Service::PcCreateOrUpdateJob).to receive(:perform_later).with(
-      response["service"],
+      resource["service"],
       eosc_registry_base,
       :published,
       Time.at(resource["metadata"]["modifiedAt"].to_i / 1000),
@@ -57,7 +91,7 @@ describe Jms::ManageMessage, backend: true do
     resource = response["resource"]
 
     expect(Provider::PcCreateOrUpdateJob).to receive(:perform_later).with(
-      response["provider"],
+      resource["provider"],
       :published,
       Time.at(resource["metadata"]["modifiedAt"].to_i / 1000)
     )
@@ -66,13 +100,51 @@ describe Jms::ManageMessage, backend: true do
     $stdout = original_stdout
   end
 
+  it "routes organisation messages to provider jobs" do
+    response = parser.parse(json_organisation.body)
+    resource = response["resource"]
+
+    expect(Provider::PcCreateOrUpdateJob).to receive(:perform_later).with(
+      resource["organisation"],
+      :published,
+      Time.at(resource["metadata"]["modifiedAt"].to_i / 1000)
+    )
+
+    expect { described_class.call(json_organisation, eosc_registry_base, logger, nil) }.to_not raise_error
+  end
+
+  it "routes deployable_application messages to deployable service jobs" do
+    response = parser.parse(deployable_application_resource)
+    resource = response["resource"]
+
+    expect(DeployableService::PcCreateOrUpdateJob).to receive(:perform_later).with(
+      resource["deployableApplication"],
+      :published
+    )
+
+    expect { described_class.call(json_deployable_application, eosc_registry_base, logger, nil) }.to_not raise_error
+  end
+
+  it "routes interoperability_record messages to guideline jobs" do
+    response = parser.parse(guideline_resource)
+    resource = response["resource"]
+
+    expect(Guideline::PcCreateOrUpdateJob).to receive(:perform_later).with(
+      resource["interoperabilityRecord"],
+      :published,
+      Time.at(resource["metadata"]["modifiedAt"].to_i / 1000)
+    )
+
+    expect { described_class.call(json_interoperability_record, eosc_registry_base, logger, nil) }.to_not raise_error
+  end
+
   it "should receive update to draft provider message" do
     original_stdout = $stdout
     $stdout = StringIO.new
     response = parser.parse(provider_resource)
     resource = response["resource"]
     expect(Provider::PcCreateOrUpdateJob).to receive(:perform_later).with(
-      response["provider"],
+      resource["provider"],
       :published,
       Time.at(resource["metadata"]["modifiedAt"].to_i / 1000)
     )
@@ -82,7 +154,7 @@ describe Jms::ManageMessage, backend: true do
     response = parser.parse(draft_provider_resource)
     resource = response["resource"]
     expect(Provider::PcCreateOrUpdateJob).to receive(:perform_later).with(
-      response["provider"],
+      resource["provider"],
       :unpublished,
       Time.at(resource["metadata"]["modifiedAt"].to_i / 1000)
     )
@@ -97,7 +169,7 @@ describe Jms::ManageMessage, backend: true do
     response = parser.parse(rejected_provider_resource)
     resource = response["resource"]
     expect(Provider::PcCreateOrUpdateJob).to receive(:perform_later).with(
-      response["provider"],
+      resource["provider"],
       :unpublished,
       Time.at(resource["metadata"]["modifiedAt"].to_i / 1000)
     )
@@ -136,8 +208,21 @@ describe Jms::ManageMessage, backend: true do
     service_hash = { some_happy_key: "some_happy_value" }
     error_service_message = double(body: service_hash.to_json, headers: { "destination" => "aaaa.update" })
 
-    expect { described_class.new(error_service_message, eosc_registry_base, logger).call }.to raise_error(StandardError)
+    expect { described_class.new(error_service_message, eosc_registry_base, logger).call }.to_not raise_error
     $stdout = original_stdout
+  end
+
+  it "does not route out-of-scope adapter messages" do
+    adapter_message =
+      double(
+        body: { resource: { adapter: { id: "A1", name: "Adapter" } } }.to_json,
+        headers: {
+          "destination" => "/topic/registry.adapter.update"
+        }
+      )
+
+    expect(Sentry).to receive(:capture_exception).with(be_a(Importable::WrongMessageError))
+    expect { described_class.new(adapter_message, eosc_registry_base, logger).call }.to_not raise_error
   end
 
   it "should receive create catalogue message" do
@@ -146,8 +231,8 @@ describe Jms::ManageMessage, backend: true do
     response = JSON.parse(catalogue_resource)
     resource = response["resource"]
     expect(Catalogue::PcCreateOrUpdateJob).to receive(:perform_later).with(
-      response["catalogue"],
-      :published,
+      resource["catalogue"],
+      :unpublished,
       Time.at(resource["metadata"]["modifiedAt"].to_i / 1000)
     )
 
@@ -161,8 +246,8 @@ describe Jms::ManageMessage, backend: true do
     response = parser.parse(catalogue_resource)
     resource = response["resource"]
     expect(Catalogue::PcCreateOrUpdateJob).to receive(:perform_later).with(
-      response["catalogue"],
-      :published,
+      resource["catalogue"],
+      :unpublished,
       Time.at(resource["metadata"]["modifiedAt"].to_i / 1000)
     )
 

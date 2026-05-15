@@ -1,8 +1,6 @@
 - shepherd_target = local_assigns[:tour_overview_9_target] ? "overview_9" : nil
-.media.mb-3.service-box{ "data-shepherd-tour-target": shepherd_target, class: ("horizontal" if service.horizontal) }
+.media.mb-3.service-box{ "data-shepherd-tour-target": shepherd_target }
   .info-icons
-    - if service.horizontal
-      %span.badge.horizontal-badge.fa-pull-right.badge-right Horizontal service
     .badge.access-information.fa-pull-right.badge-right.style_order_required{ class: service.order_type }
       %i.ordertype.order_required
       = service.order_type.humanize
@@ -10,9 +8,7 @@
     .pl-4.pr-4.mb-3
       %h3{ "data-probe" => "", "data-service-id" => service.id, "data-e2e" => "service-id" }
         = yield
-        .abbreviation.list
-          = service.abbreviation
-      %p.mb-2= highlighted_for(:tagline, service, highlights)
+      %p.mb-2= highlighted_for(:description, service, highlights)
       = render "components/presentable/header_component/categorization",
         service: service,
         highlights: highlights,

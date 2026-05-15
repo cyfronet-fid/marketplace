@@ -47,7 +47,7 @@ RSpec.describe Jira::IssueUpdated, backend: true do
     expect(last_status).to be_ready
   end
 
-  context "EGI Applications on Demand" do
+  context "EGI Applications on Demand", skip: "Service platform-based AOD detection was removed in the V6 profile" do
     it "notify if accepted" do
       platform_aod = create(:platform, name: "EGI Applications on Demand")
       service = create(:service, platforms: [platform_aod])
