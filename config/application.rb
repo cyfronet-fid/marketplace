@@ -111,6 +111,6 @@ module Mp
     config.bos_api_key = ENV.fetch("BOS_API_KEY", "")
     config.bos_enabled = ActiveModel::Type::Boolean.new.cast(ENV.fetch("BOS_ENABLED", false))
 
-    config.federation_api_base_url = ENV.fetch("FEDERATION_API_BASE_URL", "http://localhost:3015/api/v1/services")
+    config.federation_api_base_url = ENV.fetch("FEDERATION_API_BASE_URL", "http://federatedsearch.service.eosc-beyond.eu/federation/services")
   end
 end
