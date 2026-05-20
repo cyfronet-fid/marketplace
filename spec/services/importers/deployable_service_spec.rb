@@ -30,12 +30,60 @@ RSpec.describe Importers::DeployableService, backend: true do
         last_update: "2026-04-14",
         license_name: "Apache-2.0",
         license_url: "https://www.apache.org/licenses/LICENSE-2.0",
-        creators: [{ "name" => "Alice", "email" => "alice@example.org" }],
         tag_list: ["alpha"],
         synchronized_at: synchronized_at,
         status: :published
       )
+      expect(result[:creators]).to contain_exactly(
+        hash_including(
+          "name" => "Alice",
+          "email" => "alice@example.org",
+          "creatorNameTypeInfo" => hash_including("creatorName" => "Alice")
+        )
+      )
       expect(result[:scientific_domains]).to contain_exactly(scientific_subdomain)
+    end
+
+    it "maps parent scientific domain when V6 payload omits subdomain" do
+      scientific_domain = create(:scientific_domain, eid: "scientific_domain-natural-sciences")
+      result =
+        described_class.call(
+          v6_payload.merge(
+            "scientificDomains" => [{ "scientificDomain" => scientific_domain.eid, "scientificSubdomain" => nil }]
+          ),
+          synchronized_at,
+          "https://example.test/api"
+        )
+
+      expect(result[:scientific_domains]).to contain_exactly(scientific_domain)
+    end
+
+    it "normalizes V6 creator detail fields" do
+      result =
+        described_class.call(
+          v6_payload.merge(
+            "creators" => [
+              {
+                "creatorName" => "Alice Example",
+                "nameType" => "name_type-personal",
+                "affiliation" => "Example Lab",
+                "affiliationIdentifier" => "https://ror.org/example",
+                "nameIdentifier" => "https://orcid.org/0000-0000-0000-0000"
+              }
+            ]
+          ),
+          synchronized_at,
+          "https://example.test/api"
+        )
+
+      expect(result[:creators]).to contain_exactly(
+        hash_including(
+          "creatorNameTypeInfo" => hash_including("creatorName" => "Alice Example", "nameType" => "name_type-personal"),
+          "creatorAffiliationInfo" =>
+            hash_including("affiliation" => "Example Lab", "affiliationIdentifier" => "https://ror.org/example"),
+          "nameIdentifier" => "https://orcid.org/0000-0000-0000-0000"
+        )
+      )
     end
 
     it "tolerates omitted optional V6 fields" do

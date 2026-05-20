@@ -31,7 +31,7 @@ class Importers::Catalogue < ApplicationService
           if @data["scientificDomains"].blank?
             []
           else
-            map_scientific_domains(@data["scientificDomains"].map { |sd| sd["scientificSubdomain"] })
+            map_scientific_domains(scientific_domain_eids(@data["scientificDomains"]))
           end
         ),
       public_contacts: Array(@data["publicContacts"]).map { |c| PublicContact.new(map_contact(c)) },

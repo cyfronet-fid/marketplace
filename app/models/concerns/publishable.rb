@@ -10,10 +10,14 @@ module Publishable
 
     private
 
-    %i[create update destroy].each do |type|
+    %i[create destroy].each do |type|
       define_method "send_to_databus_#{type}" do
         publish(payload_for(type))
       end
+    end
+
+    def send_to_databus_update
+      publish(payload_for(soft_deleted? ? :destroy : :update))
     end
 
     def publish(payload)
@@ -27,6 +31,10 @@ module Publishable
     def serialize_for_databus
       serializer = "Recommender::#{self.class}Serializer".constantize
       serializer.new(self).as_json
+    end
+
+    def soft_deleted?
+      respond_to?(:status) && status == "deleted" && saved_change_to_status?
     end
   end
 end
