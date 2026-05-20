@@ -31,6 +31,16 @@ module Importable
     domains.present? ? ScientificDomain.where(eid: domains) : []
   end
 
+  def scientific_domain_eids(domains)
+    Array(domains).filter_map do |domain|
+      if domain.is_a?(Hash)
+        domain["scientificSubdomain"].presence || domain["scientificDomain"].presence
+      else
+        domain.presence
+      end
+    end
+  end
+
   def map_link(link, type = "multimedia")
     return if link&.[]("multimediaURL").blank? && !UrlHelper.url?(link)
 

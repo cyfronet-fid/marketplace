@@ -64,6 +64,20 @@ RSpec.describe Service, backend: true do
     end
   end
 
+  context "databus publishing" do
+    before { clear_enqueued_jobs }
+
+    it "publishes a destroy event when service is soft-deleted" do
+      service = create(:service)
+      clear_enqueued_jobs
+
+      expect { service.update!(status: :deleted) }.to have_enqueued_job(Jms::PublishJob).with(
+        hash_including("cud" => "destroy", "model" => "Service"),
+        :mp_db_events
+      )
+    end
+  end
+
   context "OMS validations" do
     subject { build(:service, omses: build_list(:resource_dedicated_oms, 2)) }
     it { should have_many(:omses) }

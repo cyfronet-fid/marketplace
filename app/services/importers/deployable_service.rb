@@ -12,7 +12,6 @@ class Importers::DeployableService < ApplicationService
   end
 
   def call
-    scientific_subdomains = @data["scientificDomains"]&.map { |sd| sd["scientificSubdomain"] } || []
     urls = Array(@data["urls"])
     urls = Array(@data["url"]) if urls.blank? && @data["url"].present?
     license = @data["license"].is_a?(Hash) ? @data["license"] : {}
@@ -35,11 +34,36 @@ class Importers::DeployableService < ApplicationService
       last_update: @data["lastUpdate"],
       license_name: license["name"],
       license_url: license["url"],
-      creators: Array(@data["creators"]),
+      creators: normalize_creators(@data["creators"]),
       tag_list: Array(@data["tags"]),
-      scientific_domains: map_scientific_domains(scientific_subdomains),
+      scientific_domains: map_scientific_domains(scientific_domain_eids(@data["scientificDomains"])),
       synchronized_at: @synchronized_at,
       status: :published
     }
+  end
+
+  private
+
+  def normalize_creators(creators)
+    Array(creators).map do |creator|
+      next creator unless creator.is_a?(Hash)
+
+      creator
+        .stringify_keys
+        .merge(
+          "creatorNameTypeInfo" => {
+            "creatorName" =>
+              creator.dig("creatorNameTypeInfo", "creatorName") || creator["creatorName"] || creator["name"],
+            "nameType" => creator.dig("creatorNameTypeInfo", "nameType") || creator["nameType"]
+          }.compact,
+          "creatorAffiliationInfo" => {
+            "affiliation" => creator.dig("creatorAffiliationInfo", "affiliation") || creator["affiliation"],
+            "affiliationIdentifier" =>
+              creator.dig("creatorAffiliationInfo", "affiliationIdentifier") || creator["affiliationIdentifier"]
+          }.compact,
+          "nameIdentifier" => creator["nameIdentifier"]
+        )
+        .compact
+    end
   end
 end

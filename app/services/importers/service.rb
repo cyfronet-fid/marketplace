@@ -13,7 +13,6 @@ class Importers::Service < ApplicationService
 
   def call
     alt_pids = Array(@data["alternativePIDs"] || @data["alternativeIdentifiers"])
-    scientific_subdomains = @data["scientificDomains"]&.map { |sd| sd["scientificSubdomain"] } || []
     subcategories = @data["categories"]&.map { |category| category["subcategory"] } || []
 
     {
@@ -36,7 +35,7 @@ class Importers::Service < ApplicationService
           .map { |provider| map_provider(provider) }
           .compact,
       nodes: map_nodes(Array(@data["nodePID"] || @data["node"])),
-      scientific_domains: map_scientific_domains(scientific_subdomains),
+      scientific_domains: map_scientific_domains(scientific_domain_eids(@data["scientificDomains"])),
       categories: map_categories(subcategories) || [],
       tag_list: Array(@data["tags"]),
       access_types: map_access_types(Array(@data["accessTypes"])),

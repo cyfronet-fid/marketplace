@@ -32,6 +32,12 @@ RSpec.describe DeployableService::PcCreateOrUpdate, backend: true do
 
         expect(result.sources.first.source_type).to eq("eosc_registry")
       end
+
+      it "preserves incoming lifecycle statuses" do
+        result = described_class.new(jms_deployable_service, :suspended).call
+
+        expect(result.status).to eq("suspended")
+      end
     end
 
     context "when updating an existing deployable service" do
