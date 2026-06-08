@@ -32,13 +32,15 @@ module Importable
   end
 
   def scientific_domain_eids(domains)
-    Array(domains).filter_map do |domain|
-      if domain.is_a?(Hash)
-        domain["scientificSubdomain"].presence || domain["scientificDomain"].presence
-      else
-        domain.presence
+    Array
+      .wrap(domains)
+      .filter_map do |domain|
+        if domain.is_a?(Hash)
+          domain["scientificSubdomain"].presence || domain["scientificDomain"].presence
+        else
+          domain.presence
+        end
       end
-    end
   end
 
   def map_link(link, type = "multimedia")

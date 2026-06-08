@@ -14,6 +14,7 @@ RSpec.describe Service::PcCreateOrUpdate, backend: true do
   let!(:compute) { create(:category, name: "Compute") }
   let!(:networking) { create(:category, name: "Networking") }
   let!(:scientific_domain_other) { create(:scientific_domain, name: "Other", eid: "scientific_subdomain-other-other") }
+  let!(:scientific_domain_parent) { create(:scientific_domain, eid: "scientific_domain-parent") }
 
   let(:provider_eid) { "ten" }
 
@@ -32,6 +33,23 @@ RSpec.describe Service::PcCreateOrUpdate, backend: true do
 
       service = create(:jms_service, prov_eid: "new.prov", name: "New supper service")
       expect { stub_described_class(service) }.to_not change { Offer.count }
+    end
+
+    it "publishes a service with an object-shaped parent scientific domain" do
+      provider = create(:provider, name: "Test Provider")
+      create(:provider_source, source_type: "eosc_registry", eid: "tp", provider: provider)
+      service_payload = build(:jms_service, prov_eid: "tp", logo: nil).fetch("service")
+      service_payload["scientificDomains"] = {
+        "scientificDomain" => scientific_domain_parent.eid,
+        "scientificSubdomain" => nil
+      }
+      allow(Importers::Logo).to receive(:call)
+
+      service = described_class.new(service_payload, test_url, :published, Time.current, nil).call
+
+      expect(service).to be_published
+      expect(service).not_to be_errored
+      expect(service.scientific_domains).to contain_exactly(scientific_domain_parent)
     end
 
     it "should add provider with improper data to the resource" do
