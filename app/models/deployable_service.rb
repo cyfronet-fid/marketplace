@@ -14,7 +14,8 @@ class DeployableService < ApplicationRecord
   acts_as_taggable
 
   before_save { self.pid = upstream.eid if upstream_id.present? }
-  after_create :create_default_offer
+  after_create :create_default_offer, if: :default_offer_template?
+  after_update :create_default_offer, if: :default_offer_template?
 
   has_one_attached :logo
 
@@ -56,6 +57,10 @@ class DeployableService < ApplicationRecord
     return false if url.blank? && name.blank?
 
     url&.include?("jupyterhub_datamount.yml") || name&.downcase&.include?("jupyterhub")
+  end
+
+  def default_offer_template?
+    url&.match?(/\.ya?ml(\?|#|$)/)
   end
 
   # ============================================================================
@@ -290,9 +295,11 @@ class DeployableService < ApplicationRecord
   private
 
   def create_default_offer
-    return unless jupyterhub_datamount_template?
-
     DeployableService::CreateDefaultOffer.call(self)
+  end
+
+  def saved_change_to_default_offer_template?
+    saved_change_to_url? && default_offer_template?
   end
 
   def logo_variable
