@@ -290,8 +290,6 @@ class DeployableService < ApplicationRecord
   private
 
   def create_default_offer
-    return unless jupyterhub_datamount_template?
-
     DeployableService::CreateDefaultOffer.call(self)
   end
 
