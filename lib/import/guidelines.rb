@@ -87,7 +87,7 @@ module Import
         end
         guidelines = Guideline.where(eid: guideline_eids)
         service.guidelines = guidelines
-        service.save!
+        service.save!(validate: false)
       end
     end
 

@@ -55,4 +55,19 @@ describe Import::Guidelines, backend: true do
     expect { importer.call }.to change(ServiceGuideline, :count).by(1)
     expect(service.reload.guidelines).to contain_exactly(guideline)
   end
+
+  it "connects guidelines without validating unrelated service attributes" do
+    guideline_records = []
+    service = create(:service)
+    service.update_column(:webpage_url, "invalid-url")
+    expect(service.reload).not_to be_valid
+    guideline = Guideline.create!(eid: "guideline-v6", title: "V6 interoperability guideline")
+    create(:service_source, eid: "service-v6", source_type: "eosc_registry", service: service)
+    connection_records = [{ "resourceId" => "service-v6", "interoperabilityRecordIds" => ["guideline-v6"] }]
+    stub_responses(guideline_records, connection_records)
+    importer = described_class.new(test_url, dry_run: false, faraday: faraday, logger: logger)
+
+    expect { importer.call }.to change(ServiceGuideline, :count).by(1)
+    expect(service.reload.guidelines).to contain_exactly(guideline)
+  end
 end
