@@ -119,12 +119,6 @@ class Service < ApplicationRecord
   validates :urls, array: true
   validates :logo, blob: { content_type: :image }
   validate :logo_variable, on: %i[create update]
-  validates :scientific_domains,
-            presence: true,
-            length: {
-              minimum: 1,
-              message: "are required. Please add at least one"
-            }
   validates :trls, length: { maximum: 1 }
   validates :nodes, length: { maximum: 1 }
   validates :resource_organisation, presence: true

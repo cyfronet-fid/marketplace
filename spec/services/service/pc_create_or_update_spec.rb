@@ -52,6 +52,20 @@ RSpec.describe Service::PcCreateOrUpdate, backend: true do
       expect(service.scientific_domains).to contain_exactly(scientific_domain_parent)
     end
 
+    it "publishes a service without scientific domains" do
+      provider = create(:provider, name: "Test Provider")
+      create(:provider_source, source_type: "eosc_registry", eid: "tp", provider: provider)
+      service_payload = build(:jms_service, prov_eid: "tp", logo: nil).fetch("service")
+      service_payload["scientificDomains"] = nil
+      allow(Importers::Logo).to receive(:call)
+
+      service = described_class.new(service_payload, test_url, :published, Time.current, nil).call
+
+      expect(service).to be_published
+      expect(service).not_to be_errored
+      expect(service.scientific_domains).to be_empty
+    end
+
     it "should add provider with improper data to the resource" do
       invalid_provider = create(:provider, name: "Test Provider 3")
 

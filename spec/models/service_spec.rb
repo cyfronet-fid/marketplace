@@ -19,6 +19,10 @@ RSpec.describe Service, backend: true do
 
   it { should belong_to(:upstream).required(false) }
 
+  it "allows scientific domains to be omitted" do
+    expect(build(:service, scientific_domains: [])).to be_valid
+  end
+
   it "sets first category as default" do
     c1, c2 = create_list(:category, 2)
     service = create(:service, categories: [c1, c2])
