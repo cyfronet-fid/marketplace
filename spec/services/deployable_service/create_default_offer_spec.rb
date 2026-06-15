@@ -99,6 +99,23 @@ RSpec.describe DeployableService::CreateDefaultOffer, backend: true do
         )
         described_class.call(deployable_service)
       end
+
+      it "updates an existing default offer instead of creating a duplicate" do
+        existing_offer = result
+        updated_template = <<~YAML
+          tosca_definitions_version: tosca_simple_yaml_1_2
+          topology_template:
+            inputs:
+              memory:
+                type: integer
+                description: Memory size
+        YAML
+
+        allow_any_instance_of(described_class).to receive(:fetch_template).and_return(updated_template)
+
+        expect { described_class.call(deployable_service) }.not_to change { deployable_service.offers.count }
+        expect(existing_offer.reload.parameters.map(&:id)).to eq(["memory"])
+      end
     end
 
     context "when compute service category is missing" do

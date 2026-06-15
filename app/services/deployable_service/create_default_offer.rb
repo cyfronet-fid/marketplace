@@ -13,32 +13,37 @@ class DeployableService::CreateDefaultOffer < DeployableService::ApplicationServ
       return nil
     end
 
-    # Create offer with auto-generated parameters
-    offer =
-      Offer.new(
-        deployable_service: @deployable_service,
-        name: "Deploy #{@deployable_service.name}",
-        description: "Deploy #{@deployable_service.name} with JupyterHub and DataMount configuration",
-        parameters: parameters,
-        status: :published,
-        order_type: "order_required", # Can be ordered
-        internal: true, # Will trigger deployment API call
-        offer_category: compute_category,
-        voucherable: false
-      )
+    offer = default_offer || @deployable_service.offers.build
+    new_record = offer.new_record?
+    offer.assign_attributes(
+      name: "Deploy #{@deployable_service.name}",
+      description: "Deploy #{@deployable_service.name} with JupyterHub and DataMount configuration",
+      parameters: parameters,
+      status: :published,
+      order_type: "order_required", # Can be ordered
+      internal: true, # Will trigger deployment API call
+      default: true,
+      offer_category: compute_category,
+      voucherable: false
+    )
 
     if offer.save
-      Rails.logger.info "Created default offer for DeployableService " +
+      Rails.logger.info "#{new_record ? "Created" : "Updated"} default offer for DeployableService " +
                           "'#{@deployable_service.name}' (ID: #{@deployable_service.id})"
       offer
     else
-      Rails.logger.error "Failed to create default offer for DeployableService " +
+      Rails.logger.error "Failed to #{new_record ? "create" : "update"} default offer for DeployableService " +
                            "'#{@deployable_service.name}': #{offer.errors.full_messages.join(", ")}"
       nil
     end
   end
 
   private
+
+  def default_offer
+    @deployable_service.offers.find_by(default: true) ||
+      @deployable_service.offers.find_by(internal: true, order_type: "order_required")
+  end
 
   def parameters_from_template_url(url)
     return if url.blank?
