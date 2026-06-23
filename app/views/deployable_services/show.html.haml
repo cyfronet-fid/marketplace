@@ -14,14 +14,30 @@
           .resource-row.row.mb-3
             %span.pin-value.resource-type.ready Deployable Application
       .col-12.col-lg-3.text-center
-
-        - if @deployable_service.offers.accessible.any?
+        - if @deployable_service.url&.match?(/\.ya?ml(\?|#|$)/) && @deployable_service.offers.accessible.any?
           = link_to deployable_service_choose_offer_path(@deployable_service),
             class: "btn btn-primary d-block mb-3 py-3" do
             Run the service
-        - elsif @deployable_service.url.present?
-          = link_to "Visit URL", @deployable_service.url, target: "_blank",
-            class: "btn btn-primary d-block mb-3 py-3"
+        - else
+          .d-flex.justify-content-between.mb-3.border
+            %p
+              The system cannot run the deployable services because it received an invalid TOSCA.
+              For clarification, please contact the organisation providing the TOSCA directly.
+            %svg{ xmlns: "http://www.w3.org/2000/svg" }
+              %path{ d: "M9 13.4615C9.17433 13.4615 9.3205 13.4025 9.4385 13.2845C9.5565 13.1667 9.6155 13.0206 9.6155
+              12.8462C9.6155 12.6717 9.5565 12.5256 9.4385 12.4078C9.3205 12.2898 9.17433 12.2308 9 12.2308C8.82567
+              12.2308 8.6795 12.2898 8.5615 12.4078C8.4435 12.5256 8.3845 12.6717 8.3845 12.8462C8.3845 13.0206 8.4435
+              13.1667 8.5615 13.2845C8.6795 13.4025 8.82567 13.4615 9 13.4615ZM8.5
+              10.1538H9.5V4.15375H8.5V10.1538ZM9.00325 18C7.75875 18 6.58867 17.7638 5.493 17.2915C4.3975 16.8192 3.4445
+              16.1782 2.634 15.3685C1.8235 14.5588 1.18192 13.6067 0.70925 12.512C0.236417 11.4175 0 10.2479 0 9.00325C0
+              7.75875 0.236167 6.58867 0.7085 5.493C1.18083 4.3975 1.82183 3.4445 2.6315 2.634C3.44117 1.8235 4.39333
+              1.18192 5.488 0.70925C6.5825 0.236417 7.75208 0 8.99675 0C10.2413 0 11.4113 0.236167 12.507
+              0.708501C13.6025 1.18083 14.5555 1.82183 15.366 2.6315C16.1765 3.44117 16.8181 4.39333 17.2908
+              5.488C17.7636 6.5825 18 7.75208 18 8.99675C18 10.2413 17.7638 11.4113 17.2915 12.507C16.8192 13.6025
+              16.1782 14.5555 15.3685 15.366C14.5588 16.1765 13.6067 16.8181 12.512 17.2908C11.4175 17.7636 10.2479
+              18 9.00325 18ZM9 17C11.2333 17 13.125 16.225 14.675 14.675C16.225 13.125 17 11.2333 17 9C17 6.76667
+              16.225 4.875 14.675 3.325C13.125 1.775 11.2333 1 9 1C6.76667 1 4.875 1.775 3.325 3.325C1.775 4.875 1
+              6.76667 1 9C1 11.2333 1.775 13.125 3.325 14.675C4.875 16.225 6.76667 17 9 17Z" }
     .row
       .col-12.col-xl-9.pr-5
         %ul.nav.nav-tabs.row.pl-3.mt-3
