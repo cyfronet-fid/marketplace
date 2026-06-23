@@ -7,6 +7,34 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [4.4.0](https://github.com/cyfronet-fid/marketplace/compare/v4.3.1...v4.4.0) (2026-06-23)
+
+
+### Features
+
+* [[#3590](https://github.com/cyfronet-fid/marketplace/issues/3590)] run the service - require vo membership ([4180275](https://github.com/cyfronet-fid/marketplace/commit/418027559a110315570d3263adc5ec8fc4d0b6f9))
+* [[#3631](https://github.com/cyfronet-fid/marketplace/issues/3631)] rename deployable services to applications ([820cbdf](https://github.com/cyfronet-fid/marketplace/commit/820cbdf95836918bdb7a2ac6599c278f2c375cbb))
+* [[#3632](https://github.com/cyfronet-fid/marketplace/issues/3632)] Rename provider to organisation ([#3639](https://github.com/cyfronet-fid/marketplace/issues/3639)) ([fc4909f](https://github.com/cyfronet-fid/marketplace/commit/fc4909f19167116edf89b04af59fc5112e42b51e))
+* [[#3658](https://github.com/cyfronet-fid/marketplace/issues/3658)] V6 profile migration ([207737c](https://github.com/cyfronet-fid/marketplace/commit/207737c0e8ae1c8e366ed1275030e0742aab6666))
+
+
+### Bug Fixes
+
+* [[#3438](https://github.com/cyfronet-fid/marketplace/issues/3438)] change meta descriptions ([a57a7fb](https://github.com/cyfronet-fid/marketplace/commit/a57a7fb8979bbb430127ddaf23568a3c6c04c231))
+* [[#3637](https://github.com/cyfronet-fid/marketplace/issues/3637)] federated search api switch ([ceeb825](https://github.com/cyfronet-fid/marketplace/commit/ceeb825256d9cc1dc88d046db025da70ab4cb1a2))
+* [[#3647](https://github.com/cyfronet-fid/marketplace/issues/3647)] fix providers redirection ([b8b1f82](https://github.com/cyfronet-fid/marketplace/commit/b8b1f821a317dbdf1d072f82c3a1fdb0a05f77f6))
+* [[#3656](https://github.com/cyfronet-fid/marketplace/issues/3656)] fix broken catalogue logo ([a1b658e](https://github.com/cyfronet-fid/marketplace/commit/a1b658ee7625dfd9e03aec4524c46b5da170cc41))
+* [[#3683](https://github.com/cyfronet-fid/marketplace/issues/3683)] address V6 PC import regressions ([#3694](https://github.com/cyfronet-fid/marketplace/issues/3694)) ([56f8d73](https://github.com/cyfronet-fid/marketplace/commit/56f8d73460da7b1998b752744733f40a0a85a6fe))
+* [[#3684](https://github.com/cyfronet-fid/marketplace/issues/3684)] fix projects recommendations ([0ec51e6](https://github.com/cyfronet-fid/marketplace/commit/0ec51e6a2272e3b5596a64484a3ea8fff55041d6))
+* [[#3684](https://github.com/cyfronet-fid/marketplace/issues/3684)] import parent scientific domain from V6 payload ([bfb79aa](https://github.com/cyfronet-fid/marketplace/commit/bfb79aa3b40c9320d885428eefb2a59e41d0be3a))
+* [[#3695](https://github.com/cyfronet-fid/marketplace/issues/3695)] broken deployable application logo ([bde26c3](https://github.com/cyfronet-fid/marketplace/commit/bde26c3afaefa26397dcd9ef64469c2a1a44965a))
+* [[#3702](https://github.com/cyfronet-fid/marketplace/issues/3702)] allow PC services without scientific domains ([fa469ec](https://github.com/cyfronet-fid/marketplace/commit/fa469ec44afd4e610e7798f61ec4df40501d6583))
+* [] Services import endpoint ([d3a0b23](https://github.com/cyfronet-fid/marketplace/commit/d3a0b23100b2020cf89ff00b35fcf85194d9b1f0))
+* [] Services import endpoint ([b685ec1](https://github.com/cyfronet-fid/marketplace/commit/b685ec17b7c809f0fe1cf6998085c10f0ef75dba))
+* [AdHoc] DS 'Go to service' button ([#3627](https://github.com/cyfronet-fid/marketplace/issues/3627)) ([02aa994](https://github.com/cyfronet-fid/marketplace/commit/02aa9941e56adba7892115b17f523d5c332d0734))
+* address Brakeman warnings ([#3706](https://github.com/cyfronet-fid/marketplace/issues/3706)) ([5bfb02e](https://github.com/cyfronet-fid/marketplace/commit/5bfb02e4db322cabfc7f0461dd49f30c3956172e))
+* change federated search base api url ([00a8146](https://github.com/cyfronet-fid/marketplace/commit/00a81460fd5da714c929adf45ad0ab19a42c910d))
+
 ## [4.3.1](https://github.com/cyfronet-fid/marketplace/compare/v4.3.0...v4.3.1) (2026-02-18)
 
 
