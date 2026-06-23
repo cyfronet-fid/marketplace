@@ -1,92 +1,67 @@
 # frozen_string_literal: true
 
 class Ess::ServiceSerializer < ApplicationSerializer
-  #TODO: unify schema to transform service for services and datasources
   attribute :slug, unless: :datasource?
-
-  attribute :resource_level_url, key: :sla_url, unless: :datasource?
-  attribute :resource_level_url, if: :datasource?
 
   attributes :id,
              :pid,
-             :catalogues,
-             :guidelines,
-             :nodes,
-             :eosc_if,
-             :abbreviation,
+             :ppid,
              :name,
-             :tagline,
              :description,
-             :order_type,
+             :webpage_url,
+             :urls,
+             :logo,
+             :scientific_domains,
              :categories,
+             :tag_list,
+             :access_types,
+             :trls,
+             :jurisdiction,
+             :terms_of_use_url,
+             :privacy_policy_url,
+             :access_policies_url,
+             :order_type,
+             :order_url,
              :resource_organisation,
              :providers,
-             :multimedia_urls,
-             :use_cases_urls,
-             :horizontal,
+             :nodes,
+             :guidelines,
+             :public_contact_emails,
+             :publishing_date,
+             :resource_type,
              :status,
-             :scientific_domains,
-             :access_types,
-             :access_modes,
-             :platforms,
-             :funding_programs,
-             :funding_bodies,
-             :version,
-             :terms_of_use_url,
-             :status_monitoring_url,
-             :training_information_url,
-             :maintenance_url,
-             :webpage_url,
-             :order_url,
-             :manual_url,
-             :helpdesk_url,
-             :helpdesk_email,
-             :pricing_url,
-             :payment_model_url,
-             :changelog,
-             :tag_list,
-             :privacy_policy_url,
-             :security_contact_email,
-             :certifications,
-             :standards,
-             :open_source_technologies,
-             :grant_project_names,
-             :last_update,
              :upstream_id,
-             :updated_at,
              :synchronized_at,
-             :geographical_availabilities,
-             :resource_geographic_locations,
-             :public_contacts
+             :updated_at,
+             :created_at
 
   attribute :created_at, key: :publication_date
-  attribute :trls, key: :trl
-  attribute :life_cycle_statuses, key: :life_cycle_status
   attribute :project_items_count, key: :usage_counts_downloads
   attribute :usage_counts_views
 
-  attribute :target_users, key: :dedicated_for
-  attribute :marketplace_locations, key: :unified_categories
-  attribute :languages, key: :language_availability
-
-  #TODO: ALL attributes to the line 77 should be included in datasource schema
   attribute :offers_count, unless: :datasource?
-  attribute :access_policies_url, unless: :datasource?
   attribute :service_opinion_count, unless: :datasource?
-  attribute :restrictions, unless: :datasource?
   attribute :rating, unless: :datasource?
-  attribute :activate_message, unless: :datasource?
-  attribute :phase, unless: :datasource?
-  attribute :node
-
-  #TODO: to remove
-  attribute :related_platforms, unless: :datasource?
 
   def datasource?
     object.type == "Datasource"
   end
 
-  def phase
-    nil
+  def logo
+    return nil unless object.logo.attached?
+
+    if Rails.application.routes.default_url_options[:host].present?
+      Rails.application.routes.url_helpers.service_logo_url(object)
+    else
+      Rails.application.routes.url_helpers.service_logo_path(object)
+    end
+  end
+
+  def nodes
+    object.nodes.map(&:name)
+  end
+
+  def publishing_date
+    object.publishing_date&.as_json
   end
 end

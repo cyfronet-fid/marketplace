@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Filter::Platform, backend: true do
+RSpec.describe Filter::Platform, backend: true, skip: "Service platforms were removed in the V6 Service profile" do
   context "#options" do
     let!(:platform1) { create(:platform) }
     let!(:platform2) { create(:platform) }

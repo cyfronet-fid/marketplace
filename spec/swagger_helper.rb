@@ -175,18 +175,6 @@ RSpec.configure do |config|
                       type: :object
                     }
                   },
-                  target_users: {
-                    type: :array,
-                    items: {
-                      type: :object
-                    }
-                  },
-                  platforms: {
-                    type: :array,
-                    items: {
-                      type: :object
-                    }
-                  },
                   research_activities: {
                     type: :array,
                     items: {

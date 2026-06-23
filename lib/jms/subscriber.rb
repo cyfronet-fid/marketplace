@@ -168,7 +168,7 @@ class Jms::Subscriber
 
       log "Successfully connected to #{server_key}"
 
-      topics = subscription_config[:topics] || [subscription_config[:topic]].compact
+      topics = subscription_topics(subscription_config)
 
       if topics.empty?
         log "Warning: No topics configured for #{server_key}"
@@ -218,6 +218,13 @@ class Jms::Subscriber
         error_block(msg, e, topic)
       end
     end
+  end
+
+  def subscription_topics(config)
+    Array(config[:topics].presence || config[:topic])
+      .flat_map { |topic| topic.to_s.split(",") }
+      .map(&:strip)
+      .reject(&:blank?)
   end
 
   def process_message(msg, config)

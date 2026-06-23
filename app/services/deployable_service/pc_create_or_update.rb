@@ -9,10 +9,10 @@ class DeployableService::PcCreateOrUpdate
   class NotUpdatedError < StandardError
   end
 
-  def initialize(eosc_registry_deployable_service, is_active)
+  def initialize(eosc_registry_deployable_service, status)
     @error_message = "Deployable Service haven't been updated. Message #{eosc_registry_deployable_service}"
     @source_type = "eosc_registry"
-    @is_active = is_active
+    @status = status_for(status)
     @mp_deployable_service =
       DeployableService.joins(:sources).find_by(
         "deployable_service_sources.source_type": @source_type,
@@ -20,7 +20,8 @@ class DeployableService::PcCreateOrUpdate
       )
     @deployable_service_hash =
       Importers::DeployableService.call(eosc_registry_deployable_service, Time.current, nil, nil)
-    @deployable_service_hash["status"] = @is_active ? "published" : "draft"
+    @deployable_service_hash.delete(:logo_url)
+    @deployable_service_hash[:status] = @status
 
     @new_update_available = true
   end
@@ -87,5 +88,17 @@ class DeployableService::PcCreateOrUpdate
     DeployableServiceSource::Create.call(deployable_service)
 
     deployable_service
+  end
+
+  private
+
+  def status_for(status)
+    return :published if status == true
+    return :draft if status == false
+
+    normalized_status = status.to_s
+    return normalized_status.to_sym if Statusable::STATUSES.value?(normalized_status)
+
+    :draft
   end
 end

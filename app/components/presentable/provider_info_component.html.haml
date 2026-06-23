@@ -6,18 +6,22 @@
       = @object.name
 
   - object_fields.each do |field, opts|
-    - next unless @object.send(field).present?
+    :ruby
+      next unless @object.respond_to?(field)
+
+      value = @object.public_send(field)
+      next unless value.present?
     .provider-row
       %strong
         = field.to_s.humanize.singularize.upcase_first
         %br
       %span
         - if opts[:array]
-          - @object.send(field).each do |association|
+          - value.each do |association|
             %div= opts[:value] ? association.send(opts[:value]) : association
         - elsif opts[:type] == "url"
-          %a{ href: @object.send(field), target: "_blank", "data-preview-target": @preview ? "link" : "" }
-            = @object.send(field)
+          %a{ href: value, target: "_blank", "data-preview-target": @preview ? "link" : "" }
+            = value
 
   %a.provider-more-link{ href: @base.organisation_search_link(@object.name, services_path(providers: @object.id)),
   "data-preview-target": @preview ? "link" : "" }

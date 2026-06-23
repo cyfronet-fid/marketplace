@@ -6,9 +6,21 @@
       has_children = option["children"].present?
       collapsed = !(values.include?(option["eid"].to_s) || values.intersect?(option["children"].map { |c| c["eid"] }))
       collapse_id = "collapse_#{name}_#{option["eid"]}"
+      eid_str = option["eid"].to_s
+      input_name = name
+      if eid_str.start_with?("scientific_subdomain-")
+        input_name = "scientific_subdomains"
+      elsif eid_str.start_with?("subcategory-")
+        input_name = "subcategories"
+      elsif eid_str.start_with?("category-") && name == "categories"
+        input_name = "categories"
+      elsif eid_str.start_with?("supercategory-")
+        input_name = "supercategories"
+      end
+
     %li.clearfix{ "data-multicheckbox-target": target }
       %label{ class: ("text-muted" if muted) }
-        %input.position-static{ type: "checkbox", name: "#{name}[]", multiple: true,
+        %input.position-static{ type: "checkbox", name: "#{input_name}[]", multiple: true,
           checked: values.include?(option["eid"].to_s) || values.include?(parent.to_s),
           value: option["eid"], data: { action: "change->filter#reload", probe: "", e2e: "filter-checkbox",
           parent: parent, class: checkbox_class(option, values) } }

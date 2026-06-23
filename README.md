@@ -728,5 +728,10 @@ Example value:
 Default value (if the variable is not set):
 - `http://localhost:3015/api/v1/services`
 
-Aggregator repository:
-- https://github.com/cyfronet-fid/marketplace-search-aggregator
+### Federation Search
+
+#### AGGREGATOR TYPE
+
+Marketplace can display results from two kinds of instances. It is specified by the optional environment variable that can be one of the values:
+- `AGGREGATOR_TYPE=mp` means results are coming from aggregator like https://github.com/cyfronet-fid/marketplace-search-aggregator
+- `AGGREGATOR_TYPE=pc` means results are coming from Provider Component API. This is default value. 

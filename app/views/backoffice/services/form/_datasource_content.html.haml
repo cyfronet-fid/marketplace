@@ -1,4 +1,5 @@
-- collapsed = collapsed?(datasource, [:provider_life_cycle_status, :certifications])
+- collapsed = collapsed?(datasource, [:version_control, :thematic, :datasource_classification_id, :jurisdiction_id,
+  :research_product_types])
 .card.shadow-sm.rounded{ class: datasource_fields_class, "data-form-target": "datasourceFields" }
   %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed),
                 data: { toggle: "collapse", target: "#datasource-content" },
@@ -19,7 +20,12 @@
                           disabled: cant_edit?(:jurisdiction_id)
     = f.association :datasource_classification, input_html: { data: { choice: true } },
                               disabled: cant_edit?(:datasource_classification_id)
-    = f.association :research_entity_types, input_html: { data: { choice: true } },
-                              disabled: cant_edit?([research_entity_type_ids: []])
+    = f.input :version_control, as: :boolean, include_hidden: true
     = f.input :thematic, as: :boolean, include_hidden: true
-    = f.input :harvestable, as: :boolean, include_hidden: true
+    .form-group
+      = f.label :research_product_types_as_text, _("Research product types")
+      = f.text_area :research_product_types_as_text,
+        value: (datasource.research_product_types || []).join("\n"),
+        rows: 3,
+        class: "form-control",
+        disabled: cant_edit?([research_product_types: []])

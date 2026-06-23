@@ -109,19 +109,10 @@ RSpec.feature "Providers in backoffice", manager_frontend: true do
       page.attach_file("provider_logo", "#{Rails.root}/app/assets/images/eosc-img.png")
 
       click_on "Location", match: :first
-      expect(page).to have_content("Street name and number")
 
-      # fill_in "Street name and number", with: provider.street_name_and_number
-      fill_in "provider_street_name_and_number", with: provider.street_name_and_number
-      fill_in "Postal code", with: provider.postal_code
-      fill_in "City", with: provider.city
       select "non-European", from: "provider_country"
 
       click_on "Contact", match: :first
-      fill_in "provider_main_contact_attributes_first_name", with: "Main first name"
-      fill_in "provider_main_contact_attributes_last_name", with: "Main last name"
-      fill_in "provider_main_contact_attributes_email", with: "main.contact@mail.com"
-      fill_in "provider_public_contacts_attributes_0_email", with: "public.contact@mail.com"
 
       click_on "Other", match: :first
       fill_in "provider_sources_attributes_0_eid", with: provider.sources.first.eid
@@ -199,15 +190,8 @@ RSpec.feature "Providers in backoffice", manager_frontend: true do
       fill_in "Website", with: provider.website
       fill_in "Description", with: provider.description
       page.attach_file("provider_logo", "#{Rails.root}/app/assets/images/eosc-img.png")
-      fill_in "Street name and number", with: provider.street_name_and_number
-      fill_in "Postal code", with: provider.postal_code
-      fill_in "City", with: provider.city
       select "non-European", from: "provider_country"
 
-      fill_in "provider_main_contact_attributes_first_name", with: "Main first name"
-      fill_in "provider_main_contact_attributes_last_name", with: "Main last name"
-      fill_in "provider_main_contact_attributes_email", with: "main.contact@mail.com"
-      fill_in "provider_public_contacts_attributes_0_email", with: "public.contact@mail.com"
       fill_in "provider_sources_attributes_0_eid", with: provider.sources.first.eid
 
       expect { click_on "Create Provider" }.to change { Provider.count }.by(1)

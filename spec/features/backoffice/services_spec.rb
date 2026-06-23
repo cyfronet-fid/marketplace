@@ -36,14 +36,7 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       resource_organisation = create(:provider)
 
       # platform = create(:platform)
-      funding_body = create(:funding_body)
-      funding_program = create(:funding_program)
-      trl = create(:trl)
-      life_cycle_status = create(:life_cycle_status)
-      target_user = create(:target_user)
       access_type = create(:access_type)
-      access_mode = create(:access_mode)
-      service_category = create(:service_category)
 
       Service.reindex
 
@@ -53,51 +46,21 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
 
       fill_in "service_name", with: "service name"
       fill_in "Description", with: "service description"
+      fill_in "service_public_contact_emails", visible: false, with: "jane@doe.com"
       fill_in "Terms of use", with: "service terms of use"
-      fill_in "Tagline", with: "service tagline"
-      fill_in "service_link_multimedia_urls_attributes_0_url", with: "https://sample.url"
-      select "English", from: "Language availability"
-      select "Poland", from: "Geographical availabilities"
-      select "Poland", from: "Service geographic locations"
-      select trl.name, from: "Trl"
-      select life_cycle_status.name, from: "Life cycle status"
-      select funding_body.name, from: "Funding bodies"
-      select funding_program.name, from: "Funding programs"
-      select target_user.name, from: "Dedicated For"
-      fill_in "service_main_contact_attributes_first_name", with: "John"
-      fill_in "service_main_contact_attributes_last_name", with: "Doe"
-      fill_in "service_main_contact_attributes_email", with: "john@doe.com"
-      fill_in "service_public_contacts_attributes_0_first_name", with: "Jane"
-      fill_in "service_public_contacts_attributes_0_last_name", with: "Doe"
-      fill_in "service_public_contacts_attributes_0_email", with: "jane@doe.com"
-      select access_mode.name, from: "Access modes"
       select access_type.name, from: "Access types"
       fill_in "Terms of use url", with: "https://sample.url"
       fill_in "Access policies url", with: "https://sample.url"
       fill_in "Privacy policy url", with: "https://sample.url"
-      fill_in "Resource level url", with: "https://sample.url"
-      fill_in "service_link_use_cases_urls_attributes_0_url", with: "https://sample.url"
       fill_in "Webpage url", with: "https://sample.url"
-      fill_in "Manual url", with: "https://sample.url"
-      fill_in "Helpdesk url", with: "https://sample.url"
-      fill_in "Training information url", with: "https://sample.url"
-      fill_in "Restrictions", with: "Reaserch affiliation needed"
-      fill_in "Activate message", with: "Welcome!!!"
-      fill_in "service_certifications_0", with: "ISO-639"
-      fill_in "service_standards_0", with: "standard"
-      fill_in "service_open_source_technologies_0", with: "opensource"
-      fill_in "service_grant_project_names_0", with: "grantname"
-      fill_in "service_changelog_0", with: "fixed bug"
       select scientific_domain.name, from: "Scientific domains"
       select provider.name, from: "Providers"
-      select service_category.name, from: "Service categories"
       select "open_access", from: "Order type"
       select resource_organisation.name, from: "Service organisation"
 
       # TODO: uncomment when Resource Profile 4.0 will be released
       # select platform.name, from: "Platforms"
       select category.name, from: "Categories"
-      fill_in "Version", with: "2.2.2"
 
       fill_in "service_sources_attributes_0_eid", with: "12345a"
 
@@ -107,25 +70,14 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
 
       expect(page).to have_content("service name")
       expect(page).to have_content("service description")
-      expect(page).to have_content("service tagline")
       expect(page).to have_content("Open Access")
       expect(page).to have_content(scientific_domain.name)
       expect(page).to have_content("Publish")
 
       click_on "Details"
 
-      expect(page).to have_content(funding_body.name)
-      expect(page).to have_content(funding_program.name)
-      expect(page).to have_content("jane@doe.com")
+      expect(page).to have_selector("body", text: "jane@doe.com", visible: :all)
       expect(page).to have_content(access_type.name)
-      expect(page).to have_content(access_mode.name)
-      expect(page).to have_content("ISO-639")
-      expect(page).to have_content("standard")
-      expect(page).to have_content("opensource")
-      expect(page).to have_content("grantname")
-      expect(page).to have_content("2.2.2")
-      expect(page).to have_content(trl.name.upcase)
-      expect(page).to have_content(life_cycle_status.name)
     end
 
     scenario "I can create a service after clicking `preview` in an empty form" do
@@ -141,17 +93,8 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       fill_in "service_name", with: "service name"
       select resource_organisation.name, from: "Service organisation"
       fill_in "Description", with: "service description"
-      fill_in "Tagline", with: "service tagline"
+      fill_in "service_public_contact_emails", visible: false, with: "jane@doe.com"
       select scientific_domain.name, from: "Scientific domains"
-      select "English", from: "Language availability"
-      select "Poland", from: "Geographical availabilities"
-      select "Poland", from: "Service geographic locations"
-      fill_in "service_main_contact_attributes_first_name", with: "John"
-      fill_in "service_main_contact_attributes_last_name", with: "Doe"
-      fill_in "service_main_contact_attributes_email", with: "john@doe.com"
-      fill_in "service_public_contacts_attributes_0_first_name", with: "Jane"
-      fill_in "service_public_contacts_attributes_0_last_name", with: "Doe"
-      fill_in "service_public_contacts_attributes_0_email", with: "jane@doe.com"
       select "open_access", from: "Order type"
 
       click_on "Create Service"
@@ -162,33 +105,17 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
 
       expect(page).to have_content("service name")
       expect(page).to have_content("service description")
-      expect(page).to have_content("service tagline")
       expect(page).to have_content(scientific_domain.name)
       expect(page).to have_content(resource_organisation.name)
     end
 
-    scenario "I can add additional public contacts", js: true do
+    scenario "I can add public contact emails", js: true do
       service = create(:service)
 
       visit edit_backoffice_service_path(service)
 
-      find_button("Contact").click
-
-      fill_in "service_public_contacts_attributes_0_first_name", with: "Jane"
-      fill_in "service_public_contacts_attributes_0_last_name", with: "Doe"
-      fill_in "service_public_contacts_attributes_0_email", with: "jane@doe.com"
-
-      click_on "Add additional public contact"
-
-      fill_in "service_public_contacts_attributes_1_first_name", with: "Johny"
-      fill_in "service_public_contacts_attributes_1_last_name", with: "Does"
-      fill_in "service_public_contacts_attributes_1_email", with: "johny@does.com"
-
-      click_on "Add additional public contact"
-
-      fill_in "service_public_contacts_attributes_2_first_name", with: "John"
-      fill_in "service_public_contacts_attributes_2_last_name", with: "Doe"
-      fill_in "service_public_contacts_attributes_2_email", with: "john@doe.com"
+      find_button("Marketing").click
+      fill_in "service_public_contact_emails", visible: false, with: "jane@doe.com\njohny@does.com\njohn@doe.com"
 
       click_on "Update Service"
 
@@ -196,51 +123,39 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
 
       service.reload
 
-      expect(service.public_contacts.map(&:email)).to contain_exactly("jane@doe.com", "johny@does.com", "john@doe.com")
+      expect(service.public_contact_emails).to contain_exactly("jane@doe.com", "johny@does.com", "john@doe.com")
     end
 
-    scenario "I can remove additional public contacts", js: true do
-      service = create(:service)
-      public_contacts = create_list(:public_contact, 2, contactable: service)
+    scenario "I can remove public contact emails", js: true do
+      service = create(:service, public_contact_emails: %w[jane@doe.com john@doe.com])
 
       visit edit_backoffice_service_path(service)
 
-      find_button("Contact").click
-
-      find("a", id: "public-contact-delete-0").click
-      find("a", id: "public-contact-delete-1").click
+      find_button("Marketing").click
+      fill_in "service_public_contact_emails", visible: false, with: ""
 
       click_on "Update Service"
 
-      expect(page).to_not have_content(public_contacts.first.email)
-      expect(page).to_not have_content(public_contacts.second.email)
+      expect(page).to have_content("Service updated successfully")
+
+      service.reload
+      expect(service.public_contact_emails).to be_empty
     end
 
     scenario "I can preview service before create" do
       provider = create(:provider)
       scientific_domain = create(:scientific_domain)
       resource_organisation = create(:provider)
-      service_category = create(:service_category)
 
       visit backoffice_services_path
       click_on "Create new Service"
 
       fill_in "service_name", with: "service name"
-      fill_in "Tagline", with: "tagline"
       fill_in "Description", with: "description"
+      fill_in "service_public_contact_emails", visible: false, with: "jane@doe.com"
       select scientific_domain.name, from: "Scientific domains"
       select provider.name, from: "Providers"
-      select "English", from: "Language availability"
-      select "Poland", from: "Geographical availabilities"
-      select "Poland", from: "Service geographic locations"
-      fill_in "service_main_contact_attributes_first_name", with: "John"
-      fill_in "service_main_contact_attributes_last_name", with: "Doe"
-      fill_in "service_main_contact_attributes_email", with: "john@doe.com"
-      fill_in "service_public_contacts_attributes_0_first_name", with: "Jane"
-      fill_in "service_public_contacts_attributes_0_last_name", with: "Doe"
-      fill_in "service_public_contacts_attributes_0_email", with: "jane@doe.com"
       select resource_organisation.name, from: "Service organisation"
-      select service_category.name, from: "Service categories"
       select "open_access", from: "Order type"
 
       enqueued_jobs.each(&:clear)
@@ -258,14 +173,7 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
     end
 
     scenario "I cannot do any action on service preview", js: true do
-      service =
-        create(
-          :service,
-          related_services: [create(:service)],
-          tag_list: ["tag"],
-          public_contacts: [build(:public_contact)],
-          offers: [create(:offer)]
-        )
+      service = create(:service, tag_list: ["tag"], public_contact_emails: ["jane@doe.com"], offers: [create(:offer)])
 
       visit edit_backoffice_service_path(service)
 
@@ -275,13 +183,10 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
 
       # expect(page).to have_link(service.providers.first.name, href: "javascript:;")
       expect(page).to have_link("Webpage", href: "javascript:;")
-      expect(page).to have_link("Manual", href: "javascript:;")
-      expect(page).to have_link("Helpdesk", href: "javascript:;")
-      expect(page).to have_link("Training information", href: "javascript:;")
-      expect(page).to have_link("Contact provider", href: "javascript:;")
+      expect(page).to have_link("Contact organisation", href: "javascript:;")
       expect(page).to have_link("Access the service", href: "javascript:;")
       expect(page).to have_link("tag", href: "javascript:;")
-      expect(page).to have_link(service.related_services.first.name, href: "javascript:;")
+      expect(page).to have_selector("body", text: "jane@doe.com", visible: :all)
     end
 
     scenario "I cannot create service with wrong logo file" do
@@ -294,7 +199,6 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       attach_file("service_logo", "spec/lib/images/invalid-logo.svg")
       fill_in "service_name", with: "service name"
       fill_in "Description", with: "service description"
-      fill_in "Tagline", with: "service tagline"
       select scientific_domain.name, from: "Scientific domains"
       select provider.name, from: "Providers"
 
@@ -343,7 +247,6 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
 
     scenario "I can update service with default offer with parameters" do
       service = create(:service, name: "my service", offers: [create(:offer_with_parameters)])
-      service_category = create(:service_category)
 
       parameters = service.offers.first.parameters
       parameter = parameters.first
@@ -360,7 +263,6 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       fill_in "service_name", with: "updated name"
       fill_in "Order url", with: "http://order.com"
       select "fully_open_access", from: "Order type"
-      select service_category.name, from: "Service categories"
 
       click_on "Update Service"
 
@@ -417,13 +319,11 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
 
     scenario "I can see service preview" do
       service = create(:service, name: "my service")
-      service_category = create(:service_category)
 
       visit backoffice_service_path(service)
       click_on "Edit"
 
       fill_in "service_name", with: "updated name"
-      select service_category.name, from: "Service categories"
       click_on "Preview"
 
       expect(page).to have_content("updated name")
@@ -698,21 +598,10 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       # TODO: uncomment when Resource Profile 4.0 will be released
       # expect(page).to have_field "Platforms", disabled: false
       expect(page).to have_field "Scientific domains", disabled: false
-      expect(page).to have_field "Dedicated For", disabled: false
-      expect(page).to have_field "Funding bodies", disabled: false
-      expect(page).to have_field "Funding programs", disabled: false
-      expect(page).to have_field "Language availability", disabled: false
-      expect(page).to have_field "Geographical availabilities", disabled: false
       expect(page).to have_field "Terms of use url", disabled: false
       expect(page).to have_field "Access policies url", disabled: false
-      expect(page).to have_field "Resource level url", disabled: false
       expect(page).to have_field "Webpage url", disabled: false
-      expect(page).to have_field "Manual url", disabled: false
-      expect(page).to have_field "Helpdesk url", disabled: false
-      expect(page).to have_field "Helpdesk email", disabled: false
-      expect(page).to have_field "Training information url", disabled: false
-      expect(page).to have_field "Restrictions", disabled: false
-      expect(page).to have_field "Activate message", disabled: false
+      expect(page).to have_field "Public contact emails (one per line)", disabled: false
     end
 
     scenario "If eosc_registry is selected as upstream fields imported from there should be disabled" do
@@ -729,64 +618,16 @@ RSpec.feature "Services in backoffice", manager_frontend: true do
       expect(page).to have_field "Logo", disabled: true
       expect(page).to have_field "Tag list", disabled: true
       expect(page).to have_field "Description", disabled: true
-      expect(page).to have_field "Tagline", disabled: true
-      expect(page).to have_field "service_link_multimedia_urls_attributes_0_url", disabled: true
-      expect(page).to have_field "service_link_use_cases_urls_attributes_0_url", disabled: true
       expect(page).to have_field "Order type", disabled: true
       expect(page).to have_field "Order url", disabled: true
       expect(page).to have_field "Categories", disabled: true
       expect(page).to have_field "Access types", disabled: true
-      expect(page).to have_field "Access modes", disabled: true
       expect(page).to have_field "Providers", disabled: true
-
-      expect(page).to have_field "Related platforms", disabled: true
-      expect(page).to have_field "service_main_contact_attributes_first_name", disabled: true
-      expect(page).to have_field "service_main_contact_attributes_last_name", disabled: true
-      expect(page).to have_field "service_main_contact_attributes_email", disabled: true
-      expect(page).to have_field "service_main_contact_attributes_country_phone_code", disabled: true
-      expect(page).to have_field "service_main_contact_attributes_phone", disabled: true
-      expect(page).to have_field "service_main_contact_attributes_organisation", disabled: true
-      expect(page).to have_field "service_main_contact_attributes_position", disabled: true
-      expect(page).to have_field "service_public_contacts_attributes_0_first_name", disabled: true
-      expect(page).to have_field "service_public_contacts_attributes_0_last_name", disabled: true
-      expect(page).to have_field "service_public_contacts_attributes_0_email", disabled: true
-      expect(page).to have_field "service_public_contacts_attributes_0_phone", disabled: true
-      expect(page).to have_field "service_public_contacts_attributes_0_organisation", disabled: true
-      expect(page).to have_field "service_public_contacts_attributes_0_position", disabled: true
-      expect(page).to have_field "Helpdesk email", disabled: true
-      expect(page).to have_field "Security contact email", disabled: true
-      expect(page).to have_field "Trl", disabled: true
-      expect(page).to have_field "Life cycle status", disabled: true
-      expect(page).to have_field "service_certifications_0", disabled: true
-      expect(page).to have_field "service_standards_0", disabled: true
-      expect(page).to have_field "service_open_source_technologies_0", disabled: true
-      expect(page).to have_field "Version", disabled: true
-      expect(page).to have_field "Last update", disabled: true
-      expect(page).to have_field "service_changelog_0", disabled: true
-      expect(page).to have_field "Required Services", disabled: true
-      expect(page).to have_field "Related Services", disabled: true
       expect(page).to have_field "Scientific domains", disabled: true
-      expect(page).to have_field "Dedicated For", disabled: true
-      expect(page).to have_field "Funding bodies", disabled: true
-      expect(page).to have_field "Funding programs", disabled: true
-      expect(page).to have_field "service_grant_project_names_0", disabled: true
-      expect(page).to have_field "Language availability", disabled: true
-      expect(page).to have_field "Geographical availabilities", disabled: true
-      expect(page).to have_field "Service geographic locations", disabled: true
       expect(page).to have_field "Terms of use url", disabled: true
       expect(page).to have_field "Access policies url", disabled: true
-      expect(page).to have_field "Resource level url", disabled: true
       expect(page).to have_field "Webpage url", disabled: true
-      expect(page).to have_field "Manual url", disabled: true
-      expect(page).to have_field "Helpdesk url", disabled: true
-      expect(page).to have_field "Training information url", disabled: true
-      expect(page).to have_field "Status monitoring url", disabled: true
-      expect(page).to have_field "Status monitoring url", disabled: true
-      expect(page).to have_field "Maintenance url", disabled: true
-      expect(page).to have_field "Payment model url", disabled: true
-      expect(page).to have_field "Pricing url", disabled: true
-      expect(page).to have_field "Restrictions", disabled: false
-      expect(page).to have_field "Activate message", disabled: false
+      expect(page).to have_field "Public contact emails (one per line)", disabled: true
       expect(page).to have_field "service_upstream_id", disabled: false
       expect(page).to have_field "service_sources_attributes_0_eid", disabled: false
       expect(page).to have_field "Synchronized at", disabled: true

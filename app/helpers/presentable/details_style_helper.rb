@@ -23,7 +23,7 @@ module Presentable::DetailsStyleHelper
 
   def display_detail?(detail, service)
     (detail[:clazz].blank? && any_present?(service, *detail[:fields])) ||
-      (detail[:clazz] && service.send(detail[:clazz]).present?)
+      (detail[:clazz] && service.respond_to?(detail[:clazz]) && service.send(detail[:clazz]).present?)
   end
 
   def monitoring_numerable_class(number)

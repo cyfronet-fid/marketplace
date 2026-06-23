@@ -5,8 +5,18 @@
         .col-7.text-uppercase
           = _("Filters")
 
+    -# haml-lint:disable InstanceVariables
     - filters.each do |key, elements|
-      = render "federation/filters/multiselect", name: key, elements: elements, active: params[key] || []
+      - label = defined?(@facets_labels) && @facets_labels.present? ? (@facets_labels[key] || key.humanize) : key.humanize
+      :ruby
+        active_eids = Array(params[key])
+        if key == "categories"
+          active_eids += Array(params[:supercategories]) + Array(params[:subcategories])
+        elsif key == "scientific_domains"
+          active_eids += Array(params[:scientific_subdomains])
+        end
+      = render "federation/filters/multiselect", name: key, label: label, elements: elements, active: active_eids
+    -# haml-lint:enable InstanceVariables
 
     .row.mt-3
       .col-12

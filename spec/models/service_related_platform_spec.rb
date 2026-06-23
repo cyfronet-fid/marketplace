@@ -2,7 +2,10 @@
 
 require "rails_helper"
 
-RSpec.describe ServiceRelatedPlatform, type: :model, backend: true do
+RSpec.describe ServiceRelatedPlatform,
+               type: :model,
+               backend: true,
+               skip: "Service related platforms were removed in the V6 Service profile" do
   it { should belong_to(:service) }
   it { should belong_to(:platform) }
   it { should validate_presence_of(:service) }

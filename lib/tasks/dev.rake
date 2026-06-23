@@ -56,16 +56,8 @@ namespace :dev do
         legal_entity: hash["legal_entity"],
         description: hash["description"],
         link_multimedia_urls: hash["multimedia"].map { |h| Link::MultimediaUrl.new(url: h) },
-        tag_list: hash["tags"],
-        street_name_and_number: hash["street_name_and_number"],
-        postal_code: hash["postal_code"],
-        city: hash["city"],
-        region: hash["region"],
         country: Country.for(hash["country_alpha2"]),
-        certifications: %w[ISO AES VESA].sample(rand(1..3)),
-        hosting_legal_entity_string: ["Lorem ipsum", "Test", "Some Entity"].sample(rand(1..3)),
-        affiliations: ["Affiliation A", "Affiliation test", "Affiliation 1"].sample(rand(1..3)),
-        national_roadmaps: ["Roadmap 1", "Roadmap 2", "Roadmap 3"].sample(rand(1..3)),
+        public_contact_emails: ["example-#{hash["abbreviation"]}@mail.com"],
         pid: hash["abbreviation"],
         status: hash["status"]
       )
@@ -90,18 +82,9 @@ namespace :dev do
 
   def assign_sample_associations_to_provider(provider)
     provider.assign_attributes(
-      provider_life_cycle_status: Vocabulary::ProviderLifeCycleStatus.all.sample.id,
-      networks: samples_of(Vocabulary::Network),
-      structure_types: samples_of(Vocabulary::StructureType),
-      esfri_domains: samples_of(Vocabulary::EsfriDomain),
-      esfri_type: Vocabulary::EsfriType.all.sample.id,
-      meril_scientific_domains: samples_of(Vocabulary::MerilScientificDomain),
-      areas_of_activity: samples_of(Vocabulary::AreaOfActivity),
-      societal_grand_challenges: samples_of(Vocabulary::SocietalGrandChallenge),
-      scientific_domains: samples_of(ScientificDomain),
-      legal_status: Vocabulary::LegalStatus.all.sample.id,
-      participating_countries: samples_of(Country),
-      public_contacts: [PublicContact.new(email: "example#{provider.id}@mail.com")],
+      nodes: samples_of(Vocabulary::Node, 1),
+      hosting_legal_entities: samples_of(Vocabulary::HostingLegalEntity, 1),
+      legal_statuses: samples_of(Vocabulary::LegalStatus, 1),
       data_administrators: [
         DataAdministrator.new(
           first_name: "John#{provider.id}",
@@ -141,7 +124,6 @@ namespace :dev do
     end
   end
 
-  # rubocop:disable Metrics/AbcSize
   def create_services(services_hash)
     puts "Generating services:"
     Service.skip_callback :validation, :before, :assign_analytics
@@ -152,19 +134,11 @@ namespace :dev do
       providers = Provider.where(name: prov)
       catalogue = Catalogue.find_by(name: hash["catalogue"] || [])
       domain = ScientificDomain.where(name: hash["domain"])
-      platforms = Platform.where(name: hash["platforms"])
-      funding_bodies = Vocabulary::FundingBody.where(eid: hash["funding_bodies"])
-      funding_programs = Vocabulary::FundingProgram.where(eid: hash["funding_programs"])
       service = Service.find_or_initialize_by(name: hash["name"])
       trl = Vocabulary::Trl.where(eid: hash["trl"])
-      life_cycle_status = Vocabulary::LifeCycleStatus.where(eid: hash["life_cycle_status"])
-      target_users = TargetUser.where(name: hash["target_users"])
-      public_contacts = [PublicContact.new(email: "mail@example.org")]
-      main_contact = MainContact.new(first_name: "John", last_name: "Doe", email: "john@example.org")
 
       service.assign_attributes(
         pid: hash["pid"] || nil,
-        tagline: hash["tagline"],
         description: hash["description"],
         scientific_domains: domain,
         providers: providers,
@@ -173,25 +147,14 @@ namespace :dev do
         order_url: hash["order_url"] || "",
         resource_organisation: resource_organisation,
         webpage_url: hash["webpage_url"],
-        manual_url: hash["manual_url"],
-        helpdesk_url: hash["helpdesk_url"],
-        training_information_url: hash["training_information_url"],
-        funding_bodies: funding_bodies,
-        funding_programs: funding_programs,
         terms_of_use_url: hash["terms_of_use_url"],
-        resource_level_url: hash["resource_level_url"],
         access_policies_url: hash["access_policies_url"],
-        language_availability: hash["language_availability"],
-        geographical_availabilities: [hash["geographical_availabilities"]],
-        target_users: target_users,
-        restrictions: hash["restrictions"],
+        publishing_date: hash["publishing_date"] || Date.current,
+        resource_type: "Service",
+        public_contact_emails: ["mail@example.org"],
         trls: trl,
-        life_cycle_statuses: life_cycle_status,
         categories: categories,
         tag_list: hash["tags"],
-        platforms: platforms,
-        main_contact: main_contact,
-        public_contacts: public_contacts,
         status: hash["status"] || :published
       )
       service.save(validate: false)
@@ -204,8 +167,6 @@ namespace :dev do
       Service.set_callback :validation, :before, :assign_analytics
     end
   end
-
-  # rubocop:enable Metrics/AbcSize
 
   def order_type_from(hash)
     if hash["external"]
@@ -227,8 +188,7 @@ namespace :dev do
         internal: effective_order_url.blank?,
         limited_availability: h["limited_availability"].blank? ? false : h["limited_availability"],
         availability_count: h["availability_count"].blank? ? 0 : h["availability_count"],
-        offer_category:
-          service.service_categories.first || Vocabulary::ServiceCategory.find_by(eid: "service_category-other"),
+        offer_category: Vocabulary::ServiceCategory.find_by(eid: "service_category-other"),
         status: :published
       )
       puts "    - #{h["name"]} offer generated"
@@ -239,6 +199,8 @@ namespace :dev do
 
   def create_relations(relations_hash)
     puts "Generating service relations from yaml (remove all relations and crating new one):"
+    return unless ActiveRecord::Base.connection.data_source_exists?("service_relationships")
+
     ServiceRelationship.delete_all
 
     relations_hash&.each_value do |hash|
@@ -277,7 +239,12 @@ namespace :dev do
         node: hash["node"],
         version: hash["version"],
         last_update: hash["last_update"],
-        software_license: hash["software_license"],
+        license_name: hash["license_name"] || hash["software_license"],
+        license_url: hash["license_url"],
+        urls: hash["urls"] || Array(hash["url"]),
+        publishing_date: hash["publishing_date"],
+        resource_type: hash["resource_type"] || "DeployableApplication",
+        public_contact_emails: hash["public_contact_emails"] || [],
         creators: hash["creators"] || [],
         resource_organisation: resource_organisation,
         catalogue: catalogue,

@@ -34,13 +34,14 @@ class Import::Providers
 
   def call
     log "Importing providers from EOSC Registry #{@eosc_registry_base_url}... Rescue mode: #{@rescue_mode}"
-    @request_providers = external_providers_data.select { |pro| @ids.empty? || @ids.include?(pro["provider"]["id"]) }
+    @request_providers = external_providers_data.select { |provider| @ids.empty? || @ids.include?(provider["id"]) }
 
     @request_providers.each do |external_data|
-      external_provider_data = external_data["provider"]
-      eid = external_provider_data["id"]
-      parsed_provider_data = Importers::Provider.call(external_provider_data, Time.now.to_i)
-      parsed_provider_data["status"] = object_status(external_data["active"], external_data["suspended"])
+      eid = external_data["id"]
+      parsed_provider_data = Importers::Provider.call(external_data, Time.now.to_i)
+      if external_data.key?("active")
+        parsed_provider_data[:status] = object_status(external_data["active"], external_data["suspended"])
+      end
       eosc_registry_provider =
         Provider.joins(:sources).find_by("provider_sources.source_type": "eosc_registry", "provider_sources.eid": eid)
       current_provider = eosc_registry_provider || Provider.find_by(pid: parsed_provider_data[:pid])
@@ -50,9 +51,9 @@ class Import::Providers
       next if @dry_run
 
       if current_provider.blank?
-        create_provider(parsed_provider_data, external_provider_data["logo"], eid)
+        create_provider(parsed_provider_data, external_data["logo"], eid)
       elsif provider_source.present? && provider_source.id == current_provider.upstream_id
-        update_provider(current_provider, parsed_provider_data, external_provider_data["logo"])
+        update_provider(current_provider, parsed_provider_data, external_data["logo"])
       end
       if @default_upstream == :eosc_registry && provider_source.present?
         current_provider.update(upstream_id: provider_source.id)
@@ -79,11 +80,11 @@ class Import::Providers
   private
 
   def name(external_data)
-    external_data.dig("provider", "name")
+    external_data["name"]
   end
 
   def eid(external_data)
-    external_data.dig("provider", "id")
+    external_data["id"]
   end
 
   def log(msg)
@@ -134,8 +135,7 @@ class Import::Providers
   def external_providers_data
     begin
       @token ||= Importers::Token.new(faraday: @faraday).receive_token
-      rp =
-        Importers::Request.new(@eosc_registry_base_url, "public/provider/bundle", faraday: @faraday, token: @token).call
+      rp = Importers::Request.new(@eosc_registry_base_url, "public/organisation", faraday: @faraday, token: @token).call
     rescue Errno::ECONNREFUSED, Importers::Token::RequestError => e
       abort("import exited with errors - could not connect to #{@eosc_registry_base_url} \n #{e.message}")
     end

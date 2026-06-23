@@ -11,7 +11,6 @@ class ServicesController < ApplicationController
   before_action :sort_options
   before_action :load_query_params_from_session, only: :index
 
-  # rubocop:disable Metrics/AbcSize
   def index
     search_base_url = Mp::Application.config.search_service_base_url
     redirect_to search_base_url + "/search/service?q=*", allow_other_host: true if external_search_enabled?
@@ -32,13 +31,11 @@ class ServicesController < ApplicationController
                     )
       end
     end
-    subgroup_quantity = 5
-    additionals_size = hide_horizontals? ? 0 : (per_page / subgroup_quantity)
-    @services, @offers = search(scope, additionals_size: additionals_size)
-    @horizontals = horizontals(@services, additionals_size)
-    @presentable = presentable
+    @services, @offers = search(scope, additionals_size: 0)
+    @horizontals = []
+    @presentable = @services
     begin
-      @pagy = Pagy.new_from_searchkick(@services, items: per_page(additionals_size))
+      @pagy = Pagy.new_from_searchkick(@services, items: per_page)
     rescue Pagy::OverflowError
       params[:page] = 1
       @services, @offers = search(scope)
@@ -50,8 +47,6 @@ class ServicesController < ApplicationController
       current_user&.favourite_services || Service.where(slug: Array(cookies[:favourites]&.split("&") || []))
   end
 
-  # rubocop:enable Metrics/AbcSize
-
   def show
     @service = Service.includes(:offers).friendly.find(params[:id])
     @service.store_analytics unless Mp::Application.config.analytics_enabled
@@ -62,7 +57,7 @@ class ServicesController < ApplicationController
     @bundles = policy_scope(@service.bundles.published).order(:iid)
     @bundled = bundled
     @similar_services = fetch_similar(@service.id, current_user&.id)
-    @related_services = @service.related_services
+    @related_services = []
 
     @service_opinions =
       ServiceOpinion.joins(project_item: :offer).where(offers: { orderable_type: "Service", orderable_id: @service.id })
@@ -104,23 +99,5 @@ class ServicesController < ApplicationController
 
   def datasource_scope
     policy_scope(Datasource).with_attached_logo
-  end
-
-  def presentable
-    if hide_horizontals?(init: false)
-      @services
-    else
-      @services.each_slice(per_page(@horizontals.size) / @horizontals.size).zip(@horizontals).flatten
-    end
-  end
-
-  def horizontals(services, limit)
-    service_ids = services.map(&:id)
-    Service.published.horizontal.reject { |s| service_ids.include? s.id }.sample(limit)
-  end
-
-  def hide_horizontals?(init: true)
-    empty_listed = init ? Service.published.horizontal.empty? : @horizontals.empty?
-    empty_listed || active_filters.size.positive? || params[:q].present? || @category.present?
   end
 end

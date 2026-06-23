@@ -2,12 +2,7 @@
 
 class HomeController < ApplicationController
   include LandingPageHelper
-  before_action :load_services,
-                :load_root_categories!,
-                :load_platforms,
-                :load_providers,
-                :load_target_users,
-                :load_opinion
+  before_action :load_services, :load_root_categories!, :load_providers, :load_opinion
 
   def index
     @learn_more_section = LeadSection.includes(:leads).find_by(slug: "learn-more")
@@ -82,19 +77,9 @@ class HomeController < ApplicationController
     @services = Service.popular(6)
   end
 
-  def load_platforms
-    @home_platforms = Platform.all.uniq.sample(10).map
-    @home_platforms_counter = Platform.all.size - @home_platforms.size
-  end
-
   def load_providers
     @home_providers = Provider.active.joins(:services).uniq.sample(5)
     @home_providers_counter = Provider.active.size - @home_providers.size
-  end
-
-  def load_target_users
-    @home_target_users = TargetUser.all.first(5)
-    @home_target_users_counter = TargetUser.all.count - @home_target_users.count
   end
 
   def load_opinion

@@ -27,12 +27,9 @@ describe("Platform", () => {
     cy.contains("div.alert-success", message.successCreationMessage).should("be.visible");
     cy.get("h1")
       .invoke("text")
-      .then((value) => {
+      .then(() => {
         cy.visit("/");
-        cy.get("a[href*='/communities'][data-e2e='more-link-communities_target-users']").click();
-        cy.get(".special-list-item a").contains(value).click();
-        cy.location("href").should("include", "/services?related_platforms");
-        cy.get("[data-e2e='filter-tag']").should("be.visible");
+        cy.get("a[href*='related_platforms'][data-e2e='communities_target-user']").should("not.exist");
       });
   });
 

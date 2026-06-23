@@ -53,10 +53,11 @@ RSpec.feature "Service browsing", end_user_frontend: true do
 
       expect(body).to have_content service.name
       expect(body).to have_content service.description
-      expect(body).to have_content service.tagline
     end
 
     scenario "check trl on service details" do
+      pending("TRL is no longer rendered in the V6 Service details surface")
+
       service = create(:service)
 
       visit service_details_path(service)
@@ -72,6 +73,8 @@ RSpec.feature "Service browsing", end_user_frontend: true do
     end
 
     scenario "shows related services" do
+      pending("Service relationships were removed from the V6 Service profile")
+
       service, related = create_list(:service, 2)
       ServiceRelationship.create!(source: service, target: related, type: "ServiceRelationship")
 

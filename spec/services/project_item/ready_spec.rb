@@ -57,18 +57,15 @@ RSpec.describe ProjectItem::Ready, backend: true do
       expect(project_item).to be_ready
     end
 
-    it "send email with activate message" do
+    it "does not send removed activate message email" do
       service = create(:open_access_service, activate_message: "Welcome!!!")
       offer = create(:open_access_offer, service: service)
       project_item = create(:project_item, offer: offer)
 
       project_item.new_status(status: "custom_created", status_type: :created)
 
-      expect { described_class.new(project_item).call }.to change { ActionMailer::Base.deliveries.count }.by(2)
+      expect { described_class.new(project_item).call }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
-      expect(ActionMailer::Base.deliveries[-2].subject).to eq(
-        "[EOSC marketplace] #{service.name} is ready - usage instructions"
-      )
       expect(ActionMailer::Base.deliveries.last.subject).to eq("EOSC Portal - Rate your service")
     end
 

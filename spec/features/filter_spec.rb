@@ -52,15 +52,15 @@ RSpec.feature "Service filter", end_user_frontend: true do
     click_on "Services"
 
     expect(page).to have_text("Looking for: dd")
-    expect(page).to have_text("Providers: Cyfronet provider")
+    expect(page).to have_text("Organisations: Cyfronet provider")
   end
 
   it "reset page after filtering", js: true do
     create_list(:service, 5)
 
     visit services_path(page: 3, per_page: 1)
-    find("#geographical_availabilities-filter").click
-    select "European Union"
+    find("#order_type-filter").click
+    select "Other"
 
     expect(page.current_path).to_not have_content("page=")
   end
@@ -80,9 +80,9 @@ RSpec.feature "Service filter", end_user_frontend: true do
   end
 
   it "shows active filters" do
-    platform = create(:platform)
+    provider = create(:provider)
 
-    visit services_path(related_platforms: [platform.id])
+    visit services_path(providers: [provider.id])
     expect(page).to have_selector(".active-filters > *", count: 2)
   end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_12_14_143117) do
+ActiveRecord::Schema[7.2].define(version: 2026_04_30_103000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -289,13 +289,12 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_14_143117) do
 
   create_table "deployable_services", force: :cascade do |t|
     t.string "name", null: false
-    t.text "description", null: false
-    t.string "tagline", null: false
+    t.text "description"
+    t.string "tagline"
     t.string "abbreviation"
     t.string "url"
     t.string "node"
     t.string "version"
-    t.string "software_license"
     t.datetime "last_update"
     t.jsonb "creators", default: []
     t.string "slug"
@@ -303,10 +302,16 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_14_143117) do
     t.string "pid"
     t.integer "upstream_id"
     t.datetime "synchronized_at"
-    t.bigint "resource_organisation_id", null: false
+    t.bigint "resource_organisation_id"
     t.bigint "catalogue_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "publishing_date"
+    t.string "resource_type"
+    t.string "public_contact_emails", default: [], array: true
+    t.string "license_name"
+    t.string "license_url"
+    t.string "urls", default: [], array: true
     t.index ["catalogue_id"], name: "index_deployable_services_on_catalogue_id"
     t.index ["pid"], name: "index_deployable_services_on_pid"
     t.index ["resource_organisation_id"], name: "index_deployable_services_on_resource_organisation_id"
@@ -543,28 +548,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_14_143117) do
     t.index ["type"], name: "index_omses_on_type"
   end
 
-  create_table "persistent_identity_system_vocabularies", force: :cascade do |t|
-    t.bigint "persistent_identity_system_id"
-    t.bigint "vocabulary_id"
-    t.string "vocabulary_type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["persistent_identity_system_id", "vocabulary_id"], name: "index_persistent_id_system_vocabularies"
-    t.index ["persistent_identity_system_id"], name: "index_persistent_id_system"
-    t.index ["vocabulary_id"], name: "index_persistent_id_system_on_vocabulary"
-  end
-
-  create_table "persistent_identity_systems", force: :cascade do |t|
-    t.bigint "service_id", null: false
-    t.bigint "entity_type_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["entity_type_id"], name: "index_persistent_identity_systems_on_entity_type_id"
-    t.index ["id", "entity_type_id"], name: "index_persistent_identity_systems_on_id_and_entity_type_id"
-    t.index ["service_id", "entity_type_id"], name: "index_persistent_id_systems"
-    t.index ["service_id"], name: "index_persistent_identity_systems_on_service_id"
-  end
-
   create_table "platforms", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: nil, null: false
@@ -722,22 +705,13 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_14_143117) do
     t.string "website"
     t.boolean "legal_entity"
     t.text "description"
-    t.text "tagline"
-    t.string "street_name_and_number"
-    t.string "postal_code"
-    t.string "city"
-    t.string "region"
     t.string "country"
-    t.string "certifications", default: [], array: true
-    t.string "hosting_legal_entity_string"
-    t.string "participating_countries", default: [], array: true
-    t.string "affiliations", default: [], array: true
-    t.string "national_roadmaps", default: [], array: true
     t.integer "upstream_id"
     t.datetime "synchronized_at", precision: nil
     t.string "status"
     t.integer "usage_counts_views", default: 0, null: false
     t.string "ppid"
+    t.string "public_contact_emails", default: [], array: true
   end
 
   create_table "research_products", force: :cascade do |t|
@@ -808,25 +782,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_14_143117) do
     t.index ["service_id"], name: "index_service_providers_on_service_id"
   end
 
-  create_table "service_related_platforms", force: :cascade do |t|
-    t.bigint "service_id"
-    t.bigint "platform_id"
-    t.index ["platform_id"], name: "index_service_related_platforms_on_platform_id"
-    t.index ["service_id", "platform_id"], name: "index_service_related_platforms_on_service_id_and_platform_id", unique: true
-    t.index ["service_id"], name: "index_service_related_platforms_on_service_id"
-  end
-
-  create_table "service_relationships", force: :cascade do |t|
-    t.bigint "source_id", null: false
-    t.bigint "target_id", null: false
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.string "type"
-    t.index ["source_id", "target_id", "type"], name: "index_service_relationships_on_source_id_and_target_id_and_type", unique: true
-    t.index ["source_id"], name: "index_service_relationships_on_source_id"
-    t.index ["target_id"], name: "index_service_relationships_on_target_id"
-  end
-
   create_table "service_scientific_domains", force: :cascade do |t|
     t.bigint "service_id"
     t.bigint "scientific_domain_id"
@@ -846,16 +801,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_14_143117) do
     t.jsonb "errored"
     t.index ["eid", "source_type", "service_id"], name: "index_service_sources_on_eid_and_source_type_and_service_id", unique: true
     t.index ["service_id"], name: "index_service_sources_on_service_id"
-  end
-
-  create_table "service_target_users", force: :cascade do |t|
-    t.bigint "service_id"
-    t.bigint "target_user_id"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.index ["service_id", "target_user_id"], name: "index_service_target_users_on_service_id_and_target_user_id", unique: true
-    t.index ["service_id"], name: "index_service_target_users_on_service_id"
-    t.index ["target_user_id"], name: "index_service_target_users_on_target_user_id"
   end
 
   create_table "service_user_relationships", force: :cascade do |t|
@@ -883,55 +828,23 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_14_143117) do
     t.text "description", null: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.text "tagline", null: false
     t.decimal "rating", precision: 2, scale: 1, default: "0.0", null: false
-    t.bigint "provider_id"
     t.integer "service_opinion_count", default: 0
-    t.string "geographical_availabilities", default: [], array: true
-    t.string "language_availability", default: [], array: true
-    t.string "dedicated_for", array: true
     t.string "terms_of_use_url"
     t.string "access_policies_url"
-    t.string "resource_level_url"
     t.string "webpage_url"
-    t.string "manual_url"
-    t.string "helpdesk_url"
-    t.string "training_information_url"
-    t.string "restrictions"
     t.integer "offers_count", default: 0
-    t.text "activate_message"
     t.string "slug"
     t.string "order_type", null: false
     t.string "status"
     t.integer "upstream_id"
-    t.string "helpdesk_email", default: ""
     t.integer "project_items_count", default: 0, null: false
-    t.string "version"
     t.float "popularity_ratio"
     t.bigint "resource_organisation_id", null: false
-    t.string "status_monitoring_url"
-    t.string "maintenance_url"
     t.string "order_url", default: "", null: false
-    t.string "payment_model_url"
-    t.string "pricing_url"
-    t.string "security_contact_email", default: "", null: false
-    t.string "resource_geographic_locations", default: [], array: true
-    t.string "certifications", default: [], array: true
-    t.string "standards", default: [], array: true
-    t.string "open_source_technologies", default: [], array: true
-    t.text "changelog", default: [], array: true
-    t.string "grant_project_names", default: [], array: true
     t.string "privacy_policy_url"
-    t.datetime "last_update", precision: nil
-    t.string "related_platforms", default: [], array: true
     t.datetime "synchronized_at", precision: nil
     t.string "pid"
-    t.string "abbreviation"
-    t.boolean "horizontal", default: false, null: false
-    t.float "availability_cache"
-    t.float "reliability_cache"
-    t.string "submission_policy_url"
-    t.string "preservation_policy_url"
     t.bigint "jurisdiction_id"
     t.bigint "datasource_classification_id"
     t.boolean "version_control"
@@ -940,11 +853,13 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_14_143117) do
     t.integer "bundles_count", default: 0, null: false
     t.integer "usage_counts_views", default: 0, null: false
     t.string "ppid"
-    t.string "datasource_id"
-    t.boolean "harvestable", default: false
+    t.string "public_contact_emails", default: [], array: true
+    t.date "publishing_date"
+    t.string "resource_type"
+    t.string "urls", default: [], array: true
+    t.string "research_product_types", default: [], array: true
     t.index ["name"], name: "index_services_on_name"
     t.index ["pid"], name: "index_services_on_pid"
-    t.index ["provider_id"], name: "index_services_on_provider_id"
     t.index ["resource_organisation_id"], name: "index_services_on_resource_organisation_id"
   end
 
@@ -1121,7 +1036,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_14_143117) do
   add_foreign_key "oms_providers", "providers"
   add_foreign_key "oms_triggers", "omses"
   add_foreign_key "omses", "services"
-  add_foreign_key "persistent_identity_systems", "services"
   add_foreign_key "project_items", "bundles", on_delete: :nullify
   add_foreign_key "project_items", "offers"
   add_foreign_key "project_items", "projects"
@@ -1142,19 +1056,12 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_14_143117) do
   add_foreign_key "service_catalogues", "services"
   add_foreign_key "service_providers", "providers"
   add_foreign_key "service_providers", "services"
-  add_foreign_key "service_related_platforms", "platforms"
-  add_foreign_key "service_related_platforms", "services"
-  add_foreign_key "service_relationships", "services", column: "source_id"
-  add_foreign_key "service_relationships", "services", column: "target_id"
   add_foreign_key "service_scientific_domains", "scientific_domains"
   add_foreign_key "service_scientific_domains", "services"
-  add_foreign_key "service_target_users", "services"
-  add_foreign_key "service_target_users", "target_users"
   add_foreign_key "service_user_relationships", "services"
   add_foreign_key "service_user_relationships", "users"
   add_foreign_key "service_vocabularies", "services"
   add_foreign_key "service_vocabularies", "vocabularies"
-  add_foreign_key "services", "providers"
   add_foreign_key "services", "providers", column: "resource_organisation_id"
   add_foreign_key "services", "service_sources", column: "upstream_id", on_delete: :nullify
   add_foreign_key "tour_feedbacks", "users"

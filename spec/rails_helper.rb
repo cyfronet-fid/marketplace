@@ -79,6 +79,7 @@ RSpec.configure do |config|
 
   # Use mock of middleware
   config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include Devise::Test::IntegrationHelpers, type: :request
 end
 
 OmniAuth.config.test_mode = true

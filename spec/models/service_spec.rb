@@ -8,7 +8,6 @@ RSpec.describe Service, backend: true do
 
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:description) }
-  it { should validate_presence_of(:tagline) }
   it { should validate_presence_of(:rating) }
 
   it { should have_many(:providers) }
@@ -16,11 +15,13 @@ RSpec.describe Service, backend: true do
   it { should have_many(:offers).dependent(:restrict_with_error) }
   it { should have_many(:categories) }
   it { should have_many(:service_scientific_domains).dependent(:destroy) }
-  it { should have_many(:funding_bodies) }
-  it { should have_many(:funding_programs) }
   it { should have_many(:service_vocabularies).dependent(:destroy) }
 
   it { should belong_to(:upstream).required(false) }
+
+  it "allows scientific domains to be omitted" do
+    expect(build(:service, scientific_domains: [])).to be_valid
+  end
 
   it "sets first category as default" do
     c1, c2 = create_list(:category, 2)
@@ -51,15 +52,6 @@ RSpec.describe Service, backend: true do
     expect(create(:service).rating).to eq(0.0)
   end
 
-  it "has related services" do
-    s1, s2, s3 = create_list(:service, 3)
-
-    ServiceRelationship.create!(source: s1, target: s2, type: "ServiceRelationship")
-    ServiceRelationship.create!(source: s1, target: s3, type: "ServiceRelationship")
-
-    expect(s1.related_services).to contain_exactly(s2, s3)
-  end
-
   context "#owned_by?" do
     it "is true when user is in the owners list" do
       owner = create(:user)
@@ -73,6 +65,20 @@ RSpec.describe Service, backend: true do
       service = create(:service)
 
       expect(service.owned_by?(stranger)).to be_falsy
+    end
+  end
+
+  context "databus publishing" do
+    before { clear_enqueued_jobs }
+
+    it "publishes a destroy event when service is soft-deleted" do
+      service = create(:service)
+      clear_enqueued_jobs
+
+      expect { service.update!(status: :deleted) }.to have_enqueued_job(Jms::PublishJob).with(
+        hash_including("cud" => "destroy", "model" => "Service"),
+        :mp_db_events
+      )
     end
   end
 
@@ -133,7 +139,7 @@ RSpec.describe Service, backend: true do
       it "an updated service" do
         service = create(:service)
 
-        expect { service.update!(tagline: "new value") }.to have_enqueued_job(Ess::UpdateJob).with { |payload|
+        expect { service.update!(description: "new value") }.to have_enqueued_job(Ess::UpdateJob).with { |payload|
           expect(payload).to be_an_add_operation
         }
       end
@@ -174,7 +180,7 @@ RSpec.describe Service, backend: true do
       it "an updated service" do
         service = create(:service, status: "deleted")
 
-        expect { service.update!(tagline: "new value") }.to have_enqueued_job(Ess::UpdateJob).with { |payload|
+        expect { service.update!(description: "new value") }.to have_enqueued_job(Ess::UpdateJob).with { |payload|
           expect(payload).to be_a_delete_operation
         }
       end

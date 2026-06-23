@@ -47,7 +47,7 @@ RSpec.describe Bundle, type: :model, backend: true do
   context "#bundled_offers" do
     %i[offer open_access_offer fully_open_access_offer other_offer external_offer].each do |type|
       context "#correct main offer with #{PRETTY_OFFER_TYPE[type]} type" do
-        let(:offer) { build(type) }
+        let(:offer) { create(type) }
         let(:bundle) { build(:bundle, main_offer: offer) }
 
         it "allows empty" do

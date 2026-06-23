@@ -10,4 +10,4 @@
           = link_to _("Edit #{tab.capitalize}"),
                       edit_backoffice_provider_path(provider, step: tab),
                       class: "btn btn-primary edit-button d-flex justify-content-center",
-                      data: tab.in?(basic_steps) ? { turbo_frame: "_top" } : {}
+                      data: { turbo_frame: "_top" }

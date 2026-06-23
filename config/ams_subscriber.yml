@@ -15,15 +15,15 @@ default: &default
         - mp-datasource-create
         - mp-datasource-delete
         - mp-datasource-update
-        - mp-deployable_service-create
-        - mp-deployable_service-delete
-        - mp-deployable_service-update
+        - mp-deployable_application-create
+        - mp-deployable_application-delete
+        - mp-deployable_application-update
         - mp-interoperability_record-create
         - mp-interoperability_record-delete
         - mp-interoperability_record-update
-        - mp-provider-create
-        - mp-provider-delete
-        - mp-provider-update
+        - mp-organisation-create
+        - mp-organisation-delete
+        - mp-organisation-update
         - mp-service-create
         - mp-service-delete
         - mp-service-update

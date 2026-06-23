@@ -3,11 +3,11 @@
 require "rails_helper"
 
 RSpec.describe "Api::ServicesController", backend: true do
-  let!(:published_service) { create(:service, public_contacts: [build(:public_contact)]) }
-  let!(:second_service) { create(:service, public_contacts: [build(:public_contact)], status: :published) }
-  let!(:draft_service) { create(:service, public_contacts: [build(:public_contact)], status: :draft) }
-  let!(:deleted_service) { create(:service, public_contacts: [build(:public_contact)], status: :deleted) }
-  let!(:errored_service) { create(:service, public_contacts: [build(:public_contact)], status: :errored) }
+  let!(:published_service) { create(:service, public_contact_emails: ["one@example.org"]) }
+  let!(:second_service) { create(:service, public_contact_emails: ["two@example.org"], status: :published) }
+  let!(:draft_service) { create(:service, public_contact_emails: ["draft@example.org"], status: :draft) }
+  let!(:deleted_service) { create(:service, public_contact_emails: ["deleted@example.org"], status: :deleted) }
+  let!(:errored_service) { create(:service, public_contact_emails: ["errored@example.org"], status: :errored) }
 
   describe "GET /api/services" do
     before(:each) { get api_services_api_path }
@@ -32,9 +32,9 @@ RSpec.describe "Api::ServicesController", backend: true do
 
       expect(body[0]["Service Unique ID"]).to eq(published_service.id)
       expect(body[0]["SERVICE_TYPE"]).to eq("eu.eosc.portal.services.url")
-      expect(body[0]["CONTACT_EMAIL"]).to eq(published_service.public_contacts.map(&:email))
+      expect(body[0]["CONTACT_EMAIL"]).to eq(published_service.public_contact_emails)
       expect(body[0]["SITENAME-SERVICEGROUP"]).to eq(published_service.name)
-      expect(body[0]["COUNTRY_NAME"]).to eq(published_service.geographical_availabilities.as_json)
+      expect(body[0]["COUNTRY_NAME"]).to eq([])
       expect(body[0]["URL"]).to eq(published_service.webpage_url)
 
       expect(body[1].keys).to contain_exactly(
@@ -48,9 +48,9 @@ RSpec.describe "Api::ServicesController", backend: true do
 
       expect(body[1]["Service Unique ID"]).to eq(second_service.id)
       expect(body[1]["SERVICE_TYPE"]).to eq("eu.eosc.portal.services.url")
-      expect(body[1]["CONTACT_EMAIL"]).to eq(second_service.public_contacts.map(&:email))
+      expect(body[1]["CONTACT_EMAIL"]).to eq(second_service.public_contact_emails)
       expect(body[1]["SITENAME-SERVICEGROUP"]).to eq(second_service.name)
-      expect(body[1]["COUNTRY_NAME"]).to eq(second_service.geographical_availabilities.as_json)
+      expect(body[1]["COUNTRY_NAME"]).to eq([])
       expect(body[1]["URL"]).to eq(second_service.webpage_url)
     end
   end

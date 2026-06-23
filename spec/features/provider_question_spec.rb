@@ -21,7 +21,7 @@ RSpec.feature "Question about provider", end_user_frontend: true do
 
       visit provider_path(provider)
 
-      click_on "Ask organisation a question"
+      click_on "Contact the organisation"
 
       within("#form-modal") { fill_in("provider_question_text", with: "text") }
 
@@ -39,7 +39,7 @@ RSpec.feature "Question about provider", end_user_frontend: true do
 
       visit provider_path(provider)
 
-      click_on "Ask organisation a question"
+      click_on "Contact the organisation"
 
       click_on "SEND"
 
@@ -55,7 +55,7 @@ RSpec.feature "Question about provider", end_user_frontend: true do
 
       visit provider_path(provider)
 
-      click_on "Ask organisation a question"
+      click_on "Contact the organisation"
 
       within("#form-modal") do
         fill_in("provider_question_author", with: "John Doe")
@@ -77,7 +77,7 @@ RSpec.feature "Question about provider", end_user_frontend: true do
 
       visit provider_path(provider)
 
-      click_on "Ask organisation a question"
+      click_on "Contact the organisation"
 
       click_on "SEND"
 

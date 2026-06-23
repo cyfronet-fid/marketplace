@@ -6,12 +6,7 @@
     class: ("collapsed" if collapsed) }
   .row
     .col-10
-      - if filter.field_name == "geographical_availabilities"
-        %h6.panel-heading{ "data-toggle": "tooltip",
-        title: "Service available in the territory of the entire selected region" }
-          = filter.title
-      - else
-        %h6.panel-heading= filter.title
+      %h6.panel-heading= filter.title
     .col-2
       .collapse-icon
         %i.fas.fa-chevron-down

@@ -321,8 +321,8 @@ RSpec.describe DeployableService::DeploymentJob, type: :job do
   end
 
   describe "job configuration" do
-    it "uses the default queue" do
-      expect(described_class.new.queue_name).to eq("default")
+    it "uses the deployments queue" do
+      expect(described_class.new.queue_name).to eq("deployments")
     end
   end
 end

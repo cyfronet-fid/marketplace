@@ -2,7 +2,9 @@
 
 require "rails_helper"
 
-RSpec.describe Filter::MarketplaceLocation, backend: true do
+RSpec.describe Filter::MarketplaceLocation,
+               backend: true,
+               skip: "Service marketplace locations were removed in the V6 Service profile" do
   context "#options" do
     it "returns tree structure with accumulated count with correct values" do
       root = create(:marketplace_location)

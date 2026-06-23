@@ -1,3 +1,4 @@
+- label ||= name.humanize
 %a.text-dark{ href: "#collapse_#{name}", "data-toggle": "collapse",
     id: "#{name}-filter",
     "data-action": "click->filter#toggle",
@@ -5,7 +6,7 @@
     class: ("collapsed" if collapsed) }
   .row
     .col-10
-      %h6.panel-heading= name.humanize
+      %h6.panel-heading= label
     .col-2
       .collapse-icon
         %i.fas.fa-chevron-down

@@ -226,33 +226,12 @@ RSpec.describe ApplicationController, type: :controller, backend: true do
       end
     end
 
-    context Filter::Platform do
-      let!(:collection) { create_list(:platform, 3) }
-      let!(:field_name) { :platforms }
-      let!(:param_name) { :related_platforms }
-      let!(:filter_class) { Filter::Platform }
-      it "checks if platform filter works" do
-        basic_test
-      end
-    end
-
     context Filter::ScientificDomain do
       let!(:collection) { create_list(:scientific_domain, 3) }
       let!(:field_name) { :scientific_domains }
       let!(:param_name) { :scientific_domains }
       let!(:filter_class) { Filter::ScientificDomain }
       it "checks if scientific domain filter works" do
-        basic_test
-      end
-    end
-
-    context Filter::TargetUser do
-      let!(:collection) { create_list(:target_user, 3) }
-      let!(:field_name) { :target_users }
-      let!(:param_name) { :dedicated_for }
-      let!(:index) { :dedicated_for }
-      let!(:filter_class) { Filter::TargetUser }
-      it "checks if target group filter works" do
         basic_test
       end
     end
@@ -279,7 +258,7 @@ RSpec.describe ApplicationController, type: :controller, backend: true do
       end
       let!(:field_name) { :rating }
       let!(:param_name) { :rating }
-      let!(:values) { 2.0 }
+      let!(:values) { "2" }
       let!(:filter_class) { Filter::Rating }
       it "checks if rating filter works" do
         Service.reindex
@@ -307,39 +286,19 @@ RSpec.describe ApplicationController, type: :controller, backend: true do
       end
     end
 
-    context Filter::Location do
-      let!(:collection) { %w[PL BR EO] }
-      let!(:service1) do
-        create(
-          :service,
-          geographical_availabilities: Array.wrap([Country.load(collection.first), Country.load(collection.third)])
-        )
-      end
-      let!(:service2) do
-        create(
-          :service,
-          geographical_availabilities: Array.wrap([Country.load(collection.second), Country.load(collection.third)])
-        )
-      end
-      let!(:service4) { create(:service, geographical_availabilities: Array.wrap(Country.load(collection.second))) }
-      let!(:field_name) { :geographical_availabilities }
-      let!(:param_name) { :geographical_availabilities }
-      let!(:filter_class) { Filter::Location }
+    context Filter::Jurisdiction do
+      let!(:collection) { create_list(:vocabulary_jurisdiction, 3) }
+      let!(:service1) { create(:service, jurisdiction: collection.first) }
+      let!(:service2) { create(:service, jurisdiction: collection.second) }
+      let!(:service4) { create(:service, jurisdiction: collection.third) }
+      let!(:field_name) { :jurisdiction }
+      let!(:param_name) { :jurisdiction }
+      let!(:values) { [collection.first.eid, collection.second.eid] }
+      let!(:filter_class) { Filter::Jurisdiction }
 
-      context "with filter country value" do
-        let!(:values) { "Poland" }
-        it "checks if location filter works" do
-          Service.reindex
-          basic_test
-        end
-      end
-
-      context "with filter region value" do
-        let!(:values) { "Europe" }
-        it "checks if location filter works" do
-          Service.reindex
-          basic_test
-        end
+      it "checks if jurisdiction filter works" do
+        Service.reindex
+        basic_test
       end
     end
   end

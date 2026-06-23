@@ -1,8 +1,6 @@
 .pt-4.service-box-redesign.service-detail{ "data-shepherd-tour-target": "service-box" }
   = render Presentable::HeaderComponent.new(object: service,
                           title: service.name,
-                          abbreviation: service.abbreviation,
-                          subtitle: service.tagline,
                           comparison_enabled: comparison_enabled,
                           preview: local_assigns[:preview] || service.suspended?,
                           favourite_services: favourite_services) do |c|

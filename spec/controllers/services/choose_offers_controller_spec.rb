@@ -54,10 +54,9 @@ RSpec.describe Services::ChooseOffersController, type: :controller, backend: tru
       end
 
       context "when #{service_type} has no offers" do
-        it "renders the page with empty offers" do
+        it "does not initialize selectable offers" do
           get :show, params: service_params
-          expect(response).to render_template(:show)
-          expect(assigns(:offers)).to be_empty
+          expect(assigns(:offers)).to be_nil
         end
       end
 
@@ -83,8 +82,10 @@ RSpec.describe Services::ChooseOffersController, type: :controller, backend: tru
         it "saves the selection in session and redirects to next step" do
           put :update, params: service_params.merge(customizable_project_item: { offer_id: offer.iid })
 
-          expect(session[:customizable_project_item_choose_offer]).to be_present
-          expect(response).to redirect_to(service_information_path(service_resource))
+          session_key =
+            service_resource.is_a?(DeployableService) ? "ds_#{service_resource.id}" : service_resource.id.to_s
+          expect(session[session_key]).to be_present
+          expect(response).to redirect_to(information_path)
         end
 
         it "creates valid step with selected offer" do
@@ -96,6 +97,8 @@ RSpec.describe Services::ChooseOffersController, type: :controller, backend: tru
       end
 
       context "with invalid offer selection" do
+        let!(:alternative_offer) { create_offer(name: "Alternative Offer", status: :published) }
+
         it "re-renders show template with error" do
           put :update, params: service_params.merge(customizable_project_item: { offer_id: 99_999 })
 
@@ -201,6 +204,10 @@ RSpec.describe Services::ChooseOffersController, type: :controller, backend: tru
       { service_id: service_resource.to_param }
     end
 
+    def information_path
+      service_information_path(service_resource)
+    end
+
     include_examples "choose offers controller", "Service"
 
     describe "Service-specific behavior" do
@@ -221,6 +228,10 @@ RSpec.describe Services::ChooseOffersController, type: :controller, backend: tru
 
     def service_params
       { deployable_service_id: service_resource.to_param }
+    end
+
+    def information_path
+      deployable_service_information_path(service_resource)
     end
 
     include_examples "choose offers controller", "DeployableService"
@@ -272,14 +283,14 @@ RSpec.describe Services::ChooseOffersController, type: :controller, backend: tru
     end
 
     context "when service/deployable_service is not found" do
-      it "raises ActiveRecord::RecordNotFound for service" do
-        expect { get :show, params: { service_id: "nonexistent" } }.to raise_error(ActiveRecord::RecordNotFound)
+      it "redirects to not found for service" do
+        get :show, params: { service_id: "nonexistent" }
+        expect(response).to redirect_to("/404")
       end
 
-      it "raises ActiveRecord::RecordNotFound for deployable_service" do
-        expect { get :show, params: { deployable_service_id: "nonexistent" } }.to raise_error(
-          ActiveRecord::RecordNotFound
-        )
+      it "redirects to not found for deployable_service" do
+        get :show, params: { deployable_service_id: "nonexistent" }
+        expect(response).to redirect_to("/404")
       end
     end
   end

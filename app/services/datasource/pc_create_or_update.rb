@@ -9,25 +9,31 @@ class Datasource::PcCreateOrUpdate
   class NotUpdatedError < StandardError
   end
 
-  def initialize(eosc_registry_datasource, is_active)
+  def initialize(eosc_registry_datasource, status)
     @error_message = "Datasource haven't been updated. Message #{eosc_registry_datasource}"
+    @logo = eosc_registry_datasource["logo"]
     @source_type = "eosc_registry"
-    @is_active = is_active
+    @status = status_for(status)
     @mp_datasource =
       Service.joins(:sources).find_by(
         "service_sources.source_type": @source_type,
-        "service_sources.eid": eosc_registry_datasource["serviceId"]
-      )
+        "service_sources.eid": eosc_registry_datasource["id"]
+      ) ||
+        Service.joins(:sources).find_by(
+          "service_sources.source_type": @source_type,
+          "service_sources.eid": eosc_registry_datasource["serviceId"]
+        )
     @datasource_hash = Importers::Datasource.call(eosc_registry_datasource)
-    @datasource_hash["status"] = @is_active ? "published" : "draft"
-    @datasource_hash["type"] = "Datasource"
+    @datasource_hash.delete(:logo_url)
+    @datasource_hash[:status] = @status
+    @datasource_hash[:type] = "Datasource"
 
     @new_update_available = true
   end
 
   def call
     create_new = @mp_datasource.nil?
-    return Datasource::PcCreateOrUpdate.create_datasource(@datasource_hash) if create_new
+    return Datasource::PcCreateOrUpdate.create_datasource(@datasource_hash, @logo) if create_new
     return @mp_datasource unless @new_update_available
 
     source_id = @mp_datasource&.sources&.find_by(source_type: @source_type)
@@ -37,7 +43,14 @@ class Datasource::PcCreateOrUpdate
       return @mp_datasource
     end
 
-    update_valid = Service::Update.call(@mp_datasource, @datasource_hash)
+    update_valid = false
+    ActiveRecord::Base.transaction do
+      source_id.update!(eid: @datasource_hash[:pid])
+      @mp_datasource.upstream = source_id
+      update_valid = Service::Update.call(@mp_datasource, @datasource_hash)
+      raise ActiveRecord::Rollback unless update_valid
+    end
+
     unless update_valid
       Datasource::PcCreateOrUpdate.handle_invalid_data(@mp_datasource, @datasource_hash, @error_message)
       return @mp_datasource
@@ -48,6 +61,7 @@ class Datasource::PcCreateOrUpdate
       @mp_datasource.sources.first.update(errored: nil)
     end
 
+    Importers::Logo.new(@mp_datasource, @logo).call
     @mp_datasource.save!
     @mp_datasource
   rescue Errno::ECONNREFUSED
@@ -66,8 +80,8 @@ class Datasource::PcCreateOrUpdate
     mp_datasource.sources&.first&.update(errored: datasource_errors)
   end
 
-  def self.create_datasource(datasource_hash)
-    datasource = Service.new(datasource_hash)
+  def self.create_datasource(datasource_hash, logo)
+    datasource = Datasource.new(datasource_hash)
     if datasource.valid?
       Service::Create.call(datasource)
     else
@@ -75,7 +89,21 @@ class Datasource::PcCreateOrUpdate
       datasource.save(validate: false)
     end
 
+    ServiceSource::Create.call(datasource)
+    Importers::Logo.call(datasource, logo)
     datasource.save!(validate: false)
     datasource
+  end
+
+  private
+
+  def status_for(status)
+    return :published if status == true
+    return :draft if status == false
+
+    normalized_status = status.to_s
+    return normalized_status.to_sym if Statusable::STATUSES.value?(normalized_status)
+
+    :draft
   end
 end

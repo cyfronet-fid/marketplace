@@ -196,7 +196,7 @@ crumb :backoffice_platform_edit do |platform|
 end
 
 crumb :backoffice_vocabularies_root do
-  link "Vocabularies", backoffice_other_settings_target_users_path
+  link "Vocabularies", backoffice_other_settings_access_types_path
   parent :backoffice_other_settings
 end
 

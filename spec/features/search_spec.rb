@@ -190,7 +190,7 @@ RSpec.feature "Service searching in top bar", js: true, end_user_frontend: true 
     click_on(id: "query-submit")
 
     expect(page).to have_content("Active filters")
-    expect(page).to have_content("Providers: #{provider.name}")
+    expect(page).to have_content("Organisations: #{provider.name}")
     expect(page).to have_current_path("/services?object_id=&type=&anchor=&sort=_score&providers%5B%5D=1&q=abc")
   end
 

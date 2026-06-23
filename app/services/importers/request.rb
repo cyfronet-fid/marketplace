@@ -6,7 +6,7 @@ class Importers::Request
   def initialize(eosc_registry_base_url, suffix, faraday: Faraday, token: nil, id: nil)
     @eosc_registry_base_url = eosc_registry_base_url
     @suffix = suffix
-    @token = "Bearer #{token}"
+    @token = token.present? ? "Bearer #{token}" : nil
     @id = id
     @conn = api_client_connection(faraday, @token)
   end

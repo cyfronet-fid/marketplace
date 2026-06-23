@@ -7,9 +7,9 @@ class Provider::Question::Deliver
   end
 
   def call
-    @provider.public_contacts.each do |contact|
+    @provider.public_contact_emails.each do |email|
       ProviderMailer.new_question(
-        contact.email,
+        email,
         @provider_question.author,
         @provider_question.email,
         @provider_question.text,

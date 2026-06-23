@@ -16,16 +16,14 @@ class Api::V1::Search::ServicesController < Api::V1::Search::ApplicationControll
         highlight: {
           tag: "<mark>"
         },
-        aggs: %i[categories scientific_domains providers platforms research_activities dedicated_for order_type rating],
+        aggs: %i[categories scientific_domains providers jurisdiction order_type rating],
         scope_results: ->(r) do
           r.includes(
             :resource_organisation,
             :categories,
-            :platforms,
             :providers,
-            :marketplace_locations,
             :scientific_domains,
-            :target_users,
+            :jurisdiction,
             :offers
           ).with_attached_logo
         end
@@ -61,7 +59,6 @@ class Api::V1::Search::ServicesController < Api::V1::Search::ApplicationControll
     policy_scope(Service)
   end
 
-  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def build_eid_constraints
     constraint = {}
 
@@ -80,24 +77,8 @@ class Api::V1::Search::ServicesController < Api::V1::Search::ApplicationControll
       constraint[:providers] = provider_ids if provider_ids.any?
     end
 
-    if params[:target_users].present?
-      target_user_eids = params[:target_users].is_a?(Array) ? params[:target_users] : [params[:target_users]]
-      target_user_ids = TargetUser.where(eid: target_user_eids).pluck(:id)
-      # ES index field for target users is `dedicated_for`, not `target_users`
-      constraint[:dedicated_for] = target_user_ids if target_user_ids.any?
-    end
-
-    if params[:platforms].present?
-      platform_eids = params[:platforms].is_a?(Array) ? params[:platforms] : [params[:platforms]]
-      platform_ids = Platform.where(eid: platform_eids).pluck(:id)
-      constraint[:platforms] = platform_ids if platform_ids.any?
-    end
-
-    if params[:research_activities].present?
-      activity_eids =
-        params[:research_activities].is_a?(Array) ? params[:research_activities] : [params[:research_activities]]
-      activity_ids = Vocabulary::MarketplaceLocation.where(eid: activity_eids).pluck(:id)
-      constraint[:research_activities] = activity_ids if activity_ids.any?
+    if params[:jurisdiction].present?
+      constraint[:jurisdiction] = params[:jurisdiction].is_a?(Array) ? params[:jurisdiction] : [params[:jurisdiction]]
     end
 
     constraint[:rating] = params[:rating] if params[:rating].present?
@@ -105,8 +86,6 @@ class Api::V1::Search::ServicesController < Api::V1::Search::ApplicationControll
 
     constraint
   end
-
-  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
   def serialize_services(services)
     scores_map = build_scores_map(services)
@@ -202,7 +181,7 @@ class Api::V1::Search::ServicesController < Api::V1::Search::ApplicationControll
 
   def common_params
     {
-      fields: %w[name^7 tagline^3 description offer_names provider_names resource_organisation_name],
+      fields: %w[name^7 description offer_names provider_names resource_organisation_name],
       operator: "or",
       match: :word_middle
     }
@@ -216,7 +195,7 @@ class Api::V1::Search::ServicesController < Api::V1::Search::ApplicationControll
 
   def load_root_categories!
     @root_categories = Category.roots.order(:name)
-    @research_activities = Vocabulary::MarketplaceLocation.where.not(description: "")
+    @research_activities = []
   end
 
   # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
@@ -295,26 +274,13 @@ class Api::V1::Search::ServicesController < Api::V1::Search::ApplicationControll
     providers = prov_records.map { |id, name, pid| { name: name, eid: pid, count: provider_counts[id] || 0 } }
     providers.sort_by! { |h| [-h[:count], h[:name].to_s.downcase] }
 
-    # Target users come from dedicated_for field in ES
-    tu_buckets = extract_buckets.call(aggs, :dedicated_for)
-    tu_counts = tu_buckets.to_h { |b| [b["key"].to_i, b["doc_count"].to_i] }
-    tu_records = TargetUser.pluck(:id, :name, :eid)
-    target_users = tu_records.map { |id, name, eid| { name: name, eid: eid, count: tu_counts[id] || 0 } }
-    target_users.sort_by! { |h| [-h[:count], h[:name].to_s.downcase] }
-
-    # Platforms
-    platform_buckets = extract_buckets.call(aggs, :platforms)
-    platform_counts = platform_buckets.to_h { |b| [b["key"].to_i, b["doc_count"].to_i] }
-    plat_records = Platform.pluck(:id, :name, :eid)
-    platforms = plat_records.map { |id, name, eid| { name: name, eid: eid, count: platform_counts[id] || 0 } }
-    platforms.sort_by! { |h| [-h[:count], h[:name].to_s.downcase] }
-
-    # Research activities
-    ra_buckets = extract_buckets.call(aggs, :research_activities)
-    ra_counts = ra_buckets.to_h { |b| [b["key"].to_i, b["doc_count"].to_i] }
-    ra_records = Vocabulary::MarketplaceLocation.pluck(:id, :name, :eid)
-    research_activities = ra_records.map { |id, name, eid| { name: name, eid: eid, count: ra_counts[id] || 0 } }
-    research_activities.sort_by! { |h| [-h[:count], h[:name].to_s.downcase] }
+    jurisdiction_buckets = extract_buckets.call(aggs, :jurisdiction)
+    jurisdiction_counts = jurisdiction_buckets.to_h { |b| [b["key"].to_s, b["doc_count"].to_i] }
+    jurisdictions =
+      Vocabulary::Jurisdiction
+        .pluck(:name, :eid)
+        .map { |name, eid| { name: name, eid: eid, count: jurisdiction_counts[eid] || 0 } }
+    jurisdictions.sort_by! { |h| [-h[:count], h[:name].to_s.downcase] }
 
     # Simple filters: rating and order_type
     rating_buckets = extract_buckets.call(aggs, :rating)
@@ -352,9 +318,7 @@ class Api::V1::Search::ServicesController < Api::V1::Search::ApplicationControll
       categories: categories,
       scientific_domains: scientific_domains,
       providers: providers,
-      target_users: target_users,
-      platforms: platforms,
-      research_activities: research_activities,
+      jurisdiction: jurisdictions,
       rating: ratings,
       order_type: order_types
     }

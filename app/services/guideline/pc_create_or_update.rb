@@ -21,11 +21,15 @@ class Guideline::PcCreateOrUpdate < ApplicationService
   private
 
   def create_guideline
-    Guideline.create!(eid: @guideline_data["id"], title: @guideline_data["title"])
+    Guideline.create!(eid: @guideline_data["id"], title: title)
   end
 
   def update_guideline
-    @guideline.update!(title: @guideline_data["title"])
+    @guideline.update!(title: title)
     @guideline
+  end
+
+  def title
+    @guideline_data["name"].presence || @guideline_data["title"]
   end
 end

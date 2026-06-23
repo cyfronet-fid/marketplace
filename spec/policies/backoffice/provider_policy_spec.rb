@@ -19,7 +19,7 @@ RSpec.describe Backoffice::ProviderPolicy, backend: true do
     end
   end
 
-  permissions :index?, :show?, :new?, :create? do
+  permissions :index?, :show? do
     it "grants access for service portfolio manager" do
       expect(subject).to permit(build(:user, roles: [:coordinator]))
     end
@@ -27,6 +27,20 @@ RSpec.describe Backoffice::ProviderPolicy, backend: true do
     it "denies for other users" do
       user = create(:user)
       expect(subject).to_not permit(user)
+    end
+  end
+
+  permissions :new?, :create? do
+    it "grants access for service portfolio manager" do
+      expect(subject).to permit(build(:user, roles: [:coordinator]))
+    end
+
+    it "grants access for a first-time provider registration" do
+      expect(subject).to permit(create(:user))
+    end
+
+    it "denies for unauthenticated users" do
+      expect(subject).to_not permit(nil)
     end
   end
 end

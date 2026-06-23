@@ -67,142 +67,14 @@ Cypress.Commands.add("fillFormCreateProvider", (provider: IProvidersExtended, lo
     cy.get("#provider_logo").attachFile(logo);
   }
 
-  if (provider.marketingMultimedia) {
-    cy.get("#provider_link_multimedia_urls_attributes_0_url").clear().type(provider.marketingMultimedia);
-  }
-
-  if (provider.classificationScientificDomains) {
-    cy.get("#classification-header").click();
-    selectItemsMultipleChoice(provider.classificationScientificDomains, ".provider_scientific_domains");
-  }
-
-  if (provider.classificationTag) {
-    cy.get("#provider_tag_list").clear().type(provider.classificationTag);
-  }
-
-  if (provider.classificationStructureTypes) {
-    selectItemsMultipleChoice(provider.classificationStructureTypes, ".provider_structure_types");
-  }
-
-  if (provider.locationStreet) {
-    cy.get("#location-header").click();
-  }
-
-  if (provider.locationStreet) {
-    cy.get("#provider_street_name_and_number").clear({ force: true }).type(provider.locationStreet);
-  }
-
-  if (provider.locationPostCode) {
-    cy.get("#provider_postal_code").clear({ force: true }).type(provider.locationPostCode);
-  }
-
-  if (provider.locationCity) {
-    cy.get("#provider_city").clear({ force: true }).type(provider.locationCity);
-  }
-
-  if (provider.locationRegion) {
-    cy.get("#provider_region").clear({ force: true }).type(provider.locationRegion);
-  }
-
   if (provider.locationCountry) {
+    cy.get("#location-tab").click();
     cy.get("#provider_country").select(provider.locationCountry);
   }
 
-  if (provider.contactFirstname) {
-    cy.get("#contact-header").click();
-  }
-
-  if (provider.contactFirstname) {
-    cy.get("#provider_main_contact_attributes_first_name").clear({ force: true }).type(provider.contactFirstname);
-  }
-
-  if (provider.contactLastname) {
-    cy.get("#provider_main_contact_attributes_last_name").clear({ force: true }).type(provider.contactLastname);
-  }
-
-  if (provider.contactEmail) {
-    cy.get("#provider_main_contact_attributes_email").clear({ force: true }).type(provider.contactEmail);
-  }
-
-  if (provider.contactPhone) {
-    cy.get("#provider_main_contact_attributes_phone").clear({ force: true }).type(provider.contactPhone);
-  }
-
-  if (provider.contactPosition) {
-    cy.get("#provider_main_contact_attributes_position").clear({ force: true }).type(provider.contactPosition);
-  }
-
-  if (provider.publicContactsFirstName) {
-    cy.get("#provider_public_contacts_attributes_0_first_name")
-      .clear({ force: true })
-      .type(provider.publicContactsFirstName);
-  }
-
-  if (provider.publicContactsLastName) {
-    cy.get("#provider_public_contacts_attributes_0_last_name")
-      .clear({ force: true })
-      .type(provider.publicContactsLastName);
-  }
-
   if (provider.publicContactsEmail) {
-    cy.get("#provider_public_contacts_attributes_0_email").clear({ force: true }).type(provider.publicContactsEmail);
-  }
-
-  if (provider.publicContactsPhone) {
-    cy.get("#provider_public_contacts_attributes_0_phone").clear({ force: true }).type(provider.publicContactsPhone);
-  }
-
-  if (provider.publicContactsPosition) {
-    cy.get("#provider_public_contacts_attributes_0_position")
-      .clear({ force: true })
-      .type(provider.publicContactsPosition);
-  }
-
-  if (provider.maturityProviderLifeCycleStatus) {
-    cy.get("#maturity-header").click();
-    selectItemSingleChoice(provider.maturityProviderLifeCycleStatus, ".provider_provider_life_cycle_status");
-  }
-
-  if (provider.maturityCertifications) {
-    cy.get("#provider_certifications_0").clear({ force: true }).type(provider.maturityCertifications);
-  }
-
-  if (provider.dependenciesParticipatingCountries) {
-    cy.get("#dependencies-header").click();
-    selectItemsMultipleChoice(provider.dependenciesParticipatingCountries, ".provider_participating_countries");
-  }
-
-  if (provider.dependenciesAffiliations) {
-    cy.get("#provider_affiliations_0").clear({ force: true }).type(provider.dependenciesAffiliations);
-  }
-
-  if (provider.dependenciesNetworks) {
-    selectItemsMultipleChoice(provider.dependenciesNetworks, ".provider_networks");
-  }
-
-  if (provider.otherESFRIDomains) {
-    cy.get("#other-header").click();
-    selectItemsMultipleChoice(provider.otherESFRIDomains, ".provider_esfri_domains");
-  }
-
-  if (provider.otherESFRIType) {
-    selectItemSingleChoice(provider.otherESFRIType, ".provider_esfri_type");
-  }
-
-  if (provider.otherMerilScientificDomains) {
-    selectItemsMultipleChoice(provider.otherMerilScientificDomains, ".provider_meril_scientific_domains");
-  }
-
-  if (provider.otherAreasOfActivity) {
-    selectItemsMultipleChoice(provider.otherAreasOfActivity, ".provider_areas_of_activity");
-  }
-
-  if (provider.otherSocietalGrandChallenges) {
-    selectItemsMultipleChoice(provider.otherSocietalGrandChallenges, ".provider_societal_grand_challenges");
-  }
-
-  if (provider.otherNationalRoadmaps) {
-    cy.get("#provider_national_roadmaps_0").clear({ force: true }).type(provider.otherNationalRoadmaps);
+    cy.get("#contacts-tab").click();
+    cy.get("#provider_public_contact_emails").clear({ force: true }).type(provider.publicContactsEmail);
   }
 
   if (provider.adminEmail) {
@@ -225,21 +97,7 @@ Cypress.Commands.add("fillFormCreateProvider", (provider: IProvidersExtended, lo
 });
 
 Cypress.Commands.add("hasProviderDetails", () => {
-  const providerDetails = [
-    "Classification",
-    "Tags",
-    "ESFRI Type",
-    "ESFRI Domain",
-    "MERIL Scientific Categorisation",
-    "Networks",
-    "Affiliations",
-    "Certifications",
-    "Areas of Activity",
-    "Hosting Legal Entity",
-    "Structure Types",
-    "Societal Grand Challenges",
-    "National Roadmaps",
-  ];
+  const providerDetails = ["Provider coverage", "Hosting Legal Entity", "Public contacts"];
 
   for (const value of providerDetails) {
     cy.contains(value).should("be.visible");
@@ -247,7 +105,7 @@ Cypress.Commands.add("hasProviderDetails", () => {
 });
 
 Cypress.Commands.add("hasProviderAbout", () => {
-  const providerAbout = ["Classification", "Multimedia", "Address", "Contact"];
+  const providerAbout = ["Provider coverage", "Public contacts"];
 
   for (const value of providerAbout) {
     cy.contains(value).should("be.visible");

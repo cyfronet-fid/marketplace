@@ -32,9 +32,6 @@ class ApplicationSerializer < ActiveModel::Serializer
     societal_grand_challenges
     bundle_goals
     capabilities_of_goals
-    research_entity_types
-    research_product_access_policies
-    research_product_metadata_access_policies
   ].each do |method|
     define_method method do
       object.send(method)&.map(&:name)
@@ -65,22 +62,9 @@ class ApplicationSerializer < ActiveModel::Serializer
     end
   end
 
-  %i[
-    multimedia_urls
-    use_cases_urls
-    research_product_license_urls
-    research_product_metadata_license_urls
-  ].each do |method|
+  %i[multimedia_urls use_cases_urls].each do |method|
     define_method method do
       object.send("link_#{method}")&.map { |link| { name: link.name, url: link.url } }
-    end
-  end
-
-  %i[persistent_identity_systems].each do |method|
-    define_method method do
-      object
-        .send(method)
-        &.map { |p| { entity_type: p.entity_type&.name, entity_type_schemes: p.entity_type_schemes&.map(&:name) } }
     end
   end
 

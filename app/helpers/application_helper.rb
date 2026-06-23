@@ -112,4 +112,11 @@ module ApplicationHelper
     url = parser.unescape(url_target(name, raw_url))
     link_to(name, url, html_options)
   end
+
+  def safe_external_url(url)
+    uri = URI.parse(url.to_s)
+    uri.to_s if uri.is_a?(URI::HTTP)
+  rescue URI::InvalidURIError
+    nil
+  end
 end

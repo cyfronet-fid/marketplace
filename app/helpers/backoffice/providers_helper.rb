@@ -2,22 +2,18 @@
 
 module Backoffice::ProvidersHelper
   BASIC_STEPS = %w[profile location contacts managers summary].freeze
-  EXTENDED_STEPS = %w[profile classification location contacts maturity dependencies managers other].freeze
+  PROVIDER_TABS = %w[profile location contacts managers].freeze
 
   def cant_edit?(attribute)
     !policy([:backoffice, @provider]).permitted_attributes.include?(attribute)
   end
 
-  def render_step(step, provider, extended_form)
-    render partial_path(step, extended_form: extended_form), provider: provider, extended_form: extended_form
+  def render_step(step, provider, _legacy_mode = nil)
+    render partial_path(step), provider: provider
   end
 
-  def form_directory(extended_form)
-    extended_form ? "form" : "steps"
-  end
-
-  def partial_path(step, extended_form: false)
-    "backoffice/providers/#{form_directory(extended_form)}/#{step}"
+  def partial_path(step)
+    "backoffice/providers/steps/#{step}"
   end
 
   def next_title
@@ -40,8 +36,8 @@ module Backoffice::ProvidersHelper
     BASIC_STEPS
   end
 
-  def extended_steps
-    EXTENDED_STEPS
+  def provider_tabs
+    PROVIDER_TABS
   end
 
   def exit_confirm_details

@@ -17,14 +17,8 @@ RSpec.describe Api::V1::Search::ServicesController, type: :controller do
           "providers" => {
             "buckets" => [{ "key" => 10, "doc_count" => 2 }]
           },
-          "platforms" => {
-            "buckets" => [{ "key" => 20, "doc_count" => 1 }]
-          },
-          "research_activities" => {
-            "buckets" => [{ "key" => 30, "doc_count" => 5 }]
-          },
-          "dedicated_for" => {
-            "buckets" => [{ "key" => 40, "doc_count" => 6 }]
+          "jurisdiction" => {
+            "buckets" => [{ "key" => "PL", "doc_count" => 1 }]
           },
           "order_type" => {
             "buckets" => [{ "key" => "open_access", "doc_count" => 7 }]
@@ -44,11 +38,9 @@ RSpec.describe Api::V1::Search::ServicesController, type: :controller do
       allow(Category).to receive(:arrange).with(order: :name).and_return({ fake_category => {} })
       allow(ScientificDomain).to receive(:arrange).with(order: :name).and_return({ fake_sd => {} })
 
-      # Providers, Target Users, Platforms, Research Activities
+      # Providers and Jurisdictions
       allow(Provider).to receive(:pluck).with(:id, :name, :pid).and_return([[10, "Prov A", "prov-a"]])
-      allow(TargetUser).to receive(:pluck).with(:id, :name, :eid).and_return([[40, "Scientists", "scientists"]])
-      allow(Platform).to receive(:pluck).with(:id, :name, :eid).and_return([[20, "Web", "web"]])
-      allow(Vocabulary::ResearchActivity).to receive(:pluck).with(:id, :name, :eid).and_return([[30, "RA", "ra"]])
+      allow(Vocabulary::Jurisdiction).to receive(:pluck).with(:name, :eid).and_return([%w[Poland PL]])
     end
 
     it "returns non-zero counts when aggregations have string keys" do
@@ -59,9 +51,7 @@ RSpec.describe Api::V1::Search::ServicesController, type: :controller do
       expect(result[:categories].first[:count]).to eq(3)
       expect(result[:scientific_domains].first[:count]).to eq(4)
       expect(result[:providers].first[:count]).to eq(2)
-      expect(result[:platforms].first[:count]).to eq(1)
-      expect(result[:research_activities].first[:count]).to eq(5)
-      expect(result[:target_users].first[:count]).to eq(6)
+      expect(result[:jurisdiction].first[:count]).to eq(1)
 
       rating_entry = result[:rating].find { |h| h[:eid] == "4" }
       expect(rating_entry[:count]).to eq(8)

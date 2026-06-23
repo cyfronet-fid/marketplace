@@ -22,7 +22,7 @@ FactoryBot.define do
         "scope" => "test",
         "active" => true,
         "suspended" => false,
-        "logo" => "https://www.cyfronet.pl/zalacznik/8437",
+        "logo" => nil,
         "users" => [{ "email" => "test@mail.pl", "name" => "test", "surname" => "test" }],
         "location" => {
           "streetNameAndNumber" => "street",

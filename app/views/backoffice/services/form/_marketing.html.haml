@@ -1,7 +1,6 @@
 .card.rounded
   %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
-              [:description, :tagline, :logo, :link_multimedia_urls, :link_use_cases_urls,
-               :"link_multimedia_urls.url", :"link_use_cases_urls.url"])),
+              [:description, :logo, :public_contact_emails])),
               data: { toggle: "collapse", target: "#marketing" },
               aria: { expanded: true, controls: "marketing" } }
     .card-header.text-left{ id: "marketing-header" }
@@ -14,33 +13,11 @@
             %i.fas.fa-chevron-up
   .collapse{ id: "marketing", "aria-labelledby": "marketing-header",
             "data-parent": "#accordion-form",
-            class: ("show" unless collapsed?(service, [:description, :tagline, :logo, :link_multimedia_urls,
-             :link_use_cases_urls, :"link_multimedia_urls.url", :"link_use_cases_urls.url"])) }
+            class: ("show" unless collapsed?(service, [:description, :logo, :public_contact_emails])) }
     .card-body
       .service-description
         = f.input :description, disabled: cant_edit?(:description)
-      = f.input :tagline, disabled: cant_edit?(:tagline)
       = f.input :logo, disabled: cant_edit?(:logo)
-      %h3
-        = _("Multimedia urls")
-      = f.fields_for :link_multimedia_urls, disabled: service.upstream_id.present?, multiple: true, as: :array,
-                  wrapper_html: { "data-form-target" => "link" } do |link_form|
-        = render_link(link_form, service, "multimedia")
-      = link_to _("Add new multimedia"), "#", class: "btn btn-primary disablable",
-                data: { "form-target": "addField",
-                action: "click->form#addField",
-                value: "multimedia",
-                fields: f.fields_for(:link_multimedia_urls, Link::MultimediaUrl.new,
-                child_index: "new_field") { |lf| render_link(lf, service, "multimedia") } }
-      .mt-4
-        %h3
-          = _("Use cases urls")
-        = f.fields_for :link_use_cases_urls, disabled: service.upstream_id.present?, multiple: true, as: :array,
-                  wrapper_html: { "data-form-target" => "link" } do |link_form|
-          = render_link(link_form, service, "useCase")
-        = link_to _("Add new use case"), "#", class: "btn btn-primary disablable",
-                  data: { "form-target": "addField",
-                  action: "click->form#addField",
-                  value: "useCases",
-                  fields: f.fields_for(:link_use_cases_urls, Link::UseCasesUrl.new,
-                  child_index: "new_field") { |lf| render_link(lf, service, "useCase") } }
+      = f.input :public_contact_emails, as: :text, label: _("Public contact emails (one per line)"),
+                input_html: { rows: 4, value: Array(service.public_contact_emails).join("\n") },
+                disabled: cant_edit?([public_contact_emails: []])

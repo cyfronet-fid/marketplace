@@ -73,6 +73,18 @@ RSpec.describe Ams::ManageMessage do
         expect(Provider::DeleteJob).to receive(:perform_later).with("P1")
         Ams::ManageMessage.new(message_body, "prefix.provider.delete", registry_url, logger, token).call
       end
+
+      it "routes organisation topics with organisation body keys to Provider::PcCreateOrUpdateJob" do
+        body = JSON.parse(message_body)
+        body["organisation"] = body.delete("provider")
+
+        expect(Provider::PcCreateOrUpdateJob).to receive(:perform_later).with(
+          { "id" => "P1", "name" => "Prov" },
+          :published,
+          be_a(Time)
+        )
+        Ams::ManageMessage.new(body.to_json, "mp-organisation-update", registry_url, logger, token).call
+      end
     end
 
     context "when resource is a catalogue" do
@@ -156,6 +168,17 @@ RSpec.describe Ams::ManageMessage do
         expect(DeployableService::DeleteJob).to receive(:perform_later).with("DS1")
         Ams::ManageMessage.new(message_body, "prefix.deployable_service.delete", registry_url, logger, token).call
       end
+
+      it "routes deployable_application topics with deployableApplication body keys to DeployableService jobs" do
+        body = JSON.parse(message_body)
+        body["deployableApplication"] = body.delete("deployableService")
+
+        expect(DeployableService::PcCreateOrUpdateJob).to receive(:perform_later).with(
+          { "id" => "DS1", "name" => "Dep" },
+          :published
+        )
+        Ams::ManageMessage.new(body.to_json, "mp-deployable_application-create", registry_url, logger, token).call
+      end
     end
 
     context "when resource is an infra_service" do
@@ -205,6 +228,35 @@ RSpec.describe Ams::ManageMessage do
       )
 
       Ams::ManageMessage.new(body, "prefix.interoperability_record.update", registry_url, logger, token).call
+    end
+
+    it "routes interoperability_record body keys to Guideline::PcCreateOrUpdateJob" do
+      body = {
+        "interoperabilityRecord" => {
+          "id" => "G1",
+          "title" => "Rule"
+        },
+        "active" => true,
+        "suspended" => false,
+        "metadata" => {
+          "modifiedAt" => "1600000000000"
+        }
+      }.to_json
+
+      expect(Guideline::PcCreateOrUpdateJob).to receive(:perform_later).with(
+        { "id" => "G1", "title" => "Rule" },
+        :published,
+        be_a(Time)
+      )
+
+      Ams::ManageMessage.new(body, "mp-interoperability_record-update", registry_url, logger, token).call
+    end
+
+    it "does not route out-of-scope adapter messages" do
+      body = { "adapter" => { "id" => "A1", "name" => "Adapter" } }.to_json
+
+      expect(Sentry).to receive(:capture_exception).with(be_a(Importable::WrongMessageError))
+      Ams::ManageMessage.new(body, "mp-adapter-update", registry_url, logger, token).call
     end
 
     it "raises WrongMessageError for unknown resource type" do

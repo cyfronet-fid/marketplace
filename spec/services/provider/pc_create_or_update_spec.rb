@@ -5,6 +5,7 @@ require "rails_helper"
 RSpec.describe Provider::PcCreateOrUpdate, backend: true do
   let(:published_provider_response) { create(:jms_published_provider_response) }
   let(:draft_provider_response) { create(:jms_draft_provider_response) }
+  let(:modified_at) { Time.zone.local(2026, 5, 20, 12, 0, 0) }
   let(:logger) { Logger.new($stdout) }
 
   before(:each) { allow_any_instance_of(Importers::Logo).to receive(:call) }
@@ -97,5 +98,46 @@ RSpec.describe Provider::PcCreateOrUpdate, backend: true do
     expect(provider.upstream_id).to eq(provider.sources[0].id)
     expect(provider.unpublished?).to be_truthy
     $stdout = original_stdout
+  end
+
+  it "updates existing provider matched by EOSC Registry source" do
+    provider = create(:provider, pid: "provider-1", name: "Old name")
+    provider.sources.first.update!(source_type: "eosc_registry", eid: "provider-1")
+
+    expect { described_class.call(payload("provider-1", name: "New name"), :published, modified_at) }.not_to change(
+      Provider,
+      :count
+    )
+
+    expect(provider.reload.name).to eq("New name")
+  end
+
+  it "reuses existing provider matched by EOSC PID alternative identifier" do
+    provider = create(:provider, pid: "legacy-pid")
+    provider.alternative_identifiers << AlternativeIdentifier.create!(
+      identifier_type: "EOSC PID",
+      value: "eosc.provider"
+    )
+
+    expect { described_class.call(payload("provider-1"), :published, modified_at) }.not_to change(Provider, :count)
+
+    provider.reload
+    expect(provider.pid).to eq("provider-1")
+    expect(provider.sources.find_by(source_type: "eosc_registry", eid: "provider-1")).to be_present
+    expect(provider.upstream).to eq(provider.sources.find_by(source_type: "eosc_registry", eid: "provider-1"))
+  end
+
+  def payload(id, name: "Provider from PC")
+    {
+      "id" => id,
+      "name" => name,
+      "abbreviation" => "PCP",
+      "website" => "https://example.org",
+      "country" => "PL",
+      "legalEntity" => true,
+      "description" => "Imported provider",
+      "publicContacts" => ["ops@example.org"],
+      "alternativePIDs" => [{ "pid" => "eosc.provider", "pidSchema" => "EOSC PID" }]
+    }
   end
 end

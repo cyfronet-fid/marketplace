@@ -10,9 +10,6 @@ class Service::Update < Service::ApplicationService
   def call
     public_before = @service.public?
     ActiveRecord::Base.transaction do
-      if @service.public_contacts.present? && @service.public_contacts.all?(&:marked_for_destruction?)
-        @service.public_contacts[0].reload
-      end
       @service.update_logo!(@logo) if @logo
       @service.update!(@params)
     end

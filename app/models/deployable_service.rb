@@ -24,7 +24,7 @@ class DeployableService < ApplicationRecord
   has_many :offers, as: :orderable, dependent: :destroy
 
   belongs_to :upstream, foreign_key: "upstream_id", class_name: "DeployableServiceSource", optional: true
-  belongs_to :resource_organisation, class_name: "Provider", optional: false
+  belongs_to :resource_organisation, class_name: "Provider", optional: true
   belongs_to :catalogue, optional: true
   belongs_to :node_vocabulary, class_name: "Vocabulary::Node", foreign_key: :node, primary_key: :eid, optional: true
 
@@ -34,11 +34,11 @@ class DeployableService < ApplicationRecord
   auto_strip_attributes :url, nullify: false
   auto_strip_attributes :node, nullify: false
   auto_strip_attributes :version, nullify: false
-  auto_strip_attributes :software_license, nullify: false
+  auto_strip_attributes :license_name, nullify: false
+  auto_strip_attributes :license_url, nullify: false
+  auto_strip_attributes :resource_type, nullify: false
 
   validates :name, presence: true
-  validates :description, presence: true
-  validates :tagline, presence: true
   validates :url, mp_url: true, if: :url?
   validates :logo, blob: { content_type: :image }
   validate :logo_variable, on: %i[create update]
@@ -150,6 +150,10 @@ class DeployableService < ApplicationRecord
     url
   end
 
+  def all_urls
+    (Array(urls) + [url]).compact.reject(&:empty?).uniq
+  end
+
   # Service relationships - empty collections
   def related_services
     Service.none
@@ -249,10 +253,6 @@ class DeployableService < ApplicationRecord
 
   # Safe attribute accessors
   def abbreviation
-    super || ""
-  end
-
-  def tagline
     super || ""
   end
 

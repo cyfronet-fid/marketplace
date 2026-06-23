@@ -5,7 +5,7 @@ class Datasource::PcCreateOrUpdateJob < ApplicationJob
 
   rescue_from(Errno::ECONNREFUSED) { |exception| raise exception }
 
-  def perform(datasource, is_active)
-    Datasource::PcCreateOrUpdate.new(datasource, is_active).call
+  def perform(datasource, status)
+    Datasource::PcCreateOrUpdate.new(datasource, status).call
   end
 end

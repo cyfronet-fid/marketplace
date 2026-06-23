@@ -7,21 +7,9 @@ module Service::Recommendable
   extend ActiveSupport::Concern
   include ValidationHelper
 
-  ALLOWED_SEARCH_DATA_FIELDS = %i[
-    scientific_domains
-    providers
-    sort
-    q
-    order_type
-    rating
-    related_platforms
-    target_users
-    geographical_availabilities
-    category_id
-  ].freeze
+  ALLOWED_SEARCH_DATA_FIELDS = %i[scientific_domains providers sort q order_type rating jurisdiction category_id].freeze
 
   FILTER_PARAM_TRANSFORMERS = {
-    geographical_availabilities: ->(name) { Country.convert_to_regions_add_country(name) },
     scientific_domains: ->(ids) do
       if ids.instance_of?(Array)
         ids.map(&:to_i) | ids.map { |id| ScientificDomain.find(id).descendant_ids }.flatten
@@ -30,9 +18,7 @@ module Service::Recommendable
       end
     end,
     category_id: ->(slug) { [Category.find_by(slug: slug).id] + Category.find_by(slug: slug).descendant_ids },
-    providers: ->(ids) { ids.instance_of?(Array) ? ids.map(&:to_i) : Array(ids.to_i) },
-    related_platforms: ->(ids) { ids.instance_of?(Array) ? ids.map(&:to_i) : Array(ids.to_i) },
-    target_users: ->(ids) { ids.instance_of?(Array) ? ids.map(&:to_i) : Array(ids.to_i) }
+    providers: ->(ids) { ids.instance_of?(Array) ? ids.map(&:to_i) : Array(ids.to_i) }
   }.freeze
   FILTER_KEY_TRANSFORMERS = { category_id: "categories" }.freeze
 
@@ -60,7 +46,7 @@ module Service::Recommendable
     Service.where(id: ids, status: :published)
   rescue StandardError
     Sentry.capture_message("Similar services recommendation, similar services endpoint response error")
-    Service.find(service_id).target_relationships.take(quantity)
+    []
   end
 
   def fetch_recommended

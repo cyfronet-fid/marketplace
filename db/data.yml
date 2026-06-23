@@ -192,14 +192,8 @@ catalogues:
     website: "https://eosc.eu/"
     domains: [*natural]
     structure_type: ["Single-sited"]
-    participating_countries: ["FR"]
-    affiliations: ["EOSC"]
     networks: ["provider_network-fao"]
-    tag_list: ["open data"]
     street: "Easy Street"
-    postal_code: "FR12345"
-    city: "Paris"
-    region: "Paris Region"
     country_alpha2: "FR"
     end_of_life: "EOM"
     inclusion_criteria: "https://example.com"
@@ -217,14 +211,8 @@ catalogues:
     website: "https://catris.eu/"
     domains: [*natural]
     structure_type: ["Single-sited"]
-    participating_countries: ["PL", "US"]
-    affiliations: ["EOSC"]
     networks: ["provider_network-fao"]
-    tag_list: ["open data"]
     street: "Street 10"
-    postal_code: "GR12345"
-    city: "Thessaloniki"
-    region: "Central Macedonia"
     country_alpha2: "US"
     end_of_life: "EOW"
     inclusion_criteria: "https://example.com"
@@ -240,14 +228,8 @@ catalogues:
     website: "https://ni4os.eu/"
     domains: [*engineering]
     structure_type: ["Single-sited"]
-    participating_countries: ["PL", "US"]
-    affiliations: ["EOSC", "CatRIS"]
     networks: ["provider_network-fao"]
-    tag_list: ["open data", "open science", "publications", "research papers"]
     street: "Street 10"
-    postal_code: "GR12345"
-    city: "Athens"
-    region: "Attica"
     country_alpha2: "US"
     image_base_64: *catalogue_default_logo
     multimedia: *default_multimedia
@@ -274,9 +256,6 @@ providers:
       Ut gravida venenatis nunc placerat cursus.
     multimedia: &default_multimedia
       - https://google.com
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: &provider_default_logo |
       data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAB4CAYAAABb59j9AAAABGdBTUEAALGPC
@@ -328,9 +307,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   JSC:
@@ -350,9 +326,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   Deutsches Klimarechenzentrum (DKRZ):
@@ -371,9 +344,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   GRNET:
@@ -393,9 +363,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   SURFsara:
@@ -415,9 +382,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   CERM:
@@ -437,9 +401,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   BSC:
@@ -459,9 +420,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   All generic CDI Level 1 providers:
@@ -481,9 +439,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   CSC:
@@ -503,9 +458,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   CLARIN ERIC:
@@ -525,9 +477,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   Euro-Mediterranean Center on Climate Change (CMCC):
@@ -547,9 +496,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   RASDAMAN:
@@ -569,9 +515,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   EODC:
@@ -591,9 +534,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   Sinergise:
@@ -613,9 +553,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   ASTRON:
@@ -635,9 +572,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   RUG:
@@ -657,9 +591,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   FZJ:
@@ -679,9 +610,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   PSNC:
@@ -701,9 +629,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   SmartSMEAR:
@@ -723,9 +648,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   RECAS-BARI:
@@ -745,9 +667,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   CYFRONET-LCG2:
@@ -767,9 +686,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   BEgrid-ULV-VUB:
@@ -789,9 +705,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   CESGA:
@@ -811,9 +724,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   Ruder Boškovic Institute:
@@ -833,9 +743,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   INFN:
@@ -855,9 +762,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   INFN-CATANIA-STACK:
@@ -877,9 +781,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   INFN-Bari:
@@ -899,9 +800,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   D4Science:
@@ -921,9 +819,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   LifeWatch ERIC:
@@ -943,9 +838,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   Terradue:
@@ -965,9 +857,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   MEEO:
@@ -987,9 +876,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   CloudFerro:
@@ -1009,9 +895,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   PNCEL:
@@ -1031,9 +914,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   University of Utrecht:
@@ -1053,9 +933,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   #    University of Florence:
@@ -1077,9 +954,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   CESNET:
@@ -1099,9 +973,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   EIDA:
@@ -1121,9 +992,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   ESA:
@@ -1143,9 +1011,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   DESY:
@@ -1165,9 +1030,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   CNR-IIA:
@@ -1187,9 +1049,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   GryCAP-I3M-UPV:
@@ -1209,9 +1068,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   MTA SZTAKI Laboratory of Parallel and Distributed Systems:
@@ -1231,9 +1087,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   University of Oslo (UiO):
@@ -1253,9 +1106,6 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
   Not specified:
@@ -1275,13 +1125,9 @@ providers:
       Sed maximus odio neque, sed ullamcorper purus tristique a.
       Ut gravida venenatis nunc placerat cursus.
     multimedia: *default_multimedia
-    street_name_and_number: "Malcolm St. 4"
-    postal_code: "332-332"
-    city: "Test City"
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
 
-target_users:
   Researchers:
     name: &researchers "Researchers"
     description: "Someone who conducts scientific research, i.e., an organized and systematic investigation by using scientific methods."
@@ -1366,17 +1212,10 @@ services:
     terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
     resource_level_url: https://documents.egi.eu/document/2733
     access_policies_url: https://marketplace.egi.eu/content/7-access-policy
-    language_availability: &english EN
-    geographical_availabilities: &poland PL
     domain: *otherOther
-    target_users: [*researchers, *research_organisations]
     restrictions: &notSpecified not yet specified
-    funding_bodies: ["funding_body-innoviris", "funding_body-ec"]
-    funding_programs: ["funding_program-icfs", "funding_program-insc2020", "funding_program-isf"]
     trl: &trl_9 ["trl-9"]
-    life_cycle_status: &prod ["life_cycle_status-production"]
     tagline: Run virtual machines on-demand with complete control over computing resources
-    platforms: [*egiPlatform]
     description: |
       With Cloud Compute you can deploy and scale virtual machines
       on­demand. Cloud Compute offers guaranteed computational resources in
@@ -1672,15 +1511,10 @@ services:
     terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
     resource_level_url: https://documents.egi.eu/document/2733
     access_policies_url: https://marketplace.egi.eu/content/7-access-policy
-    language_availability: *english
-    geographical_availabilities: *poland
     domain: *otherOther
-    target_users: [*researchers, *research_organisations]
     #        #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: Execute thousands of computational tasks to analyse large datasets
-    platforms: [*egiPlatform]
     description: |
       With High-Throughput Compute you can run computational jobs at scale on the EGI infrastructure. It allows you to analyse large datasets and execute thousands of parallel computing tasks.
 
@@ -1840,15 +1674,10 @@ services:
     terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
     resource_level_url: https://documents.egi.eu/document/2733
     access_policies_url: https://marketplace.egi.eu/content/7-access-policy
-    language_availability: *english
-    geographical_availabilities: *poland
     domain: *otherOther
-    target_users: [*researchers, *research_organisations]
     #        #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: Run Docker containers in a lightweight virtualised environment
-    platforms: [*egiPlatform]
     description: |
       With Cloud Container Compute you can deploy and scale Docker containers on-demand. It offers guaranteed computational resources in a secure and isolated environment with standard API access, without the overhead of managing the operating system.
 
@@ -1876,15 +1705,10 @@ services:
     terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
     resource_level_url:
     access_policies_url: https://eudat.eu/policy
-    language_availability: *english
-    geographical_availabilities: *poland
     domain: *otherOther
-    target_users: [*researchers, *research_organisations]
     #        #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: Secure and trusted data exchange service for researchers
-    platforms: [*eudatPlatform]
     description: |
       B2DROP is a secure and trusted data exchange service for researchers and scientists to keep their research data synchronized and up-to-date and to exchange with other researchers. B2DROP is an ideal solution to store and exchange data with colleagues and team members, synchronise multiple versions of data, ensure automatic desktop synchronisation of large files.
 
@@ -2010,17 +1834,10 @@ services:
     terms_of_use_url: http://marketplace.egi.eu/content/3-terms-and-conditions-of-use
     resource_level_url:
     access_policies_url: http://eudat.eu/policy
-    language_availability: *english
-    geographical_availabilities: *poland
     domain: *otherOther
-    target_users: [*researchers, *providers, *research_organisations]
     #        #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: Metadata based data-discovery
-    platforms: [*eudatPlatform]
-    funding_bodies: ["funding_body-fapesp", "funding_body-rpf"]
-    funding_programs: ["funding_program-icfs", "funding_program-insc2020", "funding_program-iter"]
     description: |
       B2FIND is the EUDAT metadata service and provides a discovery portal which allows users
       to find data collections within an international and inter-disciplinary scope.
@@ -2141,15 +1958,10 @@ services:
     terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
     resource_level_url:
     access_policies_url: https://eudat.eu/policy
-    language_availability: *english
-    geographical_availabilities: *poland
     domain: *otherOther
-    target_users: [*researchers, *research_organisations]
     #        #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: Secure and trusted data exchange service for researchers
-    platforms: [*eudatPlatform]
     description: |
       B2HANDLE is the distributed service for minting, storing, managing and accessing persistent identifiers (PIDs) and essential metadata (PID records) as well as managing PID namespaces. The implementation of the service relies on the DONA/Handle persistent identifier solution.
 
@@ -2264,15 +2076,10 @@ services:
     terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
     resource_level_url:
     access_policies_url: https://eudat.eu/policy
-    language_availability: *english
-    geographical_availabilities: *poland
     domain: *otherOther
-    target_users: [*researchers, *research_organisations]
     #        #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: Data annotation service to create annotations on research data
-    platforms: [*eudatPlatform]
     description: |
       B2Note allows to easily create, search and manage annotations. An annotation is a keyword or commentary attached to a dete object (data collection, file) that explains or classifies it. B2NOTE is a standalone service for annotating data content hosted within the EUDAT CDI.
 
@@ -2353,15 +2160,10 @@ services:
     terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
     resource_level_url:
     access_policies_url: https://eudat.eu/policy
-    language_availability: *english
-    geographical_availabilities: *poland
     domain: *otherOther
-    target_users: [*researchers, *research_organisations]
     #        #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: Distribute and store large volumes of data based on data policies
-    platforms: [*eudatPlatform]
     description: |
       B2SAFE is a robust, safe and highly available service which allows community
       and departmental repositories to implement data management policies on their research data across
@@ -2409,15 +2211,10 @@ services:
     terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
     resource_level_url:
     access_policies_url: https://eudat.eu/policy
-    language_availability: *english
-    geographical_availabilities: *poland
     domain: *otherOther
-    target_users: [*researchers, *providers, *research_organisations]
     #        #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: Store and publish research data
-    platforms: [*eudatPlatform]
     description: |
       B2SHARE is a user-friendly, reliable and trustworthy way for researchers,
       scientific communities and citizen scientists to store and publish small-scale
@@ -2540,15 +2337,10 @@ services:
     terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
     resource_level_url:
     access_policies_url: https://eudat.eu/policy
-    language_availability: *english
     domain: *otherOther
-    geographical_availabilities: *poland
-    target_users: [*researchers, *research_organisations]
     #        #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: Transfer of data between data resources and external computational facilities
-    platforms: [*eudatPlatform]
     description: |
       B2STAGE is for communities who need to transfert large data collection from EUDAT CDI to HPC.
       B2STAGE service is a customer-facing service that allow high performance transfers
@@ -2605,15 +2397,10 @@ services:
     terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
     resource_level_url: http://hdl.handle.net/11304/e43b2e3f-83c5-4e3f-b8b7-18d38d37a6cd
     access_policies_url: https://eudat.eu/policy
-    language_availability: *english
     domain: *otherOther
-    geographical_availabilities: *poland
-    target_users: [*researchers, *research_organisations]
     #        #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: AAI platform for federated authentication to EUDAT services
-    platforms: [*eudatPlatform]
     description: |
       The B2ACCESS AAI proxy service is arbitrating access to registered Service Providers via different protocols.
       Integrated Service Providers consume Attribute assertions from the B2ACCESS service when the End User
@@ -2649,15 +2436,10 @@ services:
     terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
     resource_level_url:
     access_policies_url: https://eudat.eu/policy
-    language_availability: *english
-    geographical_availabilities: *poland
     domain: *otherOther
-    target_users: [*researchers, *research_organisations]
     #        #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: Back-up your data for the long term and future use in a secure environment.
-    platforms: [*egiPlatform]
     description: |
       Archive Storage allows you to store large amounts of data in a secure environment freeing up
       your usual file storage resources. Access to the archive can be given at an individual,
@@ -2719,15 +2501,10 @@ services:
     terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
     resource_level_url:
     access_policies_url: https://marketplace.egi.eu/content/7-access-policy
-    language_availability: *english
-    geographical_availabilities: *poland
     domain: *otherOther
-    target_users: [*researchers, *research_organisations]
     #        #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: Store, share and access your files and their metadata on a global scale.
-    platforms: [*egiPlatform]
     description: |
       Store, share and access your files and their metadata on a global scale.
 
@@ -2892,15 +2669,10 @@ services:
   #        terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
   #        resource_level_url:
   #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
-  #        geographical_availabilities: *poland
-  #        dedicated_for: ["Researchers"] #TODO: but not specified
-  #        language_availability: *english
   #        domain: *earthAndEnvironmentalScience
   ##        #restrictions: *notSpecified
   #        trl: *trl_9
-  #        life_cycle_status: *prod
   #        tagline: Store, share and access your files and their metadata on a global scale.
-  #        platforms: [*egiPlatform]
   #        description: |
   #          The data are available as downloadable netCDF files from Argo's
   #          two Global Data Assembly Centers (GDACS) and there are various data products too
@@ -2920,15 +2692,10 @@ services:
     terms_of_use_url: http://geosspublish.uat.esaportal.eu/community/guest/terms-conditions
     resource_level_url:
     access_policies_url:
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*researchers] #TODO: but not specified
     domain: *earthAndEnvironmentalScience
     #        #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: Access to resources from the Global Earth Observation System of Systems
-    platforms: [*ecopotential, *geossPlatform]
     description: |
       The GEOSS (Global Earth Observation System of Systems) Web Portal is the main entry point
       for discovering and accessing GEOSS data. GEOSS Platform interconnects more than 170 data systems globally,
@@ -2954,15 +2721,9 @@ services:
     terms_of_use_url:
     resource_level_url:
     access_policies_url:
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*researchers, *research_groups, *research_organisations]
     domain: [*earthAndEnvironmentalScience, *otherOther]
-    restrictions:
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: Multi-disciplinary discovery, access, and use of resources from the Global Earth Observation System of Systems
-    platforms: [*geo, *geossPlatform]
     description: |
 
       GEO Discovery and Access Broker (GEO DAB) is a key component of the GEOSS Platform,
@@ -2997,15 +2758,10 @@ services:
     terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
     resource_level_url:
     access_policies_url: https://marketplace.egi.eu/content/7-access-policy
-    language_availability: *english
     domain: [*otherSocialSciences, *otherHumanities]
-    geographical_availabilities: *poland
-    target_users: [*researchers] #TODO: but not specified
     #        #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: A facet browser for fast navigation and searching in huge amounts of metadata.
-    platforms: [*clarinPlatform, *eudatPlatform, *europeana]
     description: |
       A facet browser for fast navigation and searching in large amounts of metadata.
       This portal enables the discovery of language data and tools, provided by over 40 CLARIN centres,
@@ -3045,15 +2801,10 @@ services:
     terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
     resource_level_url:
     access_policies_url: https://marketplace.egi.eu/content/7-access-policy
-    language_availability: *english
     domain: [*otherSocialSciences, *otherHumanities]
-    geographical_availabilities: *poland
-    target_users: [*researchers] #TODO: but not specified
     #        #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: A web application that suggests language analysis tools for specific data sets.
-    platforms: [*clarinPlatform, *eudatPlatform, *europeana]
     description: |
       A web application that suggests language analysis tools for specific
       data sets, enabling the following tasks:
@@ -3112,15 +2863,10 @@ services:
     terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
     resource_level_url:
     access_policies_url: https://marketplace.egi.eu/content/7-access-policy
-    language_availability: *english
-    geographical_availabilities: *poland
     domain: *otherHumanities
-    target_users: [*researchers] #TODO: but not specified
     #        #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: A service that allows researchers to create their own citable digital bookmarks.
-    platforms: [*clarinPlatform, *eudatPlatform, *europeana]
     description: |
       A service that allows researchers to create their own citable digital bookmarks.
 
@@ -3173,13 +2919,9 @@ services:
   #        terms_of_use_url:
   #        resource_level_url:
   #        access_policies_url:
-  #        target_users: ["Reaserchers"] #TODO: but not specified
-  #        language_availability: *english
   #        domain: *earthAndEnvironmentalScience
-  #        geographical_availabilities: *poland
   ##        #restrictions: *notSpecified
   #        trl: *trl_9
-  #        life_cycle_status: *prod
   #        tagline: *notSpecified
   #        # platforms: [*eopillar, *ec3]
   #        description: |
@@ -3197,13 +2939,9 @@ services:
   #        terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
   #        resource_level_url:
   #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
-  #        language_availability: *english
-  #        geographical_availabilities: *poland
   #        domain: *otherOther
-  #        target_users: ["Researchers", "Research organisations"]
   #        #restrictions: *notSpecified
   #        trl: *trl_9
-  #        life_cycle_status: *prod
   #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
   #        description: "Features:
   #
@@ -3233,13 +2971,9 @@ services:
   #        terms_of_use_url:
   #        resource_level_url:
   #        access_policies_url:
-  #        language_availability: *english
-  #        geographical_availabilities: *poland
   #        domain: *mathematics
-  #        target_users: ["Researchers", "Research organisations"]
   #        #restrictions: *notSpecified
   #        trl: *trl_9
-  #        life_cycle_status: *prod
   #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
   #        # platforms: [*eopillar, *ec3]
   #        description: |
@@ -3309,13 +3043,9 @@ services:
   #        terms_of_use_url:
   #        resource_level_url:
   #        access_policies_url:
-  #        geographical_availabilities: *poland
-  #        language_availability: *english
-  #        target_users: ["Researchers", "Research organisations"]
   #        domain: *otherOther
   #        #restrictions: *notSpecified
   #        trl: *trl_9
-  #        life_cycle_status: *prod
   #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
   #        # platforms: [*eopillar, *ec3]
   #        description: |
@@ -3338,15 +3068,10 @@ services:
   #        terms_of_use_url:
   #        resource_level_url:
   #        access_policies_url:
-  #        geographical_availabilities: *poland
-  #        language_availability: *english
-  #        target_users: ["Researchers", "Research organisations"]
   #        domain: *other
   ##        #restrictions: *notSpecified
   #        trl: *trl_9
-  #        life_cycle_status: *prod
   #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-  #        platforms: [*egiPlatform, *ec3, *aodp]
   #        description: |
   #          NAMD is a parallel molecular dynamics code designed for high-performance simulation
   #          of large bio-molecular systems.
@@ -3410,13 +3135,9 @@ services:
   #        terms_of_use_url:
   #        resource_level_url:
   #        access_policies_url:
-  #        geographical_availabilities: *poland
-  #        language_availability: *english
-  #        target_users: ["Researchers", "Research organisations"]
   #        domain: *earthAndEnvironmentalScience
   #        #restrictions: *notSpecified
   #        trl: *trl_9
-  #        life_cycle_status: *prod
   #        tagline: |
   #          Applications on Demand gives you access to online applications and application-development
   #          and hosting frameworks to support compute-intensive data analysis
@@ -3444,15 +3165,10 @@ services:
   #        terms_of_use_url:
   #        resource_level_url:
   #        access_policies_url:
-  #        geographical_availabilities: *poland
-  #        language_availability: *english
-  #        target_users: ["Researchers", "Research organisations"]
   #        domain: *otherOther
   ##        #restrictions: *notSpecified
   #        trl: *trl_9
-  #        life_cycle_status: *prod
   #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-  #        platforms: [*egiPlatform, *ec3, *aodp]
   #        description: |
   #          Gnuplot is a portable command-line driven graphing utility for Linux,
   #          OS/2, MS Windows, OSX, VMS, and other platforms.
@@ -3476,14 +3192,10 @@ services:
   #        terms_of_use_url:
   #        resource_level_url:
   #        access_policies_url:
-  #        geographical_availabilities: *poland
-  #        language_availability: *english
-  #        target_users: ["Researchers", "Research organisations"]
   #        domain: *applicationFrameworks
   #        #restrictions: *notSpecified
   #        phase: production
   #        trl: *trl_9
-  #        life_cycle_status: *prod
   #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
   #        # platforms: [*eopillar, *ec3]
   #        description: |
@@ -3508,16 +3220,11 @@ services:
   #        terms_of_use_url:
   #        resource_level_url:
   #        access_policies_url:
-  #        geographical_availabilities: *poland
-  #        language_availability: *english
-  #        target_users: ["Researchers", "Research organisations"]
   #        domain: *applicationFrameworks
   ##        #restrictions: *notSpecified
   #        phase: production
   #        trl: *trl_9
-  #        life_cycle_status: *prod
   #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-  #        platforms: [*egiPlatform, *ec3, *aodp]
   #        description: |
   #          Hadoop is a framework that allows for the distributed processing
   #          of large data sets across clusters of computers using simple programming models.
@@ -3541,15 +3248,10 @@ services:
   #        terms_of_use_url:
   #        resource_level_url:
   #        access_policies_url:
-  #        geographical_availabilities: *poland
-  #        language_availability: *english
-  #        target_users: ["Researchers", "Research organisations"]
   #        domain: *applicationFrameworks
   ##        #restrictions: *notSpecified
   #        trl: *trl_9
-  #        life_cycle_status: *prod
   #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-  #        platforms: [*egiPlatform, *ec3, *aodp]
   #        description: |
   #          Marathon a production-grade container orchestration platform
   #          for Mesosphere's Data Center/Operating System (DC/OS) and Apache Mesos.
@@ -3573,13 +3275,9 @@ services:
   #        terms_of_use_url:
   #        resource_level_url:
   #        access_policies_url:
-  #        geographical_availabilities: *poland
-  #        language_availability: *english
-  #        target_users: ["Researchers", "Research organisations"]
   #        domain: *applicationFrameworks
   #        #restrictions: *notSpecified
   #        trl: *trl_9
-  #        life_cycle_status: *prod
   #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
   #        # platforms: [*eopillar, *ec3]
   #        description: |
@@ -3606,13 +3304,9 @@ services:
   #        terms_of_use_url:
   #        resource_level_url:
   #        access_policies_url:
-  #        geographical_availabilities: *poland
-  #        language_availability: *english
-  #        target_users: ["Researchers", "Research organisations"]
   #        domain: *dataAnalysis
   #        #restrictions: *notSpecified
   #        trl: *trl_9
-  #        life_cycle_status: *prod
   #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
   #        # platforms: [*eopillar, *ec3]
   #        description: |
@@ -3638,15 +3332,10 @@ services:
   #        terms_of_use_url:
   #        resource_level_url:
   #        access_policies_url:
-  #        geographical_availabilities: *poland
-  #        language_availability: *english
-  #        target_users: ["Researchers", "Research organisations"]
   #        domain: *otherHumanities
   #        #restrictions: *notSpecified
   #        trl: *trl_9
-  #        life_cycle_status: *prod
   #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
-  #        platforms: [*egiPlatform, *ec3, *aodp]
   #        description: |
   #          The Semantic Search Engine (SSE) is an application conceived to demonstrate the potential of information
   #          coupled with semantic web technologies to address the issues of data discovery and correlation.
@@ -3672,15 +3361,9 @@ services:
     terms_of_use_url: https://csgf.egi.eu/terms-of-use
     resource_level_url: https://documents.egi.eu/document/2733
     access_policies_url: https://documents.egi.eu/public/ShowDocument?docid=2635
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*researchers, *research_organisations, *business]
     domain: *otherOther
-    restrictions: "Research affiliation needed"
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: NGS and microarray analysis in the cloud.
-    platforms: [*eoscHub, *aodp]
     description: |
       Chipster is a user-friendly analysis software for high-throughput data.
       It contains over 300 analysis tools for next generation sequencing (NGS),
@@ -3719,13 +3402,9 @@ services:
   #        terms_of_use_url:
   #        resource_level_url:
   #        access_policies_url:
-  #        geographical_availabilities: *poland
-  #        language_availability: *english
-  #        target_users: ["Researchers", "Research organisations"]
   #        domain: *otherOther
   #        #restrictions: *notSpecified
   #        trl: *trl_9
-  #        life_cycle_status: *prod
   #        tagline: Applications on Demand gives you access to online applications and application-development and hosting frameworks to support compute-intensive data analysis
   #        # platforms: [*eopillar, *ec3]
   #        description: |
@@ -3748,13 +3427,9 @@ services:
   #        terms_of_use_url:
   #        resource_level_url:
   #        access_policies_url:
-  #        geographical_availabilities: *poland
-  #        language_availability: *english
-  #        target_users: ["Researchers", "Research organisations"]
   #        domain: *otherOther
   #        #restrictions: *notSpecified
   #        trl: *trl_9
-  #        life_cycle_status: *prod
   #        tagline: |
   #          Applications on Demand gives you access to online applications and application-development
   #          and hosting frameworks to support compute-intensive data analysis
@@ -3780,15 +3455,10 @@ services:
     terms_of_use_url:
     resource_level_url:
     access_policies_url:
-    target_users: [*researchers, *research_organisations]
-    language_availability: *english
     domain: *otherOther
-    geographical_availabilities: *poland
     #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: Create interactive documents with live code, visualisations and narrative text powered by the Jupyter technology
-    platforms: [*egiPlatform]
     description: |
       The service provides a browser-based tool for interactive analysis of data using EGI storage
       and compute infrastructures based on the JupyterHub technology. The notebooks can combine text,
@@ -3880,13 +3550,9 @@ services:
   #        terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
   #        resource_level_url:
   #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
-  #        geographical_availabilities: *poland
-  #        language_availability: *english
-  #        target_users: ["Researchers"] #TODO: but not specified
   #        domain: *otherOther
   #        #restrictions: *notSpecified
   #        trl: *trl_9
-  #        life_cycle_status: *prod
   #        tagline: Services for Social Sciences and Humanities provided via the national CLARIN centres
   #        description: |
   #          CLARIN-ERIC is a consortium of national service providers dedicated to Social Sicences and Humanities. The CLARIN Metadata Infrastructure offers several services through EOSC-hub:
@@ -3923,15 +3589,10 @@ services:
     terms_of_use_url:
     resource_level_url:
     access_policies_url: https://www.dariah.eu/privacy-notice/
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*researchers, *research_organisations]
     domain: *otherHumanities
     #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: The DARIAH Science Gateway is a platform that provides access to various digital applications and services for the Arts & Humanities researchers
-    # platforms: [*eopillar, *ec3]
     description: |
       The DARIAH Science Gateway provides various web-based applications and services for the Digital Humanities researchers, institutes and communities.
 
@@ -3985,15 +3646,10 @@ services:
     terms_of_use_url:
     resource_level_url:
     access_policies_url:
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*researchers, *research_organisations]
     domain: &highEnergyPhysics High-Energy Physics
     #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: Simplify the access and management of computing resources
-    # platforms: [*eopillar, *ec3]
     description: |
       DODAS acts as cloud enabler designed for scientists seeking to easily exploit distributed
       and heterogeneous clouds to process data. Aiming to reduce the learning curve as well as
@@ -4066,15 +3722,10 @@ services:
     terms_of_use_url: https://documents.egi.eu/public/ShowDocument?docid=2623
     resource_level_url: https://documents.egi.eu/document/2875
     access_policies_url: https://wiki.d4science.org/index.php?title=D4Science_Deployment_and_Operation:_Policies
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*researchers, *research_organisations]
     domain: *earthAndEnvironmentalScience
     #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: D4Science Service
-    platforms: [*egiPlatform, *d4sciencePlatform]
     description: |
       The VRE supports new particle formation event analysis on interoperable e-Infrastructures.
       It provides access to Jupyter notebooks to classify events and process information about them.
@@ -4100,15 +3751,10 @@ services:
     terms_of_use_url:
     resource_level_url:
     access_policies_url:
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*researchers, *research_organisations]
     domain: *otherOther
     #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: Analyze and process data from multiple communities with the Ophidia Big Data Analytics framework
-    platforms: [*enesPlatform]
     description: |
       Users can define parallel processing workflows, executed remotely without needing
       to download data or provide own computing resources as these are provided by ECAS.
@@ -4174,15 +3820,10 @@ services:
     terms_of_use_url:
     resource_level_url:
     access_policies_url:
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*researchers, *research_organisations]
     domain: *earthAndEnvironmentalScience
     #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: Web service to classify plant pictures based on convolutional neural networks
-    # platforms: [*eopillar, *ec3]
     description: |
       This web service connects to a deep neural network which has been trained with thousands
       of plant images from Europe. It can classify different types of plants, including flowers.
@@ -4237,15 +3878,10 @@ services:
   #        terms_of_use_url:
   #        resource_level_url:
   #        access_policies_url:
-  #        geographical_availabilities: *poland
-  #        language_availability: *english
-  #        target_users: ["Researchers"] #TODO: but not specified
   #        domain: *otherOther
   #        #restrictions: *notSpecified
   #        trl: *trl_9
-  #        life_cycle_status: *prod
   #        tagline: *notSpecified
-  #        platforms: [*elixirPlatform]
   #        description: *notSpecified
   #    EISCAT:
   #        name: EISCAT
@@ -4259,13 +3895,9 @@ services:
   #        terms_of_use_url:
   #        resource_level_url:
   #        access_policies_url:
-  #        geographical_availabilities: *poland
-  #        language_availability: *english
-  #        target_users: ["Researchers"] #TODO: but not specified
   #        domain: *otherOther
   #        #restrictions: *notSpecified
   #        trl: *trl_9
-  #        life_cycle_status: *prod
   #        tagline: *notSpecified
   #        # platforms: [*eopillar, *ec3]
   #        description: *notSpecified
@@ -4281,13 +3913,9 @@ services:
   #        terms_of_use_url:
   #        resource_level_url:
   #        access_policies_url:
-  #        geographical_availabilities: *poland
-  #        language_availability: *english
-  #        target_users: ["Researchers"] #TODO: but not specified
   #        domain: *otherOther
   #        #restrictions: *notSpecified
   #        trl: *trl_9
-  #        life_cycle_status: *prod
   #        tagline: *notSpecified
   #        # platforms: [*eopillar, *ec3]
   #        description: *notSpecified
@@ -4305,15 +3933,10 @@ services:
     terms_of_use_url:
     resource_level_url:
     access_policies_url:
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*researchers, *research_organisations]
     domain: *earthAndEnvironmentalScience
     #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: On-demand operational coastal circulation forecast service
-    # platforms: [*eopillar, *ec3]
     description: |
       OPENCoastS builds on-demand circulation forecast systems for user-selected sections
       of the North Atlantic coast and maintains them running operationally for the timeframe defined by the user.
@@ -4395,12 +4018,9 @@ services:
   #        terms_of_use_url:
   #        resource_level_url:
   #        access_policies_url:
-  #        language_availability: *english
   #        domain: *otherOther
-  #        geographical_availabilities: *poland
   #        #restrictions: *notSpecified
   #        trl: *trl_9
-  #        life_cycle_status: *prod
   #        tagline: A suite of computational tools for structural biology
   #        description: "The WeNMR suite of computational tools is composed of eight individual platforms:
   #
@@ -4447,15 +4067,9 @@ services:
     terms_of_use_url: https://wenmr.science.uu.nl/conditions
     resource_level_url: https://documents.egi.eu/public/ShowDocument?docid=2751
     access_policies_url: https://wenmr.science.uu.nl/conditions
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*researchers]
     domain: *biologicalSciences
-    restrictions: "Registration required, Limited to non-profit users"
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: Integrative modeling of biomolecular complexes with the user-friendly, EGI HTC-enabled HADDOCK portal
-    platforms: [*wenmr, *egiPlatform, *bioexcel, *instruct]
     description: |
       HADDOCK is a web portal that offers computational tools for structural biologists to model the structure
       of complexes of proteins and other biomolecules via a user-friendly interface. The portal offers a number
@@ -4487,15 +4101,9 @@ services:
     terms_of_use_url: https://wenmr.science.uu.nl/conditions
     resource_level_url: https://documents.egi.eu/public/ShowDocument?docid=2751
     access_policies_url: https://wenmr.science.uu.nl/conditions
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*researchers]
     domain: *biologicalSciences
-    restrictions: "Registration required, Limited to non-profit users"
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: The PowerFit server allows you to fit your 3D structures in any map!
-    platforms: [*wenmr, *egiPlatform, *bioexcel, *instruct]
     description: |
       PowerFit is a software designed to fit atomic structures into cryo-EM density maps,
       using an exhaustive 6-dimensional cross-correlation search.
@@ -4517,17 +4125,11 @@ services:
     terms_of_use_url: https://wenmr.science.uu.nl/conditions
     resource_level_url: https://documents.egi.eu/public/ShowDocument?docid=2751
     access_policies_url: https://wenmr.science.uu.nl/conditions
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*researchers]
     domain: *biologicalSciences
-    restrictions: "Registration required, Limited to non-profit users"
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: |
       Visualizes and quantify the information content of distance
       restraints between macromolecular complexes with DisVis
-    platforms: [*wenmr, *egiPlatform, *bioexcel, *instruct]
     description: |
       DisVis is a software designed to visualize and quantify the accessible interaction space
       defined by distance restraints between biomolecules.
@@ -4549,15 +4151,9 @@ services:
     terms_of_use_url: https://wenmr.science.uu.nl/conditions
     resource_level_url: https://documents.egi.eu/public/ShowDocument?docid=2751
     access_policies_url: https://wenmr.science.uu.nl/conditions
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*researchers]
     domain: *biologicalSciences
-    restrictions: "Registration required, Limited to non-profit users"
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: NMR protein structure prediction using the EGI HTC-enabled CS-ROSETTA portal
-    platforms: [*wenmr, *egiPlatform, *instruct]
     description: |
       The CS-ROSETTA3 web portal allows structural biologists to model the 3D structure of proteins
       using only the 13CA, 13CB, 13C’, 15N, 1HA and 1HN NMR chemical shifts as input.
@@ -4580,17 +4176,9 @@ services:
     terms_of_use_url: http://py-enmr.cerm.unifi.it/POLICY.pdf
     resource_level_url: https://documents.egi.eu/public/ShowDocument?docid=2751
     access_policies_url: http://py-enmr.cerm.unifi.it/POLICY.pdf
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*researchers]
     domain: *biologicalSciences
-    restrictions: "Limited to non-profit users, For-profit users can use the service if they a license agreement with the University of California for the AMBER toolkit"
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: Web portal for Nuclear Magnetic Resonance (NMR) structure refinement
-    platforms: [*wenmr, *egiPlatform, *instruct]
-    funding_bodies: ["funding_body-esa", "funding_body-epsrc"]
-    funding_programs: ["funding_program-h2020", "funding_program-health"]
     description: |
       Simple and user-friendly NMR-based refinement of the 3D structures of biological macromolecules
       thought the AMPS-NMR portal. Amber (Assisted Model Building with Energy Refinement) is a suite
@@ -4617,15 +4205,9 @@ services:
     terms_of_use_url: http://py-enmr.cerm.unifi.it/POLICY.pdf
     resource_level_url: https://documents.egi.eu/public/ShowDocument?docid=2751
     access_policies_url: http://py-enmr.cerm.unifi.it/POLICY.pdf
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*researchers]
     domain: *biologicalSciences
-    restrictions: "Limited to non-profit users"
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: FANTEN for the analysis of magnetic anisotropy-induced NMR data
-    platforms: [*wenmr, *egiPlatform, *instruct]
     description: |
       FANTEN is a user-friendly web tool for the
       determination of anisotropy tensors. It is freely available through the WeNMR gateway.
@@ -4650,15 +4232,9 @@ services:
     terms_of_use_url: https://wenmr.science.uu.nl/conditions
     resource_level_url: https://documents.egi.eu/public/ShowDocument?docid=2751
     access_policies_url: https://wenmr.science.uu.nl/conditions
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*researchers]
     domain: [*biologicalSciences, *otherOther]
-    restrictions: "Registration required, Limited to non-profit users"
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: "SpotOn: determination of Hot-Spots at protein-protein interfaces"
-    platforms: [*wenmr, *egiPlatform, *bioexcel, *instruct]
     description: |
       SpotOn is a robust algorithm developed to identify and classify the interfacial residues
       as Hot-Spots (HS) and Null-Spots (NS) with a final accuracy of 0.95
@@ -4682,15 +4258,9 @@ services:
     terms_of_use_url:
     resource_level_url:
     access_policies_url:
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*researchers, *research_organisations, *business]
     domain: [*earthAndEnvironmentalScience, *otherOther]
-    restrictions: " Research affiliation needed, user account registration needed."
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: "Continuous systematic interferogram generation with Sentinel-1 data over the Alpine Region."
-    platforms: [*gepPlatform, *esaPlatform]
     description: |
       This service provides an interferometric product at 50m resolution and 25m pixel spacing systematically
       for every 6-day Sentinel-1 SLC pair over the Alpine Region.
@@ -4717,15 +4287,9 @@ services:
     terms_of_use_url:
     resource_level_url:
     access_policies_url:
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*researchers, *research_organisations, *business]
     domain: [*earthAndEnvironmentalScience, *otherOther]
-    restrictions: " Research affiliation needed, user account registration needed."
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: "On-demand EO processing services for Earthquake Response and Landslides Analysis."
-    platforms: [*gepPlatform, *esaPlatform]
     description: |
       This is a Thematic Application of the Geohazards Thematic Exploitation Platform providing access to a set
       of on-demand terrain motion services supporting interferogram generation, co-seismic displacement mapping,
@@ -4751,15 +4315,9 @@ services:
     terms_of_use_url:
     resource_level_url:
     access_policies_url:
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*researchers, *research_organisations, *research_groups]
     domain: [*otherSocialSciences, *physicalSciences, *otherOther]
-    restrictions: "Research affiliation needed"
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: "EODC JupyterHub provides access to the global EODC Copernicus Data Archive."
-    #        platforms: [*eopillar]
     description: |
       EODC JupyterHub provides access to the global EODC Copernicus Data Archive.
       Eliminate the barrier to get access to and to start to develop algorithms in view of remote sensing data.
@@ -4810,15 +4368,10 @@ services:
     terms_of_use_url:
     resource_level_url:
     access_policies_url:
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*researchers, *research_organisations, *research_groups, *providers]
     domain: [*otherSocialSciences, *physicalSciences, *otherOther]
     #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: "Catalog Service for the Web (CSW), OGC compliant catalogue service to expose metadata of geospatial records hosted at EODC"
-    platforms: [*openGC]
     description: |
       The EODC Data Catalogue service allows querying the Copernicus Sentinel satellite data hosted at EODC.
       The service is available through a  simple Web GUI, eomEX+, as well as an API. The back-end of eomEX+
@@ -4849,15 +4402,10 @@ services:
     terms_of_use_url:
     resource_level_url:
     access_policies_url:
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*researchers, *research_organisations]
     domain: *earthAndEnvironmentalScience
     #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: Big data satellite imagery service
-    platforms: [*eopillar]
     description: |
       Sentinel Hub is a multi- spectral and multi-temporal big data satellite imagery service,
       capable of fully automated archiving, real-time processing and distribution
@@ -4878,15 +4426,10 @@ services:
     terms_of_use_url:
     resource_level_url:
     access_policies_url:
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*researchers, *research_organisations]
     domain: *earthAndEnvironmentalScience
     #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: Cross-domain application supporting various application fields
-    platforms: [*eopillar]
     description: |
       MEA platform implements the concept of Digital Earth making global environmental geospatial data Findable,
       Accessible, Interoperable and Reusable (FAIR). MEA platform provides an effective subsetting functionality
@@ -4907,15 +4450,10 @@ services:
     terms_of_use_url:
     resource_level_url:
     access_policies_url:
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*researchers, *research_organisations]
     domain: *earthAndEnvironmentalScience
     #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: Service providing analysis-ready EO data
-    platforms: [*eopillar]
     description: |
       Rasdaman is a datacube engine providing analysis-ready EO data by abstracting
       millions of satellite images into few spatio-temporal cubes.
@@ -4962,15 +4500,10 @@ services:
     terms_of_use_url: https://creodias.eu/terms-of-service
     resource_level_url: https://creodias.eu/appendix-service-level
     access_policies_url: https://creodias.eu/legal-matters
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*researchers, *research_organisations, *research_groups, *providers, *business]
     domain: [*otherSocialSciences, *physicalSciences, *otherOther]
     #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: "Data Collections Catalog is based on two solutions  – CKAN - comprehensive frontend catalogue application for information discovery and EO Browser – specialized catalogue application for robust satellite imagery discovery and quick georeferenced preview"
-    platforms: [*copernicus, *esaPlatform]
     description: |
       The Catalogue is be based on CKAN open source software which is widely used for open data publications like
       e.g. European Data Portal, data.org.uk or danepubliczne.gov.pl. CKAN provides user friendly web interface
@@ -5007,15 +4540,10 @@ services:
     terms_of_use_url: https://creodias.eu/terms-of-service
     resource_level_url: https://creodias.eu/appendix-service-level
     access_policies_url: https://creodias.eu/legal-matters
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*researchers, *research_organisations, *research_groups, *providers, *business]
     domain: [*otherSocialSciences, *physicalSciences, *otherOther]
     #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: "CREODIAS platform is a cloud infrastructure adapted to the processing of big amounts of EO data, including an EO Data storage cluster and a dedicated IaaS cloud infrastructure for the platform’s Users"
-    platforms: [*copernicus, *esaPlatform]
     description: |
       CREODIAS processing covers full set of virtual resources available in the solution:
       VM – Virtual Machines (or virtual computing servers) with several operating systems available
@@ -5048,15 +4576,10 @@ services:
     terms_of_use_url: https://creodias.eu/terms-of-service
     resource_level_url: https://creodias.eu/appendix-service-level
     access_policies_url: https://creodias.eu/legal-matters
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*researchers, *research_organisations, *research_groups, *providers, *business]
     domain: [*otherSocialSciences, *physicalSciences, *otherOther]
     #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: "Manage your data products"
-    platforms: [*copernicus, *esaPlatform]
     description: |
       The Finder tool allows finding data products stored in the repository, obtained or processed at
       selected times with selected cloud coverage levels and with other selection criteria.
@@ -5081,15 +4604,10 @@ services:
     terms_of_use_url: https://creodias.eu/terms-of-service
     resource_level_url: https://creodias.eu/appendix-service-level
     access_policies_url: https://creodias.eu/legal-matters
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*researchers, *research_organisations, *research_groups, *providers, *business]
     domain: [*otherSocialSciences, *physicalSciences, *otherOther]
     #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: "The EO Browser allows visualization and basic processing of selected data collections (like Sentinel-1 L1 GRD or Sentinel-2 L1C)"
-    platforms: [*copernicus, *esaPlatform]
     description: |
       CreoDias EO browser allows browsing wide archive of Earth Observation products, created  by
       ESA’s [Sentinel 1][1], [Sentinel 2][2], [Sentinel 3][3], ESA’s archives of [Landsat 5][4], [Landsat 7][5],
@@ -5123,15 +4641,10 @@ services:
     terms_of_use_url:
     resource_level_url:
     access_policies_url:
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*research_organisations]
     domain: *otherOther
     #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: Handle transparent Single Sign-On from multiple heterogeneous identity providers
-    platforms: [*egiPlatform]
     description: |
       Check-in is a proxy service that operates as a central hub to connect federated Identity Providers (IdPs)
       with service providers. Check-in allows users to select their preferred IdP so that they can access and use
@@ -5179,15 +4692,10 @@ services:
   #        terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
   #        resource_level_url: https://documents.egi.eu/document/2733
   #        access_policies_url: https://marketplace.egi.eu/content/7-access-policy
-  #        geographical_availabilities: *poland
-  #        language_availability: *english
-  #        target_users: ["Research organisations"]
   #        domain: *otherOther
   #        #restrictions: *notSpecified
   #        trl: *trl_9
-  #        life_cycle_status: *prod
   #        tagline: ToFill
-  #        platforms: [*egiPlatform]
   #        description: |
   #          EGI provides services to manage user membership, where users can register and ask to be part of a VO,
   #          and where the VO supervisor can approve or remove users from the VO.
@@ -5212,15 +4720,10 @@ services:
     terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
     resource_level_url: https://documents.egi.eu/document/2733
     access_policies_url: https://marketplace.egi.eu/content/7-access-policy
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*research_groups, *research_organisations]
     domain: *otherOther
     #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: Dedicated computing and storage for training and education
-    platforms: [*egiPlatform]
     description: |
       The Training Infrastructure is a cloud­based computing and storage resources for training events.
       It is useful to organise onsite tutorials or workshops and online training courses or as a platform
@@ -5328,15 +4831,10 @@ services:
     terms_of_use_url: https://www.egi.eu/services/fitsm-training/terms-and-conditions/
     resource_level_url: https://documents.egi.eu/document/2733
     access_policies_url: https://marketplace.egi.eu/content/7-access-policy
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*research_organisations]
     domain: *otherOther
     #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: Learn how to manage IT services with a pragmatic and lightweight standard
-    platforms: [*egiPlatform]
     description: |
       FitSM is a lightweight standards family aimed at facilitating service management in IT service provision,
       including federated scenarios. FitSM training aims at providing those involved in operating
@@ -5423,17 +4921,11 @@ services:
     terms_of_use_url: https://services.d4science.org/terms-of-use
     resource_level_url: https://wiki.d4science.org/index.php?title=D4Science_Deployment_and_Operation:_Policies#Service_Level_Agreement
     access_policies_url: https://wiki.d4science.org/index.php?title=D4Science_Deployment_and_Operation:_Policies
-    geographical_availabilities: *poland
-    target_users: [*research_groups]
-    restrictions: No restrictions
-    language_availability: *english
     domain: *otherOther
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: |
       A web-based, collaborative working environment enacting to predict the spread of an invasive species
       (possibly alien) in a new environment
-    platforms: [*egiPlatform, *gbif, *obis, *d4sciencePlatform, *gCube, *seaDataCloud]
     description: |
       Alien and Invasive Species Virtual Research Environment (VRE) is a web-based, comprehensive,
       collaborative working environment supporting decision makers and scientists in predicting the spread
@@ -5471,13 +4963,9 @@ services:
   #      terms_of_use_url:
   #      resource_level_url:
   #      access_policies_url:
-  #      geographical_availabilities: *poland
-  #      language_availability: *english
-  #      target_users: ["Research groups", "Research organisations"]
   #      domain: *otherOther
   #      #restrictions: *notSpecified
   #      trl: *trl_9
-  #      life_cycle_status: *prod
   #      tagline: *notSpecified
   #      # platforms: [*eopillar, *ec3]
   #      description: *notSpecified
@@ -5499,15 +4987,10 @@ services:
     terms_of_use_url:
     resource_level_url:
     access_policies_url:
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*research_groups, *research_organisations]
     domain: *otherOther
     #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: Enabling HTC & HPC applications opportunistically across private, academic and public clouds
-    # platforms: [*eopillar, *ec3]
     description: |
       PROMINENCE is a platform which allows users to exploit idle cloud resources for running scientific workloads
       with a simple batch system style interface. Key features include:
@@ -5541,17 +5024,9 @@ services:
     terms_of_use_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
     resource_level_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
     access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*researchers]
     domain: *otherOther
-    restrictions: |
-      Access to the platform is granted based on motivation / proposal,
-      In the pilot phase, usage is only supported for  photon and neutron science use-cases
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: dCache backend storage for the EOSC PAN Science Demonstrator
-    platforms: [*eoscPan]
     description: |
       Data backend storage service for EOSC PAN notebooks and cloud functions for EOSC PAN FaaS.
       Streams for storage events via kafka and Server Sent Events.
@@ -5580,15 +5055,10 @@ services:
     terms_of_use_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
     resource_level_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
     access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*researchers]
     domain: *otherOther
     #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: OpenWhisk, cloud functions for the EOSC PAN Science Demonstrator
-    platforms: [*eoscPan]
     description: |
       Compute backend service for EOSC PAN notebooks and EOSC PAN data.
       Continuous integration and deployments of docker containers as cloud functions on the DESY Compute Cloud.
@@ -5616,15 +5086,10 @@ services:
     terms_of_use_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
     resource_level_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
     access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*researchers]
     domain: *otherOther
     #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-    platforms: [*eoscPan]
     description: |
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam lacinia risus velit,
       in tempus erat interdum vel. Suspendisse elit metus, lobortis et felis a,
@@ -5671,15 +5136,10 @@ services:
     terms_of_use_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
     resource_level_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
     access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*researchers]
     domain: *otherOther
     #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: JupyterHub for the EOSC PAN Science Demonstrator
-    platforms: [*eoscPan]
     description: |
       Spawn Jupyter Servers in the DESY Compute Cloud and run notebooks which can make use
       of the EOSC PaN FaaS Service and connect to EOSC PaN Data Service.
@@ -5707,15 +5167,10 @@ services:
     terms_of_use_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
     resource_level_url: https://desycloud.desy.de/index.php/s/XrKEbpXFBBKfq4G
     access_policies_url: https://it.desy.de/sites2009/site_it/content/e1993/e163002/infoboxContent163004/BO-IV-DESY-Eng_eng.pdf
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*researchers]
     domain: *otherOther
     #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: GitLab for the EOSC PAN Science Demonstrator
-    platforms: [*eoscPan]
     description: |
       Repository service for EOSC PAN notebooks and cloud functions for EOSC PAN FaaS. Gitlab runners
       for continuous integration in the DESY Compute Cloud,
@@ -5744,15 +5199,10 @@ services:
     terms_of_use_url: https://ltos-gateway.lpds.sztaki.hu/web/wizard/terms-of-use
     resource_level_url: https://documents.egi.eu/document/2733
     access_policies_url: https://documents.egi.eu/public/ShowDocument?docid=2635
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*researchers, *research_organisations, *business]
     domain: *otherOther
     #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: Setup and run parameter studies in the cloud with a few clicks.
-    platforms: [*eoscHub, *aodp]
     description: |
       The WS-PGRADE Portal (Web Services Parallel Grid Runtime and Developer Environment Portal)
       is the Liferay-based web portal (WS-PGRADE web application) of gUSE high level middleware system.
@@ -5791,15 +5241,10 @@ services:
     terms_of_use_url: https://research.csc.fi/pouta-user-policy
     resource_level_url: https://research.csc.fi/documents/48467/0/ePouta+SLA/cbac49af-f069-4a8b-9636-e519b1ee331d
     access_policies_url: https://research.csc.fi/pricing-of-computing-services
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*researchers, *research_organisations, *research_groups, *providers]
     domain: [*otherSocialSciences, *otherHumanities, *otherOther, *philosophy]
     #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: Secure and cost-effective cloud computing for processing sensitive data
-    platforms: [*eudatPlatform, *elixirPlatform]
     description: |
       This service provides a infrastructure as a-service for running analysis on sensitive data.
       The ePouta Virtual Private Cloud service allows customers to provision virtual machines and
@@ -5825,15 +5270,10 @@ services:
     terms_of_use_url:
     resource_level_url:
     access_policies_url:
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*researchers]
     domain: *otherOther
     #restrictions: *notSpecified
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: Services for sensitive data
-    platforms: [*eudatPlatform, *nird]
     description: |
       This service provides researchers with a desktop with secure storage and software
       to run your collection and analysis of sensitive data. The system is built on the idea
@@ -5860,15 +5300,9 @@ services:
     terms_of_use_url: https://servproject.i3m.upv.es/ec3-ltos/terms.html
     resource_level_url: https://documents.egi.eu/document/2733
     access_policies_url: https://documents.egi.eu/public/ShowDocument?docid=2635
-    geographical_availabilities: *poland
-    language_availability: *english
-    target_users: [*researchers, *research_organisations, *business]
     domain: *otherOther
-    restrictions: Research affiliation needed
     trl: *trl_9
-    life_cycle_status: *prod
     tagline: Deploy a virtual cluster on top of IaaS infrastructures with a few clicks.
-    platforms: [*eoscHub, *aodp]
     description: |
       The Elastic Cloud Computing Cluster (EC3) is a platform that allows creating elastic virtual clusters
       on top of Infrastructure as a Service (IaaS) providers, either public (such as Amazon Web Services,
@@ -6451,7 +5885,7 @@ deployable_services:
     url: https://github.com/jupyterhub/jupyterhub-docker
     node: docker
     version: "4.0.2"
-    software_license: BSD-3-Clause
+    license_name: BSD-3-Clause
     creators: ["Project Jupyter", "JupyterHub Community"]
     resource_organisation: *egi
     catalogue: *eosc
@@ -6470,7 +5904,7 @@ deployable_services:
     url: https://www.tensorflow.org/tfx/guide/serving
     node: kubernetes
     version: "2.14.0"
-    software_license: Apache-2.0
+    license_name: Apache-2.0
     creators: ["Google Brain Team", "TensorFlow Community"]
     resource_organisation: *cyfro
     catalogue: *eosc
@@ -6488,7 +5922,7 @@ deployable_services:
     url: https://www.rstudio.com/products/rstudio-server/
     node: docker
     version: "2023.12.1"
-    software_license: AGPL-3.0
+    license_name: AGPL-3.0
     creators: ["RStudio Team", "Posit Software"]
     resource_organisation: *grnet
     catalogue: *eosc

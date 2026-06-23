@@ -2,6 +2,7 @@
 
 class Datasource < Service
   include Rails.application.routes.url_helpers
+
   def self.model_name
     Service.model_name
   end
@@ -12,13 +13,7 @@ class Datasource < Service
 
   friendly_id :name, use: :slugged
 
-  before_save do
-    self.pid = sources&.first&.eid || abbreviation if pid.blank?
-    self.persistent_identity_systems =
-      persistent_identity_systems.reject { |p| p.entity_type.blank? && p.entity_type_schemes.blank? }
-  end
-
-  accepts_nested_attributes_for :persistent_identity_systems, reject_if: :all_blank, allow_destroy: true
+  before_save { self.pid = sources&.first&.eid if pid.blank? }
 
   private
 

@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-class Provider::Delete
-  def initialize(provider_id)
-    @provider = Provider.friendly.find(provider_id)
+class Provider::Delete < ApplicationService
+  def initialize(provider)
+    super()
+    @provider = provider.is_a?(Provider) ? provider : Provider.friendly.find(provider)
   end
 
   def call

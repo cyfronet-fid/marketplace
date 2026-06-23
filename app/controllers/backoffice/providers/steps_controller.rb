@@ -17,12 +17,19 @@ class Backoffice::Providers::StepsController < Backoffice::ProvidersController
   end
 
   FORM_STEPS = {
-    profile: %i[name abbreviation description website logo legal_entity],
-    location: %i[street_name_and_number postal_code city region country],
-    contacts: [
-      main_contact_attributes: %i[id first_name last_name email country_phone_code phone position],
-      public_contacts_attributes: %i[id first_name last_name email country_phone_code phone position _destroy]
+    profile: [
+      :name,
+      :abbreviation,
+      :description,
+      :website,
+      :logo,
+      :legal_entity,
+      :legal_status,
+      :hosting_legal_entity,
+      node_ids: []
     ],
+    location: %i[country],
+    contacts: [public_contact_emails: []],
     managers: [data_administrators_attributes: %i[id first_name last_name email _destroy]]
   }.freeze
 
@@ -32,6 +39,7 @@ class Backoffice::Providers::StepsController < Backoffice::ProvidersController
   end
 
   def update
+    normalize_public_contact_emails
     saved_params = session[session_key]
     provider_attrs = saved_params.merge permitted_step_attributes
     @provider.assign_attributes provider_attrs.except("logo")
@@ -109,9 +117,6 @@ class Backoffice::Providers::StepsController < Backoffice::ProvidersController
   def prepare_step(step_to_set)
     find_and_authorize
     case step_to_set
-    when :contacts
-      @provider.build_main_contact if @provider.main_contact.blank?
-      @provider.public_contacts.build if @provider.public_contacts.empty?
     when :managers
       if @provider.data_administrators.blank?
         @provider.data_administrators << DataAdministrator.new(
@@ -178,6 +183,15 @@ class Backoffice::Providers::StepsController < Backoffice::ProvidersController
       if provider_attrs["logo"].present?
         provider_attrs["logo"].is_a?(Hash) ? provider_attrs["logo"] : ImageHelper.to_json(provider_attrs["logo"])
       end
+  end
+
+  def normalize_public_contact_emails
+    return unless params.dig(:provider, :public_contact_emails).is_a?(String)
+
+    params[:provider][:public_contact_emails] = params[:provider][:public_contact_emails]
+      .split(/\r?\n/)
+      .map(&:strip)
+      .reject(&:blank?)
   end
 
   def session_key

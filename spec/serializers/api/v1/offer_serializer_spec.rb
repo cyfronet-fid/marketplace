@@ -75,7 +75,7 @@ RSpec.describe Api::V1::OfferSerializer, backend: true do
   end
 
   it "properly serializes a non-order_required offer" do
-    offer = create(:offer, order_type: :open_access, internal: false)
+    offer = create(:offer, service: create(:open_access_service), order_type: :open_access, internal: false)
 
     serialized = JSON.parse(described_class.new(offer).to_json)
 

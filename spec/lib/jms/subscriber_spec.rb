@@ -5,125 +5,87 @@ require "jms/subscriber"
 require "stomp"
 
 describe Jms::Subscriber, backend: true do
-  let(:eosc_registry_base) { "localhost" }
-  let(:logger) { Logger.new($stdout) }
-  let(:parser) { JSON }
-  let(:client) { double("Stomp::Client", config_hash) }
-  let(:client_stub) { class_double(Stomp::Client).as_stubbed_const(transfer_nested_constants: true) }
-  let(:service_resource) { create(:jms_json_service) }
-  let(:provider_resource) { create(:jms_json_provider) }
-  let(:json_service) { double(body: service_resource.to_json) }
-  let(:json_provider) { double(body: provider_resource.to_json) }
-  let(:connection) do
-    double(
-      "connection",
-      :autoflush= => true,
-      :login => "dummy_login",
-      :passcode => "dummy_pass",
-      :port => 12_345,
-      :host => "dummy_host",
-      :ssl => "false"
-    )
-  end
-
-  let(:manage_message_service) { instance_double(Jms::ManageMessage) }
-
-  def mock_subscriber
-    allow_any_instance_of(Jms::Subscriber).to receive(:conf_hash).with(
-      "dummy_login",
-      "dummy_pass",
-      "dummy_host",
-      "MPClientTest",
-      false
-    ).and_return(config_hash)
-
-    allow(client_stub).to receive(:new).and_return(client)
-    Jms::Subscriber.new(
-      "dummy_topic",
-      "dummy_login",
-      "dummy_pass",
-      "dummy_host",
-      "MPClientTest",
-      "localhost",
-      false,
-      nil,
-      client: client_stub,
-      logger: logger
-    )
-  end
-
-  def stub_good_message
-    allow(client).to receive(:subscribe).with(
-      "/topic/dummy_topic.>",
-      { ack: "client-individual", "activemq.subscriptionName": "mpSubscription" }
-    ).and_yield(json_service)
-
-    allow(client).to receive(:ack).with(json_service)
-    allow(Jms::ManageMessage).to receive(:new).with(json_service, eosc_registry_base, logger, nil).and_return(
-      manage_message_service
-    )
-    allow(manage_message_service).to receive(:call).and_return(true)
-  end
-
-  it "should receive error if connection fail" do
-    original_stdout = $stdout
-    $stdout = StringIO.new
-
-    stub_good_message
-
-    allow(client).to receive(:open?).and_return(false)
-    subscriber = mock_subscriber
-
-    expect { subscriber.run }.to raise_error(Jms::Subscriber::ConnectionError, "Connection failed!!")
-    $stdout = original_stdout
-  end
-
-  it "should receive error if queue send error frame" do
-    original_stdout = $stdout
-    $stdout = StringIO.new
-    stub_good_message
-
-    allow(client).to receive(:open?).and_return(true)
-    allow(client).to receive(:connection_frame).and_return(double(command: Stomp::CMD_ERROR, body: "Error"))
-    subscriber = mock_subscriber
-
-    expect { subscriber.run }.to raise_error(Jms::Subscriber::ConnectionError, "Connection error: Error")
-    $stdout = original_stdout
-  end
-
-  it "should receive error if queue send error frame" do
-    original_stdout = $stdout
-    original_stderr = $stderr
-    $stdout = StringIO.new
-    $stderr = StringIO.new
-    allow(client).to receive(:subscribe).with(
-      "/topic/dummy_topic.>",
-      { ack: "client-individual", "activemq.subscriptionName": "mpSubscription" }
-    ).and_yield({})
-
-    allow(Jms::ManageMessage).to receive(:new).with({}, eosc_registry_base, logger, nil).and_return(
-      manage_message_service
-    )
-    allow(manage_message_service).to receive(:call).and_raise(StandardError)
-    subscriber = mock_subscriber
-
-    expect(client).to receive(:unreceive).with({})
-    expect { subscriber.run }.to raise_error(SystemExit)
-    $stdout = original_stdout
-    $stderr = original_stderr
-  end
-
-  private
-
-  def config_hash
+  let(:logger) { Logger.new(nil) }
+  let(:message) { double(body: "{}") }
+  let(:test_client) { double("Stomp::Client", open?: true, close: true) }
+  let(:client) { double("Stomp::Client", open?: true, connection_frame: nil, ack: true, join: true) }
+  let(:config) do
     {
-      hosts: [{ login: "dummy_login", passcode: "dummy_pass", host: "dummy_host", port: 61_613, ssl: false }],
-      connect_headers: {
-        "client-id": "MPClientTest",
-        "heart-beat": "0,20000",
-        "accept-version": "1.2",
-        host: "localhost"
-      }
+      subscriptions: [
+        {
+          login: "dummy_login",
+          password: "dummy_pass",
+          host: "dummy_host",
+          topic: "dummy_topic",
+          client_name: "MPClientTest",
+          eosc_registry_base_url: "localhost",
+          ssl_enabled: false
+        }
+      ]
     }
+  end
+
+  before { allow_any_instance_of(Jms::Subscriber).to receive(:load_config).and_return(config) }
+
+  it "raises if the connection test fails" do
+    allow(Stomp::Client).to receive(:new).and_return(double("Stomp::Client", open?: false))
+
+    expect { described_class.new(logger: logger).run }.to raise_error(
+      Jms::Subscriber::ConnectionError,
+      "Cannot connect to dummy_host:61613: Test connection failed for dummy_host:61613"
+    )
+  end
+
+  it "subscribes, processes, and acknowledges a message" do
+    allow(Stomp::Client).to receive(:new).and_return(test_client, client)
+    allow(client).to receive(:subscribe).with(
+      "/topic/dummy_topic.>",
+      { ack: "client-individual", "activemq.subscriptionName": "mpSubscription" }
+    ).and_yield(message)
+
+    expect(Jms::ManageMessage).to receive(:call).with(message, "localhost", logger, nil)
+    expect(client).to receive(:ack).with(message)
+
+    described_class.new(logger: logger).run
+  end
+
+  it "subscribes to each comma-separated topic" do
+    config[:subscriptions].first[:topic] = [
+      "*.organisation.*",
+      "*.service.*",
+      " *.catalogue.*",
+      "*.datasource.*",
+      "*.deployable_application.*",
+      "*.interoperability_record.*"
+    ].join(",")
+
+    allow(Stomp::Client).to receive(:new).and_return(test_client, client)
+    allow(client).to receive(:subscribe)
+
+    %w[
+      *.organisation.*
+      *.service.*
+      *.catalogue.*
+      *.datasource.*
+      *.deployable_application.*
+      *.interoperability_record.*
+    ].each do |topic|
+      expect(client).to receive(:subscribe).with(
+        "/topic/#{topic}.>",
+        { ack: "client-individual", "activemq.subscriptionName": "mpSubscription" }
+      )
+    end
+
+    described_class.new(logger: logger).run
+  end
+
+  it "unreceives a message when processing fails" do
+    allow(Stomp::Client).to receive(:new).and_return(test_client, client)
+    allow(client).to receive(:subscribe).and_yield(message)
+    allow(Jms::ManageMessage).to receive(:call).and_raise(StandardError, "boom")
+
+    expect(client).to receive(:unreceive).with(message)
+
+    described_class.new(logger: logger).run
   end
 end
