@@ -80,7 +80,7 @@ gem "savon", "~> 2.15"
 
 gem "google-apis-analyticsreporting_v4", "~> 0.5"
 
-gem "sidekiq"
+gem "sidekiq", ">= 8.0.9"
 gem "sidekiq-limit_fetch", "~>4.4"
 
 gem "stomp"
