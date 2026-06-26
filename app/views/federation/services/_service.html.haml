@@ -15,14 +15,13 @@
         = image_tag "service_logo.svg", class: "logo-img", alt: "Default service logo"
     .service-content.flex-grow-1
       %h5.card-title
-        - if aggregator_type == "pc"
-          - key = service["nodePID"].match(/\(([^)]+)\)/)&.[](1)
-          - service_url = "#{urls.fetch(key, urls["EOSC-Beyond"])}services/#{service["pid"] || service["slug"]}"
-          -# remove when it start working:
-          - unless ["ENES", "CESSDA", "NI4OS-EUROPE"].any? { |s| service["nodePID"].include?(s) } # rubocop:disable Style/IfUnlessModifier
-            - service_url = service_url.sub("https://", "https://integration.")
-        - else
-          - service_url = "#{service["source_node_url"]}services/#{service["pid"] || service["slug"]}"
+        :ruby
+          if aggregator_type == "pc"
+            key = service["nodePID"].match(/\(([^)]+)\)/)&.[](1)
+            service_url = "#{urls.fetch(key, urls["EOSC-Beyond"])}services/#{service["pid"] || service["slug"]}"
+          else
+            service_url = "#{service["source_node_url"]}services/#{service["pid"] || service["slug"]}"
+          end
         %a.text-decoration-none{ href: service_url, target: "_blank", rel: "noopener" }
           = service_highlight(service, "name", highlights || {})
           %i.fas.fa-external-link-alt.ml-1.text-muted

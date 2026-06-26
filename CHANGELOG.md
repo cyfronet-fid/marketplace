@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [4.4.1](https://github.com/cyfronet-fid/marketplace/compare/v4.4.0...v4.4.1) (2026-06-24)
+
+
+### Bug Fixes
+
+* [] change sidekiq version ([3f45da6](https://github.com/cyfronet-fid/marketplace/commit/3f45da6273411964304a5b4c99f1f0e326f25749))
+
 ## [4.4.0](https://github.com/cyfronet-fid/marketplace/compare/v4.3.1...v4.4.0) (2026-06-23)
 
 

@@ -115,26 +115,24 @@ class Federation::ServicesController < ApplicationController
     facet_values.to_h { |v| [v["value"], v["label"]] }
   end
 
-  def map_results(json)
+  def map_results(json, pid_to_name)
     scientific_domain_map = build_facet_map(json, "scientific_domains")
     service_providers_map = build_facet_map(json, "service_providers")
-    nodes_map = build_facet_map(json, "node")
 
     Array(json["results"]).map do |item|
-      service = item.dig("result", "service") || {}
+      service = item["result"] || {}
       domains = Array(service["scientificDomains"])
       providers = Array(service["serviceProviders"])
+      node_pid = item["result"]["nodePID"]
 
       {
         "pid" => item["result"]["id"],
-        "name" => item["result"]["service"]["name"],
+        "name" => item["result"]["name"],
         "slug" => item["id"],
-        # "tagline" => item["tagline"],
-        "description" => item["result"]["service"]["description"],
-        # "rating" => nil,
+        "description" => item["result"]["description"],
         "score" => item["score"],
-        "path" => item["webpage"],
-        "logo" => item["result"]["service"]["logo"],
+        "path" => item["result"]["webpage"],
+        "logo" => item["result"]["logo"],
         "scientific_domains" =>
           domains.map do |domain|
             value = domain["scientificDomain"].to_s
@@ -147,15 +145,19 @@ class Federation::ServicesController < ApplicationController
           "pid" => item["resourceOrganisation"]
         },
         "providers" => providers.map { |provider| { "name" => service_providers_map.fetch(provider, provider) } },
-        "webpage" => item["webpage"] || item["userManual"] || item["order"],
-        "nodePID" => nodes_map.fetch(item["result"]["service"]["nodePID"], item["result"]["service"]["nodePID"])
-        # "source_node_url" => "test node pid"
+        "webpage" => item["result"]["webpage"] || item["userManual"] || item["order"],
+        "nodePID" => pid_to_name[node_pid] || node_pid
       }
     end
   end
 
-  def map_federation_response(json)
-    results = map_results(json)
+  def map_federation_response(json) # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+    metadata = json["metadata"].is_a?(Hash) ? json["metadata"] : {}
+    nodes = metadata["nodes"].is_a?(Array) ? metadata["nodes"] : []
+
+    pid_to_name = nodes.each_with_object({}) { |node, hash| hash[node["pid"]] = node["name"] }
+
+    results = map_results(json, pid_to_name)
 
     total_count = json["total"].to_i
     total_pages = (total_count.to_f / RESULTS_PER_PAGE).ceil
@@ -183,10 +185,12 @@ class Federation::ServicesController < ApplicationController
       alternative_pids
       webpage
       contacts
+      main_contact_role
     ]
     facets_array.each do |facet|
       field = facet["field"].to_s
       next if facets_to_skip.include?(field)
+      next if facet["values"] == []
 
       values = Array(facet["values"]).map { |v| map_facet_value_pc(v) }
 
@@ -216,6 +220,7 @@ class Federation::ServicesController < ApplicationController
       "facets" => mapped_facets,
       "facets_labels" => facets_labels,
       "node_facets" => node_facets_values,
+      "node_metadata" => nodes,
       "node_urls" => node_urls
     }
   end
@@ -234,8 +239,9 @@ class Federation::ServicesController < ApplicationController
   end
 
   def extract_available_nodes_pc
-    node_facets = @json_data["node_facets"] || []
-    node_facets.map { |node| { name: node["name"], value: node["eid"], url: node["eid"] } }
+    metadata_nodes = @json_data["node_metadata"] || []
+
+    metadata_nodes.map { |node| { name: node["name"], value: node["pid"] } }
   end
 
   def scope
