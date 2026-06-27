@@ -42,7 +42,7 @@ class Importers::Datasource < ApplicationService
       terms_of_use_url: @data["termsOfUse"] || "",
       privacy_policy_url: @data["privacyPolicy"] || "",
       access_policies_url: @data["accessPolicy"] || "",
-      order_type: map_order_type(@data["orderType"]),
+      order_type: datasource_order_type,
       order_url: @data["order"] || ""
     }
   end
@@ -62,5 +62,9 @@ class Importers::Datasource < ApplicationService
 
   def subcategories
     @subcategories ||= @data["categories"]&.map { |category| category["subcategory"] } || []
+  end
+
+  def datasource_order_type
+    map_order_type(@data["orderType"]) || "other"
   end
 end
