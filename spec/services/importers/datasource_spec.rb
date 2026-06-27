@@ -27,7 +27,8 @@ RSpec.describe Importers::Datasource, backend: true do
       version_control: true,
       datasource_classification: classification,
       research_product_types: %w[ds_research_entity_type-research_data dataset],
-      thematic: true
+      thematic: true,
+      order_type: "other"
     )
   end
 

@@ -18,7 +18,6 @@ describe Import::Datasources, backend: true do
       "webpage" => "not-a-url",
       "resourceOwner" => "bluebridge",
       "resourceProviders" => ["bluebridge"],
-      "orderType" => "order_type-other",
       "publicContacts" => [{ "email" => "contact@example.org" }],
       "versionControl" => false
     }
@@ -46,6 +45,7 @@ describe Import::Datasources, backend: true do
     source = ServiceSource.last
 
     expect(datasource.status).to eq("draft")
+    expect(datasource.order_type).to eq("other")
     expect(source).to have_attributes(
       service_id: datasource.id,
       eid: "bluebridge.invalid-datasource",
