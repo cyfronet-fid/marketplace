@@ -1,5 +1,5 @@
 .offer-section-wrapper
-  .bordered-header Provider
+  .bordered-header Organisation
   %dl
     %dt
       = _("Name") + ":"
@@ -9,11 +9,6 @@
       %dt
         = _("Service Providers") + ":"
       %dd= service_providers_list(project_item)
-  %dl
-    %dt
-      = _("E-mail") + ":"
-    %dd
-      = link_to "Ask organisation a question", project_service_conversation_path(project, project_item)
 
 .offer-section-wrapper.mt-4
   .bordered-header Informations

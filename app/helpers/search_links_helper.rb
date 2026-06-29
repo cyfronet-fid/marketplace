@@ -92,8 +92,7 @@ module SearchLinksHelper
 
   def service_resource_organisation(project_item)
     organisation = project_item.service.resource_organisation
-    path = project_item.service.organisation_search_link(organisation.name, services_path(providers: organisation.id))
-    link_to organisation.name, path
+    link_to organisation.name, provider_path(organisation.id)
   end
 
   def service_providers_list(project_item)
