@@ -235,8 +235,35 @@ RSpec.describe DeployableService, backend: true do
 
     describe "auto-offer creation workflow" do
       let(:compute_category) { create(:service_category, eid: "service_category-compute", name: "Compute") }
+      let(:template_content) { <<~YAML }
+          tosca_definitions_version: tosca_simple_yaml_1_2
+          topology_template:
+            inputs:
+              fe_cpus:
+                type: integer
+                description: Number of CPUs for the frontend node
+              admin_password:
+                type: string
+                description: Password for JupyterHub administrator user
+              dataset_ids:
+                type: list
+                description: Dataset DOIs to mount
+        YAML
+      let(:updated_template_content) { <<~YAML }
+          tosca_definitions_version: tosca_simple_yaml_1_2
+          topology_template:
+            inputs:
+              memory:
+                type: integer
+                description: Memory size
+        YAML
 
-      before { compute_category } # Ensure category exists
+      before do
+        compute_category # Ensure category exists
+        allow_any_instance_of(DeployableService::CreateDefaultOffer).to receive(:fetch_template).and_return(
+          template_content
+        )
+      end
 
       context "when creating a JupyterHub deployable service" do
         let(:jupyter_service_attrs) do
@@ -262,13 +289,13 @@ RSpec.describe DeployableService, backend: true do
           expect(offer.service).to be_nil
         end
 
-        it "creates offer with JupyterHub-specific parameters" do
+        it "creates offer with parameters from template URL" do
           ds = create(:deployable_service, jupyter_service_attrs)
           offer = ds.offers.first
 
-          expect(offer.parameters.size).to eq(10)
+          expect(offer.parameters.size).to eq(3)
           parameter_ids = offer.parameters.map(&:id)
-          expect(parameter_ids).to include("fe_cpus", "wn_num", "admin_password", "dataset_ids")
+          expect(parameter_ids).to include("fe_cpus", "admin_password", "dataset_ids")
         end
 
         it "creates published, internal offer ready for ordering" do
@@ -278,17 +305,32 @@ RSpec.describe DeployableService, backend: true do
           expect(offer.status).to eq("published")
           expect(offer.order_type).to eq("order_required")
           expect(offer.internal).to be(true)
+          expect(offer.default).to be(true)
           expect(offer.offer_category).to eq(compute_category)
+        end
+
+        it "updates the default offer after template URL changes" do
+          ds = create(:deployable_service, jupyter_service_attrs)
+          offer = ds.offers.first
+          allow_any_instance_of(DeployableService::CreateDefaultOffer).to receive(:fetch_template).and_return(
+            updated_template_content
+          )
+
+          expect do
+            ds.update!(url: "https://github.com/grycap/tosca/blob/eosc_beyond/templates/updated_template.yml")
+          end.not_to change { ds.offers.count }
+
+          expect(offer.reload.parameters.map(&:id)).to eq(["memory"])
         end
       end
 
-      context "when creating non-JupyterHub deployable service" do
+      context "when creating deployable service without a template URL" do
         let(:non_jupyter_attrs) do
           {
             name: "Docker Container Service",
             description: "A generic container service",
             tagline: "Run containers",
-            url: "https://example.com/docker-compose.yml",
+            url: "https://example.com/docker-compose",
             resource_organisation: provider
           }
         end
