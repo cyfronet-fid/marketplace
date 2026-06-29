@@ -305,7 +305,7 @@ RSpec.feature "My Services", end_user_frontend: true do
         expect(page).to have_selector(".project-listing-item > .new-message-icon")
         expect(page).to have_selector(".new-message-icon", count: 2)
 
-        click_link "Ask organisation a question"
+        visit project_service_conversation_path(project, project_item)
         expect(page).to_not have_selector(".new-message-icon")
         expect(page).to have_selector(".new-message-separator")
       end
@@ -327,8 +327,9 @@ RSpec.feature "My Services", end_user_frontend: true do
         visit project_service_path(project, project_item)
         expect(page).to_not have_selector(".new-message-icon")
 
-        click_link "Ask organisation a question"
-        create(:provider_message, messageable: project_item, scope: "internal")
+        visit project_service_conversation_path(project, project_item)
+        fill_in "message_message", with: "This is my question"
+        click_button "Send message"
 
         visit current_path
         expect(page).to_not have_selector(".new-message-icon")

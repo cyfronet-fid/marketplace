@@ -15,6 +15,7 @@ RSpec.describe Datasource::PcCreateOrUpdate, backend: true do
     datasource = Datasource.last
     expect(datasource.pid).to eq("datasource-1")
     expect(datasource.status).to eq("published")
+    expect(datasource.order_type).to eq("other")
     expect(datasource.upstream).to be_present
     expect(datasource.upstream.eid).to eq("datasource-1")
     expect(datasource.scientific_domains).to contain_exactly(scientific_domain)
@@ -53,7 +54,6 @@ RSpec.describe Datasource::PcCreateOrUpdate, backend: true do
       "resourceProviders" => [provider.pid],
       "scientificDomains" => [{ "scientificDomain" => scientific_domain.eid }],
       "publicContacts" => ["ops@example.org"],
-      "orderType" => "order_type-other",
       "versionControl" => true,
       "researchProductTypes" => ["dataset"]
     }

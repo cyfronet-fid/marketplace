@@ -65,7 +65,7 @@
           = link_to _("Order history"), project_service_timeline_path(project, project_item),
             class: "nav-link #{"active" if controller.controller_name == "timelines"}"
       %li.nav-item.contact-nav
-        = link_to _("Contact service provider"),
+        = link_to _("Contact organisation"),
           project_service_conversation_path(project, project_item),
           class: "nav-link #{"active" if controller.controller_name == "conversations"}"
         - if project_item.user_has_new_messages?
