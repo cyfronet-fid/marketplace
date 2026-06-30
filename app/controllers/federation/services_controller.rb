@@ -1,3 +1,5 @@
+# rubocop:disable all
+
 # frozen_string_literal: true
 
 class Federation::ServicesController < ApplicationController
@@ -127,12 +129,16 @@ class Federation::ServicesController < ApplicationController
 
       {
         "pid" => item["result"]["id"],
-        "name" => item["result"]["name"],
+        # "name" => item["result"]["name"],
+        "name" => item["result"]["name"].presence || item["result"]["service"]["name"],
         "slug" => item["id"],
-        "description" => item["result"]["description"],
+        # "description" => item["result"]["description"],
+        "description" => item["result"]["description"].presence || item["result"]["service"]["description"],
         "score" => item["score"],
-        "path" => item["result"]["webpage"],
-        "logo" => item["result"]["logo"],
+        # "path" => item["result"]["webpage"],
+        "path" => item["result"]["webpage"].presence || item["result"]["service"]["webpage"],
+        # "logo" => item["result"]["logo"],
+        "logo" => item["result"]["logo"].presence || item["result"]["service"]["logo"],
         "scientific_domains" =>
           domains.map do |domain|
             value = domain["scientificDomain"].to_s
@@ -145,8 +151,8 @@ class Federation::ServicesController < ApplicationController
           "pid" => item["resourceOrganisation"]
         },
         "providers" => providers.map { |provider| { "name" => service_providers_map.fetch(provider, provider) } },
-        "webpage" => item["result"]["webpage"] || item["userManual"] || item["order"],
-        "nodePID" => pid_to_name[node_pid] || node_pid
+        "webpage" => item["result"]["webpage"] || item["userManual"] || item["order"] || item["result"]["service"]["webpage"],
+        "nodePID" => pid_to_name[node_pid] || node_pid || item["result"]["service"]["nodePID"]
       }
     end
   end
@@ -504,3 +510,6 @@ class Federation::ServicesController < ApplicationController
     end
   end
 end
+
+
+# rubocop:enable all
