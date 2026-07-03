@@ -129,7 +129,7 @@ class Federation::ServicesController < ApplicationController
         "pid" => item["result"]["id"],
         "name" => item["result"]["name"],
         "slug" => item["id"],
-        "description" => item["result"]["description"],
+        "description" => ActionController::Base.helpers.strip_tags(item["result"]["description"]),
         "score" => item["score"],
         "path" => item["result"]["webpage"],
         "logo" => item["result"]["logo"],
@@ -155,7 +155,7 @@ class Federation::ServicesController < ApplicationController
     metadata = json["metadata"].is_a?(Hash) ? json["metadata"] : {}
     nodes = metadata["nodes"].is_a?(Array) ? metadata["nodes"] : []
 
-    pid_to_name = nodes.each_with_object({}) { |node, hash| hash[node["pid"]] = node["name"] }
+    pid_to_name = nodes.each_with_object({}) { |node, hash| hash[node["pid"].strip] = node["name"] }
 
     results = map_results(json, pid_to_name)
 
