@@ -274,7 +274,7 @@ Devise.setup do |config|
     token: "/auth/realms/core/protocol/openid-connect/token",
     userinfo: "/auth/realms/core/protocol/openid-connect/userinfo",
     jwk: "/auth/realms/core/protocol/openid-connect/certs",
-    become_vo_member: "https://aai.egi.eu/auth/realms/id/account/#/enroll?groupPath=/eosc-beyond.eu",
+    become_vo_member: "https://core-proxy.sandbox.eosc-beyond.eu/auth/realms/core/account/#/enroll?groupPath=/eosc-beyond.eu",
     introspection: "/auth/realms/core/protocol/openid-connect/token/introspect"
   }
   endpoints = ENV.fetch("OIDC_AAI_NEW_API", true) ? new_endpoints : old_endpoints
