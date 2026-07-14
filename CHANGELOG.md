@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [4.4.2](https://github.com/cyfronet-fid/marketplace/compare/v4.4.1...v4.4.2) (2026-06-29)
+
+
+### Bug Fixes
+
+* [[#3711](https://github.com/cyfronet-fid/marketplace/issues/3711)] default datasource order type ([2f40a0e](https://github.com/cyfronet-fid/marketplace/commit/2f40a0e2e2e6704380324b950097137f4f0fb2ec))
+* federated search api changes ([#3716](https://github.com/cyfronet-fid/marketplace/issues/3716)) ([fe0b946](https://github.com/cyfronet-fid/marketplace/commit/fe0b9460906ce081362ce1d2955320150a7e0b84))
+* links in project view da ([#3715](https://github.com/cyfronet-fid/marketplace/issues/3715)) ([eea24e6](https://github.com/cyfronet-fid/marketplace/commit/eea24e6bb72755e6680bb22905732e50df347ebe))
+
 ## [4.4.1](https://github.com/cyfronet-fid/marketplace/compare/v4.4.0...v4.4.1) (2026-06-24)
 
 

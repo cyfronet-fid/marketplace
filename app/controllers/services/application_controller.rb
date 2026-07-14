@@ -84,7 +84,7 @@ class Services::ApplicationController < ApplicationController
     entitlements = Array(body["entitlements"])
 
     vo_group_name = Rails.application.config.vo_group_name
-    has_vo_membership = entitlements.any? { |entitlement| entitlement.include?(vo_group_name) }
+    has_vo_membership = entitlements.any? { |entitlement| entitlement.include?("group:#{vo_group_name}") }
 
     unless has_vo_membership
       get_vo_membership_url = Devise.omniauth_configs[:checkin].options[:become_vo_member_url]
