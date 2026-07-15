@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [4.4.3](https://github.com/cyfronet-fid/marketplace/compare/v4.4.2...v4.4.3) (2026-07-14)
+
+
+### Bug Fixes
+
+* [[#3726](https://github.com/cyfronet-fid/marketplace/issues/3726)] fix vo auth on preproduction ([b186bec](https://github.com/cyfronet-fid/marketplace/commit/b186becfab1cb040f3bae43a4ee0271db75f6de5))
+
 ## [4.4.2](https://github.com/cyfronet-fid/marketplace/compare/v4.4.1...v4.4.2) (2026-06-29)
 
 

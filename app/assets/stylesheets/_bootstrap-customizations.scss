@@ -8450,6 +8450,30 @@ abbr[title] {
     line-height: 1.4;
   }
 }
+.deploy-notice {
+  border-radius: 4px;
+  border: 1px solid $custom-33;
+  background: $custom-34;
+  display: flex;
+  padding: 24px;
+  align-items: flex-start;
+  gap: 24px;
+
+  p {
+    margin: 0;
+    color: $custom-35;
+    text-align: left;
+    font-size: 14px;
+    flex: 1;
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    flex: 0 0 20px;
+  }
+}
 
 .tip-box {
   border-radius: 8px;
