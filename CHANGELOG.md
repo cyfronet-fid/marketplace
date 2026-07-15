@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [4.4.4](https://github.com/cyfronet-fid/marketplace/compare/v4.4.3...v4.4.4) (2026-07-15)
+
+
+### Bug Fixes
+
+* [[#3675](https://github.com/cyfronet-fid/marketplace/issues/3675)] add dynamic default offer creation for da ([e1d1227](https://github.com/cyfronet-fid/marketplace/commit/e1d1227b0f103d91bf6cbe1319af3cbaa76462fe))
+
 ## [4.4.3](https://github.com/cyfronet-fid/marketplace/compare/v4.4.2...v4.4.3) (2026-07-14)
 
 
