@@ -14,18 +14,18 @@
           .resource-row.row.mb-3
             %span.pin-value.resource-type.ready Deployable Application
       .col-12.col-lg-3.text-center
-        - unless @deployable_service.url.blank?
-          - if @deployable_service.url&.match?(/\.ya?ml(\?|#|$)/) && @deployable_service.offers.accessible.any?
-            = link_to deployable_service_choose_offer_path(@deployable_service),
-              class: "btn btn-primary d-block mb-3 py-3" do
-              Run the service
-          - else
-            .d-flex.mb-3.deploy-notice
-              %p
-                The system cannot execute this Deployable Application because the provided TOSCA definition is invalid or missing.
-                For assistance, please contact the organisation that published this Deployable Application.
-              %svg{ xmlns: "http://www.w3.org/2000/svg" }
-                %path{ d: "M9 13.4615C9.17433 13.4615 9.3205 13.4025 9.4385 13.2845C9.5565 13.1667 9.6155 13.0206 9.6155
+        - if @deployable_service.url&.match?(/\.ya?ml(\?|#|$)/) && @deployable_service.offers.accessible.any?
+          = link_to deployable_service_choose_offer_path(@deployable_service),
+            class: "btn btn-primary d-block mb-3 py-3" do
+            Run the service
+        - else
+          .d-flex.mb-3.deploy-notice
+            - info = @deployable_service.url.blank? ? "missing" : "invalid"
+            %p
+              The system cannot execute this Deployable Application because the provided TOSCA definition is #{info}.
+              %br For assistance, please contact the organisation that published this Deployable Application.
+            %svg{ xmlns: "http://www.w3.org/2000/svg" }
+              %path{ d: "M9 13.4615C9.17433 13.4615 9.3205 13.4025 9.4385 13.2845C9.5565 13.1667 9.6155 13.0206 9.6155
                 12.8462C9.6155 12.6717 9.5565 12.5256 9.4385 12.4078C9.3205 12.2898 9.17433 12.2308 9 12.2308C8.82567
                 12.2308 8.6795 12.2898 8.5615 12.4078C8.4435 12.5256 8.3845 12.6717 8.3845 12.8462C8.3845 13.0206 8.4435
                 13.1667 8.5615 13.2845C8.6795 13.4025 8.82567 13.4615 9 13.4615ZM8.5
