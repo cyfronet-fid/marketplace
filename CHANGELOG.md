@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [4.4.5](https://github.com/cyfronet-fid/marketplace/compare/v4.4.4...v4.4.5) (2026-07-30)
+
+
+### Bug Fixes
+
+* [[#3723](https://github.com/cyfronet-fid/marketplace/issues/3723)] change service url for services ([965a7f8](https://github.com/cyfronet-fid/marketplace/commit/965a7f8c90e7c60d572d3e87f76fbe4604266c20))
+* add info about missing tosca template ([d4b8c0b](https://github.com/cyfronet-fid/marketplace/commit/d4b8c0bb33e0b6423d9fe92f18576089780d64ad))
+
 ## [4.4.4](https://github.com/cyfronet-fid/marketplace/compare/v4.4.3...v4.4.4) (2026-07-15)
 
 
