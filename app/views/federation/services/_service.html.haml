@@ -17,8 +17,9 @@
       %h5.card-title
         :ruby
           if aggregator_type == "pc"
-            key = service["nodePID"].match(/\(([^)]+)\)/)&.[](1)
-            service_url = "#{urls.fetch(key, urls["EOSC-Beyond"])}services/#{service["pid"] || service["slug"]}"
+            key = service["nodePID"]
+            base_url = (urls[key].presence || urls["EOSC-Beyond"]).chomp("/")
+            service_url = "#{base_url}/services/#{service["pid"] || service["slug"]}"
           else
             service_url = "#{service["source_node_url"]}services/#{service["pid"] || service["slug"]}"
           end
