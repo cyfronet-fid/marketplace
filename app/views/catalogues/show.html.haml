@@ -30,7 +30,7 @@
     .row.justify-content-between
       %main.col-12.col-xl-9.pr-4.pt-4
         .service-description-container
-          %p= @catalogue.description || "-"
+          %p= ActionController::Base.helpers.strip_tags(@catalogue.description) || "-"
         .details-box-wrapper.mt-5
           .details-box.maturity_information
             .details-header

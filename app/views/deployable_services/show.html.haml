@@ -50,7 +50,7 @@
     .row.justify-content-between
       %main.col-12.col-xl-9.pr-4.pt-4
         .service-description-container
-          %p= @deployable_service.description || "-"
+          %p= ActionController::Base.helpers.strip_tags(@deployable_service.description) || "-"
         .details-box-wrapper.mt-5
 
           - if @deployable_service.resource_organisation.present?
