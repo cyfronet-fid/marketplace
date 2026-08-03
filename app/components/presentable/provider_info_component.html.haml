@@ -1,29 +1,23 @@
-.provider-panel
-  .provider-head
-    .provider-logo
-      = presentable_logo(@object, "align-self-center img-responsive", [80, 80])
-    .provider-name
-      = @object.name
+- if creators.present?
+  .provider-panel
+    .details-header
+      %h5 Creators
 
-  - object_fields.each do |field, opts|
-    :ruby
-      next unless @object.respond_to?(field)
-
-      value = @object.public_send(field)
-      next unless value.present?
-    .provider-row
-      %strong
-        = field.to_s.humanize.singularize.upcase_first
-        %br
-      %span
-        - if opts[:array]
-          - value.each do |association|
-            %div= opts[:value] ? association.send(opts[:value]) : association
-        - elsif opts[:type] == "url"
-          %a{ href: value, target: "_blank", "data-preview-target": @preview ? "link" : "" }
-            = value
-
-  %a.provider-more-link{ href: @base.organisation_search_link(@object.name, services_path(providers: @object.id)),
-  "data-preview-target": @preview ? "link" : "" }
-    See all services provided by
-    = @object.name
+    .card-body
+      - creators.each do |creator|
+        - if creator[:name].present?
+          %dl
+            %dt Name
+            %dd= creator[:name]
+        - if creator[:pid].present?
+          %dl
+            %dt PID
+            %dd
+              - if creator[:pid_url].present?
+                = link_to creator[:pid], creator[:pid_url], target: "_blank", rel: "noopener"
+              - else
+                = creator[:pid]
+        - next unless creator[:affiliation].present?
+        %dl
+          %dt Affiliation
+          %dd= creator[:affiliation]

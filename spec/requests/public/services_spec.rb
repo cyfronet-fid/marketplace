@@ -475,4 +475,31 @@ RSpec.describe "Services" do
       end
     end
   end
+
+  context "when viewing a published service" do
+    let(:service) { create(:service, description: "A **useful** service") }
+
+    before do
+      login_as(create(:user))
+      stub_request(:post, %r{/similar_services/recommendation}).to_return(
+        status: 200,
+        body: { recommendations: [] }.to_json,
+        headers: { "Content-Type" => "application/json" }
+      )
+    end
+
+    it "shows only the Details tab when the service has no offers" do
+      get service_path(service)
+
+      tab_labels = response.parsed_body.css("#my-tab .nav-link").map { |tab| tab.text.squish }
+      expect(tab_labels).to eq(["Details"])
+    end
+
+    it "renders the description in the Details content" do
+      get service_path(service)
+
+      description = response.parsed_body.at_css(".service-description-container")
+      expect(description.text.squish).to eq("A useful service")
+    end
+  end
 end

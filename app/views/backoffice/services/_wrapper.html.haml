@@ -23,7 +23,7 @@
 .tab-content
   #desc.tab-pane.container.active.desc{ "aria-labelledby" => "home-tab", role: "tabpanel" }
     .row.justify-content-between
-      %main.col-12.col-xl-9.pr-4.pl-0.pt-4{ "data-shepherd-tour-target": "service-about" }
+      %main.col-12.col-xl-9.pr-4.pr-xl-0.pt-4{ "data-shepherd-tour-target": "service-about" }
         = yield
       %sidebar.col-12.col-xl-3{ "data-shepherd-tour-target": "service-classification" }
         = render "components/presentable/explore_links", object: service
