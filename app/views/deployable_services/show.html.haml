@@ -9,7 +9,14 @@
           = image_tag @deployable_service.logo.variant(resize_to_limit: [200, 125]), class: "align-self-center" if has_logo
           = image_tag("service_logo.svg", size: "100x67") unless has_logo
         .col-12.col-sm-9.service-details-header
-          %h2.font-weight-bolder.mb-1= @deployable_service.name
+          %h2.font-weight-bolder.mb-3= @deployable_service.name
+
+          .date-info.d-flex.mb-2
+            .doi
+              DOI:
+              %a{ href: "#" } 10509585.2015.1092083
+            .mx-4 Published: 27 may 2026
+
           %p= @deployable_service.abbreviation || "-"
           .resource-row.row.mb-3
             %span.pin-value.resource-type.ready Deployable Application
@@ -48,7 +55,7 @@
 .tab-content
   .tab-pane.container.active.desc
     .row.justify-content-between
-      %main.col-12.col-xl-9.pr-4.pt-4
+      %main.col-12.col-xl-9.pr-1.pt-4
         .service-description-container
           %p= ActionController::Base.helpers.strip_tags(@deployable_service.description) || "-"
         .details-box-wrapper.mt-5

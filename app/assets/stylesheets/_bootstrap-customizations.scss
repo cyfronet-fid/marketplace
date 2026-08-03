@@ -2910,8 +2910,18 @@ label[data-multicheckbox].small {
   overflow: hidden;
   position: relative;
 
+  a {
+    text-decoration: underline;
+  }
+
   .img-service-detail {
     justify-content: center;
+  }
+
+  .service-details-header {
+    h2 {
+      font-size: 32px;
+    }
   }
 
   .btn-outline-secondary {
@@ -2942,15 +2952,17 @@ label[data-multicheckbox].small {
   }
 
   .resource-row {
-    margin: 5px 0 10px 0;
+    margin: 4px 0 10px 0;
     display: flex;
-    font-weight: 500;
+    font-weight: 400;
     column-gap: 8px;
     row-gap: 8px;
 
     .resource-type {
-      padding: 6px 12px 6px 12px;
+      padding: 4px 9px 4px 9px;
       line-height: 1.2;
+      letter-spacing: -0.32px;
+      font-size: 16px;
       background: $alert-bg;
       color: $palette-blue;
 
@@ -2974,18 +2986,20 @@ label[data-multicheckbox].small {
   .nav-tabs {
     background: none;
     margin-top: 35px;
-    border-bottom: 1px solid $palette-solid-10;
+    max-width: 942px;
+    border-bottom: 1px solid $custom-36;
 
     .nav-link {
       text-transform: none;
       color: $black;
-      font-size: 16px;
+      font-size: 14px;
+      text-decoration: none;
       font-weight: 400;
 
       &.active {
         border: none;
         margin-bottom: 0;
-        font-weight: 500;
+        font-weight: 400;
         color: $palette-blue;
         border-bottom: 3px solid $palette-blue;
       }
@@ -3066,10 +3080,31 @@ label[data-multicheckbox].small {
   }
 }
 
-.right-panel-links {
-  border: 1px solid $palette-solid-10;
+.linked-resource {
+  display: flex;
+  padding: 12px 24px;
+  align-items: center;
+  gap: 9px;
+  align-self: stretch;
   border-radius: 8px;
-  padding: 0 30px;
+  font-weight: 400;
+  font-size: 15px;
+  border: 1px solid $custom-12;
+  color: $custom-12;
+  background: $alert-bg;
+  margin-bottom: 17px;
+
+  &:hover {
+    border: 1px solid $custom-12;
+    color: $custom-12;
+    background: $alert-bg;
+  }
+}
+
+.right-panel-links {
+  border: 1px solid $custom-36;
+  border-radius: 8px;
+  padding: 12px 30px;
   margin-bottom: 30px;
 
   ul {
@@ -3081,7 +3116,7 @@ label[data-multicheckbox].small {
     flex-direction: column;
 
     li {
-      padding: 20px 0;
+      padding: 15px 0;
       list-style: none;
       width: 100%;
       border-bottom: 1px solid $palette-solid-10;
@@ -3092,7 +3127,7 @@ label[data-multicheckbox].small {
 
       a {
         color: $black;
-        font-size: 16px;
+        font-size: 14px;
         display: flex;
         align-items: center;
 
@@ -3197,12 +3232,12 @@ label[data-multicheckbox].small {
   }
 
   .question-link {
-    padding: 20px 0;
+    padding: 15px 0;
     width: 100%;
     display: block;
     border-bottom: 1px solid $palette-solid-10;
     color: $black;
-    font-size: 16px;
+    font-size: 14px;
 
     &::before {
       content: "";
@@ -3345,43 +3380,46 @@ label[data-multicheckbox].small {
     }
   }
 }
-
 .provider-panel {
-  padding: 25px;
+  padding: 20px 20px 8px 20px;
   display: flex;
   border-radius: 8px;
   flex-direction: column;
   align-items: flex-start;
   gap: 25px;
-  background: $custom-10;
+  background: $custom-38;
 
-  .provider-head {
-    display: flex;
-    gap: 15px;
-    font-size: 15px;
-    font-weight: bold;
-    align-items: center;
+  .details-header {
+    border-bottom: none;
 
-    .provider-name {
-      .subtitle-name {
-        font-size: 12px;
-        color: $palette-gray-70;
-        font-weight: 400;
-        margin-top: 4px;
-        line-height: 1.3;
-      }
+    h5 {
+      color: #1c313a;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 16px;
+      text-transform: none;
+      margin: 0;
+      background-repeat: no-repeat;
+      background-image: url("icon-person.svg");
+      background-position: 0 1px;
+      background-size: 16px auto;
+      padding-left: 21px;
     }
   }
 
-  .provider-more-link {
-    font-weight: bold;
-    position: relative;
+  .card-body {
+    padding: 0 0 0 21px;
+  }
 
-    &::after {
-      font-family: "Font Awesome 6 Free";
-      content: "\f061";
-      display: inline-block;
-      font-weight: 900;
+  dl {
+    font-size: 14px;
+
+    dt {
+      color: $body-color;
+    }
+
+    dd {
+      color: $custom-39;
     }
   }
 }
@@ -3825,6 +3863,12 @@ label[data-multicheckbox].small {
   .rating {
     float: left;
     margin: 1px 20px 0 0;
+    color: $custom-37;
+
+    a {
+      text-decoration: none !important;
+      color: $custom-37;
+    }
   }
 
   .comparison {
@@ -5772,9 +5816,9 @@ abbr[title] {
   input[type="checkbox"] + span {
     position: relative;
     cursor: pointer;
-    padding-left: 47px;
+    padding-left: 48px;
     color: $palette-blue;
-    padding-top: 1px;
+    padding-top: 2px;
     margin-right: 6px;
     background: url("icon-compare.svg") no-repeat 24px 2px;
 
@@ -5797,11 +5841,11 @@ abbr[title] {
     display: block;
     position: absolute;
     margin-right: 5px;
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     top: 1px;
     left: 0;
-    border: 1px solid $palette-solid-20;
+    border: 1px solid $custom-36;
     border-radius: 3px;
     background-color: $white;
   }
@@ -5814,16 +5858,16 @@ abbr[title] {
   input[type="checkbox"]:checked + span::after {
     content: "";
     display: block;
-    width: 5px;
-    height: 10px;
+    width: 7px;
+    height: 12px;
     border: solid $palette-black;
     border-width: 0 2px 2px 0;
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
     position: absolute;
-    top: 2px;
-    left: 6px;
+    top: 3px;
+    left: 7px;
   }
 
   input[type="checkbox"]:disabled + span::before {
@@ -6263,11 +6307,11 @@ abbr[title] {
   z-index: 1;
 
   .details-box {
-    border: 1px solid $palette-solid-10;
+    border: 1px solid $custom-36;
     border-radius: 8px;
     overflow: hidden;
     float: left;
-    width: 23%;
+    width: 31%;
     margin-bottom: 16px;
 
     &.special-box {
@@ -6285,7 +6329,7 @@ abbr[title] {
     .details-header {
       border-bottom: none;
       background-color: $footer-color;
-      padding: 16px 8px 3px;
+      padding: 16px 12px 3px 16px;
 
       h5 {
         color: $palette-gray-100;
@@ -6302,26 +6346,69 @@ abbr[title] {
     }
 
     .details-content {
-      padding: 15px 10px 5px 30px;
+      padding: 15px 10px 5px 40px;
 
       // scss-lint:disable all
       .taglist-holder {
         display: flex;
-        flex-wrap: wrap;
-        margin-bottom: 15px;
-        font-weight: 400;
-        grid-column-gap: 8px;
-        -moz-column-gap: 8px;
-        column-gap: 6px;
-        grid-row-gap: 6px;
-        row-gap: 6px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
 
-        .tag-item {
-          padding: 4px 8px 4px;
+        li {
+          margin: 0 0 8px;
+          padding: 0;
+          list-style: none;
+        }
+
+        a {
+          display: inline-flex;
+          align-items: center;
+          gap: 7px;
+          color: #010e87;
+          font-size: 14px;
           line-height: 1.2;
-          background: $alert-bg;
-          font-size: 10.5px;
-          color: $palette-blue;
+          text-decoration: underline;
+          text-decoration-thickness: 1px;
+          text-underline-offset: 2px;
+          transition:
+            color 0.2s ease,
+            gap 0.2s ease;
+
+          &::after {
+            content: "";
+            flex: 0 0 16px;
+            width: 16px;
+            height: 16px;
+            background-color: currentColor;
+
+            -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M13.0788 8.5H1V7.5H13.0788L7.2865 1.70775L8 1L15 8L8 15L7.2865 14.2923L13.0788 8.5Z'/%3E%3C/svg%3E");
+            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M13.0788 8.5H1V7.5H13.0788L7.2865 1.70775L8 1L15 8L8 15L7.2865 14.2923L13.0788 8.5Z'/%3E%3C/svg%3E");
+
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+
+            -webkit-mask-position: center;
+            mask-position: center;
+
+            -webkit-mask-size: contain;
+            mask-size: contain;
+
+            transition: transform 0.2s ease;
+          }
+
+          &:hover,
+          &:focus-visible {
+            color: #3142c7;
+            gap: 11px;
+
+            &::after {
+              transform: translateX(2px);
+            }
+          }
         }
       }
       // scss-lint:enable all
@@ -6602,10 +6689,82 @@ abbr[title] {
       }
     }
 
+    &.providers {
+      .details-header {
+        h5 {
+          background-image: url("icon-providers.svg");
+        }
+      }
+    }
+
+    &.datasource {
+      .details-header {
+        h5 {
+          background-image: url("icon-datasource.svg");
+        }
+      }
+    }
+
+    &.access {
+      .details-header {
+        h5 {
+          background-image: url("icon-access.svg");
+        }
+      }
+    }
+
+    &.jurisdiction_ and_language {
+      .details-header {
+        h5 {
+          background-image: url("icon-jurisdiction.svg");
+        }
+      }
+    }
+
+    &.persistent_identifiers {
+      .details-header {
+        h5 {
+          background-image: url("icon-persistent.svg");
+        }
+      }
+    }
+
     &.maturity_information {
       .details-header {
         h5 {
           background-image: url("icon-maturity.svg");
+        }
+      }
+    }
+
+    &.version_release {
+      .details-header {
+        h5 {
+          background-image: url("icon-version.svg");
+        }
+      }
+    }
+
+    &.sqa {
+      .details-header {
+        h5 {
+          background-image: url("icon-shield.svg");
+        }
+      }
+    }
+
+    &.configuration_template {
+      .details-header {
+        h5 {
+          background-image: url("icon-dns.svg");
+        }
+      }
+    }
+
+    &.license {
+      .details-header {
+        h5 {
+          background-image: url("icon-balance.svg");
         }
       }
     }
@@ -7597,7 +7756,6 @@ abbr[title] {
               padding-left: 10px;
 
               li {
-                margin-top: 9px;
                 margin: 8px 0 0;
 
                 span {
@@ -7605,6 +7763,13 @@ abbr[title] {
                 }
               }
             }
+          }
+        }
+
+        .list-group {
+          li {
+            display: flex;
+            flex-direction: column;
           }
         }
       }

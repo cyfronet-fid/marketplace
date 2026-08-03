@@ -1,4 +1,25 @@
 .details-box-wrapper
+  .details-box.version_release
+    .details-header
+      %h5 Version & release
+    .details-content
+      %ul
+        %li.d-flex.flex-column
+          %span.list-title
+            Version:
+          %span
+            2.3.1
+        %li.d-flex.flex-column
+          %span.list-title
+            Last update
+          %span
+            10 June 2025
+        %li.d-flex.flex-column
+          %span.list-title
+            Programing language
+          %span
+            C++
+
   = render Presentable::SidebarComponent.new(@object)
   - details_columns.each do |column|
     - column.map do |group|
