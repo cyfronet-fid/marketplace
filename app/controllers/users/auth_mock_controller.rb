@@ -4,9 +4,9 @@ require "bcrypt"
 
 class Users::AuthMockController < ApplicationController
   def login
-    return if current_user.present?
+    return redirect_to backoffice_path if current_user.present?
 
-    return unless Mp::Application.config.auth_mock && Rails.env.development?
+    return head :forbidden unless Mp::Application.config.auth_mock && Rails.env.development?
 
     encrypted_password = ::BCrypt::Password.create("#{params[:password]}nil", cost: 11).to_s
     user =
@@ -33,6 +33,7 @@ class Users::AuthMockController < ApplicationController
       end
     end
     sign_in user, event: :authentication
+    redirect_to backoffice_path
   end
 
   private
