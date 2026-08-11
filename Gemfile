@@ -3,18 +3,24 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.3.6"
+ruby "3.3.11"
 
 gem "rails", "~> 7.2.3"
 gem "pg", "~> 1.5", "< 2.0"
-gem "puma"
+gem "puma", "~> 7.0"
 gem "nori"
+
+# transitive deps pinned to their current major, kept off auto-bump
+gem "minitest", "~> 5.27"
+gem "jwt", "~> 2.10"
+gem "parallel", "~> 1.27"
 
 gem "uglifier", "~> 4.2"
 gem "sprockets-rails"
 gem "jsbundling-rails"
 gem "cssbundling-rails"
 gem "view_component", "~> 2.83"
+gem "haml", "~> 6.3"
 gem "haml-rails"
 gem "turbo-rails"
 gem "stimulus-rails"
@@ -23,18 +29,18 @@ gem "render_async"
 gem "bootsnap", "~> 1.18", require: false
 gem "colorize", "~> 1.1", require: false
 
-gem "ancestry"
+gem "ancestry", "~> 4.3"
 gem "gretel"
-gem "pagy"
+gem "pagy", "~> 9.4"
 gem "simple_form"
 gem "friendly_id", "~> 5.5"
-gem "acts-as-taggable-on"
+gem "acts-as-taggable-on", "~> 12.0"
 gem "countries"
 gem "i18n_data"
 gem "humanize"
 
 gem "activestorage-validator"
-gem "image_processing", ">= 1.2"
+gem "image_processing", "~> 1.14"
 gem "marcel"
 
 # translations
@@ -48,22 +54,22 @@ gem "counter_culture", "~> 3.7"
 
 # validation
 gem "valid_email2"
-gem "json-schema"
-gem "public_suffix"
+gem "json-schema", "~> 5.2"
+gem "public_suffix", "~> 6.0"
 
-gem "searchkick"
+gem "searchkick", "~> 5.5"
 gem "elasticsearch", "7.6.0"
 
-gem "devise"
+gem "devise", "~> 4.9"
 gem "omniauth"
-gem "omniauth_openid_connect"
-gem "omniauth-rails_csrf_protection"
+gem "omniauth_openid_connect", "~> 0.6"
+gem "omniauth-rails_csrf_protection", "~> 1.0"
 gem "rack-cors"
 gem "pundit", "~> 2.0"
 gem "role_model"
 gem "recaptcha", require: "recaptcha/rails"
 # Markdown
-gem "github-markup"
+gem "github-markup", "~> 5.0"
 gem "redcarpet"
 
 # api
@@ -101,7 +107,7 @@ group :development, :test do
   gem "dotenv-rails"
   gem "webmock"
   gem "foreman"
-  gem "brakeman"
+  gem "brakeman", "~> 7.1"
 end
 
 group :development do
@@ -111,16 +117,16 @@ group :development do
   gem "spring-watcher-listen", "~> 2.1"
   gem "spring-commands-rspec"
   gem "prettier", require: false
-  gem "overcommit", require: false
   gem "haml_lint", require: false
   gem "scss_lint", require: false
   gem "mdl"
+  gem "debride", require: false
 end
 
 group :test do
   gem "parallel_tests"
   gem "factory_bot_rails"
-  gem "shoulda-matchers"
+  gem "shoulda-matchers", "~> 6.5"
   gem "capybara"
   gem "database_cleaner"
   gem "rack_session_access"
@@ -131,12 +137,12 @@ end
 gem "tzinfo-data", platforms: [:windows, :jruby]
 
 group :production do
-  gem "sentry-ruby"
-  gem "sentry-rails"
-  gem "sentry-sidekiq"
+  gem "sentry-ruby", "~> 5.28"
+  gem "sentry-rails", "~> 5.28"
+  gem "sentry-sidekiq", "~> 5.28"
 end
 
-gem "faraday"
+gem "faraday", "~> 1.10"
 gem "faraday_middleware"
 gem "reverse_markdown"
 gem "auto_strip_attributes"
