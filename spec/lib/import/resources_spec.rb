@@ -85,6 +85,7 @@ describe Import::Resources, backend: true do
     it "should abort if /api/services errored" do
       response = double(status: 500, body: {})
       expect_responses(test_url, response)
+      mock_access_token
       expect { log_less_eosc_registry.call }.to raise_error(SystemExit).and output.to_stderr
     end
   end
