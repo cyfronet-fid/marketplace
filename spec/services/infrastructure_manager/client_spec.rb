@@ -25,10 +25,6 @@ RSpec.describe InfrastructureManager::Client, type: :service do
               admin_password: { get_input: admin_password }
     YAML
 
-  before { WebMock.disable_net_connect! }
-
-  after { WebMock.allow_net_connect! }
-
   describe "#create_infrastructure" do
     let(:success_response_body) do
       { "uri" => "https://deploy.sandbox.eosc-beyond.eu/infrastructures/inf-12345" }.to_json
