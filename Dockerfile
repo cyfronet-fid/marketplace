@@ -1,5 +1,5 @@
 # Stage 0: Get ruby version
-ARG RUBY_VERSION=3.3.6
+ARG RUBY_VERSION=3.3.11
 
 # Stage 1: Building dependencies
 FROM ruby:${RUBY_VERSION}-alpine AS builder
