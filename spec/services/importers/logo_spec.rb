@@ -3,29 +3,70 @@
 require "rails_helper"
 
 RSpec.describe Importers::Logo, backend: true do
-  let(:service) { create(:service) }
-  let(:provider) { create(:provider) }
-  let(:url) { "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png" }
+  let(:url) { "https://example.com/PhenoMeNal_logo.png" }
+  let(:image_double) { instance_double(Vips::Image, write_to_buffer: "converted-png-bytes") }
 
-  before do
-    stub_request(:get, url).to_return(
-      status: 200,
-      body: File.binread(file_fixture("PhenoMeNal_logo.png")),
-      headers: { "Content-Type" => "image/png" }
-    )
-  end
+  before { allow(Vips::Image).to receive(:new_from_buffer).and_return(image_double) }
 
-  it "saves logo for service" do
-    logo_importer = described_class.new(service, url)
-    logo_importer.call
+  describe "#call" do
+    it "returns an attachable png for a valid png image" do
+      stub_request(:get, url).to_return(body: "png-bytes", headers: { "Content-Type" => "image/png" })
 
-    expect(service.logo).to_not be_nil
-  end
+      attachable = described_class.new(url).call
 
-  it "saves logo for provider" do
-    logo_importer = described_class.new(provider, url)
-    logo_importer.call
+      expect(Vips::Image).to have_received(:new_from_buffer).with("png-bytes", "")
+      expect(attachable[:io]).to be_a(StringIO)
+      expect(attachable[:filename]).to end_with(".png")
+      expect(attachable[:content_type]).to eq("image/png")
+    end
 
-    expect(service.logo).to_not be_nil
+    it "renders svg images at a higher scale before converting to png" do
+      stub_request(:get, url).to_return(body: "<svg></svg>", headers: { "Content-Type" => "image/svg+xml" })
+
+      attachable = described_class.new(url).call
+
+      expect(Vips::Image).to have_received(:new_from_buffer).with("<svg></svg>", "scale=2")
+      expect(attachable[:content_type]).to eq("image/png")
+    end
+
+    it "returns nil when the url is blank" do
+      expect(described_class.new(nil).call).to be_nil
+    end
+
+    it "returns nil when the response is not an image" do
+      stub_request(:get, url).to_return(body: "<html></html>", headers: { "Content-Type" => "text/html" })
+
+      expect(described_class.new(url).call).to be_nil
+    end
+
+    it "returns nil when the response has no content type" do
+      stub_request(:get, url).to_return(body: "png-bytes")
+
+      expect(described_class.new(url).call).to be_nil
+    end
+
+    it "returns nil on a 404 response" do
+      stub_request(:get, url).to_return(status: 404)
+
+      expect(described_class.new(url).call).to be_nil
+    end
+
+    it "returns nil when the host is unreachable" do
+      stub_request(:get, url).to_raise(Errno::EHOSTUNREACH)
+
+      expect(described_class.new(url).call).to be_nil
+    end
+
+    it "returns nil on a socket error" do
+      stub_request(:get, url).to_raise(SocketError)
+
+      expect(described_class.new(url).call).to be_nil
+    end
+
+    it "returns nil when the download times out" do
+      stub_request(:get, url).to_timeout
+
+      expect(described_class.new(url).call).to be_nil
+    end
   end
 end

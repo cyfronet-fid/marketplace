@@ -3,69 +3,49 @@
 require "image_processing/vips"
 require "timeout"
 
-class Importers::Logo < ApplicationService
-  class LogoNotAvailableError < StandardError
-  end
+class Importers::Logo
+  PNG_CONTENT_TYPE = "image/png"
+  SVG_CONTENT_TYPE = "image/svg+xml"
+  TTL = 10
 
-  def initialize(object, image_url)
-    super()
-    @object = object
-    @image_url = image_url
+  def initialize(url)
+    @url = url
   end
 
   def call
-    Timeout.timeout(10) do
-      logo = URI.parse(@image_url).open(ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE)
-      logo_content_type = logo.content_type
-      extension = Rack::Mime::MIME_TYPES.invert[logo_content_type]
-      abbreviation = @object.abbreviation if @object.respond_to?(:abbreviation)
-      filename = abbreviation.present? ? "#{@object.id}-#{abbreviation}" : to_slug(@object.name)
-      unless %w[.jpg .jpeg .pjpeg .png .gif .tiff].include?(extension)
-        logo = convert_to_png(logo, extension)
-        logo_content_type = "image/png"
-        extension = ".png"
-      end
+    return if @url.blank?
 
-      if logo.present? && logo_content_type.start_with?("image")
-        @object.logo.attach(io: logo, filename: filename + extension, content_type: logo_content_type)
-      end
-    rescue OpenURI::HTTPError, Errno::EHOSTUNREACH, LogoNotAvailableError, SocketError => e
-      log "ERROR - there was a problem processing image for #{@object.name} #{@image_url}: #{e}"
-    rescue StandardError => e
-      log "ERROR - there was a unexpected problem processing image for #{@object.name} #{@image_url}: #{e}"
+    Timeout.timeout(TTL) do
+      file = fetch_file_from_url
+
+      return if file.blank?
+      return unless image_content_type?(file)
+
+      { io: convert_to_png(file), filename: "#{SecureRandom.uuid}.png", content_type: PNG_CONTENT_TYPE }
     end
-  rescue Timeout::Error => e
-    log "ERROR - there was a problem with image loading from #{@image_url}: #{e}"
   end
 
   private
 
-  def convert_to_png(logo, extension)
-    option = extension == ".svg" ? "scale=2" : ""
-    img = Vips::Image.new_from_buffer(logo.read, option)
-    png_buffer = img.write_to_buffer(".png")
+  def fetch_file_from_url
+    URI.parse(@url).open(ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE)
+  rescue OpenURI::HTTPError, Errno::EHOSTUNREACH, SocketError, Timeout::Error => e
+    Rails.logger.error "Error on fetching logo from #{@url}: #{e.message}"
 
-    io = StringIO.new(png_buffer)
+    nil
+  end
+
+  def image_content_type?(file)
+    file.content_type.to_s.start_with?("image/")
+  end
+
+  def convert_to_png(file)
+    option = file.content_type == SVG_CONTENT_TYPE ? "scale=2" : ""
+    image = Vips::Image.new_from_buffer(file.read, option)
+
+    io = StringIO.new(image.write_to_buffer(".png"))
     io.set_encoding("binary")
     io.rewind
     io
-  end
-
-  def to_slug(ret)
-    ret
-      .downcase
-      .strip
-      .gsub(/['`]/, "")
-      .gsub(/\s*@\s*/, " at ")
-      .gsub(/\s*&\s*/, " and ")
-      .gsub(/\s*[^A-Za-z0-9.-]\s*/, "-")
-      .gsub(/_+/, "_")
-      .gsub(/\A[_.]+|[_.]+\z/, "")
-      .gsub(/-+/, "-")
-      .gsub(/-$/, "")
-  end
-
-  def log(msg)
-    Rails.logger.error msg
   end
 end

@@ -83,8 +83,10 @@ class Import::Catalogues
     Array(rp.body["results"])
   end
 
-  def set_logo(catalogue, logo)
-    catalogue.set_default_logo
-    Importers::Logo.new(catalogue, logo).call
+  def set_logo(catalogue, logo_url)
+    logo_file = Importers::Logo.call(logo_url)
+    return unless logo_file
+
+    catalogue.logo.attach(logo_file)
   end
 end

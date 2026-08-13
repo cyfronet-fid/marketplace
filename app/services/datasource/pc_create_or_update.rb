@@ -61,7 +61,8 @@ class Datasource::PcCreateOrUpdate
       @mp_datasource.sources.first.update(errored: nil)
     end
 
-    Importers::Logo.new(@mp_datasource, @logo).call
+    logo = Importers::Logo.call(@logo)
+    @mp_datasource.logo.attach(logo) if logo
     @mp_datasource.save!
     @mp_datasource
   rescue Errno::ECONNREFUSED
@@ -90,7 +91,8 @@ class Datasource::PcCreateOrUpdate
     end
 
     ServiceSource::Create.call(datasource)
-    Importers::Logo.call(datasource, logo)
+    fetched_logo = Importers::Logo.call(logo)
+    datasource.logo.attach(fetched_logo) if fetched_logo
     datasource.save!(validate: false)
     datasource
   end

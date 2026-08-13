@@ -67,7 +67,10 @@ class Import::Datasources
 
           ds = Datasource.new(attrs)
           if ds.valid?
-            Importers::Logo.call(ds, image_url) unless @rescue_mode
+            unless @rescue_mode
+              logo = Importers::Logo.call(image_url)
+              ds.logo.attach(logo) if logo
+            end
             ds = Service::Create.call(ds)
             source = ServiceSource.create!(service_id: ds.id, eid: ds.pid, source_type: "eosc_registry")
             ds.update_column(:upstream_id, source.id) if @default_upstream == :eosc_registry
@@ -85,7 +88,10 @@ class Import::Datasources
             log "Updating [EXISTING] datasource #{attrs[:name]}, id: #{source.id}, eid: #{ds_data["id"]}"
             next if @dry_run
 
-            Importers::Logo.call(existing, image_url) unless @rescue_mode
+            unless @rescue_mode
+              logo = Importers::Logo.call(image_url)
+              existing.logo.attach(logo) if logo
+            end
             Service::Update.call(existing, attrs)
           else
             log "Datasource upstream is not set to EOSC Registry," \
