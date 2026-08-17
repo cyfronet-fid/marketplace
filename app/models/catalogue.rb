@@ -90,7 +90,7 @@ class Catalogue < ApplicationRecord
   end
 
   def affiliations=(value)
-    super(value.compact_blank)
+    super(value&.compact_blank)
   end
 
   def hosting_legal_entity

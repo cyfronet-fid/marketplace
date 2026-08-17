@@ -74,7 +74,14 @@ you can add new records by editing `db/data.yml`.
 It is important to remember that if some record
 is a parent for another, it must be written above its child.
 
+`dev:prime` saves records that are synced to Elasticsearch via Searchkick
+(`Service`, `Offer`, `Bundle`, `Provider`), so their indices must already
+exist beforehand, otherwise the task aborts partway through with
+`Searchkick::ImportError: index_not_found_exception`. Make sure Elasticsearch
+is running (see [docker compose](#docker-compose)), then run:
+
 ```shell
+./bin/rails searchkick:reindex:all
 ./bin/rails dev:prime
 ```
 

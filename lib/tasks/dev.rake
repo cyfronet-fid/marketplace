@@ -116,6 +116,8 @@ namespace :dev do
   end
 
   def create_target_users(target_users_hash)
+    return unless target_users_hash
+
     puts "Generating target groups:"
     target_users_hash.each_value do |hash|
       parent = TargetUser.find_by(name: hash["parent"])
