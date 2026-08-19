@@ -71,4 +71,11 @@ class User < ApplicationRecord
   def connect_data_administrators
     DataAdministrator.where(email: email).each(&:save)
   end
+
+  def dismiss_welcome_popup_for_frequent_visitors!
+    if sign_in_count > 10
+      self.show_welcome_popup = true
+      save
+    end
+  end
 end
