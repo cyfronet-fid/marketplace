@@ -12,7 +12,7 @@ RSpec.describe Importers::Logo, backend: true do
     it "returns an attachable png for a valid png image" do
       stub_request(:get, url).to_return(body: "png-bytes", headers: { "Content-Type" => "image/png" })
 
-      attachable = described_class.new(url).call
+      attachable = described_class.call(url)
 
       expect(Vips::Image).to have_received(:new_from_buffer).with("png-bytes", "")
       expect(attachable[:io]).to be_a(StringIO)
@@ -23,50 +23,50 @@ RSpec.describe Importers::Logo, backend: true do
     it "renders svg images at a higher scale before converting to png" do
       stub_request(:get, url).to_return(body: "<svg></svg>", headers: { "Content-Type" => "image/svg+xml" })
 
-      attachable = described_class.new(url).call
+      attachable = described_class.call(url)
 
       expect(Vips::Image).to have_received(:new_from_buffer).with("<svg></svg>", "scale=2")
       expect(attachable[:content_type]).to eq("image/png")
     end
 
     it "returns nil when the url is blank" do
-      expect(described_class.new(nil).call).to be_nil
+      expect(described_class.call(nil)).to be_nil
     end
 
     it "returns nil when the response is not an image" do
       stub_request(:get, url).to_return(body: "<html></html>", headers: { "Content-Type" => "text/html" })
 
-      expect(described_class.new(url).call).to be_nil
+      expect(described_class.call(url)).to be_nil
     end
 
     it "returns nil when the response has no content type" do
       stub_request(:get, url).to_return(body: "png-bytes")
 
-      expect(described_class.new(url).call).to be_nil
+      expect(described_class.call(url)).to be_nil
     end
 
     it "returns nil on a 404 response" do
       stub_request(:get, url).to_return(status: 404)
 
-      expect(described_class.new(url).call).to be_nil
+      expect(described_class.call(url)).to be_nil
     end
 
     it "returns nil when the host is unreachable" do
       stub_request(:get, url).to_raise(Errno::EHOSTUNREACH)
 
-      expect(described_class.new(url).call).to be_nil
+      expect(described_class.call(url)).to be_nil
     end
 
     it "returns nil on a socket error" do
       stub_request(:get, url).to_raise(SocketError)
 
-      expect(described_class.new(url).call).to be_nil
+      expect(described_class.call(url)).to be_nil
     end
 
     it "returns nil when the download times out" do
       stub_request(:get, url).to_timeout
 
-      expect(described_class.new(url).call).to be_nil
+      expect(described_class.call(url)).to be_nil
     end
   end
 end

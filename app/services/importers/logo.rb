@@ -3,12 +3,14 @@
 require "image_processing/vips"
 require "timeout"
 
-class Importers::Logo
+class Importers::Logo < ApplicationService
   PNG_CONTENT_TYPE = "image/png"
   SVG_CONTENT_TYPE = "image/svg+xml"
   TTL = 10
 
   def initialize(url)
+    super()
+
     @url = url
   end
 
