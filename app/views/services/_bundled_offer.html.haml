@@ -29,6 +29,6 @@
             = render "services/choose_offers/bundle_parameters", id: offer.id,
                      technical_parameters: offer.attributes.map(&:to_json)
 
-      .bundle-offer-order-type.badge.access-information.badge-right.style_order_required{ class: offer.order_type }
-        %i.ordertype{ class: offer.order_type }
+      .bundle-offer-order-type.badge.access-information.badge-right.style_order_required{ class: h(offer.order_type) }
+        %i.ordertype{ class: h(offer.order_type) }
         = t("offers.type.#{offer.order_type}")

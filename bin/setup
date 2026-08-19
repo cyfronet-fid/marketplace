@@ -23,10 +23,6 @@ FileUtils.chdir APP_ROOT do
   system! "gem install foreman --conservative"
   system("bundle check") || system!("bundle install")
 
-  puts "== Installing git-hooks =="
-  system! "overcommit --install"
-  system! "overcommit --sign"
-
   # Install JavaScript dependencies
   system! "bin/yarn"
 
