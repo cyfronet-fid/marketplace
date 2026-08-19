@@ -1,0 +1,17 @@
+reviews:
+  profile: assertive
+  auto_review:
+    enabled: true
+    base_branches:
+      - "development"
+  path_filters:
+    - "!db/schema.rb"
+    - "!**/vendor/**"
+    - "!**/node_modules/**"
+    - "!bin/**"
+  tools:
+    rubocop:
+      enabled: true
+
+chat:
+  auto_reply: true
