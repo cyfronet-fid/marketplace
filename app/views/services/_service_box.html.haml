@@ -2,7 +2,7 @@
   .card.related-box.mb-4
     .card-logo.d-flex
       = presentable_logo(service)
-    .badge.access-information.fa-pull-right.badge-right.style_order_required{ class: service.order_type }
+    .badge.access-information.fa-pull-right.badge-right.style_order_required{ class: h(service.order_type) }
       %i.ordertype.order_required
       = service.order_type.humanize
     .card-body
