@@ -25,7 +25,7 @@ jobs:
       run: |
         echo "http://archive.ubuntu.com/ubuntu" | sudo tee /etc/apt/apt-mirrors.txt
         sudo apt-get update
-        sudo NEEDRESTART_MODE=a apt-get install libvips -y --no-install-recommends
+        sudo NEEDRESTART_MODE=a apt-get install libvips42 -y --no-install-recommends
     - uses: ruby/setup-ruby@v1
       with:
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
