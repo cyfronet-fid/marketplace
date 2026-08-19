@@ -10,7 +10,7 @@ so they don't catch routing mistakes, and several here call private methods
 directly (`controller.send(:some_private_method)`), coupling the test to
 implementation rather than to the actual HTTP behavior users depend on.
 
-## Current state (9 files)
+## Current state (8 files)
 
 Not all of these are "endpoint" tests, and coverage against the equivalent
 request spec is uneven:
@@ -24,16 +24,20 @@ request spec is uneven:
 | `services/choose_offers_controller_spec.rb` | `Services::ChooseOffersController#show`/`#update` via real dispatch | **Yes** — `spec/requests/services/application_controller_spec.rb` hits the same `choose_offer` route |
 | `user_action_controller_spec.rb` | `UserActionController#create` via real dispatch | **None found** |
 | `api/v1/search/services_controller_facets_spec.rb` | private `#facets` method directly, mocked ES response | Partial — `spec/requests/api/v1/search/services_controller_spec.rb` exercises `facets` through the real endpoint, but with different (integration-level) intent |
-| `auth_mock_controller_spec.rb` | calls `controller.login` directly, not through routing | **None found** |
 | `federation/services_controller_active_filters_spec.rb` | private `#active_filters` method directly | **None found** |
+
+`auth_mock_controller_spec.rb` has been replaced by
+`spec/requests/users/auth_mock_controller_spec.rb` and removed from this
+directory — the route it exercises (`users/login`) is only drawn when
+`Rails.env.development? && Mp::Application.config.auth_mock`, so the request
+spec draws it for the duration of each example instead.
 
 So only one controller (`Services::ChooseOffersController`) has genuine
 duplicate coverage today. The other four concern specs aren't duplicating
 anything since they test shared modules, not endpoints. But
-`UserActionController#create`, `Users::AuthMockController#login`, and
-`Federation::ServicesController#active_filters` have **no request-spec
-coverage at all** — deleting those controller specs outright would lose
-real signal, not just remove duplication.
+`UserActionController#create` and `Federation::ServicesController#active_filters`
+still have **no request-spec coverage at all** — deleting those controller
+specs outright would lose real signal, not just remove duplication.
 
 ## Recommendation
 
