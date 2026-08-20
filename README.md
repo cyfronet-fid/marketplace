@@ -348,7 +348,7 @@ We are currently using the following ENV variables:
 We use a specifically configured Rubocop (with rubocop-rails and
 rubocop-rspec), inspect `.rubocop.yml` for specifics.
 
-To run rubocop manually `$ rubocop`, add `-a` to autocorrect
+To run rubocop manually `$ bundle exec rubocop`, add `-a` to autocorrect
 offenses that support it.
 
 To run haml-lint manually `$ haml-lint --exclude 'lib/**/*.haml'`.
