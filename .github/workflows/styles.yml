@@ -1,9 +1,10 @@
 name: Styles
-on: [push]
+on: [push, pull_request]
 jobs:
   styles:
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
-        
+
     steps:
     - uses: actions/checkout@v4
     - uses: ruby/setup-ruby@v1
@@ -13,3 +14,24 @@ jobs:
       run: |
         gem install brakeman
         brakeman --exit-on-warn --quiet -f plain --safe-methods sanitize
+
+  rubocop:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - uses: ruby/setup-ruby@v1
+      with:
+        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+    - name: Run rubocop on changed files
+      run: |
+        git fetch origin ${{ github.base_ref }} --depth=1
+        mapfile -t files < <(git diff --name-only --diff-filter=ACMR "origin/${{ github.base_ref }}...HEAD" -- '*.rb')
+        if [ "${#files[@]}" -eq 0 ]; then
+          echo "No Ruby files changed, skipping rubocop"
+          exit 0
+        fi
+        bundle exec rubocop "${files[@]}"

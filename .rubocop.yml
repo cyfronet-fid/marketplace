@@ -1,5 +1,6 @@
-inherit_gem:
-  prettier: rubocop.yml
+plugins:
+  - rubocop-rails
+  - rubocop-rspec
 
 AllCops:
   TargetRubyVersion: 3.3.0
@@ -81,7 +82,6 @@ Style/NumericLiterals:
 Bundler/OrderedGems:
   Enabled: false
 
-# Turn off due conflict with prettier
 Style/LineEndConcatenation:
   Enabled: false
 

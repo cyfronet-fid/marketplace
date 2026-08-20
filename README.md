@@ -345,16 +345,11 @@ We are currently using the following ENV variables:
 
 ### Linting and code formatting
 
-We use prettier for code formatting and a specifically configured
-Rubocop, inspect `.prettierrc`, `.prettierignore`
-and `rubocop.yml` for specifics.
+We use a specifically configured Rubocop (with rubocop-rails and
+rubocop-rspec), inspect `.rubocop.yml` for specifics.
 
-To correct formatting with prettier `$ rbprettier --write .`
-(it will take some time), you may want to run it
-selectively on modified files only
-(just pass them as explicit arguments instead of a dot `.`).
-
-To run rubocop manually `$ rubocop`.
+To run rubocop manually `$ rubocop`, add `-a` to autocorrect
+offenses that support it.
 
 To run haml-lint manually `$ haml-lint --exclude 'lib/**/*.haml'`.
 
