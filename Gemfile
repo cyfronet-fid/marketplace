@@ -116,7 +116,9 @@ group :development do
   gem "spring"
   gem "spring-watcher-listen", "~> 2.1"
   gem "spring-commands-rspec"
-  gem "prettier", require: false
+  gem "rubocop", require: false
+  gem "rubocop-rails", require: false
+  gem "rubocop-rspec", require: false
   gem "haml_lint", require: false
   gem "scss_lint", require: false
   gem "mdl"
