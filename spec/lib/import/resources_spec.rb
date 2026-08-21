@@ -221,9 +221,7 @@ describe Import::Resources, backend: true do
           "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png"
         ).and_return(mock_uri)
         allow(URI).to receive(:parse).and_call_original
-        expect(mock_uri).to receive(:open).with(ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).and_raise(
-          OpenURI::HTTPError.new("", status: 404)
-        )
+        expect(mock_uri).to receive(:open).and_raise(OpenURI::HTTPError.new("", status: 404))
         eosc_registry.call
         expect(Service.first.logo.attached?).to be_falsey
       end
@@ -234,9 +232,7 @@ describe Import::Resources, backend: true do
           "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png"
         ).and_return(mock_uri)
         allow(URI).to receive(:parse).and_call_original
-        expect(mock_uri).to receive(:open).with(ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).and_raise(
-          Errno::EHOSTUNREACH.new
-        )
+        expect(mock_uri).to receive(:open).and_raise(Errno::EHOSTUNREACH.new)
         eosc_registry.call
         expect(Service.first.logo.attached?).to be_falsey
       end
