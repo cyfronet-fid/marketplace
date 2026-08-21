@@ -8,88 +8,142 @@ RSpec.describe Importers::Logo, backend: true do
 
   before { allow(Vips::Image).to receive(:new_from_buffer).and_return(image_double) }
 
+  subject(:attachable) { described_class.call(url) }
+
   describe "#call" do
-    it "returns an attachable png for a valid png image" do
-      stub_request(:get, url).to_return(body: "png-bytes", headers: { "Content-Type" => "image/png" })
+    context "when image is valid" do
+      before do
+        stub_request(:get, url).to_return(body: "png-bytes", headers: { "Content-Type" => "image/png" })
+      end
 
-      attachable = described_class.call(url)
+      it "returns element of proper content type" do
+        expect(attachable[:content_type]).to eq("image/png")
+      end
 
-      expect(Vips::Image).to have_received(:new_from_buffer).with("png-bytes", "")
-      expect(attachable[:io]).to be_a(StringIO)
-      expect(attachable[:filename]).to end_with(".png")
-      expect(attachable[:content_type]).to eq("image/png")
-context 'when image is valid' do
-    before do
-          stub_request(:get, url).to_return(body: "png-bytes", headers: { "Content-Type" => "image/png" })
-    end
-    
-    let(:attachable) { described_class.call(url) }
-    
-    it "returns element of proper content type" do
-      expect(attachable[:content_type]).to eq("image/png")
-    end
-    
-    it 'calls Vips' do
-          expect(Vips::Image).to have_received(:new_from_buffer).with("png-bytes", "")
-    end
-    
-    it 'returns element of a class StringIO' do
-          expect(attachable[:io]).to be_a(StringIO)
-    end
-    
-    it 'file extention is png' do
-      expect(attachable[:filename]).to end_with(".png")
-    end
-end
+      it "calls Vips" do
+        attachable
 
+        expect(Vips::Image).to have_received(:new_from_buffer).with("png-bytes", "")
+      end
 
-    it "renders svg images at a higher scale before converting to png" do
-      stub_request(:get, url).to_return(body: "<svg></svg>", headers: { "Content-Type" => "image/svg+xml" })
+      it "returns element of a class StringIO" do
+        expect(attachable[:io]).to be_a(StringIO)
+      end
 
-      attachable = described_class.call(url)
-
-      expect(Vips::Image).to have_received(:new_from_buffer).with("<svg></svg>", "scale=2")
-      expect(attachable[:content_type]).to eq("image/png")
+      it "file extention is png" do
+        expect(attachable[:filename]).to end_with(".png")
+      end
     end
 
-    it "returns nil when the url is blank" do
-      expect(described_class.call(nil)).to be_nil
+    context "when image is svg" do
+      before do
+        stub_request(:get, url).to_return(body: "<svg></svg>", headers: { "Content-Type" => "image/svg+xml" })
+      end
+
+      it "returns element of proper content type" do
+        expect(attachable[:content_type]).to eq("image/png")
+      end
+
+      it "calls Vips with scale=2" do
+        attachable
+
+        expect(Vips::Image).to have_received(:new_from_buffer).with("<svg></svg>", "scale=2")
+      end
     end
 
-    it "returns nil when the response is not an image" do
-      stub_request(:get, url).to_return(body: "<html></html>", headers: { "Content-Type" => "text/html" })
+    context "when url is blank" do
+      let(:url) { "" }
 
-      expect(described_class.call(url)).to be_nil
+      it "returns nil" do
+        expect(attachable).to be_nil
+      end
     end
 
-    it "returns nil when the response has no content type" do
-      stub_request(:get, url).to_return(body: "png-bytes")
+    context "when url is nil" do
+      let(:url) { nil }
 
-      expect(described_class.call(url)).to be_nil
+      it "returns nil" do
+        expect(attachable).to be_nil
+      end
     end
 
-    it "returns nil on a 404 response" do
-      stub_request(:get, url).to_return(status: 404)
+    context "when url is invalid" do
+      let(:url) { "https://example.com/ logo.png" }
 
-      expect(described_class.call(url)).to be_nil
+      it "returns nil" do
+        expect(attachable).to be_nil
+      end
     end
 
-    it "returns nil when the host is unreachable" do
-      stub_request(:get, url).to_raise(Errno::EHOSTUNREACH)
+    context "when url is unreachable" do
+      before do
+        stub_request(:get, url).to_raise(Errno::EHOSTUNREACH)
+      end
 
-      expect(described_class.call(url)).to be_nil
+      it "returns nil" do
+        expect(attachable).to be_nil
+      end
     end
 
-    it "returns nil on a socket error" do
-      stub_request(:get, url).to_raise(SocketError)
+    context "when url does not point to an image" do
+      before do
+        stub_request(:get, url).to_return(body: "<html></html>", headers: { "Content-Type" => "text/html" })
+      end 
 
-      expect(described_class.call(url)).to be_nil
+      it "returns nil" do
+        expect(attachable).to be_nil
+      end
     end
 
-    it "returns nil when the download times out" do
-      stub_request(:get, url).to_timeout
+    context "when response has no content type" do
+      before do
+        stub_request(:get, url).to_return(body: "png-bytes")
+      end
 
-      expect(described_class.call(url)).to be_nil
+      it "returns nil" do
+        expect(attachable).to be_nil
+      end
+    end
+
+    context "when response status is 404" do
+      before do
+        stub_request(:get, url).to_return(status: 404)
+      end
+
+      it "returns nil" do
+        expect(attachable).to be_nil
+      end
+    end
+
+    context "when socket error occurs" do
+      before do
+        stub_request(:get, url).to_raise(SocketError)
+      end
+
+      it "returns nil" do
+        expect(attachable).to be_nil
+      end
+    end
+
+    context "when timeout error occurs" do
+      before do
+        stub_request(:get, url).to_timeout
+      end
+
+      it "returns nil" do
+        expect(attachable).to be_nil
+      end
+    end
+
+    context "when the image bytes are corrupt" do
+      before do
+        allow(Vips::Image).to receive(:new_from_buffer).and_raise(Vips::Error, "bad image data")
+        stub_request(:get, url).to_return(body: "corrupt-bytes", headers: { "Content-Type" => "image/png" })
+      end
+
+      it "returns nil" do
+        expect(attachable).to be_nil
+      end
     end
   end
 end

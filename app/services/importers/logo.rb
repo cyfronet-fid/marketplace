@@ -25,13 +25,17 @@ class Importers::Logo < ApplicationService
 
       { io: convert_to_png(file), filename: "#{SecureRandom.uuid}.png", content_type: PNG_CONTENT_TYPE }
     end
+  rescue Vips::Error => e
+    Rails.logger.error "Error on processing logo from #{@url}: #{e.message}"
+
+    nil
   end
 
   private
 
   def fetch_file_from_url
     URI.parse(@url).open(ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE)
-  rescue OpenURI::HTTPError, Errno::EHOSTUNREACH, SocketError, Timeout::Error => e
+  rescue URI::InvalidURIError, OpenURI::HTTPError, Errno::EHOSTUNREACH, SocketError, Timeout::Error => e
     Rails.logger.error "Error on fetching logo from #{@url}: #{e.message}"
 
     nil
