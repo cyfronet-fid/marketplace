@@ -1,6 +1,6 @@
 # Agent conventions for this repo
 
-Ruby 3.3, Rails 7.2. RSpec (`rspec-rails`) for tests, not Minitest. Style is enforced by RuboCop with `prettier`'s inherited config (`.rubocop.yml`) — don't flag pure style/formatting, that's covered separately.
+Ruby 3.3, Rails 7.2. RSpec (`rspec-rails`) for tests, not Minitest. Style is enforced by RuboCop (`.rubocop.yml`) — don't flag pure style/formatting, that's covered separately.
 
 ## Architecture patterns to know
 
