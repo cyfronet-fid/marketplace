@@ -34,7 +34,7 @@ class Importers::Logo < ApplicationService
   private
 
   def fetch_file_from_url
-    URI.parse(@url).open(ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE)
+    URI.parse(@url).open
   rescue URI::InvalidURIError, OpenURI::HTTPError, Errno::EHOSTUNREACH, SocketError, Timeout::Error => e
     Rails.logger.error "Error on fetching logo from #{@url}: #{e.message}"
 
