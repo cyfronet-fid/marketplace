@@ -18,7 +18,30 @@ RSpec.describe Importers::Logo, backend: true do
       expect(attachable[:io]).to be_a(StringIO)
       expect(attachable[:filename]).to end_with(".png")
       expect(attachable[:content_type]).to eq("image/png")
+context 'when image is valid' do
+    before do
+          stub_request(:get, url).to_return(body: "png-bytes", headers: { "Content-Type" => "image/png" })
     end
+    
+    let(:attachable) { described_class.call(url) }
+    
+    it "returns element of proper content type" do
+      expect(attachable[:content_type]).to eq("image/png")
+    end
+    
+    it 'calls Vips' do
+          expect(Vips::Image).to have_received(:new_from_buffer).with("png-bytes", "")
+    end
+    
+    it 'returns element of a class StringIO' do
+          expect(attachable[:io]).to be_a(StringIO)
+    end
+    
+    it 'file extention is png' do
+      expect(attachable[:filename]).to end_with(".png")
+    end
+end
+
 
     it "renders svg images at a higher scale before converting to png" do
       stub_request(:get, url).to_return(body: "<svg></svg>", headers: { "Content-Type" => "image/svg+xml" })
