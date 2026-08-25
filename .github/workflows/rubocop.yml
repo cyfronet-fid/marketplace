@@ -5,23 +5,20 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      checks: write
 
     steps:
     - uses: actions/checkout@v4
       with:
-        fetch-depth: 0
         persist-credentials: false
     - uses: ruby/setup-ruby@v1
       with:
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-    - name: Run rubocop on changed files
-      env:
-        BASE_REF: ${{ github.base_ref }}
-      run: |
-        git fetch origin "$BASE_REF" --depth=1
-        mapfile -t files < <(git diff --name-only --diff-filter=ACMR "origin/$BASE_REF...HEAD" -- '*.rb')
-        if [ "${#files[@]}" -eq 0 ]; then
-          echo "No Ruby files changed, skipping rubocop"
-          exit 0
-        fi
-        bundle exec rubocop "${files[@]}"
+    - name: Run rubocop on changed lines
+      uses: reviewdog/action-rubocop@v2
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        rubocop_version: bundler
+        reporter: github-pr-check
+        fail_level: error
+        filter_mode: diff_context
