@@ -3,10 +3,10 @@
 require "swagger_helper"
 require "rails_helper"
 
-RSpec.describe Api::V1::UsersController, swagger_doc: "v1/users_swagger.json", backend: true do
+RSpec.describe Api::V1::UsersController, :backend, swagger_doc: "v1/users_swagger.json", type: :request do
   around do |example|
     original_dir = Dir.pwd
-    Dir.chdir Rails.root.join("swagger", "v1")
+    Dir.chdir Rails.root.join("swagger/v1")
     example.run
   ensure
     Dir.chdir original_dir
@@ -33,9 +33,11 @@ RSpec.describe Api::V1::UsersController, swagger_doc: "v1/users_swagger.json", b
         before { user.update(roles: %i[admin coordinator]) }
 
         run_test! do |response|
-          data = JSON.parse(response.body)
-          expect(data["uid"]).to eq(user_id)
-          expect(data["roles"]).to include("coordinator", "admin")
+          aggregate_failures do
+            data = JSON.parse(response.body)
+            expect(data["uid"]).to eq(user_id)
+            expect(data["roles"]).to include("coordinator", "admin")
+          end
         end
       end
 
@@ -51,17 +53,21 @@ RSpec.describe Api::V1::UsersController, swagger_doc: "v1/users_swagger.json", b
       response(401, "unauthorized") do
         schema "$ref" => "error.json"
 
+        # rubocop:disable RSpec/EmptyExampleGroup -- `run_test!` defines the example; rubocop-rspec doesn't know rswag's DSL
         context "when no token provided" do
           let(:"X-User-Token") { "" }
           let(:user_id) { "test-uid" }
+
           run_test!
         end
 
         context "when invalid token provided" do
           let(:"X-User-Token") { "invalid-token" }
           let(:user_id) { "test-uid" }
+
           run_test!
         end
+        # rubocop:enable RSpec/EmptyExampleGroup
       end
     end
   end
