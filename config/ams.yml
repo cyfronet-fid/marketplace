@@ -1,0 +1,61 @@
+default: &default
+  token: <%= ENV.fetch("AMS_TOKEN", Rails.application.credentials.ams[:token]) %>
+  subscriptions_url: "https://api-new.msg.argo.grnet.gr/v1/projects/eosc-beyond-providers/subscriptions"
+  subscription_prefix: <%= ENV.fetch("AMS_SUBSCRIPTION_PREFIX", "mp_") %>
+  topics:
+    - catalogue-create
+    - catalogue-delete
+    - catalogue-update
+    - datasource-create
+    - datasource-delete
+    - datasource-update
+    - deployable_application-create
+    - deployable_application-delete
+    - deployable_application-update
+    - interoperability_record-create
+    - interoperability_record-delete
+    - interoperability_record-update
+    - organisation-create
+    - organisation-delete
+    - organisation-update
+    - service-create
+    - service-delete
+    - service-update
+
+  # default_poll_interval: 2
+  # subscriptions:
+  #   - name: "EOSC Provider Portal AMS"
+  #     mode: "pull"
+  #     pull_url: "https://api-new.msg.argo.grnet.gr/v1/projects/"
+  #     poll_interval: 2
+  #     max_messages: 10
+  #     destination_prefix: "eosc-beyond-providers"
+  #     topics:
+  #       - mp-catalogue-create
+  #       - mp-catalogue-delete
+  #       - mp-catalogue-update
+  #       - mp-datasource-create
+  #       - mp-datasource-delete
+  #       - mp-datasource-update
+  #       - mp-deployable_application-create
+  #       - mp-deployable_application-delete
+  #       - mp-deployable_application-update
+  #       - mp-interoperability_record-create
+  #       - mp-interoperability_record-delete
+  #       - mp-interoperability_record-update
+  #       - mp-organisation-create
+  #       - mp-organisation-delete
+  #       - mp-organisation-update
+  #       - mp-service-create
+  #       - mp-service-delete
+  #       - mp-service-update
+
+production:
+  <<: *default
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+  subscriptions_url: "https://example.com/v1/projects/eosc-beyond-providers/subscriptions"
