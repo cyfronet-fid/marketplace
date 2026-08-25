@@ -1,7 +1,8 @@
 default: &default
-  token: <%= ENV.fetch("AMS_TOKEN", Rails.application.credentials.ams[:token]) %>
-  subscriptions_url: "https://api-new.msg.argo.grnet.gr/v1/projects/eosc-beyond-providers/subscriptions"
+  base_url: <%= ENV.fetch("AMS_BASE_URL", nil) %>
   subscription_prefix: <%= ENV.fetch("AMS_SUBSCRIPTION_PREFIX", "mp_") %>
+  subscriptions_endpoint: <%= ENV.fetch("AMS_SUBSCRIPTIONS_ENDPOINT", nil) %>
+  token: <%= ENV.fetch("AMS_TOKEN", Rails.application.credentials.ams[:token]) %>
   topics:
     - catalogue-create
     - catalogue-delete
@@ -58,4 +59,8 @@ development:
 
 test:
   <<: *default
-  subscriptions_url: "https://example.com/v1/projects/eosc-beyond-providers/subscriptions"
+  base_url: "https://ams.example.com"
+  subscription_prefix: "test_"
+  subscriptions_endpoint: "/v1/projects/test/subscriptions"
+  token: "test-token"
+
