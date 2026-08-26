@@ -2,13 +2,13 @@
 
 require "rails_helper"
 
-RSpec.describe Importers::Logo, backend: true do
+RSpec.describe Importers::Logo, :backend do
+  subject(:attachable) { described_class.call(url) }
+
   let(:url) { "https://example.com/PhenoMeNal_logo.png" }
   let(:image_double) { instance_double(Vips::Image, write_to_buffer: "converted-png-bytes") }
 
   before { allow(Vips::Image).to receive(:new_from_buffer).and_return(image_double) }
-
-  subject(:attachable) { described_class.call(url) }
 
   describe "#call" do
     context "when image is valid" do
@@ -88,7 +88,7 @@ RSpec.describe Importers::Logo, backend: true do
     context "when url does not point to an image" do
       before do
         stub_request(:get, url).to_return(body: "<html></html>", headers: { "Content-Type" => "text/html" })
-      end 
+      end
 
       it "returns nil" do
         expect(attachable).to be_nil
