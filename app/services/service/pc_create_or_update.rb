@@ -49,7 +49,8 @@ class Service::PcCreateOrUpdate
       @mp_service.sources.first.update(errored: nil)
     end
 
-    Importers::Logo.new(@mp_service, @logo).call
+    logo = Importers::Logo.call(@logo)
+    @mp_service.logo.attach(logo) if logo
     @mp_service.save!
     @mp_service
   rescue Errno::ECONNREFUSED
@@ -78,7 +79,8 @@ class Service::PcCreateOrUpdate
     end
     ServiceSource::Create.call(service)
 
-    Importers::Logo.call(service, logo)
+    fetched_logo = Importers::Logo.call(logo)
+    service.logo.attach(fetched_logo) if fetched_logo
     service.save!(validate: false)
     service
   end

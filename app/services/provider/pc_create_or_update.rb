@@ -28,7 +28,8 @@ class Provider::PcCreateOrUpdate < ApplicationService
       mapped_provider.update!(upstream_id: provider_source.id)
     end
 
-    Importers::Logo.new(mapped_provider, @eosc_registry_provider["logo"]).call
+    logo = Importers::Logo.call(@eosc_registry_provider["logo"])
+    mapped_provider.logo.attach(logo) if logo
     mapped_provider.save!
     mapped_provider
   end

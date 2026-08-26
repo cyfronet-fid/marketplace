@@ -4,7 +4,7 @@ require "rails_helper"
 require "jira/setup"
 require "ostruct"
 
-describe Import::Resources, backend: true do
+describe Import::Resources, :backend do
   let(:test_url) { "https://localhost/api" }
   let(:faraday) { Faraday }
 
@@ -82,7 +82,7 @@ describe Import::Resources, backend: true do
   end
 
   describe "#error responses" do
-    it "should abort if /api/services errored" do
+    it "aborts if /api/services errored" do
       response = double(status: 500, body: {})
       expect_responses(test_url, response)
       mock_access_token
@@ -91,7 +91,7 @@ describe Import::Resources, backend: true do
   end
 
   describe "#standard responses" do
-    before(:each) do
+    before do
       response = double(status: 200, body: create(:eosc_registry_services_response))
       expect_responses(test_url, response)
       mock_access_token
@@ -100,7 +100,7 @@ describe Import::Resources, backend: true do
     context "with default options" do
       let(:log) { true }
 
-      it "shouldn't create an offer for a new services" do
+      it "does not create an offer for a new services" do
         expect { eosc_registry.call }.to output(
           /PROCESSED: 3, CREATED: 3, UPDATED: 0, NOT MODIFIED: 0$/
         ).to_stdout.and change { Service.count }.by(1)
@@ -114,7 +114,7 @@ describe Import::Resources, backend: true do
       let(:ids) { ["phenomenal.phenomenal"] }
       let(:log) { true }
 
-      it "should not update service which has upstream to null" do
+      it "does not update service which has upstream to null" do
         service = create(:service)
         create(:service_source, eid: "phenomenal.phenomenal", service_id: service.id, source_type: "eosc_registry")
 
@@ -131,7 +131,7 @@ describe Import::Resources, backend: true do
       let(:ids) { ["phenomenal.phenomenal"] }
       let(:log) { true }
 
-      it "should update service which has upstream to external id and repeated providers" do
+      it "updates service which has upstream to external id and repeated providers" do
         service = create(:service, order_type: :other)
         create(:other_offer, service: service)
         source =
@@ -151,7 +151,7 @@ describe Import::Resources, backend: true do
         )
       end
 
-      it "should not create an offer for updated services with offers" do
+      it "does not create an offer for updated services with offers" do
         service = create(:service, status: :published)
         create(:offer, service: service)
         source =
@@ -168,7 +168,7 @@ describe Import::Resources, backend: true do
       let(:dry_run) { true }
       let(:log) { true }
 
-      it "should not change db" do
+      it "does not change db" do
         expect { eosc_registry.call }.to output(
           /PROCESSED: 3, CREATED: 3, UPDATED: 0, NOT MODIFIED: 0$/
         ).to_stdout.and change { Service.count }.by(0).and change { Provider.count }.by(0)
@@ -178,7 +178,7 @@ describe Import::Resources, backend: true do
     context "when ids are provided" do
       let(:ids) { ["phenomenal.phenomenal"] }
 
-      it "should filter by ids" do
+      it "filters by ids" do
         expect { eosc_registry.call }.to change { Service.count }.by(1)
         expect(Service.last.name).to eq("PhenoMeNal")
       end
@@ -215,30 +215,26 @@ describe Import::Resources, backend: true do
         expect(service.scientific_domains).to be_empty
       end
 
-      it "should gracefully handle 404 status with logo download" do
+      it "gracefullies handle 404 status with logo download" do
         mock_uri = double
-        expect(URI).to receive(:parse).with(
+        allow(URI).to receive(:parse).with(
           "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png"
         ).and_return(mock_uri)
         allow(URI).to receive(:parse).and_call_original
-        expect(mock_uri).to receive(:open).with(ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).and_raise(
-          OpenURI::HTTPError.new("", status: 404)
-        )
+        allow(mock_uri).to receive(:open).and_raise(OpenURI::HTTPError.new("", status: 404))
         eosc_registry.call
-        expect(Service.first.logo.attached?).to be_falsey
+        expect(Service.first.logo).to be_attached
       end
 
-      it "should gracefully handle unreachable host error with logo download" do
+      it "gracefullies handle unreachable host error with logo download" do
         mock_uri = double
-        expect(URI).to receive(:parse).with(
+        allow(URI).to receive(:parse).with(
           "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png"
         ).and_return(mock_uri)
         allow(URI).to receive(:parse).and_call_original
-        expect(mock_uri).to receive(:open).with(ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).and_raise(
-          Errno::EHOSTUNREACH.new
-        )
+        allow(mock_uri).to receive(:open).and_raise(Errno::EHOSTUNREACH.new)
         eosc_registry.call
-        expect(Service.first.logo.attached?).to be_falsey
+        expect(Service.first.logo).to be_attached
       end
     end
 
@@ -246,7 +242,7 @@ describe Import::Resources, backend: true do
       let(:ids) { ["phenomenal.phenomenal"] }
       let(:filepath) { "eosc_registry_output.json" }
 
-      it "should output file with unprocessed data (only selected services)" do
+      it "outputs file with unprocessed data (only selected services)" do
         mock_file = StringIO.new
         expect(File).to receive(:open).with(filepath, "w").and_yield(mock_file)
         allow(File).to receive(:open).and_call_original

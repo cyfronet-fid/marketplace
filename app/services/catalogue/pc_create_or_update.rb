@@ -59,6 +59,7 @@ class Catalogue::PcCreateOrUpdate < ApplicationService
   def self.set_logo(catalogue, logo)
     # Assign a default logo if there are some problems in the mapper later
     catalogue.set_default_logo
-    Importers::Logo.new(catalogue, logo).call
+    fetched_logo = Importers::Logo.call(logo)
+    catalogue.logo.attach(fetched_logo) if fetched_logo
   end
 end
