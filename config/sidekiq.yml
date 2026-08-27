@@ -21,9 +21,12 @@ staging:
   - pc_publisher
   - ess_update
   - deployments
+  - ams_subscriber
 
 :limits:
   pc_subscriber: 1
+  ams_subscriber: 1
 
 :process_limits:
   pc_subscriber: 1
+  ams_subscriber: 1

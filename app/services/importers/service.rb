@@ -3,12 +3,10 @@
 class Importers::Service < ApplicationService
   include Importable
 
-  def initialize(data, synchronized_at, eosc_registry_base_url, token = nil)
+  def initialize(data, synchronized_at)
     super()
     @data = data
     @synchronized_at = synchronized_at
-    @eosc_registry_base_url = eosc_registry_base_url
-    @token = token
   end
 
   def call
@@ -31,9 +29,9 @@ class Importers::Service < ApplicationService
       resource_organisation: map_provider(@data["resourceOwner"] || @data["resourceOrganisation"]),
       providers:
         Array(@data["serviceProviders"] || @data["resourceProviders"])
-          .uniq
-          .map { |provider| map_provider(provider) }
-          .compact,
+        .uniq
+        .map { |provider| map_provider(provider) }
+        .compact,
       nodes: map_nodes(Array(@data["nodePID"] || @data["node"])),
       scientific_domains: map_scientific_domains(scientific_domain_eids(@data["scientificDomains"])),
       categories: map_categories(subcategories) || [],

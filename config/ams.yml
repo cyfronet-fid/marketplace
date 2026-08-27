@@ -1,7 +1,8 @@
 default: &default
   base_url: <%= ENV.fetch("AMS_BASE_URL", nil) %>
-  subscription_prefix: <%= ENV.fetch("AMS_SUBSCRIPTION_PREFIX", "mp_") %>
-  subscriptions_endpoint: <%= ENV.fetch("AMS_SUBSCRIPTIONS_ENDPOINT", nil) %>
+  subscription_prefix: <%= ENV.fetch("AMS_SUBSCRIPTION_PREFIX", "mp") %>
+  subscriptions_path: <%= ENV.fetch("AMS_SUBSCRIPTIONS_PATH", nil) %>
+  topics_path: <%= ENV.fetch("AMS_TOPICS_PATH", nil) %>
   token: <%= ENV.fetch("AMS_TOKEN", Rails.application.credentials.ams[:token]) %>
   topics:
     - catalogue-create
@@ -23,34 +24,6 @@ default: &default
     - service-delete
     - service-update
 
-  # default_poll_interval: 2
-  # subscriptions:
-  #   - name: "EOSC Provider Portal AMS"
-  #     mode: "pull"
-  #     pull_url: "https://api-new.msg.argo.grnet.gr/v1/projects/"
-  #     poll_interval: 2
-  #     max_messages: 10
-  #     destination_prefix: "eosc-beyond-providers"
-  #     topics:
-  #       - mp-catalogue-create
-  #       - mp-catalogue-delete
-  #       - mp-catalogue-update
-  #       - mp-datasource-create
-  #       - mp-datasource-delete
-  #       - mp-datasource-update
-  #       - mp-deployable_application-create
-  #       - mp-deployable_application-delete
-  #       - mp-deployable_application-update
-  #       - mp-interoperability_record-create
-  #       - mp-interoperability_record-delete
-  #       - mp-interoperability_record-update
-  #       - mp-organisation-create
-  #       - mp-organisation-delete
-  #       - mp-organisation-update
-  #       - mp-service-create
-  #       - mp-service-delete
-  #       - mp-service-update
-
 production:
   <<: *default
 
@@ -60,7 +33,11 @@ development:
 test:
   <<: *default
   base_url: "https://ams.example.com"
-  subscription_prefix: "test_"
-  subscriptions_endpoint: "/v1/projects/test/subscriptions"
+  subscription_prefix: "test"
+  subscriptions_path: "/v1/projects/test/subscriptions"
+  topics_path: "/v1/projects/test/topics"
   token: "test-token"
+  topics:
+    - service-create
+    - service-update
 
