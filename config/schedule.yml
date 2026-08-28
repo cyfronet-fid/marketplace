@@ -1,0 +1,4 @@
+ams_subscribe_all:
+  cron: "*/5 * * * *"
+  class: "Ams::SubscribeAllJob"
+  queue: ams_subscriber

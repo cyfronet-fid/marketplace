@@ -2,6 +2,7 @@
 
 class Ams::SubscribeAllJob < ApplicationJob
   queue_as :ams_subscriber
+  sidekiq_options retry: 3
 
   def perform
     config = Rails.application.config_for(:ams)
