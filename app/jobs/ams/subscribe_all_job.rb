@@ -8,7 +8,7 @@ class Ams::SubscribeAllJob < ApplicationJob
     config = Rails.application.config_for(:ams)
 
     config.topics.each do |topic|
-      subscription_name = [config.subscription_prefix, topic].compact.join("-")
+      subscription_name = [config.subscription_prefix.presence, topic].compact.join("-")
       Ams::SubscribeJob.perform_later(subscription_name)
     end
   end
