@@ -12,7 +12,13 @@ class Api::V1::Ess::ApplicationController < ActionController::API
     render json: not_authorized, status: 403
   end
 
-  COLLECTIONS = %w[providers services datasources offers bundles catalogues deployable_services].freeze
+  # Deployable services (and the polymorphic Offer#orderable they hang off)
+  # are a marketplace-only data model per ADR-0001's controller audit -
+  # pl-marketplace and whitelabel-marketplace don't carry that entity.
+  COLLECTIONS = (
+    %w[providers services datasources offers bundles catalogues] +
+      (Mp::Variant.marketplace? ? %w[deployable_services] : [])
+  ).freeze
 
   def policy_scope(scope = controller_class, policy_scope_class: nil)
     if scope == Datasource
