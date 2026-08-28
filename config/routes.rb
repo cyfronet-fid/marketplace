@@ -220,7 +220,9 @@ Rails.application.routes.draw do
         resources :catalogues, only: %i[index show]
         resources :offers, only: %i[index show]
         resources :bundles, only: %i[index show]
-        resources :deployable_services, only: %i[index show], constraints: { id: pid_format_constraint }
+        if Mp::Variant.marketplace?
+          resources :deployable_services, only: %i[index show], constraints: { id: pid_format_constraint }
+        end
       end
       resources :users, only: :show, constraints: { id: pid_format_constraint }
     end
