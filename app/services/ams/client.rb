@@ -21,9 +21,7 @@ module Ams
       end
     end
 
-    def acknowledge(subscription_name, ack_ids: [])
-      return if ack_ids.blank?
-
+    def acknowledge(subscription_name, ack_ids:)
       acknowledge_path = "#{config.subscriptions_path}/#{subscription_name}:acknowledge"
 
       connection.post(acknowledge_path) do |req|

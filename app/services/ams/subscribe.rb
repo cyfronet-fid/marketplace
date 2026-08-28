@@ -10,11 +10,14 @@ module Ams
 
     def call
       response = client.pull(subscription_name)
+      raise "AMS pull failed for #{subscription_name}: #{response.status}" unless response.success?
 
       messages = get_messages(response)
       ack_ids = messages.filter_map { |message| process(message) }
+      return if ack_ids.blank?
 
-      client.acknowledge(subscription_name, ack_ids: ack_ids)
+      ack_response = client.acknowledge(subscription_name, ack_ids: ack_ids)
+      raise "AMS acknowledge failed for #{subscription_name}: #{ack_response.status}" unless ack_response.success?
     end
 
     private

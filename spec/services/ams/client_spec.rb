@@ -70,32 +70,6 @@ RSpec.describe Ams::Client, type: :service do
     let(:ack_url) { "https://ams.example.com/v1/projects/test/subscriptions/#{subscription_name}:acknowledge" }
     let(:subscription_name) { "test-service-create" }
 
-    context "when ack_ids is not provided" do
-      it "returns nil" do
-        result = client.acknowledge(subscription_name)
-        expect(result).to be_nil
-      end
-
-      it "does not make a request" do
-        client.acknowledge(subscription_name)
-        expect(WebMock).not_to have_requested(:post, ack_url)
-      end
-    end
-
-    context "when ack_ids is empty" do
-      let(:ack_ids) { [] }
-
-      it "returns nil" do
-        result = client.acknowledge(subscription_name, ack_ids: ack_ids)
-        expect(result).to be_nil
-      end
-
-      it "does not make a request" do
-        client.acknowledge(subscription_name, ack_ids: ack_ids)
-        expect(WebMock).not_to have_requested(:post, ack_url)
-      end
-    end
-
     context "when ack_ids is provided" do
       let(:ack_ids) { %w[ack-1 ack-2] }
 
