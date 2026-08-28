@@ -78,6 +78,11 @@ class Service < ApplicationRecord
   has_many :service_guidelines, dependent: :destroy
   has_many :guidelines, through: :service_guidelines
 
+  # Same polymorphic Contact model Catalogue#public_contacts uses. Populated
+  # and read only under the pl/whitelabel variants (see Mp::Variant) - the
+  # marketplace variant keeps reading the flat `public_contact_emails` column.
+  has_many :public_contacts, as: :contactable, dependent: :destroy, autosave: true
+
   accepts_nested_attributes_for :sources,
                                 reject_if:
                                   lambda { |attributes| attributes["eid"].blank? || attributes["source_type"].blank? },

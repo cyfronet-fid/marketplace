@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_04_30_103000) do
+ActiveRecord::Schema[7.2].define(version: 2026_08_28_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -858,6 +858,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_04_30_103000) do
     t.string "resource_type"
     t.string "urls", default: [], array: true
     t.string "research_product_types", default: [], array: true
+    t.string "geographical_availabilities", default: [], array: true
     t.index ["name"], name: "index_services_on_name"
     t.index ["pid"], name: "index_services_on_pid"
     t.index ["resource_organisation_id"], name: "index_services_on_resource_organisation_id"
