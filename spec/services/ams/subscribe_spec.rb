@@ -17,8 +17,12 @@ RSpec.describe Ams::Subscribe do
       let(:decoded_message) { { "data" => { "foo" => "bar" } } }
 
       before do
-        stub_request(:post, pull_url).to_return(body: { "receivedMessages" => [raw_message] }.to_json)
-        allow(Ams::DecodeMessage).to receive(:call).with(raw_message).and_return(decoded_message)
+        stub_request(:post, pull_url).to_return(
+          body: { "receivedMessages" => [raw_message] }.to_json,
+          headers: { "Content-Type" => "application/json" }
+        )
+
+        allow(Ams::DecodeMessage).to receive(:call).with(raw_message["message"]).and_return(decoded_message)
       end
 
       it "passes the decoded message to Ams::ProcessMessage" do
@@ -41,7 +45,12 @@ RSpec.describe Ams::Subscribe do
     end
 
     context "when there are no messages" do
-      before { stub_request(:post, pull_url).to_return(body: { "receivedMessages" => [] }.to_json) }
+      before do
+        stub_request(:post, pull_url).to_return(
+          body: { "receivedMessages" => [] }.to_json,
+          headers: { "Content-Type" => "application/json" }
+        )
+      end
 
       it "does not acknowledge" do
         subscribe
@@ -50,7 +59,12 @@ RSpec.describe Ams::Subscribe do
     end
 
     context "when receivedMessages is absent from the response" do
-      before { stub_request(:post, pull_url).to_return(body: {}.to_json) }
+      before do
+        stub_request(:post, pull_url).to_return(
+          body: {}.to_json,
+          headers: { "Content-Type" => "application/json" }
+        )
+      end
 
       it "does not acknowledge" do
         subscribe

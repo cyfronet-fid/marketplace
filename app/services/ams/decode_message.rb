@@ -26,10 +26,7 @@ module Ams
     attr_reader :message
 
     def encoded_value
-      message.dig("message", "data").presence ||
-        message["data"].presence ||
-        message["body"].presence ||
-        ""
+      message["data"].presence || message["body"].presence || ""
     end
   end
 end

@@ -6,7 +6,6 @@ module Ams
 
     def initialize(subscription_name)
       @subscription_name = subscription_name
-      @ack_ids = []
     end
 
     def call
@@ -23,13 +22,13 @@ module Ams
     attr_reader :subscription_name
 
     def get_messages(response)
-      JSON.parse(response.body)["receivedMessages"] || []
+      response.body["receivedMessages"] || []
     end
 
     def process(message)
       ack_id = message["ackId"]
 
-      decoded_message = Ams::DecodeMessage.call(message)
+      decoded_message = Ams::DecodeMessage.call(message["message"])
       result = Ams::ProcessMessage.call(subscription_name, message: decoded_message)
 
       ack_id if result
