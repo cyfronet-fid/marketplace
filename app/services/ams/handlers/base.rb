@@ -45,7 +45,7 @@ class Ams::Handlers::Base
 
   def modified_at
     m = data.dig("metadata", "modifiedAt")
-    m ? Time.zone.at(m.to_i / 1000) : Time.zone.now
+    m ? Time.zone.at(Rational(m.to_i, 1000)) : Time.zone.now
   end
 
   def status

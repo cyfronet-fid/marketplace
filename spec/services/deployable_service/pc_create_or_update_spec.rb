@@ -14,13 +14,13 @@ RSpec.describe DeployableService::PcCreateOrUpdate, backend: true do
       let(:jms_deployable_service) { build(:jms_deployable_service, provider_eid: provider_eid) }
 
       it "creates a deployable service with a source" do
-        expect { described_class.new(jms_deployable_service, true).call }.to change(DeployableService, :count).by(
-          1
-        ).and change(DeployableServiceSource, :count).by(1)
+        expect do
+          described_class.new(jms_deployable_service, true, Time.current).call
+        end.to change(DeployableService, :count).by(1).and change(DeployableServiceSource, :count).by(1)
       end
 
       it "sets the upstream_id on the deployable service" do
-        result = described_class.new(jms_deployable_service, true).call
+        result = described_class.new(jms_deployable_service, true, Time.current).call
 
         expect(result.upstream_id).to be_present
         expect(result.sources.first).to be_present
@@ -28,13 +28,13 @@ RSpec.describe DeployableService::PcCreateOrUpdate, backend: true do
       end
 
       it "sets the source_type to eosc_registry" do
-        result = described_class.new(jms_deployable_service, true).call
+        result = described_class.new(jms_deployable_service, true, Time.current).call
 
         expect(result.sources.first.source_type).to eq("eosc_registry")
       end
 
       it "preserves incoming lifecycle statuses" do
-        result = described_class.new(jms_deployable_service, :suspended).call
+        result = described_class.new(jms_deployable_service, :suspended, Time.current).call
 
         expect(result.status).to eq("suspended")
       end
@@ -52,14 +52,18 @@ RSpec.describe DeployableService::PcCreateOrUpdate, backend: true do
       before { existing_ds.update!(upstream_id: existing_source.id) }
 
       it "updates the existing deployable service" do
-        expect { described_class.new(jms_deployable_service, true).call }.not_to change(DeployableService, :count)
+        expect do
+          described_class.new(jms_deployable_service, true, Time.current).call
+        end.not_to change(DeployableService, :count)
 
         existing_ds.reload
         expect(existing_ds.name).to eq("New Name")
       end
 
       it "does not create a new source" do
-        expect { described_class.new(jms_deployable_service, true).call }.not_to change(DeployableServiceSource, :count)
+        expect do
+          described_class.new(jms_deployable_service, true, Time.current).call
+        end.not_to change(DeployableServiceSource, :count)
       end
     end
 
@@ -67,7 +71,7 @@ RSpec.describe DeployableService::PcCreateOrUpdate, backend: true do
       let(:jms_deployable_service) { build(:jms_deployable_service, provider_eid: provider_eid) }
 
       it "creates with draft status" do
-        result = described_class.new(jms_deployable_service, false).call
+        result = described_class.new(jms_deployable_service, false, Time.current).call
 
         expect(result.status).to eq("draft")
       end

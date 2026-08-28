@@ -19,16 +19,17 @@ RSpec.describe Ams::Handlers::Datasource do
           "id" => "1",
           "datasource" => { "name" => "Foo" },
           "active" => true,
-          "suspended" => false
+          "suspended" => false,
+          "metadata" => { "modifiedAt" => "1700000000000" }
         }
       end
 
       before { allow(Datasource::PcCreateOrUpdateJob).to receive(:perform_later) }
 
-      it "enqueues Datasource::PcCreateOrUpdateJob with the payload and status (no modified_at)" do
+      it "enqueues Datasource::PcCreateOrUpdateJob with the payload, status and modified_at" do
         described_class.call(action: "update", resource: "datasource", data: data)
         expect(Datasource::PcCreateOrUpdateJob).to have_received(:perform_later).with(
-          { "name" => "Foo" }, :published
+          { "name" => "Foo" }, :published, Time.zone.at(1_700_000_000)
         )
       end
     end

@@ -119,6 +119,15 @@ RSpec.describe Ams::Handlers::Base do
       end
     end
 
+    context "when metadata.modifiedAt has a non-zero millisecond component" do
+      let(:data) { { "id" => "1", "metadata" => { "modifiedAt" => "1700000000123" } } }
+
+      it "retains the millisecond precision instead of truncating to the second" do
+        result = handler.send(:modified_at)
+        expect([result.to_i, result.usec]).to eq([1_700_000_000, 123_000])
+      end
+    end
+
     context "when metadata.modifiedAt is absent" do
       let(:data) { { "id" => "1" } }
 

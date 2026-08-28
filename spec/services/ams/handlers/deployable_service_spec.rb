@@ -19,16 +19,17 @@ RSpec.describe Ams::Handlers::DeployableService do
           "id" => "1",
           "deployableApplication" => { "name" => "Foo" },
           "active" => true,
-          "suspended" => false
+          "suspended" => false,
+          "metadata" => { "modifiedAt" => "1700000000000" }
         }
       end
 
       before { allow(DeployableService::PcCreateOrUpdateJob).to receive(:perform_later) }
 
-      it "enqueues DeployableService::PcCreateOrUpdateJob with the payload and status (no modified_at)" do
+      it "enqueues DeployableService::PcCreateOrUpdateJob with the payload, status and modified_at" do
         described_class.call(action: "create", resource: "deployable_application", data: data)
         expect(DeployableService::PcCreateOrUpdateJob).to have_received(:perform_later).with(
-          { "name" => "Foo" }, :published
+          { "name" => "Foo" }, :published, Time.zone.at(1_700_000_000)
         )
       end
     end

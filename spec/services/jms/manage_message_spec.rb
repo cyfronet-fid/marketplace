@@ -116,7 +116,8 @@ describe Jms::ManageMessage, :backend do
 
     expect(DeployableService::PcCreateOrUpdateJob).to receive(:perform_later).with(
       resource["deployableApplication"],
-      :published
+      :published,
+      kind_of(Time)
     )
 
     expect { described_class.call(json_deployable_application, logger) }.not_to raise_error

@@ -68,7 +68,8 @@ class Jms::ManageMessage < ApplicationService
       if action != "delete"
         Datasource::PcCreateOrUpdateJob.perform_later(
           hash,
-          object_status(event_body["active"], event_body["suspended"])
+          object_status(event_body["active"], event_body["suspended"]),
+          modified_at(event_body)
         )
       elsif action == "delete"
         Datasource::DeleteJob.perform_later(hash["id"])
@@ -79,7 +80,8 @@ class Jms::ManageMessage < ApplicationService
       if action != "delete"
         DeployableService::PcCreateOrUpdateJob.perform_later(
           hash,
-          object_status(event_body["active"], event_body["suspended"])
+          object_status(event_body["active"], event_body["suspended"]),
+          modified_at(event_body)
         )
       elsif action == "delete"
         DeployableService::DeleteJob.perform_later(hash["id"])
