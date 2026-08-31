@@ -5,251 +5,215 @@ require "stomp"
 
 describe Jms::ManageMessage, :backend do
   let(:logger) { Logger.new($stdout) }
-  let(:parser) { JSON }
-  let(:service_resource) { create(:jms_json_service) }
-  let(:provider_resource) { create(:jms_json_provider) }
-  let(:catalogue_resource) { create(:jms_json_catalogue) }
-  let(:deployable_application_resource) do
-    { resource: { active: true, suspended: false, deployableApplication: create(:jms_deployable_service) } }.to_json
+
+  context "when receiving a service create/update message" do
+    subject(:call) { described_class.call(message, logger) }
+
+    let(:body) { create(:jms_json_service) }
+    let(:resource) { JSON.parse(body)["resource"] }
+    let(:modified_at) { Time.zone.at(resource["metadata"]["modifiedAt"].to_i / 1000) }
+    let(:message) { double(body: body, headers: { "destination" => "/topic/registry.service.update" }) }
+
+    it "enqueues a publish job for the service" do
+      expect { call }
+        .to have_enqueued_job(Service::PcCreateOrUpdateJob).with(resource["service"], :published, modified_at)
+        .and output.to_stdout
+    end
   end
-  let(:guideline_resource) do
-    {
-      resource: {
-        active: true,
-        suspended: false,
-        metadata: {
-          modifiedAt: 1_600_000_000_000
-        },
-        interoperabilityRecord: {
-          id: "G1",
-          title: "Rule"
+
+  context "when receiving a provider update message" do
+    subject(:call) { described_class.call(message, logger) }
+
+    let(:body) { create(:jms_json_provider) }
+    let(:resource) { JSON.parse(body)["resource"] }
+    let(:modified_at) { Time.zone.at(resource["metadata"]["modifiedAt"].to_i / 1000) }
+    let(:message) { double(body: body, headers: { "destination" => "/topic/registry.provider.update" }) }
+
+    it "enqueues a publish job for the provider" do
+      expect { call }
+        .to have_enqueued_job(Provider::PcCreateOrUpdateJob).with(resource["provider"], :published, modified_at)
+        .and output.to_stdout
+    end
+  end
+
+  context "when routing an organisation message to provider jobs" do
+    subject(:call) { described_class.call(message, logger) }
+
+    let(:body) do
+      parsed = JSON.parse(create(:jms_json_provider))
+      parsed["resource"]["organisation"] = parsed["resource"].delete("provider")
+      parsed.to_json
+    end
+    let(:resource) { JSON.parse(body)["resource"] }
+    let(:modified_at) { Time.zone.at(resource["metadata"]["modifiedAt"].to_i / 1000) }
+    let(:message) { double(body: body, headers: { "destination" => "/topic/registry.organisation.update" }) }
+
+    it "enqueues a publish job for the provider" do
+      expect { call }
+        .to have_enqueued_job(Provider::PcCreateOrUpdateJob).with(resource["organisation"], :published, modified_at)
+    end
+  end
+
+  context "when routing a deployable_application message to deployable service jobs" do
+    subject(:call) { described_class.call(message, logger) }
+
+    let(:body) do
+      { resource: { active: true, suspended: false, deployableApplication: create(:jms_deployable_service) } }.to_json
+    end
+    let(:resource) { JSON.parse(body)["resource"] }
+    let(:message) do
+      double(body: body, headers: { "destination" => "/topic/registry.deployable_application.create" })
+    end
+
+    it "enqueues a publish job for the deployable service" do
+      expect { call }
+        .to have_enqueued_job(DeployableService::PcCreateOrUpdateJob)
+        .with(resource["deployableApplication"], :published, kind_of(Time))
+    end
+  end
+
+  context "when routing an interoperability_record message to guideline jobs" do
+    subject(:call) { described_class.call(message, logger) }
+
+    let(:body) do
+      {
+        resource: {
+          active: true,
+          suspended: false,
+          metadata: { modifiedAt: 1_600_000_000_000 },
+          interoperabilityRecord: { id: "G1", title: "Rule" }
         }
-      }
-    }.to_json
-  end
-  let(:draft_provider_resource) { build(:jms_json_draft_provider) }
-  let(:rejected_provider_resource) { build(:jms_json_rejected_provider) }
-  let(:json_service) { double(body: service_resource, headers: { "destination" => "/topic/registry.service.update" }) }
-  let(:json_provider) do
-    double(body: provider_resource, headers: { "destination" => "/topic/registry.provider.update" })
-  end
-  let(:json_organisation) do
-    body = parser.parse(provider_resource)
-    body["resource"]["organisation"] = body["resource"].delete("provider")
-    double(body: body.to_json, headers: { "destination" => "/topic/registry.organisation.update" })
-  end
-  let(:json_catalogue) do
-    double(body: catalogue_resource, headers: { "destination" => "/topic/registry.catalogue.update" })
-  end
-  let(:json_deployable_application) do
-    double(
-      body: deployable_application_resource,
-      headers: {
-        "destination" => "/topic/registry.deployable_application.create"
-      }
-    )
-  end
-  let(:json_interoperability_record) do
-    double(body: guideline_resource, headers: { "destination" => "/topic/registry.interoperability_record.update" })
-  end
-  let(:json_create_catalogue) do
-    double(body: catalogue_resource, headers: { "destination" => "/topic/registry.catalogue.create" })
-  end
-  let(:json_draft_provider) do
-    double(body: draft_provider_resource, headers: { "destination" => "/topic/registry.provider.update" })
-  end
-  let(:json_rejected_provider) do
-    double(body: rejected_provider_resource, headers: { "destination" => "/topic/registry.provider.update" })
-  end
-  let(:service_create_or_update) { instance_double(Service::PcCreateOrUpdate) }
-  let(:provider_create_or_update) { instance_double(Provider::PcCreateOrUpdate) }
+      }.to_json
+    end
+    let(:resource) { JSON.parse(body)["resource"] }
+    let(:modified_at) { Time.zone.at(resource["metadata"]["modifiedAt"].to_i / 1000) }
+    let(:message) do
+      double(body: body, headers: { "destination" => "/topic/registry.interoperability_record.update" })
+    end
 
-  it "receives service message" do
-    response = parser.parse(service_resource)
-    resource = response["resource"]
-    original_stdout = $stdout
-
-    $stdout = StringIO.new
-
-    expect(Service::PcCreateOrUpdateJob).to receive(:perform_later).with(
-      resource["service"],
-      :published,
-      Time.at(resource["metadata"]["modifiedAt"].to_i / 1000)
-    )
-    expect { described_class.call(json_service, logger) }.not_to raise_error
-    $stdout = original_stdout
+    it "enqueues a publish job for the guideline" do
+      expect { call }.to have_enqueued_job(Guideline::PcCreateOrUpdateJob)
+        .with(resource["interoperabilityRecord"], :published, modified_at)
+    end
   end
 
-  it "receives update active provider message" do
-    original_stdout = $stdout
+  context "when receiving an update to a draft provider message" do
+    subject(:call) { described_class.new(message, logger).call }
 
-    $stdout = StringIO.new
-    response = parser.parse(provider_resource)
-    resource = response["resource"]
+    let(:body) { build(:jms_json_draft_provider) }
+    let(:resource) { JSON.parse(body)["resource"] }
+    let(:modified_at) { Time.zone.at(resource["metadata"]["modifiedAt"].to_i / 1000) }
+    let(:message) { double(body: body, headers: { "destination" => "/topic/registry.provider.update" }) }
 
-    expect(Provider::PcCreateOrUpdateJob).to receive(:perform_later).with(
-      resource["provider"],
-      :published,
-      Time.at(resource["metadata"]["modifiedAt"].to_i / 1000)
-    )
-
-    expect { described_class.call(json_provider, logger) }.not_to raise_error
-    $stdout = original_stdout
+    it "enqueues an unpublish job for the provider" do
+      expect { call }
+        .to have_enqueued_job(Provider::PcCreateOrUpdateJob).with(resource["provider"], :unpublished, modified_at)
+        .and output.to_stdout
+    end
   end
 
-  it "routes organisation messages to provider jobs" do
-    response = parser.parse(json_organisation.body)
-    resource = response["resource"]
+  context "when receiving an update to a rejected provider message" do
+    subject(:call) { described_class.new(message, logger).call }
 
-    expect(Provider::PcCreateOrUpdateJob).to receive(:perform_later).with(
-      resource["organisation"],
-      :published,
-      Time.at(resource["metadata"]["modifiedAt"].to_i / 1000)
-    )
+    let(:body) { build(:jms_json_rejected_provider) }
+    let(:resource) { JSON.parse(body)["resource"] }
+    let(:modified_at) { Time.zone.at(resource["metadata"]["modifiedAt"].to_i / 1000) }
+    let(:message) { double(body: body, headers: { "destination" => "/topic/registry.provider.update" }) }
 
-    expect { described_class.call(json_organisation, logger) }.not_to raise_error
+    it "enqueues an unpublish job for the provider" do
+      expect { call }
+        .to have_enqueued_job(Provider::PcCreateOrUpdateJob).with(resource["provider"], :unpublished, modified_at)
+        .and output.to_stdout
+    end
   end
 
-  it "routes deployable_application messages to deployable service jobs" do
-    response = parser.parse(deployable_application_resource)
-    resource = response["resource"]
+  context "when receiving a provider delete message" do
+    subject(:call) { described_class.new(message, logger).call }
 
-    expect(DeployableService::PcCreateOrUpdateJob).to receive(:perform_later).with(
-      resource["deployableApplication"],
-      :published,
-      kind_of(Time)
-    )
+    let(:provider) { create(:provider) }
+    let(:message) do
+      double(body: create(:jms_json_provider), headers: { "destination" => "/topic/registry.provider.delete" })
+    end
 
-    expect { described_class.call(json_deployable_application, logger) }.not_to raise_error
+    before { create(:provider_source, provider: provider, eid: "cyfronet") }
+
+    it "enqueues a delete job for the provider" do
+      expect { call }.to have_enqueued_job(Provider::DeleteJob).with("eosc.cyfronet").and output.to_stdout
+    end
   end
 
-  it "routes interoperability_record messages to guideline jobs" do
-    response = parser.parse(guideline_resource)
-    resource = response["resource"]
+  context "when receiving a service delete message" do
+    subject(:call) { described_class.new(message, logger).call }
 
-    expect(Guideline::PcCreateOrUpdateJob).to receive(:perform_later).with(
-      resource["interoperabilityRecord"],
-      :published,
-      Time.at(resource["metadata"]["modifiedAt"].to_i / 1000)
-    )
+    let(:service) { create(:service) }
+    let(:message) do
+      double(body: create(:jms_json_service), headers: { "destination" => "/topic/registry.service.delete" })
+    end
 
-    expect { described_class.call(json_interoperability_record, logger) }.not_to raise_error
+    before { create(:service_source, service: service, eid: "eosc.tp.openminted_catalogue_of_corpora_2") }
+
+    it "enqueues a delete job for the service" do
+      expect { call }
+        .to have_enqueued_job(Service::DeleteJob).with("eosc.tp.openminted_catalogue_of_corpora_2").and output.to_stdout
+    end
   end
 
-  it "receives update to draft provider message" do
-    original_stdout = $stdout
-    $stdout = StringIO.new
-    response = parser.parse(provider_resource)
-    resource = response["resource"]
-    expect(Provider::PcCreateOrUpdateJob).to receive(:perform_later).with(
-      resource["provider"],
-      :published,
-      Time.at(resource["metadata"]["modifiedAt"].to_i / 1000)
-    )
+  context "when the message resource cannot be parsed" do
+    subject(:call) { described_class.new(message, logger).call }
 
-    expect { described_class.new(json_provider, logger).call }.not_to raise_error
+    let(:message) do
+      double(body: { some_happy_key: "some_happy_value" }.to_json, headers: { "destination" => "aaaa.update" })
+    end
 
-    response = parser.parse(draft_provider_resource)
-    resource = response["resource"]
-    expect(Provider::PcCreateOrUpdateJob).to receive(:perform_later).with(
-      resource["provider"],
-      :unpublished,
-      Time.at(resource["metadata"]["modifiedAt"].to_i / 1000)
-    )
-
-    expect { described_class.new(json_draft_provider, logger).call }.not_to raise_error
-    $stdout = original_stdout
+    it "does not raise an error" do
+      expect { call }.to output.to_stdout
+    end
   end
 
-  it "receives update to update rejected provider message" do
-    original_stdout = $stdout
-    $stdout = StringIO.new
-    response = parser.parse(rejected_provider_resource)
-    resource = response["resource"]
-    expect(Provider::PcCreateOrUpdateJob).to receive(:perform_later).with(
-      resource["provider"],
-      :unpublished,
-      Time.at(resource["metadata"]["modifiedAt"].to_i / 1000)
-    )
+  context "when the message type is out of scope" do
+    subject(:call) { described_class.new(message, logger).call }
 
-    expect { described_class.new(json_rejected_provider, logger).call }.not_to raise_error
-    $stdout = original_stdout
-  end
-
-  it "receives provider delete message" do
-    provider = create(:provider)
-    create(:provider_source, provider: provider, eid: "cyfronet")
-    original_stdout = $stdout
-    $stdout = StringIO.new
-    json_provider = double(body: provider_resource, headers: { "destination" => "/topic/registry.provider.delete" })
-    expect(Provider::DeleteJob).to receive(:perform_later).with("eosc.cyfronet")
-
-    expect { described_class.new(json_provider, logger).call }.not_to raise_error
-    $stdout = original_stdout
-  end
-
-  it "receives service delete message" do
-    service = create(:service)
-    create(:service_source, service: service, eid: "eosc.tp.openminted_catalogue_of_corpora_2")
-    original_stdout = $stdout
-    $stdout = StringIO.new
-    json_service = double(body: service_resource, headers: { "destination" => "/topic/registry.service.delete" })
-    expect(Service::DeleteJob).to receive(:perform_later).with("eosc.tp.openminted_catalogue_of_corpora_2")
-
-    expect { described_class.new(json_service, logger).call }.not_to raise_error
-    $stdout = original_stdout
-  end
-
-  it "receives error if message is invalid" do
-    original_stdout = $stdout
-    $stdout = StringIO.new
-    service_hash = { some_happy_key: "some_happy_value" }
-    error_service_message = double(body: service_hash.to_json, headers: { "destination" => "aaaa.update" })
-
-    expect { described_class.new(error_service_message, logger).call }.not_to raise_error
-    $stdout = original_stdout
-  end
-
-  it "does not route out-of-scope adapter messages" do
-    adapter_message =
+    let(:message) do
       double(
         body: { resource: { adapter: { id: "A1", name: "Adapter" } } }.to_json,
-        headers: {
-          "destination" => "/topic/registry.adapter.update"
-        }
+        headers: { "destination" => "/topic/registry.adapter.update" }
       )
+    end
 
-    expect(Sentry).to receive(:capture_exception).with(be_a(Importable::WrongMessageError))
-    expect { described_class.new(adapter_message, logger).call }.not_to raise_error
+    before { allow(Sentry).to receive(:capture_exception) }
+
+    it "reports the error to Sentry" do
+      call
+
+      expect(Sentry).to have_received(:capture_exception).with(be_a(Importable::WrongMessageError))
+    end
   end
 
-  it "receives create catalogue message" do
-    original_stdout = $stdout
-    # $stdout = StringIO.new
-    response = JSON.parse(catalogue_resource)
-    resource = response["resource"]
-    expect(Catalogue::PcCreateOrUpdateJob).to receive(:perform_later).with(
-      resource["catalogue"],
-      :unpublished,
-      Time.at(resource["metadata"]["modifiedAt"].to_i / 1000)
-    )
+  context "when receiving a create catalogue message" do
+    subject(:call) { described_class.call(message, logger) }
 
-    expect { described_class.call(json_create_catalogue, logger) }.not_to raise_error
-    $stdout = original_stdout
+    let(:body) { create(:jms_json_catalogue) }
+    let(:resource) { JSON.parse(body)["resource"] }
+    let(:modified_at) { Time.zone.at(resource["metadata"]["modifiedAt"].to_i / 1000) }
+    let(:message) { double(body: body, headers: { "destination" => "/topic/registry.catalogue.create" }) }
+
+    it "enqueues an unpublish job for the catalogue" do
+      expect { call }
+        .to have_enqueued_job(Catalogue::PcCreateOrUpdateJob).with(resource["catalogue"], :unpublished, modified_at)
+    end
   end
 
-  it "receives update catalogue message" do
-    original_stdout = $stdout
-    # $stdout = StringIO.new
-    response = parser.parse(catalogue_resource)
-    resource = response["resource"]
-    expect(Catalogue::PcCreateOrUpdateJob).to receive(:perform_later).with(
-      resource["catalogue"],
-      :unpublished,
-      Time.at(resource["metadata"]["modifiedAt"].to_i / 1000)
-    )
+  context "when receiving an update catalogue message" do
+    subject(:call) { described_class.call(message, logger) }
 
-    expect { described_class.call(json_catalogue, logger) }.not_to raise_error
-    $stdout = original_stdout
+    let(:body) { create(:jms_json_catalogue) }
+    let(:resource) { JSON.parse(body)["resource"] }
+    let(:modified_at) { Time.zone.at(resource["metadata"]["modifiedAt"].to_i / 1000) }
+    let(:message) { double(body: body, headers: { "destination" => "/topic/registry.catalogue.update" }) }
+
+    it "enqueues an unpublish job for the catalogue" do
+      expect { call }
+        .to have_enqueued_job(Catalogue::PcCreateOrUpdateJob).with(resource["catalogue"], :unpublished, modified_at)
+    end
   end
 end
