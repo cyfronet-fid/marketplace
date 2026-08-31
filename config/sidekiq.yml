@@ -9,19 +9,19 @@ staging:
   :concurrency: 5
 
 :queues:
-  - active_storage_analysis
-  - active_storage_purge
-  - pc_subscriber
-  - orders
-  - mailers
-  - reports
-  - matomo
-  - probes
-  - default
-  - pc_publisher
-  - ess_update
-  - deployments
-  - ams_subscriber
+  - active_storage_analysis,1
+  - active_storage_purge,1
+  - pc_subscriber,1
+  - orders,1
+  - mailers,1
+  - reports,1
+  - matomo,1
+  - probes,1
+  - default,1
+  - pc_publisher,1
+  - ess_update,1
+  - deployments,1
+  - ams_subscriber,1
 
 :limits:
   pc_subscriber: 1
