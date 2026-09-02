@@ -245,6 +245,109 @@ RSpec.describe "Services::ApplicationController functionality", type: :request d
     end
   end
 
+  describe "#check_vo_membership!" do
+    let(:service_resource) { create(:service, resource_organisation: provider, status: :published) }
+
+    before { allow(Users::CheckVoMembership).to receive(:call).and_return(check_vo_membership_result) }
+
+    context "when the status is session_expired" do
+      let(:check_vo_membership_result) { Users::CheckVoMembership::Result.new(status: :session_expired) }
+
+      before { get service_choose_offer_path(service_resource) }
+
+      it "redirects to sign out" do
+        expect(response).to redirect_to(destroy_user_session_path)
+      end
+
+      it "sets an expired session alert" do
+        expect(flash[:alert]).to eq("Your session has expired. Please sign in again.")
+      end
+    end
+
+    context "when the status is verification_failed" do
+      let(:check_vo_membership_result) { Users::CheckVoMembership::Result.new(status: :verification_failed) }
+
+      before { get service_choose_offer_path(service_resource) }
+
+      it "redirects to root" do
+        expect(response).to redirect_to(root_path)
+      end
+
+      it "sets a verification failure alert" do
+        expect(flash[:alert]).to eq("Authentication verification failed")
+      end
+    end
+
+    context "when the status is not_member" do
+      let(:check_vo_membership_result) do
+        Users::CheckVoMembership::Result.new(status: :not_member, become_vo_member_url: "https://example.com/enroll")
+      end
+
+      before { get service_choose_offer_path(service_resource) }
+
+      it "redirects to the become_vo_member_url" do
+        expect(response).to redirect_to("https://example.com/enroll")
+      end
+    end
+
+    context "when the status is vo_url_missing" do
+      let(:check_vo_membership_result) { Users::CheckVoMembership::Result.new(status: :vo_url_missing) }
+
+      before { get service_choose_offer_path(service_resource) }
+
+      it "redirects to root" do
+        expect(response).to redirect_to(root_path)
+      end
+
+      it "sets a configuration alert" do
+        expect(flash[:alert]).to eq("VO membership URL is not configured")
+      end
+    end
+
+    context "when the status is member" do
+      let(:check_vo_membership_result) { Users::CheckVoMembership::Result.new(status: :member) }
+
+      before do
+        create(
+          :offer,
+          service: service_resource,
+          deployable_service: nil,
+          offer_category: service_category,
+          status: :published
+        )
+        create(
+          :offer,
+          service: service_resource,
+          deployable_service: nil,
+          offer_category: service_category,
+          name: "Alternative Offer",
+          status: :published
+        )
+      end
+
+      it "proceeds to the requested action" do
+        get service_choose_offer_path(service_resource)
+        expect(response).to have_http_status(:success)
+      end
+    end
+
+    context "when the service returns refreshed tokens" do
+      let(:check_vo_membership_result) do
+        Users::CheckVoMembership::Result.new(
+          status: :verification_failed,
+          refresh_token: "new-refresh",
+          access_token: "new-token"
+        )
+      end
+
+      before { get service_choose_offer_path(service_resource) }
+
+      it "syncs the refreshed tokens into the session before redirecting" do
+        expect(session.to_h).to include("token" => "new-token", "refresh_token" => "new-refresh")
+      end
+    end
+  end
+
   describe "error handling and edge cases" do
     let(:service_resource) { create(:service, resource_organisation: provider, status: :published) }
 

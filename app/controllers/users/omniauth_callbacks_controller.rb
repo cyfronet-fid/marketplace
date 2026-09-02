@@ -21,6 +21,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
           cookies.delete(:favourites)
         end
         flash[:notice] = I18n.t "devise.omniauth_callbacks.success", kind: "Checkin"
+        session["refresh_token"] = auth["credentials"]["refresh_token"]
         session["token"] = auth["credentials"]["token"]
       else
         flash[:alert] = "Cannot register user #{@user.errors.inspect}"
