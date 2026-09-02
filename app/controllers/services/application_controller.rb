@@ -46,7 +46,8 @@ class Services::ApplicationController < ApplicationController
 
     case result.status
     when :session_expired
-      redirect_to destroy_user_session_path, alert: _("Your session has expired. Please sign in again.")
+      sign_out(current_user)
+      redirect_to root_path, alert: _("Your session has expired. Please sign in again.")
     when :verification_failed
       redirect_to root_path, alert: _("Authentication verification failed")
     when :not_member

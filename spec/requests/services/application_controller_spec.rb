@@ -255,12 +255,17 @@ RSpec.describe "Services::ApplicationController functionality", type: :request d
 
       before { get service_choose_offer_path(service_resource) }
 
-      it "redirects to sign out" do
-        expect(response).to redirect_to(destroy_user_session_path)
+      it "redirects to root" do
+        expect(response).to redirect_to(root_path)
       end
 
       it "sets an expired session alert" do
         expect(flash[:alert]).to eq("Your session has expired. Please sign in again.")
+      end
+
+      it "signs the user out" do
+        get service_choose_offer_path(service_resource)
+        expect(response).to redirect_to(user_checkin_omniauth_authorize_path)
       end
     end
 
