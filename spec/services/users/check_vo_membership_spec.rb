@@ -148,6 +148,29 @@ RSpec.describe Users::CheckVoMembership, type: :service do
     end
   end
 
+  describe "when the token is active and the user is a VO member, but no become_vo_member_url is configured" do
+    let(:token) { "a-token" }
+
+    let(:checkin_config) do
+      class_double(
+        Users::CheckinConfig,
+        vo_group_name: "eosc-beyond.eu",
+        become_vo_member_url: nil
+      )
+    end
+
+    before do
+      allow(introspect_service)
+        .to receive(:call)
+        .with(token)
+        .and_return(double(success: true, active: true, entitlements: ["group:eosc-beyond.eu"]))
+    end
+
+    it "returns a member status" do
+      expect(result.status).to eq(:member)
+    end
+  end
+
   describe "when the token is active, the user lacks the VO entitlement, and no become_vo_member_url is configured" do
     let(:token) { "a-token" }
 

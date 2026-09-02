@@ -24,11 +24,6 @@ class Users::CheckVoMembership < ApplicationService
       return Result.new(status: :session_expired)
     end
 
-    if @checkin_config.become_vo_member_url.blank?
-      Rails.logger.error("Missing become_vo_member_url")
-      return Result.new(status: :vo_url_missing)
-    end
-
     introspection = @introspect_service.call(@token)
     return Result.new(status: :verification_failed) unless introspection.success
 
@@ -47,20 +42,21 @@ class Users::CheckVoMembership < ApplicationService
     end
 
     has_membership = introspection.entitlements.any? { |e| e.include?("group:#{@checkin_config.vo_group_name}") }
-
     if has_membership
-      Result.new(
-        status: :member,
-        access_token: new_access_token,
-        refresh_token: new_refresh_token
-      )
-    else
-      Result.new(
-        status: :not_member,
-        access_token: new_access_token,
-        refresh_token: new_refresh_token,
-        become_vo_member_url: @checkin_config.become_vo_member_url
-      )
+      return Result.new(status: :member, access_token: new_access_token,
+                        refresh_token: new_refresh_token)
     end
+
+    if @checkin_config.become_vo_member_url.blank?
+      Rails.logger.error("Missing become_vo_member_url")
+      return Result.new(status: :vo_url_missing)
+    end
+
+    Result.new(
+      status: :not_member,
+      access_token: new_access_token,
+      refresh_token: new_refresh_token,
+      become_vo_member_url: @checkin_config.become_vo_member_url
+    )
   end
 end
