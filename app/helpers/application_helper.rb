@@ -96,7 +96,7 @@ module ApplicationHelper
   end
 
   def whitelabel
-    Rails.configuration.whitelabel
+    Mp::Variant.whitelabel?
   end
 
   def render_turbo_stream_flash

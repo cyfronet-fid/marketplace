@@ -31,7 +31,7 @@ class DataAdministrator < ApplicationRecord
     user = User.find_by(email: email)
     if previous_id.present? && previous_id != user&.id
       previous_user = User.find(previous_id)
-      previous_user.decrement("#{joined}_count", 1)
+      previous_user.decrement("#{joined}_count", 1) if joined.present?
       previous_user.save
     end
     self.user_id = user.present? ? user.id : nil

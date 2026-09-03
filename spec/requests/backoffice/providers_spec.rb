@@ -53,5 +53,17 @@ RSpec.describe "Backoffice: manage providers", backend: true do
       expect(provider.upstream_id).to eq(nil)
       new_params.each { |key, value| expect(provider[key]).to eq(value) }
     end
+
+    it "can save an in-progress wizard registration as a draft" do
+      provider = create(:provider, status: :unpublished)
+      get edit_backoffice_provider_path(provider)
+
+      put backoffice_provider_wizard_path(provider),
+          params: { provider: { name: provider.name }, commit: "Save as draft" }
+
+      expect(response).to redirect_to(backoffice_providers_path(format: :html))
+      expect(provider.reload.status).to eq("draft")
+      expect(session[provider.id.to_s.to_sym]).to be_nil
+    end
   end
 end

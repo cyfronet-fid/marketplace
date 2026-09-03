@@ -44,6 +44,9 @@ class Backoffice::Providers::StepsController < Backoffice::ProvidersController
     provider_attrs = saved_params.merge permitted_step_attributes
     @provider.assign_attributes provider_attrs.except("logo")
     provider_attrs["logo"] = logo(provider_attrs) if provider_attrs["logo"].present? && current_step_index.zero?
+
+    return save_as_draft if params[:commit] == save_as_draft_title
+
     if @provider.valid?
       session[session_key] = provider_attrs
       redirect_to_next_step(params[:commit])
@@ -56,6 +59,16 @@ class Backoffice::Providers::StepsController < Backoffice::ProvidersController
   end
 
   private
+
+  # whitelabel-only: lets a coordinator save an in-progress registration
+  # mid-wizard instead of finishing all steps (ADR-0001 controller audit,
+  # backoffice-providers-steps-controller.md). Gated in the view by
+  # Mp::Variant.whitelabel? - the button only exists for that variant.
+  def save_as_draft
+    Provider::Draft.new(@provider).call
+    clear_session_data
+    redirect_to backoffice_providers_path(format: :html), notice: "Provider saved successfully as a draft"
+  end
 
   def target_step(commit)
     raise CommitValueError, "Unknown commit value" if commit.blank?
