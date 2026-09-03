@@ -98,8 +98,6 @@ class Services::SummariesController < Services::ApplicationController
       Probes::ProbesJob.perform_later(request_body.to_json)
     end
 
-    if %w[all jms].include? Mp::Application.config.user_actions_target
-      Jms::PublishJob.perform_later(request_body.to_json, :user_actions)
-    end
+    Jms::PublishJob.perform_later(request_body.to_json, :user_actions) if publish_user_actions_to_jms?
   end
 end

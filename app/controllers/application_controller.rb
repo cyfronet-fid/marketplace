@@ -34,6 +34,11 @@ class ApplicationController < ActionController::Base
     @root_categories = Category.roots.order(:name)
   end
 
+  def publish_user_actions_to_jms?
+    Mp::Application.config.mp_stomp_publisher_enabled &&
+      %w[all jms].include?(Mp::Application.config.user_actions_target)
+  end
+
   private
 
   def load_query_params_from_session
