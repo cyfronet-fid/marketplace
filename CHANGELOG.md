@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [4.4.7](https://github.com/cyfronet-fid/marketplace/compare/v4.4.6...v4.4.7) (2026-09-03)
+
+
+### Bug Fixes
+
+* auth mock login redirect and regenerate schema from migrations ([#3742](https://github.com/cyfronet-fid/marketplace/issues/3742)) ([736cc20](https://github.com/cyfronet-fid/marketplace/commit/736cc2048b5d74ba780855fd1688838aab4fe90c))
+* build assets once before watching in dev Procfile ([561c797](https://github.com/cyfronet-fid/marketplace/commit/561c7971715f5d55e1baaaa947349caa972dfadd))
+* **logos:** [[#3725](https://github.com/cyfronet-fid/marketplace/issues/3725)] rescue invalid urls and corrupt image bytes ([6672332](https://github.com/cyfronet-fid/marketplace/commit/66723329db668ba2629f7274da2b10ce1935e365))
+* **logos:** [[#3725](https://github.com/cyfronet-fid/marketplace/issues/3725)] use own default logo for deployable services ([610a5f6](https://github.com/cyfronet-fid/marketplace/commit/610a5f6540bc362b11cb726745c8312b7b9b2398))
+* **logos:** [[#3725](https://github.com/cyfronet-fid/marketplace/issues/3725)] verify TLS certificates when fetching logo urls ([adf7818](https://github.com/cyfronet-fid/marketplace/commit/adf7818501fa8edc7125e27937536e4316378e0c))
+* repair dev:prime seed task crashing on fresh setup ([#3741](https://github.com/cyfronet-fid/marketplace/issues/3741)) ([056a4c8](https://github.com/cyfronet-fid/marketplace/commit/056a4c828eb04313bfd665afc16ba3eaf56c6adf))
+
 ## [4.4.6](https://github.com/cyfronet-fid/marketplace/compare/v4.4.5...v4.4.6) (2026-07-31)
 
 
