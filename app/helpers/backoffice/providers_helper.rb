@@ -28,6 +28,10 @@ module Backoffice::ProvidersHelper
     "#{session[:wizard_action].capitalize} provider"
   end
 
+  def save_as_draft_title
+    "Save as draft"
+  end
+
   def preloaded(provider)
     params[:provider_id] == "new" ? provider : Provider.with_attached_logo.find(params[:provider_id])
   end

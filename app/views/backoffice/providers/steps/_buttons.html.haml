@@ -4,6 +4,9 @@
     .col-5.back-link-wrapper
       = link_to back_title, backoffice_provider_wizard_path(params[:provider_id], step: prev_step) unless current_step_index.zero?
     .col-2
+      - if Mp::Variant.whitelabel?
+        = f.button :submit, save_as_draft_title, class: "btn btn-outline-primary btn-sm d-block mb-1",
+                                                 formnovalidate: true
       = link_to "Exit", backoffice_provider_exit_path(params[:provider_id].present? ? params[:provider_id] : params[:id]),
             data: { turbo_confirm: "Exit provider editor",
             confirm_details: exit_confirm_details,

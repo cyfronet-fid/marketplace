@@ -12,7 +12,7 @@ class Api::V1::UsersController < Api::V1::ApplicationController
   rescue ActiveRecord::RecordNotFound
     render json: {
              error: "User not found",
-             message: "User with uid '#{params[:user_id]}' does not exist"
+             message: "User with uid '#{params[:id]}' does not exist"
            },
            status: :not_found
   rescue Pundit::NotAuthorizedError
