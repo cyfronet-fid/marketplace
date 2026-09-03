@@ -77,6 +77,6 @@ class Backoffice::OtherSettings::VocabulariesController < Backoffice::Applicatio
   end
 
   def vocabulary_type
-    VOCABULARY_TYPES[params[:type].to_sym][:klass].constantize
+    VOCABULARY_TYPES[params[:type].to_sym][:klass].call
   end
 end

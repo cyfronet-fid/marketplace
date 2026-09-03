@@ -74,7 +74,14 @@ you can add new records by editing `db/data.yml`.
 It is important to remember that if some record
 is a parent for another, it must be written above its child.
 
+`dev:prime` saves records that are synced to Elasticsearch via Searchkick
+(`Service`, `Offer`, `Bundle`, `Provider`), so their indices must already
+exist beforehand, otherwise the task aborts partway through with
+`Searchkick::ImportError: index_not_found_exception`. Make sure Elasticsearch
+is running (see [docker compose](#docker-compose)), then run:
+
 ```shell
+./bin/rails searchkick:reindex:all
 ./bin/rails dev:prime
 ```
 
@@ -336,66 +343,17 @@ We are currently using the following ENV variables:
         refresh token (default `ENV["CHECKIN_IDENTIFIER"]`
         or `Rails.application.credentials.checkin[:identifier]`)
 
-## Commits
-
-Running `./bin/setup` automatically installs githooks
-(using `overcommit` gem) for code linting. But if you're using
-an IDE for repository management then
-you will probably experience problems with committing code changes.
-This is related to the fact that some IDE's do not inherit user's `.bash_profile`
-or any other scripts which traditionally set OS environmental variables.
-
-Installed githooks require access to ruby,
-so ruby environment must be available for IDE.
-
-If you are using asdf-based ruby installation and IDE like RubyMine,
-the solution is placing asdf
-sourcing commands at the end of your `.profile`
-file which is inherited by graphical applications
-(unlike `.bashrc` that is standard place for asdf sourcing commands):
-
-```shell
-. $HOME/.asdf/asdf.sh
-. $HOME/.asdf/completions/asdf.bash
-```
-
-Other solutions could be:
-
-- For OSX: calling `sudo launchctl config user path $PATH`
-- For Linux systems: modifying `PATH` in `/etc/environment`.
-
-You can also skip githooks altogether using:
-
-```shell
- git <command> --no-verify
-```
-
-... or by unchecking 'run Git hooks' in RubyMine IDE
-when applying git operations, or setting `OVERCOMMIT_DISABLE=1`
-envvar globally in your system.
-
 ### Linting and code formatting
 
-We use prettier for code formatting and a specifically configured
-Rubocop, inspect `.prettierrc`, `.prettierignore`
-and `rubocop.yml` for specifics.
+We use a specifically configured Rubocop (with rubocop-rails and
+rubocop-rspec), inspect `.rubocop.yml` for specifics.
 
-To correct formatting with prettier `$ rbprettier --write .`
-(it will take some time), you may want to run it
-selectively on modified files only
-(just pass them as explicit arguments instead of a dot `.`).
-
-To manually run all overcommit checks `$ overcommit --run`
-(you may need to sign configs, first, just follow its instructions).
-It's configured in `.overcommit.yml`.
-
-To run rubocop manually `$ rubocop`.
+To run rubocop manually `$ bundle exec rubocop`, add `-a` to autocorrect
+offenses that support it.
 
 To run haml-lint manually `$ haml-lint --exclude 'lib/**/*.haml'`.
 
-To run brakeman (it's only run directly in CI though,
-not through overcommit) manually (in interactive mode)
-`$ brakeman -I`.
+To run brakeman manually (in interactive mode) `$ brakeman -I`.
 
 ## Designing UI without dedicated controller
 

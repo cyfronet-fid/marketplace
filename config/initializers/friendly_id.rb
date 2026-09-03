@@ -16,12 +16,9 @@ module FriendlyIdExtensions
     private
       def first_by_friendly_id(id)
         fields = (column_names & ["ppid", "pid", "eid"])
-        dup_id = Array.new(fields.size + 1) { "#{id}" }
-        if fields.present?
-          find_by("#{friendly_id_config.query_field} = ? #{fields.map { |f| "OR #{f} = ?"}.join(" ")}", *dup_id)
-        else
-          find_by("#{friendly_id_config.query_field} = ?", id)
-        end
+        scope = where(friendly_id_config.query_field => id.to_s)
+        fields.each { |field| scope = scope.or(where(field => id.to_s)) }
+        scope.first
       end
   end
 end

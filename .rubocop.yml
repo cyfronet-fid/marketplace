@@ -1,5 +1,6 @@
-inherit_gem:
-  prettier: rubocop.yml
+plugins:
+  - rubocop-rails
+  - rubocop-rspec
 
 AllCops:
   TargetRubyVersion: 3.3.0
@@ -81,7 +82,6 @@ Style/NumericLiterals:
 Bundler/OrderedGems:
   Enabled: false
 
-# Turn off due conflict with prettier
 Style/LineEndConcatenation:
   Enabled: false
 
@@ -175,3 +175,11 @@ Style/OpenStructUse:
   Exclude:
     - "spec/lib/import/providers_spec.rb"
     - "spec/lib/import/resources_spec.rb"
+
+# rswag request specs bind `let` names to literal header names (e.g. "X-User-Token")
+# read by simple_token_authentication; snake_case would break the header lookup.
+RSpec/VariableName:
+  Include:
+    - "spec/requests/**/*"
+  AllowedPatterns:
+    - '^X-.*-Token$'

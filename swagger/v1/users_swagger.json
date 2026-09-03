@@ -20,7 +20,9 @@
       ],
       "get": {
         "summary": "Get user roles",
-        "tags": ["Users"],
+        "tags": [
+          "Users"
+        ],
         "description": "Returns roles for a specific user",
         "security": [
           {

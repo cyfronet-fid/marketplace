@@ -63,7 +63,10 @@ class Import::Resources
           unless @dry_run
             service = Service.new(service)
             if service.valid?
-              Importers::Logo.call(service, image_url) unless @rescue_mode
+              unless @rescue_mode
+                logo = Importers::Logo.call(image_url)
+                service.logo.attach(logo) if logo
+              end
               service = Service::Create.call(service)
               service_source =
                 ServiceSource.create!(service_id: service.id, eid: service.pid, source_type: "eosc_registry")
@@ -75,7 +78,10 @@ class Import::Resources
               update_from_eosc_registry(service, service_source, false)
               log "Service #{service.name}, eid: #{service.pid} saved with errors: #{service.errors.full_messages}"
 
-              Importers::Logo.call(service, image_url) unless @rescue_mode
+              unless @rescue_mode
+                logo = Importers::Logo.call(image_url)
+                service.logo.attach(logo) if logo
+              end
               service.save(validate: false)
             end
           end
@@ -85,7 +91,10 @@ class Import::Resources
             updated += 1
             log "Updating [EXISTING] service #{service[:name]}, id: #{service_source.id}, eid: #{service[:pid]}"
             unless @dry_run
-              Importers::Logo.call(existing_service, image_url) unless @rescue_mode
+              unless @rescue_mode
+                logo = Importers::Logo.call(image_url)
+                existing_service.logo.attach(logo) if logo
+              end
               Service::Update.call(existing_service, service)
             end
           else
@@ -94,7 +103,10 @@ class Import::Resources
               updated += 1
               log "Updating [EXISTING] service #{service[:name]}, id: #{service_source.id}, eid: #{service[:pid]}"
               unless @dry_run
-                Importers::Logo.call(existing_service, image_url) unless @rescue_mode
+                unless @rescue_mode
+                  logo = Importers::Logo.call(image_url)
+                  existing_service.logo.attach(logo) if logo
+                end
                 Service::Update.call(existing_service, service)
               end
             else

@@ -5,9 +5,10 @@
     .row.space-between
       .col-12.col-lg-9.row
         .col-12.col-sm-3.d-flex.img-service-detail
-          - has_logo = @deployable_service.logo.attached? && @deployable_service.logo.variable?
-          = image_tag @deployable_service.logo.variant(resize_to_limit: [200, 125]), class: "align-self-center" if has_logo
-          = image_tag("service_logo.svg", size: "100x67") unless has_logo
+          - if @deployable_service.logo.attached? && @deployable_service.logo.variable?
+            = image_tag @deployable_service.logo.variant(resize_to_limit: [200, 125]), class: "align-self-center"
+          - else
+            = image_tag "deployable_service_logo.svg", size: "100x67", class: "align-self-center"
         .col-12.col-sm-9.service-details-header
           %h2.font-weight-bolder.mb-1= @deployable_service.name
           %p= @deployable_service.abbreviation || "-"
@@ -84,8 +85,9 @@
                       = tag
 
       %sidebar.col-12.col-xl-3
-        = link_to "Deployment Template", @deployable_service.url, target: "_blank",
-          class: "right-panel-button configuration" if @deployable_service.url.present?
+        - deployment_template_url = safe_external_url(@deployable_service.url)
+        = link_to "Deployment Template", deployment_template_url, target: "_blank",
+          class: "right-panel-button configuration" if deployment_template_url.present?
 
         .details-box-wrapper.sidebar-box-wrapper.mt-4
           .details-box.maturity

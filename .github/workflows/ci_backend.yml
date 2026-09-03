@@ -1,8 +1,15 @@
 name: Backend tests
-on: workflow_dispatch
+on:
+  pull_request:
+  workflow_dispatch:
 jobs:
   rspec:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      # ci_node values must span 1..N_GROUPS, N_GROUPS must match --only-group's -n below
+      matrix:
+        ci_node: [1, 2, 3, 4]
 
     steps:
     - name: Configure sysctl limits
@@ -15,7 +22,10 @@ jobs:
     - name: Start containers
       run: docker compose -f docker-compose-x64.yml up -d
     - name: Install VIPS
-      run: sudo apt-get update && sudo apt-get install libvips -y --no-install-recommends
+      run: |
+        echo "http://archive.ubuntu.com/ubuntu" | sudo tee /etc/apt/apt-mirrors.txt
+        sudo apt-get update
+        sudo NEEDRESTART_MODE=a apt-get install libvips42 -y --no-install-recommends
     - uses: ruby/setup-ruby@v1
       with:
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
@@ -32,7 +42,7 @@ jobs:
       run: |
         bundle exec rake db:drop db:create db:migrate RAILS_ENV=test
         bundle exec rake test:prepare
-        bundle exec rspec -t ~end_user_frontend -t ~manager_frontend
+        bundle exec parallel_rspec -n 4 --only-group ${{ matrix.ci_node }} --group-by filesize -- -t "~end_user_frontend" -t "~manager_frontend" -- spec
     - name: Containers logs
       if: failure()
       run: docker compose logs

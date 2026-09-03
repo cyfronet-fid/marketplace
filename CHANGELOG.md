@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [4.4.6](https://github.com/cyfronet-fid/marketplace/compare/v4.4.5...v4.4.6) (2026-07-31)
+
+
+### Bug Fixes
+
+* [] remove html tags from resource description ([6c5f777](https://github.com/cyfronet-fid/marketplace/commit/6c5f777b19f7d4418cf70dabc57122d0055a65f0))
+
 ## [4.4.5](https://github.com/cyfronet-fid/marketplace/compare/v4.4.4...v4.4.5) (2026-07-30)
 
 
