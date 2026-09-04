@@ -76,7 +76,10 @@ RSpec.describe Ams::Subscribe do
       before { stub_request(:post, pull_url).to_return(status: 500, body: { "message" => "boom" }.to_json) }
 
       it "raises instead of silently treating it as no messages" do
-        expect { subscribe }.to raise_error(/AMS pull failed for #{subscription_name}: 500/)
+        expect { subscribe }.to raise_error(
+          Ams::Subscribe::PullError,
+          "[AMS] Pull failed for #{subscription_name}: 500"
+        )
       end
     end
 
@@ -96,7 +99,10 @@ RSpec.describe Ams::Subscribe do
       end
 
       it "raises instead of silently swallowing the failure" do
-        expect { subscribe }.to raise_error(/AMS acknowledge failed for #{subscription_name}: 500/)
+        expect { subscribe }.to raise_error(
+          Ams::Subscribe::AcknowledgeError,
+          "[AMS] Acknowledge failed for #{subscription_name}: 500"
+        )
       end
     end
   end

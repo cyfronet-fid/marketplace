@@ -6,20 +6,18 @@ RSpec.describe Ams::SubscribeAllJob, type: :job do
   describe "#perform_now" do
     before do
       allow(Ams::SubscribeJob).to receive(:perform_later)
+      described_class.perform_now
     end
 
     it "calls Ams::SubscribeJob once per topic" do
-      described_class.perform_now
       expect(Ams::SubscribeJob).to have_received(:perform_later).twice
     end
 
     it "calls Ams::SubscribeJob for the first subscription" do
-      described_class.perform_now
       expect(Ams::SubscribeJob).to have_received(:perform_later).with("test-service-create")
     end
 
     it "calls Ams::SubscribeJob for the second subscription" do
-      described_class.perform_now
       expect(Ams::SubscribeJob).to have_received(:perform_later).with("test-service-update")
     end
   end

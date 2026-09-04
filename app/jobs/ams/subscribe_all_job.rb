@@ -2,7 +2,9 @@
 
 class Ams::SubscribeAllJob < ApplicationJob
   queue_as :ams_subscriber
-  sidekiq_options retry: 3
+
+  # New pull every 3 minutes, so retry must be low
+  sidekiq_options retry: 2
 
   def perform
     config = Rails.application.config_for(:ams)

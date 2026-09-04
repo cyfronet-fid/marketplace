@@ -4,20 +4,25 @@ module Ams
   class Subscribe
     include Callable
 
+    class PullError < Ams::Error; end
+    class AcknowledgeError < Ams::Error; end
+
     def initialize(subscription_name)
       @subscription_name = subscription_name
     end
 
     def call
       response = client.pull(subscription_name)
-      raise "AMS pull failed for #{subscription_name}: #{response.status}" unless response.success?
+      raise PullError, "Pull failed for #{subscription_name}: #{response.status}" unless response.success?
 
       messages = get_messages(response)
       ack_ids = messages.filter_map { |message| process(message) }
       return if ack_ids.blank?
 
       ack_response = client.acknowledge(subscription_name, ack_ids: ack_ids)
-      raise "AMS acknowledge failed for #{subscription_name}: #{ack_response.status}" unless ack_response.success?
+      return if ack_response.success?
+
+      raise AcknowledgeError, "Acknowledge failed for #{subscription_name}: #{ack_response.status}"
     end
 
     private
