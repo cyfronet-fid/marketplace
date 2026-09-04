@@ -9,7 +9,7 @@ class Datasource::PcCreateOrUpdate
   class NotUpdatedError < StandardError
   end
 
-  def initialize(eosc_registry_datasource, status)
+  def initialize(eosc_registry_datasource, status, modified_at)
     @error_message = "Datasource haven't been updated. Message #{eosc_registry_datasource}"
     @logo = eosc_registry_datasource["logo"]
     @source_type = "eosc_registry"
@@ -23,12 +23,12 @@ class Datasource::PcCreateOrUpdate
           "service_sources.source_type": @source_type,
           "service_sources.eid": eosc_registry_datasource["serviceId"]
         )
-    @datasource_hash = Importers::Datasource.call(eosc_registry_datasource)
+    @datasource_hash = Importers::Datasource.call(eosc_registry_datasource, modified_at)
     @datasource_hash.delete(:logo_url)
     @datasource_hash[:status] = @status
     @datasource_hash[:type] = "Datasource"
 
-    @new_update_available = true
+    @new_update_available = Datasource::PcCreateOrUpdate.new_update_available?(@mp_datasource, modified_at)
   end
 
   def call

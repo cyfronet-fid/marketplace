@@ -55,7 +55,7 @@ class Import::Datasources
         raise "Unexpected type #{ds_data["type"]}" unless ds_data["type"] == "DataSource"
 
         synchronized_at = Time.now.to_i
-        service_attrs = Importers::Service.call(ds_data, synchronized_at, @eosc_registry_base_url, @token)
+        service_attrs = Importers::Service.call(ds_data, synchronized_at)
         ds_delta = Importers::Datasource.call(ds_data)
         attrs = service_attrs.merge(ds_delta).merge(type: "Datasource", status: :published)
         image_url = attrs.delete(:logo_url)

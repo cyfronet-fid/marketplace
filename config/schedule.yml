@@ -1,0 +1,4 @@
+ams_subscribe_all:
+  cron: "<%= ENV.fetch('AMS_SUBSCRIBE_ALL_CRON', '*/3 * * * *') %>"
+  class: "Ams::SubscribeAllJob"
+  queue: ams_subscriber

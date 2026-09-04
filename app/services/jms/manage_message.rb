@@ -9,12 +9,10 @@ class Jms::ManageMessage < ApplicationService
     "interoperability_record" => "guideline"
   }.freeze
 
-  def initialize(message, eosc_registry_base_url, logger, token = nil)
+  def initialize(message, logger)
     super()
     @message = message
     @logger = logger
-    @eosc_registry_base_url = eosc_registry_base_url
-    @token = token
     Sidekiq.strict_args! false
   end
 
@@ -36,10 +34,8 @@ class Jms::ManageMessage < ApplicationService
       if action != "delete"
         Service::PcCreateOrUpdateJob.perform_later(
           resource,
-          @eosc_registry_base_url,
           object_status(event_body["active"], event_body["suspended"]),
-          modified_at,
-          @token
+          modified_at
         )
       elsif action == "delete"
         Service::DeleteJob.perform_later(resource["id"])
@@ -72,7 +68,8 @@ class Jms::ManageMessage < ApplicationService
       if action != "delete"
         Datasource::PcCreateOrUpdateJob.perform_later(
           hash,
-          object_status(event_body["active"], event_body["suspended"])
+          object_status(event_body["active"], event_body["suspended"]),
+          modified_at(event_body)
         )
       elsif action == "delete"
         Datasource::DeleteJob.perform_later(hash["id"])
@@ -83,7 +80,8 @@ class Jms::ManageMessage < ApplicationService
       if action != "delete"
         DeployableService::PcCreateOrUpdateJob.perform_later(
           hash,
-          object_status(event_body["active"], event_body["suspended"])
+          object_status(event_body["active"], event_body["suspended"]),
+          modified_at(event_body)
         )
       elsif action == "delete"
         DeployableService::DeleteJob.perform_later(hash["id"])

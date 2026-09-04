@@ -1,0 +1,42 @@
+default: &default
+  base_url: <%= ENV.fetch("AMS_BASE_URL", nil) %>
+  subscription_prefix: <%= ENV.fetch("AMS_SUBSCRIPTION_PREFIX", "mp") %>
+  subscriptions_path: <%= ENV.fetch("AMS_SUBSCRIPTIONS_PATH", nil) %>
+  topics_path: <%= ENV.fetch("AMS_TOPICS_PATH", nil) %>
+  token: <%= ENV.fetch("AMS_TOKEN", Rails.application.credentials.ams[:token]) %>
+  topics:
+    - catalogue-create
+    - catalogue-delete
+    - catalogue-update
+    - datasource-create
+    - datasource-delete
+    - datasource-update
+    - deployable_application-create
+    - deployable_application-delete
+    - deployable_application-update
+    - interoperability_record-create
+    - interoperability_record-delete
+    - interoperability_record-update
+    - organisation-create
+    - organisation-delete
+    - organisation-update
+    - service-create
+    - service-delete
+    - service-update
+
+production:
+  <<: *default
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+  base_url: "https://ams.example.com"
+  subscription_prefix: "test"
+  subscriptions_path: "/v1/projects/test/subscriptions"
+  topics_path: "/v1/projects/test/topics"
+  token: "test-token"
+  topics:
+    - service-create
+    - service-update
