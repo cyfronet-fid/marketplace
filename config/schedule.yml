@@ -1,4 +1,5 @@
 ams_subscribe_all:
   cron: "<%= ENV.fetch('AMS_SUBSCRIBE_ALL_CRON', '*/3 * * * *') %>"
+  status: "<%= ENV.fetch('AMS_SUBSCRIBE_ALL_ENABLED', 'false') == 'true' ? 'enabled' : 'disabled' %>"
   class: "Ams::SubscribeAllJob"
   queue: ams_subscriber
