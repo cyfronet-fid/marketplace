@@ -160,6 +160,9 @@ GEM
       bigdecimal
       rexml
     crass (1.0.7)
+    cronex (0.15.0)
+      tzinfo
+      unicode (>= 0.4.4.5)
     cssbundling-rails (1.4.3)
       railties (>= 6.0.0)
     database_cleaner (2.1.0)
@@ -196,6 +199,8 @@ GEM
       multi_json
     erb (6.0.7)
     erubi (1.13.1)
+    et-orbi (1.4.1)
+      tzinfo
     execjs (2.10.1)
     factory_bot (6.6.0)
       activesupport (>= 6.1.0)
@@ -238,6 +243,9 @@ GEM
     forwardable (1.4.0)
     friendly_id (5.7.0)
       activerecord (>= 4.0.0)
+    fugit (1.13.0)
+      et-orbi (~> 1.4)
+      raabro (~> 1.4)
     get_process_mem (1.0.0)
       bigdecimal (>= 2.0)
       ffi (~> 1.0)
@@ -475,6 +483,7 @@ GEM
       puma (>= 2.7)
     pundit (2.5.2)
       activesupport (>= 3.0.0)
+    raabro (1.5.0)
     racc (1.8.1)
     rack (3.2.6)
     rack-cors (3.0.0)
@@ -687,6 +696,11 @@ GEM
       logger (>= 1.7.0)
       rack (>= 3.2.0)
       redis-client (>= 0.29.0)
+    sidekiq-cron (2.4.0)
+      cronex (>= 0.13.0)
+      fugit (~> 1.8, >= 1.11.1)
+      globalid (>= 1.0.1)
+      sidekiq (>= 6.5.0)
     sidekiq-limit_fetch (4.4.1)
       sidekiq (>= 6)
     signet (0.22.0)
@@ -745,6 +759,7 @@ GEM
     uglifier (4.2.1)
       execjs (>= 0.3.0, < 3)
     unaccent (0.4.0)
+    unicode (0.4.4.5)
     unicode-display_width (3.2.0)
       unicode-emoji (~> 4.1)
     unicode-emoji (4.2.0)
@@ -887,6 +902,7 @@ DEPENDENCIES
   sentry-sidekiq (~> 5.28)
   shoulda-matchers (~> 6.5)
   sidekiq (>= 8.0.9)
+  sidekiq-cron (~> 2.4)
   sidekiq-limit_fetch (~> 4.4)
   simple_form
   simple_token_authentication

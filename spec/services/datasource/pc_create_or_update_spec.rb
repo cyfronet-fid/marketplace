@@ -7,7 +7,7 @@ RSpec.describe Datasource::PcCreateOrUpdate, backend: true do
   let!(:scientific_domain) { create(:scientific_domain, eid: "scientific_domain-parent") }
 
   it "creates a datasource with an EOSC Registry source" do
-    expect { described_class.new(payload, :published).call }.to change(Datasource, :count).by(1).and change(
+    expect { described_class.new(payload, :published, Time.current).call }.to change(Datasource, :count).by(1).and change(
             ServiceSource,
             :count
           ).by(1)
@@ -26,7 +26,7 @@ RSpec.describe Datasource::PcCreateOrUpdate, backend: true do
     source = create(:service_source, service: datasource, source_type: "eosc_registry", eid: "legacy-service-id")
     datasource.update!(upstream: source)
 
-    expect { described_class.new(payload.merge("name" => "New name"), :published).call }.not_to change(
+    expect { described_class.new(payload.merge("name" => "New name"), :published, Time.current).call }.not_to change(
       Datasource,
       :count
     )
@@ -38,7 +38,7 @@ RSpec.describe Datasource::PcCreateOrUpdate, backend: true do
   end
 
   it "preserves incoming lifecycle statuses" do
-    datasource = described_class.new(payload, :suspended).call
+    datasource = described_class.new(payload, :suspended, Time.current).call
 
     expect(datasource.status).to eq("suspended")
   end

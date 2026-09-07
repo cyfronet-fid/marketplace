@@ -87,6 +87,7 @@ gem "savon", "~> 2.15"
 gem "google-apis-analyticsreporting_v4", "~> 0.5"
 
 gem "sidekiq", ">= 8.0.9"
+gem "sidekiq-cron", "~> 2.4"
 gem "sidekiq-limit_fetch", "~>4.4"
 
 gem "stomp"
@@ -94,7 +95,7 @@ gem "stomp"
 gem "aws-sdk-s3", require: false
 
 group :development, :test do
-  gem "byebug", platforms: [:mri, :windows]
+  gem "byebug", platforms: %i[mri windows]
 
   gem "rspec-rails", "~> 6.1"
   gem "rspec-retry"
@@ -136,7 +137,7 @@ group :test do
   gem "rails-controller-testing"
 end
 
-gem "tzinfo-data", platforms: [:windows, :jruby]
+gem "tzinfo-data", platforms: %i[windows jruby]
 
 group :production do
   gem "sentry-ruby", "~> 5.28"
