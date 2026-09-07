@@ -53,7 +53,7 @@ class Import::Resources
         service_payload =
           service_data["service"] ? service_data["service"].merge(service_data["resourceExtras"] || {}) : service_data
         image_url = service_payload["logo"]
-        service = Importers::Service.call(service_payload, synchronized_at, @eosc_registry_base_url, @token)
+        service = Importers::Service.call(service_payload, synchronized_at)
         service.delete(:logo_url)
         service[:status] = registry_status(service_data, service_payload) || service[:status]
         service[:status] ||= :published

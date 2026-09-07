@@ -3,7 +3,6 @@
 require "rails_helper"
 
 RSpec.describe Service::PcCreateOrUpdate, backend: true do
-  let(:test_url) { "https://localhost/api" }
   let(:logger) { double("Logger").as_null_object }
   let!(:storage) { create(:category, name: "Storage") }
   let!(:training) { create(:category, name: "Training & Support") }
@@ -45,7 +44,7 @@ RSpec.describe Service::PcCreateOrUpdate, backend: true do
 
       service = create(:jms_service, prov_eid: "new.prov", name: "New supper service")
       expect {
-        described_class.new(service["service"], test_url, :published, Time.now, nil).call
+        described_class.new(service["service"], :published, Time.current).call
       }.to_not change { Offer.count }
     end
 
@@ -59,7 +58,7 @@ RSpec.describe Service::PcCreateOrUpdate, backend: true do
       }
       allow(Importers::Logo).to receive(:call)
 
-      service = described_class.new(service_payload, test_url, :published, Time.current, nil).call
+      service = described_class.new(service_payload, :published, Time.current).call
 
       expect(service).to be_published
       expect(service).not_to be_errored
@@ -73,7 +72,7 @@ RSpec.describe Service::PcCreateOrUpdate, backend: true do
       service_payload["scientificDomains"] = nil
       allow(Importers::Logo).to receive(:call)
 
-      service = described_class.new(service_payload, test_url, :published, Time.current, nil).call
+      service = described_class.new(service_payload, :published, Time.current).call
 
       expect(service).to be_published
       expect(service).not_to be_errored
@@ -96,7 +95,7 @@ RSpec.describe Service::PcCreateOrUpdate, backend: true do
 
       # first create a service
       jms_service = build(:jms_service, prov_eid: "tp")
-      described_class.new(jms_service["service"], test_url, :published, Time.now, nil).call
+      described_class.new(jms_service["service"], :published, Time.current).call
 
       service = Service.last
       expect(service.name).to eq("Title")
@@ -104,7 +103,7 @@ RSpec.describe Service::PcCreateOrUpdate, backend: true do
 
       # only then attach an invalid provider
       jms_service = build(:jms_service, prov_eid: "new.prov", name: "New supper service")
-      described_class.new(jms_service["service"], test_url, :published, Time.now, nil).call
+      described_class.new(jms_service["service"], :published, Time.current).call
 
       service.reload
 

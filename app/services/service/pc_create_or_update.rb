@@ -9,7 +9,7 @@ class Service::PcCreateOrUpdate
   class NotUpdatedError < StandardError
   end
 
-  def initialize(eosc_registry_service, eosc_registry_base_url, status, modified_at, token)
+  def initialize(eosc_registry_service, status, modified_at)
     @error_message = "Service haven't been updated. Message #{eosc_registry_service}"
     @logo = eosc_registry_service["logo"]
     @status = status
@@ -20,7 +20,7 @@ class Service::PcCreateOrUpdate
         "service_sources.source_type": @source_type,
         "service_sources.eid": [eosc_registry_service["id"]]
       )
-    @service_hash = Importers::Service.call(eosc_registry_service, modified_at, eosc_registry_base_url, token)
+    @service_hash = Importers::Service.call(eosc_registry_service, modified_at)
     @service_hash.delete(:logo_url)
     @service_hash[:status] = @status
     @new_update_available = Service::PcCreateOrUpdate.new_update_available?(@mp_service, modified_at)
@@ -59,6 +59,7 @@ class Service::PcCreateOrUpdate
 
   def self.new_update_available?(service, modified_at)
     return true unless service&.synchronized_at.present?
+
     modified_at >= service.synchronized_at
   end
 

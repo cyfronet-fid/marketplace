@@ -245,6 +245,7 @@ Rails.application.routes.draw do
   # Sidekiq monitoring and split dashboard
   authenticate :user, lambda(&:admin?) do
     require "sidekiq/web"
+    require "sidekiq/cron/web"
     mount Sidekiq::Web => "/admin/sidekiq"
   end
 
