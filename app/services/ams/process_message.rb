@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 module Ams
-  class ProcessMessage
-    include Callable
+  class ProcessMessage < ApplicationService
     include Importable
 
     JOBS_MAP = {
@@ -34,6 +33,8 @@ module Ams
     SUBSCRIPTION_PARTS_FORMAT = /\A(?:(?<prefix>[^-]+)-)?(?<resource>[^-]+)-(?<action>[^-]+)\z/
 
     def initialize(subscription_name, message:)
+      super()
+
       @subscription_name = subscription_name
       @message = message
 

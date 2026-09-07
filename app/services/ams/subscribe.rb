@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 module Ams
-  class Subscribe
-    include Callable
-
+  class Subscribe < ApplicationService
     class PullError < Ams::Error; end
     class AcknowledgeError < Ams::Error; end
 
     def initialize(subscription_name)
+      super()
+
       @subscription_name = subscription_name
     end
 

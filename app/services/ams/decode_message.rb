@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 module Ams
-  class DecodeMessage
-    include Callable
-
+  class DecodeMessage < ApplicationService
     def initialize(message)
+      super()
+
       @message = message
     end
 
