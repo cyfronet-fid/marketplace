@@ -3,7 +3,7 @@ default: &default
   subscription_prefix: <%= ENV.fetch("AMS_SUBSCRIPTION_PREFIX", "mp") %>
   subscriptions_path: <%= ENV.fetch("AMS_SUBSCRIPTIONS_PATH", nil) %>
   topics_path: <%= ENV.fetch("AMS_TOPICS_PATH", nil) %>
-  token: <%= ENV.fetch("AMS_TOKEN", Rails.application.credentials.ams[:token]) %>
+  token: <%= ENV.fetch("AMS_TOKEN", nil) %>
   topics:
     - catalogue-create
     - catalogue-delete
