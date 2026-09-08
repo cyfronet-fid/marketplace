@@ -31,6 +31,13 @@ gated.
   `IMPORTER_AAI_CLIENT_SECRET` presence) alongside the existing refresh-token
   flow.
 - `config.whitelabel`/`MP_WHITELABEL` was folded into `Mp::Variant.whitelabel?`.
+- `config.monitoring_data_token` — no longer raises on a deployment whose
+  `credentials.yml.enc` lacks the `monitoring_data` key; falls back to `nil`
+  instead (all variants, not gated — a bug fix, not a behavior difference).
+- `SearchLinksHelper#resource_organisation`/`#providers` — under `pl`/
+  `whitelabel`, the organisation/provider name in a service's header links
+  straight to the provider's own detail page; `marketplace` keeps its
+  search-highlighting/preview-aware filtered-search link unchanged.
 
 ## Full details
 
