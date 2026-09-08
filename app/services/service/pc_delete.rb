@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Service::Delete < ApplicationService
+class Service::PcDelete < ApplicationService
   def initialize(service_eid, source: "eosc_registry")
     super()
     @service =
