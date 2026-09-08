@@ -1,4 +1,227 @@
 .details-box-wrapper
+  .details-box.version_release
+    .details-header
+      %h5 Version & release
+    .details-content
+      %ul
+        %li.d-flex.flex-column
+          %span.list-title
+            Version:
+          %span
+            2.3.1
+        %li.d-flex.flex-column
+          %span.list-title
+            Last update
+          %span
+            10 June 2025
+        %li.d-flex.flex-column
+          %span.list-title
+            Programing language
+          %span
+            C++
+
+  .details-box.license
+    .details-header
+      %h5 License
+    .details-content
+      %ul
+        %li.d-flex.flex-column
+          %span.list-title
+            License name
+          %span
+            %a{ href: "#" } Link CC0 1.0 Universal
+
+  .details-box.sqa
+    .details-header
+      %h5 SQA
+    .details-content
+      %ul
+        %li.d-flex.flex-column
+          %span.list-title
+            License name
+          %span
+            %a{ href: "#" } Apache License 2.0
+
+  .details-box.tags
+    .details-header
+      %h5 Tags
+    .details-content
+      .taglist-holder
+        %ul
+          %li
+            %a{ href: "#" } Cloud Compute
+          %li
+            %a{ href: "#" } Operating system
+          %li
+            %a{ href: "#" } Operating system or software
+
+  .details-box.keywords
+    .details-header
+      %h5 Keywords
+    .details-content
+      .taglist-holder
+        %ul
+          %li
+            %a{ href: "#" } Cloud Compute
+          %li
+            %a{ href: "#" } Operating system
+          %li
+            %a{ href: "#" } Operating system or software
+
+  .details-box.location
+    .details-header
+      %h5 Location
+    .details-content
+      %ul
+        %li.d-flex.flex-column
+          %span.list-title
+            Country
+          %span
+            Poland
+        %li.d-flex.flex-column
+          %span.list-title
+            City
+          %span
+            00-001, Warsaw
+        %li.d-flex.flex-column
+          %span.list-title
+            Region
+          %span
+            Mazowieckie
+        %li.d-flex.flex-column
+          %span.list-title
+            Street
+          %span
+            Lwowska 123
+
+  .details-box.multimedia_resources
+    .details-header
+      %h5 Multimedia resources
+    .details-content
+      .taglist-holder
+        %ul
+          %li
+            %a{ href: "#" } Introduction to EGI
+          %li
+            %a{ href: "#" } EGI Services Overview 2024
+
+  .details-box.providers
+    .details-header
+      %h5 Providers
+    .details-content
+      .taglist-holder.arrows
+        %ul
+          %li
+            %a{ href: "#" } Provider demo
+          %li
+            %a{ href: "#" } Sample provider
+          %li
+            %a{ href: "#" } Test provider
+
+  .details-box.jurisdiction_and_language
+    .details-header
+      %h5 Jurisdiction and language
+    .details-content
+      %ul
+        %li.d-flex.flex-column
+          %span.list-title
+            Jurisdiction
+          %span
+            World
+
+  .details-box.persistent_identifiers
+    .details-header
+      %h5 Persistent identifiers
+    .details-content
+      %ul
+        %li.d-flex.flex-column
+          %span.list-title
+            DOI
+        %li.d-flex.flex-column
+          %span.list-title
+            Handle
+
+  .details-box.participating_countries
+    .details-header
+      %h5 Participating countries
+    .details-content
+      %ul
+        %li.d-flex.flex-column
+          %span.list-title
+            Poland
+        %li.d-flex.flex-column
+          %span.list-title
+            Germany
+        %li.d-flex.flex-column
+          %span.list-title
+            France
+
+
+  .details-box.learning_outcomes
+    .details-header
+      %h5 Learning outcomes
+    .details-content
+      %ul
+        %li.d-flex.flex-column
+          %span.list-title
+            Understand FAIR principles and their application
+
+  .details-box.configuration_template
+    .details-header
+      %h5 Configuration template
+    .details-content
+      %ul
+        %li.d-flex.flex-column
+          %span.list-title
+            Configuration template PID
+          %span
+            %a{ href: "#" } eosc.ct.fair.assess.v1
+
+  .details-box.access_information
+    .details-header
+      %h5 Access information
+    .details-content
+      %ul
+        %li.d-flex.flex-column
+          %span.list-title
+            Access type
+          %span
+            Virtual
+        %li.d-flex.flex-column
+          %span.list-title
+            Technology readiness level
+          %span
+            2 - technology concept formulated
+
+  .details-box.datasource
+    .details-header
+      %h5 Data source classification
+    .details-content
+      %ul
+        %li.d-flex.flex-column
+          %span.list-title
+            Classification type
+          %span
+            Aggregator
+        %li.d-flex.flex-column
+          %span.list-title
+            Research product types
+          %span
+            Publications, Datasets, Software
+        %li.d-flex.flex-column
+          %span.list-title
+            Thematic
+          %span
+            No
+        %li.d-flex.flex-column
+          %span.list-title
+            Version control
+          %span
+            Yes
+
+
+.details-box-wrapper
+  %h3 Old Boxes - to be removed
   = render Presentable::SidebarComponent.new(@object)
   - details_columns.each do |column|
     - column.map do |group|
