@@ -39,8 +39,12 @@ module SearchLinksHelper
     search_base_url + "/search/all_collection?q=*"
   end
 
-  def resource_organisation(service, highlights = nil, preview: false)
+  def resource_organisation(service, highlights = nil, preview: false, backoffice: false)
     target = service.resource_organisation
+    unless Mp::Variant.marketplace?
+      return link_to(target.name, backoffice ? backoffice_provider_path(target) : target)
+    end
+
     preview_options = preview ? { "data-preview-target": "link" } : {}
     link_to_unless(
       target.deleted? || target.draft? || service.suspended?,
@@ -50,28 +54,29 @@ module SearchLinksHelper
     )
   end
 
-  def providers(service, highlights = nil, preview: false)
+  def providers(service, highlights = nil, preview: false, backoffice: false)
+    active_providers =
+      service.providers.compact.reject(&:deleted?).reject { |p| p == service.resource_organisation }.uniq
+
+    unless Mp::Variant.marketplace?
+      return active_providers.map { |target| link_to(target.name, backoffice ? backoffice_provider_path(target) : target) }
+    end
+
     highlighted = highlights.present? ? sanitize(highlights[:provider_names])&.to_str : ""
     preview_options = preview ? { "data-preview-target": "link" } : {}
-    service
-      .providers
-      .compact
-      .reject(&:deleted?)
-      .reject { |p| p == service.resource_organisation }
-      .uniq
-      .map do |target|
-        if highlighted.present? && highlighted.strip == target.name.strip
-          link_to_unless target.deleted? || target.draft? || target.suspended?,
-                         highlights[:provider_names].html_safe,
-                         service.provider_search_link(target.name, services_path(providers: target.id)),
-                         preview_options
-        else
-          link_to_unless target.deleted? || target.draft? || target.suspended?,
-                         target.name,
-                         service.provider_search_link(target.name, services_path(providers: target.id)),
-                         preview_options
-        end
+    active_providers.map do |target|
+      if highlighted.present? && highlighted.strip == target.name.strip
+        link_to_unless target.deleted? || target.draft? || target.suspended?,
+                       highlights[:provider_names].html_safe,
+                       service.provider_search_link(target.name, services_path(providers: target.id)),
+                       preview_options
+      else
+        link_to_unless target.deleted? || target.draft? || target.suspended?,
+                       target.name,
+                       service.provider_search_link(target.name, services_path(providers: target.id)),
+                       preview_options
       end
+    end
   end
 
   def node_link(object, preview: false)
