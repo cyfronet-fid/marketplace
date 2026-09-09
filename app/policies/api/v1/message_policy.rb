@@ -8,10 +8,24 @@ class Api::V1::MessagePolicy < ApplicationPolicy
       else
         # Outer join chosen messages with ProjectItem OR Project messageables
         # and look if user is administrating an oms inside their respective offers.primary_oms
+        #
+        # Written as raw SQL joins (rather than left_outer_joins(project_item: :offer, ...))
+        # because Message#project_item/#project scope their association on
+        # `messages.messageable_type`, which Rails cannot merge into a join condition
+        # here (it self-joins "messages" instead), silently dropping the type filter and
+        # matching any project_item/project whose id coincides with messageable_id.
         scope
           .where("offers.primary_oms_id IN (?)", user.administrated_oms_ids)
           .or(scope.where("offers_project_items.primary_oms_id IN (?)", user.administrated_oms_ids))
-          .left_outer_joins(project_item: :offer, project: { project_items: :offer })
+          .joins(<<~SQL.squish)
+            LEFT OUTER JOIN project_items ON project_items.id = messages.messageable_id
+              AND messages.messageable_type = 'ProjectItem'
+            LEFT OUTER JOIN offers ON offers.id = project_items.offer_id
+            LEFT OUTER JOIN projects ON projects.id = messages.messageable_id
+              AND messages.messageable_type = 'Project'
+            LEFT OUTER JOIN project_items project_items_projects ON project_items_projects.project_id = projects.id
+            LEFT OUTER JOIN offers offers_project_items ON offers_project_items.id = project_items_projects.offer_id
+          SQL
           .distinct
       end
     end
