@@ -12,37 +12,28 @@ module Checkin
     end
 
     def call
-      if access_token.blank? || refresh_token.blank?
+      if refresh_token.blank?
         Checkin::Logger.warn("Missing credentials")
         return session_expired_result
       end
 
-      # 1. Introspect current access token
+      # 1. Refresh token
+      response = client.refresh_token(refresh_token)
+      return session_expired_result unless response.success?
+
+      credentials = JSON.parse(response.body)
+      @access_token = credentials["access_token"].presence || access_token
+      @refresh_token = credentials["refresh_token"].presence || refresh_token
+
+      # 2. Introspect token
       response = client.introspect(access_token)
       return verification_failed_result unless response.success?
 
       introspection = JSON.parse(response.body)
+      return session_expired_result unless introspection["active"]
 
-      unless introspection["active"]
-        # 2. Refresh token as it could expire
-        response = client.refresh_token(refresh_token)
-        return session_expired_result unless response.success?
-
-        credentials = JSON.parse(response.body)
-        @access_token = credentials["access_token"]
-        @refresh_token = credentials["refresh_token"]
-
-        # 3. Introspect new token
-        response = client.introspect(access_token)
-        return verification_failed_result unless response.success?
-
-        introspection = JSON.parse(response.body)
-        return session_expired_result unless introspection["active"]
-      end
-
-      # 4. Check membership
       Result.new(
-        status: membership_status(introspection),
+        status: status(introspection),
         access_token: access_token,
         refresh_token: refresh_token
       )
@@ -72,7 +63,7 @@ module Checkin
       )
     end
 
-    def membership_status(introspection)
+    def status(introspection)
       entitlements = introspection["entitlements"] || []
       group_entitlement = "group:#{Checkin::Config.vo_group_name}"
 
