@@ -49,7 +49,7 @@ module Mp
 
     # Hierachical locales file structure
     # see https://guides.rubyonrails.org/i18n.html#configure-the-i18n-module
-    config.i18n.load_path += Dir[Rails.root.join("config/locales/**/*.{rb,yml}")]
+    config.i18n.load_path += Rails.root.glob("config/locales/**/*.{rb,yml}")
 
     # Views and locales customization
     # The dir structure pointed by `$CUSTOMIZATION_PATH` should looks as follow:
