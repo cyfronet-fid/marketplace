@@ -274,7 +274,6 @@ Devise.setup do |config|
     token: "/auth/realms/core/protocol/openid-connect/token",
     userinfo: "/auth/realms/core/protocol/openid-connect/userinfo",
     jwk: "/auth/realms/core/protocol/openid-connect/certs",
-    become_vo_member: "https://core-proxy.sandbox.eosc-beyond.eu/auth/realms/core/account/#/enroll?groupPath=/eosc-beyond.eu",
     introspection: "/auth/realms/core/protocol/openid-connect/token/introspect"
   }
   endpoints = ENV.fetch("OIDC_AAI_NEW_API", true) ? new_endpoints : old_endpoints
@@ -286,22 +285,19 @@ Devise.setup do |config|
                   issuer: ENV["CHECKIN_ISSUER_URI"] || "https://#{checkin_host}/#{endpoints[:issuer]}",
                   discovery: true,
                   pkce: ENV["CHECKIN_PKCE"] || false,
-                  become_vo_member_url: ENV["BECOME_VO_MEMBER_URL"] || endpoints[:become_vo_member],
                   client_options: {
                     port: nil,
                     scheme: "https",
                     host: checkin_host,
                     identifier: ENV["CHECKIN_IDENTIFIER"] || Rails.application.credentials.checkin[:identifier],
                     secret: ENV["CHECKIN_SECRET"] || Rails.application.credentials.checkin[:secret],
-                    redirect_uri: ENV["REDIRECT_URI"] ||
-                                  "#{root_url}/users/auth/checkin/callback",
+                    redirect_uri: ENV["REDIRECT_URI"] || "#{root_url}/users/auth/checkin/callback",
                     authorization_endpoint: ENV["CHECKIN_AUTHORIZATION_ENDPOINT"] || endpoints[:authorize],
                     token_endpoint: ENV["CHECKIN_TOKEN_ENDPOINT"] || endpoints[:token],
                     userinfo_endpoint: ENV["CHECKIN_USERINFO_ENDPOINT"] || endpoints[:userinfo],
                     jwks_uri: ENV["CHECKIN_JWKS_ENDPOINT"] || endpoints[:jwk],
                     introspection_uri: ENV["INTROSPECTION_ENDPOINT"] || "https://#{checkin_host}/#{endpoints[:introspection]}"
                   }
-
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
