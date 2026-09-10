@@ -26,6 +26,7 @@ class BackfillServicePlProfiles < ActiveRecord::Migration[7.2]
         grant_project_names, last_update, related_platforms, abbreviation,
         horizontal, availability_cache, reliability_cache,
         submission_policy_url, preservation_policy_url, security_contact_email,
+        restrictions, status_monitoring_url, harvestable,
         created_at, updated_at
       )
       SELECT
@@ -37,6 +38,7 @@ class BackfillServicePlProfiles < ActiveRecord::Migration[7.2]
         grant_project_names, last_update, related_platforms, abbreviation,
         COALESCE(horizontal, false), availability_cache, reliability_cache,
         submission_policy_url, preservation_policy_url, security_contact_email,
+        restrictions, status_monitoring_url, COALESCE(harvestable, false),
         now(), now()
       FROM services
       ON CONFLICT (service_id) DO NOTHING

@@ -66,6 +66,7 @@ class Provider < ApplicationRecord
   # nil for marketplace/whitelabel, where pl_profile is always nil.
   PL_PROFILE_FIELDS = %i[
     street_name_and_number postal_code city region certifications affiliations national_roadmaps
+    tagline hosting_legal_entity_string participating_countries
   ].freeze
 
   delegate(*PL_PROFILE_FIELDS, *PL_PROFILE_FIELDS.map { |f| :"#{f}=" }, to: :pl_profile, allow_nil: true)
