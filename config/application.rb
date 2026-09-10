@@ -72,7 +72,7 @@ module Mp
     config.monitoring_data_enabled = ActiveModel::Type::Boolean.new.cast(ENV.fetch("MONITORING_DATA_ENABLED", false))
     config.monitoring_data_host = ENV.fetch("MONITORING_DATA_URL", "https://api.devel.argo.grnet.gr/api")
     config.monitoring_data_token = ENV.fetch("MONITORING_DATA_TOKEN",
-                                             Rails.application.credentials.monitoring_data[:access_token])
+                                             Rails.application.credentials.dig(:monitoring_data, :access_token))
     config.monitoring_data_ui_url = ENV.fetch("MONITORING_DATA_UI_URL", "https://eosc.ui.devel.argo.grnet.gr")
     config.monitoring_data_path = ENV.fetch("MONITORING_DATA_UI_PATH",
                                             "eosc/report-ar-group-details/Default/SERVICEGROUPS/")
@@ -97,15 +97,16 @@ module Mp
 
     config.resource_cache_ttl = ENV.fetch("ESS_RESOURCE_CACHE_TTL", "60").to_i.seconds
 
-    config.mp_stomp_publisher_enabled = ActiveModel::Type::Boolean.new.cast(
-      ENV.fetch("MP_STOMP_PUBLISHER_ENABLED", Rails.env.test?))
+    # Defaults to enabled: ApplicationController#publish_user_actions_to_jms? is the
+    # only reader of this flag, so flipping the default preserves today's
+    # unconditional-publish behavior for any deployment that doesn't set it.
+    config.mp_stomp_publisher_enabled = ActiveModel::Type::Boolean.new.cast(ENV.fetch("MP_STOMP_PUBLISHER_ENABLED", true))
 
     config.eosc_helpdesk_form_link = ENV.fetch("EOSC_HELPDESK_FORM_URL",
                                                "https://helpdesk.sandbox.eosc-beyond.eu/assets/form/form.js")
 
     config.enable_external_search = ActiveModel::Type::Boolean.new.cast(ENV.fetch("MP_ENABLE_EXTERNAL_SEARCH", false))
     config.analytics_enabled = ActiveModel::Type::Boolean.new.cast(ENV.fetch("ANALYTICS_ENABLED", false))
-    config.whitelabel = ENV.fetch("MP_WHITELABEL", false)
 
     config.bos_base_url = ENV.fetch("BOS_API_URL", "http://localhost:8000")
     config.bos_api_key = ENV.fetch("BOS_API_KEY", "")

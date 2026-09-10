@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_04_30_103000) do
+ActiveRecord::Schema[7.2].define(version: 2026_09_09_100500) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -548,6 +548,28 @@ ActiveRecord::Schema[7.2].define(version: 2026_04_30_103000) do
     t.index ["type"], name: "index_omses_on_type"
   end
 
+  create_table "persistent_identity_system_vocabularies", force: :cascade do |t|
+    t.bigint "persistent_identity_system_id"
+    t.bigint "vocabulary_id"
+    t.string "vocabulary_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["persistent_identity_system_id", "vocabulary_id"], name: "index_persistent_id_system_vocabularies"
+    t.index ["persistent_identity_system_id"], name: "index_persistent_id_system"
+    t.index ["vocabulary_id"], name: "index_persistent_id_system_on_vocabulary"
+  end
+
+  create_table "persistent_identity_systems", force: :cascade do |t|
+    t.bigint "service_id", null: false
+    t.bigint "entity_type_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["entity_type_id"], name: "index_persistent_identity_systems_on_entity_type_id"
+    t.index ["id", "entity_type_id"], name: "index_persistent_identity_systems_on_id_and_entity_type_id"
+    t.index ["service_id", "entity_type_id"], name: "index_persistent_id_systems"
+    t.index ["service_id"], name: "index_persistent_identity_systems_on_service_id"
+  end
+
   create_table "platforms", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: nil, null: false
@@ -664,6 +686,23 @@ ActiveRecord::Schema[7.2].define(version: 2026_04_30_103000) do
     t.index ["provider_id"], name: "index_provider_data_administrators_on_provider_id"
   end
 
+  create_table "provider_pl_profiles", force: :cascade do |t|
+    t.bigint "provider_id", null: false
+    t.string "street_name_and_number"
+    t.string "postal_code"
+    t.string "city"
+    t.string "region"
+    t.string "certifications", default: [], array: true
+    t.string "affiliations", default: [], array: true
+    t.string "national_roadmaps", default: [], array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "tagline"
+    t.string "hosting_legal_entity_string"
+    t.string "participating_countries", default: [], array: true
+    t.index ["provider_id"], name: "index_provider_pl_profiles_on_provider_id", unique: true
+  end
+
   create_table "provider_scientific_domains", force: :cascade do |t|
     t.bigint "provider_id"
     t.bigint "scientific_domain_id"
@@ -772,6 +811,44 @@ ActiveRecord::Schema[7.2].define(version: 2026_04_30_103000) do
     t.index ["project_item_id"], name: "index_service_opinions_on_project_item_id"
   end
 
+  create_table "service_pl_profiles", force: :cascade do |t|
+    t.bigint "service_id", null: false
+    t.text "tagline"
+    t.string "language_availability", default: [], array: true
+    t.string "dedicated_for", array: true
+    t.string "resource_level_url"
+    t.string "manual_url"
+    t.string "helpdesk_url"
+    t.string "training_information_url"
+    t.text "activate_message"
+    t.string "helpdesk_email"
+    t.string "version"
+    t.string "maintenance_url"
+    t.string "payment_model_url"
+    t.string "pricing_url"
+    t.string "resource_geographic_locations", default: [], array: true
+    t.string "certifications", default: [], array: true
+    t.string "standards", default: [], array: true
+    t.string "open_source_technologies", default: [], array: true
+    t.text "changelog", default: [], array: true
+    t.string "grant_project_names", default: [], array: true
+    t.datetime "last_update", precision: nil
+    t.string "related_platforms", default: [], array: true
+    t.string "abbreviation"
+    t.boolean "horizontal", default: false, null: false
+    t.float "availability_cache"
+    t.float "reliability_cache"
+    t.string "submission_policy_url"
+    t.string "preservation_policy_url"
+    t.string "security_contact_email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "restrictions"
+    t.string "status_monitoring_url"
+    t.boolean "harvestable", default: false
+    t.index ["service_id"], name: "index_service_pl_profiles_on_service_id", unique: true
+  end
+
   create_table "service_providers", force: :cascade do |t|
     t.bigint "service_id"
     t.bigint "provider_id"
@@ -780,6 +857,25 @@ ActiveRecord::Schema[7.2].define(version: 2026_04_30_103000) do
     t.index ["provider_id"], name: "index_service_providers_on_provider_id"
     t.index ["service_id", "provider_id"], name: "index_service_providers_on_service_id_and_provider_id", unique: true
     t.index ["service_id"], name: "index_service_providers_on_service_id"
+  end
+
+  create_table "service_related_platforms", force: :cascade do |t|
+    t.bigint "service_id"
+    t.bigint "platform_id"
+    t.index ["platform_id"], name: "index_service_related_platforms_on_platform_id"
+    t.index ["service_id", "platform_id"], name: "index_service_related_platforms_on_service_id_and_platform_id", unique: true
+    t.index ["service_id"], name: "index_service_related_platforms_on_service_id"
+  end
+
+  create_table "service_relationships", force: :cascade do |t|
+    t.bigint "source_id", null: false
+    t.bigint "target_id", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.string "type"
+    t.index ["source_id", "target_id", "type"], name: "index_service_relationships_on_source_id_and_target_id_and_type", unique: true
+    t.index ["source_id"], name: "index_service_relationships_on_source_id"
+    t.index ["target_id"], name: "index_service_relationships_on_target_id"
   end
 
   create_table "service_scientific_domains", force: :cascade do |t|
@@ -801,6 +897,16 @@ ActiveRecord::Schema[7.2].define(version: 2026_04_30_103000) do
     t.jsonb "errored"
     t.index ["eid", "source_type", "service_id"], name: "index_service_sources_on_eid_and_source_type_and_service_id", unique: true
     t.index ["service_id"], name: "index_service_sources_on_service_id"
+  end
+
+  create_table "service_target_users", force: :cascade do |t|
+    t.bigint "service_id"
+    t.bigint "target_user_id"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["service_id", "target_user_id"], name: "index_service_target_users_on_service_id_and_target_user_id", unique: true
+    t.index ["service_id"], name: "index_service_target_users_on_service_id"
+    t.index ["target_user_id"], name: "index_service_target_users_on_target_user_id"
   end
 
   create_table "service_user_relationships", force: :cascade do |t|
@@ -830,6 +936,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_04_30_103000) do
     t.datetime "updated_at", precision: nil, null: false
     t.decimal "rating", precision: 2, scale: 1, default: "0.0", null: false
     t.integer "service_opinion_count", default: 0
+    t.string "geographical_availabilities", default: [], array: true
     t.string "terms_of_use_url"
     t.string "access_policies_url"
     t.string "webpage_url"
@@ -1036,6 +1143,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_04_30_103000) do
   add_foreign_key "oms_providers", "providers"
   add_foreign_key "oms_triggers", "omses"
   add_foreign_key "omses", "services"
+  add_foreign_key "persistent_identity_systems", "services"
   add_foreign_key "project_items", "bundles", on_delete: :nullify
   add_foreign_key "project_items", "offers"
   add_foreign_key "project_items", "projects"
@@ -1045,6 +1153,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_04_30_103000) do
   add_foreign_key "provider_alternative_identifiers", "providers"
   add_foreign_key "provider_catalogues", "catalogues"
   add_foreign_key "provider_catalogues", "providers"
+  add_foreign_key "provider_pl_profiles", "providers"
   add_foreign_key "provider_scientific_domains", "providers"
   add_foreign_key "provider_scientific_domains", "scientific_domains"
   add_foreign_key "provider_vocabularies", "providers"
@@ -1054,10 +1163,17 @@ ActiveRecord::Schema[7.2].define(version: 2026_04_30_103000) do
   add_foreign_key "service_alternative_identifiers", "services"
   add_foreign_key "service_catalogues", "catalogues"
   add_foreign_key "service_catalogues", "services"
+  add_foreign_key "service_pl_profiles", "services"
   add_foreign_key "service_providers", "providers"
   add_foreign_key "service_providers", "services"
+  add_foreign_key "service_related_platforms", "platforms"
+  add_foreign_key "service_related_platforms", "services"
+  add_foreign_key "service_relationships", "services", column: "source_id"
+  add_foreign_key "service_relationships", "services", column: "target_id"
   add_foreign_key "service_scientific_domains", "scientific_domains"
   add_foreign_key "service_scientific_domains", "services"
+  add_foreign_key "service_target_users", "services"
+  add_foreign_key "service_target_users", "target_users"
   add_foreign_key "service_user_relationships", "services"
   add_foreign_key "service_user_relationships", "users"
   add_foreign_key "service_vocabularies", "services"

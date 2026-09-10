@@ -2,6 +2,14 @@
 
 class StripProviderToV6 < ActiveRecord::Migration[7.2]
   def up
+    # pl-marketplace never ran this migration (no matching file in its own
+    # history) and still uses these columns/data live — see arch_docs:
+    # docs/rationale/db-schema-comparison.md §3. Without this guard, the
+    # first `db:migrate` run against a real pl production database would
+    # destroy them. Data instead moves to provider_pl_profiles via
+    # BackfillProviderPlProfiles (20260909100300).
+    return if Mp::Variant.pl?
+
     execute "DELETE FROM taggings WHERE taggable_type = 'Provider'"
     execute "DELETE FROM provider_scientific_domains"
     execute "DELETE FROM contacts WHERE contactable_type = 'Provider' AND type IN ('MainContact', 'PublicContact')"

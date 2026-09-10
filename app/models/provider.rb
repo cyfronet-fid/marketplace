@@ -60,6 +60,17 @@ class Provider < ApplicationRecord
 
   belongs_to :upstream, foreign_key: "upstream_id", class_name: "ProviderSource", optional: true
 
+  has_one :pl_profile, class_name: "Provider::PlProfile", inverse_of: :provider, dependent: :destroy
+
+  # pl-marketplace-only fields (arch_docs: docs/rationale/db-schema-comparison.md §3).
+  # nil for marketplace/whitelabel, where pl_profile is always nil.
+  PL_PROFILE_FIELDS = %i[
+    street_name_and_number postal_code city region certifications affiliations national_roadmaps
+    tagline hosting_legal_entity_string participating_countries
+  ].freeze
+
+  delegate(*PL_PROFILE_FIELDS, *PL_PROFILE_FIELDS.map { |f| :"#{f}=" }, to: :pl_profile, allow_nil: true)
+
   has_one :provider_catalogue, dependent: :destroy
   has_one :catalogue, through: :provider_catalogue
 

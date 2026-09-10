@@ -65,6 +65,21 @@ class Service < ApplicationRecord
   has_many :trls, through: :service_vocabularies, source: :vocabulary, source_type: "Vocabulary::Trl"
   has_many :omses, dependent: :destroy
 
+  has_one :pl_profile, class_name: "Service::PlProfile", inverse_of: :service, dependent: :destroy
+
+  # pl-marketplace-only fields (arch_docs: docs/rationale/db-schema-comparison.md §3).
+  # nil for marketplace/whitelabel, where pl_profile is always nil.
+  PL_PROFILE_FIELDS = %i[
+    tagline language_availability dedicated_for resource_level_url manual_url helpdesk_url
+    training_information_url activate_message helpdesk_email version maintenance_url payment_model_url
+    pricing_url resource_geographic_locations certifications standards open_source_technologies changelog
+    grant_project_names last_update related_platforms abbreviation horizontal availability_cache
+    reliability_cache submission_policy_url preservation_policy_url security_contact_email
+    restrictions status_monitoring_url harvestable
+  ].freeze
+
+  delegate(*PL_PROFILE_FIELDS, *PL_PROFILE_FIELDS.map { |f| :"#{f}=" }, to: :pl_profile, allow_nil: true)
+
   accepts_nested_attributes_for :alternative_identifiers, reject_if: :all_blank, allow_destroy: true
 
   has_many :user_services, dependent: :destroy
@@ -77,6 +92,11 @@ class Service < ApplicationRecord
 
   has_many :service_guidelines, dependent: :destroy
   has_many :guidelines, through: :service_guidelines
+
+  # Same polymorphic Contact model Catalogue#public_contacts uses. Populated
+  # and read only under the pl/whitelabel variants (see Mp::Variant) - the
+  # marketplace variant keeps reading the flat `public_contact_emails` column.
+  has_many :public_contacts, as: :contactable, dependent: :destroy, autosave: true
 
   accepts_nested_attributes_for :sources,
                                 reject_if:
@@ -160,14 +180,6 @@ class Service < ApplicationRecord
 
   def aod?
     false
-  end
-
-  def activate_message
-    nil
-  end
-
-  def activate_message=(_value)
-    nil
   end
 
   def owned_by?(user)
