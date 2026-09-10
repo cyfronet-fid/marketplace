@@ -697,6 +697,9 @@ ActiveRecord::Schema[7.2].define(version: 2026_09_09_100500) do
     t.string "national_roadmaps", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "tagline"
+    t.string "hosting_legal_entity_string"
+    t.string "participating_countries", default: [], array: true
     t.index ["provider_id"], name: "index_provider_pl_profiles_on_provider_id", unique: true
   end
 
@@ -840,6 +843,9 @@ ActiveRecord::Schema[7.2].define(version: 2026_09_09_100500) do
     t.string "security_contact_email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "restrictions"
+    t.string "status_monitoring_url"
+    t.boolean "harvestable", default: false
     t.index ["service_id"], name: "index_service_pl_profiles_on_service_id", unique: true
   end
 

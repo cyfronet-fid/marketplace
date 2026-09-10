@@ -9,12 +9,12 @@ class StripDatasourceToV6 < ActiveRecord::Migration[7.2]
     # live — see arch_docs: docs/rationale/db-schema-comparison.md §2/§3.
     # Without this guard, the first `db:migrate` run against a real pl
     # production database would drop that data. submission_policy_url/
-    # preservation_policy_url move to service_pl_profiles via
+    # preservation_policy_url/harvestable move to service_pl_profiles via
     # BackfillServicePlProfiles (20260909100200); persistent_identity_systems
-    # is kept as-is, already the right shape. harvestable/datasource_id are
-    # dead even in pl's own app (per the usage audit) but are left alone here
-    # too — cleaning those up is a deliberate later step, not a side effect
-    # of this guard.
+    # is kept as-is, already the right shape. datasource_id is dead even in
+    # pl's own app (per the usage audit) but is left alone here too —
+    # cleaning it up is a deliberate later step, not a side effect of this
+    # guard.
     return if Mp::Variant.pl?
 
     drop_table :persistent_identity_system_vocabularies, if_exists: true

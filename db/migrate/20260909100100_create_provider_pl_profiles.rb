@@ -15,6 +15,9 @@ class CreateProviderPlProfiles < ActiveRecord::Migration[7.2]
       t.string :certifications, array: true, default: []
       t.string :affiliations, array: true, default: []
       t.string :national_roadmaps, array: true, default: []
+      t.text :tagline
+      t.string :hosting_legal_entity_string
+      t.string :participating_countries, array: true, default: []
 
       t.timestamps
     end
