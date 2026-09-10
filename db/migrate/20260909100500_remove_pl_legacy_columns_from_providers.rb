@@ -2,9 +2,11 @@
 
 # Completes the reconciliation started by BackfillProviderPlProfiles
 # (20260909100300) — see RemovePlLegacyColumnsFromServices for the same
-# rationale. Includes the 7 fields that moved to provider_pl_profiles and
-# the 3 confirmed dead even in pl's own app (tagline, hosting_legal_entity_string,
-# participating_countries — arch_docs: docs/rationale/db-schema-comparison.md §3).
+# rationale. Includes the 10 fields that moved to provider_pl_profiles: the
+# original 7 plus tagline, hosting_legal_entity_string and
+# participating_countries, which the original usage audit wrongly called
+# dead — pl's own app strips, serializes and permits all three; see
+# CreateProviderPlProfiles and BackfillProviderPlProfiles.
 class RemovePlLegacyColumnsFromProviders < ActiveRecord::Migration[7.2]
   COLUMNS = %i[
     street_name_and_number postal_code city region certifications affiliations national_roadmaps

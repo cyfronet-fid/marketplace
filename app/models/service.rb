@@ -75,6 +75,7 @@ class Service < ApplicationRecord
     pricing_url resource_geographic_locations certifications standards open_source_technologies changelog
     grant_project_names last_update related_platforms abbreviation horizontal availability_cache
     reliability_cache submission_policy_url preservation_policy_url security_contact_email
+    restrictions status_monitoring_url harvestable
   ].freeze
 
   delegate(*PL_PROFILE_FIELDS, *PL_PROFILE_FIELDS.map { |f| :"#{f}=" }, to: :pl_profile, allow_nil: true)

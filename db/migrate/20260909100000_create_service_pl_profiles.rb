@@ -39,6 +39,9 @@ class CreateServicePlProfiles < ActiveRecord::Migration[7.2]
       t.string :submission_policy_url
       t.string :preservation_policy_url
       t.string :security_contact_email
+      t.string :restrictions
+      t.string :status_monitoring_url
+      t.boolean :harvestable, default: false
 
       t.timestamps
     end
