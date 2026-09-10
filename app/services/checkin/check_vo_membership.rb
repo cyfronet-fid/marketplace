@@ -2,7 +2,7 @@
 
 module Checkin
   class CheckVoMembership < ApplicationService
-    Result = Struct.new(:status, :access_token, :refresh_token, keyword_init: true)
+    Result = Struct.new(:status, :access_token, :refresh_token, :become_vo_member_url, keyword_init: true)
 
     def initialize(access_token:, refresh_token:)
       super()
@@ -12,14 +12,12 @@ module Checkin
     end
 
     def call
-      if refresh_token.blank?
-        Checkin::Logger.warn("Missing credentials")
-        return session_expired_result
-      end
+      return result_for(:session_expired) if refresh_token.blank?
+      return result_for(:misconfiguration) if vo_group_name.blank? || become_vo_member_url.blank?
 
       # 1. Refresh token
       response = client.refresh_token(refresh_token)
-      return session_expired_result unless response.success?
+      return result_for(:session_expired) unless response.success?
 
       credentials = JSON.parse(response.body)
       @access_token = credentials["access_token"].presence || access_token
@@ -27,20 +25,16 @@ module Checkin
 
       # 2. Introspect token
       response = client.introspect(access_token)
-      return verification_failed_result unless response.success?
+      return result_for(:verification_failed) unless response.success?
 
       introspection = JSON.parse(response.body)
-      return session_expired_result unless introspection["active"]
+      return result_for(:session_expired) unless introspection["active"]
 
-      Result.new(
-        status: status(introspection),
-        access_token: access_token,
-        refresh_token: refresh_token
-      )
+      result_for(status(introspection))
     rescue Faraday::Error, JSON::ParserError => e
       Checkin::Logger.warn("Membership check failed: #{e.message}")
 
-      verification_failed_result
+      result_for(:verification_failed)
     end
 
     private
@@ -51,23 +45,28 @@ module Checkin
       @client ||= Checkin::Client.new
     end
 
-    def session_expired_result
-      Result.new(status: :session_expired)
-    end
-
-    def verification_failed_result
+    def result_for(status)
       Result.new(
-        status: :verification_failed,
+        status: status,
         access_token: access_token,
-        refresh_token: refresh_token
+        refresh_token: refresh_token,
+        become_vo_member_url: become_vo_member_url
       )
     end
 
     def status(introspection)
       entitlements = introspection["entitlements"] || []
-      group_entitlement = "group:#{Checkin::Config.vo_group_name}"
+      group_tag = "group:#{vo_group_name}"
 
-      entitlements.include?(group_entitlement) ? :member : :not_member
+      entitlements.any? { _1.include?(group_tag) } ? :member : :not_member
+    end
+
+    def become_vo_member_url
+      ENV.fetch("BECOME_VO_MEMBER_URL", nil)
+    end
+
+    def vo_group_name
+      ENV.fetch("VO_GROUP_NAME", nil)
     end
   end
 end

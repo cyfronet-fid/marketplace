@@ -13,29 +13,32 @@ RSpec.describe Checkin::CheckVoMembership, type: :service do
 
   before do
     allow(Checkin::Client).to receive(:new).and_return(client)
-    allow(Checkin::Config).to receive(:vo_group_name).and_return("eosc-beyond.eu")
+    allow(ENV).to receive(:fetch).and_call_original
+    allow(ENV).to receive(:fetch).with("VO_GROUP_NAME", nil).and_return("eosc-beyond.eu")
+    allow(ENV).to receive(:fetch).with("BECOME_VO_MEMBER_URL", nil).and_return("https://example.com/enroll")
   end
 
   context "when the refresh_token is blank" do
     let(:refresh_token) { "" }
 
-    before do
-      allow(Checkin::Logger).to receive(:warn)
-      allow(client).to receive(:refresh_token)
-    end
-
-    it "returns a session_expired status" do
+    it "returns a session_expired status without contacting the client" do
       expect(result.status).to eq(:session_expired)
     end
+  end
 
-    it "does not call the refresh endpoint" do
-      result
-      expect(client).not_to have_received(:refresh_token)
+  context "when the VO group name is not configured" do
+    before { allow(ENV).to receive(:fetch).with("VO_GROUP_NAME", nil).and_return(nil) }
+
+    it "returns a misconfiguration status without contacting the client" do
+      expect(result.status).to eq(:misconfiguration)
     end
+  end
 
-    it "logs a warning" do
-      result
-      expect(Checkin::Logger).to have_received(:warn).with("Missing credentials")
+  context "when the become_vo_member_url is not configured" do
+    before { allow(ENV).to receive(:fetch).with("BECOME_VO_MEMBER_URL", nil).and_return(nil) }
+
+    it "returns a misconfiguration status without contacting the client" do
+      expect(result.status).to eq(:misconfiguration)
     end
   end
 
@@ -51,7 +54,7 @@ RSpec.describe Checkin::CheckVoMembership, type: :service do
     end
   end
 
-  context "when refresh succeeds and the new token is active" do
+  context "when refresh succeeds and the new token belongs to a VO member" do
     before do
       allow(client).to receive(:refresh_token).with(refresh_token).and_return(
         instance_double(
@@ -118,13 +121,8 @@ RSpec.describe Checkin::CheckVoMembership, type: :service do
       )
     end
 
-    it "falls back to introspecting the original tokens" do
-      result
-      expect(client).to have_received(:introspect).with(access_token)
-    end
-
-    it "returns the original tokens" do
-      expect(result).to have_attributes(access_token: access_token, refresh_token: refresh_token)
+    it "falls back to the original tokens" do
+      expect(result).to have_attributes(status: :member, access_token: access_token, refresh_token: refresh_token)
     end
   end
 
@@ -139,11 +137,7 @@ RSpec.describe Checkin::CheckVoMembership, type: :service do
       )
 
       allow(client).to receive(:introspect).with(new_access_token).and_return(
-        instance_double(
-          Faraday::Response,
-          success?: true,
-          body: { active: false }.to_json
-        )
+        instance_double(Faraday::Response, success?: true, body: { active: false }.to_json)
       )
     end
 
@@ -167,12 +161,12 @@ RSpec.describe Checkin::CheckVoMembership, type: :service do
       )
     end
 
-    it "returns a verification_failed status" do
-      expect(result.status).to eq(:verification_failed)
-    end
-
-    it "returns the refreshed tokens so they are persisted" do
-      expect(result).to have_attributes(access_token: new_access_token, refresh_token: new_refresh_token)
+    it "returns a verification_failed status but keeps the refreshed tokens for persistence" do
+      expect(result).to have_attributes(
+        status: :verification_failed,
+        access_token: new_access_token,
+        refresh_token: new_refresh_token
+      )
     end
   end
 
@@ -181,10 +175,16 @@ RSpec.describe Checkin::CheckVoMembership, type: :service do
       allow(client).to receive(:refresh_token).with(refresh_token).and_raise(
         Faraday::ConnectionFailed.new("connection failed")
       )
+      allow(Checkin::Logger).to receive(:warn)
     end
 
     it "returns a verification_failed status" do
       expect(result.status).to eq(:verification_failed)
+    end
+
+    it "logs the failure" do
+      result
+      expect(Checkin::Logger).to have_received(:warn).with("Membership check failed: connection failed")
     end
   end
 

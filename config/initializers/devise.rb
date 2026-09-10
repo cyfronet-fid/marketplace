@@ -259,44 +259,26 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
-  checkin_host = ENV["CHECKIN_HOST"] || "aai.eosc-portal.eu"
-  root_url = ENV["ROOT_URL"] || "http://localhost:#{ENV["PORT"] || 3000}"
-  old_endpoints = {
-    issuer: "oidc",
-    authorize: "/oidc/authorize",
-    token: "/oidc/token",
-    userinfo: "/oidc/userinfo",
-    jwk: "/oidc/jwk"
-  }
-  new_endpoints = {
-    issuer: "auth/realms/core",
-    authorize: "/auth/realms/core/protocol/openid-connect/auth",
-    token: "/auth/realms/core/protocol/openid-connect/token",
-    userinfo: "/auth/realms/core/protocol/openid-connect/userinfo",
-    jwk: "/auth/realms/core/protocol/openid-connect/certs",
-    introspection: "/auth/realms/core/protocol/openid-connect/token/introspect"
-  }
-  endpoints = ENV.fetch("OIDC_AAI_NEW_API", true) ? new_endpoints : old_endpoints
-  scope = ENV["CHECKIN_SCOPE"].nil? ? %w[openid profile email aarc offline_access entitlements] : ENV["CHECKIN_SCOPE"].split(",")
+
   config.omniauth :openid_connect,
                   name: :checkin,
-                  scope: scope,
                   response_type: :code,
-                  issuer: ENV["CHECKIN_ISSUER_URI"] || "https://#{checkin_host}/#{endpoints[:issuer]}",
-                  discovery: true,
-                  pkce: ENV["CHECKIN_PKCE"] || false,
+                  issuer: ENV.fetch("CHECKIN_ISSUER_URI"),
+                  discovery: ENV.fetch("CHECKIN_DISCOVERY", "true") == "true",
+                  scope: ENV.fetch("CHECKIN_SCOPE", "openid,basic,profile,email,offline_access,aarc,entitlements").split(","),
+                  pkce: ENV.fetch("CHECKIN_PKCE", "true") == "true",
                   client_options: {
-                    port: nil,
-                    scheme: "https",
-                    host: checkin_host,
-                    identifier: ENV["CHECKIN_IDENTIFIER"] || Rails.application.credentials.checkin[:identifier],
-                    secret: ENV["CHECKIN_SECRET"] || Rails.application.credentials.checkin[:secret],
-                    redirect_uri: ENV["REDIRECT_URI"] || "#{root_url}/users/auth/checkin/callback",
-                    authorization_endpoint: ENV["CHECKIN_AUTHORIZATION_ENDPOINT"] || endpoints[:authorize],
-                    token_endpoint: ENV["CHECKIN_TOKEN_ENDPOINT"] || endpoints[:token],
-                    userinfo_endpoint: ENV["CHECKIN_USERINFO_ENDPOINT"] || endpoints[:userinfo],
-                    jwks_uri: ENV["CHECKIN_JWKS_ENDPOINT"] || endpoints[:jwk],
-                    introspection_uri: ENV["INTROSPECTION_ENDPOINT"] || "https://#{checkin_host}/#{endpoints[:introspection]}"
+                    port: ENV.fetch("CHECKIN_PORT", nil),
+                    scheme: ENV.fetch("CHECKIN_SCHEME", "https"),
+                    host: ENV.fetch("CHECKIN_HOST"),
+                    identifier: ENV.fetch("CHECKIN_IDENTIFIER"),
+                    secret: ENV.fetch("CHECKIN_SECRET"),
+                    redirect_uri: ENV.fetch("REDIRECT_URI"),
+                    authorization_endpoint: ENV.fetch("CHECKIN_AUTHORIZATION_ENDPOINT", "/authorize"),
+                    introspection_endpoint: ENV.fetch("CHECKIN_INTROSPECTION_ENDPOINT", "/token/introspect"),
+                    token_endpoint: ENV.fetch("CHECKIN_TOKEN_ENDPOINT", "/token"),
+                    userinfo_endpoint: ENV.fetch("CHECKIN_USERINFO_ENDPOINT", "/userinfo"),
+                    jwks_uri: ENV.fetch("CHECKIN_JWKS_URI", "/jwk")
                   }
 
   # ==> Warden configuration

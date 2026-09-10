@@ -13,14 +13,14 @@ module Checkin
     end
 
     def introspect(access_token)
-      connection.post(Checkin::Config.introspection_url) do |req|
+      connection.post(oidc_config.raw["introspection_endpoint"]) do |req|
         req.body = URI.encode_www_form(token: access_token)
         req.headers.merge!(headers)
       end
     end
 
     def refresh_token(refresh_token)
-      connection.post(Checkin::Config.token_url) do |req|
+      connection.post(oidc_config.raw["token_endpoint"]) do |req|
         req.body = URI.encode_www_form(grant_type: "refresh_token", refresh_token: refresh_token)
         req.headers.merge!(headers)
       end
@@ -29,10 +29,6 @@ module Checkin
     private
 
     attr_reader :timeout, :open_timeout
-
-    def client_options
-      @client_options ||= Checkin::Config.client_options
-    end
 
     def connection
       @connection ||=
@@ -46,6 +42,18 @@ module Checkin
 
     def headers
       { "Content-Type" => "application/x-www-form-urlencoded" }
+    end
+
+    def oidc_config
+      @oidc_config ||= OmniAuth::Strategies::OpenIDConnect.new(nil, provider.options).config
+    end
+
+    def client_options
+      provider.options[:client_options]
+    end
+
+    def provider
+      Devise.omniauth_configs[:checkin]
     end
   end
 end
