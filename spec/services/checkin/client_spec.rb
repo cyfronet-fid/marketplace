@@ -5,19 +5,38 @@ require "rails_helper"
 RSpec.describe Checkin::Client, type: :service do
   subject(:client) { described_class.new }
 
+  let(:issuer) { "https://checkin.example.com/realms/core" }
   let(:identifier) { "client-id" }
   let(:secret) { "client-secret" }
-  let(:introspection_url) { "https://aai.eosc-portal.eu/auth/realms/core/protocol/openid-connect/token/introspect" }
-  let(:token_url) { "https://aai.eosc-portal.eu/auth/realms/core/protocol/openid-connect/token" }
 
   before do
-    allow(Checkin::Config).to receive_messages(
-      introspection_url: introspection_url,
-      token_url: token_url,
-      client_options: {
-        identifier: identifier,
-        secret: secret
+    provider = instance_double(
+      Devise::OmniAuth::Config,
+      options: {
+        issuer: issuer,
+        client_options: {
+          identifier: identifier,
+          secret: secret
+        }
       }
+    )
+
+    allow(Devise.omniauth_configs).to receive(:[]).with(:checkin).and_return(provider)
+
+    stub_request(:get, "#{issuer}/.well-known/openid-configuration").to_return(
+      status: 200,
+      headers: { "Content-Type" => "application/json" },
+      body: {
+        issuer: issuer,
+        authorization_endpoint: "#{issuer}/authorize",
+        token_endpoint: "#{issuer}/token",
+        introspection_endpoint: "#{issuer}/token/introspect",
+        userinfo_endpoint: "#{issuer}/userinfo",
+        jwks_uri: "#{issuer}/jwk",
+        response_types_supported: ["code"],
+        subject_types_supported: ["public"],
+        id_token_signing_alg_values_supported: ["RS256"]
+      }.to_json
     )
   end
 
@@ -27,15 +46,12 @@ RSpec.describe Checkin::Client, type: :service do
     let(:access_token) { "a-token" }
 
     before do
-      stub_request(:post, introspection_url)
+      stub_request(:post, "#{issuer}/token/introspect")
         .with(
           body: "token=#{access_token}",
           headers: { "Content-Type" => "application/x-www-form-urlencoded" }
         )
-        .to_return(
-          status: 200,
-          body: { active: true }.to_json
-        )
+        .to_return(status: 200, body: { active: true }.to_json)
     end
 
     it "returns the introspection response" do
@@ -50,7 +66,7 @@ RSpec.describe Checkin::Client, type: :service do
       response
 
       expect(WebMock)
-        .to have_requested(:post, introspection_url)
+        .to have_requested(:post, "#{issuer}/token/introspect")
         .with(headers: { "Authorization" => "Basic #{Base64.strict_encode64("#{identifier}:#{secret}")}" })
     end
   end
@@ -61,15 +77,12 @@ RSpec.describe Checkin::Client, type: :service do
     let(:refresh_token) { "a-refresh-token" }
 
     before do
-      stub_request(:post, token_url)
+      stub_request(:post, "#{issuer}/token")
         .with(
           body: "grant_type=refresh_token&refresh_token=#{refresh_token}",
           headers: { "Content-Type" => "application/x-www-form-urlencoded" }
         )
-        .to_return(
-          status: 200,
-          body: { access_token: "new-token", refresh_token: "new-refresh" }.to_json
-        )
+        .to_return(status: 200, body: { access_token: "new-token", refresh_token: "new-refresh" }.to_json)
     end
 
     it "returns the token refresh response" do
@@ -84,7 +97,7 @@ RSpec.describe Checkin::Client, type: :service do
       response
 
       expect(WebMock)
-        .to have_requested(:post, token_url)
+        .to have_requested(:post, "#{issuer}/token")
         .with(headers: { "Authorization" => "Basic #{Base64.strict_encode64("#{identifier}:#{secret}")}" })
     end
   end

@@ -2,7 +2,6 @@
 
 class Services::ApplicationController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_vo_membership!
   before_action :load_and_authenticate_service!
   before_action :saved_state
 
@@ -36,26 +35,6 @@ class Services::ApplicationController < ApplicationController
         service_choose_offer_path(@service)
       end
     redirect_to choose_offer_path, alert: "Service request template not found" unless @saved_state
-  end
-
-  def check_vo_membership!
-    result = Checkin::CheckVoMembership.call(
-      access_token: session["token"],
-      refresh_token: session["refresh_token"]
-    )
-
-    session["refresh_token"] = result.refresh_token if result.refresh_token.present?
-    session["token"] = result.access_token if result.access_token.present?
-
-    case result.status
-    when :session_expired
-      sign_out(current_user)
-      redirect_to root_path, alert: _("Your session has expired. Please sign in again.")
-    when :verification_failed
-      redirect_to root_path, alert: _("Authentication verification failed")
-    when :not_member
-      redirect_to Checkin::Config.become_vo_member_url, allow_other_host: true
-    end
   end
 
   def load_and_authenticate_service!

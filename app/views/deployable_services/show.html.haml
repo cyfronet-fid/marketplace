@@ -17,7 +17,8 @@
       .col-12.col-lg-3.text-center
         - if @deployable_service.url&.match?(/\.ya?ml(\?|#|$)/) && @deployable_service.offers.accessible.any?
           = link_to deployable_service_choose_offer_path(@deployable_service),
-            class: "btn btn-primary d-block mb-3 py-3" do
+            class: "btn btn-primary d-block mb-3 py-3",
+            data: { "turbo-prefetch": false } do
             Run the service
         - else
           .d-flex.mb-3.deploy-notice
