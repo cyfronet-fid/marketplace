@@ -61,14 +61,22 @@ module Ams
 
     def create_or_update_later
       job = JOBS_MAP.dig(resource, :create_or_update_job)
-      return job.perform_later(message.dig("data", resource_key), status, modified_at) if job
+
+      if job.present?
+        Ams::Logger.info("Enqueue #{resource} id=#{message.dig("data", "id")} for create/update")
+        return job.perform_later(message.dig("data", resource_key), status, modified_at)
+      end
 
       Ams::Logger.warn("Unsupported '#{action}' for resource '#{resource}'")
     end
 
     def delete_later
       job = JOBS_MAP.dig(resource, :delete_job)
-      return job.perform_later(message.dig("data", "id")) if job
+
+      if job.present?
+        Ams::Logger.info("Enqueue #{resource} id=#{message.dig("data", "id")} for delete")
+        return job.perform_later(message.dig("data", "id"))
+      end
 
       Ams::Logger.warn("Unsupported '#{action}' for resource '#{resource}'")
     end
