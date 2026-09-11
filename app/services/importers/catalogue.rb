@@ -34,7 +34,8 @@ class Importers::Catalogue < ApplicationService
             map_scientific_domains(scientific_domain_eids(@data["scientificDomains"]))
           end
         ),
-      public_contacts: Array(@data["publicContacts"]).map { |c| PublicContact.new(map_contact(c)) },
+      data_administrators: data_administrators,
+      public_contacts: public_contacts,
       main_contact: @data["mainContact"] ? MainContact.new(map_contact(@data["mainContact"])) : nil,
       street_name_and_number: @data.dig("location", "streetNameAndNumber") || "",
       postal_code: @data.dig("location", "postalCode") || "",
@@ -45,10 +46,19 @@ class Importers::Catalogue < ApplicationService
       validation_process: @data["validationProcess"] || "",
       end_of_life: @data["endOfLife"] || "",
       scope: @data["scope"],
-      data_administrators: @data["users"]&.map { |da| DataAdministrator.new(map_data_administrator(da)) },
       status: :published,
       synchronized_at: @synchronized_at
     }
   end
   # rubocop:enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+
+  private
+
+  def data_administrators
+    Array(@data["users"]).map { |user| DataAdministrator.new(map_data_administrator(user)) }
+  end
+
+  def public_contacts
+    extract_public_contact_emails(@data["publicContacts"]).map { |email| PublicContact.new(email: email) }
+  end
 end

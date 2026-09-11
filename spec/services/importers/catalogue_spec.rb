@@ -2,11 +2,11 @@
 
 require "rails_helper"
 
-RSpec.describe Importers::Catalogue, backend: true do
+RSpec.describe Importers::Catalogue, :backend do
   let(:catalogue_hash_instance) { double("Importers::Catalogue") }
   let(:parser) { JSON }
 
-  it "should return catalogue hash from jms" do
+  it "returns catalogue hash from jms" do
     response = create(:jms_json_catalogue)
     response = parser.parse(response)
     resource = response["resource"]
@@ -51,5 +51,87 @@ RSpec.describe Importers::Catalogue, backend: true do
     expect(imported_hash[:public_contacts].length).to eq(1)
     expect(imported_hash[:public_contacts][0].attributes).to eq(public_contact.attributes)
     expect(imported_hash[:synchronized_at]).to eq(correct_hash[:synchronized_at])
+  end
+
+  describe ".call" do
+    subject(:importer) { described_class.call(data, synchronized_at) }
+
+    let(:data) { {} }
+    let(:synchronized_at) { Time.current.to_i }
+
+    context "when publicContacts is blank" do
+      it "builds empty array" do
+        expect(importer[:public_contacts]).to eq([])
+      end
+    end
+
+    context "when publicContacts is empty array" do
+      let(:data) { { "publicContacts" => [] } }
+
+      it "builds empty array" do
+        expect(importer[:public_contacts]).to eq([])
+      end
+    end
+
+    context "when publicContacts is an array of emails" do
+      let(:data) { { "publicContacts" => ["john@example.com"] } }
+
+      it "builds PublicContact[]" do
+        expect(importer[:public_contacts]).to all be_a(PublicContact)
+      end
+
+      it "assigns email to PublicContact record" do
+        expect(importer[:public_contacts].map(&:email)).to contain_exactly("john@example.com")
+      end
+    end
+
+    context "when mainContact has fields with no matching Contact attribute" do
+      let(:data) do
+        {
+          "mainContact" => {
+            "firstName" => "Jan",
+            "lastName" => "Kowalski",
+            "email" => "jan@example.com",
+            "role" => nil,
+            "PIDs" => nil,
+            "affiliations" => nil
+          }
+        }
+      end
+
+      it "builds a MainContact" do
+        expect(importer[:main_contact]).to be_a(MainContact)
+      end
+
+      it "maps only known Contact attributes" do
+        expect(importer[:main_contact].attributes).to eq(
+          MainContact.new(first_name: "Jan", last_name: "Kowalski", email: "jan@example.com").attributes
+        )
+      end
+    end
+
+    context "when mainContact is absent" do
+      it "does not build a main contact" do
+        expect(importer[:main_contact]).to be_nil
+      end
+    end
+
+    context "when users is absent" do
+      it "builds an empty data_administrators array" do
+        expect(importer[:data_administrators]).to eq([])
+      end
+    end
+
+    context "when users is present" do
+      let(:data) { { "users" => ["name" => "Jan", "surname" => "Kowalski", "email" => "jan@example.com"] } }
+
+      it "builds DataAdministrator[]" do
+        expect(importer[:data_administrators]).to all be_a(DataAdministrator)
+      end
+
+      it "maps user fields to a DataAdministrator record" do
+        expect(importer[:data_administrators].map(&:email)).to contain_exactly("jan@example.com")
+      end
+    end
   end
 end
