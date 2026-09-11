@@ -274,11 +274,11 @@ Devise.setup do |config|
                     identifier: ENV.fetch("CHECKIN_IDENTIFIER"),
                     secret: ENV.fetch("CHECKIN_SECRET"),
                     redirect_uri: ENV.fetch("REDIRECT_URI"),
-                    authorization_endpoint: ENV.fetch("CHECKIN_AUTHORIZATION_ENDPOINT", "/authorize"),
-                    introspection_endpoint: ENV.fetch("CHECKIN_INTROSPECTION_ENDPOINT", "/token/introspect"),
-                    token_endpoint: ENV.fetch("CHECKIN_TOKEN_ENDPOINT", "/token"),
-                    userinfo_endpoint: ENV.fetch("CHECKIN_USERINFO_ENDPOINT", "/userinfo"),
-                    jwks_uri: ENV.fetch("CHECKIN_JWKS_URI", "/jwk")
+                    authorization_endpoint: ENV.fetch("CHECKIN_AUTHORIZATION_ENDPOINT", nil),
+                    introspection_endpoint: ENV.fetch("CHECKIN_INTROSPECTION_ENDPOINT", nil),
+                    token_endpoint: ENV.fetch("CHECKIN_TOKEN_ENDPOINT", nil),
+                    userinfo_endpoint: ENV.fetch("CHECKIN_USERINFO_ENDPOINT", nil),
+                    jwks_uri: ENV.fetch("CHECKIN_JWKS_URI", nil)
                   }
 
   # ==> Warden configuration

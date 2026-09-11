@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Services::ChooseOffersController < Services::ApplicationController
-  prepend_before_action :check_vo_membership!, only: :show
+  prepend_before_action :check_vo_membership!
 
   def show
     pi_init = params[:customizable_project_item]

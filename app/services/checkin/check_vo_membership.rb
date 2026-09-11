@@ -12,8 +12,8 @@ module Checkin
     end
 
     def call
+      return result_for(:misconfiguration) if misconfigured?
       return result_for(:session_expired) if refresh_token.blank?
-      return result_for(:misconfiguration) if vo_group_name.blank? || become_vo_member_url.blank?
 
       # 1. Refresh token
       response = client.refresh_token(refresh_token)
@@ -59,6 +59,10 @@ module Checkin
       group_tag = "group:#{vo_group_name}"
 
       entitlements.any? { _1.include?(group_tag) } ? :member : :not_member
+    end
+
+    def misconfigured?
+      become_vo_member_url.blank? || vo_group_name.blank?
     end
 
     def become_vo_member_url
