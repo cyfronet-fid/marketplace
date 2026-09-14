@@ -34,7 +34,7 @@ class Services::ApplicationController < ApplicationController
       else
         service_choose_offer_path(@service)
       end
-    redirect_to choose_offer_path, alert: "Service request template not found" unless @saved_state
+    redirect_to choose_offer_path, alert: _("Service request template not found") unless @saved_state
   end
 
   def load_and_authenticate_service!

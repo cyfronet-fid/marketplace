@@ -15,8 +15,8 @@ class Api::V1::MessagePolicy < ApplicationPolicy
         # here (it self-joins "messages" instead), silently dropping the type filter and
         # matching any project_item/project whose id coincides with messageable_id.
         scope
-          .where("offers.primary_oms_id IN (?)", user.administrated_oms_ids)
-          .or(scope.where("offers_project_items.primary_oms_id IN (?)", user.administrated_oms_ids))
+          .where(offers: { primary_oms_id: user.administrated_oms_ids })
+          .or(scope.where(offers_project_items: { primary_oms_id: user.administrated_oms_ids }))
           .joins(<<~SQL.squish)
             LEFT OUTER JOIN project_items ON project_items.id = messages.messageable_id
               AND messages.messageable_type = 'ProjectItem'
