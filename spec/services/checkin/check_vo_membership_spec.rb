@@ -187,7 +187,7 @@ RSpec.describe Checkin::CheckVoMembership, type: :service do
       allow(client).to receive(:refresh_token).with(refresh_token).and_raise(
         Faraday::ConnectionFailed.new("connection failed")
       )
-      allow(Rails.logger).to receive(:tagged).with("[Checkin]").and_return(logger)
+      allow(Rails.logger).to receive(:tagged).with("CHECKIN").and_return(logger)
     end
 
     it "returns a verification_failed status" do

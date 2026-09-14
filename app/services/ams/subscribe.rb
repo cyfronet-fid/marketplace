@@ -16,10 +16,10 @@ module Ams
       raise PullError, "Pull failed for #{subscription_name}: #{response.status}" unless response.success?
 
       messages = get_messages(response)
-      Rails.logger.tagged("[AMS]").info("Found #{messages.size} messages on #{subscription_name}")
+      Rails.logger.tagged("AMS").info("Found #{messages.size} messages on #{subscription_name}")
 
       ack_ids = messages.filter_map { |message| process(message) }
-      Rails.logger.tagged("[AMS]").info("Processed #{ack_ids.size} messages from #{subscription_name}")
+      Rails.logger.tagged("AMS").info("Processed #{ack_ids.size} messages from #{subscription_name}")
       return if ack_ids.blank?
 
       ack_response = client.acknowledge(subscription_name, ack_ids: ack_ids)
