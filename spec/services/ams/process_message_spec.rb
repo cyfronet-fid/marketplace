@@ -80,15 +80,18 @@ RSpec.describe Ams::ProcessMessage do
 
   context "when no job is registered for the resource/action pair" do
     let(:message) { { "data" => { "id" => "123" } } }
+    let(:logger) { instance_spy(ActiveSupport::Logger) }
 
-    before { allow(Ams::Logger).to receive(:warn) }
+    before do
+      allow(Rails.logger).to receive(:tagged).with("[AMS]").and_return(logger)
+    end
 
     context "when the resource is unknown" do
       let(:subscription_name) { "mp-infra_service-create" }
 
       it "logs a warning" do
         call
-        expect(Ams::Logger).to have_received(:warn).with("Unsupported 'create' for resource 'infra_service'")
+        expect(logger).to have_received(:warn).with("Unsupported 'create' for resource 'infra_service'")
       end
     end
 
@@ -97,7 +100,7 @@ RSpec.describe Ams::ProcessMessage do
 
       it "logs a warning" do
         call
-        expect(Ams::Logger).to have_received(:warn).with("Unsupported 'delete' for resource 'catalogue'")
+        expect(logger).to have_received(:warn).with("Unsupported 'delete' for resource 'catalogue'")
       end
     end
   end
