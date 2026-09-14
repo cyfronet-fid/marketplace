@@ -7,8 +7,6 @@ RSpec.describe Checkin::CheckVoMembership, type: :service do
 
   let(:access_token) { "a-token" }
   let(:refresh_token) { "a-refresh-token" }
-  let(:new_access_token) { "new-token" }
-  let(:new_refresh_token) { "new-refresh-token" }
   let(:client) { instance_double(Checkin::Client) }
 
   before do
@@ -55,6 +53,9 @@ RSpec.describe Checkin::CheckVoMembership, type: :service do
   end
 
   context "when refresh succeeds and the new token belongs to a VO member" do
+    let(:new_access_token) { "new-token" }
+    let(:new_refresh_token) { "new-refresh-token" }
+
     before do
       allow(client).to receive(:refresh_token).with(refresh_token).and_return(
         instance_double(
@@ -83,6 +84,9 @@ RSpec.describe Checkin::CheckVoMembership, type: :service do
   end
 
   context "when refresh succeeds and the new token is active but the user is not a VO member" do
+    let(:new_access_token) { "new-token" }
+    let(:new_refresh_token) { "new-refresh-token" }
+
     before do
       allow(client).to receive(:refresh_token).with(refresh_token).and_return(
         instance_double(
@@ -127,6 +131,9 @@ RSpec.describe Checkin::CheckVoMembership, type: :service do
   end
 
   context "when refresh succeeds but introspection reports the token inactive" do
+    let(:new_access_token) { "new-token" }
+    let(:new_refresh_token) { "new-refresh-token" }
+
     before do
       allow(client).to receive(:refresh_token).with(refresh_token).and_return(
         instance_double(
@@ -147,6 +154,9 @@ RSpec.describe Checkin::CheckVoMembership, type: :service do
   end
 
   context "when refresh succeeds but introspection fails outright" do
+    let(:new_access_token) { "new-token" }
+    let(:new_refresh_token) { "new-refresh-token" }
+
     before do
       allow(client).to receive(:refresh_token).with(refresh_token).and_return(
         instance_double(
@@ -171,11 +181,13 @@ RSpec.describe Checkin::CheckVoMembership, type: :service do
   end
 
   context "when the client raises a Faraday error" do
+    let(:logger) { instance_spy(ActiveSupport::Logger) }
+
     before do
       allow(client).to receive(:refresh_token).with(refresh_token).and_raise(
         Faraday::ConnectionFailed.new("connection failed")
       )
-      allow(Checkin::Logger).to receive(:warn)
+      allow(Rails.logger).to receive(:tagged).with("[Checkin]").and_return(logger)
     end
 
     it "returns a verification_failed status" do
@@ -184,7 +196,7 @@ RSpec.describe Checkin::CheckVoMembership, type: :service do
 
     it "logs the failure" do
       result
-      expect(Checkin::Logger).to have_received(:warn).with("Membership check failed: connection failed")
+      expect(logger).to have_received(:warn).with("Membership check failed: connection failed")
     end
   end
 

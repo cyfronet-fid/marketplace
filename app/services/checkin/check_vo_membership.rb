@@ -32,7 +32,7 @@ module Checkin
 
       result_for(status(introspection))
     rescue Faraday::Error, JSON::ParserError => e
-      Checkin::Logger.warn("Membership check failed: #{e.message}")
+      Rails.logger.tagged("[Checkin]").warn("Membership check failed: #{e.message}")
 
       result_for(:verification_failed)
     end
