@@ -44,6 +44,32 @@ RSpec.describe Ams::Subscribe do
       end
     end
 
+    context "when logging message counts" do
+      let(:raw_message) { { "ackId" => "ack-1", "message" => { "data" => "encoded" } } }
+      let(:logger) { instance_spy(ActiveSupport::Logger) }
+
+      before do
+        stub_request(:post, pull_url).to_return(
+          body: { "receivedMessages" => [raw_message] }.to_json,
+          headers: { "Content-Type" => "application/json" }
+        )
+
+        allow(Ams::DecodeMessage).to receive(:call).and_return({})
+        allow(Ams::ProcessMessage).to receive(:call).and_return(true)
+        allow(Rails.logger).to receive(:tagged).with("[AMS]").and_return(logger)
+      end
+
+      it "logs the number of messages found on the subscription" do
+        subscribe
+        expect(logger).to have_received(:info).with("Found 1 messages on #{subscription_name}")
+      end
+
+      it "logs the number of messages processed from the subscription" do
+        subscribe
+        expect(logger).to have_received(:info).with("Processed 1 messages from #{subscription_name}")
+      end
+    end
+
     context "when there are no messages" do
       before do
         stub_request(:post, pull_url).to_return(
