@@ -9,7 +9,6 @@ require "rack_session_access/capybara"
 # and recreated between test runs. Don't rely on the data there!
 
 Rails.application.configure do
-  config.logger = Logger.new(Rails.root.join("log", "test.log"))
   config.log_level = :warn
   # Settings specified here will take precedence over those in config/application.rb.
 

@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [4.5.0](https://github.com/cyfronet-fid/marketplace/compare/v4.4.7...v4.5.0) (2026-09-07)
+
+
+### Features
+
+* [[#3633](https://github.com/cyfronet-fid/marketplace/issues/3633)] replace AMS subscriber daemon with job-based sync pipeline ([#3759](https://github.com/cyfronet-fid/marketplace/issues/3759)) ([f195d9a](https://github.com/cyfronet-fid/marketplace/commit/f195d9a7669e4111e573a21a3eafeb6ea989cf28))
+
 ## [4.4.7](https://github.com/cyfronet-fid/marketplace/compare/v4.4.6...v4.4.7) (2026-09-03)
 
 
