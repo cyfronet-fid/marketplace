@@ -55,6 +55,22 @@ Database:
 - Provider `pid` is required and unique, generated when blank, including on
   `save(validate: false)` (ported from pl-marketplace).
 
+Lifecycle and messaging:
+
+- Delete, suspend and unpublish are selected per variant through
+  `VariantOperation`: marketplace keeps its `Standalone` behavior; pl and
+  whitelabel use `Cascading` implementations that enqueue `DeleteJob`,
+  `SuspendJob` or `UnpublishJob` for dependent records and save without
+  validation. Controllers remove services, offers and bundles through
+  `Service/Offer/Bundle::Removal`.
+- `Datasource::Delete` renamed to `Datasource::PcDelete`, so `DeleteJob`
+  resolves a datasource to `Service::Delete`.
+- `Provider#managed_services` ported; registry provider deletes cascade on
+  pl/whitelabel (their own `Provider::PcDelete` never defined `call`).
+- JMS messages with `resource` as a JSON string are accepted; the subscriber
+  and `Jms::ManageMessageJob` now call `Jms::ManageMessage` with its actual
+  arguments.
+
 ## Next steps
 
 Found by comparing `app/`, `lib/` and `config/` of this branch with
@@ -75,12 +91,10 @@ Found by comparing `app/`, `lib/` and `config/` of this branch with
 
 ### Delete, lifecycle and messaging (pl + whitelabel)
 
-- [ ] Port and gate `Service::Delete`, `Bundle::Delete`,
-      `Provider/Catalogue/Datasource::PcDelete`, `DeleteJob`, `SuspendJob`,
-      `UnpublishJob` next to marketplace's `Destroy` services.
-- [ ] `Bundle::Unpublish`: skip deleted bundles, save without validation.
-- [ ] `Jms::ManageMessage` and `lib/jms/subscriber.rb`: accept `resource` as a
-      JSON string; test with real messages from all three deployments.
+- [ ] Test JMS handling with real messages from all three deployments.
+- [ ] `Service::Publish` differs: pl/whitelabel publish the single offer and
+      notify subscribers only after the service update succeeds. Decide
+      between gating and a bug fix for all variants.
 
 ### PL imports, forms and policies
 
