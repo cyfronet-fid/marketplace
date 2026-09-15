@@ -3,6 +3,7 @@
 class Backoffice::Providers::StepsController < Backoffice::ProvidersController
   include Backoffice::ProvidersHelper
   include UrlHelper
+
   skip_before_action :backoffice_authorization!
   before_action :validate_wizard_action, only: :show
   before_action :current_step, only: :show
@@ -45,18 +46,21 @@ class Backoffice::Providers::StepsController < Backoffice::ProvidersController
     @provider.assign_attributes provider_attrs.except("logo")
     provider_attrs["logo"] = logo(provider_attrs) if provider_attrs["logo"].present? && current_step_index.zero?
 
-    return save_as_draft if params[:commit] == save_as_draft_title
+    if save_as_draft_requested?
+      return save_as_draft if Mp::Variant.whitelabel?
+
+      return head :unprocessable_content
+    end
 
     if @provider.valid?
       session[session_key] = provider_attrs
       redirect_to_next_step(params[:commit])
     else
-      render :show, status: :unprocessable_entity
+      render :show, status: :unprocessable_content
     end
   end
 
-  def destroy
-  end
+  def destroy; end
 
   private
 
@@ -70,8 +74,13 @@ class Backoffice::Providers::StepsController < Backoffice::ProvidersController
     redirect_to backoffice_providers_path(format: :html), notice: "Provider saved successfully as a draft"
   end
 
+  def save_as_draft_requested?
+    params[:commit] == save_as_draft_title
+  end
+
   def target_step(commit)
     raise CommitValueError, "Unknown commit value" if commit.blank?
+
     @provider.current_step = session[:provider_step]
 
     case commit
@@ -115,11 +124,11 @@ class Backoffice::Providers::StepsController < Backoffice::ProvidersController
           ar.save
         end
       else
-        render :show, status: :unprocessable_entity
+        render :show, status: :unprocessable_content
       end
     else
       init_provider(session_key, saved_params.except("logo"))
-      render :show, status: :unprocessable_entity unless @provider.update(saved_params)
+      render :show, status: :unprocessable_content unless @provider.update(saved_params)
     end
     @provider.update_logo!(@logo) if @logo.present?
     action = session.delete(:wizard_action)
@@ -169,7 +178,7 @@ class Backoffice::Providers::StepsController < Backoffice::ProvidersController
   end
 
   def validate_wizard_action
-    if session[:wizard_action].nil? || !%w[create update].include?(session[:wizard_action])
+    if session[:wizard_action].nil? || %w[create update].exclude?(session[:wizard_action])
       raise WizardActionError, "wizard_action parameter not set"
     end
   end
@@ -202,9 +211,9 @@ class Backoffice::Providers::StepsController < Backoffice::ProvidersController
     return unless params.dig(:provider, :public_contact_emails).is_a?(String)
 
     params[:provider][:public_contact_emails] = params[:provider][:public_contact_emails]
-      .split(/\r?\n/)
-      .map(&:strip)
-      .reject(&:blank?)
+                                                .split(/\r?\n/)
+                                                .map(&:strip)
+                                                .compact_blank
   end
 
   def session_key
