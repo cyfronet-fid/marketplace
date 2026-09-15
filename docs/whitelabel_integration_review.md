@@ -38,8 +38,8 @@ The main problems are:
 5. PL and whitelabel still expose 14 deployable-service routes.
 6. Their UI, login settings, and deployment defaults are not fully copied.
 
-The exact implementation tasks are in
-`docs/repository_consolidation_tasks.md`.
+Current status and next steps are in
+`docs/repository_consolidation_status.md`.
 
 ## What already works
 
