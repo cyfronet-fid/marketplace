@@ -739,7 +739,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_09_15_100000) do
     t.string "name", null: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.string "pid"
+    t.string "pid", null: false
     t.string "abbreviation"
     t.string "website"
     t.boolean "legal_entity"
@@ -751,6 +751,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_09_15_100000) do
     t.integer "usage_counts_views", default: 0, null: false
     t.string "ppid"
     t.string "public_contact_emails", default: [], array: true
+    t.index ["pid"], name: "index_providers_on_pid", unique: true
   end
 
   create_table "research_products", force: :cascade do |t|
