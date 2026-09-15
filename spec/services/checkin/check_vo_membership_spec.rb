@@ -11,9 +11,10 @@ RSpec.describe Checkin::CheckVoMembership, type: :service do
 
   before do
     allow(Checkin::Client).to receive(:new).and_return(client)
-    allow(ENV).to receive(:fetch).and_call_original
-    allow(ENV).to receive(:fetch).with("VO_GROUP_NAME", nil).and_return("eosc-beyond.eu")
-    allow(ENV).to receive(:fetch).with("BECOME_VO_MEMBER_URL", nil).and_return("https://example.com/enroll")
+    allow(Checkin::Config).to receive_messages(
+      vo_group_name: "eosc-beyond.eu",
+      become_vo_member_url: "https://example.com/enroll"
+    )
   end
 
   context "when the refresh_token is blank" do
@@ -25,7 +26,7 @@ RSpec.describe Checkin::CheckVoMembership, type: :service do
   end
 
   context "when the VO group name is not configured" do
-    before { allow(ENV).to receive(:fetch).with("VO_GROUP_NAME", nil).and_return(nil) }
+    before { allow(Checkin::Config).to receive(:vo_group_name).and_return(nil) }
 
     it "returns a misconfiguration status without contacting the client" do
       expect(result.status).to eq(:misconfiguration)
@@ -33,7 +34,7 @@ RSpec.describe Checkin::CheckVoMembership, type: :service do
   end
 
   context "when the become_vo_member_url is not configured" do
-    before { allow(ENV).to receive(:fetch).with("BECOME_VO_MEMBER_URL", nil).and_return(nil) }
+    before { allow(Checkin::Config).to receive(:become_vo_member_url).and_return(nil) }
 
     it "returns a misconfiguration status without contacting the client" do
       expect(result.status).to eq(:misconfiguration)

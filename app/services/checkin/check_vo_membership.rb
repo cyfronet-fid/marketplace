@@ -2,13 +2,14 @@
 
 module Checkin
   class CheckVoMembership < ApplicationService
-    Result = Struct.new(:status, :access_token, :refresh_token, :become_vo_member_url, keyword_init: true)
+    CheckResult = Struct.new(:status, :access_token, :refresh_token, :become_vo_member_url, keyword_init: true)
 
-    def initialize(access_token:, refresh_token:)
+    def initialize(access_token:, refresh_token:, config: Checkin::Config)
       super()
 
       @access_token = access_token
       @refresh_token = refresh_token
+      @config = config
     end
 
     def call
@@ -19,9 +20,7 @@ module Checkin
       response = client.refresh_token(refresh_token)
       return result_for(:session_expired) unless response.success?
 
-      credentials = JSON.parse(response.body)
-      @access_token = credentials["access_token"].presence || access_token
-      @refresh_token = credentials["refresh_token"].presence || refresh_token
+      update_credentials!(JSON.parse(response.body))
 
       # 2. Introspect token
       response = client.introspect(access_token)
@@ -31,7 +30,7 @@ module Checkin
       return result_for(:session_expired) unless introspection["active"]
 
       result_for(status(introspection))
-    rescue Faraday::Error, JSON::ParserError => e
+    rescue Faraday::ConnectionFailed, Faraday::TimeoutError, JSON::ParserError => e
       Rails.logger.tagged("CHECKIN").warn("Membership check failed: #{e.message}")
 
       result_for(:verification_failed)
@@ -39,14 +38,19 @@ module Checkin
 
     private
 
-    attr_reader :access_token, :refresh_token
+    attr_reader :access_token, :refresh_token, :config
 
     def client
       @client ||= Checkin::Client.new
     end
 
+    def update_credentials!(credentials)
+      @access_token = credentials["access_token"].presence || access_token
+      @refresh_token = credentials["refresh_token"].presence || refresh_token
+    end
+
     def result_for(status)
-      Result.new(
+      CheckResult.new(
         status: status,
         access_token: access_token,
         refresh_token: refresh_token,
@@ -66,11 +70,11 @@ module Checkin
     end
 
     def become_vo_member_url
-      ENV.fetch("BECOME_VO_MEMBER_URL", nil)
+      config.become_vo_member_url
     end
 
     def vo_group_name
-      ENV.fetch("VO_GROUP_NAME", nil)
+      config.vo_group_name
     end
   end
 end

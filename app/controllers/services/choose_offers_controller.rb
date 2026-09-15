@@ -63,6 +63,10 @@ class Services::ChooseOffersController < Services::ApplicationController
       redirect_to root_path, alert: _("Your VO membership verification has failed.")
     when :not_member
       redirect_to result.become_vo_member_url, allow_other_host: true
+    when :member
+      nil
+    else
+      Rails.logger.tagged("CHECKIN").warn("Unhandled VO membership status: #{result.status.inspect}")
     end
   end
 

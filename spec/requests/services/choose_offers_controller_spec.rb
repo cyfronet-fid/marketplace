@@ -14,7 +14,7 @@ RSpec.describe "Services::ChooseOffersController functionality", type: :request 
     before { allow(Checkin::CheckVoMembership).to receive(:call).and_return(check_vo_membership_result) }
 
     context "when the status is misconfiguration" do
-      let(:check_vo_membership_result) { Checkin::CheckVoMembership::Result.new(status: :misconfiguration) }
+      let(:check_vo_membership_result) { Checkin::CheckVoMembership::CheckResult.new(status: :misconfiguration) }
 
       before { get service_choose_offer_path(service_resource) }
 
@@ -28,7 +28,7 @@ RSpec.describe "Services::ChooseOffersController functionality", type: :request 
     end
 
     context "when the status is session_expired" do
-      let(:check_vo_membership_result) { Checkin::CheckVoMembership::Result.new(status: :session_expired) }
+      let(:check_vo_membership_result) { Checkin::CheckVoMembership::CheckResult.new(status: :session_expired) }
 
       before { get service_choose_offer_path(service_resource) }
 
@@ -47,7 +47,7 @@ RSpec.describe "Services::ChooseOffersController functionality", type: :request 
     end
 
     context "when the status is verification_failed" do
-      let(:check_vo_membership_result) { Checkin::CheckVoMembership::Result.new(status: :verification_failed) }
+      let(:check_vo_membership_result) { Checkin::CheckVoMembership::CheckResult.new(status: :verification_failed) }
 
       before { get service_choose_offer_path(service_resource) }
 
@@ -62,7 +62,7 @@ RSpec.describe "Services::ChooseOffersController functionality", type: :request 
 
     context "when the status is not_member" do
       let(:check_vo_membership_result) do
-        Checkin::CheckVoMembership::Result.new(status: :not_member, become_vo_member_url: "https://example.com/enroll")
+        Checkin::CheckVoMembership::CheckResult.new(status: :not_member, become_vo_member_url: "https://example.com/enroll")
       end
 
       before { get service_choose_offer_path(service_resource) }
@@ -73,7 +73,7 @@ RSpec.describe "Services::ChooseOffersController functionality", type: :request 
     end
 
     context "when the status is member" do
-      let(:check_vo_membership_result) { Checkin::CheckVoMembership::Result.new(status: :member) }
+      let(:check_vo_membership_result) { Checkin::CheckVoMembership::CheckResult.new(status: :member) }
 
       before do
         create(
@@ -99,9 +99,45 @@ RSpec.describe "Services::ChooseOffersController functionality", type: :request 
       end
     end
 
+    context "when the status is unrecognized" do
+      let(:check_vo_membership_result) { Checkin::CheckVoMembership::CheckResult.new(status: :something_new) }
+
+      before do
+        allow(Rails.logger).to receive(:tagged).and_call_original
+        allow(Rails.logger).to receive(:tagged).with("CHECKIN").and_return(instance_spy(ActiveSupport::Logger))
+        create(
+          :offer,
+          service: service_resource,
+          deployable_service: nil,
+          offer_category: service_category,
+          status: :published
+        )
+        create(
+          :offer,
+          service: service_resource,
+          deployable_service: nil,
+          offer_category: service_category,
+          name: "Alternative Offer",
+          status: :published
+        )
+      end
+
+      it "logs a warning" do
+        get service_choose_offer_path(service_resource)
+
+        expect(Rails.logger.tagged("CHECKIN"))
+          .to have_received(:warn).with("Unhandled VO membership status: :something_new")
+      end
+
+      it "proceeds to the requested action" do
+        get service_choose_offer_path(service_resource)
+        expect(response).to have_http_status(:success)
+      end
+    end
+
     context "when the service returns refreshed tokens" do
       let(:check_vo_membership_result) do
-        Checkin::CheckVoMembership::Result.new(
+        Checkin::CheckVoMembership::CheckResult.new(
           status: :verification_failed,
           refresh_token: "new-refresh",
           access_token: "new-token"

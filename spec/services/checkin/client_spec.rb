@@ -8,6 +8,7 @@ RSpec.describe Checkin::Client, type: :service do
   let(:issuer) { "https://checkin.example.com/realms/core" }
   let(:identifier) { "client-id" }
   let(:secret) { "client-secret" }
+  let(:basic_auth_header) { "Basic #{Base64.strict_encode64("#{identifier}:#{secret}")}" }
 
   before do
     provider = instance_double(
@@ -49,7 +50,7 @@ RSpec.describe Checkin::Client, type: :service do
       stub_request(:post, "#{issuer}/token/introspect")
         .with(
           body: "token=#{access_token}",
-          headers: { "Content-Type" => "application/x-www-form-urlencoded" }
+          headers: { "Content-Type" => "application/x-www-form-urlencoded", "Authorization" => basic_auth_header }
         )
         .to_return(status: 200, body: { active: true }.to_json)
     end
@@ -62,12 +63,19 @@ RSpec.describe Checkin::Client, type: :service do
       expect(JSON.parse(response.body)).to eq("active" => true)
     end
 
-    it "authenticates with HTTP basic auth using the checkin client credentials" do
-      response
+    context "when the introspection request is rejected" do
+      before do
+        stub_request(:post, "#{issuer}/token/introspect")
+          .with(
+            body: "token=#{access_token}",
+            headers: { "Content-Type" => "application/x-www-form-urlencoded", "Authorization" => basic_auth_header }
+          )
+          .to_return(status: 401, body: { error: "invalid_token" }.to_json)
+      end
 
-      expect(WebMock)
-        .to have_requested(:post, "#{issuer}/token/introspect")
-        .with(headers: { "Authorization" => "Basic #{Base64.strict_encode64("#{identifier}:#{secret}")}" })
+      it "returns the failed response instead of raising" do
+        expect(response).to have_attributes(success?: false, status: 401)
+      end
     end
   end
 
@@ -80,7 +88,7 @@ RSpec.describe Checkin::Client, type: :service do
       stub_request(:post, "#{issuer}/token")
         .with(
           body: "grant_type=refresh_token&refresh_token=#{refresh_token}",
-          headers: { "Content-Type" => "application/x-www-form-urlencoded" }
+          headers: { "Content-Type" => "application/x-www-form-urlencoded", "Authorization" => basic_auth_header }
         )
         .to_return(status: 200, body: { access_token: "new-token", refresh_token: "new-refresh" }.to_json)
     end
@@ -93,12 +101,19 @@ RSpec.describe Checkin::Client, type: :service do
       expect(JSON.parse(response.body)).to eq("access_token" => "new-token", "refresh_token" => "new-refresh")
     end
 
-    it "authenticates with HTTP basic auth using the checkin client credentials" do
-      response
+    context "when the refresh request is rejected" do
+      before do
+        stub_request(:post, "#{issuer}/token")
+          .with(
+            body: "grant_type=refresh_token&refresh_token=#{refresh_token}",
+            headers: { "Content-Type" => "application/x-www-form-urlencoded", "Authorization" => basic_auth_header }
+          )
+          .to_return(status: 400, body: { error: "invalid_grant" }.to_json)
+      end
 
-      expect(WebMock)
-        .to have_requested(:post, "#{issuer}/token")
-        .with(headers: { "Authorization" => "Basic #{Base64.strict_encode64("#{identifier}:#{secret}")}" })
+      it "returns the failed response instead of raising" do
+        expect(response).to have_attributes(success?: false, status: 400)
+      end
     end
   end
 
