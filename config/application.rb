@@ -37,7 +37,7 @@ module Mp
 
     config.autoload_lib(ignore: %w[assets tasks])
 
-    default_redis_url = Rails.env == "test" ? "redis://localhost:6379/1" : "redis://localhost:6379/0"
+    default_redis_url = Rails.env.test? ? "redis://localhost:6379/1" : "redis://localhost:6379/0"
 
     config.redis_url = ENV.fetch("REDIS_URL", default_redis_url)
 
@@ -49,7 +49,7 @@ module Mp
 
     # Hierachical locales file structure
     # see https://guides.rubyonrails.org/i18n.html#configure-the-i18n-module
-    config.i18n.load_path += Dir[Rails.root.join("config", "locales", "**", "*.{rb,yml}")]
+    config.i18n.load_path += Rails.root.glob("config/locales/**/*.{rb,yml}")
 
     # Views and locales customization
     # The dir structure pointed by `$CUSTOMIZATION_PATH` should looks as follow:
@@ -88,7 +88,8 @@ module Mp
     config.eosc_commons_env = ENV.fetch("EOSC_COMMONS_ENV", "production")
 
     config.home_page_external_links_enabled = ActiveModel::Type::Boolean.new.cast(
-      ENV.fetch("HOME_PAGE_EXTERNAL_LINKS_ENABLED", false))
+      ENV.fetch("HOME_PAGE_EXTERNAL_LINKS_ENABLED", false)
+    )
     config.search_service_base_url = ENV.fetch("SEARCH_SERVICE_BASE_URL", "https://search.marketplace.eosc-portal.eu")
     config.search_service_research_product_endpoint = ENV.fetch("SEARCH_SERVICE_RESEARCH_PRODUCT_ENDPOINT",
                                                                 "/api/web/research-product/")
@@ -98,7 +99,8 @@ module Mp
     config.resource_cache_ttl = ENV.fetch("ESS_RESOURCE_CACHE_TTL", "60").to_i.seconds
 
     config.mp_stomp_publisher_enabled = ActiveModel::Type::Boolean.new.cast(
-      ENV.fetch("MP_STOMP_PUBLISHER_ENABLED", Rails.env.test?))
+      ENV.fetch("MP_STOMP_PUBLISHER_ENABLED", Rails.env.test?)
+    )
 
     config.eosc_helpdesk_form_link = ENV.fetch("EOSC_HELPDESK_FORM_URL",
                                                "https://helpdesk.sandbox.eosc-beyond.eu/assets/form/form.js")
@@ -113,7 +115,5 @@ module Mp
 
     config.federation_api_base_url = ENV.fetch("FEDERATION_API_BASE_URL", "http://federatedsearch.service.eosc-beyond.eu/federation/services")
     config.aggregator_type = ENV.fetch("AGGREGATOR_TYPE", "pc")
-
-    config.vo_group_name = ENV.fetch("VO_GROUP_NAME", "eosc-beyond.eu")
   end
 end

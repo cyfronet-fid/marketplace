@@ -29,7 +29,7 @@ RSpec.describe Ams::DecodeMessage do
       let(:logger) { instance_spy(ActiveSupport::Logger) }
 
       before do
-        allow(Rails.logger).to receive(:tagged).with("[AMS]").and_return(logger)
+        allow(Rails.logger).to receive(:tagged).with("AMS").and_return(logger)
       end
 
       it "returns the original message unchanged" do
