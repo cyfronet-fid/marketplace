@@ -16,8 +16,9 @@ gated.
 
 - `Api::ServicesController` — `COUNTRY_NAME`/`CONTACT_EMAIL` now serve real
   data (via a restored `geographical_availabilities` column and a
-  `Service#public_contacts` association) under `pl`/`whitelabel`; `marketplace`
-  keeps its existing flat/empty behavior.
+  `Service#public_contacts` association) under `pl`; `marketplace` and
+  `whitelabel` keep the flat/empty behavior (whitelabel's own `Service`
+  stubbed both fields, so its endpoint raised on `includes(:public_contacts)`).
 - `Api::V1::Ess::ApplicationController` — the `deployable_services` ESS
   collection/route is `marketplace`-only (the underlying `DeployableService`
   data model doesn't exist on `pl`/`whitelabel`).
@@ -27,9 +28,14 @@ gated.
 - `DataAdministrator#connect_user` — fixed an unguarded counter decrement.
 - `Api::V1::UsersController` — fixed a 404 message referencing the wrong
   param key.
-- `Importers::Token` — added the client-credentials grant (selected by
-  `IMPORTER_AAI_CLIENT_SECRET` presence) alongside the existing refresh-token
-  flow.
+- `Importers::ClientCredentialsToken` — normal import tasks can obtain a token
+  automatically when `IMPORT_CLIENT_ID`, `IMPORT_CLIENT_SECRET`, and the
+  Check-in token endpoint are configured. `MP_IMPORT_TOKEN` still takes
+  precedence, and the legacy refresh-token client remains separate.
+- `Provider#pid` — ported from pl-marketplace for all variants (not gated):
+  generated as a UUID when blank, validated present/unique, and enforced
+  `NOT NULL` + unique index by `EnforceNotNullUniquePidOnProviders`, which
+  keeps pl's migration version.
 - `config.whitelabel`/`MP_WHITELABEL` was folded into `Mp::Variant.whitelabel?`.
 - `config.monitoring_data_token` — no longer raises on a deployment whose
   `credentials.yml.enc` lacks the `monitoring_data` key; falls back to `nil`
