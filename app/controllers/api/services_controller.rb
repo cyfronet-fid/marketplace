@@ -18,19 +18,20 @@ class Api::ServicesController < ActionController::API
 
   private
 
-  # The `marketplace` variant never populated `geographical_availabilities` or
-  # the `public_contacts` association - see ADR-0001's controller audit and
-  # StripServiceToV6. Only pl/whitelabel serve real data for either field.
+  # Only `pl` kept `geographical_availabilities` and the `public_contacts`
+  # association through the V6 migration (StripServiceToV6). `whitelabel`
+  # stubbed both via Service::V6_REMOVED_ARRAY_FIELDS, so its own
+  # `includes(:public_contacts)` raised; it shares marketplace's data shape.
   def published_services
     scope = Service.where(status: :published)
-    Mp::Variant.marketplace? ? scope : scope.includes(:public_contacts)
+    Mp::Variant.pl? ? scope.includes(:public_contacts) : scope
   end
 
   def contact_email(service)
-    Mp::Variant.marketplace? ? service.public_contact_emails : service.public_contacts.map(&:email)
+    Mp::Variant.pl? ? service.public_contacts.map(&:email) : service.public_contact_emails
   end
 
   def country_name(service)
-    Mp::Variant.marketplace? ? [] : service.geographical_availabilities
+    Mp::Variant.pl? ? service.geographical_availabilities : []
   end
 end
