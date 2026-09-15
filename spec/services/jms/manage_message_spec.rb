@@ -21,6 +21,28 @@ describe Jms::ManageMessage, :backend do
     end
   end
 
+  context "when the resource arrives as a JSON string" do
+    subject(:call) { described_class.call(message, logger) }
+
+    let(:parsed_body) { JSON.parse(create(:jms_json_service)) }
+    let(:resource) { parsed_body["resource"] }
+    let(:modified_at) { Time.zone.at(resource["metadata"]["modifiedAt"].to_i / 1000) }
+    let(:message) do
+      double(
+        body: parsed_body.merge("resource" => resource.to_json).to_json,
+        headers: {
+          "destination" => "/topic/registry.service.update"
+        }
+      )
+    end
+
+    it "enqueues a publish job for the service" do
+      expect { call }
+        .to have_enqueued_job(Service::PcCreateOrUpdateJob).with(resource["service"], :published, modified_at)
+        .and output.to_stdout
+    end
+  end
+
   context "when receiving a provider update message" do
     subject(:call) { described_class.call(message, logger) }
 

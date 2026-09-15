@@ -3,7 +3,7 @@
 class Jms::ManageMessageJob < ApplicationJob
   queue_as :pc_subscriber
 
-  def perform(message, eosc_registry_base_url, logger)
-    Jms::ManageMessage.new(message, eosc_registry_base_url, logger)
+  def perform(message, logger)
+    Jms::ManageMessage.call(message, logger)
   end
 end
