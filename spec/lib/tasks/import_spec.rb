@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe "import:resources", type: :task, backend: true do
+describe "import:resources", :backend, type: :task do
   let(:resource_importer) { double("Import::Resources") }
   let(:provider_importer) { double("Import::Providers") }
 
@@ -24,7 +24,7 @@ describe "import:resources", type: :task, backend: true do
     expect(task.prerequisites).to include "environment"
   end
 
-  it "should pass ENV variables" do
+  it "passes ENV variables" do
     allow(resource_importer).to receive(:call)
     import_class_stub = class_double(Import::Resources).as_stubbed_const(transfer_nested_constants: true)
     allow(import_class_stub).to receive(:new).with(
@@ -40,7 +40,7 @@ describe "import:resources", type: :task, backend: true do
     subject.invoke
   end
 
-  it "should call Import::Resources.call" do
+  it "calls Import::Resources.call" do
     allow(resource_importer).to receive(:call)
     import_class_stub = class_double(Import::Resources).as_stubbed_const(transfer_nested_constants: true)
     allow(import_class_stub).to receive(:new).with(
@@ -56,7 +56,7 @@ describe "import:resources", type: :task, backend: true do
     subject.invoke
   end
 
-  it "should call Import::Providers.call" do
+  it "calls Import::Providers.call" do
     allow(provider_importer).to receive(:call)
     import_class_stub = class_double(Import::Providers).as_stubbed_const(transfer_nested_constants: true)
     allow(import_class_stub).to receive(:new).with(
@@ -66,5 +66,44 @@ describe "import:resources", type: :task, backend: true do
     ).and_return(provider_importer)
 
     subject.invoke
+  end
+end
+
+describe "import:authorize", :backend, type: :task do
+  before { task.reenable }
+
+  around do |example|
+    keys = %w[MP_IMPORT_TOKEN IMPORT_CLIENT_ID IMPORT_CLIENT_SECRET CHECKIN_TOKEN_ENDPOINT]
+    original = keys.index_with { |key| ENV.key?(key) ? ENV[key] : nil }
+    example.run
+  ensure
+    keys.each { |key| original[key].nil? ? ENV.delete(key) : ENV[key] = original[key] }
+  end
+
+  after { task.reenable }
+
+  it "sets MP_IMPORT_TOKEN from complete client credentials" do
+    ENV.delete("MP_IMPORT_TOKEN")
+    ENV["IMPORT_CLIENT_ID"] = "import-client"
+    ENV["IMPORT_CLIENT_SECRET"] = "import-secret"
+    ENV["CHECKIN_TOKEN_ENDPOINT"] = "https://checkin.example/token"
+    token_importer = instance_double(Importers::ClientCredentialsToken, receive_token: "received-token")
+    allow(Importers::ClientCredentialsToken).to receive(:new).and_return(token_importer)
+
+    task.invoke
+
+    expect(ENV.fetch("MP_IMPORT_TOKEN", nil)).to eq("received-token")
+  end
+
+  it "keeps an explicitly supplied token" do
+    ENV["MP_IMPORT_TOKEN"] = "manual-token"
+    ENV["IMPORT_CLIENT_ID"] = "import-client"
+    ENV["IMPORT_CLIENT_SECRET"] = "import-secret"
+
+    expect(Importers::ClientCredentialsToken).not_to receive(:new)
+
+    task.invoke
+
+    expect(ENV.fetch("MP_IMPORT_TOKEN", nil)).to eq("manual-token")
   end
 end
