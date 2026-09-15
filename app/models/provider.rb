@@ -13,6 +13,7 @@ class Provider < ApplicationRecord
   include WizardFormModel
 
   extend FriendlyId
+
   friendly_id :pid
 
   searchkick word_middle: [:provider_name]
@@ -58,9 +59,13 @@ class Provider < ApplicationRecord
 
   has_many :sources, class_name: "ProviderSource", dependent: :destroy
 
-  belongs_to :upstream, foreign_key: "upstream_id", class_name: "ProviderSource", optional: true
+  belongs_to :upstream, class_name: "ProviderSource", optional: true
 
-  has_one :pl_profile, class_name: "Provider::PlProfile", inverse_of: :provider, dependent: :destroy
+  has_one :pl_profile,
+          class_name: "Provider::PlProfile",
+          inverse_of: :provider,
+          dependent: :destroy,
+          autosave: true
 
   # pl-marketplace-only fields (arch_docs: docs/rationale/db-schema-comparison.md §3).
   # nil for marketplace/whitelabel, where pl_profile is always nil.
@@ -69,7 +74,12 @@ class Provider < ApplicationRecord
     tagline hosting_legal_entity_string participating_countries
   ].freeze
 
-  delegate(*PL_PROFILE_FIELDS, *PL_PROFILE_FIELDS.map { |f| :"#{f}=" }, to: :pl_profile, allow_nil: true)
+  delegate(
+    *PL_PROFILE_FIELDS,
+    *PL_PROFILE_FIELDS.map { |field| :"#{field}=" },
+    to: :pl_profile_for_delegation,
+    allow_nil: true
+  )
 
   has_one :provider_catalogue, dependent: :destroy
   has_one :catalogue, through: :provider_catalogue
@@ -216,5 +226,15 @@ class Provider < ApplicationRecord
     return true if (has_new_logo && !has_previous_logo) || (!has_new_logo && has_previous_logo)
 
     logo.attachment.blob != previous_logo.attachment.blob
+  end
+
+  protected
+
+  def pl_profile_for_delegation
+    pl_profile || build_pl_profile_if_needed
+  end
+
+  def build_pl_profile_if_needed
+    build_pl_profile if Mp::Variant.pl?
   end
 end
