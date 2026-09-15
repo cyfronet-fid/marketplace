@@ -22,14 +22,14 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
       case params["type"]
       when "provider"
         redirect_to backoffice_provider_path(
-                      Provider.friendly.find(params["object_id"]),
-                      anchor: ("offer-#{params["anchor"]}" if params["anchor"].present?)
-                    )
+          Provider.friendly.find(params["object_id"]),
+          anchor: ("offer-#{params["anchor"]}" if params["anchor"].present?)
+        )
       when "service"
         redirect_to backoffice_service_offers_path(
-                      Service.friendly.find(params["object_id"]),
-                      anchor: ("offer-#{params["anchor"]}" if params["anchor"].present?)
-                    )
+          Service.friendly.find(params["object_id"]),
+          anchor: ("offer-#{params["anchor"]}" if params["anchor"].present?)
+        )
       when "datasource"
         redirect_to backoffice_service_offers_path(Datasource.friendly.find(params["object_id"]))
       end
@@ -64,6 +64,13 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     authorize(@service)
   end
 
+  def edit
+    @service.assign_attributes(temp_attrs || {})
+    provider_scope
+    remove_temp_data!(save_logo: true)
+    add_missing_nested_models(@service)
+  end
+
   def create
     normalize_public_contact_emails
     normalize_research_product_types
@@ -78,19 +85,12 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     if @service.invalid?
       provider_scope
       add_missing_nested_models(@service)
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
       return
     end
 
     remove_temp_data!
     redirect_to backoffice_service_offers_path(@service), notice: "New service created successfully"
-  end
-
-  def edit
-    @service.assign_attributes(temp_attrs || {})
-    provider_scope
-    remove_temp_data!(save_logo: true)
-    add_missing_nested_models(@service)
   end
 
   def update
@@ -107,7 +107,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     end
     unless Service::Update.call(@service, attrs, temp_logo)
       provider_scope
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
       return
     end
     @service.store_analytics
@@ -116,7 +116,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   end
 
   def destroy
-    if Service::Destroy.call(@service)
+    if Service::Removal.call(@service)
       redirect_to backoffice_services_path, notice: "Service removed successfully"
     else
       redirect_to backoffice_service_offers_path(@service),
@@ -209,19 +209,19 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
     return unless params.dig(:service, :public_contact_emails).is_a?(String)
 
     params[:service][:public_contact_emails] = params[:service][:public_contact_emails]
-      .split(/\r?\n/)
-      .map(&:strip)
-      .reject(&:blank?)
+                                               .split(/\r?\n/)
+                                               .map(&:strip)
+                                               .compact_blank
   end
 
   def normalize_research_product_types
     return unless params.dig(:service, :research_product_types_as_text)
 
     params[:service][:research_product_types] = params[:service][:research_product_types_as_text]
-      .to_s
-      .split(/\r?\n/)
-      .map(&:strip)
-      .reject(&:blank?)
+                                                .to_s
+                                                .split(/\r?\n/)
+                                                .map(&:strip)
+                                                .compact_blank
     params[:service].delete(:research_product_types_as_text)
   end
 end

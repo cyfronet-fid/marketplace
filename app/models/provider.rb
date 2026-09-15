@@ -183,6 +183,11 @@ class Provider < ApplicationRecord
     logo.attach(io: io, filename: SecureRandom.uuid + extension, content_type: "image/#{extension.delete(".", "")}")
   end
 
+  # pl/whitelabel lifecycle: services cascaded to by Provider::*::Cascading.
+  def managed_services
+    Service.left_joins(:service_providers).where(status: :published, resource_organisation_id: id)
+  end
+
   def owned_by?(user)
     data_administrators&.map(&:user_id)&.include?(user&.id) ||
       (catalogue.present? && catalogue.data_administrators&.map(&:user_id)&.include?(user.id))
