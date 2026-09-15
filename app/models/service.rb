@@ -12,6 +12,7 @@ class Service < ApplicationRecord
   include OrderableResource
 
   extend FriendlyId
+
   friendly_id :name, use: :slugged
 
   acts_as_taggable
@@ -25,7 +26,7 @@ class Service < ApplicationRecord
 
   scope :visible, -> { where(status: %i[published suspended]) }
   scope :managed_by,
-        ->(user) do
+        lambda { |user|
           includes(resource_organisation: :data_administrators).where(
             providers: {
               data_administrators: {
@@ -33,7 +34,7 @@ class Service < ApplicationRecord
               }
             }
           ).or where(catalogues: { data_administrators: { user_id: user&.id } })
-        end
+        }
   scope :datasources, -> { where(type: "Datasource") }
 
   has_one_attached :logo
@@ -63,9 +64,36 @@ class Service < ApplicationRecord
   has_many :nodes, through: :service_vocabularies, source: :vocabulary, source_type: "Vocabulary::Node"
   has_many :access_types, through: :service_vocabularies, source: :vocabulary, source_type: "Vocabulary::AccessType"
   has_many :trls, through: :service_vocabularies, source: :vocabulary, source_type: "Vocabulary::Trl"
+
+  # pl-only vocabulary type (dropped from marketplace/whitelabel by the V6
+  # migration). The association itself is safe to leave defined for every
+  # variant — nothing outside pl ever attaches a Vocabulary::ResearchActivity
+  # to a service_vocabularies row, so it just stays empty elsewhere.
+  has_many :research_activities,
+           through: :service_vocabularies,
+           source: :vocabulary,
+           source_type: "Vocabulary::ResearchActivity"
+
+  # pl-only (dropped from marketplace/whitelabel by the V6 migration, along
+  # with ServiceHelper#dedicated_for_links/#dedicated_for_text, which stay
+  # hardcoded to [] for those two variants rather than reading this).
+  # TargetUser/ServiceTargetUser themselves are still shared with Bundle, so
+  # only the Service side of this relation needed restoring.
+  has_many :service_target_users, dependent: :destroy
+  has_many :target_users, through: :service_target_users
+
+  # pl-only (dropped from marketplace/whitelabel by the V6 migration). Backs
+  # PL's Filter::Platform via the `platforms` search field.
+  has_many :service_related_platforms, dependent: :destroy
+  has_many :platforms, through: :service_related_platforms
+
   has_many :omses, dependent: :destroy
 
-  has_one :pl_profile, class_name: "Service::PlProfile", inverse_of: :service, dependent: :destroy
+  has_one :pl_profile,
+          class_name: "Service::PlProfile",
+          inverse_of: :service,
+          dependent: :destroy,
+          autosave: true
 
   # pl-marketplace-only fields (arch_docs: docs/rationale/db-schema-comparison.md §3).
   # nil for marketplace/whitelabel, where pl_profile is always nil.
@@ -78,7 +106,12 @@ class Service < ApplicationRecord
     restrictions status_monitoring_url harvestable
   ].freeze
 
-  delegate(*PL_PROFILE_FIELDS, *PL_PROFILE_FIELDS.map { |f| :"#{f}=" }, to: :pl_profile, allow_nil: true)
+  delegate(
+    *PL_PROFILE_FIELDS,
+    *PL_PROFILE_FIELDS.map { |field| :"#{field}=" },
+    to: :pl_profile_for_delegation,
+    allow_nil: true
+  )
 
   accepts_nested_attributes_for :alternative_identifiers, reject_if: :all_blank, allow_destroy: true
 
@@ -100,10 +133,10 @@ class Service < ApplicationRecord
 
   accepts_nested_attributes_for :sources,
                                 reject_if:
-                                  lambda { |attributes| attributes["eid"].blank? || attributes["source_type"].blank? },
+                                  ->(attributes) { attributes["eid"].blank? || attributes["source_type"].blank? },
                                 allow_destroy: true
 
-  belongs_to :upstream, foreign_key: "upstream_id", class_name: "ServiceSource", optional: true
+  belongs_to :upstream, class_name: "ServiceSource", optional: true
   belongs_to :resource_organisation, class_name: "Provider", optional: false
 
   has_one :service_catalogue, dependent: :destroy
@@ -111,6 +144,8 @@ class Service < ApplicationRecord
 
   belongs_to :jurisdiction, class_name: "Vocabulary::Jurisdiction", optional: true
   belongs_to :datasource_classification, class_name: "Vocabulary::DatasourceClassification", optional: true
+
+  serialize :geographical_availabilities, coder: Country::Array
 
   auto_strip_attributes :name, nullify: false
   auto_strip_attributes :description, nullify: false
@@ -141,7 +176,6 @@ class Service < ApplicationRecord
   validate :logo_variable, on: %i[create update]
   validates :trls, length: { maximum: 1 }
   validates :nodes, length: { maximum: 1 }
-  validates :resource_organisation, presence: true
   validate :public_contact_emails_format
 
   after_save :set_first_category_as_main!, if: :main_category_missing?
@@ -151,7 +185,9 @@ class Service < ApplicationRecord
   end
 
   def main_category
-    @main_category ||= categories.joins(:categorizations).find_by(categorizations: { main: true })
+    return @main_category if defined?(@main_category)
+
+    @main_category = categories.joins(:categorizations).find_by(categorizations: { main: true })
   end
 
   def main_source
@@ -199,6 +235,16 @@ class Service < ApplicationRecord
 
   def provider_search_link(target, default_path = nil)
     _search_link(target, "providers", default_path)
+  end
+
+  protected
+
+  def pl_profile_for_delegation
+    pl_profile || build_pl_profile_if_needed
+  end
+
+  def build_pl_profile_if_needed
+    build_pl_profile if Mp::Variant.pl?
   end
 
   private
