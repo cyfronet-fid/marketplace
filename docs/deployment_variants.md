@@ -36,6 +36,12 @@ gated.
   generated as a UUID when blank, validated present/unique, and enforced
   `NOT NULL` + unique index by `EnforceNotNullUniquePidOnProviders`, which
   keeps pl's migration version.
+- Delete/suspend/unpublish lifecycle — selected per variant by
+  `VariantOperation` (`app/services/variant_operation.rb`): `marketplace` uses
+  the `*::Standalone` implementations and `Service/Offer/Bundle::Destroy`;
+  `pl`/`whitelabel` use `*::Cascading` and `Service/Offer/Bundle::Delete`,
+  which enqueue `DeleteJob`/`SuspendJob`/`UnpublishJob` for dependent records.
+- `Jms::ManageMessage` — accepts `resource` as a JSON string (all variants).
 - `config.whitelabel`/`MP_WHITELABEL` was folded into `Mp::Variant.whitelabel?`.
 - `config.monitoring_data_token` — no longer raises on a deployment whose
   `credentials.yml.enc` lacks the `monitoring_data` key; falls back to `nil`
