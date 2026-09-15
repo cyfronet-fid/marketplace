@@ -12,9 +12,16 @@
 
       .date-info.d-flex.mb-2
         .doi
-          DOI:
-          %a{ href: "#" } 10509585.2015.1092083
-        .mx-4 Published: 27 may 2026
+          - if header_identifiers.any?
+            - header_identifiers.each do |identifier|
+              %span= identifier.identifier_type.presence || "PID"
+              = ": "
+              %span= identifier.value
+          - else
+            PID:
+            = @object.pid
+        - if publishing_date.present?
+          .mx-4= publishing_date.strftime("Published: %-d %B %Y")
 
       %p.abbreviation= @abbreviation.presence
       = render "components/presentable/header_component/badges", object: @object

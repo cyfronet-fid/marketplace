@@ -1,14 +1,29 @@
-.provider-panel
-  .details-header
-    %h5 Creators
+- if @base.respond_to?(:creators) && @base.creators.present?
+  .provider-panel
+    .details-header
+      %h5 Creators
 
-  .card-body
-    %dl
-      %dt Name
-      %dd Alicja Świerad
-    %dl
-      %dt PID
-      %dd 0000-0001-2345-6789
-    %dl
-      %dt Afiliation
-      %dd ACC Cyfronet AGH
+    .card-body
+      - @base.creators.each do |creator|
+        :ruby
+          creator_name =
+            if creator.is_a?(Hash)
+              creator.dig("creatorNameTypeInfo", "creatorName") || creator["creatorName"] || creator["name"]
+            else
+              creator
+            end
+          creator_pid = creator["nameIdentifier"] if creator.is_a?(Hash)
+          creator_affiliation = creator.dig("creatorAffiliationInfo", "affiliation") if creator.is_a?(Hash)
+        - if creator_name.present?
+          %dl
+            %dt Name
+            %dd= creator_name
+        - if creator_pid.present?
+          %dl
+            %dt PID
+            %dd
+              = link_to creator_pid, creator_pid, target: "_blank", rel: "noopener"
+        - next unless creator_affiliation.present?
+        %dl
+          %dt Affiliation
+          %dd= creator_affiliation

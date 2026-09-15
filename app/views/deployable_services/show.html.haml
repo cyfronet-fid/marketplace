@@ -13,9 +13,10 @@
 
           .date-info.d-flex.mb-2
             .doi
-              DOI:
-              %a{ href: "#" } 10509585.2015.1092083
-            .mx-4 Published: 27 may 2026
+              PID:
+              = @deployable_service.pid
+            - if @deployable_service.publishing_date.present?
+              .mx-4= @deployable_service.publishing_date.strftime("Published: %-d %B %Y")
 
           %p= @deployable_service.abbreviation || "-"
           .resource-row.row.mb-3
