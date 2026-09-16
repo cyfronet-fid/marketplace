@@ -76,6 +76,8 @@ class Jms::ManageMessage < ApplicationService
         Datasource::DeleteJob.perform_later(hash["id"])
       end
     when "deployable_service"
+      raise Importable::WrongMessageError unless Mp::Variant.marketplace?
+
       hash = resource.to_hash
 
       if action != "delete"
