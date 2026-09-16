@@ -7,7 +7,12 @@ class Api::V1::UsersController < Api::V1::ApplicationController
   end
 
   def find_user
-    @user = User.find_by!(uid: params[:id])
+    @user =
+      if Mp::Variant.pl?
+        UserIdentity.find_by!(provider: "checkin", uid: params[:id]).user
+      else
+        User.find_by!(uid: params[:id])
+      end
     authorize @user
   rescue ActiveRecord::RecordNotFound
     render json: {

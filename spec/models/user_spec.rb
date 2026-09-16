@@ -12,6 +12,26 @@ RSpec.describe User, backend: true do
   it { should validate_presence_of(:uid) }
 
   it { should have_many(:projects).dependent(:destroy) }
+  it { should have_many(:identities).dependent(:destroy) }
+
+  context "when running as pl" do
+    subject { build(:user) }
+
+    before { allow(Mp::Variant).to receive(:pl?).and_return(true) }
+
+    it { should_not validate_presence_of(:uid) }
+    it { should validate_uniqueness_of(:email).case_insensitive }
+
+    context "#uid" do
+      subject(:user) { create(:user, uid: nil) }
+
+      let!(:primary_identity) { create(:user_identity, user: user, uid: "checkin-uid", primary: true) }
+
+      it "is read from the primary identity" do
+        expect(user.reload.uid).to eq(primary_identity.uid)
+      end
+    end
+  end
 
   context "#full_name" do
     it "is composed from first and last name" do
