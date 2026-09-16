@@ -209,13 +209,13 @@ Found by comparing `app/`, `lib/` and `config/` of this branch with
       `_financial`, `_location`, `_maturity`): views come from
       `CUSTOMIZATION_PATH` (see UI below); the policies and models already
       accept what they post.
-- [ ] Exit modal and `ExitHelper` (identical in pl and whitelabel:
+- [ ] Exit modal (identical in pl and whitelabel:
       `common_parts/modals/_exit_modal`, richer `exit_controller.js`, used by
-      provider steps and offer forms); PL provider approval and profile
-      completion modals; whitelabel `Backoffice::Services::UnpublishesController`
-      with its `Presentable::StatusActionsComponent` (turbo frame,
-      `polymorphic_path` unpublish/suspend; marketplace routes service
-      unpublish through `drafts`; pl's component differs from both).
+      provider steps and offer forms) and the PL provider approval and profile
+      completion modals: views via `CUSTOMIZATION_PATH`; pl/whitelabel's
+      `ExitHelper` methods already exist here as `Backoffice::OffersHelper`
+      and all helpers are available to every view. The JavaScript
+      (`exit_controller.js`) is bundled from the repo and still differs.
 
 ### Variant-only features
 
@@ -233,15 +233,39 @@ stylesheets); this repository keeps marketplace's views. Code that those
 views need (controllers, helpers, components, policies' permitted
 attributes) is consolidated here.
 
-- [ ] Styles (`_bootstrap-customizations.scss`, variables), landing and home
-      pages, navbar/sections layouts, EOSC Commons footer, admin views,
-      whitelabel `customization.rb`, images, whitelabel's federation views
-      (`federation/services/index`, `_service`, `_pagination`; marketplace-only
-      `_federation_banner`) — via variant partials/assets or
-      `CUSTOMIZATION_PATH`.
-- [ ] Whitelabel `customization.rb` (`config.recaptcha_enabled`, default
-      true) with `ApplicationHelper#recaptcha_tags` skipping the widget and
-      `recaptcha.rb` skipping the keys when `RECAPTCHA_ENABLED` is false.
+Mechanism, per deployment (`CUSTOMIZATION_PATH=/path/to/dir`):
+
+- `views/` and `config/locales/` — prepended to the view and locale paths
+  (`config/application.rb`).
+- `images/` — prepended to the asset paths (`config/initializers/assets.rb`);
+  same-named files override the repository's.
+- stylesheets — `CSS_ENTRY=$CUSTOMIZATION_PATH/stylesheets/application.scss`
+  for `yarn build:css`; the entry imports its own partials (variables,
+  bootstrap customizations, design system) and the repository's through the
+  `app/assets/stylesheets` load path.
+- ViewComponent templates cannot come from that directory; components that
+  differ per variant carry `<name>.html+pl.haml` / `<name>.html+whitelabel.haml`
+  templates in the repository, selected through `request.variant`
+  (`ApplicationController#set_variant`). Done for
+  `Presentable::StatusActionsComponent` (pl layout; whitelabel turbo frame and
+  `polymorphic_path` unpublish/suspend with
+  `Backoffice::Services::UnpublishesController` and its route drawn under
+  whitelabel). The header, provider-info and list components and
+  `Services::InlineOrderUrlComponent` differ only in robustness rewrites.
+  `Presentable::LinksHelper` lists pl's profile links and wording under pl;
+  `links_component.yml` carries the labels.
+- `RECAPTCHA_ENABLED=false` (whitelabel's `customization.rb`) skips the
+  reCAPTCHA keys and widget on any variant.
+
+- [ ] Assemble the pl and whitelabel customization directories from their
+      repos: the views (backoffice, services, layouts, home/pages, providers,
+      projects, mailers, federation), locales, the seven stylesheet files
+      (`_variables`, `_bootstrap-customizations`, `designsystem`, `_flash`,
+      `_order`, `_ref_*`) as a `stylesheets/application.scss` entry with its
+      partials, and the differing images; then run each variant's pages
+      against it.
+- [ ] `exit_controller.js` and other `app/javascript` differences are bundled
+      from the repository (esbuild); decide variant handling there.
 - [ ] Dev seeds: pl's `db/data.yml` is a different V5 sample dataset
       (addresses, funding, life-cycle statuses, platforms, target users) and
       its `dev.rake` seeds those fields; this repo keeps marketplace's seeds
