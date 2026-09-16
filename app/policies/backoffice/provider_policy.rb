@@ -1,20 +1,28 @@
 # frozen_string_literal: true
 
 class Backoffice::ProviderPolicy < Backoffice::ApplicationPolicy
+  # pl and whitelabel open the backoffice provider pages to every signed-in
+  # user; marketplace keeps them for coordinators and data administrators.
   def index?
-    management_role?
+    Mp::Variant.marketplace? ? management_role? : user.present?
   end
 
   def show?
-    management_role?
+    if Mp::Variant.pl?
+      edit_permissions?
+    elsif Mp::Variant.whitelabel?
+      user.present?
+    else
+      management_role?
+    end
   end
 
   def new?
-    management_role? || first_provider_registration?
+    Mp::Variant.marketplace? ? management_role? || first_provider_registration? : user.present?
   end
 
   def create?
-    management_role? || first_provider_registration?
+    Mp::Variant.marketplace? ? management_role? || first_provider_registration? : user.present?
   end
 
   def edit?
@@ -55,7 +63,12 @@ class Backoffice::ProviderPolicy < Backoffice::ApplicationPolicy
       [alternative_identifiers_attributes: %i[id identifier_type value _destroy]]
     ]
 
-    !@record.is_a?(Provider) || @record.upstream_id.blank? ? attrs : attrs & MP_INTERNAL_FIELDS
+    # Only marketplace locks registry-imported providers to their internal fields.
+    if !Mp::Variant.marketplace? || !@record.is_a?(Provider) || @record.upstream_id.blank?
+      attrs
+    else
+      attrs & MP_INTERNAL_FIELDS
+    end
   end
 
   private

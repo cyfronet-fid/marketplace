@@ -2,7 +2,9 @@
 
 require "rails_helper"
 
-RSpec.describe Backoffice::ServicePolicy, backend: true do
+RSpec.describe Backoffice::ServicePolicy, :backend do
+  subject { described_class }
+
   let(:coordinator) { create(:user, roles: [:coordinator]) }
   let!(:provider_data_administrator) { create(:user) }
   let!(:provider) do
@@ -15,10 +17,8 @@ RSpec.describe Backoffice::ServicePolicy, backend: true do
 
   let(:basic_user) { create(:user) }
 
-  subject { described_class }
-
   context "permitted_attributes" do
-    it "should return attrs if service has no upstream or is not persisted" do
+    it "returns attrs if service has no upstream or is not persisted" do
       policy = described_class.new(coordinator, create(:service))
       attrs = policy.permitted_attributes
 
@@ -48,14 +48,13 @@ RSpec.describe Backoffice::ServicePolicy, backend: true do
       )
     end
 
-    it "should filter EOSC Registry managed fields if upstream is set to eosc_registry source" do
+    it "filters EOSC Registry managed fields if upstream is set to eosc_registry source" do
       service = create(:service)
       source = create(:service_source, source_type: :eosc_registry, service: service)
       service.update!(upstream: source)
       policy = described_class.new(coordinator, service)
-      expect(policy.permitted_attributes).to match_array(
-        [:type, :status, :upstream_id, [owner_ids: []], [sources_attributes: %i[id source_type eid _destroy]]]
-      )
+      expect(policy.permitted_attributes).to contain_exactly(:type, :status, :upstream_id, [owner_ids: []],
+                                                             [sources_attributes: %i[id source_type eid _destroy]])
     end
   end
 
@@ -90,7 +89,7 @@ RSpec.describe Backoffice::ServicePolicy, backend: true do
       end
 
       it "denies access for basic user" do
-        expect(subject).to_not permit(basic_user, build(:service, status: :draft))
+        expect(subject).not_to permit(basic_user, build(:service, status: :draft))
       end
     end
 
@@ -104,7 +103,7 @@ RSpec.describe Backoffice::ServicePolicy, backend: true do
       end
 
       it "denies access for provider data administrator of other service" do
-        expect(subject).to_not permit(provider_data_administrator, build(:service, status: :draft))
+        expect(subject).not_to permit(provider_data_administrator, build(:service, status: :draft))
       end
 
       it "grants access for catalogue data administrator" do
@@ -112,7 +111,7 @@ RSpec.describe Backoffice::ServicePolicy, backend: true do
       end
 
       it "denies access for not owned service" do
-        expect(subject).to_not permit(basic_user, build(:service, status: :draft))
+        expect(subject).not_to permit(basic_user, build(:service, status: :draft))
       end
     end
 
@@ -163,7 +162,7 @@ RSpec.describe Backoffice::ServicePolicy, backend: true do
       end
 
       it "denies access for not owned service" do
-        expect(subject).to_not permit(basic_user, build(:service))
+        expect(subject).not_to permit(basic_user, build(:service))
       end
     end
 
@@ -173,7 +172,7 @@ RSpec.describe Backoffice::ServicePolicy, backend: true do
       end
 
       it "denies access for service owner" do
-        expect(subject).to_not permit(basic_user, build(:service))
+        expect(subject).not_to permit(basic_user, build(:service))
       end
     end
 
@@ -183,7 +182,7 @@ RSpec.describe Backoffice::ServicePolicy, backend: true do
       end
 
       it "denies access for user" do
-        expect(subject).to_not permit(basic_user, build(:service))
+        expect(subject).not_to permit(basic_user, build(:service))
       end
 
       it "allows when service has project_items attached" do
@@ -195,7 +194,7 @@ RSpec.describe Backoffice::ServicePolicy, backend: true do
     end
   end
 
-  context "#scope" do
+  describe "#scope" do
     it "returns all services for service portfolio manager" do
       create_list(:service, 2)
 
@@ -220,11 +219,11 @@ RSpec.describe Backoffice::ServicePolicy, backend: true do
     end
 
     it "denies access for other users" do
-      expect(subject).to_not permit(basic_user, build(:service, status: :draft))
+      expect(subject).not_to permit(basic_user, build(:service, status: :draft))
     end
 
     it "denies access for already published service" do
-      expect(subject).to_not permit(coordinator, build(:service, status: :published))
+      expect(subject).not_to permit(coordinator, build(:service, status: :published))
     end
   end
 
@@ -235,11 +234,68 @@ RSpec.describe Backoffice::ServicePolicy, backend: true do
     end
 
     it "denies access for other users" do
-      expect(subject).to_not permit(basic_user, build(:service, status: :published))
+      expect(subject).not_to permit(basic_user, build(:service, status: :published))
     end
 
     it "denies access fo service in unpublished state" do
-      expect(subject).to_not permit(coordinator, build(:service, status: :unpublished))
+      expect(subject).not_to permit(coordinator, build(:service, status: :unpublished))
+    end
+  end
+
+  context "when the service is deleted" do
+    permissions :show? do
+      it "denies access for service portfolio manager" do
+        expect(subject).not_to permit(coordinator, build(:service, status: :deleted))
+      end
+    end
+
+    permissions :edit?, :update?, :destroy? do
+      it "grants access for service portfolio manager" do
+        expect(subject).to permit(coordinator, build(:service, status: :deleted))
+      end
+    end
+  end
+
+  permissions :create? do
+    it "denies access for data administrator of another organisation" do
+      provider_data_administrator.reload
+      expect(subject).not_to permit(provider_data_administrator, build(:service))
+    end
+  end
+
+  context "when running as pl or whitelabel" do
+    before { allow(Mp::Variant).to receive(:marketplace?).and_return(false) }
+
+    permissions :show? do
+      it "grants access for service portfolio manager to a deleted service" do
+        expect(subject).to permit(coordinator, build(:service, status: :deleted))
+      end
+    end
+
+    permissions :edit?, :update?, :destroy? do
+      it "denies access for service portfolio manager to a deleted service" do
+        expect(subject).not_to permit(coordinator, build(:service, status: :deleted))
+      end
+    end
+
+    permissions :create? do
+      it "grants access for data administrator of another organisation" do
+        provider_data_administrator.reload
+        expect(subject).to permit(provider_data_administrator, build(:service))
+      end
+
+      it "denies access for basic user" do
+        expect(subject).not_to permit(basic_user, build(:service))
+      end
+    end
+
+    it "does not lock registry-imported services to internal fields" do
+      service = create(:service)
+      source = create(:service_source, source_type: :eosc_registry, service: service)
+      service.update!(upstream: source)
+      policy = described_class.new(coordinator, service)
+
+      expect(policy.permitted_attributes).to include(:name)
     end
   end
 end
