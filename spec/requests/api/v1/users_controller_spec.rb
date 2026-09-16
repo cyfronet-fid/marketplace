@@ -45,7 +45,7 @@ RSpec.describe Api::V1::UsersController, :backend, swagger_doc: "v1/users_swagge
         schema "$ref" => "user/user_read.json"
 
         let(:user_id) { "test-user-uid" }
-        let(:user) { create(:user, roles: %i[admin coordinator]) }
+        let(:user) { create(:user, roles: %i[admin coordinator executive]) }
         let(:"X-User-Token") { user.authentication_token }
         let!(:identity) { create(:user_identity, user: user, provider: "checkin", uid: user_id, primary: true) }
 
@@ -81,6 +81,17 @@ RSpec.describe Api::V1::UsersController, :backend, swagger_doc: "v1/users_swagge
         context "when invalid token provided" do
           let(:"X-User-Token") { "invalid-token" }
           let(:user_id) { "test-uid" }
+
+          run_test!
+        end
+
+        context "when the pl requester does not hold every role" do
+          let(:user_id) { "test-uid" }
+          let(:user) { create(:user, roles: %i[admin]) }
+          let(:"X-User-Token") { user.authentication_token }
+          let!(:identity) { create(:user_identity, user: user, provider: "checkin", uid: user_id, primary: true) }
+
+          before { allow(Mp::Variant).to receive(:pl?).and_return(true) }
 
           run_test!
         end
