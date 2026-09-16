@@ -91,7 +91,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resource :reports, only: %i[new create], constraints: lambda { |req| req.format == :js }
+  resource :reports, only: %i[new create], constraints: ->(req) { req.format == :js }
 
   resources :projects do
     scope module: :projects do
@@ -180,11 +180,10 @@ Rails.application.routes.draw do
     end
   end
 
-  post "/backoffice/services/:service_id/offers/:offer_id/duplicate", to: "backoffice/services/offers#duplicate", 
-    as: :duplicate_offer
+  post "/backoffice/services/:service_id/offers/:offer_id/duplicate", to: "backoffice/services/offers#duplicate",
+                                                                      as: :duplicate_offer
 
   post "/backoffice/services/:service_id/offers/fetch_subtypes", to: "backoffice/services/offers#fetch_subtypes"
-
 
   resource :executive, only: :show
   namespace :executive do
@@ -203,6 +202,12 @@ Rails.application.routes.draw do
     namespace :v1 do
       namespace :search do
         resources :services, only: [:index]
+      end
+
+      if Mp::Variant.pl?
+        namespace :catalogue do
+          resources :services, only: %i[index]
+        end
       end
 
       resources :resources, only: %i[index show], constraints: { id: pid_format_constraint } do
@@ -264,11 +269,11 @@ Rails.application.routes.draw do
   get "errors/not_found"
   get "errors/unprocessable"
   get "errors/internal_server_error"
-  match "about", to: "pages#about", via: "get", as: :about
-  match "target_users", to: "pages#target_users", via: "get", as: :target_users
-  match "communities", to: "pages#communities", via: "get", as: :communities
-  match "about_projects", to: "pages#about_projects", via: "get", as: :about_projects
-  match "landing_page", to: "pages#landing_page", via: "get", as: :landing_page
+  get "about", to: "pages#about", as: :about
+  get "target_users", to: "pages#target_users", as: :target_users
+  get "communities", to: "pages#communities", as: :communities
+  get "about_projects", to: "pages#about_projects", as: :about_projects
+  get "landing_page", to: "pages#landing_page", as: :landing_page
 
   namespace :federation do
     resources :services, only: [:index]

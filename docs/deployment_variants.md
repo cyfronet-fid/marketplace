@@ -65,6 +65,13 @@ gated.
 - `Api::V1::UserPolicy#show?`, `OrderingApi::AddSombo` (admin gets every
   role) and `OrderingApi::AddProviderOMS` (`underscore` instead of
   `downcase`) — pl behavior under `pl`, unchanged elsewhere.
+- `Api::V1::Catalogue::ServicesController` (`/api/v1/catalogue/services`,
+  `v1/catalogue_swagger.json`) — pl's public catalogue API; the route is drawn
+  only under `pl`. `Service#access_modes` and `Service#logo_url` exist on
+  every variant for its serializer.
+- `Federation::ServicesController#map_results` — whitelabel's fallbacks to
+  `result.service.*` for name, description, webpage, logo and nodePID, for all
+  variants (`dig`, so absent keys stay `nil`).
 - `config.whitelabel`/`MP_WHITELABEL` was folded into `Mp::Variant.whitelabel?`.
 - `config.monitoring_data_token` — no longer raises on a deployment whose
   `credentials.yml.enc` lacks the `monitoring_data` key; falls back to `nil`
