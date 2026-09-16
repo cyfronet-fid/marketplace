@@ -70,4 +70,25 @@ describe OrderingApi::AddProviderOMS, backend: true do
     expect(OMS.first.name).to eq("Test Provider OMS")
     expect(OMS.first.administrators.first.first_name).to eq("Test Provider")
   end
+
+  context "when running as pl" do
+    subject(:admin) { UserIdentity.find_by(provider: "checkin", uid: "iamatest_provideradmin").user }
+
+    before do
+      allow(Mp::Variant).to receive(:pl?).and_return(true)
+      described_class.new("TestProvider", "test.pid", "token_value").call
+    end
+
+    it "underscores the OMS name" do
+      expect(OMS.first.name).to eq("Test Provider OMS")
+    end
+
+    it "creates the admin through a checkin identity" do
+      expect(admin.authentication_token).to eq("token_value")
+    end
+
+    it "adds the admin to the OMS" do
+      expect(OMS.first.administrators).to include(admin)
+    end
+  end
 end

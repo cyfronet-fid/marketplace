@@ -57,6 +57,14 @@ gated.
   email-uniqueness validation and the `lib/ordering_api` admin setup go
   through identities; `marketplace`/`whitelabel` keep `User::Checkin` and
   `users.uid`. `session["token"]` is set after login only on `marketplace`.
+- `Ess::Add` / `Propagable#propagate_to_ess` — pl's `propagate_offers:`
+  option for all variants (default `true` keeps current behavior). Under `pl`
+  datasources go to ESS with `Ess::DatasourceSerializer` and `Offer::Create`
+  pushes the service to ESS after saving the offer; other variants send every
+  service with `Ess::ServiceSerializer` and only reindex.
+- `Api::V1::UserPolicy#show?`, `OrderingApi::AddSombo` (admin gets every
+  role) and `OrderingApi::AddProviderOMS` (`underscore` instead of
+  `downcase`) — pl behavior under `pl`, unchanged elsewhere.
 - `config.whitelabel`/`MP_WHITELABEL` was folded into `Mp::Variant.whitelabel?`.
 - `config.monitoring_data_token` — no longer raises on a deployment whose
   `credentials.yml.enc` lacks the `monitoring_data` key; falls back to `nil`

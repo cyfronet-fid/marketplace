@@ -94,6 +94,17 @@ Variant-only features:
   reads it). pl's unique `lower(email)` index was not ported: marketplace
   allows duplicate emails.
 
+ESS and ordering API:
+
+- `Propagable#propagate_to_ess` and `Ess::Add` take pl's `propagate_offers:`
+  option (default unchanged). Under pl, datasources are sent to ESS with the
+  datasource profile and `Offer::Create` pushes the service to ESS after
+  saving the offer; the other variants keep sending datasources as services
+  and only reindex.
+- pl's users API rule (`Api::V1::UserPolicy#show?` requires every role), the
+  SOMBO admin holding every role and `AddProviderOMS` underscoring the OMS
+  name are gated to pl.
+
 ## Next steps
 
 Found by comparing `app/`, `lib/` and `config/` of this branch with
@@ -136,12 +147,9 @@ Found by comparing `app/`, `lib/` and `config/` of this branch with
       whitelabel audit marks it client-specific.
 - [ ] PL Catalogue API (`Api::V1::Catalogue::ServicesController`, policy,
       serializers).
-- [ ] PL SOMBO/OMS role fixes in `lib/ordering_api` (`oms_name.underscore`,
-      `roles_mask: 7` for the SOMBO admin, service attributes in
-      `AuthorizationTestSetup`); `Propagable` `propagate_offers:` option and
-      the matching `Ess::Add` change.
-- [ ] `Api::V1::UserPolicy#show?`: pl restricts the users API to holders of
-      every role and drops the policy scope.
+- [ ] `OrderingApi::AuthorizationTestSetup` service attributes: pl and
+      whitelabel create the sample services with `tagline` and
+      `geographical_availabilities` instead of `categories` and `order_type`.
 - [ ] Whitelabel search API and federation (`Api::V1::Search`,
       `Federation::ServicesController` and views).
 

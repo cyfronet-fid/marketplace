@@ -65,4 +65,25 @@ describe OrderingApi::AddSombo, backend: true do
       expect(sombo.administrators).to include(User.find_by(uid: "iamasomboadmin"))
     end
   end
+
+  context "when running as pl" do
+    subject(:sombo_admin) { UserIdentity.find_by(provider: "checkin", uid: "iamasomboadmin").user }
+
+    before do
+      allow(Mp::Variant).to receive(:pl?).and_return(true)
+      described_class.new.call
+    end
+
+    it "creates the SOMBO admin through a checkin identity" do
+      expect(sombo_admin.first_name).to eq("SOMBO admin")
+    end
+
+    it "gives the SOMBO admin every role" do
+      expect(sombo_admin.roles_mask).to eq(7)
+    end
+
+    it "adds the SOMBO admin to the SOMBO OMS" do
+      expect(OMS.find_by(name: "SOMBO").administrators).to include(sombo_admin)
+    end
+  end
 end

@@ -15,6 +15,7 @@ module OrderingApi
               user.email = "sombo@sombo.com"
             end
         end
+      sombo_admin.update!(roles_mask: 7) if Mp::Variant.pl?
 
       sombo =
         OMS
