@@ -13,13 +13,13 @@ class ApplicationController < ActionController::Base
   include Tourable
 
   before_action :load_root_categories!, unless: :external_search_enabled?
-  before_action :welcome_popup, :report, :set_locale, :set_gettext_locale, :action
+  before_action :welcome_popup, :report, :set_locale, :set_gettext_locale, :action, :set_variant
   helper_method :turbo_frame_request?
 
   protect_from_forgery
 
   rescue_from ActiveRecord::RecordNotFound do |_|
-    redirect_back fallback_location: "/404"
+    redirect_back_or_to("/404")
   end
 
   rescue_from Pundit::NotAuthorizedError do |exception|
@@ -40,6 +40,13 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  # Templates that differ per deployment variant live next to the marketplace
+  # ones as `<name>.html+pl.haml` / `<name>.html+whitelabel.haml`
+  # (Action Pack variants, also honoured by ViewComponent).
+  def set_variant
+    request.variant = Mp::Variant.current unless Mp::Variant.marketplace?
+  end
 
   def load_query_params_from_session
     @query_params = session[:query] || {}
@@ -86,6 +93,7 @@ class ApplicationController < ActionController::Base
 
   def ensure_frame_response
     return unless Rails.env.development?
+
     redirect_to root_path unless turbo_frame_request?
   end
 
@@ -114,6 +122,7 @@ class ApplicationController < ActionController::Base
       []
     end
   end
+
   def commons_enabled?
     COMMONS_ENABLED
   end

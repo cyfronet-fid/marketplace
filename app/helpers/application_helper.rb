@@ -63,7 +63,7 @@ module ApplicationHelper
     links.push({ href: admin_path, caption: _("Admin") }) if policy(%i[admin admin]).show?
     links.push({ href: api_docs_path, caption: "Marketplace API" })
 
-    [{ id: "provider", name: "Provider", links: links }].to_json
+    [id: "provider", name: "Provider", links: links].to_json
   end
 
   def meta_og_title_content
@@ -82,6 +82,7 @@ module ApplicationHelper
     Explore this huge European database of science."
     )
   end
+
   def external_search_url(include_query: false)
     if Rails.configuration.enable_external_search && Rails.configuration.search_service_base_url.present?
       query = ""
@@ -101,6 +102,13 @@ module ApplicationHelper
 
   def render_turbo_stream_flash
     turbo_stream.replace "flash-messages", partial: "layouts/flash"
+  end
+
+  # RECAPTCHA_ENABLED (config/initializers/customization.rb) switches the widget off per deployment.
+  def recaptcha_tags(options = {})
+    return unless Rails.application.config.recaptcha_enabled
+
+    super
   end
 
   def eosc_helpdesk_form_link

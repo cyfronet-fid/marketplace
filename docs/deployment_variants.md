@@ -99,6 +99,16 @@ gated.
   Permitted attributes follow the variant (pl's V5 form fields, whitelabel's
   `node_ids` scalar without `owner_ids`, bundle `research_activity_ids`);
   the forms themselves come from `CUSTOMIZATION_PATH`.
+- `CUSTOMIZATION_PATH` — per-deployment `views/`, `config/locales/` and
+  `images/` override the repository's; `CSS_ENTRY` points `build:css` at a
+  customization stylesheet entry. `request.variant` is set from `Mp::Variant`
+  (`ApplicationController#set_variant`) so `*.html+pl.haml` /
+  `*.html+whitelabel.haml` templates win, which is how
+  `Presentable::StatusActionsComponent` differs per variant; under
+  `whitelabel` it unpublishes/suspends services through
+  `Backoffice::Services::UnpublishesController`. `Presentable::LinksHelper`
+  shows pl's profile links under `pl`. `RECAPTCHA_ENABLED=false` disables
+  reCAPTCHA keys and widget on any variant.
 - `VOCABULARY_TYPES` — `marketplace` keeps its ten V6 vocabulary types; `pl`
   and `whitelabel` manage the full set (target users, access modes, funding
   bodies/programs, life-cycle statuses, ESFRI, MERIL, research activities,

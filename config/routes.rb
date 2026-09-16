@@ -151,6 +151,7 @@ Rails.application.routes.draw do
         end
         resource :publish, only: :create
         resource :draft, only: :create
+        resource :unpublish, only: :create if Mp::Variant.whitelabel?
       end
     end
     get "service_autocomplete", to: "services#autocomplete", as: :service_autocomplete
