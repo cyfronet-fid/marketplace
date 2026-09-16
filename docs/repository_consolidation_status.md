@@ -237,9 +237,13 @@ Found by comparing `app/`, `lib/` and `config/` of this branch with
 
 - [ ] Diff the files changed on both sides (173 vs pl-marketplace, 144 vs
       whitelabel-marketplace) and decide port / gate / already covered.
-- [ ] CI job per variant (separate process, database, Redis, Elasticsearch):
-      boot, routes, public and backoffice page, profile persistence, import
-      and JMS fixtures, search reindex, deletion.
+- [ ] Extend the per-variant CI job (`variants` in `ci_backend.yml`: fresh
+      database from `db/schema.rb`, eager load, routes, routing specs under
+      `pl` and `whitelabel`) with public and backoffice pages, profile
+      persistence, import and JMS fixtures, search reindex and deletion.
+      Note: since the migration squash a fresh database can only be built
+      with `db:schema:load`; `db:migrate` on an empty database fails at the
+      first remaining migration, so the rspec job was switched too.
 - [ ] Fix order-dependent failures in `spec/lib/import/resources_spec.rb` and
       `spec/lib/ordering_api/*` (pass alone, fail in a combined run).
 - [ ] Build a real PL search index from copied PL data and compare results
