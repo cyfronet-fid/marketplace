@@ -167,6 +167,14 @@ ESS and ordering API:
   `before :context` seeding, which outlived the per-example transaction; it
   now truncates in `after(:context)`, and the combined models + services +
   lib run passes in defined order.
+- UI mechanism (see the decision under UI below): `request.variant` follows
+  `Mp::Variant`, so `*.html+pl.haml` / `*.html+whitelabel.haml` templates
+  select per variant; `Presentable::StatusActionsComponent` has pl's and
+  whitelabel's templates, whitelabel's
+  `Backoffice::Services::UnpublishesController` and route are drawn under
+  whitelabel, `Presentable::LinksHelper` shows pl's profile links under pl,
+  `CUSTOMIZATION_PATH` also overrides images and (through `CSS_ENTRY`) the
+  stylesheet entry, and `RECAPTCHA_ENABLED=false` disables reCAPTCHA.
 - Data model leftovers resolved by keeping marketplace's model:
   `ServiceUserRelationship` (service owners) and `MarketplaceLocation` stay
   for every variant and are simply unused on pl/whitelabel; `Offer` here is
@@ -222,6 +230,15 @@ Found by comparing `app/`, `lib/` and `config/` of this branch with
 - [ ] `OrderingApi::AuthorizationTestSetup` service attributes: pl and
       whitelabel create the sample services with `tagline` and
       `geographical_availabilities` instead of `categories` and `order_type`.
+- [ ] Code files the other repos have that this one lacks (check first
+      whether this repo covers each differently):
+      `Backoffice::Vocabulary::ResearchActivityPolicy` and
+      `Recommender::Vocabulary::ResearchActivitySerializer` (pl and
+      whitelabel), `Catalogue::PcDelete` and `Provider::PcDelete` (pl and
+      whitelabel; this repo cascades registry provider deletes through
+      `Provider::Delete`), whitelabel's `Provider::CreateAsDraft`, pl's
+      `dialog_controller.js`. pl/whitelabel's `ExitHelper` is
+      `Backoffice::OffersHelper` here.
 
 ### UI, branding and configuration
 
@@ -258,12 +275,24 @@ Mechanism, per deployment (`CUSTOMIZATION_PATH=/path/to/dir`):
   reCAPTCHA keys and widget on any variant.
 
 - [ ] Assemble the pl and whitelabel customization directories from their
-      repos: the views (backoffice, services, layouts, home/pages, providers,
-      projects, mailers, federation), locales, the seven stylesheet files
-      (`_variables`, `_bootstrap-customizations`, `designsystem`, `_flash`,
-      `_order`, `_ref_*`) as a `stylesheets/application.scss` entry with its
-      partials, and the differing images; then run each variant's pages
-      against it.
+      repos: the views that differ (backoffice, services, layouts, home/pages,
+      providers, projects, mailers, federation) and the views this repo lacks
+      entirely — pl: `backoffice/categories/index`,
+      `backoffice/services/form/_contact` and `_dependencies`,
+      `common_parts/modals/_exit_modal`, `_provider_approval_modal`,
+      `_provider_profile_completion_modal`; whitelabel: the
+      `backoffice/providers/form/*` and `backoffice/services/form/*` partials,
+      `backoffice/providers/_show` and `edit.turbo_stream`,
+      `backoffice/services/destroy.turbo_stream` and
+      `publishes/create.turbo_stream`,
+      `backoffice/common_parts/form/_persistent_identity_system_fields`,
+      `layouts/navbar/_navbar_tabs`, `_oder_panel`, `_sections`,
+      `_user_panel`, `common_parts/modals/_exit_modal` — plus locales, the
+      seven stylesheet files (`_variables`, `_bootstrap-customizations`,
+      `designsystem`, `_flash`, `_order`, `_ref_*`) as a
+      `stylesheets/application.scss` entry with its partials, and the images
+      (17 pl-only, 18 whitelabel-only); then run each variant's pages against
+      it.
 - [ ] `exit_controller.js` and other `app/javascript` differences are bundled
       from the repository (esbuild); decide variant handling there.
 - [ ] Dev seeds: pl's `db/data.yml` is a different V5 sample dataset
@@ -274,8 +303,11 @@ Mechanism, per deployment (`CUSTOMIZATION_PATH=/path/to/dir`):
 
 ### Review and tests
 
-- [ ] Diff the files changed on both sides (173 vs pl-marketplace, 144 vs
-      whitelabel-marketplace) and decide port / gate / already covered.
+- [ ] Re-run the comparison after the customization directories exist and
+      review what is still "different" (313 vs pl-marketplace, 291 vs
+      whitelabel-marketplace on 2026-09-16; most of those files were changed
+      here by the consolidation itself, so the number no longer measures
+      remaining work).
 - [ ] Extend the per-variant CI job (`variants` in `ci_backend.yml`: fresh
       database from `db/schema.rb`, eager load, routes, routing specs under
       `pl` and `whitelabel`) with public and backoffice pages, profile
@@ -290,8 +322,10 @@ Mechanism, per deployment (`CUSTOMIZATION_PATH=/path/to/dir`):
 
 The history of `pl-marketplace` and `whitelabel-marketplace` still contains
 marketplace commits up to `b82db140` (2025-01-20) and `be8c9a1d`
-(2025-06-05). Files each repo changed after that commit were compared with
-this branch:
+(2025-06-05). Files under `app/`, `lib/` and `config/` that each repo
+changed after that commit were compared with this branch.
+
+Original audit (2026-09-15):
 
 | | pl-marketplace | whitelabel-marketplace |
 |---|---|---|
@@ -301,3 +335,17 @@ this branch:
 | Different, marketplace changed it too | 173 | 144 |
 | Added independently in both | 53 | 47 |
 | Deleted there, still here | 20 | 19 |
+
+After the 2026-09-16 batches (same file sets, compared byte for byte; the
+consolidation changed many of these files here, so "different" now includes
+files that are gated rather than missing):
+
+| | pl-marketplace | whitelabel-marketplace |
+|---|---|---|
+| Already identical here | 269 | 331 |
+| Missing here | 29 | 50 |
+| Different | 313 | 291 |
+
+Of the missing files, 17 / 18 are images and 6 / 26 are views, both covered
+by the `CUSTOMIZATION_PATH` decision; the code files are listed under
+"Variant-only features".
