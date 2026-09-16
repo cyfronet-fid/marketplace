@@ -72,6 +72,12 @@ RSpec.describe Backoffice::ProviderPolicy, :backend do
 
       expect(policy.permitted_attributes).to include(:name)
     end
+
+    it "permits the PL profile and V5 fields" do
+      policy = described_class.new(build(:user, roles: [:coordinator]), build(:provider))
+
+      expect(policy.permitted_attributes).to include(:street_name_and_number, :city, [network_ids: []])
+    end
   end
 
   context "when running as whitelabel" do
@@ -85,6 +91,12 @@ RSpec.describe Backoffice::ProviderPolicy, :backend do
       it "denies for unauthenticated users" do
         expect(subject).not_to permit(nil, build(:provider))
       end
+    end
+
+    it "permits node_ids as a scalar" do
+      policy = described_class.new(build(:user, roles: [:coordinator]), build(:provider))
+
+      expect(policy.permitted_attributes).to include(:node_ids)
     end
   end
 end

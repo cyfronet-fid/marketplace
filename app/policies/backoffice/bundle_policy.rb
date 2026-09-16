@@ -56,7 +56,8 @@ class Backoffice::BundlePolicy < ApplicationPolicy
       [category_ids: []],
       [scientific_domain_ids: []],
       [target_user_ids: []],
-      [marketplace_location_ids: []],
+      # pl and whitelabel replaced marketplace locations with research activities.
+      Mp::Variant.marketplace? ? [marketplace_location_ids: []] : [research_activity_ids: []],
       :main_offer_id,
       :tag_list,
       :from,

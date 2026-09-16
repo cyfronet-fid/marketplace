@@ -157,7 +157,16 @@ ESS and ordering API:
   policy rules and the vocabulary-based policies (category, platform,
   scientific domain, target user) are equivalent in all three repos; pl's and
   whitelabel's offer/bundle/orderable policies are pre-polymorphic versions
-  of marketplace's. Per-variant permitted attributes are left for the forms.
+  of marketplace's. Permitted attributes follow the variant: pl's service,
+  provider and datasource lists, whitelabel's `node_ids` scalar and no
+  `owner_ids`, bundle `research_activity_ids` instead of
+  `marketplace_location_ids`; `Service` and `Provider` accept the nested
+  contact, link and persistent-identity attributes pl's forms post.
+- Test suite: the order-dependent failures in `spec/lib/import` and
+  `spec/lib/ordering_api` came from `simple_recommender_spec`'s
+  `before :context` seeding, which outlived the per-example transaction; it
+  now truncates in `after(:context)`, and the combined models + services +
+  lib run passes in defined order.
 - Data model leftovers resolved by keeping marketplace's model:
   `ServiceUserRelationship` (service owners) and `MarketplaceLocation` stay
   for every variant and are simply unused on pl/whitelabel; `Offer` here is
@@ -197,7 +206,9 @@ Found by comparing `app/`, `lib/` and `config/` of this branch with
 - [ ] Backoffice provider forms (pl: editable show-page tabs; whitelabel:
       form partials) and service form partials (`_contact`, `_dependencies`,
       whitelabel's `_attribution`, `_availability`, `_datasource_policies`,
-      `_financial`, `_location`, `_maturity`).
+      `_financial`, `_location`, `_maturity`): views come from
+      `CUSTOMIZATION_PATH` (see UI below); the policies and models already
+      accept what they post.
 - [ ] Exit modal and `ExitHelper` (identical in pl and whitelabel:
       `common_parts/modals/_exit_modal`, richer `exit_controller.js`, used by
       provider steps and offer forms); PL provider approval and profile
@@ -205,10 +216,6 @@ Found by comparing `app/`, `lib/` and `config/` of this branch with
       with its `Presentable::StatusActionsComponent` (turbo frame,
       `polymorphic_path` unpublish/suspend; marketplace routes service
       unpublish through `drafts`; pl's component differs from both).
-- [ ] Per-variant `permitted_attributes` for the backoffice service,
-      provider and datasource policies (pl's PL-profile fields, whitelabel's
-      `node_ids`, bundle `research_activity_ids`), ported together with the
-      form partials above.
 
 ### Variant-only features
 
@@ -217,6 +224,14 @@ Found by comparing `app/`, `lib/` and `config/` of this branch with
       `geographical_availabilities` instead of `categories` and `order_type`.
 
 ### UI, branding and configuration
+
+Decision (2026-09-16): variant views, locales and styles are not merged
+into this repository. Each deployment points `CUSTOMIZATION_PATH` at a
+directory extracted from pl-marketplace or whitelabel-marketplace (their
+files that differ from this repo's `app/views`, `config/locales` and
+stylesheets); this repository keeps marketplace's views. Code that those
+views need (controllers, helpers, components, policies' permitted
+attributes) is consolidated here.
 
 - [ ] Styles (`_bootstrap-customizations.scss`, variables), landing and home
       pages, navbar/sections layouts, EOSC Commons footer, admin views,
@@ -244,8 +259,6 @@ Found by comparing `app/`, `lib/` and `config/` of this branch with
       Note: since the migration squash a fresh database can only be built
       with `db:schema:load`; `db:migrate` on an empty database fails at the
       first remaining migration, so the rspec job was switched too.
-- [ ] Fix order-dependent failures in `spec/lib/import/resources_spec.rb` and
-      `spec/lib/ordering_api/*` (pass alone, fail in a combined run).
 - [ ] Build a real PL search index from copied PL data and compare results
       with pl-marketplace.
 

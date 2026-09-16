@@ -120,6 +120,9 @@ class Provider < ApplicationRecord
   accepts_nested_attributes_for :alternative_identifiers, allow_destroy: true
   accepts_nested_attributes_for :sources, allow_destroy: true
   accepts_nested_attributes_for :data_administrators, allow_destroy: true
+  # Posted by pl's backoffice forms (served through CUSTOMIZATION_PATH).
+  accepts_nested_attributes_for :main_contact, allow_destroy: true
+  accepts_nested_attributes_for :public_contacts, allow_destroy: true
 
   auto_strip_attributes :name, nullify: false
   auto_strip_attributes :pid, nullify: false

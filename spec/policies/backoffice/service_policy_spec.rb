@@ -298,4 +298,28 @@ RSpec.describe Backoffice::ServicePolicy, :backend do
       expect(policy.permitted_attributes).to include(:name)
     end
   end
+
+  context "when running as pl" do
+    subject(:attrs) { described_class.new(coordinator, build(:service)).permitted_attributes }
+
+    before { allow(Mp::Variant).to receive(:pl?).and_return(true) }
+
+    it "permits the PL profile and V5 fields" do
+      expect(attrs).to include(:tagline, :abbreviation, :harvestable, [platform_ids: []], [target_user_ids: []])
+    end
+  end
+
+  context "when running as whitelabel" do
+    subject(:attrs) { described_class.new(coordinator, build(:service)).permitted_attributes }
+
+    before { allow(Mp::Variant).to receive_messages(marketplace?: false, pl?: false, whitelabel?: true) }
+
+    it "permits the shared fields" do
+      expect(attrs).to include(:name)
+    end
+
+    it "does not permit service owners" do
+      expect(attrs).not_to include([owner_ids: []])
+    end
+  end
 end

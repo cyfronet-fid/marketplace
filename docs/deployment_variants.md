@@ -96,7 +96,9 @@ gated.
   needs `management_role?`, editing/destroying a service needs
   `actionable?`, deleted services are viewable, and registry-imported
   records are not locked to internal fields. `marketplace` keeps its rules.
-  Permitted attributes are still marketplace's on every variant.
+  Permitted attributes follow the variant (pl's V5 form fields, whitelabel's
+  `node_ids` scalar without `owner_ids`, bundle `research_activity_ids`);
+  the forms themselves come from `CUSTOMIZATION_PATH`.
 - `VOCABULARY_TYPES` — `marketplace` keeps its ten V6 vocabulary types; `pl`
   and `whitelabel` manage the full set (target users, access modes, funding
   bodies/programs, life-cycle statuses, ESFRI, MERIL, research activities,
