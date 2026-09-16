@@ -77,6 +77,12 @@ gated.
   `ProjectItem::Create` and `Projects::Services::ConversationsController`
   enqueue the jobs unless `Mp::Variant.marketplace?`. `BOS_ENABLED`,
   `BOS_API_URL`, `BOS_API_KEY` configure the client.
+- Configuration — Devise and `cookie_rotator.rb` use
+  `Rails.application.secret_key_base`; Check-in reads `CHECKIN_ISSUER_ENDPOINT`
+  and `CHECKIN_JWK_ENDPOINT` as well as `CHECKIN_JWKS_ENDPOINT`, tolerates a
+  missing `checkin` credentials key, and adds the `entitlements` scope to the
+  default only under `marketplace`; STOMP, xGUS and reCAPTCHA credential
+  lookups are nil-safe.
 - `VOCABULARY_TYPES` — `marketplace` keeps its ten V6 vocabulary types; `pl`
   and `whitelabel` manage the full set (target users, access modes, funding
   bodies/programs, life-cycle statuses, ESFRI, MERIL, research activities,
