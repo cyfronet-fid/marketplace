@@ -113,6 +113,19 @@ ESS and ordering API:
   whitelabel's fallbacks to the nested `result.service` fields for every
   variant, written with `dig` so they stay inert on marketplace responses.
   The federation views still differ (see UI below).
+- BOS integration (identical in pl and whitelabel) ported: `Bos::Client`,
+  `Bos::CreateOrderJob`, `Bos::PostMessageJob`, `BosRetryable`, `bos.rake`;
+  `ProjectItem::Create` and the project conversation controller enqueue the
+  jobs unless running as marketplace. `BOS_ENABLED` / `BOS_API_URL` /
+  `BOS_API_KEY` and the `orders` Sidekiq queue were already configured here.
+- `VOCABULARY_TYPES` (backoffice vocabularies): marketplace keeps its V6 set;
+  pl and whitelabel get their full set in their order, so the backoffice
+  vocabulary routes follow the variant.
+- Data model leftovers resolved by keeping marketplace's model:
+  `ServiceUserRelationship` (service owners) and `MarketplaceLocation` stay
+  for every variant and are simply unused on pl/whitelabel; `Offer` here is
+  the polymorphic superset of both other repos (`service`/`service=` compat
+  accessors), so nothing was ported from them.
 
 ## Next steps
 
@@ -123,7 +136,14 @@ Found by comparing `app/`, `lib/` and `config/` of this branch with
 
 - [ ] Read `schema_migrations` and real columns on every deployed database;
       compare PL profile rows with the original data. Fix only with new
-      migrations.
+      migrations. Tables in this schema that pl's schema lacks:
+      `deployable_service_scientific_domains`, `deployable_service_sources`,
+      `deployable_services`, `infrastructures`, `offer_links`,
+      `service_user_relationships` (plus the pl profile tables and
+      `user_identities`, created by this repo's own migrations); whitelabel's
+      schema lacks the five PL-only tables restored by `RestorePlOnlyTables`,
+      the pl profile tables and `user_identities`. Make sure the pl database
+      gets the marketplace-only tables through a forward migration.
 - [ ] Check marketplace and whitelabel production databases for duplicate
       provider pids (the pid migration aborts on duplicates).
 - [ ] Make `MARKETPLACE_VARIANT` required in production.
@@ -152,17 +172,9 @@ Found by comparing `app/`, `lib/` and `config/` of this branch with
 
 ### Variant-only features
 
-- [ ] Decide on BOS integration (`services/bos`, `jobs/bos`, `bos.rake`) —
-      whitelabel audit marks it client-specific.
 - [ ] `OrderingApi::AuthorizationTestSetup` service attributes: pl and
       whitelabel create the sample services with `tagline` and
       `geographical_availabilities` instead of `categories` and `order_type`.
-
-### Data model leftovers
-
-- [ ] `MarketplaceLocation` replaced by research activity in both other repos.
-- [ ] `ServiceUserRelationship` (service owners) removed in both other repos.
-- [ ] `Offer` model and `config/initializers/constants.rb` differences.
 
 ### UI, branding and configuration
 

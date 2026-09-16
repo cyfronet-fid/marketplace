@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ProjectItem::Create, backend: true do
+RSpec.describe ProjectItem::Create, :backend do
   let(:user) { create(:user) }
   let(:project) { create(:project, user: user) }
   let(:service) { create(:service) }
@@ -32,6 +32,25 @@ RSpec.describe ProjectItem::Create, backend: true do
 
     non_customizable_project_item = ProjectItem.find_by(id: project_item.id)
     expect(ProjectItem::RegisterJob).to have_been_enqueued.with(non_customizable_project_item, nil)
+  end
+
+  context "when running as marketplace" do
+    before { described_class.new(project_item_template).call }
+
+    it "does not order the project item in BOS" do
+      expect(Bos::CreateOrderJob).not_to have_been_enqueued
+    end
+  end
+
+  context "when running as another variant" do
+    before do
+      allow(Mp::Variant).to receive(:marketplace?).and_return(false)
+      described_class.new(project_item_template).call
+    end
+
+    it "orders the project item in BOS" do
+      expect(Bos::CreateOrderJob).to have_been_enqueued
+    end
   end
 
   context "for service with :eosc_registry upstream" do
@@ -79,7 +98,7 @@ RSpec.describe ProjectItem::Create, backend: true do
     end
   end
 
-  context "#bundle" do
+  describe "#bundle" do
     let(:offer) { create(:offer, service: service) }
     let(:child1) { build(:offer) }
     let(:child2) { build(:offer) }
@@ -142,9 +161,9 @@ RSpec.describe ProjectItem::Create, backend: true do
       end
 
       it "enqueues deployment processing without sending immediate emails" do
-        expect { described_class.new(ds_project_item_template).call }.to change {
+        expect { described_class.new(ds_project_item_template).call }.not_to change {
           ActionMailer::Base.deliveries.count
-        }.by(0)
+        }
 
         expect(DeployableService::DeploymentJob).to have_been_enqueued
       end

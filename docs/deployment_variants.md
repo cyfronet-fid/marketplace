@@ -72,6 +72,16 @@ gated.
 - `Federation::ServicesController#map_results` — whitelabel's fallbacks to
   `result.service.*` for name, description, webpage, logo and nodePID, for all
   variants (`dig`, so absent keys stay `nil`).
+- BOS (`Bos::Client`, `Bos::CreateOrderJob`, `Bos::PostMessageJob`,
+  `bos:sync_users` / `bos:sync_providers`) — ported from pl/whitelabel;
+  `ProjectItem::Create` and `Projects::Services::ConversationsController`
+  enqueue the jobs unless `Mp::Variant.marketplace?`. `BOS_ENABLED`,
+  `BOS_API_URL`, `BOS_API_KEY` configure the client.
+- `VOCABULARY_TYPES` — `marketplace` keeps its ten V6 vocabulary types; `pl`
+  and `whitelabel` manage the full set (target users, access modes, funding
+  bodies/programs, life-cycle statuses, ESFRI, MERIL, research activities,
+  entity types, product access policies, service categories, …) and the
+  backoffice `other_settings/vocabularies` routes follow.
 - `config.whitelabel`/`MP_WHITELABEL` was folded into `Mp::Variant.whitelabel?`.
 - `config.monitoring_data_token` — no longer raises on a deployment whose
   `credentials.yml.enc` lacks the `monitoring_data` key; falls back to `nil`
