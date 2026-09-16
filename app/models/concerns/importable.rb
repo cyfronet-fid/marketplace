@@ -110,8 +110,8 @@ module Importable
     end
   end
 
-  def extract_public_contact_emails(raw)
-    Array(raw).map { |c| c.is_a?(Hash) ? c["email"] : c }.map { _1.to_s.strip }.compact_blank.uniq
+  def extract_public_contact_emails(raw_contacts)
+    Array(raw_contacts).map { |item| (item.is_a?(Hash) ? item["email"] : item).to_s.strip }.compact_blank.uniq
   end
 
   def map_alt_pid(hash)
