@@ -42,6 +42,15 @@ gated.
   `pl`/`whitelabel` use `*::Cascading` and `Service/Offer/Bundle::Delete`,
   which enqueue `DeleteJob`/`SuspendJob`/`UnpublishJob` for dependent records.
 - `Jms::ManageMessage` — accepts `resource` as a JSON string (all variants).
+- `Service::Publish` — pl/whitelabel ordering for all variants: offer
+  publish, bundled-offer notifications and subscriber mail happen only after
+  `update(status: :published)` succeeds; a failed update returns `false`.
+- Public `deployable_services` routes (pages, logo, ordering wizard) and the
+  project `infrastructure` destroy route exist only under `marketplace`;
+  `Jms::ManageMessage` raises `WrongMessageError` for `deployable_application`
+  messages on the other variants, as their own subscribers do. The
+  `DeployableService::*` jobs and services stay unreachable there.
+  `Ams::ProcessMessage` is not gated.
 - `config.whitelabel`/`MP_WHITELABEL` was folded into `Mp::Variant.whitelabel?`.
 - `config.monitoring_data_token` — no longer raises on a deployment whose
   `credentials.yml.enc` lacks the `monitoring_data` key; falls back to `nil`
