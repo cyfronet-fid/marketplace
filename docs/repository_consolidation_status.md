@@ -70,6 +70,18 @@ Lifecycle and messaging:
 - JMS messages with `resource` as a JSON string are accepted; the subscriber
   and `Jms::ManageMessageJob` now call `Jms::ManageMessage` with its actual
   arguments.
+- `Service::Publish` uses the pl/whitelabel ordering on every variant: the
+  single offer is published, bundled offers notified and subscribers mailed
+  only after the service update succeeds; a failed update returns `false`.
+
+Variant-only features:
+
+- Public `deployable_services` pages, the ordering wizard reused for them and
+  `Projects::Services::InfrastructuresController` are routed only for
+  marketplace. `Jms::ManageMessage` treats `deployable_application` messages
+  as an unknown type on the other variants, as their own subscribers do; the
+  `DeployableService::*` jobs and services are unreachable there.
+  `Ams::ProcessMessage` is deliberately left ungated.
 
 ## Next steps
 
@@ -92,9 +104,6 @@ Found by comparing `app/`, `lib/` and `config/` of this branch with
 ### Delete, lifecycle and messaging (pl + whitelabel)
 
 - [ ] Test JMS handling with real messages from all three deployments.
-- [ ] `Service::Publish` differs: pl/whitelabel publish the single offer and
-      notify subscribers only after the service update succeeds. Decide
-      between gating and a bug fix for all variants.
 
 ### PL imports, forms and policies
 
@@ -112,8 +121,6 @@ Found by comparing `app/`, `lib/` and `config/` of this branch with
 
 ### Variant-only features
 
-- [ ] Gate the public `deployable_services` routes, jobs and services and
-      `Projects::Services::InfrastructuresController` to marketplace.
 - [ ] Decide on BOS integration (`services/bos`, `jobs/bos`, `bos.rake`) —
       whitelabel audit marks it client-specific.
 - [ ] PL Catalogue API (`Api::V1::Catalogue::ServicesController`, policy,
