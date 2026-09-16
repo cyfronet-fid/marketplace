@@ -83,6 +83,13 @@ gated.
   missing `checkin` credentials key, and adds the `entitlements` scope to the
   default only under `marketplace`; STOMP, xGUS and reCAPTCHA credential
   lookups are nil-safe.
+- `Importers::Service` / `Importers::Provider` / `Importers::Datasource` —
+  under `pl` the V5 registry payload fields (tagline and the other profile
+  fields, service categories, funding, life-cycle statuses, contacts, links,
+  related/required services, platforms, provider location, ESFRI/MERIL,
+  networks, data administrators, datasource policies) are mapped on top of
+  the shared V6 mapping into the pl profiles and the shared join tables.
+  Other variants keep the V6 mapping only.
 - `Backoffice::ProviderPolicy` / `Backoffice::ServicePolicy` — under `pl`
   and `whitelabel` any signed-in user may list and create providers
   (`whitelabel` also view them; `pl` shows them to editors), service creation

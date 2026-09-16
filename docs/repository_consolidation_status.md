@@ -132,6 +132,17 @@ ESS and ordering API:
   them), the credentials fallbacks whitelabel dropped from `storage.yml` /
   `xgus.yml`, and the EOSC Explore default URL (whitelabel sets
   `EOSC_EXPLORE_BASE_URL`).
+- PL registry import: `Importers::Service`, `Importers::Provider` and
+  `Importers::Datasource` add pl's V5 field mapping on top of the shared
+  V6 mapping under `Mp::Variant.pl?`; `Importable` carries pl's mapping
+  helpers. The V5 data lands in structures every variant already has: the
+  pl profiles, and the shared `contacts`, `links`, `service_vocabularies`,
+  `provider_vocabularies`, `service_relationships`,
+  `provider_scientific_domains` and `persistent_identity_systems` tables,
+  so no new satellite table was needed. `Service` and `Provider` regained
+  pl's association declarations over those tables (empty elsewhere) and the
+  `PersistentIdentitySystem` models were restored. Whitelabel's importer
+  differences were already covered by this repo's JMS handling.
 - Backoffice policy rules: pl and whitelabel open the provider list and
   creation to any signed-in user (whitelabel also the provider page; pl the
   page to editors), use `management_role?` for service creation and
@@ -178,8 +189,6 @@ Found by comparing `app/`, `lib/` and `config/` of this branch with
 
 ### PL imports, forms and policies
 
-- [ ] Full PL field mapping in `importers/service.rb`, `provider.rb`,
-      `datasource.rb` and `concerns/importable.rb`.
 - [ ] Backoffice provider forms (pl: editable show-page tabs; whitelabel:
       form partials) and service form partials (`_contact`, `_dependencies`,
       whitelabel's `_attribution`, `_availability`, `_datasource_policies`,

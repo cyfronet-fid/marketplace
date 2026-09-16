@@ -133,6 +133,78 @@ class Service < ApplicationRecord
   # marketplace variant keeps reading the flat `public_contact_emails` column.
   has_many :public_contacts, as: :contactable, dependent: :destroy, autosave: true
 
+  # pl-only associations over the shared contacts, links, service_vocabularies,
+  # service_relationships and persistent_identity_systems tables; filled by
+  # pl's registry import, empty on the other variants.
+  has_one :main_contact, as: :contactable, dependent: :destroy, autosave: true
+  has_many :link_multimedia_urls, as: :linkable, dependent: :destroy, autosave: true, class_name: "Link::MultimediaUrl"
+  has_many :link_use_cases_urls, as: :linkable, dependent: :destroy, autosave: true, class_name: "Link::UseCasesUrl"
+  has_many :link_research_product_license_urls,
+           as: :linkable,
+           dependent: :destroy,
+           autosave: true,
+           class_name: "Link::ResearchProductLicenseUrl"
+  has_many :link_research_product_metadata_license_urls,
+           as: :linkable,
+           dependent: :destroy,
+           autosave: true,
+           class_name: "Link::ResearchProductMetadataLicenseUrl"
+  has_many :service_categories,
+           through: :service_vocabularies,
+           source: :vocabulary,
+           source_type: "Vocabulary::ServiceCategory"
+  has_many :funding_bodies, through: :service_vocabularies, source: :vocabulary, source_type: "Vocabulary::FundingBody"
+  has_many :funding_programs,
+           through: :service_vocabularies,
+           source: :vocabulary,
+           source_type: "Vocabulary::FundingProgram"
+  has_many :life_cycle_statuses,
+           through: :service_vocabularies,
+           source: :vocabulary,
+           source_type: "Vocabulary::LifeCycleStatus"
+  has_many :research_entity_types,
+           through: :service_vocabularies,
+           source: :vocabulary,
+           source_type: "Vocabulary::EntityType"
+  has_many :research_product_access_policies,
+           through: :service_vocabularies,
+           source: :vocabulary,
+           source_type: "Vocabulary::ResearchProductAccessPolicy"
+  has_many :research_product_metadata_access_policies,
+           through: :service_vocabularies,
+           source: :vocabulary,
+           source_type: "Vocabulary::ResearchProductMetadataAccessPolicy"
+  has_many :source_relationships,
+           class_name: "ServiceRelationship",
+           foreign_key: "target_id",
+           dependent: :destroy,
+           inverse_of: :target
+  has_many :target_relationships,
+           class_name: "ServiceRelationship",
+           foreign_key: "source_id",
+           dependent: :destroy,
+           inverse_of: :source
+  has_many :related_services,
+           through: :target_relationships,
+           class_name: "Service",
+           source: :target,
+           source_type: "ServiceRelationship"
+  has_many :manual_related_services,
+           through: :target_relationships,
+           class_name: "Service",
+           source: :target,
+           source_type: "ManualServiceRelationship"
+  has_many :required_services,
+           through: :target_relationships,
+           class_name: "Service",
+           source: :target,
+           source_type: "RequiredServiceRelationship"
+  has_many :persistent_identity_systems,
+           class_name: "PersistentIdentitySystem",
+           autosave: true,
+           dependent: :destroy,
+           inverse_of: :datasource
+
   accepts_nested_attributes_for :sources,
                                 reject_if:
                                   ->(attributes) { attributes["eid"].blank? || attributes["source_type"].blank? },
