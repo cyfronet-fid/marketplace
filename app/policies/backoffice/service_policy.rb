@@ -25,8 +25,10 @@ class Backoffice::ServicePolicy < Backoffice::ApplicationPolicy
     coordinator? || service_owner? || data_administrator?
   end
 
+  # pl and whitelabel inherit Backoffice::ApplicationPolicy's rules here;
+  # marketplace keeps its own (access? ignores deleted records, show? does not).
   def show?
-    actionable?
+    Mp::Variant.marketplace? ? actionable? : access?
   end
 
   def new?
@@ -34,15 +36,15 @@ class Backoffice::ServicePolicy < Backoffice::ApplicationPolicy
   end
 
   def create?
-    access?
+    Mp::Variant.marketplace? ? access? : management_role?
   end
 
   def edit?
-    access?
+    Mp::Variant.marketplace? ? access? : actionable?
   end
 
   def update?
-    access?
+    Mp::Variant.marketplace? ? access? : actionable?
   end
 
   def publish?
@@ -66,7 +68,7 @@ class Backoffice::ServicePolicy < Backoffice::ApplicationPolicy
   end
 
   def destroy?
-    access?
+    Mp::Variant.marketplace? ? access? : actionable?
   end
 
   def permitted_attributes
@@ -109,7 +111,8 @@ class Backoffice::ServicePolicy < Backoffice::ApplicationPolicy
       [alternative_identifiers_attributes: %i[id identifier_type value _destroy]]
     ]
 
-    !@record.is_a?(Service) || @record.upstream.nil? ? attrs : MP_INTERNAL_FIELDS
+    # Only marketplace locks registry-imported services to their internal fields.
+    !Mp::Variant.marketplace? || !@record.is_a?(Service) || @record.upstream.nil? ? attrs : MP_INTERNAL_FIELDS
   end
 
   private

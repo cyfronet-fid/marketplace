@@ -132,6 +132,16 @@ ESS and ordering API:
   them), the credentials fallbacks whitelabel dropped from `storage.yml` /
   `xgus.yml`, and the EOSC Explore default URL (whitelabel sets
   `EOSC_EXPLORE_BASE_URL`).
+- Backoffice policy rules: pl and whitelabel open the provider list and
+  creation to any signed-in user (whitelabel also the provider page; pl the
+  page to editors), use `management_role?` for service creation and
+  `actionable?` for editing/destroying services, show deleted services, and
+  never lock registry-imported services or providers to internal fields;
+  marketplace keeps its rules. The base backoffice policy, the datasource
+  policy rules and the vocabulary-based policies (category, platform,
+  scientific domain, target user) are equivalent in all three repos; pl's and
+  whitelabel's offer/bundle/orderable policies are pre-polymorphic versions
+  of marketplace's. Per-variant permitted attributes are left for the forms.
 - Data model leftovers resolved by keeping marketplace's model:
   `ServiceUserRelationship` (service owners) and `MarketplaceLocation` stay
   for every variant and are simply unused on pl/whitelabel; `Offer` here is
@@ -181,9 +191,10 @@ Found by comparing `app/`, `lib/` and `config/` of this branch with
       with its `Presentable::StatusActionsComponent` (turbo frame,
       `polymorphic_path` unpublish/suspend; marketplace routes service
       unpublish through `drafts`; pl's component differs from both).
-- [ ] Policies: `service`, `datasource`, `provider`, `bundle`, `category`,
-      `scientific_domain`, `platform`; research-activity policy and
-      recommender serializer.
+- [ ] Per-variant `permitted_attributes` for the backoffice service,
+      provider and datasource policies (pl's PL-profile fields, whitelabel's
+      `node_ids`, bundle `research_activity_ids`), ported together with the
+      form partials above.
 
 ### Variant-only features
 
