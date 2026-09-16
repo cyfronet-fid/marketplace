@@ -64,6 +64,8 @@ class Service < ApplicationRecord
   has_many :nodes, through: :service_vocabularies, source: :vocabulary, source_type: "Vocabulary::Node"
   has_many :access_types, through: :service_vocabularies, source: :vocabulary, source_type: "Vocabulary::AccessType"
   has_many :trls, through: :service_vocabularies, source: :vocabulary, source_type: "Vocabulary::Trl"
+  # pl-only, read by the catalogue API (Catalogue::ServiceSerializer); stays empty elsewhere.
+  has_many :access_modes, through: :service_vocabularies, source: :vocabulary, source_type: "Vocabulary::AccessMode"
 
   # pl-only vocabulary type (dropped from marketplace/whitelabel by the V6
   # migration). The association itself is safe to leave defined for every
@@ -245,6 +247,18 @@ class Service < ApplicationRecord
 
   def build_pl_profile_if_needed
     build_pl_profile if Mp::Variant.pl?
+  end
+
+  def logo_url
+    # Return URL to Services::LogosController#show for this service
+    # Use absolute URL if default host is configured, otherwise return a relative path
+    if Rails.application.routes.default_url_options[:host].present?
+      service_logo_url(self)
+    elsif ENV.fetch("ROOT_URL", nil).present?
+      service_logo_url(self, host: ENV.fetch("ROOT_URL"))
+    else
+      service_logo_path(self)
+    end
   end
 
   private

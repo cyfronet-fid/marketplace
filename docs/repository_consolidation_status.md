@@ -104,6 +104,15 @@ ESS and ordering API:
 - pl's users API rule (`Api::V1::UserPolicy#show?` requires every role), the
   SOMBO admin holding every role and `AddProviderOMS` underscoring the OMS
   name are gated to pl.
+- PL Catalogue API ported: `Api::V1::Catalogue::ServicesController`, its
+  policy, `Catalogue::ServiceSerializer` (+ alternative identifiers), the
+  swagger document and `Service#access_modes` / `Service#logo_url` it reads;
+  the route exists only under pl.
+- Whitelabel's `Api::V1::Search` differs from marketplace only cosmetically
+  (nothing to port). `Federation::ServicesController#map_results` takes
+  whitelabel's fallbacks to the nested `result.service` fields for every
+  variant, written with `dig` so they stay inert on marketplace responses.
+  The federation views still differ (see UI below).
 
 ## Next steps
 
@@ -145,13 +154,9 @@ Found by comparing `app/`, `lib/` and `config/` of this branch with
 
 - [ ] Decide on BOS integration (`services/bos`, `jobs/bos`, `bos.rake`) —
       whitelabel audit marks it client-specific.
-- [ ] PL Catalogue API (`Api::V1::Catalogue::ServicesController`, policy,
-      serializers).
 - [ ] `OrderingApi::AuthorizationTestSetup` service attributes: pl and
       whitelabel create the sample services with `tagline` and
       `geographical_availabilities` instead of `categories` and `order_type`.
-- [ ] Whitelabel search API and federation (`Api::V1::Search`,
-      `Federation::ServicesController` and views).
 
 ### Data model leftovers
 
@@ -163,7 +168,9 @@ Found by comparing `app/`, `lib/` and `config/` of this branch with
 
 - [ ] Styles (`_bootstrap-customizations.scss`, variables), landing and home
       pages, navbar/sections layouts, EOSC Commons footer, admin views,
-      whitelabel `customization.rb`, images — via variant partials/assets or
+      whitelabel `customization.rb`, images, whitelabel's federation views
+      (`federation/services/index`, `_service`, `_pagination`; marketplace-only
+      `_federation_banner`) — via variant partials/assets or
       `CUSTOMIZATION_PATH`.
 - [ ] Config: `devise.rb`, `stomp_publisher.yml`, `stomp_subscriber.yml`,
       whitelabel `recaptcha.rb`, `cookie_rotator.rb`, `storage.yml`,
