@@ -97,30 +97,58 @@
 
 %section.federated
   .container
-    .federated-media.pl-5
-      .row
-        .col-lg-5.col-sm-12.ml-5
-          %h3
-            Browse resources locally
-            %br
-            and
-            %span across the federation
-          %p.description
-            Browse local and federated resources. Thanks to Federated Catalogues, you can also access the collections
-            of other institutions from your catalogue.
-          %a.btn.btn-primary.mt-3{ href: federation_services_path } Discover Federated Catalogues
+    .federated-intro
+      %h3
+        Federated Catalogue
+      %p.description
+        The Federated Catalogue does not store services itself. Nodes keep their own catalogues and stay responsible for
+        their own services. The catalogue collects information about them, so you can search everything in one place.
+      %a.btn.btn-primary.mt-2{ href: "https://userspace.sandbox.eosc-beyond.eu/federation/services" } Discover Federated Catalogue
 
-%section.support
+    .federated-media
+      = image_tag "landing_page/federated-schema.png", alt: "Federated Catalogue", class: "img-fluid mt-5"
+
+
+%section.nodes
   .container
-    .row
-      .col-md-6.col-sm-12
-        = image_tag "landing_page/landing-pic-01.png", alt: "We can provide you full support", class: "img-fluid"
-      .col-md-5.col-sm-12
-        %h3 Create space for your<br> scientific activity
-        %p.description
-          Adding the project will help you organize your services into logical blocks and gaining
-          support in the scope of the created idea.
-        %a.btn.btn-primary.mt-3{ href: "#{root_url}projects" } Add project
+    %h3 Connected Nodes
+
+    .node-list
+      %a.node-item.is-link{href: "#"}
+        %img.node-item__icon{src: "/assets/landing_page/logo-cessda.png", alt: "EOSC-Beyond"}
+        %span.node-item__name EOSC-Beyond
+      %a.node-item.is-link{href: "#"}
+        %img.node-item__icon{src: "/assets/landing_page/logo-cessda.png", alt: "CESSDA"}
+        %span.node-item__name CESSDA
+      %a.node-item.is-link{href: "#"}
+        %img.node-item__icon{src: "/assets/landing_page/logo-nfdi.png", alt: "NFDI"}
+        %span.node-item__name NFDI
+      %a.node-item.is-link{href: "#"}
+        %img.node-item__icon{src: "/assets/landing_page/logo-metrofood.png", alt: "METROFOOD"}
+        %span.node-item__name METROFOOD
+
+      %a.node-item.is-link{href: "#"}
+        %img.node-item__icon{src: "/assets/landing_page/logo-instruct.png", alt: "Instruct-ERIC"}
+        %span.node-item__name Instruct-ERIC
+      %a.node-item.is-link{href: "#"}
+        %img.node-item__icon{src: "/assets/landing_page/logo-lifewatch.svg", alt: "LifeWatch-ERIC"}
+        %span.node-item__name LifeWatch-ERIC
+      %a.node-item.is-link{href: "#"}
+        %img.node-item__icon{src: "/assets/landing_page/logo-enes.png", alt: "ENES"}
+        %span.node-item__name ENES
+      %a.node-item.is-link{href: "#"}
+        %img.node-item__icon{src: "/assets/landing_page/logo-cnb.png", alt: "CNB-CSIC"}
+        %span.node-item__name CNB-CSIC
+
+      %a.node-item.is-link{href: "#"}
+        %img.node-item__icon{src: "/assets/landing_page/logo-cessda.png", alt: "NI4OS-EUROPE"}
+        %span.node-item__name NI4OS-EUROPE
+      %a.node-item.is-link{href: "#"}
+        %img.node-item__icon{src: "/assets/landing_page/logo-egi.png", alt: "EGI Pilot Node"}
+        %span.node-item__name EGI Pilot Node
+      %a.node-item.is-link{href: "#"}
+        %img.node-item__icon{src: "/assets/landing_page/logo-einfra.svg", alt: "e-INFRA_CZ"}
+        %span.node-item__name e-INFRA_CZ
 
 
 %section.eosc-navy
