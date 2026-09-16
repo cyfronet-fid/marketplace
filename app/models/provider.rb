@@ -54,6 +54,38 @@ class Provider < ApplicationRecord
            source: :vocabulary,
            source_type: "Vocabulary::HostingLegalEntity"
   has_many :legal_statuses, through: :provider_vocabularies, source: :vocabulary, source_type: "Vocabulary::LegalStatus"
+
+  # pl-only associations over the shared provider_scientific_domains,
+  # provider_vocabularies and contacts tables; filled by pl's registry
+  # import, empty on the other variants.
+  has_many :provider_scientific_domains, dependent: :destroy
+  has_many :scientific_domains, through: :provider_scientific_domains
+  has_many :provider_life_cycle_statuses,
+           through: :provider_vocabularies,
+           source: :vocabulary,
+           source_type: "Vocabulary::ProviderLifeCycleStatus"
+  has_many :networks, through: :provider_vocabularies, source: :vocabulary, source_type: "Vocabulary::Network"
+  has_many :structure_types,
+           through: :provider_vocabularies,
+           source: :vocabulary,
+           source_type: "Vocabulary::StructureType"
+  has_many :esfri_domains, through: :provider_vocabularies, source: :vocabulary, source_type: "Vocabulary::EsfriDomain"
+  has_many :esfri_types, through: :provider_vocabularies, source: :vocabulary, source_type: "Vocabulary::EsfriType"
+  has_many :meril_scientific_domains,
+           through: :provider_vocabularies,
+           source: :vocabulary,
+           source_type: "Vocabulary::MerilScientificDomain"
+  has_many :areas_of_activity,
+           through: :provider_vocabularies,
+           source: :vocabulary,
+           source_type: "Vocabulary::AreaOfActivity"
+  has_many :societal_grand_challenges,
+           through: :provider_vocabularies,
+           source: :vocabulary,
+           source_type: "Vocabulary::SocietalGrandChallenge"
+  has_one :main_contact, as: :contactable, dependent: :destroy, autosave: true
+  has_many :public_contacts, as: :contactable, dependent: :destroy, autosave: true
+
   has_many :oms_providers, dependent: :destroy
   has_many :omses, through: :oms_providers
 
