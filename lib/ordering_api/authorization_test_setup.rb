@@ -5,8 +5,10 @@ module OrderingApi
     def call
       oms_admin1 =
         User.create!(uid: "oms2_admin", first_name: "oms2_admin", last_name: "oms2_admin", email: "email1@email.com")
+      oms_admin1.identities.create!(provider: "checkin", uid: "oms2_admin", primary: true) if Mp::Variant.pl?
       oms_admin2 =
         User.create!(uid: "oms3_admin", first_name: "oms3_admin", last_name: "oms3_admin", email: "email2@email.com")
+      oms_admin2.identities.create!(provider: "checkin", uid: "oms3_admin", primary: true) if Mp::Variant.pl?
 
       oms2 = OMS.create!(name: "OMS2", type: "global", administrators: [oms_admin1])
       oms3 = OMS.create!(name: "OMS3", type: "global", administrators: [oms_admin2])
@@ -54,6 +56,7 @@ module OrderingApi
         )
 
       project_owner = User.create!(uid: "user", first_name: "user", last_name: "user", email: "email3@email.com")
+      project_owner.identities.create!(provider: "checkin", uid: "user", primary: true) if Mp::Variant.pl?
       project1 =
         Project.create!(
           user: project_owner,

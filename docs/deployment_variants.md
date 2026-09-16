@@ -51,6 +51,12 @@ gated.
   messages on the other variants, as their own subscribers do. The
   `DeployableService::*` jobs and services stay unreachable there.
   `Ams::ProcessMessage` is not gated.
+- Login identities — `UserIdentity`, `Users::Authenticate` and the
+  `user_identities` table exist everywhere; `users.uid` stays, nullable. Under
+  `pl` the Check-in callback, `Api::V1::UsersController`, `User#uid`, the
+  email-uniqueness validation and the `lib/ordering_api` admin setup go
+  through identities; `marketplace`/`whitelabel` keep `User::Checkin` and
+  `users.uid`. `session["token"]` is set after login only on `marketplace`.
 - `config.whitelabel`/`MP_WHITELABEL` was folded into `Mp::Variant.whitelabel?`.
 - `config.monitoring_data_token` — no longer raises on a deployment whose
   `credentials.yml.enc` lacks the `monitoring_data` key; falls back to `nil`

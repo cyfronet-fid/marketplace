@@ -41,6 +41,23 @@ RSpec.describe Api::V1::UsersController, :backend, swagger_doc: "v1/users_swagge
         end
       end
 
+      response(200, "successful through a checkin identity on pl", document: false) do
+        schema "$ref" => "user/user_read.json"
+
+        let(:user_id) { "test-user-uid" }
+        let(:user) { create(:user, roles: %i[admin coordinator]) }
+        let(:"X-User-Token") { user.authentication_token }
+        let!(:identity) { create(:user_identity, user: user, provider: "checkin", uid: user_id, primary: true) }
+
+        # rubocop:disable RSpec/ScatteredSetup -- each rswag `response` block is its own example group
+        before { allow(Mp::Variant).to receive(:pl?).and_return(true) }
+        # rubocop:enable RSpec/ScatteredSetup
+
+        run_test! do |response|
+          expect(JSON.parse(response.body)["uid"]).to eq(identity.uid)
+        end
+      end
+
       response(404, "user not found") do
         schema "$ref" => "error.json"
 

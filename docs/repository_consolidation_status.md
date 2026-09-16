@@ -82,6 +82,17 @@ Variant-only features:
   as an unknown type on the other variants, as their own subscribers do; the
   `DeployableService::*` jobs and services are unreachable there.
   `Ams::ProcessMessage` is deliberately left ungated.
+- PL login identities: `UserIdentity`, `Users::Authenticate` and the
+  `user_identities` table exist on every variant (pl's migration keeps its
+  version but not its `remove_column :users, :uid`; `AddNullableUidToUsers`
+  gives every variant a nullable `users.uid`). Only pl logs in through
+  `Users::Authenticate`, reads `User#uid` from the primary identity, validates
+  case-insensitive email uniqueness and resolves the users API and the
+  `lib/ordering_api` admins through identities; marketplace and whitelabel
+  keep `User::Checkin` and `users.uid`. The Check-in token is stored in the
+  session only on marketplace (only its `Services::ApplicationController`
+  reads it). pl's unique `lower(email)` index was not ported: marketplace
+  allows duplicate emails.
 
 ## Next steps
 
@@ -125,10 +136,12 @@ Found by comparing `app/`, `lib/` and `config/` of this branch with
       whitelabel audit marks it client-specific.
 - [ ] PL Catalogue API (`Api::V1::Catalogue::ServicesController`, policy,
       serializers).
-- [ ] PL login identities: `UserIdentity`, `Users::Authenticate` (replaces
-      `User::Checkin`, prevents duplicate accounts).
-- [ ] PL SOMBO/OMS role fixes in `lib/ordering_api`; `Propagable`
-      `propagate_offers:` option.
+- [ ] PL SOMBO/OMS role fixes in `lib/ordering_api` (`oms_name.underscore`,
+      `roles_mask: 7` for the SOMBO admin, service attributes in
+      `AuthorizationTestSetup`); `Propagable` `propagate_offers:` option and
+      the matching `Ess::Add` change.
+- [ ] `Api::V1::UserPolicy#show?`: pl restricts the users API to holders of
+      every role and drops the policy scope.
 - [ ] Whitelabel search API and federation (`Api::V1::Search`,
       `Federation::ServicesController` and views).
 

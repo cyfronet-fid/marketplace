@@ -30,11 +30,20 @@ class User < ApplicationRecord
   has_many :catalogues, through: :catalogue_data_administrators
   has_many :observed_user_offers, dependent: :destroy
   has_many :observed_offers, through: :observed_user_offers
+  has_many :identities, class_name: "UserIdentity", dependent: :destroy, inverse_of: :user
+
+  has_one :primary_identity, -> { where(primary: true) }, class_name: "UserIdentity", inverse_of: :user
 
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :email, presence: true
-  validates :uid, presence: true
+  validates :uid, presence: true, unless: -> { Mp::Variant.pl? }
+  validates :email, uniqueness: { case_sensitive: false }, if: -> { Mp::Variant.pl? }
+
+  # pl-marketplace dropped users.uid and reads it from the primary identity.
+  def uid
+    Mp::Variant.pl? ? primary_identity&.uid : super
+  end
 
   def full_name
     "#{first_name} #{last_name}"

@@ -22,9 +22,13 @@ class Users::AuthMockController < ApplicationController
           email: params[:email],
           last_name: params[:first_name],
           first_name: params[:last_name],
-          uid: SecureRandom.uuid,
           encrypted_password: encrypted_password
         )
+      if Mp::Variant.pl?
+        user.identities.build(provider: "mock", uid: SecureRandom.uuid, primary: true)
+      else
+        user.uid = SecureRandom.uuid
+      end
       user.roles = params[:roles].map(&:to_sym) unless params[:roles].blank?
       user.save!
 

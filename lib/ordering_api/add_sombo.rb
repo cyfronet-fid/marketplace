@@ -4,13 +4,17 @@ module OrderingApi
   class AddSombo
     def call
       sombo_admin =
-        User
-          .default_scoped
-          .find_or_create_by(uid: "iamasomboadmin") do |user|
-            user.first_name = "SOMBO admin"
-            user.last_name = "SOMBO admin"
-            user.email = "sombo@sombo.com"
-          end
+        if Mp::Variant.pl?
+          Users::Authenticate.call(auth_params)
+        else
+          User
+            .default_scoped
+            .find_or_create_by(uid: "iamasomboadmin") do |user|
+              user.first_name = "SOMBO admin"
+              user.last_name = "SOMBO admin"
+              user.email = "sombo@sombo.com"
+            end
+        end
 
       sombo =
         OMS
@@ -22,6 +26,21 @@ module OrderingApi
           end
 
       sombo.administrators << sombo_admin unless sombo.administrators.include?(sombo_admin)
+    end
+
+    private
+
+    def auth_params
+      {
+        "provider" => "checkin",
+        "uid" => "iamasomboadmin",
+        "info" => {
+          "email" => "sombo@sombo.com",
+          "first_name" => "SOMBO admin",
+          "last_name" => "SOMBO admin",
+          "email_verified" => true
+        }
+      }
     end
   end
 end
