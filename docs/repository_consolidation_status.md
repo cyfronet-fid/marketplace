@@ -121,6 +121,17 @@ ESS and ordering API:
 - `VOCABULARY_TYPES` (backoffice vocabularies): marketplace keeps its V6 set;
   pl and whitelabel get their full set in their order, so the backoffice
   vocabulary routes follow the variant.
+- Configuration: Devise and the cookie rotator use
+  `Rails.application.secret_key_base` (covers pl's `SECRET_KEY_BASE` and
+  marketplace's credentials); Check-in accepts pl/whitelabel's
+  `CHECKIN_ISSUER_ENDPOINT` / `CHECKIN_JWK_ENDPOINT` next to marketplace's
+  names, works without a `checkin` credentials key, and requests the
+  `entitlements` scope by default only on marketplace; the STOMP, xGUS and
+  reCAPTCHA settings no longer raise when the credentials key is absent.
+  Kept as marketplace's: the STOMP YAML shapes (this repo's subscriber reads
+  them), the credentials fallbacks whitelabel dropped from `storage.yml` /
+  `xgus.yml`, and the EOSC Explore default URL (whitelabel sets
+  `EOSC_EXPLORE_BASE_URL`).
 - Data model leftovers resolved by keeping marketplace's model:
   `ServiceUserRelationship` (service owners) and `MarketplaceLocation` stay
   for every variant and are simply unused on pl/whitelabel; `Offer` here is
@@ -147,10 +158,9 @@ Found by comparing `app/`, `lib/` and `config/` of this branch with
 - [ ] Check marketplace and whitelabel production databases for duplicate
       provider pids (the pid migration aborts on duplicates).
 - [ ] Make `MARKETPLACE_VARIANT` required in production.
-- [ ] Keep per-deployment settings: `SECRET_KEY_BASE`, Check-in endpoint
-      variable names, PL's EOSC Commons URL and recommendation setting,
-      whitelabel's HTTPS federation URL, STOMP/JMS, monitoring, BOS and import
-      settings. Devise should use `Rails.application.secret_key_base`.
+- [ ] Keep per-deployment settings: PL's EOSC Commons URL and recommendation
+      setting, whitelabel's HTTPS federation URL and `EOSC_EXPLORE_BASE_URL`,
+      STOMP/JMS, monitoring, BOS and import settings, `RECAPTCHA_*` keys.
 
 ### Delete, lifecycle and messaging (pl + whitelabel)
 
@@ -164,8 +174,13 @@ Found by comparing `app/`, `lib/` and `config/` of this branch with
       form partials) and service form partials (`_contact`, `_dependencies`,
       whitelabel's `_attribution`, `_availability`, `_datasource_policies`,
       `_financial`, `_location`, `_maturity`).
-- [ ] Exit modal and `ExitHelper`; PL provider approval and profile
-      completion modals; whitelabel `Backoffice::Services::UnpublishesController`.
+- [ ] Exit modal and `ExitHelper` (identical in pl and whitelabel:
+      `common_parts/modals/_exit_modal`, richer `exit_controller.js`, used by
+      provider steps and offer forms); PL provider approval and profile
+      completion modals; whitelabel `Backoffice::Services::UnpublishesController`
+      with its `Presentable::StatusActionsComponent` (turbo frame,
+      `polymorphic_path` unpublish/suspend; marketplace routes service
+      unpublish through `drafts`; pl's component differs from both).
 - [ ] Policies: `service`, `datasource`, `provider`, `bundle`, `category`,
       `scientific_domain`, `platform`; research-activity policy and
       recommender serializer.
@@ -184,9 +199,9 @@ Found by comparing `app/`, `lib/` and `config/` of this branch with
       (`federation/services/index`, `_service`, `_pagination`; marketplace-only
       `_federation_banner`) — via variant partials/assets or
       `CUSTOMIZATION_PATH`.
-- [ ] Config: `devise.rb`, `stomp_publisher.yml`, `stomp_subscriber.yml`,
-      whitelabel `recaptcha.rb`, `cookie_rotator.rb`, `storage.yml`,
-      `xgus.yml`, `eosc_explore_banner.yml`.
+- [ ] Whitelabel `customization.rb` (`config.recaptcha_enabled`, default
+      true) with `ApplicationHelper#recaptcha_tags` skipping the widget and
+      `recaptcha.rb` skipping the keys when `RECAPTCHA_ENABLED` is false.
 - [ ] Rake tasks: `dev.rake`, `rdt.rake`, PL `add_providers_default_logo.rake`.
 
 ### Review and tests
