@@ -76,16 +76,18 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :deployable_services, only: %i[index show] do
-    scope module: :deployable_services do
-      resource :logo, only: :show
-    end
-    # Reuse Services wizard controllers for ordering DeployableServices
-    scope module: :services do
-      resource :choose_offer, only: %i[show update]
-      resource :information, only: %i[show update]
-      resource :configuration, only: %i[show update]
-      resource :summary, only: %i[show create]
+  if Mp::Variant.marketplace?
+    resources :deployable_services, only: %i[index show] do
+      scope module: :deployable_services do
+        resource :logo, only: :show
+      end
+      # Reuse Services wizard controllers for ordering DeployableServices
+      scope module: :services do
+        resource :choose_offer, only: %i[show update]
+        resource :information, only: %i[show update]
+        resource :configuration, only: %i[show update]
+        resource :summary, only: %i[show create]
+      end
     end
   end
 
@@ -102,7 +104,7 @@ Rails.application.routes.draw do
           resource :opinion, only: %i[new create]
           resource :conversation, only: %i[show create]
           resource :timeline, only: :show
-          resource :infrastructure, only: :destroy
+          resource :infrastructure, only: :destroy if Mp::Variant.marketplace?
         end
       end
       resource :conversation, only: %i[show create]
