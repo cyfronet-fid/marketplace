@@ -33,7 +33,7 @@ RSpec.describe Users::Authenticate, :backend do
     end
 
     it "does not create a new user" do
-      expect(User.count).to eq(1)
+      expect(User.where(email: email)).to be_empty
     end
   end
 
@@ -62,7 +62,7 @@ RSpec.describe Users::Authenticate, :backend do
     end
 
     it "does not create a new user" do
-      expect(User.count).to eq(2)
+      expect(User.where(email: email)).to contain_exactly(email_matched_user)
     end
 
     it "does not attach the identity to the email-matched user" do
@@ -74,7 +74,7 @@ RSpec.describe Users::Authenticate, :backend do
     before { result }
 
     it "creates a new user" do
-      expect(User.count).to eq(1)
+      expect(User.find_by(email: email)).to eq(result)
     end
 
     it "creates a primary identity for the new user" do

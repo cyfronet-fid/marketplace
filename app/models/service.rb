@@ -205,6 +205,20 @@ class Service < ApplicationRecord
            dependent: :destroy,
            inverse_of: :datasource
 
+  # Posted by pl's backoffice forms (served through CUSTOMIZATION_PATH).
+  accepts_nested_attributes_for :main_contact, allow_destroy: true
+  accepts_nested_attributes_for :public_contacts, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :link_multimedia_urls, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :link_use_cases_urls, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :link_research_product_license_urls, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :link_research_product_metadata_license_urls, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :persistent_identity_systems,
+                                reject_if:
+                                  lambda { |attributes|
+                                    attributes["entity_type_id"].blank? && attributes["entity_type_scheme_ids"].blank?
+                                  },
+                                allow_destroy: true
+
   accepts_nested_attributes_for :sources,
                                 reject_if:
                                   ->(attributes) { attributes["eid"].blank? || attributes["source_type"].blank? },
