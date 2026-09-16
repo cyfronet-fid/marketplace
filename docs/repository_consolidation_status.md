@@ -143,6 +143,11 @@ ESS and ordering API:
   pl's association declarations over those tables (empty elsewhere) and the
   `PersistentIdentitySystem` models were restored. Whitelabel's importer
   differences were already covered by this repo's JMS handling.
+- Rake tasks: `add_providers_default_logo` uses pl's working loop (the
+  marketplace version called the method on the array); `rdt:repair_language_data`
+  runs pl's alpha-2 repair under pl only (the field lives in the pl profile);
+  `rdt:add_internal_vocabularies` creates pl's research activities from the
+  section ported into `db/internal_vocabulary.yml` under pl only.
 - Backoffice policy rules: pl and whitelabel open the provider list and
   creation to any signed-in user (whitelabel also the provider page; pl the
   page to editors), use `management_role?` for service creation and
@@ -222,7 +227,11 @@ Found by comparing `app/`, `lib/` and `config/` of this branch with
 - [ ] Whitelabel `customization.rb` (`config.recaptcha_enabled`, default
       true) with `ApplicationHelper#recaptcha_tags` skipping the widget and
       `recaptcha.rb` skipping the keys when `RECAPTCHA_ENABLED` is false.
-- [ ] Rake tasks: `dev.rake`, `rdt.rake`, PL `add_providers_default_logo.rake`.
+- [ ] Dev seeds: pl's `db/data.yml` is a different V5 sample dataset
+      (addresses, funding, life-cycle statuses, platforms, target users) and
+      its `dev.rake` seeds those fields; this repo keeps marketplace's seeds
+      (nodes, deployable services). Port pl's seed data under `pl` if pl
+      developers need `dev:prime` to fill the profiles.
 
 ### Review and tests
 
