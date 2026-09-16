@@ -30,6 +30,31 @@ RSpec.describe Service::Publish, backend: true do
     end
   end
 
+  context "when the service cannot be updated" do
+    subject(:publish) { described_class.call(service) }
+
+    let(:service) { create(:service, status: :draft) }
+    let!(:offer) { create(:offer, service: service, status: :draft) }
+
+    before do
+      allow(service).to receive(:update).and_return(false)
+      allow(Service::Mailer::SendToSubscribers).to receive(:new).and_call_original
+      publish
+    end
+
+    it "returns false" do
+      expect(publish).to be false
+    end
+
+    it "leaves the single offer unpublished" do
+      expect(offer.reload).to be_draft
+    end
+
+    it "does not notify subscribers" do
+      expect(Service::Mailer::SendToSubscribers).not_to have_received(:new)
+    end
+  end
+
   context "#bundled_offers" do
     it "doesn't send notification if service wasn't made public" do
       service = build(:service, status: "errored")
