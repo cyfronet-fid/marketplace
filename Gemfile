@@ -114,9 +114,6 @@ end
 group :development do
   gem "web-console", "~> 4.2"
   gem "listen"
-  gem "spring"
-  gem "spring-watcher-listen", "~> 2.1"
-  gem "spring-commands-rspec"
   gem "rubocop", require: false
   gem "rubocop-rails", require: false
   gem "rubocop-rspec", require: false
