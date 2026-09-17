@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Service::Publish, backend: true do
+RSpec.describe Service::Publish, :backend do
   context "publish" do
     it "publish service" do
       service = create(:service)
@@ -55,7 +55,7 @@ RSpec.describe Service::Publish, backend: true do
     end
   end
 
-  context "#bundled_offers" do
+  describe "#bundled_offers" do
     it "doesn't send notification if service wasn't made public" do
       service = build(:service, status: "errored")
       create(:offer, service: service)
