@@ -26,4 +26,11 @@ class Presentable::ProviderInfoComponent < ApplicationComponent
       }
     }
   end
+
+  def safe_creator_pid_url(creator_pid)
+    uri = URI.parse(creator_pid.to_s)
+    uri.to_s if uri.is_a?(URI::HTTPS) && uri.host.present?
+  rescue URI::InvalidURIError
+    nil
+  end
 end

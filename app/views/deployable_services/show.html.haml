@@ -16,7 +16,7 @@
               PID:
               = @deployable_service.pid
             - if @deployable_service.publishing_date.present?
-              .mx-4= @deployable_service.publishing_date.strftime("Published: %-d %B %Y")
+              .mx-4= "Published: %s" % l(@deployable_service.publishing_date, format: :long)
 
           %p= @deployable_service.abbreviation || "-"
           .resource-row.row.mb-3

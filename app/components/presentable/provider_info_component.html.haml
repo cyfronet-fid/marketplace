@@ -22,7 +22,11 @@
           %dl
             %dt PID
             %dd
-              = link_to creator_pid, creator_pid, target: "_blank", rel: "noopener"
+              - creator_pid_url = safe_creator_pid_url(creator_pid)
+              - if creator_pid_url.present?
+                = link_to creator_pid, creator_pid_url, target: "_blank", rel: "noopener"
+              - else
+                = creator_pid
         - next unless creator_affiliation.present?
         %dl
           %dt Affiliation

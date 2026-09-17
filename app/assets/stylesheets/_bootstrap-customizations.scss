@@ -3856,6 +3856,12 @@ label[data-multicheckbox].small {
 }
 
 .service-details-header {
+  .date-info {
+    .doi {
+      overflow-wrap: anywhere;
+    }
+  }
+
   .stars {
     float: left;
   }
