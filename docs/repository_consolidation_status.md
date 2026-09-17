@@ -55,6 +55,22 @@ Database:
   databases (verified on a throwaway database).
 - Provider `pid` is required and unique, generated when blank, including on
   `save(validate: false)` (ported from pl-marketplace).
+- `RenameProjectNameToProjectOwner` (20250518120000, marketplace's version)
+  skips when `projects.project_name` is already gone: pl and whitelabel ran
+  the same rename as 20250510072744, so their databases see this one as
+  pending. Same repair pattern as the guarded V6 strip migrations.
+- `RestoreServiceOwnerTables`: recreates `service_user_relationships` and
+  `users.owned_services_count` on pl databases (pl dropped service owners in
+  2024; `User#service_owner?`, `Service#owned_by?` and the backoffice service
+  and bundle policies read them on every variant).
+- Verified against the pl-marketplace testing dump of 2026-08-24 (269
+  applied versions) restored into a throwaway database: every migration runs
+  under `MARKETPLACE_VARIANT=pl`, nothing stays pending, every service and
+  provider gets its profile row with the legacy data, 40 blank provider pids
+  are backfilled, and the app boots and reads the profiles. After migrating,
+  the only differences from `db/schema.rb` are `offer_links` (no repo
+  references it) and the testing database's empty `orders` and
+  `order_changes` tables, which pl's own schema does not have either.
 
 Lifecycle and messaging:
 
@@ -267,16 +283,25 @@ Found by comparing `app/`, `lib/` and `config/` of this branch with
 
 - [ ] Read `schema_migrations` and real columns on every deployed database;
       compare PL profile rows with the original data. Fix only with new
-      migrations. Tables in this schema that pl's schema lacks:
-      `deployable_service_scientific_domains`, `deployable_service_sources`,
-      `deployable_services`, `infrastructures`, `offer_links`,
-      `service_user_relationships` (plus the pl profile tables and
-      `user_identities`, created by this repo's own migrations); whitelabel's
-      schema lacks the five PL-only tables restored by `RestorePlOnlyTables`,
-      the pl profile tables and `user_identities`. Make sure the pl database
-      gets the marketplace-only tables through a forward migration.
+      migrations. The pl path is verified against the testing dump (see
+      Done); a pl database migrated to pl-marketplace's current `development`
+      before switching also has `index_users_on_lower_email` instead of
+      `index_users_on_email` (its `20260901103100` was not ported) and no
+      `users.uid` until `AddNullableUidToUsers` re-adds it. `offer_links`
+      stays missing on pl; nothing reads it.
+- [ ] Test a whitelabel dump the same way. Whitelabel shares the V6 strip
+      versions with this repo, but its `schema.rb` already has
+      `deployable_services`, `infrastructures` and the polymorphic
+      `offers.orderable_*` columns without this repo's migration versions
+      for them (20250806111826 to 20251214143117; whitelabel has
+      `MakeOffersOrderable`, 20260429155000, instead). On a whitelabel
+      database that has those tables, the `create_table` and `add_column`
+      calls in this repo's migrations fail the way the project rename did.
+      Whitelabel also ran the rename as 20250510072744 (handled by the
+      guard).
 - [ ] Check marketplace and whitelabel production databases for duplicate
-      provider pids (the pid migration aborts on duplicates).
+      provider pids (the pid migration aborts on duplicates; the pl testing
+      dump only had blank ones, which are backfilled).
 - [ ] Keep per-deployment settings: PL's EOSC Commons URL and recommendation
       setting, whitelabel's HTTPS federation URL and `EOSC_EXPLORE_BASE_URL`,
       STOMP/JMS, monitoring, BOS and import settings, `RECAPTCHA_*` keys.
