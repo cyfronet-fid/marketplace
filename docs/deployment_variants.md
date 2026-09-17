@@ -101,15 +101,28 @@ gated.
   `node_ids` scalar without `owner_ids`, bundle `research_activity_ids`);
   the forms themselves come from `CUSTOMIZATION_PATH`.
 - `CUSTOMIZATION_PATH` — per-deployment `views/`, `config/locales/`,
-  `images/` and `javascript/` override the repository's same-named files
-  (`config/esbuild.config.js` resolves imports, and the `application.js`
-  entry, from `javascript/` first; whitelabel's README promised this for JS
-  but its esbuild config never did it); `CSS_ENTRY` points `build:css` at a
-  customization stylesheet entry. pl and whitelabel keep their
+  `images/` (also precompiled), `javascript/` and `stylesheets/` override the
+  repository's same-named files. `config/esbuild.config.js` and
+  `config/sass.config.js` resolve every import, and the `application.js` /
+  `application.scss` entries, through the customization directory first
+  (whitelabel's README promised this for JS and SCSS but its build never did
+  it). pl and whitelabel keep their seven differing stylesheet partials,
   `controllers/exit_controller.js`, `controllers/form_controller.js` and
   `app/cookies_policy.js` there, whitelabel also `application.js` and
   `controllers/form_redirect_controller.js`; pl's `dialog` Stimulus
-  controller is in the repository bundle. `request.variant` is set from `Mp::Variant`
+  controller is in the repository bundle. The directories themselves live
+  next to the repositories (`pl-customization`, `whitelabel-customization`,
+  built by `assemble_customization.sh`).
+- Helpers the pl/whitelabel views call — `Presentable::DetailsHelper` returns
+  pl's V5 detail sections under `pl` and carries the datasource policy,
+  persistent identity system and research product sections everywhere;
+  `Backoffice::ProvidersHelper#cant_edit`, `#extended_steps`, `#safe_tab`,
+  `#safe_step` (Next/Back labels without arrows under `pl`),
+  `Backoffice::CataloguesHelper#cant_edit_catalogue`,
+  `ApplicationHelper#enable_commons` (`ENABLE_COMMONS`), `#footer_params`,
+  `#lead_class`, `FormsHelper#render_persistent_identity_system`,
+  `SearchLinksHelper#resource_organisation_detail_path` and
+  `ApplicationController#tour_disabled` exist on every variant. `request.variant` is set from `Mp::Variant`
   (`ApplicationController#set_variant`) so `*.html+pl.haml` /
   `*.html+whitelabel.haml` templates win, which is how
   `Presentable::StatusActionsComponent` differs per variant; under

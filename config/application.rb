@@ -37,7 +37,7 @@ module Mp
 
     config.autoload_lib(ignore: %w[assets tasks])
 
-    default_redis_url = Rails.env == "test" ? "redis://localhost:6379/1" : "redis://localhost:6379/0"
+    default_redis_url = Rails.env.test? ? "redis://localhost:6379/1" : "redis://localhost:6379/0"
 
     config.redis_url = ENV.fetch("REDIS_URL", default_redis_url)
 
@@ -49,7 +49,7 @@ module Mp
 
     # Hierachical locales file structure
     # see https://guides.rubyonrails.org/i18n.html#configure-the-i18n-module
-    config.i18n.load_path += Dir[Rails.root.join("config", "locales", "**", "*.{rb,yml}")]
+    config.i18n.load_path += Dir[Rails.root.join("config/locales/**/*.{rb,yml}")]
 
     # Views and locales customization
     # The dir structure pointed by `$CUSTOMIZATION_PATH` should looks as follow:
@@ -86,9 +86,12 @@ module Mp
     config.eosc_commons_enabled = ActiveModel::Type::Boolean.new.cast(ENV.fetch("EOSC_COMMONS_ENABLED", true))
     config.eosc_commons_base_url = ENV.fetch("EOSC_COMMONS_BASE_URL", "https://s3.cloud.cyfronet.pl/eosc-portal-common/")
     config.eosc_commons_env = ENV.fetch("EOSC_COMMONS_ENV", "production")
+    # pl's layouts switch the EOSC Commons header/footer with this flag (ApplicationHelper#enable_commons).
+    config.enable_commons = ActiveModel::Type::Boolean.new.cast(ENV.fetch("ENABLE_COMMONS", true))
 
     config.home_page_external_links_enabled = ActiveModel::Type::Boolean.new.cast(
-      ENV.fetch("HOME_PAGE_EXTERNAL_LINKS_ENABLED", false))
+      ENV.fetch("HOME_PAGE_EXTERNAL_LINKS_ENABLED", false)
+    )
     config.search_service_base_url = ENV.fetch("SEARCH_SERVICE_BASE_URL", "https://search.marketplace.eosc-portal.eu")
     config.search_service_research_product_endpoint = ENV.fetch("SEARCH_SERVICE_RESEARCH_PRODUCT_ENDPOINT",
                                                                 "/api/web/research-product/")
@@ -100,7 +103,8 @@ module Mp
     # Defaults to enabled: ApplicationController#publish_user_actions_to_jms? is the
     # only reader of this flag, so flipping the default preserves today's
     # unconditional-publish behavior for any deployment that doesn't set it.
-    config.mp_stomp_publisher_enabled = ActiveModel::Type::Boolean.new.cast(ENV.fetch("MP_STOMP_PUBLISHER_ENABLED", true))
+    config.mp_stomp_publisher_enabled = ActiveModel::Type::Boolean.new.cast(ENV.fetch("MP_STOMP_PUBLISHER_ENABLED",
+                                                                                      true))
 
     config.eosc_helpdesk_form_link = ENV.fetch("EOSC_HELPDESK_FORM_URL",
                                                "https://helpdesk.sandbox.eosc-beyond.eu/assets/form/form.js")

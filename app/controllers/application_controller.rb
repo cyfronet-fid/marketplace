@@ -30,6 +30,11 @@ class ApplicationController < ActionController::Base
     false
   end
 
+  # pl/whitelabel's layouts call `controller.tour_disabled` without the question mark.
+  def tour_disabled
+    tour_disabled?
+  end
+
   def load_root_categories!
     @root_categories = Category.roots.order(:name)
   end

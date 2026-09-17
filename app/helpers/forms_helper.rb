@@ -34,8 +34,8 @@ module FormsHelper
   def contact_form_message
     message =
       "  Accept EOSC Helpdesk <a target=\"_blank\" href=\"https://eosc-helpdesk.scc.kit.edu/privacy-policy\">" +
-        "Data Privacy Policy</a> & <a target=\"_blank\" " +
-        "href=\"https://eosc-helpdesk.scc.kit.edu/aup\">Acceptable Use Policy</a>"
+      "Data Privacy Policy</a> & <a target=\"_blank\" " +
+      "href=\"https://eosc-helpdesk.scc.kit.edu/aup\">Acceptable Use Policy</a>"
     message.html_safe
   end
 
@@ -50,6 +50,14 @@ module FormsHelper
 
   def render_alternative_identifier(form, object)
     render "backoffice/common_parts/form/alternative_identifier_fields", identifier_form: form, object: object
+  end
+
+  # pl/whitelabel datasource forms (the partial comes from CUSTOMIZATION_PATH).
+  def render_persistent_identity_system(form, object)
+    render "backoffice/common_parts/form/persistent_identity_system_fields",
+           link_form: form,
+           object: object,
+           name: "persistentIdentitySystem"
   end
 
   def render_data_administrator(form, object)
@@ -73,7 +81,7 @@ module FormsHelper
     published = "published " if action != "remove"
     message =
       "Are you sure you want to %{action} this %{object}? It will %{action} " +
-        "all dependent %{published}%{entities}.\n\n%{warning}"
+      "all dependent %{published}%{entities}.\n\n%{warning}"
     _(message % { action: _(action), entities: entities, object: object, published: published, warning: warning })
   end
 

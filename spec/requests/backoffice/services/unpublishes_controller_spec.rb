@@ -14,6 +14,8 @@ RSpec.describe Backoffice::Services::UnpublishesController, type: :request do
   end
 
   after do
+    allow(Mp::Variant).to receive(:marketplace?).and_call_original
+    allow(Mp::Variant).to receive(:pl?).and_call_original
     allow(Mp::Variant).to receive(:whitelabel?).and_call_original
     Rails.application.reload_routes!
   end
