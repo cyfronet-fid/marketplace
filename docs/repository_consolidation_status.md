@@ -228,6 +228,20 @@ ESS and ordering API:
   `whitelabel?` before reloading routes, so every later spec in a
   defined-order run lost the marketplace-only routes; it now restores all
   three predicates.
+- Dev seeds: `dev:prime` / `dev:prime_e2e` load `db/data_pl.yml` /
+  `db/data_e2e_pl.yml` under pl and `db/data_whitelabel.yml` /
+  `db/data_e2e_whitelabel.yml` under whitelabel (the other repos' datasets,
+  copied); marketplace keeps `db/data.yml`. Outside marketplace the task
+  seeds pl/whitelabel's V5 provider and service fields (addresses,
+  certifications, affiliations, roadmaps, provider vocabularies, tagline,
+  manuals, funding, life-cycle status, target users, platforms, contacts;
+  provider tags under pl) and picks each service's first category for its
+  offers. Verified in the test database: pl fills every service and
+  provider profile, whitelabel seeds its own set without profiles,
+  marketplace is unchanged.
+- `Provider` gained pl's `esfri_type` / `provider_life_cycle_status`
+  accessors and `acts_as_taggable`: the pl provider policy here already
+  permitted those attributes and pl's classification tab posts them.
 
 ## Next steps
 
@@ -319,11 +333,6 @@ Mechanism, per deployment (`CUSTOMIZATION_PATH=/path/to/dir`):
       pages, offers and bundles, mailers, federation, admin) and port any
       helper or controller method they still miss; then drop from the
       directories the files whose differences turn out cosmetic.
-- [ ] Dev seeds: pl's `db/data.yml` is a different V5 sample dataset
-      (addresses, funding, life-cycle statuses, platforms, target users) and
-      its `dev.rake` seeds those fields; this repo keeps marketplace's seeds
-      (nodes, deployable services). Port pl's seed data under `pl` if pl
-      developers need `dev:prime` to fill the profiles.
 
 ### Review and tests
 

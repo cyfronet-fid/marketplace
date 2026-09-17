@@ -148,6 +148,13 @@ gated.
   tagline and a geographical availability under `pl`/`whitelabel`; it also
   sets the provider fields and offer category the current models require
   (it failed on every repo without them).
+- `dev:prime` / `dev:prime_e2e` — `db/data.yml` and `db/data_e2e.yml`
+  under `marketplace`, `db/data_<variant>.yml` / `db/data_e2e_<variant>.yml`
+  (the other repos' datasets) under `pl` and `whitelabel`, where the task
+  also seeds the V5 provider and service fields the way pl's and
+  whitelabel's `dev.rake` did (provider tags only under `pl`).
+- `Provider#esfri_type`, `#provider_life_cycle_status` and `tag_list`
+  (`acts_as_taggable`) exist on every variant; pl's provider forms post them.
 - `config.whitelabel`/`MP_WHITELABEL` was folded into `Mp::Variant.whitelabel?`.
 - `config.monitoring_data_token` — no longer raises on a deployment whose
   `credentials.yml.enc` lacks the `monitoring_data` key; falls back to `nil`
