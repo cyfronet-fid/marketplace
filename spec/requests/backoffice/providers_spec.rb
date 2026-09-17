@@ -27,7 +27,8 @@ RSpec.describe "Backoffice: manage providers", :backend do
       end
     end
 
-    it "I can't delete provider having service with status different than deleted" do
+    # pl and whitelabel cascade the delete instead (Provider::Delete::Cascading).
+    it "I can't delete provider having service with status different than deleted", variant: :marketplace do
       provider = create(:provider)
       create(:service, status: :errored, resource_organisation: provider)
 

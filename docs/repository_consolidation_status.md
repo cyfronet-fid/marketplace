@@ -242,6 +242,21 @@ ESS and ordering API:
 - `Provider` gained pl's `esfri_type` / `provider_life_cycle_status`
   accessors and `acts_as_taggable`: the pl provider policy here already
   permitted those attributes and pl's classification tab posts them.
+- CI: the `variants` job (`ci_backend.yml`) builds the assets and runs
+  `spec/requests`, `spec/lib`, `spec/helpers` and `spec/routing` under `pl`
+  and `whitelabel` on top of the boot, eager-load and routes checks.
+  Examples that exercise marketplace-only behavior carry
+  `variant: :marketplace` metadata and are excluded there: the
+  infrastructure route, deployable-service pages and ESS API, the
+  standalone provider delete, the users API without pl's every-role rule
+  and identity lookup, the flat-column simple services API and the SOMBO
+  admin lookup by `users.uid`. The user factory builds a primary Check-in
+  identity from the uid column under pl (pl-marketplace's factory does),
+  built through the `has_one` so an unsaved user already answers `#uid`;
+  specs that create identities by hand give the user `uid: nil`. Both
+  variant runs pass locally (489 examples each).
+- Spring removed (gems, `bin/spring`, `config/spring.rb`, the loader in
+  `bin/rspec`): a running preloader served stale code between runs.
 
 ## Next steps
 
@@ -341,13 +356,13 @@ Mechanism, per deployment (`CUSTOMIZATION_PATH=/path/to/dir`):
       whitelabel-marketplace on 2026-09-16; most of those files were changed
       here by the consolidation itself, so the number no longer measures
       remaining work).
-- [ ] Extend the per-variant CI job (`variants` in `ci_backend.yml`: fresh
-      database from `db/schema.rb`, eager load, routes, routing specs under
-      `pl` and `whitelabel`) with public and backoffice pages, profile
-      persistence, import and JMS fixtures, search reindex and deletion.
-      Note: since the migration squash a fresh database can only be built
-      with `db:schema:load`; `db:migrate` on an empty database fails at the
-      first remaining migration, so the rspec job was switched too.
+- [ ] Extend the per-variant CI job further with profile persistence, import
+      and JMS fixtures, search reindex and deletion under `pl` and
+      `whitelabel` (it now runs the request, lib, helper and routing specs;
+      see Done). Note: since the migration squash a fresh database can only
+      be built with `db:schema:load`; `db:migrate` on an empty database
+      fails at the first remaining migration, so the rspec job was switched
+      too.
 - [ ] Build a real PL search index from copied PL data and compare results
       with pl-marketplace.
 

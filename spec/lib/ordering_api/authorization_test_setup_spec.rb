@@ -9,7 +9,10 @@ describe OrderingApi::AuthorizationTestSetup, :backend do
   let!(:service_category) { create(:service_category) }
 
   context "when running as marketplace" do
-    before { described_class.new.call }
+    before do
+      allow(Mp::Variant).to receive_messages(marketplace?: true, pl?: false, whitelabel?: false)
+      described_class.new.call
+    end
 
     it "creates the sample services" do
       expect(Service.pluck(:name)).to contain_exactly("s1", "s2")

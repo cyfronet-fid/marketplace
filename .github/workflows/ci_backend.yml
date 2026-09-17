@@ -53,7 +53,9 @@ jobs:
 
   # The rspec job runs as the default marketplace variant. This job boots the
   # other deployment variants (MARKETPLACE_VARIANT) against a fresh database:
-  # initializers, eager loading of every class and the variant-drawn routes.
+  # initializers, eager loading of every class, the variant-drawn routes, and
+  # the request, lib, helper and routing specs. Examples tagged
+  # `variant: :marketplace` exercise marketplace-only behavior and are skipped.
   variants:
     runs-on: ubuntu-latest
     strategy:
@@ -73,15 +75,22 @@ jobs:
     - uses: ruby/setup-ruby@v1
       with:
         bundler-cache: true
-    - name: Boot the variant
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '20.12.2'
+        check-latest: true
+        cache: yarn
+    - run: yarn
+    - name: Boot the variant, run its specs
       env:
         RAILS_ENV: test
         RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
         MARKETPLACE_VARIANT: ${{ matrix.variant }}
       run: |
         bundle exec rake db:drop db:create db:schema:load
+        bundle exec rake test:prepare
         bundle exec rails runner 'Rails.application.eager_load!; puts "#{Mp::Variant.current}: #{Rails.application.routes.routes.count} routes"'
-        bundle exec rspec spec/routing
+        bundle exec rspec spec/requests spec/lib spec/helpers spec/routing --tag ~variant:marketplace
     - name: Containers logs
       if: failure()
       run: docker compose logs
