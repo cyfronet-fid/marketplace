@@ -13,7 +13,11 @@ class Provider < ApplicationRecord
   include WizardFormModel
 
   extend FriendlyId
+
   friendly_id :pid
+
+  # pl's provider classification tab posts and shows tag_list.
+  acts_as_taggable
 
   searchkick word_middle: [:provider_name]
 
@@ -53,12 +57,64 @@ class Provider < ApplicationRecord
            source: :vocabulary,
            source_type: "Vocabulary::HostingLegalEntity"
   has_many :legal_statuses, through: :provider_vocabularies, source: :vocabulary, source_type: "Vocabulary::LegalStatus"
+
+  # pl-only associations over the shared provider_scientific_domains,
+  # provider_vocabularies and contacts tables; filled by pl's registry
+  # import, empty on the other variants.
+  has_many :provider_scientific_domains, dependent: :destroy
+  has_many :scientific_domains, through: :provider_scientific_domains
+  has_many :provider_life_cycle_statuses,
+           through: :provider_vocabularies,
+           source: :vocabulary,
+           source_type: "Vocabulary::ProviderLifeCycleStatus"
+  has_many :networks, through: :provider_vocabularies, source: :vocabulary, source_type: "Vocabulary::Network"
+  has_many :structure_types,
+           through: :provider_vocabularies,
+           source: :vocabulary,
+           source_type: "Vocabulary::StructureType"
+  has_many :esfri_domains, through: :provider_vocabularies, source: :vocabulary, source_type: "Vocabulary::EsfriDomain"
+  has_many :esfri_types, through: :provider_vocabularies, source: :vocabulary, source_type: "Vocabulary::EsfriType"
+  has_many :meril_scientific_domains,
+           through: :provider_vocabularies,
+           source: :vocabulary,
+           source_type: "Vocabulary::MerilScientificDomain"
+  has_many :areas_of_activity,
+           through: :provider_vocabularies,
+           source: :vocabulary,
+           source_type: "Vocabulary::AreaOfActivity"
+  has_many :societal_grand_challenges,
+           through: :provider_vocabularies,
+           source: :vocabulary,
+           source_type: "Vocabulary::SocietalGrandChallenge"
+  has_one :main_contact, as: :contactable, dependent: :destroy, autosave: true
+  has_many :public_contacts, as: :contactable, dependent: :destroy, autosave: true
+
   has_many :oms_providers, dependent: :destroy
   has_many :omses, through: :oms_providers
 
   has_many :sources, class_name: "ProviderSource", dependent: :destroy
 
-  belongs_to :upstream, foreign_key: "upstream_id", class_name: "ProviderSource", optional: true
+  belongs_to :upstream, class_name: "ProviderSource", optional: true
+
+  has_one :pl_profile,
+          class_name: "Provider::PlProfile",
+          inverse_of: :provider,
+          dependent: :destroy,
+          autosave: true
+
+  # pl-marketplace-only fields (arch_docs: docs/rationale/db-schema-comparison.md §3).
+  # nil for marketplace/whitelabel, where pl_profile is always nil.
+  PL_PROFILE_FIELDS = %i[
+    street_name_and_number postal_code city region certifications affiliations national_roadmaps
+    tagline hosting_legal_entity_string participating_countries
+  ].freeze
+
+  delegate(
+    *PL_PROFILE_FIELDS,
+    *PL_PROFILE_FIELDS.map { |field| :"#{field}=" },
+    to: :pl_profile_for_delegation,
+    allow_nil: true
+  )
 
   has_one :provider_catalogue, dependent: :destroy
   has_one :catalogue, through: :provider_catalogue
@@ -67,6 +123,9 @@ class Provider < ApplicationRecord
   accepts_nested_attributes_for :alternative_identifiers, allow_destroy: true
   accepts_nested_attributes_for :sources, allow_destroy: true
   accepts_nested_attributes_for :data_administrators, allow_destroy: true
+  # Posted by pl's backoffice forms (served through CUSTOMIZATION_PATH).
+  accepts_nested_attributes_for :main_contact, allow_destroy: true
+  accepts_nested_attributes_for :public_contacts, allow_destroy: true
 
   auto_strip_attributes :name, nullify: false
   auto_strip_attributes :pid, nullify: false
@@ -79,7 +138,12 @@ class Provider < ApplicationRecord
     remove_empty_array_fields
     self.legal_status = nil unless legal_entity
     self.status ||= :unpublished
+    assign_generated_pid
   end
+
+  before_save :assign_generated_pid
+
+  validates :pid, presence: true, uniqueness: true
 
   with_options if: -> { required_for_step?("profile") } do
     validates :name, presence: true
@@ -135,6 +199,27 @@ class Provider < ApplicationRecord
     hosting_legal_entities[0].id
   end
 
+  # Posted by pl's backoffice provider forms (single-select vocabularies).
+  def esfri_type=(type_id)
+    self.esfri_types = type_id.blank? ? [] : [Vocabulary.find(type_id)]
+  end
+
+  def esfri_type
+    return nil if esfri_types.blank?
+
+    esfri_types[0].id
+  end
+
+  def provider_life_cycle_status=(status_id)
+    self.provider_life_cycle_statuses = status_id.blank? ? [] : [Vocabulary.find(status_id)]
+  end
+
+  def provider_life_cycle_status
+    return nil if provider_life_cycle_statuses.blank?
+
+    provider_life_cycle_statuses[0].id
+  end
+
   def country=(value)
     super(Country.for(value))
   end
@@ -157,6 +242,11 @@ class Provider < ApplicationRecord
     logo.attach(io: io, filename: SecureRandom.uuid + extension, content_type: "image/#{extension.delete(".", "")}")
   end
 
+  # pl/whitelabel lifecycle: services cascaded to by Provider::*::Cascading.
+  def managed_services
+    Service.left_joins(:service_providers).where(status: :published, resource_organisation_id: id)
+  end
+
   def owned_by?(user)
     data_administrators&.map(&:user_id)&.include?(user&.id) ||
       (catalogue.present? && catalogue.data_administrators&.map(&:user_id)&.include?(user.id))
@@ -172,6 +262,10 @@ class Provider < ApplicationRecord
 
   def steps(*)
     basic_steps
+  end
+
+  def assign_generated_pid
+    self.pid = SecureRandom.uuid if pid.blank?
   end
 
   def remove_empty_array_fields
@@ -205,5 +299,15 @@ class Provider < ApplicationRecord
     return true if (has_new_logo && !has_previous_logo) || (!has_new_logo && has_previous_logo)
 
     logo.attachment.blob != previous_logo.attachment.blob
+  end
+
+  protected
+
+  def pl_profile_for_delegation
+    pl_profile || build_pl_profile_if_needed
+  end
+
+  def build_pl_profile_if_needed
+    build_pl_profile if Mp::Variant.pl?
   end
 end

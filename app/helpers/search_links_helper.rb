@@ -11,6 +11,7 @@ module SearchLinksHelper
   def services_filter_link(element, value, filter_name = "tag_list")
     search_base_url = Mp::Application.config.search_service_base_url
     return search_base_url + "/search/service?q=*&fq=#{filter_name}:%22#{value}%22" if external_search_enabled
+
     filter_name == "tag_list" ? services_path(tag: element) : services_path("#{filter_name}": element)
   end
 
@@ -18,6 +19,7 @@ module SearchLinksHelper
     search_base_url = Mp::Application.config.search_service_base_url
     filter_params = elements.map { |e| e.send(method) }.join("%22 OR %22")
     return "#{search_base_url}/search/service?q=*&fq=#{filter_name}:(%22#{filter_params}%22)" if external_search_enabled
+
     filter_name == "tag_list" ? services_path(tag: elements) : services_path("#{filter_name}": elements.map(&:id))
   end
 
@@ -39,8 +41,12 @@ module SearchLinksHelper
     search_base_url + "/search/all_collection?q=*"
   end
 
-  def resource_organisation(service, highlights = nil, preview: false)
+  def resource_organisation(service, highlights = nil, preview: false, backoffice: false)
     target = service.resource_organisation
+    unless Mp::Variant.marketplace?
+      return link_to(target.name, backoffice ? backoffice_provider_path(target) : target)
+    end
+
     preview_options = preview ? { "data-preview-target": "link" } : {}
     link_to_unless(
       target.deleted? || target.draft? || service.suspended?,
@@ -50,29 +56,42 @@ module SearchLinksHelper
     )
   end
 
-  def providers(service, highlights = nil, preview: false)
+  # pl/whitelabel's header categorization partial links the organisation this way.
+  def resource_organisation_detail_path(service, backoffice)
+    link_to service.resource_organisation.name,
+            backoffice ? backoffice_provider_path(service.resource_organisation) : service.resource_organisation
+  end
+
+  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  def providers(service, highlights = nil, preview: false, backoffice: false)
+    # pl/whitelabel's views call providers(service, backoffice).
+    backoffice = highlights if [true, false].include?(highlights)
+    active_providers =
+      service.providers.compact.reject(&:deleted?).reject { |p| p == service.resource_organisation }.uniq
+
+    unless Mp::Variant.marketplace?
+      return active_providers.map do |target|
+        link_to(target.name, backoffice ? backoffice_provider_path(target) : target)
+      end
+    end
+
     highlighted = highlights.present? ? sanitize(highlights[:provider_names])&.to_str : ""
     preview_options = preview ? { "data-preview-target": "link" } : {}
-    service
-      .providers
-      .compact
-      .reject(&:deleted?)
-      .reject { |p| p == service.resource_organisation }
-      .uniq
-      .map do |target|
-        if highlighted.present? && highlighted.strip == target.name.strip
-          link_to_unless target.deleted? || target.draft? || target.suspended?,
-                         highlights[:provider_names].html_safe,
-                         service.provider_search_link(target.name, services_path(providers: target.id)),
-                         preview_options
-        else
-          link_to_unless target.deleted? || target.draft? || target.suspended?,
-                         target.name,
-                         service.provider_search_link(target.name, services_path(providers: target.id)),
-                         preview_options
-        end
+    active_providers.map do |target|
+      if highlighted.present? && highlighted.strip == target.name.strip
+        link_to_unless target.deleted? || target.draft? || target.suspended?,
+                       highlights[:provider_names].html_safe,
+                       service.provider_search_link(target.name, services_path(providers: target.id)),
+                       preview_options
+      else
+        link_to_unless target.deleted? || target.draft? || target.suspended?,
+                       target.name,
+                       service.provider_search_link(target.name, services_path(providers: target.id)),
+                       preview_options
       end
+    end
   end
+  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
   def node_link(object, preview: false)
     target = object.nodes.first
@@ -100,16 +119,17 @@ module SearchLinksHelper
     service = project_item.service
     providers =
       project_item
-        .service
-        .providers
-        .reject { |p| p == organisation }
-        .map { |p| link_to(p.name, service.provider_search_link(p.name, services_path(providers: p.id))) }
+      .service
+      .providers
+      .reject { |p| p == organisation }
+      .map { |p| link_to(p.name, service.provider_search_link(p.name, services_path(providers: p.id))) }
     safe_join(providers, ", ")
   end
 
   def services_comparison_link(query_params)
     search_base_url = Mp::Application.config.search_service_base_url
     return search_base_url + "/search/service?q=*" if external_search_enabled
+
     services_path(params: query_params)
   end
 

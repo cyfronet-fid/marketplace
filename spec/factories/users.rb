@@ -8,6 +8,15 @@ FactoryBot.define do
     sequence(:show_welcome_popup) { |_n| false }
     password { "12345678" }
     sequence(:uid) { |n| "uid#{n}" }
+
+    # pl reads User#uid from the primary login identity (pl-marketplace's factory builds one).
+    # Built through the has_one so the unsaved user already answers #uid.
+    after(:build) do |user|
+      if Mp::Variant.pl? && user[:uid].present? && user.primary_identity.nil?
+        user.build_primary_identity(provider: "checkin", uid: user[:uid], primary: true)
+      end
+    end
+
     factory :user_with_interests do
       sequence(:scientific_domains) { |_n| [create(:scientific_domain)] }
       sequence(:categories) { |_n| [create(:category)] }

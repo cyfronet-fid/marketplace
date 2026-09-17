@@ -2,7 +2,8 @@
 
 require "rails_helper"
 
-RSpec.describe Projects::Services::InfrastructuresController, type: :request do
+# The infrastructure route is drawn only under marketplace (config/routes.rb).
+RSpec.describe Projects::Services::InfrastructuresController, type: :request, variant: :marketplace do
   let(:user) { create(:user) }
   let(:project) { create(:project, user: user) }
   let(:provider) { create(:provider) }
@@ -84,9 +85,6 @@ RSpec.describe Projects::Services::InfrastructuresController, type: :request do
 
     context "when user is not the project owner" do
       let(:other_user) { create(:user) }
-
-      before { login_as(other_user) }
-
       let!(:infrastructure) do
         Infrastructure.create!(
           project_item: project_item,
@@ -96,6 +94,8 @@ RSpec.describe Projects::Services::InfrastructuresController, type: :request do
           im_infrastructure_id: "infra-123"
         )
       end
+
+      before { login_as(other_user) }
 
       it "redirects to root with alert (not authorized)" do
         delete project_service_infrastructure_path(project, project_item)

@@ -1,19 +1,20 @@
 # frozen_string_literal: true
 
-require "#{Rails.root}/app/helpers/image_helper"
+require "#{Rails.root.join("app/helpers/image_helper")}"
 
 namespace :dev do
   include ImageHelper
 
+  # pl and whitelabel keep their own sample datasets (db/data_pl.yml, db/data_whitelabel.yml, ...).
   desc "Sample data for local development environment"
   task prime: "db:setup" do
-    create_all_from_path("db/data.yml")
+    create_all_from_path(Mp::Variant.marketplace? ? "db/data.yml" : "db/data_#{Mp::Variant.current}.yml")
     puts "Done!"
   end
 
   desc "Sample data for e2e tests"
   task prime_e2e: "db:setup" do
-    create_all_from_path("db/data_e2e.yml")
+    create_all_from_path(Mp::Variant.marketplace? ? "db/data_e2e.yml" : "db/data_e2e_#{Mp::Variant.current}.yml")
     puts "Done!"
   end
 
@@ -61,6 +62,20 @@ namespace :dev do
         pid: hash["abbreviation"],
         status: hash["status"]
       )
+      unless Mp::Variant.marketplace?
+        # pl/whitelabel seed the V5 profile fields (stored in the pl profile, so a no-op elsewhere).
+        provider.assign_attributes(
+          street_name_and_number: hash["street_name_and_number"],
+          postal_code: hash["postal_code"],
+          city: hash["city"],
+          region: hash["region"],
+          certifications: %w[ISO AES VESA].sample(rand(1..3)),
+          hosting_legal_entity_string: ["Lorem ipsum", "Test", "Some Entity"].sample(rand(1..3)),
+          affiliations: ["Affiliation A", "Affiliation test", "Affiliation 1"].sample(rand(1..3)),
+          national_roadmaps: ["Roadmap 1", "Roadmap 2", "Roadmap 3"].sample(rand(1..3))
+        )
+        provider.tag_list = hash["tags"] if Mp::Variant.pl?
+      end
       assign_sample_associations_to_provider(provider)
 
       io, extension = ImageHelper.base_64_to_blob_stream(hash["image_base_64"])
@@ -81,18 +96,32 @@ namespace :dev do
   end
 
   def assign_sample_associations_to_provider(provider)
-    provider.assign_attributes(
-      nodes: samples_of(Vocabulary::Node, 1),
-      hosting_legal_entities: samples_of(Vocabulary::HostingLegalEntity, 1),
-      legal_statuses: samples_of(Vocabulary::LegalStatus, 1),
-      data_administrators: [
-        DataAdministrator.new(
-          first_name: "John#{provider.id}",
-          last_name: "Doe",
-          email: "example#{provider.id}@mail.com"
-        )
-      ]
-    )
+    if Mp::Variant.marketplace?
+      provider.assign_attributes(
+        nodes: samples_of(Vocabulary::Node, 1),
+        hosting_legal_entities: samples_of(Vocabulary::HostingLegalEntity, 1),
+        legal_statuses: samples_of(Vocabulary::LegalStatus, 1)
+      )
+    else
+      # pl/whitelabel sample the V5 provider vocabularies.
+      provider.assign_attributes(
+        provider_life_cycle_statuses: samples_of(Vocabulary::ProviderLifeCycleStatus, 1),
+        networks: samples_of(Vocabulary::Network),
+        structure_types: samples_of(Vocabulary::StructureType),
+        esfri_domains: samples_of(Vocabulary::EsfriDomain),
+        esfri_types: samples_of(Vocabulary::EsfriType, 1),
+        meril_scientific_domains: samples_of(Vocabulary::MerilScientificDomain),
+        areas_of_activity: samples_of(Vocabulary::AreaOfActivity),
+        societal_grand_challenges: samples_of(Vocabulary::SocietalGrandChallenge),
+        scientific_domains: samples_of(ScientificDomain),
+        legal_statuses: samples_of(Vocabulary::LegalStatus, 1),
+        participating_countries: samples_of(Country).map(&:alpha2)
+      )
+      provider.public_contacts = [PublicContact.new(email: "example#{provider.id}@mail.com")] if Mp::Variant.pl?
+    end
+    provider.data_administrators = [
+      DataAdministrator.new(first_name: "John#{provider.id}", last_name: "Doe", email: "example#{provider.id}@mail.com")
+    ]
 
     provider
   end
@@ -126,6 +155,7 @@ namespace :dev do
     end
   end
 
+  # rubocop:disable Metrics/AbcSize
   def create_services(services_hash)
     puts "Generating services:"
     Service.skip_callback :validation, :before, :assign_analytics
@@ -159,6 +189,26 @@ namespace :dev do
         tag_list: hash["tags"],
         status: hash["status"] || :published
       )
+      unless Mp::Variant.marketplace?
+        # pl/whitelabel seed the V5 service fields (profile fields are a no-op outside pl).
+        service.assign_attributes(
+          tagline: hash["tagline"],
+          manual_url: hash["manual_url"],
+          helpdesk_url: hash["helpdesk_url"],
+          training_information_url: hash["training_information_url"],
+          resource_level_url: hash["resource_level_url"],
+          language_availability: hash["language_availability"],
+          restrictions: hash["restrictions"],
+          geographical_availabilities: [hash["geographical_availabilities"]],
+          funding_bodies: Vocabulary::FundingBody.where(eid: hash["funding_bodies"]),
+          funding_programs: Vocabulary::FundingProgram.where(eid: hash["funding_programs"]),
+          life_cycle_statuses: Vocabulary::LifeCycleStatus.where(eid: hash["life_cycle_status"]),
+          target_users: TargetUser.where(name: hash["target_users"]),
+          platforms: Platform.where(name: hash["platforms"]),
+          main_contact: MainContact.new(first_name: "John", last_name: "Doe", email: "john@example.org"),
+          public_contacts: [PublicContact.new(email: "mail@example.org")]
+        )
+      end
       service.save(validate: false)
 
       service.logo.attached? && service.logo.purge_later
@@ -169,6 +219,8 @@ namespace :dev do
       Service.set_callback :validation, :before, :assign_analytics
     end
   end
+
+  # rubocop:enable Metrics/AbcSize
 
   def order_type_from(hash)
     if hash["external"]
@@ -185,12 +237,13 @@ namespace :dev do
         name: h["name"],
         description: h["description"],
         parameters: Parameter::Array.load(h["parameters"] || []),
-        order_type: h["order_type"].blank? ? service.order_type : h["order_type"],
-        order_url: effective_order_url.present? ? effective_order_url : "",
+        order_type: h["order_type"].presence || service.order_type,
+        order_url: effective_order_url.presence || "",
         internal: effective_order_url.blank?,
-        limited_availability: h["limited_availability"].blank? ? false : h["limited_availability"],
-        availability_count: h["availability_count"].blank? ? 0 : h["availability_count"],
-        offer_category: Vocabulary::ServiceCategory.find_by(eid: "service_category-other"),
+        limited_availability: h["limited_availability"].presence || false,
+        availability_count: h["availability_count"].presence || 0,
+        offer_category:
+          service.service_categories.first || Vocabulary::ServiceCategory.find_by(eid: "service_category-other"),
         status: :published
       )
       puts "    - #{h["name"]} offer generated"

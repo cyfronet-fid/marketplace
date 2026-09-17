@@ -9,7 +9,7 @@ Devise.setup do |config|
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
   # config.secret_key = 'a6d3c687f41d5ba8b5f84d17b444ef4af8b4cc1bc2463cac9b1dcd4296f8c3dd86352bee5477c6c6eaf99855726432486d267139cbfc10207409994238f54ca4'
-  config.secret_key = Rails.application.credentials.secret_key_base
+  config.secret_key = Rails.application.secret_key_base
 
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
@@ -278,12 +278,21 @@ Devise.setup do |config|
     introspection: "/auth/realms/core/protocol/openid-connect/token/introspect"
   }
   endpoints = ENV.fetch("OIDC_AAI_NEW_API", true) ? new_endpoints : old_endpoints
-  scope = ENV["CHECKIN_SCOPE"].nil? ? %w[openid profile email aarc offline_access entitlements] : ENV["CHECKIN_SCOPE"].split(",")
+  # pl and whitelabel do not request the entitlements scope. Mp::Variant is not
+  # loaded yet in initializers, so the variant is read from config/variants.yml.
+  default_scope = %w[openid profile email aarc offline_access]
+  default_scope << "entitlements" if Rails.application.config_for(:variants)[:current].to_s == "marketplace"
+  scope = ENV["CHECKIN_SCOPE"].nil? ? default_scope : ENV["CHECKIN_SCOPE"].split(",")
+  # pl and whitelabel deployments configure Check-in through ENV only, without
+  # a checkin key in credentials, and name the endpoint variables
+  # CHECKIN_ISSUER_ENDPOINT / CHECKIN_JWK_ENDPOINT.
+  checkin_credentials = Rails.application.credentials.checkin.presence || {}
   config.omniauth :openid_connect,
                   name: :checkin,
                   scope: scope,
                   response_type: :code,
-                  issuer: ENV["CHECKIN_ISSUER_URI"] || "https://#{checkin_host}/#{endpoints[:issuer]}",
+                  issuer: ENV["CHECKIN_ISSUER_URI"] ||
+                          "https://#{checkin_host}/#{ENV["CHECKIN_ISSUER_ENDPOINT"] || endpoints[:issuer]}",
                   discovery: true,
                   pkce: ENV["CHECKIN_PKCE"] || false,
                   become_vo_member_url: ENV["BECOME_VO_MEMBER_URL"] || endpoints[:become_vo_member],
@@ -291,17 +300,16 @@ Devise.setup do |config|
                     port: nil,
                     scheme: "https",
                     host: checkin_host,
-                    identifier: ENV["CHECKIN_IDENTIFIER"] || Rails.application.credentials.checkin[:identifier],
-                    secret: ENV["CHECKIN_SECRET"] || Rails.application.credentials.checkin[:secret],
+                    identifier: ENV["CHECKIN_IDENTIFIER"] || checkin_credentials[:identifier],
+                    secret: ENV["CHECKIN_SECRET"] || checkin_credentials[:secret],
                     redirect_uri: ENV["REDIRECT_URI"] ||
                                   "#{root_url}/users/auth/checkin/callback",
                     authorization_endpoint: ENV["CHECKIN_AUTHORIZATION_ENDPOINT"] || endpoints[:authorize],
                     token_endpoint: ENV["CHECKIN_TOKEN_ENDPOINT"] || endpoints[:token],
                     userinfo_endpoint: ENV["CHECKIN_USERINFO_ENDPOINT"] || endpoints[:userinfo],
-                    jwks_uri: ENV["CHECKIN_JWKS_ENDPOINT"] || endpoints[:jwk],
+                    jwks_uri: ENV["CHECKIN_JWKS_ENDPOINT"] || ENV["CHECKIN_JWK_ENDPOINT"] || endpoints[:jwk],
                     introspection_uri: ENV["INTROSPECTION_ENDPOINT"] || "https://#{checkin_host}/#{endpoints[:introspection]}"
                   }
-
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

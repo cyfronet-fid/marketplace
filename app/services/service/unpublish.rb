@@ -1,10 +1,7 @@
 # frozen_string_literal: true
 
-class Service::Unpublish < Service::ApplicationService
-  def call
-    public_before = @service.public?
-    result = @service.update!(status: :unpublished)
-    unbundle_and_notify! if result && public_before
-    result
-  end
+class Service::Unpublish
+  extend VariantOperation
+
+  implementations marketplace: "Service::Unpublish::Standalone", default: "Service::Unpublish::Cascading"
 end

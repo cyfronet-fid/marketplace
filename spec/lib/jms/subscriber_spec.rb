@@ -4,7 +4,7 @@ require "rails_helper"
 require "jms/subscriber"
 require "stomp"
 
-describe Jms::Subscriber, backend: true do
+describe Jms::Subscriber, :backend do
   let(:logger) { Logger.new(nil) }
   let(:message) { double(body: "{}") }
   let(:test_client) { double("Stomp::Client", open?: true, close: true) }
@@ -12,20 +12,20 @@ describe Jms::Subscriber, backend: true do
   let(:config) do
     {
       subscriptions: [
-        {
-          login: "dummy_login",
-          password: "dummy_pass",
-          host: "dummy_host",
-          topic: "dummy_topic",
-          client_name: "MPClientTest",
-          eosc_registry_base_url: "localhost",
-          ssl_enabled: false
-        }
+
+        login: "dummy_login",
+        password: "dummy_pass",
+        host: "dummy_host",
+        topic: "dummy_topic",
+        client_name: "MPClientTest",
+        eosc_registry_base_url: "localhost",
+        ssl_enabled: false
+
       ]
     }
   end
 
-  before { allow_any_instance_of(Jms::Subscriber).to receive(:load_config).and_return(config) }
+  before { allow_any_instance_of(described_class).to receive(:load_config).and_return(config) }
 
   it "raises if the connection test fails" do
     allow(Stomp::Client).to receive(:new).and_return(double("Stomp::Client", open?: false))
@@ -43,7 +43,7 @@ describe Jms::Subscriber, backend: true do
       { ack: "client-individual", "activemq.subscriptionName": "mpSubscription" }
     ).and_yield(message)
 
-    expect(Jms::ManageMessage).to receive(:call).with(message, "localhost", logger, nil)
+    expect(Jms::ManageMessage).to receive(:call).with(message, logger)
     expect(client).to receive(:ack).with(message)
 
     described_class.new(logger: logger).run

@@ -11,8 +11,7 @@ class Services::OrderingConfiguration::OffersController < Services::OrderingConf
     authorize @offer
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     template = offer_template
@@ -40,7 +39,7 @@ class Services::OrderingConfiguration::OffersController < Services::OrderingConf
 
   def destroy
     @offer = @service.offers.find_by(iid: params[:id])
-    if Offer::Destroy.call(@offer)
+    if Offer::Removal.call(@offer)
       redirect_to service_ordering_configuration_path(@service, from: params[:from]),
                   notice: "Offer removed successfully"
     end
