@@ -155,6 +155,13 @@ gated.
   whitelabel's `dev.rake` did (provider tags only under `pl`).
 - `Provider#esfri_type`, `#provider_life_cycle_status` and `tag_list`
   (`acts_as_taggable`) exist on every variant; pl's provider forms post them.
+- CI — the `rspec` job runs the whole suite as `marketplace`; the `variants`
+  job runs the request, lib, helper and routing specs under `pl` and
+  `whitelabel` with `--tag ~variant:marketplace`. Tag an example or group
+  `variant: :marketplace` when it exercises marketplace-only behavior
+  (routes drawn only there, the standalone delete, `users.uid` lookups).
+  Under `pl` the user factory builds a primary Check-in identity from the
+  uid column; pass `uid: nil` when a spec creates identities itself.
 - `config.whitelabel`/`MP_WHITELABEL` was folded into `Mp::Variant.whitelabel?`.
 - `config.monitoring_data_token` — no longer raises on a deployment whose
   `credentials.yml.enc` lacks the `monitoring_data` key; falls back to `nil`

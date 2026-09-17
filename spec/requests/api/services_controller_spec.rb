@@ -17,7 +17,8 @@ RSpec.describe "Api::ServicesController", :backend do
       expect(response.header["Content-Type"]).to eq("application/json; charset=utf-8")
     end
 
-    it "shows only published services with correct data" do
+    # pl serves contacts and countries instead of the flat columns (covered below).
+    it "shows only published services with correct data", variant: :marketplace do
       body = response.parsed_body
       expect(body.size).to eq(2)
 

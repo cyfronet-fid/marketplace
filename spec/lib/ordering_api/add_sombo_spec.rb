@@ -3,7 +3,7 @@
 require "rails_helper"
 require "ordering_api/add_sombo"
 
-describe OrderingApi::AddSombo, backend: true do
+describe OrderingApi::AddSombo, :backend do
   it "creates SOMBO OMS and adds SOMBO admin to it" do
     described_class.new.call
 
@@ -54,7 +54,8 @@ describe OrderingApi::AddSombo, backend: true do
     end
   end
 
-  it "creates SOMBO OMS, SOMBO admin relationship if SOMBO exists and admin doesn't" do
+  # pl resolves the SOMBO admin through a checkin identity (see below).
+  it "creates SOMBO OMS, SOMBO admin relationship if SOMBO exists and admin doesn't", variant: :marketplace do
     create(:oms, name: "SOMBO")
 
     described_class.new.call
