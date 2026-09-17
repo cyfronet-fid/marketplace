@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Presentable::DetailsComponent < ApplicationComponent
-  include Presentable::DetailsHelper
   include Presentable::DetailsStyleHelper
   include Presentable::LinksHelper
   include PresentableHelper
@@ -26,16 +25,25 @@ class Presentable::DetailsComponent < ApplicationComponent
     @from = from
   end
 
-  def details_columns
-    if @guidelines
-      guidelines_details_columns
-    else
-      case @object
-      when Provider
-        provider_details_columns
-      when Service
-        @object.type == "Datasource" ? datasource_details_columns(@object) : service_details_columns(@object)
-      end
-    end
+  def deployable_application?
+    resource_type == "DeployableApplication"
+  end
+
+  def service?
+    resource_type.casecmp?("service")
+  end
+
+  def catalogue?
+    @object.is_a?(Catalogue)
+  end
+
+  def provider?
+    @object.is_a?(Provider)
+  end
+
+  private
+
+  def resource_type
+    @object.respond_to?(:resource_type) ? @object.resource_type.to_s : ""
   end
 end
