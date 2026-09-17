@@ -23,6 +23,7 @@ Variant mechanism and configuration:
 
 - `Mp::Variant`, `config/variants.yml`, rejection of unknown variants; the
   old `whitelabel` config flag folded into `Mp::Variant.whitelabel?`.
+- `MARKETPLACE_VARIANT` is required in production: boot raises without it.
 - Missing `monitoring_data` credentials return `nil`.
 - JMS user-action publishing respects `MP_STOMP_PUBLISHER_ENABLED`.
 - Whitelabel client-credentials import token (`Importers::ClientCredentialsToken`,
@@ -93,6 +94,17 @@ Variant-only features:
   session only on marketplace (only its `Services::ApplicationController`
   reads it). pl's unique `lower(email)` index was not ported: marketplace
   allows duplicate emails.
+- Code files only the other repos had:
+  `Backoffice::Vocabulary::ResearchActivityPolicy` and
+  `Recommender::Vocabulary::ResearchActivitySerializer` ported
+  (`RecommenderLib::SerializeDb` dumps `research_activities` under pl and
+  whitelabel, `research_steps` under marketplace); pl's `dialog` Stimulus
+  controller added to the bundle for the provider approval and profile
+  completion modals; whitelabel's `Provider::CreateAsDraft` is
+  `Provider::Draft` here, which now also reindexes (whitelabel's
+  `ProvidersController#create` draft branch was not ported: `new` redirects
+  to the wizard, so nothing posts it); `Catalogue::PcDelete` has no caller in
+  any repo and `Provider::PcDelete` is covered by `Provider::Delete`.
 
 ESS and ordering API:
 
@@ -104,6 +116,12 @@ ESS and ordering API:
 - pl's users API rule (`Api::V1::UserPolicy#show?` requires every role), the
   SOMBO admin holding every role and `AddProviderOMS` underscoring the OMS
   name are gated to pl.
+- `OrderingApi::AuthorizationTestSetup` creates the sample services with a
+  tagline and a geographical availability under pl and whitelabel (order
+  type and categories stay: `services.order_type` is `NOT NULL`). The task
+  also needed the provider fields and offer category the current models
+  require; it failed on every repo without them. A spec runs it under all
+  three variants.
 - PL Catalogue API ported: `Api::V1::Catalogue::ServicesController`, its
   policy, `Catalogue::ServiceSerializer` (+ alternative identifiers), the
   swagger document and `Service#access_modes` / `Service#logo_url` it reads;
@@ -173,8 +191,10 @@ ESS and ordering API:
   whitelabel's templates, whitelabel's
   `Backoffice::Services::UnpublishesController` and route are drawn under
   whitelabel, `Presentable::LinksHelper` shows pl's profile links under pl,
-  `CUSTOMIZATION_PATH` also overrides images and (through `CSS_ENTRY`) the
-  stylesheet entry, and `RECAPTCHA_ENABLED=false` disables reCAPTCHA.
+  `CUSTOMIZATION_PATH` also overrides images, JavaScript files
+  (`javascript/`, resolved by `config/esbuild.config.js`, entry included)
+  and (through `CSS_ENTRY`) the stylesheet entry, and
+  `RECAPTCHA_ENABLED=false` disables reCAPTCHA.
 - Data model leftovers resolved by keeping marketplace's model:
   `ServiceUserRelationship` (service owners) and `MarketplaceLocation` stay
   for every variant and are simply unused on pl/whitelabel; `Offer` here is
@@ -200,7 +220,6 @@ Found by comparing `app/`, `lib/` and `config/` of this branch with
       gets the marketplace-only tables through a forward migration.
 - [ ] Check marketplace and whitelabel production databases for duplicate
       provider pids (the pid migration aborts on duplicates).
-- [ ] Make `MARKETPLACE_VARIANT` required in production.
 - [ ] Keep per-deployment settings: PL's EOSC Commons URL and recommendation
       setting, whitelabel's HTTPS federation URL and `EOSC_EXPLORE_BASE_URL`,
       STOMP/JMS, monitoring, BOS and import settings, `RECAPTCHA_*` keys.
@@ -223,22 +242,7 @@ Found by comparing `app/`, `lib/` and `config/` of this branch with
       completion modals: views via `CUSTOMIZATION_PATH`; pl/whitelabel's
       `ExitHelper` methods already exist here as `Backoffice::OffersHelper`
       and all helpers are available to every view. The JavaScript
-      (`exit_controller.js`) is bundled from the repo and still differs.
-
-### Variant-only features
-
-- [ ] `OrderingApi::AuthorizationTestSetup` service attributes: pl and
-      whitelabel create the sample services with `tagline` and
-      `geographical_availabilities` instead of `categories` and `order_type`.
-- [ ] Code files the other repos have that this one lacks (check first
-      whether this repo covers each differently):
-      `Backoffice::Vocabulary::ResearchActivityPolicy` and
-      `Recommender::Vocabulary::ResearchActivitySerializer` (pl and
-      whitelabel), `Catalogue::PcDelete` and `Provider::PcDelete` (pl and
-      whitelabel; this repo cascades registry provider deletes through
-      `Provider::Delete`), whitelabel's `Provider::CreateAsDraft`, pl's
-      `dialog_controller.js`. pl/whitelabel's `ExitHelper` is
-      `Backoffice::OffersHelper` here.
+      (`exit_controller.js`) comes from `CUSTOMIZATION_PATH/javascript`.
 
 ### UI, branding and configuration
 
@@ -256,6 +260,11 @@ Mechanism, per deployment (`CUSTOMIZATION_PATH=/path/to/dir`):
   (`config/application.rb`).
 - `images/` — prepended to the asset paths (`config/initializers/assets.rb`);
   same-named files override the repository's.
+- `javascript/` — same-named files override `app/javascript` files when
+  `yarn build` runs (`config/esbuild.config.js`), including the
+  `application.js` entry; imports from a customized file still resolve to
+  the repository's files and `node_modules`. whitelabel's README promised
+  this for `CUSTOMIZATION_PATH` but its esbuild config never did it.
 - stylesheets — `CSS_ENTRY=$CUSTOMIZATION_PATH/stylesheets/application.scss`
   for `yarn build:css`; the entry imports its own partials (variables,
   bootstrap customizations, design system) and the repository's through the
@@ -290,11 +299,13 @@ Mechanism, per deployment (`CUSTOMIZATION_PATH=/path/to/dir`):
       `_user_panel`, `common_parts/modals/_exit_modal` — plus locales, the
       seven stylesheet files (`_variables`, `_bootstrap-customizations`,
       `designsystem`, `_flash`, `_order`, `_ref_*`) as a
-      `stylesheets/application.scss` entry with its partials, and the images
-      (17 pl-only, 18 whitelabel-only); then run each variant's pages against
-      it.
-- [ ] `exit_controller.js` and other `app/javascript` differences are bundled
-      from the repository (esbuild); decide variant handling there.
+      `stylesheets/application.scss` entry with its partials, the images
+      (17 pl-only, 18 whitelabel-only) and the JavaScript files that differ
+      (`controllers/exit_controller.js`, `controllers/form_controller.js`,
+      `app/cookies_policy.js`; whitelabel also `application.js` and
+      `controllers/form_redirect_controller.js`; the repository's
+      `controllers/index.js` is a superset and needs no copy); then run each
+      variant's pages against it.
 - [ ] Dev seeds: pl's `db/data.yml` is a different V5 sample dataset
       (addresses, funding, life-cycle statuses, platforms, target users) and
       its `dev.rake` seeds those fields; this repo keeps marketplace's seeds
