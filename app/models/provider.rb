@@ -16,6 +16,9 @@ class Provider < ApplicationRecord
 
   friendly_id :pid
 
+  # pl's provider classification tab posts and shows tag_list.
+  acts_as_taggable
+
   searchkick word_middle: [:provider_name]
 
   def search_data
@@ -194,6 +197,27 @@ class Provider < ApplicationRecord
     return nil if hosting_legal_entities.blank?
 
     hosting_legal_entities[0].id
+  end
+
+  # Posted by pl's backoffice provider forms (single-select vocabularies).
+  def esfri_type=(type_id)
+    self.esfri_types = type_id.blank? ? [] : [Vocabulary.find(type_id)]
+  end
+
+  def esfri_type
+    return nil if esfri_types.blank?
+
+    esfri_types[0].id
+  end
+
+  def provider_life_cycle_status=(status_id)
+    self.provider_life_cycle_statuses = status_id.blank? ? [] : [Vocabulary.find(status_id)]
+  end
+
+  def provider_life_cycle_status
+    return nil if provider_life_cycle_statuses.blank?
+
+    provider_life_cycle_statuses[0].id
   end
 
   def country=(value)
