@@ -2,6 +2,7 @@
 
 class Api::V1::Ess::ApplicationController < ActionController::API
   include Pundit::Authorization
+
   acts_as_token_authentication_handler_for User, fallback: :exception
 
   before_action :perform_authorization
@@ -9,7 +10,7 @@ class Api::V1::Ess::ApplicationController < ActionController::API
   before_action :load_object, only: :show
 
   rescue_from Pundit::NotAuthorizedError do
-    render json: not_authorized, status: 403
+    render json: not_authorized, status: :forbidden
   end
 
   # Deployable services (and the polymorphic Offer#orderable they hang off)
@@ -53,7 +54,7 @@ class Api::V1::Ess::ApplicationController < ActionController::API
       policy_scope.respond_to?(:friendly) ? policy_scope.friendly.find(params[:id]) : policy_scope.find(params[:id])
     instance_variable_set("@#{controller_name.singularize}", object)
   rescue ActiveRecord::RecordNotFound
-    render json: { error: "Resource not found" }, status: 404
+    render json: { error: "Resource not found" }, status: :not_found
   end
 
   def controller_class(predefined = nil)

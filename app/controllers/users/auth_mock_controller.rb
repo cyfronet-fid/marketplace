@@ -29,12 +29,10 @@ class Users::AuthMockController < ApplicationController
       else
         user.uid = SecureRandom.uuid
       end
-      user.roles = params[:roles].map(&:to_sym) unless params[:roles].blank?
+      user.roles = params[:roles].map(&:to_sym) if params[:roles].present?
       user.save!
 
-      unless params[:admin_providers_services].blank?
-        add_data_admin_privilege_to(user, params[:admin_providers_services])
-      end
+      add_data_admin_privilege_to(user, params[:admin_providers_services]) if params[:admin_providers_services].present?
     end
     sign_in user, event: :authentication
     redirect_to backoffice_path
