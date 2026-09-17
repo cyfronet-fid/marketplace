@@ -191,15 +191,43 @@ ESS and ordering API:
   whitelabel's templates, whitelabel's
   `Backoffice::Services::UnpublishesController` and route are drawn under
   whitelabel, `Presentable::LinksHelper` shows pl's profile links under pl,
-  `CUSTOMIZATION_PATH` also overrides images, JavaScript files
-  (`javascript/`, resolved by `config/esbuild.config.js`, entry included)
-  and (through `CSS_ENTRY`) the stylesheet entry, and
-  `RECAPTCHA_ENABLED=false` disables reCAPTCHA.
+  `CUSTOMIZATION_PATH` also overrides images (declared for precompilation),
+  JavaScript files (`javascript/`, `config/esbuild.config.js`) and
+  stylesheets (`stylesheets/`, `config/sass.config.js`), entries included,
+  and `RECAPTCHA_ENABLED=false` disables reCAPTCHA.
 - Data model leftovers resolved by keeping marketplace's model:
   `ServiceUserRelationship` (service owners) and `MarketplaceLocation` stay
   for every variant and are simply unused on pl/whitelabel; `Offer` here is
   the polymorphic superset of both other repos (`service`/`service=` compat
   accessors), so nothing was ported from them.
+- Customization directories assembled (2026-09-17) as
+  `/Users/zlekki/Projects/cyfronet/pl-customization` and
+  `whitelabel-customization` (siblings of the repositories, inside none) by
+  `assemble_customization.sh` next to them: the views that differ or are
+  missing here (169 pl / 164 whitelabel entries), locales (2 / 3), images
+  (37 / 20), the seven stylesheet partials and the JavaScript files that
+  differ (3 / 5). Verified: the CSS and JS bundles build with each
+  directory, and the public, services, backoffice, projects and users
+  request specs run under pl and whitelabel with it without template
+  errors (the remaining failures are the marketplace-only infrastructure
+  route and the cascading provider delete, both expected there).
+- Helpers the pl/whitelabel views call: `Presentable::DetailsHelper` returns
+  pl's V5 service, datasource and provider sections under pl (classification,
+  marketing, maturity, financial information, identifiers, datasource
+  content, provider maturity) and carries the datasource policy, persistent
+  identity system and research product sections on every variant;
+  `Backoffice::ProvidersHelper` gained pl's `cant_edit`, `extended_steps`,
+  `safe_tab`, `safe_step` and its Next/Back labels under pl;
+  `Backoffice::CataloguesHelper#cant_edit_catalogue`,
+  `ApplicationHelper#enable_commons` (`ENABLE_COMMONS`), `#footer_params`
+  and `#lead_class`, `FormsHelper#render_persistent_identity_system`,
+  `SearchLinksHelper#resource_organisation_detail_path` (and the positional
+  `providers(service, backoffice)` call) and
+  `ApplicationController#tour_disabled` were added.
+- Test suite: the whitelabel unpublish request spec restored only
+  `whitelabel?` before reloading routes, so every later spec in a
+  defined-order run lost the marketplace-only routes; it now restores all
+  three predicates.
 
 ## Next steps
 
@@ -258,17 +286,20 @@ Mechanism, per deployment (`CUSTOMIZATION_PATH=/path/to/dir`):
 
 - `views/` and `config/locales/` — prepended to the view and locale paths
   (`config/application.rb`).
-- `images/` — prepended to the asset paths (`config/initializers/assets.rb`);
-  same-named files override the repository's.
+- `images/` — prepended to the asset paths (`config/initializers/assets.rb`)
+  and added to the precompile list (the manifest links only the
+  repository's images); same-named files override the repository's.
 - `javascript/` — same-named files override `app/javascript` files when
   `yarn build` runs (`config/esbuild.config.js`), including the
   `application.js` entry; imports from a customized file still resolve to
   the repository's files and `node_modules`. whitelabel's README promised
   this for `CUSTOMIZATION_PATH` but its esbuild config never did it.
-- stylesheets — `CSS_ENTRY=$CUSTOMIZATION_PATH/stylesheets/application.scss`
-  for `yarn build:css`; the entry imports its own partials (variables,
-  bootstrap customizations, design system) and the repository's through the
-  `app/assets/stylesheets` load path.
+- `stylesheets/` — same-named partials and the `application.scss` entry
+  override the repository's when `yarn build:css` runs
+  (`config/sass.config.js`); every import, also one inside a repository
+  partial, is resolved through the customization directory first, so a
+  customized `_variables.scss` reaches the partials that re-import it. Bare
+  imports resolve from `node_modules`.
 - ViewComponent templates cannot come from that directory; components that
   differ per variant carry `<name>.html+pl.haml` / `<name>.html+whitelabel.haml`
   templates in the repository, selected through `request.variant`
@@ -283,29 +314,11 @@ Mechanism, per deployment (`CUSTOMIZATION_PATH=/path/to/dir`):
 - `RECAPTCHA_ENABLED=false` (whitelabel's `customization.rb`) skips the
   reCAPTCHA keys and widget on any variant.
 
-- [ ] Assemble the pl and whitelabel customization directories from their
-      repos: the views that differ (backoffice, services, layouts, home/pages,
-      providers, projects, mailers, federation) and the views this repo lacks
-      entirely — pl: `backoffice/categories/index`,
-      `backoffice/services/form/_contact` and `_dependencies`,
-      `common_parts/modals/_exit_modal`, `_provider_approval_modal`,
-      `_provider_profile_completion_modal`; whitelabel: the
-      `backoffice/providers/form/*` and `backoffice/services/form/*` partials,
-      `backoffice/providers/_show` and `edit.turbo_stream`,
-      `backoffice/services/destroy.turbo_stream` and
-      `publishes/create.turbo_stream`,
-      `backoffice/common_parts/form/_persistent_identity_system_fields`,
-      `layouts/navbar/_navbar_tabs`, `_oder_panel`, `_sections`,
-      `_user_panel`, `common_parts/modals/_exit_modal` — plus locales, the
-      seven stylesheet files (`_variables`, `_bootstrap-customizations`,
-      `designsystem`, `_flash`, `_order`, `_ref_*`) as a
-      `stylesheets/application.scss` entry with its partials, the images
-      (17 pl-only, 18 whitelabel-only) and the JavaScript files that differ
-      (`controllers/exit_controller.js`, `controllers/form_controller.js`,
-      `app/cookies_policy.js`; whitelabel also `application.js` and
-      `controllers/form_redirect_controller.js`; the repository's
-      `controllers/index.js` is a superset and needs no copy); then run each
-      variant's pages against it.
+- [ ] Exercise the pages the request specs do not reach against each
+      customization directory (provider and catalogue forms, datasource
+      pages, offers and bundles, mailers, federation, admin) and port any
+      helper or controller method they still miss; then drop from the
+      directories the files whose differences turn out cosmetic.
 - [ ] Dev seeds: pl's `db/data.yml` is a different V5 sample dataset
       (addresses, funding, life-cycle statuses, platforms, target users) and
       its `dev.rake` seeds those fields; this repo keeps marketplace's seeds

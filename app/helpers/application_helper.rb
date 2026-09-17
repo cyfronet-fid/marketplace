@@ -100,6 +100,34 @@ module ApplicationHelper
     Mp::Variant.whitelabel?
   end
 
+  # pl's layouts switch the EOSC Commons header/footer with ENABLE_COMMONS.
+  def enable_commons
+    Mp::Application.config.enable_commons
+  end
+
+  # pl's EOSC Commons footer attributes.
+  def footer_params
+    if external_search_enabled
+      {
+        "terms-of-use": "#{external_search_url}/acceptable-use-policy",
+        "privacy-policy": "#{external_search_url}/privacy-policy"
+      }
+    else
+      {}
+    end
+  end
+
+  # pl's "learn more" lead cards.
+  def lead_class(card_counter, card_length)
+    if card_counter.zero?
+      "top"
+    elsif card_counter < (card_length - 1)
+      "middle"
+    else
+      "bottom"
+    end
+  end
+
   def render_turbo_stream_flash
     turbo_stream.replace "flash-messages", partial: "layouts/flash"
   end

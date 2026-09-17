@@ -13,10 +13,16 @@
 Rails.application.config.assets.paths << Rails.root.join("node_modules")
 
 # Images under $CUSTOMIZATION_PATH/images override same-named repository images
-# (views and locales are handled in config/application.rb, stylesheets by
-# CSS_ENTRY in package.json's build:css).
+# and are precompiled like them (views and locales are handled in
+# config/application.rb, JavaScript and stylesheets by config/esbuild.config.js
+# and config/sass.config.js).
 if ENV["CUSTOMIZATION_PATH"].present?
-  Rails.application.config.assets.paths.unshift(File.join(ENV["CUSTOMIZATION_PATH"], "images"))
+  customization_images = File.join(ENV["CUSTOMIZATION_PATH"], "images")
+  Rails.application.config.assets.paths.unshift(customization_images)
+  Rails.application.config.assets.precompile +=
+    Dir[File.join(customization_images, "**", "*")].select { |file| File.file?(file) }.map do |file|
+      file.delete_prefix("#{customization_images}/")
+    end
 end
 
 Rails.application.config.assets.precompile += %w[trix.css bootstrap.min.js popper.js]
