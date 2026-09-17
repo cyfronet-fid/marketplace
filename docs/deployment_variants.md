@@ -5,7 +5,8 @@ onto this single codebase (ADR-0001: single codebase over per-node forks).
 Which node a running process behaves as is selected at boot by the
 `MARKETPLACE_VARIANT` env var (`marketplace` / `pl` / `whitelabel`), validated
 against `config/variants.yml` and exposed via `Mp::Variant` (`lib/mp/variant.rb`).
-Unset defaults to `marketplace`.
+Unset defaults to `marketplace` in development and test; a production boot
+raises without it (`config/initializers/variants.rb`).
 
 Use `Mp::Variant.marketplace?` / `.pl?` / `.whitelabel?` to key off it. Prefer
 a config/env toggle for genuine per-deployment behavior; if two repos' code
@@ -99,9 +100,16 @@ gated.
   Permitted attributes follow the variant (pl's V5 form fields, whitelabel's
   `node_ids` scalar without `owner_ids`, bundle `research_activity_ids`);
   the forms themselves come from `CUSTOMIZATION_PATH`.
-- `CUSTOMIZATION_PATH` — per-deployment `views/`, `config/locales/` and
-  `images/` override the repository's; `CSS_ENTRY` points `build:css` at a
-  customization stylesheet entry. `request.variant` is set from `Mp::Variant`
+- `CUSTOMIZATION_PATH` — per-deployment `views/`, `config/locales/`,
+  `images/` and `javascript/` override the repository's same-named files
+  (`config/esbuild.config.js` resolves imports, and the `application.js`
+  entry, from `javascript/` first; whitelabel's README promised this for JS
+  but its esbuild config never did it); `CSS_ENTRY` points `build:css` at a
+  customization stylesheet entry. pl and whitelabel keep their
+  `controllers/exit_controller.js`, `controllers/form_controller.js` and
+  `app/cookies_policy.js` there, whitelabel also `application.js` and
+  `controllers/form_redirect_controller.js`; pl's `dialog` Stimulus
+  controller is in the repository bundle. `request.variant` is set from `Mp::Variant`
   (`ApplicationController#set_variant`) so `*.html+pl.haml` /
   `*.html+whitelabel.haml` templates win, which is how
   `Presentable::StatusActionsComponent` differs per variant; under
@@ -114,6 +122,19 @@ gated.
   bodies/programs, life-cycle statuses, ESFRI, MERIL, research activities,
   entity types, product access policies, service categories, …) and the
   backoffice `other_settings/vocabularies` routes follow.
+- `Backoffice::Vocabulary::ResearchActivityPolicy` and
+  `Recommender::Vocabulary::ResearchActivitySerializer` exist on every
+  variant; `RecommenderLib::SerializeDb` dumps `research_activities` under
+  `pl`/`whitelabel` and `research_steps` (marketplace locations) under
+  `marketplace`.
+- `Provider::Draft` (whitelabel's save-as-draft) reindexes the provider like
+  whitelabel's `Provider::CreateAsDraft`. `Catalogue::PcDelete` (no caller in
+  any repo) and `Provider::PcDelete` (covered by `Provider::Delete`) were not
+  ported.
+- `OrderingApi::AuthorizationTestSetup` creates the sample services with a
+  tagline and a geographical availability under `pl`/`whitelabel`; it also
+  sets the provider fields and offer category the current models require
+  (it failed on every repo without them).
 - `config.whitelabel`/`MP_WHITELABEL` was folded into `Mp::Variant.whitelabel?`.
 - `config.monitoring_data_token` — no longer raises on a deployment whose
   `credentials.yml.enc` lacks the `monitoring_data` key; falls back to `nil`

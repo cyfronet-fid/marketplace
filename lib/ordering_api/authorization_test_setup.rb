@@ -13,7 +13,12 @@ module OrderingApi
       oms2 = OMS.create!(name: "OMS2", type: "global", administrators: [oms_admin1])
       oms3 = OMS.create!(name: "OMS3", type: "global", administrators: [oms_admin2])
 
-      provider = Provider.create!(name: "provider")
+      provider =
+        Provider.create!(name: "provider", abbreviation: "provider", website: "https://provider.example",
+                         description: "asd")
+      # pl and whitelabel create the sample services with a tagline and a
+      # geographical availability (order_type stays: the column is NOT NULL).
+      pl_attributes = Mp::Variant.marketplace? ? {} : { tagline: "asd", geographical_availabilities: ["PL"] }
       service1 =
         Service.create!(
           name: "s1",
@@ -23,7 +28,8 @@ module OrderingApi
           resource_organisation: provider,
           scientific_domains: [ScientificDomain.first],
           categories: [Category.first],
-          order_type: "open_access"
+          order_type: "open_access",
+          **pl_attributes
         )
       service2 =
         Service.create!(
@@ -34,7 +40,8 @@ module OrderingApi
           resource_organisation: provider,
           scientific_domains: [ScientificDomain.first],
           categories: [Category.first],
-          order_type: "open_access"
+          order_type: "open_access",
+          **pl_attributes
         )
       offer1 =
         Offer.create!(
@@ -42,6 +49,7 @@ module OrderingApi
           name: "o1",
           description: "asd",
           service: service1,
+          offer_category: Vocabulary::ServiceCategory.first,
           status: "published",
           primary_oms: oms2
         )
@@ -51,6 +59,7 @@ module OrderingApi
           name: "o2",
           description: "asd",
           service: service2,
+          offer_category: Vocabulary::ServiceCategory.first,
           status: "published",
           primary_oms: oms3
         )
