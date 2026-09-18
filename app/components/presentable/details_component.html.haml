@@ -30,6 +30,22 @@
               - else
                 = @object.license_name
 
+  - if sqa_entries.present?
+    .details-box.sqa
+      .details-header
+        %h5 SQA
+      .details-content
+        %ul
+          - sqa_entries.each do |entry|
+            - label = metadata_value(entry, :name, :title, :label, :value) || entry.to_s
+            - url = metadata_value(entry, :url, :website)
+            %li.d-flex.flex-column
+              %span.list-title
+                - if UrlHelper.url?(url)
+                  = link_to label, url, target: "_blank", rel: "noopener"
+                - else
+                  = label
+
   - if (deployable_application? || service? || catalogue?) && @object.respond_to?(:tag_list) && @object.tag_list.present?
     .details-box.tags
       .details-header
@@ -38,6 +54,15 @@
         .taglist-holder
           - @object.tag_list.sort.each do |tag|
             = link_to tag, services_filter_link(tag, tag), class: "badge badge-light"
+
+  - if keywords.present?
+    .details-box.keywords
+      .details-header
+        %h5 Keywords
+      .details-content
+        .taglist-holder
+          - keywords.map { |keyword| metadata_value(keyword, :name, :label, :value) || keyword.to_s }.sort.each do |keyword|
+            = link_to keyword, services_filter_link(keyword, keyword), class: "badge badge-light"
 
   - if catalogue?
     .details-box.location
@@ -74,7 +99,12 @@
         .taglist-holder
           %ul
             - @object.link_multimedia_urls.each do |link|
-              %li= link_to(link.name.presence || link.url, link.url, target: "_blank", rel: "noopener")
+              %li
+                - label = link.name.presence || link.url
+                - if UrlHelper.url?(link.url)
+                  = link_to(label, link.url, target: "_blank", rel: "noopener")
+                - else
+                  = label
 
   - if service? && @object.providers.present?
     .details-box.providers
@@ -98,6 +128,17 @@
             %span
               = @object.jurisdiction.name
 
+  - if persistent_identifiers.present?
+    .details-box.persistent_identifiers
+      .details-header
+        %h5 Persistent identifiers
+      .details-content
+        %ul
+          - persistent_identifiers.each do |identifier|
+            %li.d-flex.flex-column
+              %span.list-title= metadata_value(identifier, :identifier_type, :type).presence || "PID"
+              %span= metadata_value(identifier, :value, :pid, :identifier).presence || identifier.to_s
+
   - if catalogue? && @object.participating_countries.present?
     .details-box.participating_countries
       .details-header
@@ -107,6 +148,33 @@
           - @object.participating_countries.each do |country|
             %li.d-flex.flex-column
               %span.list-title= country
+
+  - if learning_outcomes.present?
+    .details-box.learning_outcomes
+      .details-header
+        %h5 Learning outcomes
+      .details-content
+        %ul
+          - learning_outcomes.each do |outcome|
+            %li.d-flex.flex-column
+              %span.list-title= metadata_value(outcome, :name, :title, :value) || outcome.to_s
+
+  - if configuration_templates.present?
+    .details-box.configuration_template
+      .details-header
+        %h5 Configuration template
+      .details-content
+        %ul
+          - configuration_templates.each do |template|
+            - label = metadata_value(template, :pid, :identifier, :name, :title, :value) || template.to_s
+            - url = metadata_value(template, :url, :website)
+            %li.d-flex.flex-column
+              %span.list-title Configuration template PID
+              %span
+                - if UrlHelper.url?(url)
+                  = link_to label, url, target: "_blank", rel: "noopener"
+                - else
+                  = label
 
   - if service? && (@object.access_types.present? || @object.trls.present?)
     .details-box.access_information

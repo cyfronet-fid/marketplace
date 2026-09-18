@@ -26,6 +26,11 @@ module UrlHelper
   end
 
   def self.url?(url)
-    url.blank? ? false : URI.parse(url).is_a?(URI::HTTP)
+    return false if url.blank?
+
+    uri = URI.parse(url)
+    uri.is_a?(URI::HTTP) && uri.host.present? && %w[http https].include?(uri.scheme)
+  rescue URI::InvalidURIError
+    false
   end
 end
