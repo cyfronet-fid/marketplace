@@ -16,7 +16,7 @@ module SearchLinksHelper
 
   def services_array_filter_link(elements, method, filter_name = "guidelines")
     search_base_url = Mp::Application.config.search_service_base_url
-    filter_params = elements.map { |e| e.send(method) }.join("%22 OR %22")
+    filter_params = elements.map { |e| ERB::Util.url_encode(e.send(method)) }.join("%22 OR %22")
     return "#{search_base_url}/search/service?q=*&fq=#{filter_name}:(%22#{filter_params}%22)" if external_search_enabled
     filter_name == "tag_list" ? services_path(tag: elements) : services_path("#{filter_name}": elements.map(&:id))
   end
