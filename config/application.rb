@@ -35,7 +35,7 @@ module Mp
     config.active_support.cache_format_version = 7.1
     config.active_support.disable_to_s_conversion = true
 
-    config.autoload_lib(ignore: %w[assets tasks])
+    config.autoload_lib(ignore: %w[assets tasks versions])
 
     default_redis_url = Rails.env.test? ? "redis://localhost:6379/1" : "redis://localhost:6379/0"
 

@@ -21,6 +21,7 @@ Layout/LineLength:
     - 'config/initializers/devise.rb'
     - 'db/migrate/**/*'
     - 'lib/jms/subscriber.rb'
+    - 'lib/versions/crawl_pages.rb'
     - 'spec/factories/jms_json_provider.rb'
     - 'spec/factories/jms_json_service.rb'
     - 'spec/factories/jms_service.rb'
@@ -183,3 +184,12 @@ RSpec/VariableName:
     - "spec/requests/**/*"
   AllowedPatterns:
     - '^X-.*-Token$'
+
+# lib/versions holds standalone scripts run from a terminal, outside Rails.
+Rails/Output:
+  Exclude:
+    - "lib/versions/**/*"
+
+Rails/Exit:
+  Exclude:
+    - "lib/versions/**/*"
