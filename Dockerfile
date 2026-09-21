@@ -50,8 +50,9 @@ RUN bundle config set --local without 'development test' && \
 # Copying application code
 COPY . /marketplace
 
-# Compiling assets
-RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rake assets:precompile
+# Compiling assets (.env.build: dummy values for variables that are mandatory at boot)
+RUN set -a && . ./.env.build && set +a && \
+    SECRET_KEY_BASE_DUMMY=1 ./bin/rake assets:precompile
 
 # Stage 2: Final image
 FROM ruby:${RUBY_VERSION}-alpine

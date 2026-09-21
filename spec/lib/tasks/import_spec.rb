@@ -7,6 +7,8 @@ describe "import:resources", :backend, type: :task do
   let(:provider_importer) { double("Import::Providers") }
 
   before do
+    # The authorize prerequisite (whitelabel always fetches a token) is covered by import:authorize below.
+    allow(Mp::Variant).to receive(:whitelabel?).and_return(false)
     allow(ENV).to receive(:fetch).and_call_original
     allow(ENV).to receive(:fetch).with(
       "MP_IMPORT_EOSC_REGISTRY_URL",
@@ -70,7 +72,10 @@ describe "import:resources", :backend, type: :task do
 end
 
 describe "import:authorize", :backend, type: :task do
-  before { task.reenable }
+  before do
+    task.reenable
+    allow(Mp::Variant).to receive(:whitelabel?).and_return(false)
+  end
 
   around do |example|
     keys = %w[MP_IMPORT_TOKEN IMPORT_CLIENT_ID IMPORT_CLIENT_SECRET CHECKIN_TOKEN_ENDPOINT]
@@ -105,5 +110,75 @@ describe "import:authorize", :backend, type: :task do
     task.invoke
 
     expect(ENV.fetch("MP_IMPORT_TOKEN", nil)).to eq("manual-token")
+  end
+
+  context "when whitelabel has no token and no import client credentials" do
+    let(:token_importer) { instance_double(Importers::ClientCredentialsToken, receive_token: "received-token") }
+
+    before do
+      allow(Mp::Variant).to receive(:whitelabel?).and_return(true)
+      allow(Importers::ClientCredentialsToken).to receive(:new).and_return(token_importer)
+      ENV.delete("MP_IMPORT_TOKEN")
+      ENV.delete("IMPORT_CLIENT_ID")
+      ENV.delete("IMPORT_CLIENT_SECRET")
+      task.invoke
+    end
+
+    it "still fetches a client credentials token" do
+      expect(ENV.fetch("MP_IMPORT_TOKEN", nil)).to eq("received-token")
+    end
+  end
+
+  context "when whitelabel has a blank token" do
+    let(:token_importer) { instance_double(Importers::ClientCredentialsToken, receive_token: "received-token") }
+
+    before do
+      allow(Mp::Variant).to receive(:whitelabel?).and_return(true)
+      allow(Importers::ClientCredentialsToken).to receive(:new).and_return(token_importer)
+      ENV["MP_IMPORT_TOKEN"] = ""
+      task.invoke
+    end
+
+    it "replaces it with a client credentials token" do
+      expect(ENV.fetch("MP_IMPORT_TOKEN", nil)).to eq("received-token")
+    end
+  end
+
+  context "when whitelabel has an explicitly supplied token" do
+    before do
+      allow(Mp::Variant).to receive(:whitelabel?).and_return(true)
+      allow(Importers::ClientCredentialsToken).to receive(:new)
+      ENV["MP_IMPORT_TOKEN"] = "manual-token"
+      task.invoke
+    end
+
+    it "keeps the token" do
+      expect(ENV.fetch("MP_IMPORT_TOKEN", nil)).to eq("manual-token")
+    end
+
+    it "does not request another one" do
+      expect(Importers::ClientCredentialsToken).not_to have_received(:new)
+    end
+  end
+
+  context "when whitelabel cannot fetch the token" do
+    let(:token_importer) { instance_double(Importers::ClientCredentialsToken) }
+
+    before do
+      allow(Mp::Variant).to receive(:whitelabel?).and_return(true)
+      allow(Importers::ClientCredentialsToken).to receive(:new).and_return(token_importer)
+      allow(token_importer).to receive(:receive_token).and_raise(
+        Importers::ClientCredentialsToken::RequestError,
+        "Access token request failed: boom"
+      )
+      ENV.delete("MP_IMPORT_TOKEN")
+    end
+
+    it "propagates the error" do
+      expect { task.invoke }.to raise_error(
+        Importers::ClientCredentialsToken::RequestError,
+        "Access token request failed: boom"
+      )
+    end
   end
 end

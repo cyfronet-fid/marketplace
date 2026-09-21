@@ -33,6 +33,25 @@ gated.
   automatically when `IMPORT_CLIENT_ID`, `IMPORT_CLIENT_SECRET`, and the
   Check-in token endpoint are configured. `MP_IMPORT_TOKEN` still takes
   precedence, and the legacy refresh-token client remains separate.
+  Under `whitelabel` the token endpoint comes from the Check-in OmniAuth
+  configuration (OIDC discovery, or the client options when
+  `CHECKIN_DISCOVERY=false`) and `import:authorize` always fetches a token
+  when `MP_IMPORT_TOKEN` is blank, so `IMPORT_CLIENT_ID` and
+  `IMPORT_CLIENT_SECRET` are mandatory there.
+- Check-in provider (`config/initializers/devise.rb`) — `whitelabel` uses its
+  own block: `CHECKIN_ISSUER_URI`, `CHECKIN_HOST`, `CHECKIN_IDENTIFIER`,
+  `CHECKIN_SECRET` and `REDIRECT_URI` are mandatory at boot, the defaults are
+  Keycloak's (`openid,basic,profile,email,offline_access`, PKCE on,
+  `/authorize`, `/token`, `/userinfo`, `/jwk`, `/logout`), and
+  `CHECKIN_DISCOVERY`, `CHECKIN_PORT`, `CHECKIN_SCHEME`, `CHECKIN_JWKS_URI`
+  and `CHECKIN_END_SESSION_ENDPOINT` are honoured. `marketplace` and `pl`
+  keep the block with optional variables and credentials fallback.
+- `Backoffice::ProvidersController#index` — `pl` hides deleted providers (its
+  destroy turbo stream removes the list item); the others list them.
+- `Backoffice::ServicesController#index` — `pl` authorizes after
+  `authenticate_user!`, so an unauthenticated user is sent through Check-in
+  and returned to the page; the others authorize first (redirect to the root
+  page with the not-authorized alert).
 - `Provider#pid` — ported from pl-marketplace for all variants (not gated):
   generated as a UUID when blank, validated present/unique, and enforced
   `NOT NULL` + unique index by `EnforceNotNullUniquePidOnProviders`, which

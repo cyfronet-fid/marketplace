@@ -26,7 +26,9 @@ class Importers::ClientCredentialsToken
   end
 
   def receive_token
-    validate_configuration!
+    # whitelabel takes the endpoint from the Check-in OmniAuth configuration
+    # and does not check the import variables up front.
+    validate_configuration! unless Mp::Variant.whitelabel?
 
     response =
       @faraday.post(
@@ -65,6 +67,8 @@ class Importers::ClientCredentialsToken
   end
 
   def token_endpoint
+    return checkin_token_endpoint if Mp::Variant.whitelabel?
+
     endpoint = ENV.fetch("CHECKIN_TOKEN_ENDPOINT")
     return endpoint if absolute_token_endpoint?
 
@@ -76,5 +80,28 @@ class Importers::ClientCredentialsToken
 
   def absolute_token_endpoint?
     ENV.fetch("CHECKIN_TOKEN_ENDPOINT", "").start_with?("http://", "https://")
+  end
+
+  def checkin_token_endpoint
+    return oidc_config.token_endpoint if provider.options[:discovery]
+
+    URI::Generic.build(
+      scheme: client_options[:scheme],
+      host: client_options[:host],
+      port: client_options[:port],
+      path: client_options[:token_endpoint]
+    ).to_s
+  end
+
+  def oidc_config
+    @oidc_config ||= OmniAuth::Strategies::OpenIDConnect.new(nil, provider.options).config
+  end
+
+  def client_options
+    provider.options[:client_options]
+  end
+
+  def provider
+    Devise.omniauth_configs[:checkin]
   end
 end

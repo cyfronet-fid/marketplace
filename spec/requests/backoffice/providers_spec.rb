@@ -75,5 +75,39 @@ RSpec.describe "Backoffice: manage providers", :backend do
       expect(response).to have_http_status(:unprocessable_content)
       expect(provider.reload.status).to eq("unpublished")
     end
+
+    context "when listing providers under pl" do
+      let(:deleted_provider) { create(:provider, name: "Removed provider", status: :deleted) }
+      let(:listed_provider) { create(:provider, name: "Listed provider") }
+
+      before do
+        allow(Mp::Variant).to receive(:pl?).and_return(true)
+        deleted_provider
+        listed_provider
+        get backoffice_providers_path
+      end
+
+      it "hides the deleted provider" do
+        expect(response.body).not_to include("Removed provider")
+      end
+
+      it "lists the other provider" do
+        expect(response.body).to include("Listed provider")
+      end
+    end
+
+    context "when listing providers under another variant" do
+      let(:deleted_provider) { create(:provider, name: "Removed provider", status: :deleted) }
+
+      before do
+        allow(Mp::Variant).to receive(:pl?).and_return(false)
+        deleted_provider
+        get backoffice_providers_path
+      end
+
+      it "lists the deleted provider" do
+        expect(response.body).to include("Removed provider")
+      end
+    end
   end
 end

@@ -287,29 +287,55 @@ Devise.setup do |config|
   # a checkin key in credentials, and name the endpoint variables
   # CHECKIN_ISSUER_ENDPOINT / CHECKIN_JWK_ENDPOINT.
   checkin_credentials = Rails.application.credentials.checkin.presence || {}
-  config.omniauth :openid_connect,
-                  name: :checkin,
-                  scope: scope,
-                  response_type: :code,
-                  issuer: ENV["CHECKIN_ISSUER_URI"] ||
-                          "https://#{checkin_host}/#{ENV["CHECKIN_ISSUER_ENDPOINT"] || endpoints[:issuer]}",
-                  discovery: true,
-                  pkce: ENV["CHECKIN_PKCE"] || false,
-                  become_vo_member_url: ENV["BECOME_VO_MEMBER_URL"] || endpoints[:become_vo_member],
-                  client_options: {
-                    port: nil,
-                    scheme: "https",
-                    host: checkin_host,
-                    identifier: ENV["CHECKIN_IDENTIFIER"] || checkin_credentials[:identifier],
-                    secret: ENV["CHECKIN_SECRET"] || checkin_credentials[:secret],
-                    redirect_uri: ENV["REDIRECT_URI"] ||
-                                  "#{root_url}/users/auth/checkin/callback",
-                    authorization_endpoint: ENV["CHECKIN_AUTHORIZATION_ENDPOINT"] || endpoints[:authorize],
-                    token_endpoint: ENV["CHECKIN_TOKEN_ENDPOINT"] || endpoints[:token],
-                    userinfo_endpoint: ENV["CHECKIN_USERINFO_ENDPOINT"] || endpoints[:userinfo],
-                    jwks_uri: ENV["CHECKIN_JWKS_ENDPOINT"] || ENV["CHECKIN_JWK_ENDPOINT"] || endpoints[:jwk],
-                    introspection_uri: ENV["INTROSPECTION_ENDPOINT"] || "https://#{checkin_host}/#{endpoints[:introspection]}"
-                  }
+  # whitelabel configures Check-in (Keycloak) through ENV only: the variables
+  # fetched without a default are mandatory at boot, and discovery can be
+  # switched off (the endpoints below are used then).
+  if Rails.application.config_for(:variants)[:current].to_s == "whitelabel"
+    config.omniauth :openid_connect,
+                    name: :checkin,
+                    response_type: :code,
+                    issuer: ENV.fetch("CHECKIN_ISSUER_URI"),
+                    discovery: ENV.fetch("CHECKIN_DISCOVERY", "true") == "true",
+                    scope: ENV.fetch("CHECKIN_SCOPE", "openid,basic,profile,email,offline_access").split(","),
+                    pkce: ENV.fetch("CHECKIN_PKCE", "true") == "true",
+                    client_options: {
+                      port: ENV.fetch("CHECKIN_PORT", nil),
+                      scheme: ENV.fetch("CHECKIN_SCHEME", "https"),
+                      host: ENV.fetch("CHECKIN_HOST"),
+                      identifier: ENV.fetch("CHECKIN_IDENTIFIER"),
+                      secret: ENV.fetch("CHECKIN_SECRET"),
+                      redirect_uri: ENV.fetch("REDIRECT_URI"),
+                      authorization_endpoint: ENV.fetch("CHECKIN_AUTHORIZATION_ENDPOINT", "/authorize"),
+                      token_endpoint: ENV.fetch("CHECKIN_TOKEN_ENDPOINT", "/token"),
+                      userinfo_endpoint: ENV.fetch("CHECKIN_USERINFO_ENDPOINT", "/userinfo"),
+                      jwks_uri: ENV.fetch("CHECKIN_JWKS_URI", "/jwk"),
+                      end_session_endpoint: ENV.fetch("CHECKIN_END_SESSION_ENDPOINT", "/logout")
+                    }
+  else
+    config.omniauth :openid_connect,
+                    name: :checkin,
+                    scope: scope,
+                    response_type: :code,
+                    issuer: ENV["CHECKIN_ISSUER_URI"] ||
+                            "https://#{checkin_host}/#{ENV["CHECKIN_ISSUER_ENDPOINT"] || endpoints[:issuer]}",
+                    discovery: true,
+                    pkce: ENV["CHECKIN_PKCE"] || false,
+                    become_vo_member_url: ENV["BECOME_VO_MEMBER_URL"] || endpoints[:become_vo_member],
+                    client_options: {
+                      port: nil,
+                      scheme: "https",
+                      host: checkin_host,
+                      identifier: ENV["CHECKIN_IDENTIFIER"] || checkin_credentials[:identifier],
+                      secret: ENV["CHECKIN_SECRET"] || checkin_credentials[:secret],
+                      redirect_uri: ENV["REDIRECT_URI"] ||
+                                    "#{root_url}/users/auth/checkin/callback",
+                      authorization_endpoint: ENV["CHECKIN_AUTHORIZATION_ENDPOINT"] || endpoints[:authorize],
+                      token_endpoint: ENV["CHECKIN_TOKEN_ENDPOINT"] || endpoints[:token],
+                      userinfo_endpoint: ENV["CHECKIN_USERINFO_ENDPOINT"] || endpoints[:userinfo],
+                      jwks_uri: ENV["CHECKIN_JWKS_ENDPOINT"] || ENV["CHECKIN_JWK_ENDPOINT"] || endpoints[:jwk],
+                      introspection_uri: ENV["INTROSPECTION_ENDPOINT"] || "https://#{checkin_host}/#{endpoints[:introspection]}"
+                    }
+  end
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

@@ -273,6 +273,24 @@ ESS and ordering API:
   variant runs pass locally (489 examples each).
 - Spring removed (gems, `bin/spring`, `config/spring.rb`, the loader in
   `bin/rspec`): a running preloader served stale code between runs.
+- Synchronised with the three `development` branches on 2026-09-21:
+  `marketplace` `604134d3` (4.6.0, merged), `pl-marketplace` `ce767a21`,
+  `whitelabel-marketplace` `6022b264`.
+  - pl: deleted providers are hidden from the backoffice list, and
+    `Backoffice::ServicesController#index` authorizes after
+    `authenticate_user!` (an unauthenticated user goes through Check-in and
+    comes back), both under `Mp::Variant.pl?`; the matching views come from
+    the customization directory. The provider pid on saves without validation
+    and the `Provider::Draft` fix were already here.
+  - whitelabel (#266): its Check-in provider block (mandatory ENV, Keycloak
+    defaults, `CHECKIN_DISCOVERY`, `CHECKIN_PORT`, `CHECKIN_SCHEME`,
+    `CHECKIN_JWKS_URI`, `CHECKIN_END_SESSION_ENDPOINT`) is used under
+    `whitelabel`. `Importers::ClientCredentialsToken` takes the token endpoint
+    from that configuration (discovery or client options) and
+    `import:authorize` always fetches a token when `MP_IMPORT_TOKEN` is blank,
+    both under `Mp::Variant.whitelabel?`. `.env.test` and `.env.build` carry
+    dummy values for the mandatory variables (test boot, Docker asset
+    precompilation).
 
 ## Next steps
 
@@ -302,6 +320,10 @@ Found by comparing `app/`, `lib/` and `config/` of this branch with
 - [ ] Check marketplace and whitelabel production databases for duplicate
       provider pids (the pid migration aborts on duplicates; the pl testing
       dump only had blank ones, which are backfilled).
+- [ ] The `Dockerfile` runs `assets:precompile` in production without
+      `MARKETPLACE_VARIANT`, which `config/initializers/variants.rb` refuses,
+      and without `CUSTOMIZATION_PATH`. An image build needs both (build
+      arguments, one image per deployment).
 - [ ] Keep per-deployment settings: PL's EOSC Commons URL and recommendation
       setting, whitelabel's HTTPS federation URL and `EOSC_EXPLORE_BASE_URL`,
       STOMP/JMS, monitoring, BOS and import settings, `RECAPTCHA_*` keys.
