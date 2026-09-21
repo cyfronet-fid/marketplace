@@ -131,7 +131,7 @@ gated.
   `controllers/form_redirect_controller.js`; pl's `dialog` Stimulus
   controller is in the repository bundle. The directories themselves live
   next to the repositories (`pl-customization`, `whitelabel-customization`,
-  built by `assemble_customization.sh`).
+  built by `lib/versions/assemble_customization.sh`).
 - Helpers the pl/whitelabel views call — `Presentable::DetailsHelper` returns
   pl's V5 detail sections under `pl` and carries the datasource policy,
   persistent identity system and research product sections everywhere;
