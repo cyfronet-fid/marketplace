@@ -6,7 +6,7 @@
 # Usage:
 #   smoke_test.sh [base-url]        default http://localhost:5000
 #
-#   run_pl_env.sh                   # in another terminal: start the application
+#   run_variant_env.sh <variant>    # in another terminal: start the application
 #   smoke_test.sh
 #   ruby crawl_pages.rb http://localhost:5000 "${TMPDIR:-/tmp}/mp_smoke_cookies_5000.txt"
 #                                   # optional: follow every link with the same session

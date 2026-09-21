@@ -216,10 +216,9 @@ ESS and ordering API:
   for every variant and are simply unused on pl/whitelabel; `Offer` here is
   the polymorphic superset of both other repos (`service`/`service=` compat
   accessors), so nothing was ported from them.
-- Customization directories assembled (2026-09-17) as
-  `/Users/zlekki/Projects/cyfronet/pl-customization` and
+- Customization directories assembled (2026-09-17) as `pl-customization` and
   `whitelabel-customization` (siblings of the repositories, inside none) by
-  `assemble_customization.sh` next to them: the views that differ or are
+  `lib/versions/assemble_customization.sh`: the views that differ or are
   missing here (169 pl / 164 whitelabel entries), locales (2 / 3), images
   (37 / 20), the seven stylesheet partials and the JavaScript files that
   differ (3 / 5). Verified: the CSS and JS bundles build with each
