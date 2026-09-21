@@ -3,6 +3,10 @@
 class Vocabulary < ApplicationRecord
   include Parentable
 
+  # pl's and whitelabel's vocabulary form has a logo field (Backoffice::VocabularyPolicy
+  # permits it on every variant); marketplace's form does not show it.
+  has_one_attached :logo
+
   has_many :service_vocabularies, dependent: :destroy
   has_many :services, through: :service_vocabularies
   has_many :catalogue_vocabularies, dependent: :destroy

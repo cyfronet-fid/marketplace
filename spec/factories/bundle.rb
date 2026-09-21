@@ -17,6 +17,8 @@ FactoryBot.define do
     sequence(:service) { |_n| main_offer.service }
     sequence(:resource_organisation) { |_n| service.resource_organisation }
     sequence(:marketplace_locations) { |_n| [create(:marketplace_location)] }
+    # pl and whitelabel validate research activities instead of marketplace locations.
+    sequence(:research_activities) { |_n| [create(:research_activity)] }
     sequence(:offers) { |_n| [create(:offer)] }
     sequence(:scientific_domains) { |_n| [create(:child_scientific_domain)] }
     sequence(:helpdesk_url) { |n| "https://example#{n}.com" }

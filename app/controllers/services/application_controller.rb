@@ -2,13 +2,16 @@
 
 class Services::ApplicationController < ApplicationController
   before_action :authenticate_user!
-  before_action :check_vo_membership!
+  # Checkin VO membership is a marketplace requirement; pl and whitelabel
+  # have no such step and their sessions carry no token.
+  before_action :check_vo_membership!, if: -> { Mp::Variant.marketplace? }
   before_action :load_and_authenticate_service!
   before_action :saved_state
 
   layout "order"
 
   attr_reader :wizard
+
   helper_method :wizard_title
   helper_method :step_for
   helper_method :step_key, :prev_visible_step_key
@@ -38,11 +41,16 @@ class Services::ApplicationController < ApplicationController
   end
 
   def check_vo_membership!
+    # The development auth mock has no Checkin token to introspect.
+    return if Rails.env.development? && Mp::Application.config.auth_mock
+
     token = session["token"]
 
     unless token.present?
       Rails.logger.warn("Missing check-in token in session")
-      redirect_to destroy_user_session_path, alert: "Your session has expired. Please sign in again."
+      # The callback stores the token and returns the user to this page
+      # (Devise::StoreLocation), so the session survives.
+      redirect_to user_checkin_omniauth_authorize_path
       return
     end
 
@@ -115,9 +123,9 @@ class Services::ApplicationController < ApplicationController
   def save_in_session(step)
     session[session_key] = step.project_item.attributes
     session[session_key][:bundled_parameters] = step.project_item.bundled_parameters.transform_keys(&:id) if step
-      .project_item
-      .bundled_parameters
-      .present?
+                                                                                                             .project_item
+                                                                                                             .bundled_parameters
+                                                                                                             .present?
   end
 
   def saved_state

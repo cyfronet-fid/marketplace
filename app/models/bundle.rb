@@ -34,6 +34,11 @@ class Bundle < ApplicationRecord
            through: :bundle_vocabularies,
            source: :vocabulary,
            source_type: "Vocabulary::MarketplaceLocation"
+  # pl and whitelabel replaced marketplace locations with research activities.
+  has_many :research_activities,
+           through: :bundle_vocabularies,
+           source: :vocabulary,
+           source_type: "Vocabulary::ResearchActivity"
   has_many :bundle_goals, through: :bundle_vocabularies, source: :vocabulary, source_type: "Vocabulary::BundleGoal"
   has_many :capabilities_of_goals,
            through: :bundle_vocabularies,
@@ -67,7 +72,15 @@ class Bundle < ApplicationRecord
             length: {
               minimum: 1,
               message: "are required. Please add at least one"
-            }
+            },
+            if: -> { Mp::Variant.marketplace? }
+  validates :research_activities,
+            presence: true,
+            length: {
+              minimum: 1,
+              message: "are required. Please add at least one"
+            },
+            unless: -> { Mp::Variant.marketplace? }
   validates :order_type, presence: true
   validates :main_offer, presence: true
   unless draft

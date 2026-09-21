@@ -144,6 +144,8 @@ Rails.application.routes.draw do
           resource :publish, controller: "offers/publishes", only: :create
           resource :draft, controller: "offers/drafts", only: :create
           resource :summary, controller: "offers/summaries", only: %i[create update]
+          # pl's and whitelabel's offer form exits through it.
+          post :exit unless Mp::Variant.marketplace?
         end
         resources :bundles do
           resource :publish, controller: "bundles/publishes", only: :create
