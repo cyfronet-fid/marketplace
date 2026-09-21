@@ -26,15 +26,20 @@ RSpec.describe Ams::DecodeMessage do
 
     context "when the decoded value is not valid JSON" do
       let(:message) { { "data" => Base64.strict_encode64("not json") } }
+      let(:logger) { instance_spy(ActiveSupport::Logger) }
+
+      before do
+        allow(Rails.logger).to receive(:tagged).with("[AMS]").and_return(logger)
+      end
 
       it "returns the original message unchanged" do
         expect(decode_message).to eq(message)
       end
 
       it "logs the failure" do
-        allow(Ams::Logger).to receive(:error)
         decode_message
-        expect(Ams::Logger).to have_received(:error).with(/Failed to decode AMS message/)
+
+        expect(logger).to have_received(:error).with(/Failed to decode AMS message/)
       end
     end
 

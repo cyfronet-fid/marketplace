@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [4.6.0](https://github.com/cyfronet-fid/marketplace/compare/v4.5.0...v4.6.0) (2026-09-14)
+
+
+### Features
+
+* **ams:** add tagged logging to sync pipeline ([#3777](https://github.com/cyfronet-fid/marketplace/issues/3777)) ([945f6e2](https://github.com/cyfronet-fid/marketplace/commit/945f6e2be43356f18ff6e4c36548e473dff9bc45))
+
 ## [4.5.0](https://github.com/cyfronet-fid/marketplace/compare/v4.4.7...v4.5.0) (2026-09-07)
 
 
