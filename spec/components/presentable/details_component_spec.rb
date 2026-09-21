@@ -39,7 +39,7 @@ RSpec.describe Presentable::DetailsComponent, type: :component do
         .new(resource_type: "Service")
         .tap do |service|
           service.define_singleton_method(:sqa) { [{ name: "SQA badge", url: "https://example.org/sqa" }] }
-          service.define_singleton_method(:keywords) { %w[Cloud FAIR] }
+          service.define_singleton_method(:keywords) { ["Data & AI", "FAIR"] }
           service.define_singleton_method(:learning_outcomes) { ["Understand FAIR principles"] }
           service.define_singleton_method(:configuration_templates) do
             [{ pid: "eosc.ct.fair.v1", url: "https://example.org/template" }]
@@ -52,12 +52,24 @@ RSpec.describe Presentable::DetailsComponent, type: :component do
       rendered_component
 
       expect(page).to have_css(".details-box.sqa", text: "SQA badge")
-      expect(page).to have_css(".details-box.keywords", text: "Cloud")
+      expect(page).to have_css(".details-box.keywords", text: "Data & AI")
       expect(page).to have_css(".details-box.persistent_identifiers", text: "10.1234/test")
       expect(page).to have_css(".details-box.learning_outcomes", text: "Understand FAIR principles")
       expect(page).to have_css(".details-box.configuration_template", text: "eosc.ct.fair.v1")
       expect(page).to have_link("SQA badge", href: "https://example.org/sqa")
       expect(page).to have_link("eosc.ct.fair.v1", href: "https://example.org/template")
+    end
+
+    it "URL-encodes keyword values for external search links" do
+      allow_any_instance_of(described_class).to receive(:external_search_enabled).and_return(true)
+      allow(Mp::Application.config).to receive(:search_service_base_url).and_return("https://search.example.com")
+
+      rendered_component
+
+      expect(page).to have_link(
+        "Data & AI",
+        href: "https://search.example.com/search/service?q=*&fq=tag_list:%22Data%20%26%20AI%22"
+      )
     end
 
     it "does not render provider-only multimedia resources for a service" do

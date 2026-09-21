@@ -62,7 +62,7 @@
       .details-content
         .taglist-holder
           - keywords.map { |keyword| metadata_value(keyword, :name, :label, :value) || keyword.to_s }.sort.each do |keyword|
-            = link_to keyword, services_filter_link(keyword, keyword), class: "badge badge-light"
+            = link_to keyword, services_filter_link(keyword, ERB::Util.url_encode(keyword)), class: "badge badge-light"
 
   - if catalogue?
     .details-box.location
