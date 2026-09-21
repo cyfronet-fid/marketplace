@@ -6,7 +6,10 @@ namespace :import do
   desc "Imports services data from external providers"
 
   task authorize: :environment do
-    if ENV["MP_IMPORT_TOKEN"].present?
+    # whitelabel always imports with a client credentials token.
+    if Mp::Variant.whitelabel?
+      ENV["MP_IMPORT_TOKEN"] = Importers::ClientCredentialsToken.new.receive_token if ENV["MP_IMPORT_TOKEN"].blank?
+    elsif ENV["MP_IMPORT_TOKEN"].present?
       next
     elsif Importers::ClientCredentialsToken.partially_configured?
       Importers::ClientCredentialsToken.new.receive_token

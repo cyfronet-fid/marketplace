@@ -12,7 +12,9 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
 
   def index
     authorize(Provider)
-    @pagy, @providers = pagy(policy_scope(Provider).order(:name))
+    # pl removes a deleted provider from the list (its destroy turbo stream drops the list item).
+    providers = Mp::Variant.pl? ? Provider.where.not(status: "deleted") : Provider
+    @pagy, @providers = pagy(policy_scope(providers).order(:name))
     @approval_requests = policy_scope(ApprovalRequest.includes(:approvable).active.order(created_at: :desc))
   end
 
