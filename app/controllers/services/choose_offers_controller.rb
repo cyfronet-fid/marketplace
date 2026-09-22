@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Services::ChooseOffersController < Services::ApplicationController
-  prepend_before_action :check_vo_membership!
+  before_action :check_vo_membership!
 
   def show
     pi_init = params[:customizable_project_item]
@@ -57,8 +57,7 @@ class Services::ChooseOffersController < Services::ApplicationController
     when :misconfiguration
       redirect_to root_path, alert: _("We can't verify your VO membership. Please contact admin.")
     when :session_expired
-      sign_out(current_user)
-      redirect_to root_path, alert: _("Your session has expired. Please sign in again.")
+      redirect_to user_checkin_omniauth_authorize_path
     when :verification_failed
       redirect_to root_path, alert: _("Your VO membership verification has failed.")
     when :not_member

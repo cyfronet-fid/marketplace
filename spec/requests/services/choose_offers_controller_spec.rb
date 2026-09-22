@@ -11,7 +11,24 @@ RSpec.describe "Services::ChooseOffersController functionality", type: :request 
   before { sign_in(user) }
 
   describe "#check_vo_membership!" do
-    before { allow(Checkin::CheckVoMembership).to receive(:call).and_return(check_vo_membership_result) }
+    before do
+      allow(Checkin::CheckVoMembership).to receive(:call).and_return(check_vo_membership_result)
+      create(
+        :offer,
+        service: service_resource,
+        deployable_service: nil,
+        offer_category: service_category,
+        status: :published
+      )
+      create(
+        :offer,
+        service: service_resource,
+        deployable_service: nil,
+        offer_category: service_category,
+        name: "Alternative Offer",
+        status: :published
+      )
+    end
 
     context "when the status is misconfiguration" do
       let(:check_vo_membership_result) { Checkin::CheckVoMembership::CheckResult.new(status: :misconfiguration) }
@@ -32,16 +49,7 @@ RSpec.describe "Services::ChooseOffersController functionality", type: :request 
 
       before { get service_choose_offer_path(service_resource) }
 
-      it "redirects to root" do
-        expect(response).to redirect_to(root_path)
-      end
-
-      it "sets an expired session alert" do
-        expect(flash[:alert]).to eq("Your session has expired. Please sign in again.")
-      end
-
-      it "signs the user out" do
-        get service_choose_offer_path(service_resource)
+      it "redirects to Check-in to re-authenticate" do
         expect(response).to redirect_to(user_checkin_omniauth_authorize_path)
       end
     end
@@ -75,24 +83,6 @@ RSpec.describe "Services::ChooseOffersController functionality", type: :request 
     context "when the status is member" do
       let(:check_vo_membership_result) { Checkin::CheckVoMembership::CheckResult.new(status: :member) }
 
-      before do
-        create(
-          :offer,
-          service: service_resource,
-          deployable_service: nil,
-          offer_category: service_category,
-          status: :published
-        )
-        create(
-          :offer,
-          service: service_resource,
-          deployable_service: nil,
-          offer_category: service_category,
-          name: "Alternative Offer",
-          status: :published
-        )
-      end
-
       it "proceeds to the requested action" do
         get service_choose_offer_path(service_resource)
         expect(response).to have_http_status(:success)
@@ -105,21 +95,6 @@ RSpec.describe "Services::ChooseOffersController functionality", type: :request 
       before do
         allow(Rails.logger).to receive(:tagged).and_call_original
         allow(Rails.logger).to receive(:tagged).with("CHECKIN").and_return(instance_spy(ActiveSupport::Logger))
-        create(
-          :offer,
-          service: service_resource,
-          deployable_service: nil,
-          offer_category: service_category,
-          status: :published
-        )
-        create(
-          :offer,
-          service: service_resource,
-          deployable_service: nil,
-          offer_category: service_category,
-          name: "Alternative Offer",
-          status: :published
-        )
       end
 
       it "logs a warning" do
