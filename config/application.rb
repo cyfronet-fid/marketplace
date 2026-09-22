@@ -72,7 +72,7 @@ module Mp
     config.monitoring_data_enabled = ActiveModel::Type::Boolean.new.cast(ENV.fetch("MONITORING_DATA_ENABLED", false))
     config.monitoring_data_host = ENV.fetch("MONITORING_DATA_URL", "https://api.devel.argo.grnet.gr/api")
     config.monitoring_data_token = ENV.fetch("MONITORING_DATA_TOKEN",
-                                             Rails.application.credentials.monitoring_data[:access_token])
+                                             Rails.application.credentials.dig(:monitoring_data, :access_token))
     config.monitoring_data_ui_url = ENV.fetch("MONITORING_DATA_UI_URL", "https://eosc.ui.devel.argo.grnet.gr")
     config.monitoring_data_path = ENV.fetch("MONITORING_DATA_UI_PATH",
                                             "eosc/report-ar-group-details/Default/SERVICEGROUPS/")
