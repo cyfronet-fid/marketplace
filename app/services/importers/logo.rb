@@ -4,6 +4,7 @@ require "image_processing/vips"
 require "timeout"
 
 class Importers::Logo < ApplicationService
+  USER_AGENT = "Ruby/OpenURI"
   PNG_CONTENT_TYPE = "image/png"
   SVG_CONTENT_TYPE = "image/svg+xml"
   TTL = 10
@@ -34,7 +35,7 @@ class Importers::Logo < ApplicationService
   private
 
   def fetch_file_from_url
-    URI.parse(@url).open
+    URI.parse(@url).open("User-Agent" => USER_AGENT)
   rescue URI::InvalidURIError, OpenURI::HTTPError, Errno::EHOSTUNREACH, SocketError, Timeout::Error => e
     Rails.logger.error "Error on fetching logo from #{@url}: #{e.message}"
 

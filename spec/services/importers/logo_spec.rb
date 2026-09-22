@@ -13,7 +13,9 @@ RSpec.describe Importers::Logo, :backend do
   describe "#call" do
     context "when image is valid" do
       before do
-        stub_request(:get, url).to_return(body: "png-bytes", headers: { "Content-Type" => "image/png" })
+        stub_request(:get, url)
+          .with(headers: { "User-Agent" => "Ruby/OpenURI" })
+          .to_return(body: "png-bytes", headers: { "Content-Type" => "image/png" })
       end
 
       it "returns element of proper content type" do
@@ -37,7 +39,9 @@ RSpec.describe Importers::Logo, :backend do
 
     context "when image is svg" do
       before do
-        stub_request(:get, url).to_return(body: "<svg></svg>", headers: { "Content-Type" => "image/svg+xml" })
+        stub_request(:get, url)
+          .with(headers: { "User-Agent" => "Ruby/OpenURI" })
+          .to_return(body: "<svg></svg>", headers: { "Content-Type" => "image/svg+xml" })
       end
 
       it "returns element of proper content type" do
@@ -77,7 +81,9 @@ RSpec.describe Importers::Logo, :backend do
 
     context "when url is unreachable" do
       before do
-        stub_request(:get, url).to_raise(Errno::EHOSTUNREACH)
+        stub_request(:get, url)
+          .with(headers: { "User-Agent" => "Ruby/OpenURI" })
+          .to_raise(Errno::EHOSTUNREACH)
       end
 
       it "returns nil" do
@@ -87,7 +93,9 @@ RSpec.describe Importers::Logo, :backend do
 
     context "when url does not point to an image" do
       before do
-        stub_request(:get, url).to_return(body: "<html></html>", headers: { "Content-Type" => "text/html" })
+        stub_request(:get, url)
+          .with(headers: { "User-Agent" => "Ruby/OpenURI" })
+          .to_return(body: "<html></html>", headers: { "Content-Type" => "text/html" })
       end
 
       it "returns nil" do
@@ -97,7 +105,9 @@ RSpec.describe Importers::Logo, :backend do
 
     context "when response has no content type" do
       before do
-        stub_request(:get, url).to_return(body: "png-bytes")
+        stub_request(:get, url)
+          .with(headers: { "User-Agent" => "Ruby/OpenURI" })
+          .to_return(body: "png-bytes")
       end
 
       it "returns nil" do
@@ -107,7 +117,9 @@ RSpec.describe Importers::Logo, :backend do
 
     context "when response status is 404" do
       before do
-        stub_request(:get, url).to_return(status: 404)
+        stub_request(:get, url)
+          .with(headers: { "User-Agent" => "Ruby/OpenURI" })
+          .to_return(status: 404)
       end
 
       it "returns nil" do
@@ -117,7 +129,9 @@ RSpec.describe Importers::Logo, :backend do
 
     context "when socket error occurs" do
       before do
-        stub_request(:get, url).to_raise(SocketError)
+        stub_request(:get, url)
+          .with(headers: { "User-Agent" => "Ruby/OpenURI" })
+          .to_raise(SocketError)
       end
 
       it "returns nil" do
@@ -127,7 +141,9 @@ RSpec.describe Importers::Logo, :backend do
 
     context "when timeout error occurs" do
       before do
-        stub_request(:get, url).to_timeout
+        stub_request(:get, url)
+          .with(headers: { "User-Agent" => "Ruby/OpenURI" })
+          .to_timeout
       end
 
       it "returns nil" do
@@ -138,7 +154,10 @@ RSpec.describe Importers::Logo, :backend do
     context "when the image bytes are corrupt" do
       before do
         allow(Vips::Image).to receive(:new_from_buffer).and_raise(Vips::Error, "bad image data")
-        stub_request(:get, url).to_return(body: "corrupt-bytes", headers: { "Content-Type" => "image/png" })
+
+        stub_request(:get, url)
+          .with(headers: { "User-Agent" => "Ruby/OpenURI" })
+          .to_return(body: "corrupt-bytes", headers: { "Content-Type" => "image/png" })
       end
 
       it "returns nil" do
