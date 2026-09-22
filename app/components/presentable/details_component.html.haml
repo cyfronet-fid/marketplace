@@ -41,7 +41,7 @@
             - url = metadata_value(entry, :url, :website)
             %li.d-flex.flex-column
               %span.list-title
-                - if UrlHelper.url?(url)
+                - if valid_url?(url)
                   = link_to label, url, target: "_blank", rel: "noopener"
                 - else
                   = label
@@ -101,7 +101,7 @@
             - @object.link_multimedia_urls.each do |link|
               %li
                 - label = link.name.presence || link.url
-                - if UrlHelper.url?(link.url)
+                - if valid_url?(link.url)
                   = link_to(label, link.url, target: "_blank", rel: "noopener")
                 - else
                   = label
@@ -171,7 +171,7 @@
             %li.d-flex.flex-column
               %span.list-title Configuration template PID
               %span
-                - if UrlHelper.url?(url)
+                - if valid_url?(url)
                   = link_to label, url, target: "_blank", rel: "noopener"
                 - else
                   = label

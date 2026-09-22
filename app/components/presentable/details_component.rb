@@ -83,6 +83,10 @@ class Presentable::DetailsComponent < ApplicationComponent
     nil
   end
 
+  def valid_url?(url)
+    ::UrlHelper.url?(url)
+  end
+
   private
 
   def metadata_entries(*attributes)
