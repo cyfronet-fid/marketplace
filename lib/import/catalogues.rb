@@ -53,7 +53,7 @@ class Import::Catalogues
         set_logo(current_catalogue, external_data.dig("catalogue", "logo"))
         current_catalogue.save!
         log "[INFO] Catalogue: #{parsed_catalogue_data[:name]}, " +
-              "eid: #{parsed_catalogue_data[:pid]} updated successfully"
+            "eid: #{parsed_catalogue_data[:pid]} updated successfully"
       end
     rescue ActiveRecord::RecordInvalid
       log "[WARN] Catalogue #{parsed_catalogue_data[:name]},

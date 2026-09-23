@@ -7834,68 +7834,91 @@ abbr[title] {
   }
 
   .federated {
-    padding: 20px 0 110px;
+    padding: 80px 0 60px;
 
-    .federated-media {
-      background-image: url("landing_page/media-bg.jpg");
-      background-size: 100% auto;
-      height: 407px;
+    .federated-intro {
+      max-width: 800px;
 
       h3 {
         font-size: 32px;
-        line-height: 38px;
         font-weight: 600;
-        color: $palette-white;
-        margin: 80px 0 10px;
-
-        span {
-          color: $custom-30;
-        }
-      }
-
-      .description {
-        font-weight: 400;
-        max-width: 330px;
-        font-size: 14px;
-        line-height: 20px;
-        color: $palette-white;
-        margin: 0 0 25px;
-      }
-
-      .btn-primary {
-        background: $palette-white;
+        margin: 0 0 20px;
+        line-height: 140%;
+        letter-spacing: -0.64px;
         color: $custom-12;
-        border: 1px solid $palette-white;
+      }
 
-        &:hover {
-          background: $landing-04;
-          color: $landing-03;
-          border-color: $palette-white;
-        }
+      p {
+        font-size: 14px;
+        line-height: 142%;
+        color: $custom-35;
       }
     }
+
+
   }
 
-  .support {
-    padding: 10px 0 140px;
+  .nodes {
+    padding: 0 0 90px;
 
     h3 {
-      font-size: 32px;
-      line-height: 38px;
+      font-size: 24px;
+      line-height: 140%;
       font-weight: 600;
-      margin: 40px 0 25px;
-    }
-
-    .description {
-      font-weight: 400;
-      font-size: 20px;
-      line-height: 24px;
       margin: 0 0 25px;
     }
 
-    .img-fluid {
-      border-radius: 32px;
+    .node-list {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin: 0 auto;
     }
+
+    .node-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 16px;
+      border: 1px solid $custom-36;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .node-item:hover {
+      border-color: $custom-9;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+      text-decoration: none;
+      color: $custom-1;
+    }
+
+    .node-item.is-link {
+      color: $custom-12;
+    }
+
+    .node-item__icon {
+      width: 22px;
+      height: 22px;
+      flex: 0 0 auto;
+      object-fit: contain;
+    }
+
+    .node-item__name {
+      line-height: 1.2;
+    }
+
+    /* Responsywność: mniej kolumn na węższych ekranach, dzielnik znika (nie ma już sensu) */
+    @media (max-width: 767px) {
+      .node-list {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .node-item:nth-child(4n + 3)::before {
+        display: none;
+      }
+    }
+
   }
 
   .eosc-navy {
