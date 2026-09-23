@@ -8,7 +8,7 @@
 #
 #   run_variant_env.sh <variant>    # in another terminal: start the application
 #   smoke_test.sh
-#   ruby crawl_pages.rb http://localhost:5000 "${TMPDIR:-/tmp}/mp_smoke_cookies_5000.txt"
+#   rake "smoke:crawl[http://localhost:5000,${TMPDIR:-/tmp}/mp_smoke_cookies_5000.txt]"
 #                                   # optional: follow every link with the same session
 #
 # Login: development has no password form; the auth mock (AUTH_MOCK=true in
