@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [4.6.1](https://github.com/cyfronet-fid/marketplace/compare/v4.6.0...v4.6.1) (2026-09-23)
+
+
+### Bug Fixes
+
+* [[#3765](https://github.com/cyfronet-fid/marketplace/issues/3765)] handle actual AMS/import payload shape for catalogue ([#3778](https://github.com/cyfronet-fid/marketplace/issues/3778)) ([ce9f206](https://github.com/cyfronet-fid/marketplace/commit/ce9f2067ec83245730e8296e472f255b8bc9b52e))
+* **importers:** [[#3769](https://github.com/cyfronet-fid/marketplace/issues/3769)] send User-Agent header when fetching logos ([#3784](https://github.com/cyfronet-fid/marketplace/issues/3784)) ([0c85db0](https://github.com/cyfronet-fid/marketplace/commit/0c85db06ff2b995c798c840d9df842662f1fc212))
+
 ## [4.6.0](https://github.com/cyfronet-fid/marketplace/compare/v4.5.0...v4.6.0) (2026-09-14)
 
 
