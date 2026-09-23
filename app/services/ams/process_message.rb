@@ -63,14 +63,14 @@ module Ams
       job = JOBS_MAP.dig(resource, :create_or_update_job)
       return job.perform_later(message.dig("data", resource_key), status, modified_at) if job
 
-      Rails.logger.tagged("[AMS]").warn("Unsupported '#{action}' for resource '#{resource}'")
+      Rails.logger.tagged("AMS").warn("Unsupported '#{action}' for resource '#{resource}'")
     end
 
     def delete_later
       job = JOBS_MAP.dig(resource, :delete_job)
       return job.perform_later(message.dig("data", "id")) if job
 
-      Rails.logger.tagged("[AMS]").warn("Unsupported '#{action}' for resource '#{resource}'")
+      Rails.logger.tagged("AMS").warn("Unsupported '#{action}' for resource '#{resource}'")
     end
 
     def modified_at

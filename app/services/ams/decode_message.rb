@@ -16,7 +16,7 @@ module Ams
 
       message_copy
     rescue JSON::ParserError => e
-      Rails.logger.tagged("[AMS]").error("Failed to decode AMS message: #{e.message}")
+      Rails.logger.tagged("AMS").error("Failed to decode AMS message: #{e.message}")
 
       message
     end
