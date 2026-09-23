@@ -8,41 +8,41 @@ describe Import::Providers, backend: true do
   let(:test_url) { "https://localhost/api" }
   let(:faraday) { Faraday }
 
-  def make_and_stub_eosc_registry(ids: [], dry_run: false, filepath: nil, log: false, default_upstream: nil)
+  let(:ids) { [] }
+  let(:dry_run) { false }
+  let(:filepath) { nil }
+  let(:default_upstream) { nil }
+  let(:log) { false }
+
+  let(:eosc_registry_options) do
     options = { dry_run: dry_run, ids: ids, filepath: filepath, faraday: faraday }
-
     options[:logger] = ->(_msg) {} unless log
-
     options[:default_upstream] = default_upstream if default_upstream
-
-    eosc_registry = Import::Providers.new(test_url, **options)
-
-    stub_http_file(
-      eosc_registry,
-      "PhenoMeNal_logo.png",
-      "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png"
-    )
-
-    stub_http_file(eosc_registry, "MetalPDB.png", "http://metalweb.cerm.unifi.it/global/images/MetalPDB.png")
-
-    stub_http_file(
-      eosc_registry,
-      "PDB_logo_rect_medium.svg",
-      "https://pdb-redo.eu/images/PDB_logo_rect_medium.svg",
-      content_type: "image/svg+xml"
-    )
-
-    eosc_registry
+    options
   end
 
-  def stub_http_file(eosc_registry, file_fixture_name, url, content_type: "image/png")
-    r = File.open(file_fixture(file_fixture_name))
-    r.define_singleton_method(:content_type) { content_type }
-    allow(eosc_registry).to receive(:open).with(url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).and_return(r)
+  let(:eosc_registry) { Import::Providers.new(test_url, **eosc_registry_options) }
+
+  before do
+    stub_request(:get, "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png").to_return(
+      status: 200,
+      body: File.binread(file_fixture("PhenoMeNal_logo.png")),
+      headers: { "Content-Type" => "image/png" }
+    )
+
+    stub_request(:get, "http://metalweb.cerm.unifi.it/global/images/MetalPDB.png").to_return(
+      status: 200,
+      body: File.binread(file_fixture("MetalPDB.png")),
+      headers: { "Content-Type" => "image/png" }
+    )
+
+    stub_request(:get, "https://pdb-redo.eu/images/PDB_logo_rect_medium.svg").to_return(
+      status: 200,
+      body: File.binread(file_fixture("PDB_logo_rect_medium.svg")),
+      headers: { "Content-Type" => "image/svg+xml" }
+    )
   end
 
-  let(:eosc_registry) { make_and_stub_eosc_registry(log: true) }
-  let(:log_less_eosc_registry) { make_and_stub_eosc_registry(log: false) }
   let!(:scientific_domain_other) { create(:scientific_domain, name: "Other", eid: "scientific_subdomain-other-other") }
   let!(:target_user_other) { create(:target_user, name: "Other", eid: "target_user-other") }
   let!(:storage) { create(:category, name: "Storage") }
@@ -83,7 +83,8 @@ describe Import::Providers, backend: true do
     it "should abort if /api/services errored" do
       response = double(status: 500, body: {})
       expect_responses(test_url, response)
-      expect { log_less_eosc_registry.call }.to raise_error(SystemExit).and output.to_stderr
+      mock_access_token
+      expect { eosc_registry.call }.to raise_error(SystemExit).and output.to_stderr
     end
   end
 
@@ -102,64 +103,63 @@ describe Import::Providers, backend: true do
       mock_access_token
     end
 
-    it "should not update provider which has upstream to null" do
-      provider = create(:provider)
-      create(:provider_source, eid: "phenomenal", provider_id: provider.id, source_type: "eosc_registry")
-      provider.update!(upstream_id: nil)
+    context "when provider has upstream set to null" do
+      let(:default_upstream) { :mp }
+      let(:ids) { ["phenomenal"] }
+      let(:log) { true }
 
-      eosc_registry = make_and_stub_eosc_registry(default_upstream: :mp, ids: ["phenomenal"], log: true)
+      it "should not update provider which has upstream to null" do
+        provider = create(:provider)
+        create(:provider_source, eid: "phenomenal", provider_id: provider.id, source_type: "eosc_registry")
+        provider.update!(upstream_id: nil)
 
-      expect { eosc_registry.call }.to output(
-        /PROCESSED: 1, CREATED: 0, UPDATED: 0, NOT MODIFIED: 1$/
-      ).to_stdout.and change { Provider.count }.by(0)
+        expect { eosc_registry.call }.to output(
+          /PROCESSED: 1, CREATED: 0, UPDATED: 0, NOT MODIFIED: 1$/
+        ).to_stdout.and change { Provider.count }.by(0)
+      end
     end
 
-    it "should update provider which has upstream to external id" do
-      provider = create(:provider)
-      source = create(:provider_source, eid: "phenomenal", provider_id: provider.id, source_type: "eosc_registry")
-      provider.update!(upstream_id: source.id)
+    context "when provider has upstream set to an external id" do
+      let(:ids) { ["phenomenal"] }
+      let(:log) { true }
 
-      provider.reload
+      it "should update provider which has upstream to external id" do
+        provider = create(:provider)
+        source = create(:provider_source, eid: "phenomenal", provider_id: provider.id, source_type: "eosc_registry")
+        provider.update!(upstream_id: source.id)
 
-      eosc_registry = make_and_stub_eosc_registry(ids: ["phenomenal"], log: true)
+        provider.reload
 
-      expect { eosc_registry.call }.to output(
-        /PROCESSED: 1, CREATED: 0, UPDATED: 1, NOT MODIFIED: 0$/
-      ).to_stdout.and change { Provider.count }.by(0)
+        expect { eosc_registry.call }.to output(
+          /PROCESSED: 1, CREATED: 0, UPDATED: 1, NOT MODIFIED: 0$/
+        ).to_stdout.and change { Provider.count }.by(0)
+      end
     end
 
-    it "should not change db if dry_run is set to true" do
-      eosc_registry = make_and_stub_eosc_registry(dry_run: true, log: true)
-      expect { eosc_registry.call }.to output(
-        /PROCESSED: 4, CREATED: 3, UPDATED: 0, NOT MODIFIED: 1$/
-      ).to_stdout.and change { Provider.count }.by(0)
+    context "when dry_run is set to true" do
+      let(:dry_run) { true }
+      let(:log) { true }
+
+      it "should not change db" do
+        expect { eosc_registry.call }.to output(
+          /PROCESSED: 4, CREATED: 3, UPDATED: 0, NOT MODIFIED: 1$/
+        ).to_stdout.and change { Provider.count }.by(0)
+      end
     end
 
-    it "should filter by ids if they are provided" do
-      eosc_registry = make_and_stub_eosc_registry(ids: ["phenomenal"])
-      expect { eosc_registry.call }.to change { Provider.count }.by(1)
-      expect(Provider.last.name).to eq("Phenomenal")
-    end
+    context "when ids are provided" do
+      let(:ids) { ["phenomenal"] }
 
-    it "should set default image on error" do
-      eosc_registry = make_and_stub_eosc_registry(ids: ["phenomenal"])
-      allow(eosc_registry).to receive(:open).with(
-        "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png",
-        ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
-      ).and_raise(OpenURI::HTTPError.new("", status: 404))
-      eosc_registry.call
+      it "should filter by ids" do
+        expect { eosc_registry.call }.to change { Provider.count }.by(1)
+        expect(Provider.last.name).to eq("Phenomenal")
+      end
 
-      expect(Provider.first.logo.attached?).to be_truthy
-    end
+      it "should set default image on error" do
+        eosc_registry.call
 
-    it "should set default image on error" do
-      eosc_registry = make_and_stub_eosc_registry(ids: ["phenomenal"])
-      allow(eosc_registry).to receive(:open).with(
-        "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png",
-        ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
-      ).and_raise(Errno::EHOSTUNREACH.new)
-      eosc_registry.call
-      expect(Provider.first.logo.attached?).to be_truthy
+        expect(Provider.first.logo.attached?).to be_truthy
+      end
     end
   end
 end

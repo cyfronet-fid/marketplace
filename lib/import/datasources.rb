@@ -55,7 +55,7 @@ class Import::Datasources
         raise "Unexpected type #{ds_data["type"]}" unless ds_data["type"] == "DataSource"
 
         synchronized_at = Time.now.to_i
-        service_attrs = Importers::Service.call(ds_data, synchronized_at, @eosc_registry_base_url, @token)
+        service_attrs = Importers::Service.call(ds_data, synchronized_at)
         ds_delta = Importers::Datasource.call(ds_data)
         attrs = service_attrs.merge(ds_delta).merge(type: "Datasource", status: :published)
         image_url = attrs.delete(:logo_url)
@@ -67,7 +67,10 @@ class Import::Datasources
 
           ds = Datasource.new(attrs)
           if ds.valid?
-            Importers::Logo.call(ds, image_url) unless @rescue_mode
+            unless @rescue_mode
+              logo = Importers::Logo.call(image_url)
+              ds.logo.attach(logo) if logo
+            end
             ds = Service::Create.call(ds)
             source = ServiceSource.create!(service_id: ds.id, eid: ds.pid, source_type: "eosc_registry")
             ds.update_column(:upstream_id, source.id) if @default_upstream == :eosc_registry
@@ -85,7 +88,10 @@ class Import::Datasources
             log "Updating [EXISTING] datasource #{attrs[:name]}, id: #{source.id}, eid: #{ds_data["id"]}"
             next if @dry_run
 
-            Importers::Logo.call(existing, image_url) unless @rescue_mode
+            unless @rescue_mode
+              logo = Importers::Logo.call(image_url)
+              existing.logo.attach(logo) if logo
+            end
             Service::Update.call(existing, attrs)
           else
             log "Datasource upstream is not set to EOSC Registry," \

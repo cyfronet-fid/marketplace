@@ -1128,6 +1128,7 @@ providers:
     country_alpha2: "PL"
     image_base_64: *provider_default_logo
 
+target_users:
   Researchers:
     name: &researchers "Researchers"
     description: "Someone who conducts scientific research, i.e., an organized and systematic investigation by using scientific methods."

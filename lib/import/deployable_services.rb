@@ -161,8 +161,10 @@ class Import::DeployableServices
     end
   end
 
-  def set_logo(deployable_service, logo)
-    deployable_service.set_default_logo
-    Importers::Logo.new(deployable_service, logo).call
+  def set_logo(deployable_service, logo_url)
+    logo_file = Importers::Logo.call(logo_url)
+    return unless logo_file
+
+    deployable_service.logo.attach(logo_file)
   end
 end

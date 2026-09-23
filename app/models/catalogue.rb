@@ -34,7 +34,10 @@ class Catalogue < ApplicationRecord
 
   # Vocabularies
   has_many :catalogue_vocabularies, dependent: :destroy
-  has_many :networks, through: :catalogue_vocabularies, source: :vocabulary, source_type: "Vocabulary::Network"
+  has_many :networks,
+           through: :catalogue_vocabularies,
+           source: :vocabulary,
+           source_type: "Vocabulary::Network"
   has_many :legal_statuses,
            through: :catalogue_vocabularies,
            source: :vocabulary,
@@ -45,9 +48,9 @@ class Catalogue < ApplicationRecord
            source_type: "Vocabulary::HostingLegalEntity"
 
   has_many :sources, class_name: "CatalogueSource", dependent: :destroy
-  belongs_to :upstream, foreign_key: "upstream_id", class_name: "CatalogueSource", optional: true
+  belongs_to :upstream, class_name: "CatalogueSource", optional: true
   has_many :nodes, through: :catalogue_vocabularies, source: :vocabulary, source_type: "Vocabulary::Node"
-  has_many :catalogue_data_administrators
+  has_many :catalogue_data_administrators, dependent: :destroy
   has_many :data_administrators, through: :catalogue_data_administrators, dependent: :destroy, autosave: true
 
   scope :active, -> { where.not(status: %i[deleted draft]) }
@@ -60,26 +63,7 @@ class Catalogue < ApplicationRecord
   accepts_nested_attributes_for :sources, allow_destroy: true
 
   validates :name, presence: true
-  validates :abbreviation, presence: true
-  validates :website, presence: true
-  validates :inclusion_criteria, presence: true
-  validates :end_of_life, presence: true
-  validates :validation_process, presence: true
-  validates :scope, presence: true
-  validates :description, presence: true
-  validates :street_name_and_number, presence: true
-  validates :postal_code, presence: true
-  validates :city, presence: true
-  validates :country, presence: true
-  validates :public_contacts, presence: true, length: { minimum: 1, message: "are required. Please add at least one" }
-  validates :nodes, length: { maximum: 1 }
   validate :logo_variable, on: %i[create update]
-  validates :data_administrators,
-            presence: true,
-            length: {
-              minimum: 1,
-              message: "are required. Please add at least one"
-            }
 
   def participating_countries=(value)
     super(value&.map { |v| Country.for(v) })
@@ -90,7 +74,7 @@ class Catalogue < ApplicationRecord
   end
 
   def affiliations=(value)
-    super(value.compact_blank)
+    super(value&.compact_blank)
   end
 
   def hosting_legal_entity

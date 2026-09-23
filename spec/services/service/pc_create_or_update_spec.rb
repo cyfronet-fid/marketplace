@@ -3,7 +3,6 @@
 require "rails_helper"
 
 RSpec.describe Service::PcCreateOrUpdate, backend: true do
-  let(:test_url) { "https://localhost/api" }
   let(:logger) { double("Logger").as_null_object }
   let!(:storage) { create(:category, name: "Storage") }
   let!(:training) { create(:category, name: "Training & Support") }
@@ -21,6 +20,18 @@ RSpec.describe Service::PcCreateOrUpdate, backend: true do
   before(:each) do
     provider_response = double(status: 200, body: create(:eosc_registry_provider_response, eid: provider_eid))
     allow_any_instance_of(Importers::Request).to receive(:call).and_return(provider_response)
+
+    stub_request(:get, "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png").to_return(
+      status: 200,
+      body: File.binread(file_fixture("PhenoMeNal_logo.png")),
+      headers: { "Content-Type" => "image/png" }
+    )
+
+    stub_request(:get, "http://metalweb.cerm.unifi.it/global/images/MetalPDB.png").to_return(
+      status: 200,
+      body: File.binread(file_fixture("MetalPDB.png")),
+      headers: { "Content-Type" => "image/png" }
+    )
   end
 
   describe "#succesfull responses" do
@@ -32,7 +43,9 @@ RSpec.describe Service::PcCreateOrUpdate, backend: true do
       create(:provider_source, source_type: "eosc_registry", eid: "tp", provider: provider_tp)
 
       service = create(:jms_service, prov_eid: "new.prov", name: "New supper service")
-      expect { stub_described_class(service) }.to_not change { Offer.count }
+      expect {
+        described_class.new(service["service"], :published, Time.current).call
+      }.to_not change { Offer.count }
     end
 
     it "publishes a service with an object-shaped parent scientific domain" do
@@ -45,7 +58,7 @@ RSpec.describe Service::PcCreateOrUpdate, backend: true do
       }
       allow(Importers::Logo).to receive(:call)
 
-      service = described_class.new(service_payload, test_url, :published, Time.current, nil).call
+      service = described_class.new(service_payload, :published, Time.current).call
 
       expect(service).to be_published
       expect(service).not_to be_errored
@@ -59,7 +72,7 @@ RSpec.describe Service::PcCreateOrUpdate, backend: true do
       service_payload["scientificDomains"] = nil
       allow(Importers::Logo).to receive(:call)
 
-      service = described_class.new(service_payload, test_url, :published, Time.current, nil).call
+      service = described_class.new(service_payload, :published, Time.current).call
 
       expect(service).to be_published
       expect(service).not_to be_errored
@@ -82,7 +95,7 @@ RSpec.describe Service::PcCreateOrUpdate, backend: true do
 
       # first create a service
       jms_service = build(:jms_service, prov_eid: "tp")
-      stub_described_class(jms_service)
+      described_class.new(jms_service["service"], :published, Time.current).call
 
       service = Service.last
       expect(service.name).to eq("Title")
@@ -90,38 +103,12 @@ RSpec.describe Service::PcCreateOrUpdate, backend: true do
 
       # only then attach an invalid provider
       jms_service = build(:jms_service, prov_eid: "new.prov", name: "New supper service")
-      stub_described_class(jms_service)
+      described_class.new(jms_service["service"], :published, Time.current).call
 
       service.reload
 
       expect(service.name).to eq("New supper service")
       expect(service.providers.map(&:id)).to eq([invalid_provider.id])
     end
-  end
-
-  private
-
-  def stub_described_class(jms_service, status: :published, modified_at: Time.now)
-    described_service = Service::PcCreateOrUpdate.new(jms_service["service"], test_url, status, modified_at, nil)
-
-    stub_http_file(
-      described_service,
-      "PhenoMeNal_logo.png",
-      "http://phenomenal-h2020.eu/home/wp-content/uploads/2016/06/PhenoMeNal_logo.png"
-    )
-
-    stub_http_file(described_service, "MetalPDB.png", "http://metalweb.cerm.unifi.it/global/images/MetalPDB.png")
-
-    allow(described_service).to receive(:open).with(
-      "http://phenomenal-h2020.eu/home/wp-content/logo.png",
-      ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
-    ).and_raise(OpenURI::HTTPError.new("", status: 404))
-    described_service.call
-  end
-
-  def stub_http_file(service, file_fixture_name, url, content_type: "image/png")
-    r = File.open(file_fixture(file_fixture_name))
-    r.define_singleton_method(:content_type) { content_type }
-    allow(service).to receive(:open).with(url, ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE).and_return(r)
   end
 end

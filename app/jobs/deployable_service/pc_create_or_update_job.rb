@@ -5,7 +5,7 @@ class DeployableService::PcCreateOrUpdateJob < ApplicationJob
 
   rescue_from(Errno::ECONNREFUSED) { |exception| raise exception }
 
-  def perform(deployable_service, status)
-    DeployableService::PcCreateOrUpdate.new(deployable_service, status).call
+  def perform(deployable_service, status, modified_at)
+    DeployableService::PcCreateOrUpdate.new(deployable_service, status, modified_at).call
   end
 end

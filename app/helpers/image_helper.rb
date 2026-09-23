@@ -10,6 +10,7 @@ module ImageHelper
   DEFAULT_LOGO_PATH = "service_logo.svg"
   DEFAULT_PROVIDER_LOGO_PATH = "provider_logo.svg"
   DEFAULT_CATALOGUE_LOGO_PATH = "catalogue_logo.svg"
+  DEFAULT_DEPLOYABLE_SERVICE_LOGO_PATH = "deployable_service_logo.svg"
 
   def self.to_temp_file(logo, ext)
     tmp_logo = Tempfile.new(["logo_temp", ext])

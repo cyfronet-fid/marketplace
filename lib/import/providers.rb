@@ -116,7 +116,10 @@ class Import::Providers
               eid: #{parsed_provider_data[:pid]} saved with errors: #{current_provider.errors.full_messages}"
     end
 
-    Importers::Logo.call(current_provider, image_url) unless @rescue_mode
+    unless @rescue_mode
+      logo = Importers::Logo.call(image_url)
+      current_provider.logo.attach(logo) if logo
+    end
     current_provider.save(validate: false)
   end
 
@@ -125,7 +128,10 @@ class Import::Providers
     if current_provider.valid?
       current_provider.save!
 
-      Importers::Logo.call(current_provider, image_url) unless @rescue_mode
+      unless @rescue_mode
+        logo = Importers::Logo.call(image_url)
+        current_provider.logo.attach(logo) if logo
+      end
       current_provider.save!
     else
       current_provider.sources.first.update!(errored: current_provider.errors.to_hash)

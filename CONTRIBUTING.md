@@ -184,7 +184,6 @@ you can edit files in GitHub and create Pull Request with changes.
 
 It's highly recommended to use conventional commits,
 but it's not required.
-We use overcommit to verify commit message style.
 We require subject to contain a maximum of 60 characters,
 afterwards one line break and then description with each line
 containing a maximum of 72 chars,

@@ -489,8 +489,8 @@ ActiveRecord::Schema[7.2].define(version: 2026_04_30_103000) do
     t.boolean "limited_availability", default: false
     t.bigint "availability_count", default: 0
     t.string "availability_unit", default: "piece"
-    t.string "orderable_type", null: false
-    t.bigint "orderable_id", null: false
+    t.string "orderable_type"
+    t.bigint "orderable_id"
     t.index ["iid"], name: "index_offers_on_iid"
     t.index ["orderable_type", "orderable_id"], name: "index_offers_on_orderable_type_and_orderable_id"
     t.index ["primary_oms_id"], name: "index_offers_on_primary_oms_id"

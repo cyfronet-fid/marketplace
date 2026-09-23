@@ -1,14 +1,14 @@
-:verbose: false
-:concurrency: 5
-:pidfile: tmp/sidekiq.pid
-:logfile: log/sidekiq.log
+verbose: false
+concurrency: 5
+pidfile: tmp/sidekiq.pid
+logfile: log/sidekiq.log
 
 production:
-  :concurrency: 5
+  concurrency: 5
 staging:
-  :concurrency: 5
+  concurrency: 5
 
-:queues:
+queues:
   - active_storage_analysis
   - active_storage_purge
   - pc_subscriber
@@ -21,9 +21,12 @@ staging:
   - pc_publisher
   - ess_update
   - deployments
+  - ams_subscriber
 
-:limits:
+limits:
   pc_subscriber: 1
+  ams_subscriber: 1
 
-:process_limits:
+process_limits:
   pc_subscriber: 1
+  ams_subscriber: 1

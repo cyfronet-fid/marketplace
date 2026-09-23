@@ -8,7 +8,7 @@ RSpec.describe Importers::Service, backend: true do
   let(:synchronized_at) { Time.zone.local(2026, 5, 20, 12, 0, 0) }
 
   it "maps parent scientific domain from an array when V6 payload omits subdomain" do
-    result = described_class.call(payload, synchronized_at, "https://example.test/api")
+    result = described_class.call(payload, synchronized_at)
 
     expect(result[:scientific_domains]).to contain_exactly(scientific_domain)
   end
@@ -16,7 +16,7 @@ RSpec.describe Importers::Service, backend: true do
   it "maps parent scientific domain from an object when V6 payload omits subdomain" do
     payload["scientificDomains"] = payload.fetch("scientificDomains").first
 
-    result = described_class.call(payload, synchronized_at, "https://example.test/api")
+    result = described_class.call(payload, synchronized_at)
 
     expect(result[:scientific_domains]).to contain_exactly(scientific_domain)
   end

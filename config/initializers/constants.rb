@@ -9,52 +9,52 @@ RATE_AFTER_PERIOD = ENV["RATE_AFTER_PERIOD"].present? ? ENV["RATE_AFTER_PERIOD"]
 VOCABULARY_TYPES = {
   access_type: {
     name: "Access Type",
-    klass: "Vocabulary::AccessType",
+    klass: -> { Vocabulary::AccessType },
     route: :access_types
   },
   bundle_capability_of_goal: {
     name: "Bundle Capability of Goal",
-    klass: "Vocabulary::BundleCapabilityOfGoal",
+    klass: -> { Vocabulary::BundleCapabilityOfGoal },
     route: :bundle_capabilities_of_goal
   },
   bundle_goal: {
     name: "Bundle Goal",
-    klass: "Vocabulary::BundleGoal",
+    klass: -> { Vocabulary::BundleGoal },
     route: :bundle_goals
   },
   datasource_classification: {
     name: "Datasource Classification",
-    klass: "Vocabulary::DatasourceClassification",
+    klass: -> { Vocabulary::DatasourceClassification },
     route: :datasource_classifications
   },
   hosting_legal_entity: {
     name: "Hosting Legal Entity",
-    klass: "Vocabulary::HostingLegalEntity",
+    klass: -> { Vocabulary::HostingLegalEntity },
     route: :hosting_legal_entities
   },
   jurisdiction: {
     name: "Jurisdiction",
-    klass: "Vocabulary::Jurisdiction",
+    klass: -> { Vocabulary::Jurisdiction },
     route: :jurisdictions
   },
   legal_status: {
     name: "Legal Status",
-    klass: "Vocabulary::LegalStatus",
+    klass: -> { Vocabulary::LegalStatus },
     route: :legal_statuses
   },
   network: {
     name: "Network",
-    klass: "Vocabulary::Network",
+    klass: -> { Vocabulary::Network },
     route: :networks
   },
   node: {
     name: "Node",
-    klass: "Vocabulary::Node",
+    klass: -> { Vocabulary::Node },
     route: :nodes
   },
   trl: {
     name: "TRL",
-    klass: "Vocabulary::Trl",
+    klass: -> { Vocabulary::Trl },
     route: :trls
   }
 }.freeze

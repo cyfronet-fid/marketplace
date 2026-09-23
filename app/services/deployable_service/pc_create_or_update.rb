@@ -9,7 +9,7 @@ class DeployableService::PcCreateOrUpdate
   class NotUpdatedError < StandardError
   end
 
-  def initialize(eosc_registry_deployable_service, status)
+  def initialize(eosc_registry_deployable_service, status, modified_at)
     @error_message = "Deployable Service haven't been updated. Message #{eosc_registry_deployable_service}"
     @source_type = "eosc_registry"
     @status = status_for(status)
@@ -19,11 +19,12 @@ class DeployableService::PcCreateOrUpdate
         "deployable_service_sources.eid": eosc_registry_deployable_service["id"]
       )
     @deployable_service_hash =
-      Importers::DeployableService.call(eosc_registry_deployable_service, Time.current, nil, nil)
+      Importers::DeployableService.call(eosc_registry_deployable_service, modified_at, nil, nil)
     @deployable_service_hash.delete(:logo_url)
     @deployable_service_hash[:status] = @status
 
-    @new_update_available = true
+    @new_update_available =
+      DeployableService::PcCreateOrUpdate.new_update_available(@mp_deployable_service, modified_at)
   end
 
   def call

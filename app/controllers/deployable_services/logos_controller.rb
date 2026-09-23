@@ -10,7 +10,13 @@ class DeployableServices::LogosController < ApplicationController
     if @deployable_service.logo.attached? && @deployable_service.logo.variable?
       redirect_to @deployable_service.logo.variant(resize_to_limit: [84, 84]), allow_other_host: false
     else
-      redirect_to ActionController::Base.helpers.asset_url(ImageHelper::DEFAULT_LOGO_PATH, type: :image)
+      redirect_to default_logo_url
     end
+  end
+
+  private
+
+  def default_logo_url
+    ActionController::Base.helpers.asset_url(ImageHelper::DEFAULT_DEPLOYABLE_SERVICE_LOGO_PATH, type: :image)
   end
 end

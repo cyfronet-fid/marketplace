@@ -10,6 +10,8 @@ module Importable
   class WrongIdError < StandardError
   end
 
+  CONTACT_ATTRIBUTES = %w[first_name last_name email phone].freeze
+
   def object_status(active, suspended)
     current = active ? :published : :unpublished
     suspended && active ? :suspended : current
@@ -51,7 +53,7 @@ module Importable
   end
 
   def map_contact(contact)
-    contact&.transform_keys { |k| k.to_s.underscore } || nil
+    contact&.transform_keys { _1.to_s.underscore }&.slice(*CONTACT_ATTRIBUTES)
   end
 
   def map_data_administrator(data)
@@ -63,7 +65,7 @@ module Importable
   end
 
   def map_order_type(order_type)
-    order_type.gsub("order_type-", "") unless order_type.blank?
+    order_type.presence&.gsub("order_type-", "")
   end
 
   def map_legal_statuses(statuses)
@@ -104,8 +106,8 @@ module Importable
     end
   end
 
-  def extract_public_contact_emails(raw)
-    Array(raw).map { |c| c.is_a?(Hash) ? c["email"] : c }.map { |e| e.to_s.strip }.reject(&:blank?).uniq
+  def extract_public_contact_emails(raw_contacts)
+    Array(raw_contacts).map { |item| (item.is_a?(Hash) ? item["email"] : item).to_s.strip }.compact_blank.uniq
   end
 
   def map_alt_pid(hash)
