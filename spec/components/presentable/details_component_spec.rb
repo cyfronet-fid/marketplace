@@ -98,6 +98,32 @@ RSpec.describe Presentable::DetailsComponent, type: :component do
     end
   end
 
+  describe "tags" do
+    subject(:rendered_component) { render_inline(described_class.new(object)) }
+
+    let(:object) { Datasource.new(resource_type: "DataSource", tag_list: ["Data & AI", "FAIR"]) }
+
+    it "renders tags for taggable resources regardless of resource type" do
+      rendered_component
+
+      expect(page).to have_css(".details-box.tags .taglist-holder ul li", count: 2)
+      expect(page).to have_link("Data & AI")
+      expect(page).to have_link("FAIR")
+    end
+
+    it "URL-encodes tag values for external search links" do
+      allow_any_instance_of(described_class).to receive(:external_search_enabled).and_return(true)
+      allow(Mp::Application.config).to receive(:search_service_base_url).and_return("https://search.example.com")
+
+      rendered_component
+
+      expect(page).to have_link(
+        "Data & AI",
+        href: "https://search.example.com/search/service?q=*&fq=tag_list:%22Data%20%26%20AI%22"
+      )
+    end
+  end
+
   describe "multimedia resources" do
     subject(:rendered_component) { render_inline(described_class.new(object)) }
 
