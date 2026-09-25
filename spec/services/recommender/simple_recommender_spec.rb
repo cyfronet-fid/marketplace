@@ -2,11 +2,15 @@
 
 require "rails_helper"
 
-RSpec.describe Recommender::SimpleRecommender, backend: true do
+RSpec.describe Recommender::SimpleRecommender, :backend do
   include SimpleRecommenderSpecHelper
+
   before :context do
     @categories, @services = populate_database
   end
+
+  # Records created at context level survive the per-example transaction.
+  after(:context) { DatabaseCleaner.clean_with(:truncation) }
 
   [1, 2, 3].each do |n|
     context "Simple recommender_lib service call with n=#{n} returns" do

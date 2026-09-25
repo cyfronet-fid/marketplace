@@ -68,6 +68,12 @@
         "type": "string"
       }
     },
+    "research_activities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
     "offer_ids": {
       "type": "array",
       "items": {

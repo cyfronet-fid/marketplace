@@ -76,20 +76,22 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :deployable_services, only: %i[index show] do
-    scope module: :deployable_services do
-      resource :logo, only: :show
-    end
-    # Reuse Services wizard controllers for ordering DeployableServices
-    scope module: :services do
-      resource :choose_offer, only: %i[show update]
-      resource :information, only: %i[show update]
-      resource :configuration, only: %i[show update]
-      resource :summary, only: %i[show create]
+  if Mp::Variant.marketplace?
+    resources :deployable_services, only: %i[index show] do
+      scope module: :deployable_services do
+        resource :logo, only: :show
+      end
+      # Reuse Services wizard controllers for ordering DeployableServices
+      scope module: :services do
+        resource :choose_offer, only: %i[show update]
+        resource :information, only: %i[show update]
+        resource :configuration, only: %i[show update]
+        resource :summary, only: %i[show create]
+      end
     end
   end
 
-  resource :reports, only: %i[new create], constraints: lambda { |req| req.format == :js }
+  resource :reports, only: %i[new create], constraints: ->(req) { req.format == :js }
 
   resources :projects do
     scope module: :projects do
@@ -102,7 +104,7 @@ Rails.application.routes.draw do
           resource :opinion, only: %i[new create]
           resource :conversation, only: %i[show create]
           resource :timeline, only: :show
-          resource :infrastructure, only: :destroy
+          resource :infrastructure, only: :destroy if Mp::Variant.marketplace?
         end
       end
       resource :conversation, only: %i[show create]
@@ -142,6 +144,8 @@ Rails.application.routes.draw do
           resource :publish, controller: "offers/publishes", only: :create
           resource :draft, controller: "offers/drafts", only: :create
           resource :summary, controller: "offers/summaries", only: %i[create update]
+          # pl's and whitelabel's offer form exits through it.
+          post :exit unless Mp::Variant.marketplace?
         end
         resources :bundles do
           resource :publish, controller: "bundles/publishes", only: :create
@@ -149,6 +153,7 @@ Rails.application.routes.draw do
         end
         resource :publish, only: :create
         resource :draft, only: :create
+        resource :unpublish, only: :create if Mp::Variant.whitelabel?
       end
     end
     get "service_autocomplete", to: "services#autocomplete", as: :service_autocomplete
@@ -178,11 +183,10 @@ Rails.application.routes.draw do
     end
   end
 
-  post "/backoffice/services/:service_id/offers/:offer_id/duplicate", to: "backoffice/services/offers#duplicate", 
-    as: :duplicate_offer
+  post "/backoffice/services/:service_id/offers/:offer_id/duplicate", to: "backoffice/services/offers#duplicate",
+                                                                      as: :duplicate_offer
 
   post "/backoffice/services/:service_id/offers/fetch_subtypes", to: "backoffice/services/offers#fetch_subtypes"
-
 
   resource :executive, only: :show
   namespace :executive do
@@ -203,6 +207,12 @@ Rails.application.routes.draw do
         resources :services, only: [:index]
       end
 
+      if Mp::Variant.pl?
+        namespace :catalogue do
+          resources :services, only: %i[index]
+        end
+      end
+
       resources :resources, only: %i[index show], constraints: { id: pid_format_constraint } do
         resources :offers, only: %i[index create show destroy update], module: :resources
       end
@@ -220,7 +230,9 @@ Rails.application.routes.draw do
         resources :catalogues, only: %i[index show]
         resources :offers, only: %i[index show]
         resources :bundles, only: %i[index show]
-        resources :deployable_services, only: %i[index show], constraints: { id: pid_format_constraint }
+        if Mp::Variant.marketplace?
+          resources :deployable_services, only: %i[index show], constraints: { id: pid_format_constraint }
+        end
       end
       resources :users, only: :show, constraints: { id: pid_format_constraint }
     end
@@ -260,11 +272,11 @@ Rails.application.routes.draw do
   get "errors/not_found"
   get "errors/unprocessable"
   get "errors/internal_server_error"
-  match "about", to: "pages#about", via: "get", as: :about
-  match "target_users", to: "pages#target_users", via: "get", as: :target_users
-  match "communities", to: "pages#communities", via: "get", as: :communities
-  match "about_projects", to: "pages#about_projects", via: "get", as: :about_projects
-  match "landing_page", to: "pages#landing_page", via: "get", as: :landing_page
+  get "about", to: "pages#about", as: :about
+  get "target_users", to: "pages#target_users", as: :target_users
+  get "communities", to: "pages#communities", as: :communities
+  get "about_projects", to: "pages#about_projects", as: :about_projects
+  get "landing_page", to: "pages#landing_page", as: :landing_page
 
   namespace :federation do
     resources :services, only: [:index]

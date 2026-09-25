@@ -9,6 +9,7 @@ class User < ApplicationRecord
 
   include Publishable
   include RoleModel
+
   roles :admin, :coordinator, :executive
 
   has_many :projects, dependent: :destroy
@@ -23,18 +24,27 @@ class User < ApplicationRecord
   has_many :administrated_omses, through: :oms_administrations, source: :oms
   has_many :user_service, dependent: :destroy
   has_many :favourite_services, through: :user_service, source: :service, class_name: "Service"
-  has_many :data_administrators, primary_key: :id, foreign_key: :user_id
+  has_many :data_administrators, primary_key: :id
   has_many :provider_data_administrators, through: :data_administrators
   has_many :catalogue_data_administrators, through: :data_administrators
   has_many :providers, through: :provider_data_administrators
   has_many :catalogues, through: :catalogue_data_administrators
   has_many :observed_user_offers, dependent: :destroy
   has_many :observed_offers, through: :observed_user_offers
+  has_many :identities, class_name: "UserIdentity", dependent: :destroy, inverse_of: :user
+
+  has_one :primary_identity, -> { where(primary: true) }, class_name: "UserIdentity", inverse_of: :user
 
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :email, presence: true
-  validates :uid, presence: true
+  validates :uid, presence: true, unless: -> { Mp::Variant.pl? }
+  validates :email, uniqueness: { case_sensitive: false }, if: -> { Mp::Variant.pl? }
+
+  # pl-marketplace dropped users.uid and reads it from the primary identity.
+  def uid
+    Mp::Variant.pl? ? primary_identity&.uid : super
+  end
 
   def full_name
     "#{first_name} #{last_name}"

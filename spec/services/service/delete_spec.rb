@@ -2,18 +2,17 @@
 
 require "rails_helper"
 
-RSpec.describe Service::Delete, backend: true do
-  it "Set delete status for service" do
-    service = create(:service)
-    create(:service_source, source_type: :eosc_registry, service: service, eid: service.id)
+RSpec.describe Service::Delete, :backend do
+  let(:service) { create(:service) }
+  let!(:offer) { create(:offer, service: service) }
 
-    service = described_class.new(service.id).call
-    expect(service.status).to eq("deleted")
+  before { described_class.call(service.reload) }
+
+  it "sets deleted status for the service" do
+    expect(service.reload.status).to eq("deleted")
   end
 
-  it "Does nothing if service not exist" do
-    service = create(:service)
-    service = described_class.new(service.id).call
-    expect(service).to be_nil
+  it "enqueues deletion of the service's offers" do
+    expect(DeleteJob).to have_been_enqueued.with(offer)
   end
 end

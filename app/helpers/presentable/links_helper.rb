@@ -14,18 +14,53 @@ module Presentable::LinksHelper
   end
 
   def new_question_prompt(object = @object)
-    object.instance_of?(Provider) ? "Contact the organisation" : "Contact organisation"
+    if Mp::Variant.pl?
+      object.instance_of?(Provider) ? "Ask provider a question" : "Contact provider"
+    else
+      object.instance_of?(Provider) ? "Contact the organisation" : "Contact organisation"
+    end
   end
 
   private
 
+  # pl lists the profile links that only its Service::PlProfile carries.
   def links
-    {
-      name: "links",
-      template: "links",
-      fields: %w[webpage_url privacy_policy_url terms_of_use_url access_policies_url],
-      active_when_suspended: %w[webpage_url privacy_policy_url terms_of_use_url access_policies_url]
-    }
+    if Mp::Variant.pl?
+      {
+        name: "links",
+        template: "links",
+        fields: %w[
+          webpage_url
+          helpdesk_url
+          helpdesk_email
+          manual_url
+          pricing_url
+          training_information_url
+          privacy_policy_url
+          terms_of_use_url
+          access_policies_url
+          maintenance_url
+        ],
+        active_when_suspended: %w[
+          webpage_url
+          helpdesk_url
+          helpdesk_email
+          manual_url
+          training_information_url
+          privacy_policy_url
+          terms_of_use_url
+          access_policies_url
+          maintenance_url
+        ]
+      }
+    else
+      {
+        name: "links",
+        template: "links",
+        fields: %w[webpage_url privacy_policy_url terms_of_use_url access_policies_url],
+        active_when_suspended: %w[webpage_url privacy_policy_url terms_of_use_url access_policies_url]
+      }
+    end
   end
 
   def provider_links

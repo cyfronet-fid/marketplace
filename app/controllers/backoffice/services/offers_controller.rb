@@ -19,6 +19,8 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
     authorize(@offer)
   end
 
+  def edit; end
+
   def create
     save_as_draft = params[:commit] == save_as_draft_title
     template = save_as_draft ? offer_draft_template : offer_template
@@ -38,9 +40,6 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
     else
       redirect_to backoffice_service_offers_path(@service), notice: "New offer created successfully"
     end
-  end
-
-  def edit
   end
 
   def update
@@ -66,6 +65,10 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
     else
       render :edit, status: :bad_request
     end
+  end
+
+  def exit
+    redirect_to backoffice_service_offers_path(params[:service_id]), status: :see_other
   end
 
   def fetch_subtypes

@@ -23,7 +23,12 @@ class Ess::BundleSerializer < ApplicationSerializer
              :usage_counts_views,
              :updated_at
 
-  attribute :marketplace_locations, key: :research_steps
+  # pl and whitelabel replaced marketplace locations with research activities.
+  if Mp::Variant.marketplace?
+    attribute :marketplace_locations, key: :research_steps
+  else
+    attribute :research_activities, key: :research_activities
+  end
   attribute :created_at, key: :publication_date
   attribute :project_items_count, key: :usage_counts_downloads
 

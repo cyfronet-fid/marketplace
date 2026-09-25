@@ -3,7 +3,7 @@
 module OrderingApi
   class AddProviderOMS
     def initialize(oms_name, provider_pid, authentication_token)
-      @oms_name = oms_name.downcase
+      @oms_name = Mp::Variant.pl? ? oms_name.underscore : oms_name.downcase
       @provider_pid = provider_pid
       @authentication_token = authentication_token
     end
@@ -16,10 +16,14 @@ module OrderingApi
       end
 
       admin =
-        User.find_or_initialize_by(uid: "iama#{@oms_name}admin") do |user|
-          user.first_name = @oms_name.titlecase
-          user.last_name = "admin"
-          user.email = "#{@oms_name}_admin@example.com"
+        if Mp::Variant.pl?
+          Users::Authenticate.call(auth_params)
+        else
+          User.find_or_initialize_by(uid: admin_uid) do |user|
+            user.first_name = admin_first_name
+            user.last_name = "admin"
+            user.email = admin_email
+          end
         end
       admin.authentication_token = @authentication_token if @authentication_token.present?
       admin.save!
@@ -31,10 +35,35 @@ module OrderingApi
       oms.save!
 
       logger.info "OMS id: #{oms.id}, name: '#{oms.name}', providers: #{oms.providers.pluck(:pid).join(", ")}"
-      logger.info "Admin user uid: '#{admin.uid}', token: '#{admin.authentication_token}'"
+      logger.info "Admin user uid: '#{admin_uid}', token: '#{admin.authentication_token}'"
     end
 
     private
+
+    def auth_params
+      {
+        "provider" => "checkin",
+        "uid" => admin_uid,
+        "info" => {
+          "email" => admin_email,
+          "first_name" => admin_first_name,
+          "last_name" => "admin",
+          "email_verified" => true
+        }
+      }
+    end
+
+    def admin_uid
+      "iama#{@oms_name}admin"
+    end
+
+    def admin_email
+      "#{@oms_name}_admin@example.com"
+    end
+
+    def admin_first_name
+      @oms_name.titlecase
+    end
 
     def append_if_not_present(association, element)
       association << element if association.exclude?(element)
