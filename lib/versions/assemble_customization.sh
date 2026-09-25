@@ -40,13 +40,22 @@ if [ "$REPO" = whitelabel-marketplace ]; then
 fi
 
 # Prints the paths (relative to $1's copy of $3) that differ or exist only in $REPO.
+# `diff -rq` names a directory that exists only in $REPO once, as a directory;
+# it is expanded to its files so that every entry is a file (rsync
+# --files-from does not recurse, and EXCLUDED lists files).
 differing() {
-  local sub=$1 file
+  local sub=$1 entry file
   diff -rq "$BASE/$sub" "$ROOT/$REPO/$sub" 2>/dev/null | awk -v repo="$ROOT/$REPO/$sub/" '
     /^Files/ { print $4 }
     /^Only in/ && index($0, "Only in " repo) == 1 { dir=$3; sub(/:$/, "", dir); print dir "/" $4 }
     /^Only in/ && $3 == substr(repo, 1, length(repo) - 1) ":" { print substr(repo, 1, length(repo) - 1) "/" $4 }
-  ' | sed "s|^$ROOT/$REPO/$sub/||" | sort -u | while read -r file; do
+  ' | sed "s|^$ROOT/$REPO/$sub/||" | sort -u | while read -r entry; do
+    if [ -d "$ROOT/$REPO/$sub/$entry" ]; then
+      find "$ROOT/$REPO/$sub/$entry" -type f | sed "s|^$ROOT/$REPO/$sub/||"
+    else
+      echo "$entry"
+    fi
+  done | sort -u | while read -r file; do
     (( ${EXCLUDED[(Ie)$sub/$file]} )) || echo "$file"
   done
 }
