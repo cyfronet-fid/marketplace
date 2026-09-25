@@ -46,14 +46,10 @@ module Importable
   end
 
   def map_link(link, type = "multimedia")
-    return if link&.[]("multimediaURL").blank? && !UrlHelper.url?(link)
+    url = link.is_a?(Hash) ? link["multimediaURL"] : link
+    return unless UrlHelper.url?(url)
 
-    if type == "multimedia"
-      Link::MultimediaUrl.new(
-        name: link&.[]("multimediaName") || "",
-        url: link.is_a?(Hash) ? link["multimediaURL"] : link
-      )
-    end
+    Link::MultimediaUrl.new(name: link.is_a?(Hash) ? link["multimediaName"] : "", url: url) if type == "multimedia"
   end
 
   def map_contact(contact)

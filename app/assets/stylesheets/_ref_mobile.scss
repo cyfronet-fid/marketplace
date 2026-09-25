@@ -263,6 +263,28 @@
 }
 
 @media (max-width: 768px) {
+  .service-box-redesign .service-details-header h2 {
+    font-size: 23px;
+  }
+
+  .date-info {
+    flex-direction: column;
+
+    .mx-4 {
+      margin: 6px 0 0 !important;
+    }
+  }
+
+  .service-box-redesign .nav-tabs {
+    margin-top: 0;
+  }
+
+  .service-box-redesign .resource-row .resource-type {
+    line-height: 1.4;
+    letter-spacing: -0.32px;
+    font-size: 14px;
+  }
+
   .backoffice-list {
     .list-group-item {
       &.providers {

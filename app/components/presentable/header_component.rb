@@ -35,4 +35,14 @@ class Presentable::HeaderComponent < ApplicationComponent
   def presentable_logo(object, classes = "align-self-center img-fluid", resize = [180, 120])
     super
   end
+
+  def header_identifiers
+    return [] unless @object.respond_to?(:alternative_identifiers)
+
+    @object.alternative_identifiers.select(&:value?)
+  end
+
+  def publishing_date
+    @object.publishing_date if @object.respond_to?(:publishing_date)
+  end
 end

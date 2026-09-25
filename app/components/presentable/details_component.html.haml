@@ -1,23 +1,198 @@
 .details-box-wrapper
-  = render Presentable::SidebarComponent.new(@object)
-  - details_columns.each do |column|
-    - column.map do |group|
-      - next unless display_detail?(group, @object)
-      .details-box{
-        class: "#{group[:name]}"
-        }
-        .details-header
-          %h5= t("components.presentable.details_component.details.title.#{group[:name]}")
-        .details-content
-          = render "components/presentable/details_component/#{group[:template]}",
-                          object: @object,
-                          fields: group[:fields],
-                          type: group[:type] || "single",
-                          clazz: group[:clazz] || "",
-                          nested: group[:nested] || {},
-                          inactive: @object.suspended? && !group[:active_when_suspended],
-                          with_desc: group[:with_desc] || false,
-                          preview: @preview
+  - if deployable_application?
+    .details-box.version_release
+      .details-header
+        %h5 Version & release
+      .details-content
+        %ul
+          - if @object.version.present?
+            %li.d-flex.flex-column
+              %span.list-title
+                Version:
+              %span = @object.version
+          - if @object.last_update.present?
+            %li.d-flex.flex-column
+              %span.list-title
+                Last update
+              %span = @object.last_update
+  - if deployable_application? && @object.license_name.present?
+    .details-box.license
+      .details-header
+        %h5 License
+      .details-content
+        %ul
+          %li.d-flex.flex-column
+            %span.list-title
+              License name
+            %span
+              - if @object.license_url.present?
+                = link_to @object.license_name, @object.license_url, target: "_blank", rel: "noopener"
+              - else
+                = @object.license_name
+
+  - if sqa_entries.present?
+    .details-box.sqa
+      .details-header
+        %h5 SQA
+      .details-content
+        %ul
+          - sqa_entries.each do |entry|
+            - label = metadata_value(entry, :name, :title, :label, :value) || entry.to_s
+            - url = metadata_value(entry, :url, :website)
+            %li.d-flex.flex-column
+              %span.list-title
+                - if valid_url?(url)
+                  = link_to label, url, target: "_blank", rel: "noopener"
+                - else
+                  = label
+
+  - if @object.respond_to?(:tag_list) && @object.tag_list.present?
+    .details-box.tags
+      .details-header
+        %h5 Tags
+      .details-content
+        .taglist-holder
+          %ul
+            - @object.tag_list.sort.each do |tag|
+              %li
+                - tag_url = services_filter_link(tag, ERB::Util.url_encode(tag))
+                = link_to tag, tag_url, class: "badge badge-light", "data-e2e": "tag-btn"
+
+  - if keywords.present?
+    .details-box.keywords
+      .details-header
+        %h5 Keywords
+      .details-content
+        .taglist-holder
+          - keywords.map { |keyword| metadata_value(keyword, :name, :label, :value) || keyword.to_s }.sort.each do |keyword|
+            = link_to keyword, services_filter_link(keyword, ERB::Util.url_encode(keyword)), class: "badge badge-light"
+
+  - if catalogue?
+    .details-box.location
+      .details-header
+        %h5 Location
+      .details-content
+        %ul
+          %li.d-flex.flex-column
+            %span.list-title
+              Country
+            %span
+              = @object.country
+          %li.d-flex.flex-column
+            %span.list-title
+              City
+            %span
+              = [@object.postal_code, @object.city].compact_blank.join(", ")
+          %li.d-flex.flex-column
+            %span.list-title
+              Region
+            %span
+              = @object.region
+          %li.d-flex.flex-column
+            %span.list-title
+              Street
+            %span
+              = @object.street_name_and_number
+
+  - if (catalogue? || provider?) && @object.link_multimedia_urls.present?
+    .details-box.multimedia_resources
+      .details-header
+        %h5 Multimedia resources
+      .details-content
+        .taglist-holder
+          %ul
+            - @object.link_multimedia_urls.each do |link|
+              %li
+                - label = link.name.presence || link.url
+                - if valid_url?(link.url)
+                  = link_to(label, link.url, target: "_blank", rel: "noopener")
+                - else
+                  = label
+
+  - if service? && @object.providers.present?
+    .details-box.providers
+      .details-header
+        %h5 Providers
+      .details-content
+        .taglist-holder.arrows
+          - @object.providers.each do |provider|
+            .provider-item
+              = link_to provider.name, provider
+
+  - if service? && @object.jurisdiction.present?
+    .details-box.jurisdiction_and_language
+      .details-header
+        %h5 Jurisdiction and language
+      .details-content
+        %ul
+          %li.d-flex.flex-column
+            %span.list-title
+              Jurisdiction
+            %span
+              = @object.jurisdiction.name
+
+  - if persistent_identifiers.present?
+    .details-box.persistent_identifiers
+      .details-header
+        %h5 Persistent identifiers
+      .details-content
+        %ul
+          - persistent_identifiers.each do |identifier|
+            %li.d-flex.flex-column
+              %span.list-title= metadata_value(identifier, :identifier_type, :type).presence || "PID"
+              %span= metadata_value(identifier, :value, :pid, :identifier).presence || identifier.to_s
+
+  - if catalogue? && @object.participating_countries.present?
+    .details-box.participating_countries
+      .details-header
+        %h5 Participating countries
+      .details-content
+        %ul
+          - @object.participating_countries.each do |country|
+            %li.d-flex.flex-column
+              %span.list-title= country
+
+  - if learning_outcomes.present?
+    .details-box.learning_outcomes
+      .details-header
+        %h5 Learning outcomes
+      .details-content
+        %ul
+          - learning_outcomes.each do |outcome|
+            %li.d-flex.flex-column
+              %span.list-title= metadata_value(outcome, :name, :title, :value) || outcome.to_s
+
+  - if configuration_templates.present?
+    .details-box.configuration_template
+      .details-header
+        %h5 Configuration template
+      .details-content
+        %ul
+          - configuration_templates.each do |template|
+            - label = metadata_value(template, :pid, :identifier, :name, :title, :value) || template.to_s
+            - url = metadata_value(template, :url, :website)
+            %li.d-flex.flex-column
+              %span.list-title Configuration template PID
+              %span
+                - if valid_url?(url)
+                  = link_to label, url, target: "_blank", rel: "noopener"
+                - else
+                  = label
+
+  - if service? && (@object.access_types.present? || @object.trls.present?)
+    .details-box.access_information
+      .details-header
+        %h5 Access information
+      .details-content
+        %ul
+          - if @object.access_types.present?
+            %li.d-flex.flex-column
+              %span.list-title Access type
+              %span= @object.access_types.map(&:name).join(", ")
+          - if @object.trls.present?
+            %li.d-flex.flex-column
+              %span.list-title Technology readiness level
+              %span= @object.trls.map(&:name).join(", ")
 .related-container
   .row
     .col-12
