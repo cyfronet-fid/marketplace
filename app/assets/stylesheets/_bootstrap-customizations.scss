@@ -7888,10 +7888,15 @@ abbr[title] {
     }
 
     .node-item:hover {
-      border-color: $custom-9;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+      border-color: $custom-12;
+      box-shadow: 0 0 0 1px $custom-12;
       text-decoration: none;
       color: $custom-1;
+    }
+
+    .node-item:focus-visible {
+      border-color: $custom-12;
+      box-shadow: 0 0 0 1px $custom-12;
     }
 
     .node-item.is-link {
