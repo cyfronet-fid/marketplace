@@ -19,77 +19,96 @@
                 "data-base": external_search_base_url,
                 "data-action": "keydown.esc->external#clear keydown.enter->external#search input->external#toggleClear",
                 "data-probe": ""
-              %a.d-none.search-clear{ "data-external-target": "clear",
-                                      "data-action": "click->external#clear",
-                                      title: _("Clear search"),
-                                      "data-e2e": "search-clear-btn" }
-                .fas.fa-times
+              %a.d-none.search-clear{
+                "data-external-target": "clear",
+                "data-action": "click->external#clear",
+                "aria-label": _("Clear search"),
+                title: _("Clear search"),
+                "data-e2e": "search-clear-btn"
+              }
+                .fas.fa-times{ "aria-hidden": "true" }
             .input-group-append
-              %button#query-submit.input-group-text.bg-white{ "data-external-target": "search",
-              "data-action": "click->external#search", "data-e2e": "query-submit-btn" }
-                %i.fas.fa-search
+              %button#query-submit.input-group-text.bg-white{
+                "data-external-target": "search",
+                "data-action": "click->external#search",
+                "aria-label": _("Search"),
+                "data-e2e": "query-submit-btn"
+              }
+                %i.fas.fa-search{ "aria-hidden": "true" }
           .browse
             .browse-label
               Discover by
             .solutions-box
               = render partial: "pages/solutions_box_link", collection: LandingPageHelper::SEARCH_ITEMS, as: :item
+
 %section.research-activity
   .container
     %h2.text-center Search by Research Activity
 
     .row
       .col-md-4.col-sm-12
-        %a.activity{ href: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:
-        (%22Discover%20Research%20Outputs%22)" }
+        %a.activity{
+          href: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:(%22Discover%20Research%20Outputs%22)"
+        }
           .activity-icon
-            = image_tag "landing_page/ico-01.svg", alt: "Discover Research Outputs"
+            = image_tag "landing_page/ico-01.svg", alt: ""
           .activity-texts
             .activity-title Discover Research Outputs
             .activity-subtitle
               Find datasets, scientific publications, software.
+
       .col-md-4.col-sm-12
-        %a.activity{ href: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:
-        (%22Manage%20Research%20Data%22)" }
+        %a.activity{
+          href: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:(%22Manage%20Research%20Data%22)"
+        }
           .activity-icon
-            = image_tag "landing_page/ico-09.svg", alt: "Data Management"
+            = image_tag "landing_page/ico-09.svg", alt: ""
           .activity-texts
             .activity-title Data Management
             .activity-subtitle
               Find robust, feature-rich and user-friendly services for Data Management.
+
       .col-md-4.col-sm-12
-        %a.activity{ href: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:
-        (%22Access%20Research%20Infrastructures%22)" }
+        %a.activity{
+          href: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:(%22Access%20Research%20Infrastructures%22)"
+        }
           .activity-icon
-            = image_tag "landing_page/ico-07.svg", alt: "Access research infrastructures"
+            = image_tag "landing_page/ico-07.svg", alt: ""
           .activity-texts
             .activity-title Access research infrastructures
             .activity-subtitle
               Find frameworks made by scientific clusters or RIs that will equip you with the tools to tackle
               your use case.
+
     .row
       .col-md-4.col-sm-12
-        %a.activity{ href: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:
-        (%22Publish%20Research%20Outputs%22)" }
+        %a.activity{
+          href: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:(%22Publish%20Research%20Outputs%22)"
+        }
           .activity-icon
-            = image_tag "landing_page/ico-02.svg", alt: "Publish research outputs"
+            = image_tag "landing_page/ico-02.svg", alt: ""
           .activity-texts
             .activity-title Publish research outputs
             .activity-subtitle
               Store, backup, archive your data, publications, software.
+
       .col-md-4.col-sm-12
-        %a.activity{ href: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:
-        (%22Access%20Computing%20and%20Storage%20Resources%22)" }
+        %a.activity{
+          href: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:(%22Access%20Computing%20and%20Storage%20Resources%22)"
+        }
           .activity-icon
-            = image_tag "landing_page/ico-04.svg", alt: "Access computing and storage resources"
+            = image_tag "landing_page/ico-04.svg", alt: ""
           .activity-texts
             .activity-title Access computing and storage resources
             .activity-subtitle
               Find HPC, IT centres for science, cloud computing, cloud container computing, online storage.
+
       .col-md-4.col-sm-12
-        %a.activity{ href: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:
-        (%22Access%20Training%20Material%22)" }
+        %a.activity{
+          href: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:(%22Access%20Training%20Material%22)"
+        }
           .activity-icon
-            = image_tag "landing_page/ico-06.svg", alt: "Access training material"
+            = image_tag "landing_page/ico-06.svg", alt: ""
           .activity-texts
             .activity-title Access training material
             .activity-subtitle
@@ -103,51 +122,105 @@
       %p.description
         The Federated Catalogue does not store services itself. Nodes keep their own catalogues and stay responsible for
         their own services. The catalogue collects information about them, so you can search everything in one place.
-      %a.btn.btn-primary.mt-2{ href: "https://userspace.sandbox.eosc-beyond.eu/federation/services" } Discover Federated Catalogue
+      %a.btn.btn-primary.mt-2{
+        href: "https://userspace.sandbox.eosc-beyond.eu/federation/services"
+      } Discover Federated Catalogue
 
     .federated-media
-      = image_tag "landing_page/federated-schema.jpg", alt: "Federated Catalogue", class: "img-fluid mt-5"
+      = image_tag "landing_page/federated-schema.jpg", alt: "", class: "img-fluid mt-5"
 
 %section.nodes
   .container
     %h3 Connected Nodes
 
     .node-list
-      %a.node-item.is-link{ href: "https://userspace.sandbox.eosc-beyond.eu/federation/services", target: "_blank", rel: "noopener" }
-        = image_tag "landing_page/logo-eoscbeyond.png", alt: "EOSC-Beyond", class: "node-item__icon"
+      %a.node-item.is-link{
+        href: "https://userspace.sandbox.eosc-beyond.eu/federation/services",
+        target: "_blank",
+        rel: "noopener"
+      }
+        = image_tag "landing_page/logo-eoscbeyond.png", alt: "", class: "node-item__icon"
         %span.node-item__name EOSC-Beyond
-      %a.node-item.is-link{ href: "https://marketplace-staging.cessda.eu/federation/services", target: "_blank", rel: "noopener" }
-        = image_tag "landing_page/logo-cessda.png", alt: "CESSDA", class: "node-item__icon"
+
+      %a.node-item.is-link{
+        href: "https://marketplace-staging.cessda.eu/federation/services",
+        target: "_blank",
+        rel: "noopener"
+      }
+        = image_tag "landing_page/logo-cessda.png", alt: "", class: "node-item__icon"
         %span.node-item__name CESSDA
-      %a.node-item.is-link{ href: "https://userspace.sandbox.eosc-beyond.eu/federation/services", target: "_blank", rel: "noopener" }
-        = image_tag "landing_page/logo-nfdi.png", alt: "NFDI", class: "node-item__icon"
+
+      %a.node-item.is-link{
+        href: "https://userspace.sandbox.eosc-beyond.eu/federation/services",
+        target: "_blank",
+        rel: "noopener"
+      }
+        = image_tag "landing_page/logo-nfdi.png", alt: "", class: "node-item__icon"
         %span.node-item__name NFDI
-      %a.node-item.is-link{ href: "https://userspace.sandbox.eosc-beyond.eu/federation/services", target: "_blank", rel: "noopener" }
-        = image_tag "landing_page/logo-metrofood.png", alt: "METROFOOD", class: "node-item__icon"
+
+      %a.node-item.is-link{
+        href: "https://userspace.sandbox.eosc-beyond.eu/federation/services",
+        target: "_blank",
+        rel: "noopener"
+      }
+        = image_tag "landing_page/logo-metrofood.png", alt: "", class: "node-item__icon"
         %span.node-item__name METROFOOD
 
-      %a.node-item.is-link{ href: "https://userspace.sandbox.eosc-beyond.eu/federation/services", target: "_blank", rel: "noopener" }
-        = image_tag "landing_page/logo-instruct.png", alt: "Instruct-ERIC", class: "node-item__icon"
+      %a.node-item.is-link{
+        href: "https://userspace.sandbox.eosc-beyond.eu/federation/services",
+        target: "_blank",
+        rel: "noopener"
+      }
+        = image_tag "landing_page/logo-instruct.png", alt: "", class: "node-item__icon"
         %span.node-item__name Instruct-ERIC
-      %a.node-item.is-link{ href: "https://userspace.sandbox.eosc-beyond.eu/federation/services", target: "_blank", rel: "noopener" }
-        = image_tag "landing_page/logo-lifewatch.svg", alt: "LifeWatch-ERIC", class: "node-item__icon"
-        %span.node-item__name LifeWatch-ERIC
-      %a.node-item.is-link{ href: "https://enes-discovery-hub.pilot.eosc-beyond.eu/federation/services", target: "_blank", rel: "noopener" }
-        = image_tag "landing_page/logo-enes.png", alt: "ENES", class: "node-item__icon"
-        %span.node-item__name ENES
-      %a.node-item.is-link{ href: "https://userspace.sandbox.eosc-beyond.eu/federation/services", target: "_blank", rel: "noopener" }
-        = image_tag "landing_page/logo-cnb.png", alt: "CNB-CSIC", class: "node-item__icon"
-        %span.node-item__name CNB-CSIC
-      %a.node-item.is-link{ href: "https://frontoffice.ni4os.eu/federation/services", target: "_blank", rel: "noopener" }
-        = image_tag "landing_page/logo-ni4os.jpg", alt: "NI4OS-EUROPE", class: "node-item__icon"
-        %span.node-item__name NI4OS-EUROPE
-      %a.node-item.is-link{ href: "https://userspace.sandbox.eosc-beyond.eu/federation/services", target: "_blank", rel: "noopener" }
-        = image_tag "landing_page/logo-egi.png", alt: "EGI Pilot Node", class: "node-item__icon"
-        %span.node-item__name EGI Pilot Node
-      %a.node-item.is-link{ href: "https://marketplace.cloud.cesnet.cz/federation/services", target: "_blank", rel: "noopener" }
-        = image_tag "landing_page/logo-einfra.svg", alt: "e-INFRA_CZ", class: "node-item__icon"
-        %span.node-item__name e-INFRA_CZ
 
+      %a.node-item.is-link{
+        href: "https://userspace.sandbox.eosc-beyond.eu/federation/services",
+        target: "_blank",
+        rel: "noopener"
+      }
+        = image_tag "landing_page/logo-lifewatch.svg", alt: "", class: "node-item__icon"
+        %span.node-item__name LifeWatch-ERIC
+
+      %a.node-item.is-link{
+        href: "https://enes-discovery-hub.pilot.eosc-beyond.eu/federation/services",
+        target: "_blank",
+        rel: "noopener"
+      }
+        = image_tag "landing_page/logo-enes.png", alt: "", class: "node-item__icon"
+        %span.node-item__name ENES
+
+      %a.node-item.is-link{
+        href: "https://userspace.sandbox.eosc-beyond.eu/federation/services",
+        target: "_blank",
+        rel: "noopener"
+      }
+        = image_tag "landing_page/logo-cnb.png", alt: "", class: "node-item__icon"
+        %span.node-item__name CNB-CSIC
+
+      %a.node-item.is-link{
+        href: "https://frontoffice.ni4os.eu/federation/services",
+        target: "_blank",
+        rel: "noopener"
+      }
+        = image_tag "landing_page/logo-ni4os.jpg", alt: "", class: "node-item__icon"
+        %span.node-item__name NI4OS-EUROPE
+
+      %a.node-item.is-link{
+        href: "https://userspace.sandbox.eosc-beyond.eu/federation/services",
+        target: "_blank",
+        rel: "noopener"
+      }
+        = image_tag "landing_page/logo-egi.png", alt: "", class: "node-item__icon"
+        %span.node-item__name EGI Pilot Node
+
+      %a.node-item.is-link{
+        href: "https://marketplace.cloud.cesnet.cz/federation/services",
+        target: "_blank",
+        rel: "noopener"
+      }
+        = image_tag "landing_page/logo-einfra.svg", alt: "", class: "node-item__icon"
+        %span.node-item__name e-INFRA_CZ
 
 %section.eosc-navy
   .container
@@ -156,38 +229,42 @@
         %h4
           We are the European Open Science Cloud (EOSC), an environment for hosting and processing research
           data to support EU open science
+
     .row.mt-5
       .col-md-3.col-sm-12
         %a.eosc-info{ href: "#{@search_base_url}/search/all_collection%3Fq%3D?q=*" }
           .eosc-info-icon
-            = image_tag "landing_page/browse-marketplace.svg", alt: "Explore Discovery Hub"
+            = image_tag "landing_page/browse-marketplace.svg", alt: ""
           .eosc-info-texts
             .eosc-info-title Explore Discovery Hub
             .eosc-info-subtitle
               Browse through over 3 million research and innovation tools and services, thousands of datasets
               from a wide range of research domains from renowned European service providers.
+
       .col-md-3.col-sm-12
         %a.eosc-info{ href: user_dashboard_url }
           .eosc-info-icon
-            = image_tag "landing_page/dashboard.svg", alt: "My EOSC Dashboard"
+            = image_tag "landing_page/dashboard.svg", alt: ""
           .eosc-info-texts
             .eosc-info-title My EOSC Dashboard
             .eosc-info-subtitle
               Manage your research projects, access your activity history, and get resource recommendations.
+
       .col-md-3.col-sm-12
         %a.eosc-info{ href: "https://sandbox.eosc-beyond.eu/" }
           .eosc-info-icon
-            = image_tag "landing_page/portal.svg", alt: "EOSC Core Innovation Sandbox"
+            = image_tag "landing_page/portal.svg", alt: ""
           .eosc-info-texts
             .eosc-info-title EOSC Core Innovation Sandbox
             .eosc-info-subtitle
               Your pre-production environment for testing and staging within the EOSC Platform.
               It's designed for EOSC Core service providers, EOSC Exchange service providers,
               and EOSC Nodes to integrate seamlessly with EOSC.
+
       .col-md-3.col-sm-12
         %a.eosc-info{ href: "#{providers_dashboard_url}" }
           .eosc-info-icon
-            = image_tag "landing_page/hub.svg", alt: "Providers Hub"
+            = image_tag "landing_page/hub.svg", alt: ""
           .eosc-info-texts
             .eosc-info-title Providers Hub
             .eosc-info-subtitle
@@ -198,7 +275,7 @@
   .container
     .row
       .col-md-4.col-sm-12
-        = image_tag "landing_page/provider.svg", alt: "Are you a provider?"
+        = image_tag "landing_page/provider.svg", alt: ""
       .col-md-8.col-sm-12
         %h3
           Are you a provider?<br>
@@ -210,14 +287,16 @@
   .container
     .row
       .col-md-5.col-sm-12
-        = image_tag "landing_page/questions.svg", alt: "Have any questions?"
+        = image_tag "landing_page/questions.svg", alt: ""
         %h3 Have any questions?
         %p.lead
           Contact us if you encounter any<br>
           issues while using the website or<br>
           have any other suggestions that<br>
           we should know about.
+
       .col-md-2.col-sm-12
+
       .col-md-5.col-sm-12.contact-form
         %button{ id: "zammad-feedback-form" }
         :javascript
