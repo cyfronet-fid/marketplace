@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [4.6.2](https://github.com/cyfronet-fid/marketplace/compare/v4.6.1...v4.6.2) (2026-09-28)
+
+
+### Bug Fixes
+
+* [[#1991](https://github.com/cyfronet-fid/marketplace/issues/1991)] landing page nodes ([#3793](https://github.com/cyfronet-fid/marketplace/issues/3793)) ([4360d8e](https://github.com/cyfronet-fid/marketplace/commit/4360d8e8227b3531be26071a194f2766aca14e00))
+
 ## [4.6.1](https://github.com/cyfronet-fid/marketplace/compare/v4.6.0...v4.6.1) (2026-09-23)
 
 
