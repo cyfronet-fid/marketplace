@@ -1,0 +1,40 @@
+- content_for :title, @service.name
+- breadcrumb :ordering_configuration, @service
+= render "services/errors", service: @service
+.container{ "data-controller": "comparison" }
+  = render "services/ordering_configurations/top"
+
+  .pt-4.service-box-redesign.service-detail.backoffice{ "data-shepherd-tour-target": "service-box" }
+    = render Presentable::HeaderComponent.new(object: @service,
+                          title: @service.name,
+                          subtitle: @service.tagline,
+                          comparison_enabled: @comparison_enabled,
+                          show_checkboxes: false,
+                          preview: local_assigns[:preview],
+                          favourite_services: @favourite_services) do |c|
+      - c.buttons do
+        = render "components/presentable/header_component/ordering_configuration_buttons", service: @service
+    = render "services/tabs", service: @service, params: { from: "ordering_configuration" }
+.tab-content
+  #desc.tab-pane.container.active.desc{ "aria-labelledby": "home-tab", role: "tabpanel" }
+    .row.justify-content-between
+      %main.col-12.col-xl-9.pr-4.pt-4{ "data-shepherd-tour-target": "service-about" }
+        = render Presentable::DescriptionComponent.new(object: @service,
+          similar_services: @similar_services, related_services: @related_services,
+          from: "ordering_configuration", question: @question) do |c|
+          - c.description_panels do
+            = render "layouts/common_parts/services/offers", offers: @offers, service: @service, bundles: @bundles
+        = render "taggable/details_section", taggable: @service
+      %sidebar.col-12.col-xl-3{ "data-shepherd-tour-target": "service-classification" }
+        = render "components/presentable/explore_links", object: @service
+        .right-panel-links
+          - if !@service.public_contacts.empty? && (@question || @preview)
+            = render "components/presentable/ask_question", question_link: new_question_link(@service),
+              question: @question,
+              prompt: new_question_prompt(@service),
+              preview: @preview
+          = render Presentable::LinksComponent.new(object: @service, preview: @preview)
+        = render Presentable::ProviderInfoComponent.new(base: @service,
+        preview: @preview) if @service.respond_to?(:resource_organisation)
+.container.mt-4.pt-4.related-container
+  = render "services/related", related_services: @related_services, title: @related_services_title

@@ -1,0 +1,41 @@
+.card.rounded
+  %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
+              [:scientific_domains, :categories, :target_users, :access_types,
+              :access_modes, :tag_list])),
+              data: { toggle: "collapse", target: "#classification" },
+              aria: { expanded: true, controls: "classification" } }
+    .card-header.text-left{ id: "classification-header" }
+      .row
+        .col-10
+          = _("Classification")
+        .col-2.text-right
+          .collapse-icon
+            %i.fas.fa-chevron-down
+            %i.fas.fa-chevron-up
+  .collapse{ id: "classification", "aria-labelledby": "classification-header",
+            "data-parent": "#accordion-form",
+            class: ("show" unless collapsed?(service, [:scientific_domains,
+                              :categories, :target_users, :access_types, :access_modes, :tag_list])) }
+    .card-body
+      = f.association :scientific_domains, input_html: { data: { choice: true } },
+            disabled: cant_edit([scientific_domain_ids: []]),
+            collection: ScientificDomain.child_names.map { |name, sd| [name, sd.id] },
+            label_method: :first, value_method: :second
+      = f.association :categories, multiple: true, input_html: { data: { choice: true } },
+                            collection: Category.child_names.map { |name, c| [name, c.id] },
+                            disabled: cant_edit([category_ids: []])
+      = f.input :horizontal, as: :boolean, label: "Horizontal service",
+              boolean_style: :inline, include_hidden: true
+      = f.association :service_categories, multiple: true, input_html: { data: { choice: true } }
+      = f.association :research_activities, multiple: true, input_html: { data: { choice: true } }
+
+      = f.association :target_users,
+              label: _("Dedicated For"),
+              input_html: { data: { choice: true }, class: "target_users" },
+              disabled: cant_edit([target_user_ids: []])
+      = f.association :access_types, input_html: { data: { choice: true } },
+                            disabled: cant_edit([access_type_ids: []])
+      = f.association :access_modes, input_html: { data: { choice: true } },
+                            disabled: cant_edit([access_mode_ids: []])
+      = f.input :tag_list, input_html: { value: service.tag_list.to_s, data: { choice: true } },
+      disabled: cant_edit(:tag_list)

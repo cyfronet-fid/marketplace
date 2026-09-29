@@ -4,8 +4,8 @@
 # redis database 0 are never touched):
 #
 #   variant      database           elasticsearch (container, port)  redis db  frontend
-#   pl           mp_pl_dump         mp-pl-el           9201          5         pl-customization
-#   whitelabel   mp_whitelabel_env  mp-whitelabel-el   9202          6         whitelabel-customization
+#   pl           mp_pl_dump         mp-pl-el           9201          5         customization/pl
+#   whitelabel   mp_whitelabel_env  mp-whitelabel-el   9202          6         customization/whitelabel
 #   marketplace  mp_marketplace_env mp-marketplace-el  9203          7         the repository's own
 #
 # Databases live in the marketplace-db-1 container (there is no local postgres
@@ -25,18 +25,17 @@
 # restore and prime drop the variant's database first; stop the application
 # before running them (open connections block the drop).
 #
-# The customization directories (pl-customization, whitelabel-customization) are
-# looked up in the directory that holds this repository; MP_WORKSPACE=<dir>
-# points to another one.
+# The customization directories are the repository's customization/pl and
+# customization/whitelabel; MP_CUSTOMIZATION=<dir> points to another one (an
+# absolute path).
 set -e
 APP=${0:A:h:h:h}
-ROOT=${MP_WORKSPACE:-${APP:h}}
 DB_CONTAINER=marketplace-db-1
 
 VARIANT=$1
 case $VARIANT in
-  pl)          DB=mp_pl_dump;         ES_PORT=9201; REDIS_DB=5; CUSTOMIZATION=$ROOT/pl-customization ;;
-  whitelabel)  DB=mp_whitelabel_env;  ES_PORT=9202; REDIS_DB=6; CUSTOMIZATION=$ROOT/whitelabel-customization ;;
+  pl)          DB=mp_pl_dump;         ES_PORT=9201; REDIS_DB=5; CUSTOMIZATION=${MP_CUSTOMIZATION:-$APP/customization/pl} ;;
+  whitelabel)  DB=mp_whitelabel_env;  ES_PORT=9202; REDIS_DB=6; CUSTOMIZATION=${MP_CUSTOMIZATION:-$APP/customization/whitelabel} ;;
   marketplace) DB=mp_marketplace_env; ES_PORT=9203; REDIS_DB=7; CUSTOMIZATION= ;;
   *) echo "usage: run_variant_env.sh <pl|whitelabel|marketplace> [restore <dump.sql> | prime | <command...>]"; exit 1 ;;
 esac

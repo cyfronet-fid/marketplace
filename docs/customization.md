@@ -5,7 +5,7 @@ independent things:
 
 | What differs | Mechanism | Where it lives |
 | --- | --- | --- |
-| Look: pages, texts, styles, scripts, images | `CUSTOMIZATION_PATH` | a directory outside this repository |
+| Look: pages, texts, styles, scripts, images | `CUSTOMIZATION_PATH` | a directory of its own, outside `app/` |
 | Behaviour: routes, validations, flows, data model | `MARKETPLACE_VARIANT` | this repository, behind `Mp::Variant` |
 | Settings: URLs, feature flags, credentials | environment variables | the deployment's environment |
 
@@ -16,9 +16,17 @@ listed in the [README](../README.md#environmental-variables).
 
 ## The customization directory
 
-`CUSTOMIZATION_PATH` points to a directory with this layout. Every part
-mirrors a directory of the repository, and a file in it replaces the
-repository's file with the same relative path. Everything that is not
+The frontends of the former `pl-marketplace` and `whitelabel-marketplace`
+repositories are kept in this repository as `customization/pl` and
+`customization/whitelabel`. They are ordinary customization directories:
+nothing in the application refers to them, they take effect only when
+`CUSTOMIZATION_PATH` points to one of them, and they are meant to move to
+repositories of their own. Without `CUSTOMIZATION_PATH` the application
+shows the marketplace frontend from `app/`.
+
+`CUSTOMIZATION_PATH` is an absolute path to a directory with this layout.
+Every part mirrors a directory of the repository, and a file in it replaces
+the repository's file with the same relative path. Everything that is not
 overridden keeps coming from the repository.
 
 ```text
@@ -129,9 +137,18 @@ Development:
 
 ```shell
 export MARKETPLACE_VARIANT=whitelabel        # behaviour, see below
-export CUSTOMIZATION_PATH=/path/to/customization
+export CUSTOMIZATION_PATH="$(git rev-parse --show-toplevel)/customization/whitelabel"
 bin/dev                                      # web, sidekiq, css and js watchers
 ```
+
+| Frontend | `MARKETPLACE_VARIANT` | `CUSTOMIZATION_PATH` |
+| --- | --- | --- |
+| marketplace | `marketplace` | not set |
+| pl | `pl` | `<repository>/customization/pl` |
+| whitelabel | `whitelabel` | `<repository>/customization/whitelabel` |
+
+`lib/versions/run_variant_env.sh <variant>` sets both, with a database,
+search index and redis database per variant.
 
 `bin/dev` starts foreman, and foreman lets a key in `.env` win over an exported
 variable. Keep `CUSTOMIZATION_PATH` and `MARKETPLACE_VARIANT` out of `.env`
@@ -142,9 +159,11 @@ Production: the directory has to be present and `CUSTOMIZATION_PATH` set both
 when the assets are built and when the application runs.
 `rake assets:precompile` runs `yarn build` and `yarn build:css` and
 fingerprints the images, so JavaScript, stylesheets and images are fixed at
-build time; views and texts are read at boot. The `Dockerfile` builds the
-assets without a customization, so a deployment image has to add the directory
-and the variable before its `assets:precompile` step.
+build time; views and texts are read at boot. The `Dockerfile` sets
+`MARKETPLACE_VARIANT` and `CUSTOMIZATION_PATH` in both stages, before its
+`assets:precompile` step; an image for another deployment changes both
+values, and a customization kept outside the repository has to be copied
+into the image first.
 
 ## When a customization is not enough
 

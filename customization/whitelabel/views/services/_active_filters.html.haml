@@ -1,0 +1,47 @@
+- backoffice_scope = request.fullpath.include?("backoffice")
+- if backoffice_scope
+  .col-12.justify-content-center.d-flex
+    .col-lg-9.pl-0
+      = render "backoffice/services/search", query_params: query_params || {}
+    .col-lg-3.pr-0
+      - if policy([:backoffice, Service]).new?
+        = link_to _("+ Create new Service"),
+                      new_backoffice_service_path,
+                      class: "btn btn-primary create-resource float-right",
+                      "data-e2e": "create-resource"
+.col-md-12.mb-2
+  %h1.categories.mt-5
+    - if params[:q].present?
+      %span
+        = _("Looking for") + ":"
+      #{params[:q]}
+  .col-md-12.mb-1
+    - if category && params[:q].blank?
+      %p.text-muted.mb-4.ml-1= category.description
+  - if active_filters.present? || category.present?
+    .col-md-12.mb-3.pl-0
+      %p.mb-1
+        = _("Active filters")
+      .active-filters
+        - active_filters.each do |title, label, p|
+          .filter-tag{ "data-e2e": "filter-tag" }
+            %span.text-muted
+              #{title}:
+            = label
+            = link_to(p, "data-probe": "") do
+              .fas.fa-times
+        - if category.present?
+          .filter-tag{ "data-e2e": "filter-tag" }
+            %span.text-muted
+              Category:
+            = category.name
+            = link_to send("#{"backoffice_" if backoffice_scope}services_path", **query_params) do
+              .fas.fa-times
+
+        - if active_filters.present?
+          .filter-tag.clear{ "data-probe": "" }
+            = link_to controller: controller.controller_name, action: action_name,
+                    per_page: params[:per_page], sort: params[:sort], q: params[:q] do
+              %span
+                = _("Clear all filters")
+              .fa.fa-times

@@ -129,9 +129,11 @@ gated.
   `controllers/exit_controller.js`, `controllers/form_controller.js` and
   `app/cookies_policy.js` there, whitelabel also `application.js` and
   `controllers/form_redirect_controller.js`; pl's `dialog` Stimulus
-  controller is in the repository bundle. The directories themselves live
-  next to the repositories (`pl-customization`, `whitelabel-customization`,
-  built by `lib/versions/assemble_customization.sh`).
+  controller is in the repository bundle. The directories are kept in the
+  repository as `customization/pl` and `customization/whitelabel` (first
+  built by `lib/versions/assemble_customization.sh`) until they get
+  repositories of their own; the application reads them through
+  `CUSTOMIZATION_PATH` only.
 - Helpers the pl/whitelabel views call — `Presentable::DetailsHelper` returns
   pl's V5 detail sections under `pl` and carries the datasource policy,
   persistent identity system and research product sections everywhere;

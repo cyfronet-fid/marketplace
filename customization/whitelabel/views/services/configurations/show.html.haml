@@ -1,0 +1,25 @@
+- content_for :title, _("Configuration")
+-# TODO: refactor dynamic translation
+= simple_form_for @step, as: :customizable_project_item, url: service_configuration_path(@service), method: :put,
+  html: { id: "order-form", "data-controller" => "project-item", "data-project-item-url" => projects_path } do |f|
+  .row
+    .col-12
+      - if @step.bundle.present?
+        %h2.mb-2.mt-3.font-bold Bundle configuration
+        %p.mb-4 Your service will be configured to work with following services:
+        = render "services/configurations/voucher", step: @step, f: f
+        .row.bundle-info
+          .col-12.col-md-2
+            = presentable_logo(@step.bundle.service, "align-self-center img-fluid", [180, 120])
+          .col-12.col-md-10
+            %h3.bundle-configuration-title
+              = @step.bundle.main_offer.name
+            %span.text-muted
+              = _("Provided by #{ @step.bundle.service.resource_organisation.name}")
+          = render "services/configurations/attributes", step: @step, service: @service, form: f
+        = render "services/configurations/bundled_offers", step: @step, service: @service, f: f
+      - else
+        %p.mb-4= _("Please specify parameters. It is necessary to handle your request.")
+        = render "services/configurations/voucher", step: @step, f: f
+        .row.bundle-info
+          = render "services/configurations/attributes", step: @step, service: @service, form: f

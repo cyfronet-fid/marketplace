@@ -1,0 +1,12 @@
+- if local_assigns[:preview] || policy(ServiceContext.new(service,
+  params.key?(:from) && params[:from] == "backoffice_service")).order?
+  = link_to _("Access the service"),
+                  service_choose_offer_path(service),
+                  class: "btn btn-primary d-block mb-3 py-2",
+                  "data-e2e": "access-service-btn",
+                  "data-probe": "",
+                  "data-service-id": service.id,
+                  "data-preview-target": local_assigns[:preview] ? "link" : ""
+  - show_dropdown = user_signed_in? && show_manage_button?(service)
+  = render "components/presentable/header_component/service_drop_down_menu", service: service if show_dropdown
+  = render "layouts/common_parts/services/order_type_label", object: service

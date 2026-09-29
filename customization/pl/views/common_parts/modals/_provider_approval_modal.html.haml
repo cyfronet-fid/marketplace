@@ -1,0 +1,20 @@
+%dialog#provider-approval-modal.provider-follow-up-modal{
+  aria: { labelledby: "provider-approval-modal-title", describedby: "provider-approval-modal-description" },
+  data: { controller: "dialog", action: "click->dialog#closeOnBackdrop close->dialog#handleClose",
+  "turbo-temporary": true, e2e: "provider-approval-modal" } }
+  .modal-header
+    %h3#provider-approval-modal-title.modal-title
+      = _("Congratulations! You've successfully created your first Provider.")
+    %button.close{ data: { action: "dialog#close" }, type: "button", aria: { label: _("Close") } }
+      %span{ aria: { hidden: "true" } } &times;
+  #provider-approval-modal-description.modal-body
+    %p
+      %strong= _("Your first Provider must be approved by our Technical Team")
+      = " " + _("before it can be published. Until approval is granted, the Provider, its Services, and Offers will remain unpublished.")
+
+  .modal-footer
+    .buttons-row
+      %button.btn.btn-secondary.btn-sm{ type: "button", data: { action: "dialog#close" } }
+        = _("Cancel")
+      = link_to new_backoffice_service_path, class: "btn btn-primary btn-sm", data: { turbo_frame: "_top", e2e: "create-first-service" } do
+        = _("Create your first service")

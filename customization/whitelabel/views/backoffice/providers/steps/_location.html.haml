@@ -1,0 +1,15 @@
+= simple_form_for [:backoffice, provider],
+  url: backoffice_provider_wizard_path(params[:provider_id]),
+  html: { "data-form-target": "form" },
+  method: :put do |f|
+  = render "backoffice/providers/steps/simple_navbar", provider: provider, f: f
+  .new-offer-form
+    .row
+      .col-lg-7.pl-0
+        %h4 Location
+        .offer-section-wrapper
+          = f.input :country, disabled: cant_edit?(:country), as: :select,
+              collection: Country.options.map { |c| [ c.iso_short_name, "value" => c.alpha2 ] }
+        = render "backoffice/providers/steps/buttons", f: f
+      = render "backoffice/providers/more_information"
+-# = render "common_parts/modals/become_provider_modal", f: f

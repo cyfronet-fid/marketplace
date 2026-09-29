@@ -8,6 +8,7 @@ FROM ruby:${RUBY_VERSION}-alpine AS builder
 ENV RAILS_ENV=production \
     RACK_ENV=production \
     MARKETPLACE_VARIANT=pl \
+    CUSTOMIZATION_PATH=/marketplace/customization/pl \
     BUNDLE_WITHOUT="development:test" \
     BUNDLE_JOBS=4 \
     BUNDLE_RETRY=3
@@ -62,6 +63,7 @@ FROM ruby:${RUBY_VERSION}-alpine
 ENV RAILS_ENV=production \
     RACK_ENV=production \
     MARKETPLACE_VARIANT=pl \
+    CUSTOMIZATION_PATH=/marketplace/customization/pl \
     RAILS_SERVE_STATIC_FILES=true
 
 # Installing only required production packages

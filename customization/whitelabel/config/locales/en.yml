@@ -1,0 +1,128 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# The following keys must be escaped otherwise they will not be retrieved by
+# the default I18n backend:
+#
+# true, false, on, off, yes, no
+#
+# Instead, surround them with single quotes.
+#
+# en:
+#   'true': 'foo'
+#
+# To learn more, please read the Rails Internationalization guide
+# available at https://guides.rubyonrails.org/i18n.html.
+
+en:
+  errors:
+    format: "%{message}"
+  date:
+    formats:
+      default: "%d-%m-%Y"
+  time:
+    formats:
+      default: "%e.%m.%Y %k:%M"
+      short: "%e.%m.%Y"
+  previous: Back
+  next: Next
+  cancel: Cancel
+  approval_request:
+    approved:
+      mail:
+        new_message: |
+          Your provider is approved
+  project:
+    mail:
+      new_message: |
+        Question about your Project %{project_name} in EOSC Portal Marketplace
+  project_item:
+    mail:
+      new_message: |
+        Question about your service access request in EOSC Portal Marketplace
+  conversations:
+    status:
+      info:
+        created: "Your service request has been created"
+        in_progress: "Your service request is under review by service provider"
+        waiting_for_response: "Service provider is waiting for your response"
+        approved: "You service request has been accepted and is currently being processed by service provider"
+        ready: "Your service is now ready to be used"
+        rejected: " Your service request has been rejected. Please contact service provider if you have any questions"
+        closed: "Your service request is closed. If you want to use the service again, please contact service provider"
+  lead:
+    learn_more:
+      title: Learn more
+      slug: learn-more
+      initiative:
+        header: EOSC initiative
+        body: Find out more about EOSC and what it can bring you!
+        url: https://www.eosc-beyond.eu/eosc
+      project:
+        header: Projects
+        body: |
+          Through Marketplace Projects you can organise
+          your services and gain support from the EOSC experts.
+        url: https://marketplace.eosc-portal.eu/about_projects
+      providers:
+        header: For providers
+        body: |
+          Contribute to develop EOSC into a rich environment with
+          a wide range of services and services for researchers.
+        url: https://eosc-portal.eu/for-providers
+    use_cases:
+      title: Use cases
+      slug: use-cases
+      clarin:
+        header: "From language data to insight: the CLARIN demonstrator"
+        body: |
+          How the integration of the CLARIN infrastructure
+          into the EOSC Portal can facilitate the study of language data.
+        url: https://eosc-portal.eu/language-data-insight-clarin-demonstrator
+      earth_observation:
+        header: The EOSC as a scalable computing infrastructure for Earth Observation
+        body: How EOSC could open the way for Earth Observation innovation.
+        url: https://eosc-portal.eu/eosc-scalable-computing-infrastructure-earth-observation
+
+  pagy:
+    prev: "&lsaquo;&nbsp;Prev"
+    next: "Next&nbsp;&rsaquo;"
+    gap: "&hellip;"
+
+    item_name:
+      one: "result"
+      other: "results"
+
+    aria_label:
+      prev: "Prev"
+      next: "Next"
+      gap: "&hellip;"
+      nav:
+        other: "Current Page Selector"
+
+    info:
+      no_items: "No %{item_name}"
+      single_page: "Displaying <b>%{count}</b> %{item_name}"
+      multiple_pages: "Part of <b>%{count}</b> results"
+  activemodel:
+    errors:
+      models:
+        project_item/wizard/summary_step:
+          attributes:
+            project:
+              repeated_in_project: "already pinned with this offer"

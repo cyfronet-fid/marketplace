@@ -226,6 +226,12 @@ ESS and ordering API:
   request specs run under pl and whitelabel with it without template
   errors (the remaining failures are the marketplace-only infrastructure
   route and the cascading provider delete, both expected there).
+- The two directories were moved into the repository (2026-09-29) as
+  `customization/pl` and `customization/whitelabel`, unchanged apart from a
+  `locale/.keep`. Nothing in the application refers to them; they are used
+  through `CUSTOMIZATION_PATH` like any external directory and are meant to
+  move to repositories of their own. `lib/versions/run_variant_env.sh` and
+  the `Dockerfile` point to them.
 - Helpers the pl/whitelabel views call: `Presentable::DetailsHelper` returns
   pl's V5 service, datasource and provider sections under pl (classification,
   marketing, maturity, financial information, identifiers, datasource

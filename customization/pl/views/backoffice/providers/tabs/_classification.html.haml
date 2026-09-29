@@ -1,0 +1,18 @@
+.new-offer-form
+  - sds = ScientificDomain.child_names.filter_map { |name, sd| [name, sd.id] if sd.parent.present? }
+  = simple_form_for [:backoffice, provider],
+    html: { data: { controller: "form", form_target: "form", disabled: provider.upstream_id.present? } } do |f|
+    = f.error_notification
+    = hidden_field_tag :tab, "classification"
+    .row
+      .col-lg-9.pl-0
+        = f.association :scientific_domains, disabled: cant_edit([scientific_domain_ids: []]),
+                  input_html: { data: { choice: true } },
+                  collection: sds,
+                  label_method: :first, value_method: :second
+        = f.input :tag_list, input_html: { value: provider.tag_list.to_s, data: { choice: true } },
+        disabled: cant_edit(:tag_list)
+        = f.association :structure_types, disabled: cant_edit([structure_type_ids: []]),
+                input_html: { multiple: true, data: { choice: true } }
+    .row.mt-4
+      = f.button :submit, class: "btn btn-primary"

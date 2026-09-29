@@ -1,0 +1,10 @@
+.col-sm-12.col-md-12
+  .lead-box.h-100
+    = yield :item_bar if content_for(:item_bar)
+    .openscience-intro{ class: "#{lead_class(card_counter, card_length)}-intro" }
+      .openscience-container
+        .openscience-intro-title= card.header
+        .openscience-intro-desc= card.body
+      %a.openscience-more-link{ href: card.url }
+        Sprawdź
+        %i.fas.fa-arrow-right.ml-2

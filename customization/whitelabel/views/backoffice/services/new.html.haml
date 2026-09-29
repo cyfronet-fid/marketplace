@@ -1,0 +1,7 @@
+- content_for :title, _("New Service")
+- breadcrumb :backoffice_service_new
+
+.container.p-0.backoffice
+  %h1= _("New Service")
+  .new-service
+    = render "form", service: @service, providers: @providers, catalogues: @catalogues

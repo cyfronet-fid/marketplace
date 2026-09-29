@@ -1,0 +1,240 @@
+.landing-header
+  %section.text-center.heading
+    .container
+      .row.py-lg-3
+        .col-md-8.col-sm-12.mx-auto
+          %h1 Browse Marketplace
+          .searchbar{ "data-controller": "external" }
+            .searchbar__input
+              %label.sr-only{ for: "search" }= _("Search")
+              = text_field_tag :q, params[:q], class: "autocomplete-input",
+                placeholder: "Find resource...",
+                "data-e2e": "searchbar-input",
+                "data-external-target": "query",
+                "data-base": external_search_base_url,
+                "data-action": "keydown.esc->external#clear keydown.enter->external#search input->external#toggleClear",
+                "data-probe": ""
+              %a.d-none.search-clear{ "data-external-target": "clear",
+                                      "data-action": "click->external#clear",
+                                      title: _("Clear search"),
+                                      "data-e2e": "search-clear-btn" }
+                .fas.fa-times
+            .input-group-append
+              %button#query-submit.input-group-text.bg-white{ "data-external-target": "search",
+              "data-action": "click->external#search", "data-e2e": "query-submit-btn" }
+                %i.fas.fa-search
+          .browse.d-flex
+            .browse-label
+              Popular keywords:
+            .popular-box
+              %a{ href: "#" } nanotechnology
+              %a{ href: "#" } cloud computing
+              %a{ href: "#" } storage
+%section.research-activity
+  .container
+    .activity-wrapper
+
+      %a.activity{ href: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:
+        (%22Discover%20Research%20Outputs%22)" }
+        .activity-icon
+          = image_tag "landing_page/ico-01.svg", alt: "Discover Research Outputs"
+        .activity-texts
+          .activity-title Discover Research Outputs
+          .activity-subtitle
+            Find datasets, scientific publications, software.
+
+      %a.activity{ href: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:
+        (%22Manage%20Research%20Data%22)" }
+        .activity-icon
+          = image_tag "landing_page/ico-09.svg", alt: "Data Management"
+        .activity-texts
+          .activity-title Data Management
+          .activity-subtitle
+            Find robust, feature-rich and user-friendly services for Data Management.
+
+      %a.activity{ href: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:
+        (%22Access%20Research%20Infrastructures%22)" }
+        .activity-icon
+          = image_tag "landing_page/ico-07.svg", alt: "Access research infrastructures"
+        .activity-texts
+          .activity-title Access research infrastructures
+          .activity-subtitle
+            Find frameworks made by scientific clusters or RIs that will equip you with...
+
+      %a.activity{ href: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:
+        (%22Find%20Instruments%20%5C%26%20Equipment%22)" }
+        .activity-icon
+          = image_tag "landing_page/ico-05.svg", alt: "Find Instruments & Equipment"
+        .activity-texts
+          .activity-title Find Instruments & Equipment
+          .activity-subtitle
+            Find research instruments and scientific equipment.
+
+      %a.activity{ href: "#{external_search_base_url}/search/all?q=*&fq=unified_categories:
+        (%22Publish%20Research%20Outputs%22)" }
+        .activity-icon
+          = image_tag "landing_page/ico-02.svg", alt: "Publish research outputs"
+        .activity-texts
+          .activity-title Publish research outputs
+          .activity-subtitle
+            Store, backup, archive your data, publications, software.
+
+    .activity-wrapper
+      .text-wrapper
+        Browse
+        %span all resources
+        in one place:
+      .text-wrapper
+        %a.btn{ href: "#" } Browse All Resources
+
+%section.questions
+  .container
+    .questions-wrapper
+      .row
+        .col-md-4.col-sm-12
+          %h3 Q&A
+          %p
+            Check out our Q&A guide to find answers to your questions. It's designed to help you understand and solve
+            common issues. If you still have questions after reading the guide, don’t worry:
+          %a.white-link{ href: "#" }
+            See user guide
+            %i.fa.fa-arrow-right
+        .col-md-8.col-sm-12
+          #accordion-qa.accordion
+            .qa-box
+              #heading-one
+                %button.qa-button.collapsed{ "data-toggle": "collapse", "data-target": "#collapse-one",
+                "aria-expanded": "false", "aria-controls": "collapse-one" }
+                  Why should I logged in?
+              #collapse-one.collapse{ "aria-labelledby": "heading-one", "data-parent": "#accordion-qa" }
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
+                eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                deserunt mollit anim id est laborum.
+            .qa-box
+              #heading-two
+                %button.qa-button.collapsed{ "data-toggle": "collapse", "data-target": "#collapse-two",
+                "aria-expanded": "false", "aria-controls": "collapse-two" }
+                  Can I use my google account to log in?
+              #collapse-two.collapse{ "aria-labelledby": "heading-two", "data-parent": "#accordion-qa" }
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
+                eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                deserunt mollit anim id est laborum.
+            .qa-box
+              #heading-three
+                %button.qa-button.collapsed{ "data-toggle": "collapse",
+                "data-target": "#collapse-three", "aria-expanded": "false", "aria-controls": "collapse-three" }
+                  Do I need to pau for the access?
+              #collapse-three.collapse{ "aria-labelledby": "heading-three", "data-parent": "#accordion-qa" }
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
+                eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                deserunt mollit anim id est laborum.
+            .qa-box
+              #heading-four
+                %button.qa-button.collapsed{ "data-toggle": "collapse",
+                "data-target": "#collapse-four", "aria-expanded": "false", "aria-controls": "collapse-four" }
+                  What is the difference between open access and fully open access?
+              #collapse-four.collapse{ "aria-labelledby": "heading-four", "data-parent": "#accordion-qa" }
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
+                eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                deserunt mollit anim id est laborum.
+%section.learn
+  .container
+    %h3 Learn more
+    .row
+      .col-md-4.col-sm-12
+        %a.learn-link{ href: "#" }
+          .learn-title EOSC initiative
+          .learn-desc Find out more about EOSC and what it can bring you!
+      .col-md-4.col-sm-12
+        %a.learn-link{ href: "#" }
+          .learn-title Projects
+          .learn-desc Through Marketplace Projects you can organise your services.
+      .col-md-4.col-sm-12
+        %a.learn-link{ href: "#" }
+          .learn-title For providers
+          .learn-desc Contribute into a rich environment with a wide range of resources.
+
+
+%section.research
+  .container
+    %h3 Popular Services
+    .row
+      .col-md-3.col-sm-12.d-flex.align-items-stretch
+        .popular-services-box.card
+          .popular-top
+            = image_tag "default-logo.png", alt: "Service name"
+            .badge.access-information.fa-pull-right.badge-right.style_order_required.open_access
+              %i.ordertype.order_required
+              open access
+          %a.popular-title
+            GEOSS Web Portal
+          .popular-provider
+            European Space Agency
+          .popular-description
+            Access to resources from the Global Earth Observation System of Systems
+          .taglist-holder
+            .tag-item Science
+            .tag-item Nanotechnology
+            .tag-item System
+
+      .col-md-3.col-sm-12.d-flex.align-items-stretch
+        .popular-services-box.card
+          .popular-top
+            = image_tag "default-logo.png", alt: "Service name"
+            .badge.access-information.fa-pull-right.badge-right.style_order_required.open_access
+              %i.ordertype.order_required
+              open access
+          %a.popular-title
+            GEOSS Web Portal
+          .popular-provider
+            European Space Agency
+          .popular-description
+            Access to resources from the Global Earth Observation System of Systems
+          .taglist-holder
+            .tag-item Science
+            .tag-item Nanotechnology
+            .tag-item System
+
+      .col-md-3.col-sm-12.d-flex.align-items-stretch
+        .popular-services-box.card
+          .popular-top
+            = image_tag "default-logo.png", alt: "Service name"
+            .badge.access-information.fa-pull-right.badge-right.style_order_required.open_access
+              %i.ordertype.order_required
+              open access
+          %a.popular-title
+            GEOSS Web Portal
+          .popular-provider
+            European Space Agency
+          .popular-description
+            Access to resources from the Global Earth Observation System of Systems
+          .taglist-holder
+            .tag-item Science
+            .tag-item Nanotechnology
+            .tag-item System
+
+      .col-md-3.col-sm-12.d-flex.align-items-stretch
+        .popular-services-box.card
+          .popular-top
+            = image_tag "default-logo.png", alt: "Service name"
+            .badge.access-information.fa-pull-right.badge-right.style_order_required.open_access
+              %i.ordertype.order_required
+              open access
+          %a.popular-title
+            GEOSS Web Portal
+          .popular-provider
+            European Space Agency
+          .popular-description
+            Access to resources from the Global Earth Observation System of Systems
+          .taglist-holder
+            .tag-item Science
+            .tag-item Nanotechnology
+            .tag-item System

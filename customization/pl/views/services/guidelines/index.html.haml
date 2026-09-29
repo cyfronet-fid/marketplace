@@ -1,0 +1,15 @@
+- content_for :title, @service.name
+- breadcrumb :resource_details, @service
+= render "services/wrapper", service: @service, category: @category,
+  comparison_enabled: @comparison_enabled, compare_services: @compare_services,
+  favourite_services: @favourite_services, question: @question, tab_id: "opinions", preview: false do
+  - if @service.guidelines.blank?
+    This service has no Interoperability Guidelines
+  - else
+    = render Presentable::DetailsComponent.new(@service, guidelines: true)
+
+  .related-container.container
+    .row
+      .col-12
+        = render "services/related", related_services: @related_services, title: related_services_title,
+            preview: @preview

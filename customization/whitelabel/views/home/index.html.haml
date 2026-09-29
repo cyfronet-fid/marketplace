@@ -1,0 +1,120 @@
+.landing-header
+  %section.text-center.heading
+    .container
+      .row.py-lg-3
+        .col-md-7.col-sm-12.mx-auto
+          %h1 Browse Marketplace
+          = render "services/search",
+          categories: @siblings || @root_categories,
+          query_params: @query_params || {}
+
+          %h2.research-top-space Browse by specific research activity:
+
+          .row.justify-content-center
+            .col-md-10.col-sm-12.research-wrapper
+              %a{ href: "/services?sort=_score&research_activities%5B%5D=778" }  Research Data
+              %a{ href: "/services?sort=_score&research_activities%5B%5D=771" }  Research Infrastructures
+              %a{ href: "/services?sort=_score&research_activities%5B%5D=776" }  Instruments and Equipment
+              %a{ href: "/services?research_activities=780" }  Sharing & Discovery
+              %a{ href: "/services?sort=_score&research_activities%5B%5D=776" }  Instruments and Equipment
+
+%section.federated
+  .container
+    .federated-media.pl-5
+      .row
+        .col-lg-5.col-sm-12.ml-5
+          %h3
+            Browse resources locally
+            %br
+            and
+            %span across the federation
+          %p.description
+            Browse local and federated resources. Thanks to Federated Catalogues, you can also access the collections
+            of other institutions from your catalogue.
+          %a.btn.btn-primary.mt-3{ href: federation_services_path } Discovery Federated Catalogues
+
+%section.be-provider
+  .container
+    .row
+      .col-md-6.col-sm-12
+        .become-provider-box
+          %h4 Become provider
+          .subtitle
+            Share your resources to reach the
+            %br
+            Marketplace users.
+          %a.btn.btn-secondary.w-100.mt-4{ href: "/backoffice/providers/new" } Become a provider
+      .col-md-6.col-sm-12.provider-simple-wrapper
+        .provider-simple-box
+          %h5 Add Your Service
+          .subtitle
+            Create, delete, and update their services at any time. Gain full control and manage your offerings with
+            ease.
+        .provider-simple-box
+          %h5 Create Offers
+          .subtitle
+            Add new offers, modify existing ones, and monitor their statuses. Stay responsive to users demands and
+            keep your offers up-to-date.
+        .provider-simple-box.special
+          %h5 Group Providers into Catalogues
+          .subtitle
+            Use catalogues to manage and organise multiple providers. Add, remove, and arrange them to keep your
+            marketplace in order.
+
+%section.learn
+  = render_sections("learn-more")
+
+%section.questions
+  .container
+    .questions-wrapper
+      .row
+        .col-md-4.col-sm-12
+          %h3 FAQ
+          %p
+            Check out our Q&A guide to find answers to your questions. It's designed to help you understand and solve
+            common issues. If you still have questions after reading the guide, don’t worry:
+          %a.white-link{ href: help_path }
+            See user guide
+            %i.fa.fa-arrow-right
+        .col-md-8.col-sm-12
+          #accordion-qa.accordion
+            -# Here should be user defined section of FAQ, now is hardcoded id
+            - HelpItem.where(help_section_id: 2).order(:position).each do |help_item|
+              .qa-box
+                %div{ id: "heading-#{help_item.id}" }
+                  %button.qa-button.collapsed{ "data-toggle": "collapse", "data-target": "#collapse-#{help_item.id}",
+                  "aria-expanded": "false", "aria-controls": "collapse-#{help_item.id}" }
+                    = help_item.title
+                .collapse{ id: "collapse-#{help_item.id}", "aria-labelledby": "heading-#{help_item.id}",
+                           "data-parent": "#accordion-qa" }
+                  = help_item.content
+
+
+
+-# Here should be = render_sections("use-cases") - below is a placeholder
+%section.research
+  .container
+    %h3 Popular services
+    .row
+      - @services.each do |service|
+        .col-md-3.col-sm-12.d-flex.align-items-stretch
+          .popular-services-box.card
+            .popular-top
+              - if service.logo.attached?
+                = image_tag service.logo.variant(resize: "100x80")
+              - else
+                = image_tag "eosc-img.png", alt: "Service name"
+              .badge.access-information.fa-pull-right.badge-right{ class: "style_#{order_type(service)}" }
+                %i{ class: "ordertype #{order_type(service)}" }
+                -# TODO: refactor dynamic translation
+                = t("offers.type.#{order_type(service)}")
+            %a.popular-title{ href: service_offers_path(service) }= service.name
+            %a.popular-provider{ href: services_path(providers: service.resource_organisation.id) }
+              = service.resource_organisation.name
+            .popular-description{ data_toggle: "tooltip", title: service.description }
+              = service.description.truncate(72)
+            - if service.tag_list.present?
+              .taglist-holder
+                - service.tags.each do |tag|
+                  .tag-item
+                    = link_to tag, services_path(tag: tag.name)

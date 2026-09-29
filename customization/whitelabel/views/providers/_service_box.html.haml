@@ -1,0 +1,19 @@
+.col-md-4.align-items-stretch
+  .card.related-box.mb-4
+    .card-logo.d-flex
+      = presentable_logo(service)
+    .badge.access-information.fa-pull-right.badge-right.style_order_required{ class: service.order_type }
+      %i.ordertype.order_required
+      = service.order_type.humanize
+    .card-body
+      %h3.card-title= link_to service.name, service, name: service.name,
+      "data-preview-target": local_assigns[:preview] ? "link" : ""
+      .card-provider
+        = resource_organisation_text(service)
+      .card-description
+        = service.tagline
+      .card-tagline
+        - service.target_users.map do |tu|
+          .tag
+            = link_to tu.name, services_filter_link(tu, tu.name, "dedicated_for")
+      .clearfix

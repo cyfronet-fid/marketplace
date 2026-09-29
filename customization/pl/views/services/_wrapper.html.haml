@@ -1,0 +1,40 @@
+%div{ "data-controller": "#{"preview" if preview}" }
+  .container{ class: "#{"suspended" if service.suspended?}", "data-controller": "comparison",
+    "data-shepherd-tour-target": "overview_10" }
+    .pt-4.service-box-redesign.service-detail{ "data-shepherd-tour-target": "service-box" }
+      = render Presentable::HeaderComponent.new(object: service,
+                            title: service.name,
+                            abbreviation: service.abbreviation,
+                            subtitle: service.tagline,
+                            comparison_enabled: comparison_enabled,
+                            preview: preview || service.suspended?,
+                            favourite_services: favourite_services) do |c|
+        - c.buttons do
+          - case params[:from]
+          - when "ordering_configuration"
+            = render "components/presentable/header_component/ordering_configuration_buttons", service: service
+          - when "backoffice_service"
+            = render "components/presentable/header_component/backoffice_service_buttons", service: service
+          - else
+            = render "components/presentable/header_component/order_buttons", service: service, preview: preview
+      = render "services/tabs", service: service
+    - dynamic_class = (session[:comparison]&.size || 0).positive? ? "d-block" : "d-none"
+    #comparison-bar.comparison-bar.fixed-bottom{ class: dynamic_class,
+      "data-comparison-target": "bar", "data-e2e": "comparison-bar" }
+      = render "comparisons/bar", services: compare_services, category: category
+  .tab-content
+    .tab-pane.container.active.desc{ id: tab_id, "aria-labelledby": "home-tab", role: "tabpanel" }
+      .row.justify-content-between
+        %main.col-12.col-xl-9.pr-4.pt-4{ "data-shepherd-tour-target": "service-about" }
+          = yield
+        %sidebar.col-12.col-xl-3{ "data-shepherd-tour-target": "service-classification" }
+          = render "components/presentable/explore_links", object: service
+          .right-panel-links
+            - if !service.public_contacts.empty? && (question || preview)
+              = render "components/presentable/ask_question", question_link: new_question_link(service),
+                question: question,
+                prompt: new_question_prompt(service),
+                preview: preview
+            = render Presentable::LinksComponent.new(object: service, preview: preview)
+          = render Presentable::ProviderInfoComponent.new(base: service,
+          preview: preview) if service.respond_to?(:resource_organisation)

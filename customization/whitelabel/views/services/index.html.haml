@@ -1,0 +1,29 @@
+- content_for :title do
+  :ruby
+    if params[:q]
+      params[:q]
+    elsif @category
+      @category.name
+    else
+      _("All service")
+    end
+.container
+  - @category ? breadcrumb(:category, @category) : breadcrumb(:services)
+  = render "services/index", services: @services,
+                             presentable: @presentable,
+                             pagy: @pagy,
+                             category: @category,
+                             services_count: @services_total,
+                             categories: @siblings_with_counters,
+                             subcategories: @subcategories_with_counters,
+                             sort_options: @sort_options,
+                             highlights: @highlights,
+                             filters: @filters,
+                             active_filters: @active_filters,
+                             offers: @offers,
+                             comparison_enabled: @comparison_enabled,
+                             show_recommendations: Mp::Application.config.is_recommendation_panel,
+                             recommended_services: @recommended_services,
+                             favourite_services: @favourite_services,
+                             compare_services: @compare_services,
+                             query_params: @query_params
