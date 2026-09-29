@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [4.7.0](https://github.com/cyfronet-fid/marketplace/compare/v4.6.2...v4.7.0) (2026-09-29)
+
+
+### Features
+
+* [[#3704](https://github.com/cyfronet-fid/marketplace/issues/3704)] New service layout ([e97b445](https://github.com/cyfronet-fid/marketplace/commit/e97b44515c8995c7d1f492c7a251929a138e123d))
+
 ## [4.6.2](https://github.com/cyfronet-fid/marketplace/compare/v4.6.1...v4.6.2) (2026-09-28)
 
 
