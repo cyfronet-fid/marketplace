@@ -7,6 +7,7 @@ FROM ruby:${RUBY_VERSION}-alpine AS builder
 # Setting environment variables
 ENV RAILS_ENV=production \
     RACK_ENV=production \
+    MARKETPLACE_VARIANT=pl \
     BUNDLE_WITHOUT="development:test" \
     BUNDLE_JOBS=4 \
     BUNDLE_RETRY=3
@@ -60,6 +61,7 @@ FROM ruby:${RUBY_VERSION}-alpine
 # Setting environment variables
 ENV RAILS_ENV=production \
     RACK_ENV=production \
+    MARKETPLACE_VARIANT=pl \
     RAILS_SERVE_STATIC_FILES=true
 
 # Installing only required production packages
