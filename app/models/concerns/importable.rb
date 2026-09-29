@@ -100,7 +100,8 @@ module Importable
   end
 
   def map_contact(contact)
-    contact&.transform_keys { _1.to_s.underscore }&.slice(*CONTACT_ATTRIBUTES)
+    mapped = contact&.transform_keys { _1.to_s.underscore }
+    Mp::Variant.pl? ? mapped : mapped&.slice(*CONTACT_ATTRIBUTES)
   end
 
   def map_data_administrator(data)

@@ -46,4 +46,46 @@ RSpec.describe Catalogue, type: :model do
 
     it { is_expected.to validate_presence_of(:name) }
   end
+
+  describe "validations when not running as pl" do
+    subject { build(:catalogue) }
+
+    before { allow(Mp::Variant).to receive(:pl?).and_return(false) }
+
+    it { is_expected.not_to validate_presence_of(:abbreviation) }
+
+    it { is_expected.not_to validate_presence_of(:data_administrators) }
+  end
+
+  describe "validations when running as pl" do
+    subject { build(:catalogue) }
+
+    before { allow(Mp::Variant).to receive(:pl?).and_return(true) }
+
+    it { is_expected.to validate_presence_of(:name) }
+
+    it { is_expected.to validate_presence_of(:abbreviation) }
+
+    it { is_expected.to validate_presence_of(:website) }
+
+    it { is_expected.to validate_presence_of(:inclusion_criteria) }
+
+    it { is_expected.to validate_presence_of(:end_of_life) }
+
+    it { is_expected.to validate_presence_of(:validation_process) }
+
+    it { is_expected.to validate_presence_of(:scope) }
+
+    it { is_expected.to validate_presence_of(:description) }
+
+    it { is_expected.to validate_presence_of(:street_name_and_number) }
+
+    it { is_expected.to validate_presence_of(:postal_code) }
+
+    it { is_expected.to validate_presence_of(:city) }
+
+    it { is_expected.to validate_presence_of(:public_contacts) }
+
+    it { is_expected.to validate_presence_of(:data_administrators) }
+  end
 end
