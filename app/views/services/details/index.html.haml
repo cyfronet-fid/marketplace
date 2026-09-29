@@ -3,6 +3,6 @@
 = render "services/errors", service: @service
 = render "services/wrapper", service: @service, category: @category,
   comparison_enabled: @comparison_enabled, compare_services: @compare_services,
-  favourite_services: @favourite_services, question: @question, tab_id: "opinions", preview: false do
+  favourite_services: @favourite_services, question: @question, tab_id: "details", preview: false do
   = render Presentable::DetailsComponent.new(@service, similar_services: @similar_services, question: @question,
-  related_services: @related_services)
+  related_services: @related_services, show_description: true)

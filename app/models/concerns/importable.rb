@@ -57,16 +57,15 @@ module Importable
       end
   end
 
-  # rubocop:disable Metrics/CyclomaticComplexity
   def map_link(link, type = "multimedia")
+    return map_multimedia_link(link) if type == "multimedia"
+
     if link&.[]("multimediaURL").blank? && link&.[]("researchProductLicenseURL").blank? &&
        link&.[]("researchProductMetadataLicenseURL").blank? && link&.[]("useCaseURL").blank? && !UrlHelper.url?(link)
       return
     end
 
     case type
-    when "multimedia"
-      Link::MultimediaUrl.new(name: link&.[]("multimediaName") || "", url: link["multimediaURL"] || link)
     when "use_cases"
       Link::UseCasesUrl.new(name: link&.[]("useCaseName") || "", url: link["useCaseURL"] || link)
     when "research_product_metadata"
@@ -81,7 +80,13 @@ module Importable
       )
     end
   end
-  # rubocop:enable Metrics/CyclomaticComplexity
+
+  def map_multimedia_link(link)
+    url = link.is_a?(Hash) ? link["multimediaURL"] : link
+    return unless UrlHelper.url?(url)
+
+    Link::MultimediaUrl.new(name: link.is_a?(Hash) ? link["multimediaName"] : "", url: url)
+  end
 
   def map_persistent_identity_system(system, importer = "jms")
     return if system.blank?
