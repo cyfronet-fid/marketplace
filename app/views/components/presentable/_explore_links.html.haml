@@ -8,7 +8,7 @@
   %a.right-panel-button.explore{ href_explore }
     Explore Compatible<br>
     Research Products
-- if object.respond_to?(:guidelines) && object.guidelines.present?
+- if local_assigns.fetch(:show_guidelines, true) && object.respond_to?(:guidelines) && object.guidelines.present?
   - href_guidelines = object.suspended? ? href_explore : { href: services_array_filter_link(object.guidelines, :title) }
   %a.right-panel-button.interoperability{ href_guidelines }
     Interoperability guidelines
