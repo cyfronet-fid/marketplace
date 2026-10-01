@@ -13,6 +13,40 @@ a config/env toggle for genuine per-deployment behavior; if two repos' code
 only *looked* different but did the same thing, it was unified instead of
 gated.
 
+## Database schema
+
+Every variant runs the same `db/schema.rb`. A table or column that only one
+variant uses is a satellite structure: the structure exists on every database,
+and the other variants leave the structure empty. Current satellite
+structures: `service_pl_profiles`, `provider_pl_profiles`, the five PL-only
+tables (`service_target_users`, `service_related_platforms`,
+`service_relationships`, `persistent_identity_systems`,
+`persistent_identity_system_vocabularies`), `user_identities`,
+`service_user_relationships`, `deployable_services` and `infrastructures`.
+The application reads a satellite structure only under the variant that uses
+the structure.
+
+Rules for migrations:
+
+- A migration never branches the schema per variant. A `Mp::Variant.pl?`
+  guard only delays the removal of PL data until a later migration has moved
+  the data into the satellite structure. The removal itself runs on every
+  variant with `if_exists`.
+- Where a database lost a structure that another variant needs, a new forward
+  migration recreates the structure with `if_not_exists`
+  (`RestorePlOnlyTables`, `RestoreServiceOwnerTables`).
+- A database can meet the same change under two versions, because the repos
+  wrote their own migrations for the change. The migration then gets
+  `if_not_exists`, `if_exists` or `column_exists?` guards. Such a guard is the
+  only permitted change to an applied migration: a database that already ran
+  the version does not run the migration again, so the guard changes nothing
+  there. Every other repair is a new forward migration.
+- A migration ported from another repo keeps the original version, so
+  databases that ran the migration there skip the migration.
+- After `db:migrate`, a database of any variant must match `db/schema.rb`.
+  The pl path is verified against the pl testing dump. The whitelabel and
+  marketplace dumps are pending, see `repository_consolidation_status.md`.
+
 ## What's been ported so far
 
 - `Api::ServicesController` — `COUNTRY_NAME`/`CONTACT_EMAIL` now serve real
@@ -48,10 +82,11 @@ gated.
   keep the block with optional variables and credentials fallback.
 - `Backoffice::ProvidersController#index` — `pl` hides deleted providers (its
   destroy turbo stream removes the list item); the others list them.
-- `Backoffice::ServicesController#index` — `pl` authorizes after
-  `authenticate_user!`, so an unauthenticated user is sent through Check-in
-  and returned to the page; the others authorize first (redirect to the root
-  page with the not-authorized alert).
+- `Backoffice::ServicesController#index` — authorizes after
+  `authenticate_user!` on every variant (pl's fix, not gated): an
+  unauthenticated user is sent through Check-in and returned to the page.
+  marketplace and whitelabel authorized first, with a prepended callback, and
+  sent that user to the root page with the not-authorized alert.
 - `Provider#pid` — ported from pl-marketplace for all variants (not gated):
   generated as a UUID when blank, validated present/unique, and enforced
   `NOT NULL` + unique index by `EnforceNotNullUniquePidOnProviders`, which

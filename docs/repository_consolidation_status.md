@@ -10,10 +10,22 @@ Rules used so far:
 - Behavior that really differs between the repos is gated with
   `Mp::Variant`. Code that only looked different, or a plain bug in one repo,
   is unified or fixed for every variant.
-- Every variant ends with the same database schema. PL-only tables exist
-  everywhere but are only used under `Mp::Variant.pl?`.
-- Applied migrations are never edited. Repairs are new forward migrations;
-  migrations that would delete PL data get a `pl?` guard.
+- Every variant ends with the same database schema, `db/schema.rb`. A table
+  or column that only one variant uses is a satellite structure: the structure
+  exists on every database, and the other variants leave the structure empty.
+  PL-only tables exist everywhere but are only used under `Mp::Variant.pl?`.
+- A migration never branches the schema per variant. A `Mp::Variant.pl?`
+  guard only delays the removal of PL data until a later migration has moved
+  the data into the satellite structure. The removal itself runs on every
+  variant with `if_exists`.
+- Where a database lost a structure that another variant needs, a new forward
+  migration recreates the structure with `if_not_exists`.
+- A database can meet the same change under two versions, because the repos
+  wrote their own migrations for the change. The migration then gets
+  `if_not_exists`, `if_exists` or `column_exists?` guards. Such a guard is the
+  only permitted change to an applied migration: a database that already ran
+  the version does not run the migration again, so the guard changes nothing
+  there. Every other repair is a new forward migration.
 - A migration ported from another repo keeps its original version, so
   databases that already ran it skip it.
 
@@ -281,12 +293,13 @@ ESS and ordering API:
 - Synchronised with the three `development` branches on 2026-09-21:
   `marketplace` `604134d3` (4.6.0, merged), `pl-marketplace` `ce767a21`,
   `whitelabel-marketplace` `6022b264`.
-  - pl: deleted providers are hidden from the backoffice list, and
-    `Backoffice::ServicesController#index` authorizes after
-    `authenticate_user!` (an unauthenticated user goes through Check-in and
-    comes back), both under `Mp::Variant.pl?`; the matching views come from
-    the customization directory. The provider pid on saves without validation
-    and the `Provider::Draft` fix were already here.
+  - pl: deleted providers are hidden from the backoffice list under
+    `Mp::Variant.pl?`; the matching views come from the customization
+    directory. `Backoffice::ServicesController#index` authorizes after
+    `authenticate_user!` on every variant: the prepended authorization sent an
+    unauthenticated user to the root page instead of Check-in, a bug pl fixed.
+    The provider pid on saves without validation and the `Provider::Draft` fix
+    were already here.
   - whitelabel (#266): its Check-in provider block (mandatory ENV, Keycloak
     defaults, `CHECKIN_DISCOVERY`, `CHECKIN_PORT`, `CHECKIN_SCHEME`,
     `CHECKIN_JWKS_URI`, `CHECKIN_END_SESSION_ENDPOINT`) is used under
@@ -321,7 +334,9 @@ Found by comparing `app/`, `lib/` and `config/` of this branch with
       database that has those tables, the `create_table` and `add_column`
       calls in this repo's migrations fail the way the project rename did.
       Whitelabel also ran the rename as 20250510072744 (handled by the
-      guard).
+      guard). The repair follows the schema rule above: `if_not_exists` and
+      `if_exists` guards in those migrations, so the whitelabel database ends
+      as `db/schema.rb`, with no whitelabel-specific shape.
 - [ ] Check marketplace and whitelabel production databases for duplicate
       provider pids (the pid migration aborts on duplicates; the pl testing
       dump only had blank ones, which are backfilled).

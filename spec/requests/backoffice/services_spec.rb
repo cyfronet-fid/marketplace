@@ -59,41 +59,12 @@ RSpec.describe "Backoffice service", :backend do
         expect(response).to have_http_status(:ok)
       end
     end
-
-    context "when accessing Backoffice services under pl" do
-      before do
-        allow(Mp::Variant).to receive(:pl?).and_return(true)
-        get backoffice_services_path
-      end
-
-      it "allows access" do
-        expect(response).to have_http_status(:ok)
-      end
-    end
   end
 
   context "when logged in without Backoffice permissions" do
     let(:user) { create(:user) }
 
     before do
-      login_as(user)
-      get backoffice_services_path
-    end
-
-    it "redirects to the root page" do
-      expect(response).to redirect_to(root_path(anchor: ""))
-    end
-
-    it "sets the authorization alert" do
-      expect(flash[:alert]).to eq(I18n.t("pundit.default"))
-    end
-  end
-
-  context "when logged in without Backoffice permissions under pl" do
-    let(:user) { create(:user) }
-
-    before do
-      allow(Mp::Variant).to receive(:pl?).and_return(true)
       login_as(user)
       get backoffice_services_path
     end

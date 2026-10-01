@@ -13,10 +13,7 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
   before_action :load_query_params_from_session, only: :index
   before_action :provider_scope
   before_action :catalogue_scope
-  # pl authorizes the list after authenticate_user!, so an unauthenticated user
-  # goes through Check-in and comes back; the others authorize first.
-  before_action :authorize_collection, only: :index, if: -> { Mp::Variant.pl? }
-  prepend_before_action(only: [:index], unless: -> { Mp::Variant.pl? }) { authorize(Service) }
+  before_action :authorize_collection, only: :index
   helper_method :cant_edit?
 
   def index
