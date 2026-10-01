@@ -2,6 +2,7 @@
 
 class Federation::ServicesController < ApplicationController
   include Service::Searchable
+
   layout "clear"
 
   # Avoid initializing local search filters on the federation page to prevent ES queries with external EIDs
@@ -115,6 +116,7 @@ class Federation::ServicesController < ApplicationController
     facet_values.to_h { |v| [v["value"], v["label"]] }
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def map_results(json, pid_to_name)
     scientific_domain_map = build_facet_map(json, "scientific_domains")
     service_providers_map = build_facet_map(json, "service_providers")
@@ -127,12 +129,15 @@ class Federation::ServicesController < ApplicationController
 
       {
         "pid" => item["result"]["id"],
-        "name" => item["result"]["name"],
+        "name" => item["result"]["name"].presence || item.dig("result", "service", "name"),
         "slug" => item["id"],
-        "description" => ActionController::Base.helpers.strip_tags(item["result"]["description"]),
+        "description" =>
+          ActionController::Base.helpers.strip_tags(
+            item["result"]["description"].presence || item.dig("result", "service", "description")
+          ),
         "score" => item["score"],
-        "path" => item["result"]["webpage"],
-        "logo" => item["result"]["logo"],
+        "path" => item["result"]["webpage"].presence || item.dig("result", "service", "webpage"),
+        "logo" => item["result"]["logo"].presence || item.dig("result", "service", "logo"),
         "scientific_domains" =>
           domains.map do |domain|
             value = domain["scientificDomain"].to_s
@@ -145,11 +150,13 @@ class Federation::ServicesController < ApplicationController
           "pid" => item["resourceOrganisation"]
         },
         "providers" => providers.map { |provider| { "name" => service_providers_map.fetch(provider, provider) } },
-        "webpage" => item["result"]["webpage"] || item["userManual"] || item["order"],
-        "nodePID" => pid_to_name[node_pid] || node_pid
+        "webpage" =>
+          item["result"]["webpage"] || item["userManual"] || item["order"] || item.dig("result", "service", "webpage"),
+        "nodePID" => pid_to_name[node_pid] || node_pid || item.dig("result", "service", "nodePID")
       }
     end
   end
+  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
   def map_federation_response(json) # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
     metadata = json["metadata"].is_a?(Hash) ? json["metadata"] : {}
@@ -259,6 +266,7 @@ class Federation::ServicesController < ApplicationController
     clean_base_url = base_url.to_s.strip.chomp("/")
     uri = URI.parse(clean_base_url)
     raise URI::InvalidURIError unless %w[http https].include?(uri.scheme)
+
     query_string = request.query_string.present? ? "?#{request.query_string}" : ""
     "#{clean_base_url}#{query_string}"
   rescue URI::InvalidURIError => e
@@ -287,6 +295,7 @@ class Federation::ServicesController < ApplicationController
     params.to_unsafe_h.each do |key, val|
       next if reserved_keys.include?(key.to_s)
       next unless val.present?
+
       # next if val == "true" # could be a naive solution for unwanted true value in parameters
 
       values = Array(val).map(&:to_s).reject(&:blank?)
@@ -361,6 +370,7 @@ class Federation::ServicesController < ApplicationController
   def find_option_in_facets(options, eid)
     options.each do |opt|
       return opt if opt["eid"].to_s == eid.to_s
+
       children = opt["children"]
       if children.present?
         found = find_option_in_facets(children, eid)

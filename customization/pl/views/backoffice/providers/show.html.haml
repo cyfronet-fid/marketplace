@@ -1,0 +1,25 @@
+- content_for :title, @provider.name
+- breadcrumb :backoffice_provider, @provider
+
+.container.p-0.backoffice
+  %h1.mb-3= @provider.name
+  = render Presentable::StatusActionsComponent.new(object: @provider,
+    publish: policy([:backoffice, @provider]).publish?,
+    suspend: policy([:backoffice, @provider]).suspend?,
+    unpublish: policy([:backoffice, @provider]).unpublish?,
+    destroy: policy([:backoffice, @provider]).destroy?)
+
+  .service-box-redesign.p-0.mt-10.backoffice-form.provider
+    .container{ class: "#{"suspended" if @provider.suspended?}" }
+      .pt-4.service-box-redesign.service-detail
+        = render Presentable::HeaderComponent.new(object: @provider,
+                              title: @provider.abbreviation,
+                              subtitle: @provider.name,
+                              comparison_enabled: @comparison_enabled,
+                              preview: @provider.suspended? || local_assigns[:preview])
+
+  = render "backoffice/providers/tabs/wrapper", provider: @provider, catalogues: @catalogues,
+    tab: safe_tab(params[:tab])
+  = link_to backoffice_providers_path, class: "backoffice-back-link mt-4 font-weight-bold" do
+    %i.fa-solid.fa-arrow-left.me-2.mr-1
+    = _("Go back to providers list")

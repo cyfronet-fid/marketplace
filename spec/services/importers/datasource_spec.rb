@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Importers::Datasource, backend: true do
+RSpec.describe Importers::Datasource, :backend do
   let!(:classification) do
     Vocabulary::DatasourceClassification.create!(
       eid: "ds_classification-aggregators",
@@ -35,7 +35,7 @@ RSpec.describe Importers::Datasource, backend: true do
   it "ignores removed V5 datasource structures" do
     payload = {
       "versionControl" => nil,
-      "persistentIdentitySystems" => [{ "entityType" => "removed" }],
+      "persistentIdentitySystems" => ["entityType" => "removed"],
       "researchEntityTypes" => ["removed"],
       "researchProductLicensings" => ["removed"],
       "researchProductMetadataLicensing" => ["removed"],
@@ -57,6 +57,38 @@ RSpec.describe Importers::Datasource, backend: true do
     )
   end
 
+  context "when running as pl" do
+    subject(:result) { described_class.call(v5_payload) }
+
+    let(:v5_payload) do
+      {
+        "submissionPolicyURL" => "https://example.org/submission",
+        "preservationPolicyURL" => "https://example.org/preservation",
+        "harvestable" => true,
+        "researchProductLicensings" => {
+          "researchProductLicenseName" => "CC BY",
+          "researchProductLicenseURL" => "https://example.org/cc-by"
+        }
+      }
+    end
+
+    before { allow(Mp::Variant).to receive(:pl?).and_return(true) }
+
+    it "maps the V5 datasource policies" do
+      expect(result).to include(
+        submission_policy_url: "https://example.org/submission",
+        preservation_policy_url: "https://example.org/preservation",
+        harvestable: true
+      )
+    end
+
+    it "builds the research product license links" do
+      expect(result[:link_research_product_license_urls]).to contain_exactly(
+        have_attributes(name: "CC BY", url: "https://example.org/cc-by")
+      )
+    end
+  end
+
   it "maps common V6 service fields for standalone datasource creation" do
     provider = create(:provider, pid: "provider-1")
     scientific_domain = create(:scientific_domain, eid: "scientific_domain-parent")
@@ -69,7 +101,7 @@ RSpec.describe Importers::Datasource, backend: true do
           "description" => "Datasource description",
           "resourceOrganisation" => provider.pid,
           "resourceProviders" => [provider.pid],
-          "scientificDomains" => [{ "scientificDomain" => scientific_domain.eid }],
+          "scientificDomains" => ["scientificDomain" => scientific_domain.eid],
           "publicContacts" => ["ops@example.org"],
           "orderType" => "order_type-other"
         }

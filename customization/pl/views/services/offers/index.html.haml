@@ -1,0 +1,24 @@
+- content_for :title, @service.name
+- breadcrumb :service, @service
+
+- id = h(@service&.main_source&.eid) || h(@service&q.slug)
+:javascript
+  _paq.push(['trackEvent', 'Service', 'Visit', '#{id}']);
+= render "services/errors", service: @service
+= render "services/wrapper", service: @service, category: @category,
+  comparison_enabled: @comparison_enabled, compare_services: @compare_services,
+  favourite_services: @favourite_services, question: @question, tab_id: "desc", preview: false do
+  - if policy(@service).offers_show? || policy(@service).bundles_show?
+    = render "services/offers", offers: @offers, service: @service,
+                                      bundles: @bundles, bundled: @bundled,
+                                      preview: local_assigns[:preview] || @service.suspended?
+  .related-container
+    .row
+      .col-12
+        = render "services/related", related_services: @similar_services, title: similar_services_title,
+              preview: @preview
+    - unless @service.suspended?
+      .row
+        .col-12
+          = render "services/related", related_services: @related_services, title: related_services_title,
+          preview: @preview

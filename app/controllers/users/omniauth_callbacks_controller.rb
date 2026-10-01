@@ -8,7 +8,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       flash[:alert] = "Cannot extract user uid from checkin response"
       redirect_to root_path
     else
-      @user = User::Checkin.from_omniauth(auth)
+      @user = Mp::Variant.pl? ? Users::Authenticate.call(auth) : User::Checkin.from_omniauth(auth)
 
       if @user.persisted?
         sign_in_and_redirect @user, event: :authentication, allow_other_host: true
@@ -21,8 +21,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
           cookies.delete(:favourites)
         end
         flash[:notice] = I18n.t "devise.omniauth_callbacks.success", kind: "Checkin"
-        session["refresh_token"] = auth["credentials"]["refresh_token"]
-        session["token"] = auth["credentials"]["token"]
+        # Only marketplace's order flow reads the tokens (Services::ChooseOffersController).
+        if Mp::Variant.marketplace?
+          session["refresh_token"] = auth["credentials"]["refresh_token"]
+          session["token"] = auth["credentials"]["token"]
+        end
       else
         flash[:alert] = "Cannot register user #{@user.errors.inspect}"
         session["devise.checkin_data"] = auth

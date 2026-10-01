@@ -1,0 +1,20 @@
+%dialog#provider-profile-completion-modal.provider-follow-up-modal{
+  aria: { labelledby: "provider-profile-completion-modal-title",
+  describedby: "provider-profile-completion-modal-description" },
+  data: { controller: "dialog", action: "click->dialog#closeOnBackdrop close->dialog#handleClose",
+  "turbo-temporary": true, e2e: "provider-profile-completion-modal" } }
+  .modal-header
+    %h3#provider-profile-completion-modal-title.modal-title
+      = _("Congratulations!!! You've completed all required fields")
+    %button.close{ data: { action: "dialog#close" }, type: "button", aria: { label: _("Close") } }
+      %span{ aria: { hidden: "true" } } &times;
+  #provider-profile-completion-modal-description.modal-body
+    %p= _("Help users get to know you better by adding more details.")
+
+  .modal-footer
+    .buttons-row
+      = link_to backoffice_providers_path, class: "btn btn-secondary btn-sm", data: { turbo_frame: "_top" } do
+        = _("Skip for now")
+      = link_to backoffice_provider_path(provider), class: "btn btn-primary btn-sm",
+        data: { turbo_frame: "_top" } do
+        = _("Complete profile")

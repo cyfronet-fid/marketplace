@@ -7,6 +7,8 @@ FROM ruby:${RUBY_VERSION}-alpine AS builder
 # Setting environment variables
 ENV RAILS_ENV=production \
     RACK_ENV=production \
+    MARKETPLACE_VARIANT=pl \
+    CUSTOMIZATION_PATH=/marketplace/customization/pl \
     BUNDLE_WITHOUT="development:test" \
     BUNDLE_JOBS=4 \
     BUNDLE_RETRY=3
@@ -50,7 +52,7 @@ RUN bundle config set --local without 'development test' && \
 # Copying application code
 COPY . /marketplace
 
-# Compiling assets
+# Compiling assets (.env.build: dummy values for variables that are mandatory at boot)
 RUN set -a && . ./.env.build && set +a && \
     SECRET_KEY_BASE_DUMMY=1 ./bin/rake assets:precompile
 
@@ -60,6 +62,8 @@ FROM ruby:${RUBY_VERSION}-alpine
 # Setting environment variables
 ENV RAILS_ENV=production \
     RACK_ENV=production \
+    MARKETPLACE_VARIANT=pl \
+    CUSTOMIZATION_PATH=/marketplace/customization/pl \
     RAILS_SERVE_STATIC_FILES=true
 
 # Installing only required production packages

@@ -1,0 +1,22 @@
+.card.rounded
+  %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
+                  [:resource_geographic_locations])),
+                  data: { toggle: "collapse", target: "#location" },
+                  aria: { expanded: true, controls: "location" } }
+    .card-header.text-left{ id: "location-header" }
+      .row
+        .col-10
+          = _("Location")
+        .col-2.text-right
+          .collapse-icon
+            %i.fas.fa-chevron-down
+            %i.fas.fa-chevron-up
+  .collapse{ id: "location", "aria-labelledby": "location-header",
+            "data-parent": "#accordion-form",
+            class: ("show" unless collapsed?(service, [:resource_geographic_locations])) }
+    .card-body
+      = f.input :resource_geographic_locations, as: :select,
+                  label: "Service geographic locations",
+                  collection: Country.options.map { |c| [ c.iso_short_name, "value" => c.alpha2 ] },
+                  disabled: cant_edit([resource_geographic_locations: []]),
+                  input_html: { data: { choice: true },  "multiple" => "true" }

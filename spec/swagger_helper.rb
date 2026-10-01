@@ -23,8 +23,7 @@ RSpec.configure do |config|
         # TODO: Change description
         description: "Documentation of the EOSC Marketplace REST API for integration of other software systems"
       },
-      paths: {
-      },
+      paths: {},
       components: {
         securitySchemes: {
           authentication_token: {
@@ -42,8 +41,7 @@ RSpec.configure do |config|
         version: "v1",
         description: "API for Order Management Systems to integrate with EOSC Marketplace ordering process"
       },
-      paths: {
-      },
+      paths: {},
       components: {
         securitySchemes: {
           authentication_token: {
@@ -61,8 +59,7 @@ RSpec.configure do |config|
         version: "v1",
         description: "API for Search Service to integrate with EOSC Marketplace collections"
       },
-      paths: {
-      },
+      paths: {},
       components: {
         securitySchemes: {
           authentication_token: {
@@ -80,14 +77,155 @@ RSpec.configure do |config|
         version: "v1",
         description: "API for external clients loading user configuration"
       },
-      paths: {
-      },
+      paths: {},
       components: {
         securitySchemes: {
           authentication_token: {
             type: :apiKey,
             name: "X-User-Token",
             in: :header
+          }
+        }
+      }
+    },
+    "v1/catalogue_swagger.json" => {
+      openapi: "3.0.1",
+      info: {
+        title: "Catalogue API",
+        version: "v1",
+        description: "Public Catalogue endpoints for EOSC Marketplace"
+      },
+      paths: {},
+      components: {
+        schemas: {
+          CatalogueService: {
+            type: :object,
+            description: "Subset of the Service entity as published in Catalogue API",
+            properties: {
+              id: {
+                type: :string,
+                description: "PID"
+              },
+              webpage: {
+                type: :string,
+                nullable: true
+              },
+              tags: {
+                type: :array,
+                items: {
+                  type: :string
+                }
+              },
+              languageAvailabilities: {
+                type: :array,
+                items: {
+                  type: :string
+                }
+              },
+              trl: {
+                type: :string,
+                nullable: true
+              },
+              userManual: {
+                type: :string,
+                nullable: true
+              },
+              termsOfUse: {
+                type: :string,
+                nullable: true
+              },
+              privacyPolicy: {
+                type: :string,
+                nullable: true
+              },
+              accessPolicy: {
+                type: :string,
+                nullable: true
+              },
+              orderType: {
+                type: :string,
+                example: "order_type-open_access"
+              },
+              logo: {
+                type: :string,
+                format: :uri
+              },
+              alternativeIdentifiers: {
+                type: :array,
+                items: {
+                  type: :object,
+                  properties: {
+                    type: {
+                      type: :string
+                    },
+                    value: {
+                      type: :string
+                    }
+                  },
+                  required: %w[type value]
+                }
+              },
+              abbreviation: {
+                type: :string,
+                nullable: true
+              },
+              name: {
+                type: :string
+              },
+              description: {
+                type: :string,
+                nullable: true
+              },
+              tagline: {
+                type: :string,
+                nullable: true
+              },
+              targetUsers: {
+                type: :array,
+                items: {
+                  type: :string
+                }
+              },
+              accessModes: {
+                type: :array,
+                items: {
+                  type: :string
+                }
+              },
+              helpdeskEmail: {
+                type: :string,
+                nullable: true
+              },
+              securityContactEmail: {
+                type: :string,
+                nullable: true
+              },
+              scientificDomains: {
+                type: :array,
+                items: {
+                  type: :object,
+                  properties: {
+                    scientificDomain: {
+                      type: :string
+                    }
+                  },
+                  required: ["scientificDomain"]
+                }
+              },
+              categories: {
+                type: :array,
+                items: {
+                  type: :object,
+                  properties: {
+                    category: {
+                      type: :string
+                    }
+                  },
+                  required: ["category"]
+                }
+              }
+            },
+            required: %w[id name logo orderType]
           }
         }
       }
@@ -99,8 +237,7 @@ RSpec.configure do |config|
         version: "v1",
         description: "API for searching and filtering services with advanced Elasticsearch capabilities"
       },
-      paths: {
-      },
+      paths: {},
       components: {
         securitySchemes: {
           authentication_token: {

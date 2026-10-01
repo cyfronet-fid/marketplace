@@ -21,6 +21,28 @@ describe Jms::ManageMessage, :backend do
     end
   end
 
+  context "when the resource arrives as a JSON string" do
+    subject(:call) { described_class.call(message, logger) }
+
+    let(:parsed_body) { JSON.parse(create(:jms_json_service)) }
+    let(:resource) { parsed_body["resource"] }
+    let(:modified_at) { Time.zone.at(resource["metadata"]["modifiedAt"].to_i / 1000) }
+    let(:message) do
+      double(
+        body: parsed_body.merge("resource" => resource.to_json).to_json,
+        headers: {
+          "destination" => "/topic/registry.service.update"
+        }
+      )
+    end
+
+    it "enqueues a publish job for the service" do
+      expect { call }
+        .to have_enqueued_job(Service::PcCreateOrUpdateJob).with(resource["service"], :published, modified_at)
+        .and output.to_stdout
+    end
+  end
+
   context "when receiving a provider update message" do
     subject(:call) { described_class.call(message, logger) }
 
@@ -69,6 +91,37 @@ describe Jms::ManageMessage, :backend do
       expect { call }
         .to have_enqueued_job(DeployableService::PcCreateOrUpdateJob)
         .with(resource["deployableApplication"], :published, kind_of(Time))
+    end
+  end
+
+  context "when routing a deployable_application message outside marketplace" do
+    subject(:call) { described_class.call(message, logger) }
+
+    let(:body) do
+      { resource: { active: true, suspended: false, deployableApplication: create(:jms_deployable_service) } }.to_json
+    end
+    let(:message) do
+      instance_double(
+        Stomp::Message,
+        body: body,
+        headers: {
+          "destination" => "/topic/registry.deployable_application.create"
+        }
+      )
+    end
+
+    before do
+      allow(Mp::Variant).to receive(:marketplace?).and_return(false)
+      allow(Sentry).to receive(:capture_exception)
+      call
+    end
+
+    it "does not enqueue a deployable service job" do
+      expect(DeployableService::PcCreateOrUpdateJob).not_to have_been_enqueued
+    end
+
+    it "reports the message type as out of scope" do
+      expect(Sentry).to have_received(:capture_exception).with(be_a(Importable::WrongMessageError))
     end
   end
 

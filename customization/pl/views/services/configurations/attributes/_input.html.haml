@@ -1,0 +1,15 @@
+= field.input :id, label: attr.label, hint: attr.description,
+  error: attr.errors.messages_for(:id).join(" ") do
+  - has_errors = attr.errors[:id].present?
+  - valid = !has_errors && attr.value
+  - if attr.value_type == "integer"
+    = field.input_field attr.id,
+      class: "form-control #{"is-invalid" if has_errors} #{"is-valid" if valid}",
+      value: "#{field.object.value}", name: "#{field.object_name}[#{attr.id}]",
+      id: "parameter_#{attr.id}",
+      as: :integer
+  - else
+    = field.input_field attr.id,
+      class: "form-control #{"is-invalid" if has_errors} #{"is-valid" if valid}",
+      id: "parameter_#{attr.id}",
+      value: "#{field.object.value}", name: "#{field.object_name}[#{attr.id}]"

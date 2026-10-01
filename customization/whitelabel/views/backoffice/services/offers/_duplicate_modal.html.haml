@@ -1,0 +1,17 @@
+.exit-popup.d-none{ role: "document", "data-duplicate-target": "modal" }
+  .modal-overlay
+    .modal-content
+      = simple_form_for :custom_form, url: "#", html: { data: {"duplicate-target": "form" }} do |f|
+        .modal-header
+          %h3#popup-modal-title.modal-title
+            Duplicate offer
+        .modal-body
+          %p
+            By duplicating, you create an exact copy of the offer, which you can edit later on.
+            The duplicated offer will have a draft status.
+          = f.input :new_name, label: "Name your new offer.",
+            input_html: { class: "form-control-lg", "data-duplicate-target": "modalNameInput"}
+        .modal-footer
+          .buttons-row
+            = link_to  _("Go back"), backoffice_service_offers_path(service)
+            = f.button :submit, "Submit", class: "btn btn-outline-secondary font-weight-bold"

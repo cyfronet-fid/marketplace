@@ -1,0 +1,10 @@
+- if provider.participating_countries.present?
+  %hr.bottom-hr.mt-4
+  %h2.mb-4.mt-4
+    = _("Provider coverage")
+  - field_value = provider.participating_countries
+  - if (map_data = data_for_map(field_value) if field_value&.any?).present?
+    .geographical-availabilities-map{ "data-controller": "map",
+                                      "data-geographical_availabilities": map_data,
+                                      "data-region": data_for_region(field_value.map(&:alpha2)),
+                                      "data-type": "about" }

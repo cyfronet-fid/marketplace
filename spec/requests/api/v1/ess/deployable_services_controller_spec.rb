@@ -3,9 +3,10 @@
 require "swagger_helper"
 require "rails_helper"
 
-RSpec.describe Api::V1::Ess::DeployableServicesController, swagger_doc: "v1/ess_swagger.json" do
+# The ESS deployable_services API is routed only under marketplace.
+RSpec.describe Api::V1::Ess::DeployableServicesController, swagger_doc: "v1/ess_swagger.json", variant: :marketplace do
   before(:all) do
-    Dir.chdir Rails.root.join("swagger", "v1") # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
+    Dir.chdir Rails.root.join("swagger/v1") # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
   end
 
   after(:all) do

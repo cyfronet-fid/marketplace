@@ -1,0 +1,21 @@
+%head
+  %meta{ content: "text/html; charset=UTF-8", "http-equiv" => "Content-Type" }/
+  %meta{ charset: "utf-8" }/
+  %meta{ content: "width=device-width, initial-scale=1, shrink-to-fit=no", name: "viewport" }/
+  = meta_robots
+  %title
+    = "#{yield :title} - " if content_for?(:title)
+    = _("EOSC Marketplace")
+  = csrf_meta_tags
+  = csp_meta_tag
+  = favicon_link_tag "favicon.ico"
+  = favicon_link_tag "favicon-180x180.png", rel: "apple-touch-icon", type: "image/png"
+  = stylesheet_link_tag "application.css"
+  = javascript_include_tag "application.js"
+  = yield :custom_scripts if content_for?(:custom_scripts)
+  = render "layouts/version"
+  - if Rails.env.production?
+    = yield :meta_tags if content_for?(:meta_tags)
+    = render "layouts/matomo"
+    = render "layouts/google_analytics"
+    = render "layouts/hotjar_trackingcode"

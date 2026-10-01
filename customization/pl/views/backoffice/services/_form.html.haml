@@ -1,0 +1,51 @@
+- datasource_fields_class = service.type == "Datasource" ? nil : "d-none"
+= simple_form_for [:backoffice, service],
+  html: { data: { controller: "form", "form-target": "form",
+  disabled: service.upstream_id.present?, turbo: false } } do |f|
+  = f.error_notification
+  .row
+    .col-2.col-md-2
+      = render "backoffice/services/form/menu_panel", service: service, datasource_fields_class: datasource_fields_class
+    .col-10.col-md-10
+      = f.input :type, collection: Service::SERVICE_TYPES,
+      input_html: { "data-form-target": "serviceType", "data-action": "change->form#updateForm" }
+
+      #accordion-form.accordion
+        = render "backoffice/services/form/basic", f: f, service: service, providers: providers
+        = render "backoffice/services/form/marketing", f: f, service: service
+        = render "backoffice/services/form/classification", f: f, service: service
+        = render "backoffice/services/form/availability", f: f, service: service
+        = render "backoffice/services/form/location", f: f, service: service
+        = render "backoffice/services/form/contact", f: f, service: service
+        = render "backoffice/services/form/maturity", f: f, service: service
+        = render "backoffice/services/form/dependencies", f: f, service: service, catalogues: catalogues
+        = render "backoffice/services/form/attribution", f: f, service: service
+        = render "backoffice/services/form/management", f: f, service: service
+        = render "backoffice/services/form/order", f: f, service: service
+        = render "backoffice/services/form/financial", f: f, service: service
+        = render "backoffice/services/form/datasource_policies", f: f, datasource: service,
+          datasource_fields_class: datasource_fields_class
+        = render "backoffice/services/form/datasource_content", f: f, datasource: service,
+          datasource_fields_class: datasource_fields_class
+        = render "backoffice/services/form/research_product_policies", f: f, datasource: service,
+          datasource_fields_class: datasource_fields_class
+        = render "backoffice/services/form/research_product_metadata", f: f, datasource: service,
+          datasource_fields_class: datasource_fields_class
+        = render "backoffice/services/form/other", f: f, service: service
+
+
+      .invalid-feedback{ styles: "display:block" }
+
+      %hr.bottom-hr.mt-5.mb-4
+
+      .row.mt-5
+        .col-12
+          = f.button :button, _("Preview"),
+              name: "commit",
+              value: "Preview",
+              class: "btn btn-primary pl-5 pr-5 mr-5 mobile-bottom-margin",
+              data: { e2e: "preview-btn" }
+          = f.button :submit, class: "btn btn-primary pl-5 pr-5 mr-5 mobile-bottom-margin", "data-e2e": "submit-btn",
+            "data-turbo": false
+          = back_link_to _("Cancel and back to previous page"), service, prefix: :backoffice,
+              class: "text-left flex-grow-1 text-uppercase"

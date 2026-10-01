@@ -12,14 +12,17 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
 
   def index
     authorize(Provider)
-    @pagy, @providers = pagy(policy_scope(Provider).order(:name))
+    # pl removes a deleted provider from the list (its destroy turbo stream drops the list item).
+    providers = Mp::Variant.pl? ? Provider.where.not(status: "deleted") : Provider
+    @pagy, @providers = pagy(policy_scope(providers).order(:name))
     @approval_requests = policy_scope(ApprovalRequest.includes(:approvable).active.order(created_at: :desc))
   end
 
   def show
     respond_to do |format|
       current_tab = params[:tab]
-      partial = current_tab&.in?(provider_tabs) ? current_tab : "profile"
+      tabs = Mp::Variant.pl? ? extended_steps : provider_tabs
+      partial = current_tab&.in?(tabs) ? current_tab : "profile"
       format.turbo_stream do
         render turbo_stream:
                  turbo_stream.replace(
@@ -27,7 +30,8 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
                    partial: "backoffice/providers/tabs/wrapper",
                    locals: {
                      tab: partial,
-                     provider: @provider
+                     provider: @provider,
+                     catalogues: @catalogues
                    }
                  )
       end
@@ -41,24 +45,6 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
     session[:new] ||= {}
     session[:provider_step] = params[:step] || "profile"
     redirect_to backoffice_provider_wizard_path("new")
-  end
-
-  def create
-    normalize_public_contact_emails
-    permitted_attributes = permitted_attributes(Provider)
-    @provider = Provider.new(permitted_attributes)
-    authorize(@provider)
-
-    if valid_model_and_urls? && @provider.save(validate: false)
-      if current_user.providers.published.empty? && !current_user.coordinator?
-        ar = ApprovalRequest.new(approvable: @provider, user: current_user, status: :published)
-        ar.save
-      end
-      redirect_to backoffice_provider_path(@provider, page: params[:page]), notice: "New provider created successfully"
-    else
-      catalogue_scope
-      render :new, status: :unprocessable_entity
-    end
   end
 
   def edit
@@ -81,6 +67,24 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
     end
   end
 
+  def create
+    normalize_public_contact_emails
+    permitted_attributes = permitted_attributes(Provider)
+    @provider = Provider.new(permitted_attributes)
+    authorize(@provider)
+
+    if valid_model_and_urls? && @provider.save(validate: false)
+      if current_user.providers.published.empty? && !current_user.coordinator?
+        ar = ApprovalRequest.new(approvable: @provider, user: current_user, status: :published)
+        ar.save
+      end
+      redirect_to backoffice_provider_path(@provider, page: params[:page]), notice: "New provider created successfully"
+    else
+      catalogue_scope
+      render :new, status: :unprocessable_content
+    end
+  end
+
   def current_step_index
     basic_steps.index(@provider.current_step)
   end
@@ -97,7 +101,7 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
     provider_duplicate.upstream_id = params[:provider][:upstream_id]
     permitted_attributes = permitted_attributes(provider_duplicate)
     if provider_duplicate.published? && provider_duplicate.catalogue.present? &&
-         !provider_duplicate.catalogue.published?
+       !provider_duplicate.catalogue.published?
       attrs.merge(status: provider_duplicate&.catalogue&.status)
     end
     @provider.assign_attributes(permitted_attributes)
@@ -196,9 +200,9 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
     return unless params.dig(:provider, :public_contact_emails).is_a?(String)
 
     params[:provider][:public_contact_emails] = params[:provider][:public_contact_emails]
-      .split(/\r?\n/)
-      .map(&:strip)
-      .reject(&:blank?)
+                                                .split(/\r?\n/)
+                                                .map(&:strip)
+                                                .reject(&:blank?)
   end
 
   def clear_session_data

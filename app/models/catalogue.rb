@@ -65,6 +65,28 @@ class Catalogue < ApplicationRecord
   validates :name, presence: true
   validate :logo_variable, on: %i[create update]
 
+  with_options if: -> { Mp::Variant.pl? } do
+    validates :abbreviation, presence: true
+    validates :website, presence: true
+    validates :inclusion_criteria, presence: true
+    validates :end_of_life, presence: true
+    validates :validation_process, presence: true
+    validates :scope, presence: true
+    validates :description, presence: true
+    validates :street_name_and_number, presence: true
+    validates :postal_code, presence: true
+    validates :city, presence: true
+    validates :country, presence: true
+    validates :public_contacts, presence: true, length: { minimum: 1, message: "are required. Please add at least one" }
+    validates :nodes, length: { maximum: 1 }
+    validates :data_administrators,
+              presence: true,
+              length: {
+                minimum: 1,
+                message: "are required. Please add at least one"
+              }
+  end
+
   def participating_countries=(value)
     super(value&.map { |v| Country.for(v) })
   end

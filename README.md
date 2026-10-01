@@ -691,7 +691,7 @@ To configure this integration, set the following [env variables](#environmental-
 
 Marketplace authenticates users through an external EGI/EOSC Check-in
 (Keycloak-based OpenID Connect) identity provider via Devise/OmniAuth. After
-sign-in, `Services::ApplicationController#check_vo_membership!` calls
+sign-in, `Services::ChooseOffersController#check_vo_membership!` calls
 `Checkin::CheckVoMembership` (backed by `Checkin::Client`) on every request to
 refresh the user's access token and introspect it against Check-in, gating
 access to service ordering on membership in a configured virtual

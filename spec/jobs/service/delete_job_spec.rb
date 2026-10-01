@@ -2,13 +2,13 @@
 
 require "rails_helper"
 
-RSpec.describe Service::DeleteJob, backend: true do
+RSpec.describe Service::DeleteJob, :backend do
   let(:service) { create(:service) }
   let(:source) { create(:service_source, service: service) }
-  let(:delete_service) { instance_double(Service::Delete) }
+  let(:delete_service) { instance_double(Service::PcDelete::Standalone) }
 
   it "triggers ready process for project_item" do
-    allow(Service::Delete).to receive(:new).with(service.id).and_return(delete_service)
+    allow(Service::PcDelete).to receive(:new).with(service.id).and_return(delete_service)
     expect(delete_service).to receive(:call)
     described_class.perform_now(service.id)
   end

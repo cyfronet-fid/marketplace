@@ -197,7 +197,8 @@ RSpec.describe "Services::ApplicationController functionality", type: :request d
     end
   end
 
-  context "with DeployableService" do
+  # Deployable service pages are routed only under marketplace.
+  context "with DeployableService", variant: :marketplace do
     let(:service_resource) { create(:deployable_service, resource_organisation: provider, status: :published) }
 
     def create_offer(attributes = {})

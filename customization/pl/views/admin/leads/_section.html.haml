@@ -1,0 +1,20 @@
+%h2.subsection
+  %a{ id: section.slug }
+    = section.title
+
+  .group-item.ml-3
+    = link_to admin_lead_section_path(section),
+      data: { "turbo-method": :delete, "turbo-confirm": _("Are you sure you want to remove this lead section?") },
+      class: "btn btn-sm btn-secondary", id: "delete-lead-section-#{section.id}" do
+      Delete section
+    = link_to _("Edit section"), edit_admin_lead_section_path(section),
+      class: "btn btn-sm btn-primary ml-2"
+
+.row.mb-5
+  = render partial: "item",
+    collection: section.leads,
+    locals: { parent: section.slug, card_length: section.leads.size }
+  .col-12.col-lg-4.col-sm-6.mt-4.add-column
+    = link_to new_admin_lead_path(section: section.slug),
+      class: "btn btn-primary" do
+      %span{ id: "add-new-lead-#{section.id}" } + add new lead

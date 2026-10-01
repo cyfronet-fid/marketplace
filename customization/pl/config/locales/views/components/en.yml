@@ -1,0 +1,119 @@
+en:
+  components:
+    presentable:
+      header_links_component:
+        list:
+          legal_statuses: Legal status
+          provider_life_cycle_statuses: Life cycle
+      sidebar_component:
+        title:
+          availability_and_language: Availability and Language
+          platforms: Related Infrastructures and Platforms
+          support: Support
+          documents: Documents
+          restrictions: Service restrictions
+          phase: Service phase
+          scientific_categorisation: Scientific categorisation
+          categorisation: Categorisation
+          uptime_monitoring: Uptime monitoring
+          target_users: Target Users
+          resource_availability_and_languages: Availability and language
+        fields:
+          link_multimedia_urls: Multimedia %{idx}
+          webpage_url: Webpage
+          helpdesk_url: Helpdesk
+          helpdesk_email: Email provider
+          manual_url: Manual
+          privacy_policy_url: Privacy policy
+          status_monitoring_url: Status Monitoring
+          maintenance_url: Maintenance
+          payment_model_url: Payment Model
+          pricing_url: Pricing
+          training_information_url: Training information
+          resource_level_url: Corporate SLA
+          terms_of_use_url: Terms of use
+          access_policies_url: Access policies
+          phase:
+            discovery: "Discovery (min. TRL 1)"
+            planned: "Planned (min. TRL 3)"
+            alpha: "Alpha (min. TRL 5)"
+            beta: "Beta (min. TRL 7)"
+            production: "Production (min. TRL 8)"
+            retired: "Retired (n/a)"
+          monitoring_data:
+            OK: OK
+            WARNING: Warning
+            UNKNOWN: Unknown
+            CRITICAL: Critical
+            MISSING: Missing
+          monitoring_data_tooltip:
+            OK: The Service is working properly.
+            WARNING:  The service is working but with some warnings.
+            CRITICAL: The service is not working.
+            UNKNOWN:  The checks cannot reason about the status of the service.
+            MISSING: There are no results about the service.
+        map:
+          geographical_availabilities: Regions
+          languages: Languages
+          resource_geographic_locations: Geographic Locations
+      details_component:
+        details:
+          title:
+            statuses: Statuses
+            certifications: Certifications
+            esfri_type: ESFRI Type
+            esfri_domain: ESFRI Domain
+            meril_scientific_categorisation: MERIL Scientific Categorisation
+            affiliations: Affiliations
+            structure_types: Structure Types
+            areas_of_activity: Areas of Activity
+            societal_grand_challenges: Societal Grand Challenges
+            networks: Networks
+            hosting_legal_entity: Hosting Legal Entity
+            national_roadmaps: National Roadmaps
+            classification: Classification
+            availability: Availability and language
+            order: Order
+            marketing: Marketing
+            dependencies: Dependencies
+            attribution: Attribution
+            financial_information: Financial Information
+            public_contacts: Public Contacts
+            maturity_information: Maturity Information
+            management: Management
+            changelog: Changelog
+            catalogue: Catalogue
+        links:
+          link_multimedia_urls: Multimedia %{idx}
+          link_use_cases_urls: Use case %{idx}
+        object:
+          public_contacts: Public contact %{idx}
+          entity_type: Entity Type
+          entity_type_scheme_names: Entity Type Schemes
+        array:
+          legal_statuses: Legal Status
+          provider_life_cycle_statuses: Provider Life Cycle Status
+          tag_list: Tags
+          order_type: Order type
+          target_users: Target Users
+          access_types: Access Types
+          access_modes: Access Modes
+          geographical_availabilities: Geographical Availabilities
+          languages: Languages
+          fully_open_access: Fully Open Access
+          open_access: Open Access
+          order_required: Order Required
+          other: Other Order Type
+          standards: Standards
+          certifications: Certifications
+          open_source_technologies: Open Source Technologies
+          version: Version
+          funding_bodies: Funding Bodies
+          funding_programs: Funding Programs
+          grant_project_names: Grant Project Names
+          trls: Trl
+          life_cycle_statuses: Life Cycle Status
+          required_services: Required Services
+          related_services: Suggested compatible services
+          related_platforms: Related Platforms
+          catalogue: Catalogue
