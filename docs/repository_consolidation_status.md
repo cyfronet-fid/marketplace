@@ -224,6 +224,17 @@ ESS and ordering API:
   JavaScript files (`javascript/`, `config/esbuild.config.js`) and
   stylesheets (`stylesheets/`, `config/sass.config.js`), entries included,
   and `RECAPTCHA_ENABLED=false` disables reCAPTCHA.
+- Breadcrumbs (2026-10-01): `$CUSTOMIZATION_PATH/config/breadcrumbs/**/*.rb`
+  is loaded after the repository's files (`config/initializers/breadcrumbs.rb`)
+  and replaces crumbs by name, so pl's trail of #169 is a customization file,
+  not a port; `lib/versions/assemble_customization.sh` copies the breadcrumb
+  files that differ. The repository's files were tidied on the way: the
+  `resource_details` / `resource_opinions` crumbs duplicated in
+  `backoffice.rb` are gone (pl removed them too), their parents are an
+  explicit `case params[:from]` instead of `params[:from].to_sym`, and the
+  three crumbs no view declares (`congratulations`, `favourites`,
+  `admin_lead_section_new`) are removed. A later move of the trail into the
+  controllers is written up in `docs/tickets/breadcrumbs_controller_trail.md`.
 - Data model leftovers resolved by keeping marketplace's model:
   `ServiceUserRelationship` (service owners) and `MarketplaceLocation` stay
   for every variant and are simply unused on pl/whitelabel; `Offer` here is
@@ -310,6 +321,31 @@ ESS and ordering API:
     both under `Mp::Variant.whitelabel?`. `.env.test` and `.env.build` carry
     dummy values for the mandatory variables (test boot, Docker asset
     precompilation).
+- Synchronised with pl `6e10e7f6` (4.5.4: #168 header buttons split into
+  partials, #169 breadcrumbs) and whitelabel `065f1fe7` (#283 landing page)
+  on 2026-10-01. Code: `Presentable::LinksHelper` no longer lists
+  `webpage_url` under pl (pl's `_service_buttons` shows it as a "Visit the
+  Service" button) and `Bundle#all_offers` compacts a nil main offer (every
+  variant). Both customization directories were rebuilt with
+  `lib/versions/assemble_customization.sh`, now including
+  `config/breadcrumbs/`: pl's three files carry its restructured trail,
+  whitelabel's three differ from the repository's only in the vocabularies
+  link and the tidy of the repository's files. 29 entries changed for pl
+  (22 from pl's commits, 6 views of #3704's new service layout that pl's
+  unchanged views now override, `_order_buttons` deleted) and 10 for
+  whitelabel (#283, the rest from #3704 and the backoffice provider tabs
+  wrapper). Verified with each directory: boot, the CI variant spec set, the
+  smoke test (0 failures), the crawl (pl 511 pages, whitelabel 510, only the
+  known `/executive` 404) and the trails themselves (pl "All collections ›
+  Services", whitelabel "Home › Services & Datasources › category › service",
+  the service tabs opened from the backoffice and the ordering
+  configuration). With `CUSTOMIZATION_PATH` set, the example "shows only the
+  Details tab" in `spec/requests/public/services_spec.rb` fails as expected:
+  the old repositories' `services/_tabs.haml` keeps the About, Details and
+  Reviews tabs; CI runs the variants job without a customization directory.
+  Rule: the directories drift from both sides, so rebuild them after every
+  merge of marketplace `development` too, not only after a change in the
+  old repositories. Not ported: whitelabel #286 (see Next steps).
 - Merged marketplace `development` `9f9059f1` (after 4.7.0; #3761 rework of
   the Check-in membership verification): marketplace now uses the Keycloak
   Check-in block with mandatory variables, so the block is shared by
@@ -406,6 +442,9 @@ Mechanism, per deployment (`CUSTOMIZATION_PATH=/path/to/dir`):
   partial, is resolved through the customization directory first, so a
   customized `_variables.scss` reaches the partials that re-import it. Bare
   imports resolve from `node_modules`.
+- `config/breadcrumbs/` — loaded after the repository's breadcrumb files
+  (`config/initializers/breadcrumbs.rb`); a crumb defined there replaces the
+  repository's crumb with the same name, the others stay.
 - ViewComponent templates cannot come from that directory; components that
   differ per variant carry `<name>.html+pl.haml` / `<name>.html+whitelabel.haml`
   templates in the repository, selected through `request.variant`
@@ -425,6 +464,11 @@ Mechanism, per deployment (`CUSTOMIZATION_PATH=/path/to/dir`):
       pages, offers and bundles, mailers, federation, admin) and port any
       helper or controller method they still miss; then drop from the
       directories the files whose differences turn out cosmetic.
+- [ ] whitelabel #286 (`065f1fe7`): `Tasks::ImportAllJob` scheduled with
+      sidekiq-cron (`config/schedule.yml`, `sidekiq-cron` gem, `Procfile`).
+      Decide: port under `whitelabel` only or for every variant.
+- [ ] Build the breadcrumb trail in the controllers and drop `gretel`:
+      `docs/tickets/breadcrumbs_controller_trail.md`.
 
 ### Review and tests
 

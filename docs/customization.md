@@ -33,6 +33,7 @@ overridden keeps coming from the repository.
 $CUSTOMIZATION_PATH
 ├── views/            over app/views
 ├── config/locales/   added to config/locales
+├── config/breadcrumbs/  added to config/breadcrumbs, crumb by crumb
 ├── locale/           instead of locale/ (gettext); must exist, may be empty
 ├── javascript/       over app/javascript
 ├── stylesheets/      over app/assets/stylesheets
@@ -47,6 +48,7 @@ directories are optional.
 | --- | --- | --- | --- |
 | `views/` | `config/application.rb` | every request in development, boot in production | nothing in development |
 | `config/locales/` | `config/application.rb` | boot (file list), change of a listed file in development | restart |
+| `config/breadcrumbs/` | `config/initializers/breadcrumbs.rb` | boot (file list), change of a listed file in development | restart |
 | `locale/` | `config/initializers/fast_gettext.rb` | boot | restart |
 | `javascript/` | `config/esbuild.config.js` | build (`yarn build`) | rebuild, or restart `bin/dev` |
 | `stylesheets/` | `config/sass.config.js` | build (`yarn build:css`); the watcher follows both directories | nothing under `bin/dev` |
@@ -88,6 +90,27 @@ Limits:
   directory, it is not merged with it. `rake gettext:find` also scans the
   customization directory.
 
+### Breadcrumbs
+
+Breadcrumbs come from the `gretel` gem: `config/breadcrumbs/*.rb` defines
+each crumb with its link and its parent, a view declares its crumb with
+`- breadcrumb :service, @service`, and the layout renders the chain.
+`$CUSTOMIZATION_PATH/config/breadcrumbs/**/*.rb` is loaded after the
+repository's files. Gretel keeps one block per crumb name, so:
+
+- A crumb defined in the customization directory replaces the repository's
+  crumb with the same name, including its parent.
+- A crumb the customization does not define keeps coming from the
+  repository. A file needs only the crumbs that differ.
+- A crumb the deployment does not use cannot be removed from the directory;
+  the repository's definition stays, unused.
+
+The pl frontend keeps its trail "All collections › Services › service" this
+way: its `config/breadcrumbs/marketplace.rb` redefines the top-level crumbs,
+and its views declare the crumbs it adds (`:all_collections`, `:datasources`,
+`:favourites`). A crumb a customized view declares has to exist in one of the
+two places, if not the page raises.
+
 ### JavaScript
 
 `yarn build` bundles `app/javascript/application.js`. With
@@ -128,8 +151,8 @@ In `marketplace` before the consolidation, `pl-marketplace` and
 SCSS, but that part was written for webpack and has been commented out since
 the move to esbuild and the sass command line, so each fork kept its own
 stylesheets, scripts and images in `app/`. `javascript/`, `stylesheets/`,
-`images/` and the per-variant component templates were added with the
-consolidation; views, locales and gettext work as before.
+`images/`, `config/breadcrumbs/` and the per-variant component templates were
+added with the consolidation; views, locales and gettext work as before.
 
 ## Running with a customization
 
@@ -224,6 +247,8 @@ deployment.
 | Boot fails with `path .../locale could not be found!` | `$CUSTOMIZATION_PATH/locale` is missing; create it empty |
 | An override is ignored | wrong relative path (it has to match the repository's path below `app/views`, `app/javascript`, `app/assets/stylesheets` or `app/assets/images`), or a restart or rebuild is due (table above) |
 | `undefined local variable or method` in a customized view | the override was written for other Ruby code; its caller passes different locals or the helper is gone |
+| `Breadcrumb :name not found` from a customized view | the view declares a crumb that neither the repository nor `config/breadcrumbs/` of the directory defines |
+| A customized crumb is ignored | the file is not under `config/breadcrumbs/` of the directory, or a restart is due in production |
 | `No route matches` or an undefined `*_path` helper from a customized view | the route exists in another variant or not at all; see "When a customization is not enough" |
 | Styles or scripts unchanged in production | `CUSTOMIZATION_PATH` was not set when `assets:precompile` ran |
 | A customized image is missing in production | the file was added after the assets were built |

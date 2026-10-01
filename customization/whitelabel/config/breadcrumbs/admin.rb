@@ -29,6 +29,11 @@ crumb :admin_lead_edit do
   parent :admin_lead
 end
 
+crumb :admin_lead_section_new do
+  link "Create new lead section", admin_leads_path
+  parent :admin_lead
+end
+
 crumb :admin_lead_new do
   link "Create new lead", admin_leads_path
   parent :admin_lead

@@ -18,7 +18,7 @@ crumb :services do |category|
       parent :backoffice_services
     end
   else
-    link "Services & Datasources", services_path(params: session[:query].presence || {})
+    link "Services & Datasources", services_path(params: (session[:query].blank? ? {} : session[:query]))
     parent :marketplace_root
   end
 end
@@ -52,15 +52,10 @@ crumb :ordering_configuration_offer_edit do |offer|
   parent :ordering_configuration, offer.service
 end
 
-# The service tabs are reached from the public page, the backoffice page or
-# the ordering configuration; `from` names the page the tab was opened from.
 crumb :resource_details do |service|
   link "Details", service_details_path(service)
-  case params[:from]
-  when "backoffice_service"
-    parent :backoffice_service, service
-  when "ordering_configuration"
-    parent :ordering_configuration, service
+  if params[:from]
+    parent params[:from].to_sym, service
   else
     parent :service, service
   end
@@ -68,18 +63,15 @@ end
 
 crumb :resource_opinions do |service|
   link "Reviews", service_opinions_path(service)
-  case params[:from]
-  when "backoffice_service"
-    parent :backoffice_service, service
-  when "ordering_configuration"
-    parent :ordering_configuration, service
+  if params[:from]
+    parent params[:from].to_sym, service
   else
     parent :service, service
   end
 end
 
 crumb :category do |category|
-  link category.name, category_services_path(category, params: session[:query].presence || {})
+  link category.name, category_services_path(category, params: (session[:query].blank? ? {} : session[:query]))
   parent category.parent || :services
 end
 
@@ -114,6 +106,12 @@ end
 
 crumb :projects do
   link "My projects", projects_path
+  parent :marketplace_root
+end
+
+crumb :congratulations do |project_item|
+  link "Congratulations",
+       project_service_path(project_item.project, project_item)
   parent :marketplace_root
 end
 
@@ -152,15 +150,6 @@ crumb :catalogue do |catalogue|
   parent :catalogues
 end
 
-crumb :deployable_services do
-  link "Deployable Services", deployable_services_path
-  parent :marketplace_root
-end
-
-crumb :deployable_service do |deployable_service|
-  link deployable_service.name, deployable_service_path(deployable_service)
-  parent :deployable_services
-end
 
 crumb :communities do
   link "Communities and infrastructures", communities_path
@@ -184,5 +173,10 @@ end
 
 crumb :api_docs do
   link "Marketplace API", api_docs_path
+  parent :marketplace_root
+end
+
+crumb :favourites do
+  link "Favourite services", favourites_path
   parent :marketplace_root
 end

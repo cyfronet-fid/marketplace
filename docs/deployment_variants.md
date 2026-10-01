@@ -167,7 +167,10 @@ Rules for migrations:
   the forms themselves come from `CUSTOMIZATION_PATH`.
 - `CUSTOMIZATION_PATH` — per-deployment `views/`, `config/locales/`,
   `images/` (also precompiled), `javascript/` and `stylesheets/` override the
-  repository's same-named files. `config/esbuild.config.js` and
+  repository's same-named files; `config/breadcrumbs/` overrides crumb by
+  crumb (`config/initializers/breadcrumbs.rb`), which is how pl keeps its
+  own trail. The repository's breadcrumbs have one definition per crumb and
+  explicit parents instead of `params[:from].to_sym`. `config/esbuild.config.js` and
   `config/sass.config.js` resolve every import, and the `application.js` /
   `application.scss` entries, through the customization directory first
   (whitelabel's README promised this for JS and SCSS but its build never did

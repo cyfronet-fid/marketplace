@@ -1,0 +1,44 @@
+- about_active = ["services", "ordering_configurations"].include?(controller_name)
+.row
+  .col-12.col-xl-9.pr-5
+    %ul#my-tab.nav.nav-tabs.row.pl-3{ role: "tablist" }
+      - if local_assigns[:preview]
+        %li.nav-item
+          %a.nav-link.active.text-uppercase{ "data-probe": "",
+                                             "data-service-id": service.id,
+                                             "data-preview-target": "tab",
+                                             "data-action": "click->preview#toggle",
+                                             "data-value": "about" }
+            = _("About")
+        %li.nav-item
+          %a.nav-link.text-uppercase{ "data-probe": "",
+                                      "data-service-id": service.id,
+                                      "data-preview-target": "tab details",
+                                      "data-action": "click->preview#toggle",
+                                      "data-value": "details" }
+            = _("Details")
+        %li.nav-item
+          %a.nav-link.disabled.text-uppercase{ "data-probe" => "", "data-service-id" => service.id }
+            = _("Reviews (%{ssoc})") % { ssoc: service.service_opinion_count }
+      - else
+        - if request.fullpath.include?("backoffice") || policy_scope(service.offers).any?
+          %li.nav-item
+            = link_to _("Offers"), offers_link(service, go_to_search_query_params(params)),
+              class: "nav-link #{"active" if controller.controller_name == "offers" }", role: "tab",
+              data: { probe: "", "service-id": service.id, e2e: "service-offers-btn" }
+        %li.nav-item
+          = link_to _("About"), about_link(service, go_to_search_query_params(params)),
+            class: "nav-link #{"active" if about_active }", role: "tab",
+            data: { probe: "", "service-id": service.id, e2e: "service-about-btn" }
+        %li.nav-item{ "data-shepherd-tour-target": "service-details-tab" }
+          = link_to _("Details"), service_details_path(service, go_to_search_query_params(params)),
+            class: "nav-link #{"active" if controller.controller_name == "details"}", role: "tab",
+            data: { probe: "", "service-id": service.id, e2e: "service-details-btn",
+            "shepherd-tour-target": "service-more-about" }
+        %li.nav-item
+          = link_to_unless service.suspended?, _("Reviews (%{ssoc})") % { ssoc: service.service_opinion_count },
+            service_opinions_path(service, go_to_search_query_params(params)),
+            class: "nav-link #{"active" if controller.controller_name == "opinions"}",
+            role: "tab", data: { probe: "", "service-id": service.id, e2e: "service-reviews-btn" } do
+            %a.nav-link{ class: "#{"suspended" if service.suspended?}" }
+              = _("Reviews (%{ssoc})") % { ssoc: service.service_opinion_count }

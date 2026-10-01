@@ -28,6 +28,24 @@ crumb :backoffice_service_offers do |service|
   parent :backoffice_service, service
 end
 
+crumb :resource_details do |service|
+  link "Details", service_details_path(service)
+  if params[:from]
+    parent params[:from].to_sym, service
+  else
+    parent :service, service
+  end
+end
+
+crumb :resource_opinions do |service|
+  link "Reviews", service_opinions_path(service)
+  if params[:from]
+    parent params[:from].to_sym, service
+  else
+    parent :service, service
+  end
+end
+
 crumb :backoffice_service_new do
   link "New", new_backoffice_service_path
   parent :backoffice_services
@@ -178,7 +196,7 @@ crumb :backoffice_platform_edit do |platform|
 end
 
 crumb :backoffice_vocabularies_root do
-  link "Vocabularies", backoffice_other_settings_access_types_path
+  link "Vocabularies", backoffice_other_settings_target_users_path
   parent :backoffice_other_settings
 end
 

@@ -23,14 +23,14 @@ module Presentable::LinksHelper
 
   private
 
-  # pl lists the profile links that only its Service::PlProfile carries.
+  # pl lists the profile links that only its Service::PlProfile carries; its
+  # header shows the webpage as a "Visit the Service" button instead of a link.
   def links
     if Mp::Variant.pl?
       {
         name: "links",
         template: "links",
         fields: %w[
-          webpage_url
           helpdesk_url
           helpdesk_email
           manual_url
@@ -42,7 +42,6 @@ module Presentable::LinksHelper
           maintenance_url
         ],
         active_when_suspended: %w[
-          webpage_url
           helpdesk_url
           helpdesk_email
           manual_url

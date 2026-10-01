@@ -75,6 +75,9 @@ rm -rf "$TARGET"
 mkdir -p "$TARGET/locale"
 copy_area app/views views
 copy_area config/locales config/locales
+# Loaded after the repository's breadcrumb files; a crumb defined in a copied
+# file replaces the repository's crumb with the same name (config/initializers/breadcrumbs.rb).
+copy_area config/breadcrumbs config/breadcrumbs
 copy_area app/assets/images images
 copy_area app/assets/stylesheets stylesheets
 

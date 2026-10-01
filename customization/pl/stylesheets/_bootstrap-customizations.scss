@@ -256,27 +256,9 @@ a {
   font-weight: 300;
   color: $text-muted;
 
-  .data-probe {
-    border-bottom: 1px solid $custom-17;
-    padding-bottom: 10px;
-  }
-
   a {
     padding: 0 2px;
     font-size: 12px;
-
-    &:first-child {
-      background: url("home-icon.svg") top center no-repeat;
-      height: 16px;
-      opacity: 0.5;
-      width: 17px;
-      margin-top: 3px;
-      text-indent: 100%;
-      float: left;
-      padding: 0;
-      margin-right: 4px;
-      overflow: hidden;
-    }
 
     &:hover {
       opacity: 0.6;
@@ -287,6 +269,7 @@ a {
   .current {
     padding: 0 2px;
     color: $body-color;
+    font-weight: $font-weight-bold;
     font-size: 12px;
   }
 }
@@ -8697,22 +8680,10 @@ footer {
 
     a {
       color: $palette-white !important;
-
-      &:first-child {
-        background: url("home-icon-backoffice.svg");
-        opacity: 1;
-        margin-top: 4px;
-        margin-right: 7px;
-      }
     }
 
     .current {
       color: $palette-white !important;
-    }
-
-    .data-probe {
-      padding: 0;
-      border: 0;
     }
   }
 }
