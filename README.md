@@ -254,15 +254,8 @@ We are currently using the following ENV variables:
 - `MP_VERSION` (Optional) - the application's version
   (default taken from the file `./VERSION`)
 - `PORT` (Optional) - http server port (default 5000)
-- `CHECKIN_HOST` (Optional) - checkin IDP host (default `aai-dev.egi.eu`)
-- `CHECKIN_SCOPE` (Optional) - checkin IDP scope
-  (default `["openid", "profile", "email", "refeds_edu"]`)
-  multiple scopes separated by `,`, e.g `CHECKIN_SCOPE=openid,email`
-- `CHECKIN_IDENTIFIER` (Optional) - checkin IDP identifier (default taken from
-  encrypted properties)
-- `CHECKIN_SECRET` (Optional) - checkin IDP secret (default taken from
-  encrypted properties)
-- `OIDC_AAI_NEW_API` - if you want to use old AAI endpoints, set it to false
+- ENV variables connected to the Checkin integration are described in the
+  [Checkin section](#checkin)
 - `ROOT_URL` (Optional) - root application URL (default
   `http://localhost:#{ENV["PORT"] || 3000}` (when foreman is used to start
   application 5000 ENV variable is set)
@@ -693,6 +686,39 @@ To configure this integration, set the following [env variables](#environmental-
 | `AMS_TOKEN` | AMS API token, sent as the `x-api-key` header | - | Yes |
 | `AMS_SUBSCRIBE_ALL_CRON` | Cron schedule for the subscribe-all job | `*/3 * * * *` | No |
 | `AMS_SUBSCRIBE_ALL_ENABLED` | Set to `true` to enable the subscribe-all sidekiq-cron job. Unlike most optional variables here, this defaults to `false`, so the job does **not** run unless explicitly enabled | `false` | No |
+
+## Checkin
+
+Marketplace authenticates users through an external EGI/EOSC Check-in
+(Keycloak-based OpenID Connect) identity provider via Devise/OmniAuth. After
+sign-in, `Services::ApplicationController#check_vo_membership!` calls
+`Checkin::CheckVoMembership` (backed by `Checkin::Client`) on every request to
+refresh the user's access token and introspect it against Check-in, gating
+access to service ordering on membership in a configured virtual
+organisation (VO); the refreshed tokens are persisted back into the session,
+and users who aren't VO members are redirected to a "become a member" URL.
+
+To configure this integration, set the following [env variables](#environmental-variables):
+
+| Variable | Description | Default | Required |
+| --- | --- | --- | --- |
+| `CHECKIN_HOST` | Check-in (Keycloak) host | - | Yes |
+| `CHECKIN_ISSUER_URI` | OpenID Connect issuer URI used for endpoint discovery | - | Yes |
+| `CHECKIN_IDENTIFIER` | OAuth client identifier registered with Check-in | - | Yes |
+| `CHECKIN_SECRET` | OAuth client secret registered with Check-in | - | Yes |
+| `REDIRECT_URI` | OAuth callback URL, e.g. `https://your-domain/users/auth/checkin/callback` | - | Yes |
+| `VO_GROUP_NAME` | VO entitlement group a user must belong to (checked as `group:<VO_GROUP_NAME>`) to access service ordering. If unset, every request is treated as misconfigured | - | Yes |
+| `BECOME_VO_MEMBER_URL` | URL a user who isn't a VO member is redirected to so they can join. If unset, every request is treated as misconfigured | - | Yes |
+| `CHECKIN_SCOPE` | Comma-separated OAuth scopes requested from Check-in | `openid,basic,profile,email,offline_access,aarc,entitlements` | No |
+| `CHECKIN_DISCOVERY` | Set to `true` to discover endpoints from the issuer's `.well-known/openid-configuration` document instead of the `CHECKIN_*_ENDPOINT` variables below | `true` | No |
+| `CHECKIN_PKCE` | Set to `true` to use PKCE for the authorization code flow | `true` | No |
+| `CHECKIN_SCHEME` | Scheme used to build endpoint URLs when `CHECKIN_DISCOVERY` is `false` | `https` | No |
+| `CHECKIN_PORT` | Port used to build endpoint URLs when `CHECKIN_DISCOVERY` is `false` | - | No |
+| `CHECKIN_AUTHORIZATION_ENDPOINT` | Authorization endpoint path, used when `CHECKIN_DISCOVERY` is `false` | `/authorize` | No |
+| `CHECKIN_INTROSPECTION_ENDPOINT` | Token introspection endpoint path, used when `CHECKIN_DISCOVERY` is `false` | `/token/introspect` | No |
+| `CHECKIN_TOKEN_ENDPOINT` | Token endpoint path, used when `CHECKIN_DISCOVERY` is `false` | `/token` | No |
+| `CHECKIN_USERINFO_ENDPOINT` | Userinfo endpoint path, used when `CHECKIN_DISCOVERY` is `false` | `/userinfo` | No |
+| `CHECKIN_JWKS_URI` | JWKS endpoint path, used when `CHECKIN_DISCOVERY` is `false` | `/jwk` | No |
 
 ## FEDERATION_API_BASE_URL
 

@@ -11,6 +11,9 @@
 # Environment & secrets (do not send to build context)
 .env
 .env.*
+!.env.example
+!.env.build
+!.env.test
 *.local
 
 # Ruby / Rails artifacts
