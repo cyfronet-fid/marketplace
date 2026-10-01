@@ -49,7 +49,7 @@ module Mp
 
     # Hierachical locales file structure
     # see https://guides.rubyonrails.org/i18n.html#configure-the-i18n-module
-    config.i18n.load_path += Dir[Rails.root.join("config/locales/**/*.{rb,yml}")]
+    config.i18n.load_path += Rails.root.glob("config/locales/**/*.{rb,yml}")
 
     # Views and locales customization
     # The dir structure pointed by `$CUSTOMIZATION_PATH` should looks as follow:
@@ -103,8 +103,9 @@ module Mp
     # Defaults to enabled: ApplicationController#publish_user_actions_to_jms? is the
     # only reader of this flag, so flipping the default preserves today's
     # unconditional-publish behavior for any deployment that doesn't set it.
-    config.mp_stomp_publisher_enabled = ActiveModel::Type::Boolean.new.cast(ENV.fetch("MP_STOMP_PUBLISHER_ENABLED",
-                                                                                      true))
+    config.mp_stomp_publisher_enabled = ActiveModel::Type::Boolean.new.cast(
+      ENV.fetch("MP_STOMP_PUBLISHER_ENABLED", true)
+    )
 
     config.eosc_helpdesk_form_link = ENV.fetch("EOSC_HELPDESK_FORM_URL",
                                                "https://helpdesk.sandbox.eosc-beyond.eu/assets/form/form.js")
@@ -118,7 +119,5 @@ module Mp
 
     config.federation_api_base_url = ENV.fetch("FEDERATION_API_BASE_URL", "http://federatedsearch.service.eosc-beyond.eu/federation/services")
     config.aggregator_type = ENV.fetch("AGGREGATOR_TYPE", "pc")
-
-    config.vo_group_name = ENV.fetch("VO_GROUP_NAME", "eosc-beyond.eu")
   end
 end

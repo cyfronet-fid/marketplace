@@ -72,14 +72,26 @@ Rules for migrations:
   `CHECKIN_DISCOVERY=false`) and `import:authorize` always fetches a token
   when `MP_IMPORT_TOKEN` is blank, so `IMPORT_CLIENT_ID` and
   `IMPORT_CLIENT_SECRET` are mandatory there.
-- Check-in provider (`config/initializers/devise.rb`) — `whitelabel` uses its
-  own block: `CHECKIN_ISSUER_URI`, `CHECKIN_HOST`, `CHECKIN_IDENTIFIER`,
-  `CHECKIN_SECRET` and `REDIRECT_URI` are mandatory at boot, the defaults are
-  Keycloak's (`openid,basic,profile,email,offline_access`, PKCE on,
-  `/authorize`, `/token`, `/userinfo`, `/jwk`, `/logout`), and
-  `CHECKIN_DISCOVERY`, `CHECKIN_PORT`, `CHECKIN_SCHEME`, `CHECKIN_JWKS_URI`
-  and `CHECKIN_END_SESSION_ENDPOINT` are honoured. `marketplace` and `pl`
-  keep the block with optional variables and credentials fallback.
+- Check-in provider (`config/initializers/devise.rb`) — `marketplace` and
+  `whitelabel` share the Keycloak block (marketplace adopted it in #3761):
+  `CHECKIN_ISSUER_URI`, `CHECKIN_HOST`, `CHECKIN_IDENTIFIER`, `CHECKIN_SECRET`
+  and `REDIRECT_URI` are mandatory at boot, PKCE and discovery default to on,
+  and `CHECKIN_DISCOVERY`, `CHECKIN_PORT`, `CHECKIN_SCHEME`,
+  `CHECKIN_INTROSPECTION_ENDPOINT`, `CHECKIN_JWKS_URI` and
+  `CHECKIN_END_SESSION_ENDPOINT` are honoured. Under `whitelabel` the default
+  scope is `openid,basic,profile,email,offline_access` and the endpoint paths
+  default to Keycloak's (`/authorize`, `/token`, `/userinfo`, `/jwk`,
+  `/logout`); under `marketplace` the default scope also has `aarc` and
+  `entitlements` and the paths default to `nil` (discovery supplies them).
+  `pl` keeps its own block: optional variables with the EOSC Check-in
+  defaults, a credentials fallback and the `CHECKIN_ISSUER_ENDPOINT` /
+  `CHECKIN_JWK_ENDPOINT` names. The test and build environments take the
+  mandatory values from `.env.test` and `.env.build`.
+- Order flow VO membership (`Services::ChooseOffersController`,
+  `Checkin::CheckVoMembership`, #3761) — runs only under `marketplace`:
+  `pl` and `whitelabel` have no VO step, set no `VO_GROUP_NAME` /
+  `BECOME_VO_MEMBER_URL` and store no Check-in tokens in the session. The
+  development auth mock skips the check (no token to introspect).
 - `Backoffice::ProvidersController#index` — `pl` hides deleted providers (its
   destroy turbo stream removes the list item); the others list them.
 - `Backoffice::ServicesController#index` — authorizes after
@@ -111,7 +123,8 @@ Rules for migrations:
   `pl` the Check-in callback, `Api::V1::UsersController`, `User#uid`, the
   email-uniqueness validation and the `lib/ordering_api` admin setup go
   through identities; `marketplace`/`whitelabel` keep `User::Checkin` and
-  `users.uid`. `session["token"]` is set after login only on `marketplace`.
+  `users.uid`. `session["token"]` and `session["refresh_token"]` are set after
+  login only on `marketplace`.
 - `Ess::Add` / `Propagable#propagate_to_ess` — pl's `propagate_offers:`
   option for all variants (default `true` keeps current behavior). Under `pl`
   datasources go to ESS with `Ess::DatasourceSerializer` and `Offer::Create`
@@ -133,11 +146,9 @@ Rules for migrations:
   enqueue the jobs unless `Mp::Variant.marketplace?`. `BOS_ENABLED`,
   `BOS_API_URL`, `BOS_API_KEY` configure the client.
 - Configuration — Devise and `cookie_rotator.rb` use
-  `Rails.application.secret_key_base`; Check-in reads `CHECKIN_ISSUER_ENDPOINT`
-  and `CHECKIN_JWK_ENDPOINT` as well as `CHECKIN_JWKS_ENDPOINT`, tolerates a
-  missing `checkin` credentials key, and adds the `entitlements` scope to the
-  default only under `marketplace`; STOMP, xGUS and reCAPTCHA credential
-  lookups are nil-safe.
+  `Rails.application.secret_key_base`; the `pl` Check-in block tolerates a
+  missing `checkin` credentials key (see the Check-in provider above); STOMP,
+  xGUS and reCAPTCHA credential lookups are nil-safe.
 - `Importers::Service` / `Importers::Provider` / `Importers::Datasource` —
   under `pl` the V5 registry payload fields (tagline and the other profile
   fields, service categories, funding, life-cycle statuses, contacts, links,

@@ -56,7 +56,7 @@ RSpec.describe Ams::Subscribe do
 
         allow(Ams::DecodeMessage).to receive(:call).and_return({})
         allow(Ams::ProcessMessage).to receive(:call).and_return(true)
-        allow(Rails.logger).to receive(:tagged).with("[AMS]").and_return(logger)
+        allow(Rails.logger).to receive(:tagged).with("AMS").and_return(logger)
       end
 
       it "logs the number of messages found on the subscription" do

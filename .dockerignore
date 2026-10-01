@@ -11,8 +11,9 @@
 # Environment & secrets (do not send to build context)
 .env
 .env.*
-# dummy values the asset precompilation step sources
+!.env.example
 !.env.build
+!.env.test
 *.local
 
 # Ruby / Rails artifacts

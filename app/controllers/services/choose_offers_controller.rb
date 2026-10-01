@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class Services::ChooseOffersController < Services::ApplicationController
+  # Checkin VO membership is a marketplace requirement; pl and whitelabel
+  # have no such step and their sessions carry no token.
+  before_action :check_vo_membership!, if: -> { Mp::Variant.marketplace? }
+
   def show
     pi_init = params[:customizable_project_item]
     if pi_init && (pi_init[:offer_id] || pi_init[:bundle_id])
@@ -39,6 +43,35 @@ class Services::ChooseOffersController < Services::ApplicationController
   end
 
   private
+
+  def check_vo_membership!
+    return unless user_signed_in?
+    # The development auth mock has no Checkin token to introspect.
+    return if Rails.env.development? && Mp::Application.config.auth_mock
+
+    result = Checkin::CheckVoMembership.call(
+      access_token: session["token"],
+      refresh_token: session["refresh_token"]
+    )
+
+    session["refresh_token"] = result.refresh_token if result.refresh_token.present?
+    session["token"] = result.access_token if result.access_token.present?
+
+    case result.status
+    when :misconfiguration
+      redirect_to root_path, alert: _("We can't verify your VO membership. Please contact admin.")
+    when :session_expired
+      redirect_to user_checkin_omniauth_authorize_path
+    when :verification_failed
+      redirect_to root_path, alert: _("Your VO membership verification has failed.")
+    when :not_member
+      redirect_to result.become_vo_member_url, allow_other_host: true
+    when :member
+      nil
+    else
+      Rails.logger.tagged("CHECKIN").warn("Unhandled VO membership status: #{result.status.inspect}")
+    end
+  end
 
   def step_key
     :choose_offer

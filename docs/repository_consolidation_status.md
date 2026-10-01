@@ -169,11 +169,12 @@ ESS and ordering API:
   vocabulary routes follow the variant.
 - Configuration: Devise and the cookie rotator use
   `Rails.application.secret_key_base` (covers pl's `SECRET_KEY_BASE` and
-  marketplace's credentials); Check-in accepts pl/whitelabel's
-  `CHECKIN_ISSUER_ENDPOINT` / `CHECKIN_JWK_ENDPOINT` next to marketplace's
-  names, works without a `checkin` credentials key, and requests the
-  `entitlements` scope by default only on marketplace; the STOMP, xGUS and
-  reCAPTCHA settings no longer raise when the credentials key is absent.
+  marketplace's credentials); the pl Check-in block keeps pl's
+  `CHECKIN_ISSUER_ENDPOINT` / `CHECKIN_JWK_ENDPOINT` names and works without
+  a `checkin` credentials key (marketplace and whitelabel share the Keycloak
+  block since the merge of #3761, see `deployment_variants.md`); the STOMP,
+  xGUS and reCAPTCHA settings no longer raise when the credentials key is
+  absent.
   Kept as marketplace's: the STOMP YAML shapes (this repo's subscriber reads
   them), the credentials fallbacks whitelabel dropped from `storage.yml` /
   `xgus.yml`, and the EOSC Explore default URL (whitelabel sets
@@ -309,6 +310,15 @@ ESS and ordering API:
     both under `Mp::Variant.whitelabel?`. `.env.test` and `.env.build` carry
     dummy values for the mandatory variables (test boot, Docker asset
     precompilation).
+- Merged marketplace `development` `9f9059f1` (after 4.7.0; #3761 rework of
+  the Check-in membership verification): marketplace now uses the Keycloak
+  Check-in block with mandatory variables, so the block is shared by
+  marketplace and whitelabel with the whitelabel scope and endpoint defaults
+  inline, and pl keeps its own block. The VO membership check moved to
+  `Services::ChooseOffersController` (`Checkin::CheckVoMembership` refreshes
+  and introspects the token); it stays marketplace-only, as does storing the
+  Check-in tokens in the session. `MP_STOMP_PUBLISHER_ENABLED` keeps this
+  branch's default of `true`.
 
 ## Next steps
 

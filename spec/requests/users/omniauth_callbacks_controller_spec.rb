@@ -12,7 +12,7 @@ RSpec.describe Users::OmniauthCallbacksController, type: :request do
       :checkin,
       uid: uid,
       info: { first_name: "John", last_name: "Doe", email: email },
-      credentials: { token: "checkin-token" }
+      credentials: { token: "checkin-token", refresh_token: "checkin-refresh-token" }
     )
     post user_checkin_omniauth_authorize_path
     follow_redirect!
@@ -32,6 +32,10 @@ RSpec.describe Users::OmniauthCallbacksController, type: :request do
     it "keeps the checkin token in the session" do
       expect(session["token"]).to eq("checkin-token")
     end
+
+    it "keeps the checkin refresh token in the session" do
+      expect(session["refresh_token"]).to eq("checkin-refresh-token")
+    end
   end
 
   context "when running as pl" do
@@ -47,6 +51,10 @@ RSpec.describe Users::OmniauthCallbacksController, type: :request do
 
     it "keeps no checkin token in the session" do
       expect(session["token"]).to be_nil
+    end
+
+    it "keeps no checkin refresh token in the session" do
+      expect(session["refresh_token"]).to be_nil
     end
   end
 end

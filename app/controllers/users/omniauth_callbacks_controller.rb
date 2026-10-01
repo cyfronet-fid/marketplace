@@ -21,7 +21,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
           cookies.delete(:favourites)
         end
         flash[:notice] = I18n.t "devise.omniauth_callbacks.success", kind: "Checkin"
-        session["token"] = auth["credentials"]["token"] if Mp::Variant.marketplace?
+        # Only marketplace's order flow reads the tokens (Services::ChooseOffersController).
+        if Mp::Variant.marketplace?
+          session["refresh_token"] = auth["credentials"]["refresh_token"]
+          session["token"] = auth["credentials"]["token"]
+        end
       else
         flash[:alert] = "Cannot register user #{@user.errors.inspect}"
         session["devise.checkin_data"] = auth
