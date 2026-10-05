@@ -386,10 +386,12 @@ Found by comparing `app/`, `lib/` and `config/` of this branch with
 - [ ] Check marketplace and whitelabel production databases for duplicate
       provider pids (the pid migration aborts on duplicates; the pl testing
       dump only had blank ones, which are backfilled).
-- [ ] The `Dockerfile` runs `assets:precompile` in production without
-      `MARKETPLACE_VARIANT`, which `config/initializers/variants.rb` refuses,
-      and without `CUSTOMIZATION_PATH`. An image build needs both (build
-      arguments, one image per deployment).
+- [x] The `Dockerfile` takes `MARKETPLACE_VARIANT` (no default) and
+      `CUSTOMIZATION_PATH` (default empty, the repository frontend) as build
+      arguments and sets them in both stages. One image per deployment:
+      `docker-compose-<variant>.yml` passes the values of its deployment, and
+      `lib/versions/deploy-multi.sh` deploys the three variants on one host
+      from their seed dumps.
 - [ ] Keep per-deployment settings: PL's EOSC Commons URL and recommendation
       setting, whitelabel's HTTPS federation URL and `EOSC_EXPLORE_BASE_URL`,
       STOMP/JMS, monitoring, BOS and import settings, `RECAPTCHA_*` keys.

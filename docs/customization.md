@@ -182,11 +182,12 @@ Production: the directory has to be present and `CUSTOMIZATION_PATH` set both
 when the assets are built and when the application runs.
 `rake assets:precompile` runs `yarn build` and `yarn build:css` and
 fingerprints the images, so JavaScript, stylesheets and images are fixed at
-build time; views and texts are read at boot. The `Dockerfile` sets
-`MARKETPLACE_VARIANT` and `CUSTOMIZATION_PATH` in both stages, before its
-`assets:precompile` step; an image for another deployment changes both
-values, and a customization kept outside the repository has to be copied
-into the image first.
+build time; views and texts are read at boot. The `Dockerfile` takes
+`MARKETPLACE_VARIANT` and `CUSTOMIZATION_PATH` as build arguments and sets
+them in both stages, before its `assets:precompile` step. One image per
+deployment: `docker-compose-<variant>.yml` passes the values of its
+deployment. A customization kept outside the repository must be copied into
+the image first.
 
 ## When a customization is not enough
 

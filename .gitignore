@@ -54,4 +54,6 @@ yarn-debug.log*
 !.env.example
 !.env.build
 !.env.test
+# Runtime settings of the docker-compose-<variant>.yml deployments
+/marketplace-*.env
 master.key
