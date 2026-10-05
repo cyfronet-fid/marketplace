@@ -355,6 +355,15 @@ ESS and ordering API:
   and introspects the token); it stays marketplace-only, as does storing the
   Check-in tokens in the session. `MP_STOMP_PUBLISHER_ENABLED` keeps this
   branch's default of `true`.
+- The home page of pl and whitelabel renders as a landing page in the
+  `clear` layout (`@action = "landing_page"`, four popular services), as the
+  `HomeController` of both old repositories does; marketplace keeps its
+  default layout and six services. Found on the staging host: the
+  consolidated whitelabel home page showed the full navigation bar and the
+  profile popup, the whitelabel instance at version 3.63.2 does not.
+  `spec/requests/home_spec.rb` covers the layout per variant. Not ported: the
+  platforms and target users those controllers load, which no home view of
+  any repository reads.
 
 ## Next steps
 
