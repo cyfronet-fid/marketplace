@@ -1,7 +1,10 @@
 #!/bin/bash
 # Deploys the three deployment variants of this repository (marketplace, pl,
-# whitelabel) as separate docker compose projects on one host, each from its
-# own seed dump. Written for a cron job on the staging host.
+# whitelabel) as separate docker compose projects on one host. Written for a
+# cron job on the staging host. The database and the media of a variant are
+# seeded from ROOT/seed/<variant> on the first deploy only. Later deploys keep
+# them (the web container runs the migrations), and `down <variant>` removes
+# them, so the next deploy seeds again.
 #
 # Layout of the host directory (ROOT, the parent of this checkout). The script
 # runs from lib/versions of the checkout or from a copy at ROOT/deploy-multi.sh;
@@ -22,8 +25,8 @@
 # Examples:
 #   deploy-multi.sh                 # all variants, only when there are changes
 #   deploy-multi.sh --force         # all variants, always
-#   deploy-multi.sh pl              # forced reset of pl only
-#   deploy-multi.sh down pl         # remove pl only
+#   deploy-multi.sh pl              # forced deploy of pl only, the database stays
+#   deploy-multi.sh down pl         # remove pl: containers, images, database, media
 #   deploy-multi.sh down            # remove all variants
 set -uo pipefail
 
@@ -113,14 +116,20 @@ if [ "$MODE" = "down" ]; then
     exit 0
 fi
 
-git remote update >/dev/null 2>&1 || { echo "git remote update failed"; exit 1; }
-
-if git status -uno | grep -q 'Your branch is behind'; then
-    git pull --ff-only || { echo "git pull failed"; exit 1; }
-    echo "Updated successfully"
+# --- update the checkout to the remote branch ---
+# The checkout is a deploy artifact, not a workspace: local commits and local
+# changes to tracked files are discarded, untracked files (the env files)
+# stay. The comparison of commits does not depend on the language of git's
+# messages.
+git fetch -q origin || { echo "git fetch failed"; exit 1; }
+UPSTREAM=$(git rev-parse --abbrev-ref --symbolic-full-name '@{u}') || { echo "no upstream branch"; exit 1; }
+if [ "$(git rev-parse HEAD)" != "$(git rev-parse "$UPSTREAM")" ]; then
+    git reset -q --hard "$UPSTREAM" || { echo "git reset failed"; exit 1; }
+    echo "Updated to $UPSTREAM $(git rev-parse --short HEAD)"
 fi
 
-export COMMIT_HASH=$(git rev-parse --verify HEAD)
+COMMIT_HASH=$(git rev-parse --verify HEAD)
+export COMMIT_HASH
 
 # The state file holds the commit of the last complete deploy. A failed variant
 # is thus deployed again at the next run from cron, although the repository is
@@ -150,19 +159,10 @@ deploy_variant() {
     # --- build the new image (the old environment still runs) ---
     "${dc[@]}" build || return 1
 
-    # --- drop: containers and volumes of the project (the database included) ---
-    "${dc[@]}" down -v --remove-orphans || return 1
-
-    # --- create the containers and volumes, do not start them ---
-    "${dc[@]}" up --no-start || return 1
-
-    # --- copy the media from seed/<variant>/media to the application container ---
-    # (the container exists after `up --no-start`; docker cp also writes to volumes)
-    if [ -d "$seed/media" ]; then
-        "${dc[@]}" cp "$seed/media/." "${APP_SERVICE}:${MEDIA_PATH}/" || return 1
-    else
-        echo "[${variant}] no $seed/media, skipping media copy"
-    fi
+    # --- create the containers again, do not start them ---
+    # The named volumes (database, media) stay. The anonymous volumes of the
+    # old containers move to the new ones.
+    "${dc[@]}" up --no-start --remove-orphans || return 1
 
     # --- start only the database and wait until it is healthy (healthcheck in compose) ---
     # --wait waits for the status "healthy" of the db service. The healthcheck
@@ -174,20 +174,39 @@ deploy_variant() {
         return 1
     }
 
-    # --- create the database again ---
-    # The postgres image creates POSTGRES_DB at initialization, so the database
-    # must be removed first. The connection goes to the database "postgres": a
-    # database with the name of the user (mp) does not exist, and a database
-    # with an open connection cannot be removed.
-    echo "DROP DATABASE IF EXISTS ${DB_NAME}; CREATE DATABASE ${DB_NAME};" \
-        | "${dc[@]}" exec -T -e PGOPTIONS='-c client_min_messages=warning' "$DB_SERVICE" \
-            psql -q -v ON_ERROR_STOP=1 -U "$DB_USER" -d postgres > /dev/null || return 1
+    # --- seed on the first deploy only ---
+    # The postgres image creates an empty POSTGRES_DB at the initialization of
+    # the volume, so the test is the schema_migrations table, not the database.
+    if [ "$("${dc[@]}" exec -T "$DB_SERVICE" psql -tA -U "$DB_USER" -d "$DB_NAME" \
+            -c "SELECT to_regclass('public.schema_migrations') IS NOT NULL" 2>/dev/null)" = "t" ]; then
+        echo "[${variant}] database present, kept (reset with: $0 down ${variant})"
+    else
+        # --- copy the media from seed/<variant>/media to the application container ---
+        # (the container exists after `up --no-start`; docker cp also writes to volumes)
+        if [ -d "$seed/media" ]; then
+            "${dc[@]}" cp "$seed/media/." "${APP_SERVICE}:${MEDIA_PATH}/" || return 1
+        else
+            echo "[${variant}] no $seed/media, skipping media copy"
+        fi
 
-    # --- restore the clean dump ---
-    # -q: no information messages, > /dev/null: no output of set_config and similar.
-    # Errors go to stderr, so they stay visible; NOTICE messages are silenced by PGOPTIONS.
-    "${dc[@]}" exec -T -e PGOPTIONS='-c client_min_messages=warning' "$DB_SERVICE" \
-        psql -q -v ON_ERROR_STOP=1 -U "$DB_USER" "$DB_NAME" < "$dump" > /dev/null || return 1
+        # --- create the database again ---
+        # The connection goes to the database "postgres": a database with the
+        # name of the user (mp) does not exist, and a database with an open
+        # connection cannot be removed.
+        echo "DROP DATABASE IF EXISTS ${DB_NAME}; CREATE DATABASE ${DB_NAME};" \
+            | "${dc[@]}" exec -T -e PGOPTIONS='-c client_min_messages=warning' "$DB_SERVICE" \
+                psql -q -v ON_ERROR_STOP=1 -U "$DB_USER" -d postgres > /dev/null || return 1
+
+        # --- restore the dump in one transaction ---
+        # A failed restore leaves the database empty, so the next deploy seeds
+        # again. -q: no information messages, > /dev/null: no output of
+        # set_config and similar. Errors go to stderr, so they stay visible;
+        # NOTICE messages are silenced by PGOPTIONS.
+        "${dc[@]}" exec -T -e PGOPTIONS='-c client_min_messages=warning' "$DB_SERVICE" \
+            psql -q -v ON_ERROR_STOP=1 --single-transaction -U "$DB_USER" -d "$DB_NAME" -f - \
+            < "$dump" > /dev/null || return 1
+        echo "[${variant}] database seeded from $dump"
+    fi
 
     # --- the rest of the application ---
     "${dc[@]}" up -d || return 1

@@ -48,6 +48,8 @@ services:
       POSTGRES_DB: ${DB_POSTGRES_DB:-mp_production}
       POSTGRES_USER: ${DB_POSTGRES_USER:-mp}
       POSTGRES_PASSWORD: ${DB_POSTGRES_PASSWORD:-mp}
+    volumes:
+      - db-data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U mp -d mp_production"]
       interval: 2s
@@ -64,4 +66,5 @@ services:
     command: bundle exec sidekiq -C config/sidekiq.yml
 
 volumes:
+  db-data:
   media:
