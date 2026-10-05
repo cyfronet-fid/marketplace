@@ -32,6 +32,9 @@ set -uo pipefail
 
 # Cron has a minimal PATH.
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+# The host directory is shared by a group: files written here (the checkout,
+# the state file) must stay writable for the other members.
+umask 002
 
 # A copy at ROOT/deploy-multi.sh has the checkout next to it; inside the
 # checkout the repository is the git top level.
@@ -89,8 +92,10 @@ else
     PARTIAL=1
 fi
 
-# Lock against a parallel run.
-exec 9>"${TMPDIR:-/tmp}/mp-multi-deploy.lock"
+# Lock against a parallel run. The lock is on the checkout directory, so every
+# user who can read the directory shares the same lock, and no lock file has
+# to be writable by all of them.
+exec 9<"$APP"
 flock -n 9 || { echo "Another deploy is running, exiting"; exit 0; }
 
 cd "$APP" || exit 1
@@ -98,7 +103,7 @@ cd "$APP" || exit 1
 # ---------------------------------------------------------------------------
 # Mode: deploy-multi.sh down [variant ...]
 # Removes the containers, networks, volumes (the database included) and local
-# images of the given variants (default: all). Also removes the state file, so
+# images of the given variants (default: all). Also clears the state file, so
 # the next run without an argument (for example from cron) does a full deploy
 # from zero.
 # ---------------------------------------------------------------------------
@@ -111,7 +116,9 @@ if [ "$MODE" = "down" ]; then
             down -v --remove-orphans --rmi local \
             || echo "[${variant}] down FAILED"
     done
-    rm -f "$STATE_FILE"
+    # Truncated, not removed: a removal needs write permission on ROOT, a
+    # truncation only on the file.
+    [ -f "$STATE_FILE" ] && : > "$STATE_FILE"
     echo "Down finished"
     exit 0
 fi
