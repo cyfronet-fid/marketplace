@@ -16,9 +16,13 @@ Rails.application.config.assets.paths << Rails.root.join("node_modules")
 # and are precompiled like them (views and locales are handled in
 # config/application.rb, JavaScript and stylesheets by config/esbuild.config.js
 # and config/sass.config.js).
+# The directory is prepended to the Sprockets environment, not to
+# config.assets.paths: sprockets-rails puts app/assets/* in front of that list
+# after this file ran (its append_assets_path initializer), so an entry made
+# here would come after the repository images and never override them.
 if ENV["CUSTOMIZATION_PATH"].present?
   customization_images = File.join(ENV["CUSTOMIZATION_PATH"], "images")
-  Rails.application.config.assets.paths.unshift(customization_images)
+  Rails.application.config.assets.configure { |env| env.prepend_path(customization_images) }
   Rails.application.config.assets.precompile +=
     Dir[File.join(customization_images, "**", "*")].select { |file| File.file?(file) }.map do |file|
       file.delete_prefix("#{customization_images}/")

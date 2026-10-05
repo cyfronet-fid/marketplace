@@ -364,6 +364,14 @@ ESS and ordering API:
   `spec/requests/home_spec.rb` covers the layout per variant. Not ported: the
   platforms and target users those controllers load, which no home view of
   any repository reads.
+- Same-named images of a customization (`favicon.ico`, the apple touch icon,
+  the `eosc-logo-*.png` files) never overrode the repository images: the
+  directory went into `config.assets.paths` from an initializer, and
+  sprockets-rails puts `app/assets/*` in front of that list afterwards. Found
+  on the staging host, where the pl instance served marketplace's favicon.
+  `config/initializers/assets.rb` now prepends the directory to the Sprockets
+  environment through `config.assets.configure`, which runs when the
+  environment is built.
 
 ## Next steps
 
