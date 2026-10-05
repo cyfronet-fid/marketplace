@@ -371,7 +371,14 @@ ESS and ordering API:
   on the staging host, where the pl instance served marketplace's favicon.
   `config/initializers/assets.rb` now prepends the directory to the Sprockets
   environment through `config.assets.configure`, which runs when the
-  environment is built.
+  environment is built. With the override in place, `link_tree ../images` in
+  `manifest.js` failed the precompile (`Sprockets::DoubleLinkError`: the
+  repository file and the customization file of one name, linked by
+  location, share one output path), so the images are precompiled by logical
+  path from the initializer instead. Verified with `assets:precompile` in
+  production mode for the three variants: pl and whitelabel get their own
+  `favicon.ico`, marketplace keeps the repository files, and the number of
+  linked images is unchanged.
 
 ## Next steps
 
