@@ -1,0 +1,20 @@
+.service-info-box
+  %header
+    = link_to service.name.truncate(29), service, class: "title"
+  %article
+    %p
+      = presentable_logo(service)
+      = truncate(markdown(service.tagline), length: 120, escape: false)
+  %footer
+    .column-left
+      %p
+        %small
+          = _("Organisation") + ":"
+        %br
+        = resource_organisation_text(service).truncate(24)
+    .column-right
+      %p.text-right
+        %small
+          = _("Dedicated for") + ":"
+        %br
+        = safe_join(dedicated_for_text(service), ", ").truncate(24)

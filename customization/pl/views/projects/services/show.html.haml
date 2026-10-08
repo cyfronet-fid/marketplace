@@ -1,0 +1,19 @@
+- content_for :title, "#{@project_item.service.name} - #{@project.name}"
+- breadcrumb :project_item, @project_item
+
+= render "layout",
+  project: @project, projects: @projects, project_item: @project_item do
+  .details.mb-5
+    = render "details", project: @project, project_item: @project_item
+    = render "attributes/index", property_values: @project_item.property_values
+  - if @project_item.children.present?
+    = _("This service was ordered with services below (Bundle):")
+    %ul.list-group.mt-3
+    = render(partial: "projects/services/project_item",
+      collection: @project_item.children,
+      locals: { project: @project }) || render("projects/empty_project", project: @project)
+  .row
+    .col-7
+      = render "rating", project: @project, project_item: @project_item
+    .col-5
+      = render "voucher", project_item: @project_item

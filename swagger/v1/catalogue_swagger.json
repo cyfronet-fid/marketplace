@@ -1,0 +1,232 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Catalogue API",
+    "version": "v1",
+    "description": "Public Catalogue endpoints for EOSC Marketplace"
+  },
+  "paths": {
+    "/api/v1/catalogue/services": {
+      "get": {
+        "summary": "List catalogue services",
+        "tags": ["services"],
+        "parameters": [
+          {
+            "name": "keyword",
+            "in": "query",
+            "required": false,
+            "description": "Full-text search keyword",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0
+            },
+            "required": false,
+            "description": "Offset of the first record"
+          },
+          {
+            "name": "quantity",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 10
+            },
+            "required": false,
+            "description": "Number of records to return"
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["asc", "desc"],
+              "default": "asc"
+            },
+            "required": false,
+            "description": "Sort order for name/sort_name"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "returns a paginated list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "from": {
+                      "type": "integer"
+                    },
+                    "to": {
+                      "type": "integer"
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "service": {
+                            "$ref": "#/components/schemas/CatalogueService"
+                          }
+                        },
+                        "required": ["id", "service"]
+                      }
+                    }
+                  },
+                  "required": ["total", "from", "to", "results"]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CatalogueService": {
+        "type": "object",
+        "description": "Subset of the Service entity as published in Catalogue API",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "PID"
+          },
+          "webpage": {
+            "type": "string",
+            "nullable": true
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "languageAvailabilities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "trl": {
+            "type": "string",
+            "nullable": true
+          },
+          "userManual": {
+            "type": "string",
+            "nullable": true
+          },
+          "termsOfUse": {
+            "type": "string",
+            "nullable": true
+          },
+          "privacyPolicy": {
+            "type": "string",
+            "nullable": true
+          },
+          "accessPolicy": {
+            "type": "string",
+            "nullable": true
+          },
+          "orderType": {
+            "type": "string",
+            "example": "order_type-open_access"
+          },
+          "logo": {
+            "type": "string",
+            "format": "uri"
+          },
+          "alternativeIdentifiers": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string"
+                }
+              },
+              "required": ["type", "value"]
+            }
+          },
+          "abbreviation": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "tagline": {
+            "type": "string",
+            "nullable": true
+          },
+          "targetUsers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "accessModes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "helpdeskEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "securityContactEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "scientificDomains": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "scientificDomain": {
+                  "type": "string"
+                }
+              },
+              "required": ["scientificDomain"]
+            }
+          },
+          "categories": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "type": "string"
+                }
+              },
+              "required": ["category"]
+            }
+          }
+        },
+        "required": ["id", "name", "logo", "orderType"]
+      }
+    }
+  }
+}

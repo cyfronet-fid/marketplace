@@ -86,7 +86,7 @@ class Jms::Subscriber
     end
   end
 
-  def initialize(config_file_path = nil, logger: Logger.new("#{Rails.root}/log/jms.log"))
+  def initialize(config_file_path = nil, logger: Logger.new("#{Rails.root.join("log/jms.log")}"))
     @logger = logger
     @config_file_path = config_file_path
     @config = load_config(default_config: :stomp_subscriber)
@@ -224,14 +224,11 @@ class Jms::Subscriber
     Array(config[:topics].presence || config[:topic])
       .flat_map { |topic| topic.to_s.split(",") }
       .map(&:strip)
-      .reject(&:blank?)
+      .compact_blank
   end
 
-  def process_message(msg, config)
-    eosc_registry_base_url = config[:eosc_registry_base_url] || @config[:eosc_registry_base_url]
-    token = config[:token] || @config[:token]
-
-    Jms::ManageMessage.call(msg, eosc_registry_base_url, @logger, token)
+  def process_message(msg, _config)
+    Jms::ManageMessage.call(msg, @logger)
   end
 
   def get_or_create_client(server_key, config)
@@ -257,13 +254,13 @@ class Jms::Subscriber
   def build_client_config(config)
     {
       hosts: [
-        {
-          login: config[:login],
-          passcode: config[:password],
-          host: config[:host],
-          port: (config[:port] || 61_613).to_i,
-          ssl: config[:ssl_enabled] || false
-        }
+
+        login: config[:login],
+        passcode: config[:password],
+        host: config[:host],
+        port: (config[:port] || 61_613).to_i,
+        ssl: config[:ssl_enabled] || false
+
       ],
       connect_timeout: (config[:connect_timeout] || 15).to_i,
       max_reconnect_attempts: (config[:max_reconnect_attempts] || 5).to_i,
@@ -287,9 +284,9 @@ class Jms::Subscriber
   end
 
   def log(msg)
-    timestamp = Time.now.strftime("%Y-%m-%d %H:%M:%S")
+    timestamp = Time.zone.now.strftime("%Y-%m-%d %H:%M:%S")
     @logger.info("[#{timestamp}] #{msg}")
-    puts "[#{timestamp}] #{msg}" if Rails.env.development?
+    Rails.logger.debug { "[#{timestamp}] #{msg}" } if Rails.env.development?
   end
 
   def config_schema

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class Catalogue::Suspend < Catalogue::ApplicationService
-  def call
-    @catalogue.update(status: :suspended)
-  end
+class Catalogue::Suspend
+  extend VariantOperation
+
+  implementations marketplace: "Catalogue::Suspend::Standalone", default: "Catalogue::Suspend::Cascading"
 end

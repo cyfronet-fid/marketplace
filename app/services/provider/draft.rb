@@ -2,7 +2,9 @@
 
 class Provider::Draft < Provider::ApplicationService
   def call
-    @catalogue.status = :draft
-    @catalogue.save(validate: false)
+    @provider.status = :draft
+    @provider.save(validate: false)
+    @provider.reindex
+    @provider
   end
 end

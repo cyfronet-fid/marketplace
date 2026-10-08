@@ -1,0 +1,27 @@
+%div{ "data-controller" => "details-loader", "data-details-loader-url" => projects_path }
+  %div{ class: ("d-none" unless current_user.projects.empty?), "data-details-loader-target": "empty" }
+    %p.empty-info
+      You don't have any projects yet.
+      %br
+      To pin this research object create a new project.
+    .text-center
+      = image_tag "empty-projects.svg", alt: "Empty"
+    .text-center.mt-4
+      = link_to _("CREATE NEW PROJECT"), new_project_path,
+          class: "btn btn-primary pl-5 pr-5 mobile-bottom-margin",
+          data: { turbo: true, e2e: "add-new-project-btn", "turbo-frame": "modal" }
+  %div{ class: ("d-none" if current_user.projects.empty?), "data-details-loader-target": "projects" }
+    %h2 Select a Marketplace project to add the resource
+    = f.input :project do
+      .select-row
+        = render "common_parts/project_select", f: f, projects: current_user.projects, valid: step.errors[:project].empty?
+        .mt-3.text-right
+          = link_to _("+ Create new"), new_project_path,
+              class: "text-uppercase font-weight-bolder",
+              data: { turbo: true, e2e: "add-new-project-btn", "turbo-frame": "modal" }
+
+    %div{ "data-details-loader-target" => "details" }
+
+    .text-center.mt-5
+      = f.button :submit, "PIN TO THE MARKETPLACE PROJECT ",
+            class: "btn btn-primary pl-4 pr-4 mobile-bottom-margin", "data-e2e": "create-offer-btn"

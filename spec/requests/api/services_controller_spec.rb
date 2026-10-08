@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Api::ServicesController", backend: true do
+RSpec.describe "Api::ServicesController", :backend do
   let!(:published_service) { create(:service, public_contact_emails: ["one@example.org"]) }
   let!(:second_service) { create(:service, public_contact_emails: ["two@example.org"], status: :published) }
   let!(:draft_service) { create(:service, public_contact_emails: ["draft@example.org"], status: :draft) }
@@ -10,15 +10,16 @@ RSpec.describe "Api::ServicesController", backend: true do
   let!(:errored_service) { create(:service, public_contact_emails: ["errored@example.org"], status: :errored) }
 
   describe "GET /api/services" do
-    before(:each) { get api_services_api_path }
+    before { get api_services_api_path }
 
     it "have 200 status code response" do
       expect(response).to have_http_status(:ok)
       expect(response.header["Content-Type"]).to eq("application/json; charset=utf-8")
     end
 
-    it "shows only published services with correct data" do
-      body = JSON.parse(response.body)
+    # pl serves contacts and countries instead of the flat columns (covered below).
+    it "shows only published services with correct data", variant: :marketplace do
+      body = response.parsed_body
       expect(body.size).to eq(2)
 
       expect(body[0].keys).to contain_exactly(
@@ -52,6 +53,23 @@ RSpec.describe "Api::ServicesController", backend: true do
       expect(body[1]["SITENAME-SERVICEGROUP"]).to eq(second_service.name)
       expect(body[1]["COUNTRY_NAME"]).to eq([])
       expect(body[1]["URL"]).to eq(second_service.webpage_url)
+    end
+  end
+
+  describe "GET /api/services for the pl variant" do
+    let(:public_contact) { build(:public_contact) }
+
+    before do
+      allow(Mp::Variant).to receive(:pl?).and_return(true)
+      published_service.update!(geographical_availabilities: %w[PL EU], public_contacts: [public_contact])
+      get api_services_api_path
+    end
+
+    it "serves public contacts and geographical availabilities" do
+      body = response.parsed_body.find { |service| service["Service Unique ID"] == published_service.id }
+
+      expect(body["CONTACT_EMAIL"]).to eq([public_contact.email])
+      expect(body["COUNTRY_NAME"]).to eq(JSON.parse(published_service.reload.geographical_availabilities.to_json))
     end
   end
 end

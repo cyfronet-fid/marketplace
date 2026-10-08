@@ -23,7 +23,8 @@ RSpec.describe Api::V1::UsersController, :backend, swagger_doc: "v1/users_swagge
 
       parameter name: :user_id, in: :path, type: :string, required: true, description: "Unique identifier of the user"
 
-      response(200, "successful") do
+      # pl requires every role and resolves users through identities (examples below).
+      response(200, "successful", variant: :marketplace) do
         schema "$ref" => "user/user_read.json"
 
         let(:user_id) { "test-user-uid" }
@@ -38,6 +39,23 @@ RSpec.describe Api::V1::UsersController, :backend, swagger_doc: "v1/users_swagge
             expect(data["uid"]).to eq(user_id)
             expect(data["roles"]).to include("coordinator", "admin")
           end
+        end
+      end
+
+      response(200, "successful through a checkin identity on pl", document: false) do
+        schema "$ref" => "user/user_read.json"
+
+        # rubocop:disable RSpec/ScatteredSetup -- each rswag `response` block is its own example group
+        before { allow(Mp::Variant).to receive(:pl?).and_return(true) }
+        # rubocop:enable RSpec/ScatteredSetup
+
+        let(:user_id) { "test-user-uid" }
+        let(:user) { create(:user, uid: nil, roles: %i[admin coordinator executive]) }
+        let(:"X-User-Token") { user.authentication_token }
+        let!(:identity) { create(:user_identity, user: user, provider: "checkin", uid: user_id, primary: true) }
+
+        run_test! do |response|
+          expect(JSON.parse(response.body)["uid"]).to eq(identity.uid)
         end
       end
 
@@ -64,6 +82,17 @@ RSpec.describe Api::V1::UsersController, :backend, swagger_doc: "v1/users_swagge
         context "when invalid token provided" do
           let(:"X-User-Token") { "invalid-token" }
           let(:user_id) { "test-uid" }
+
+          run_test!
+        end
+
+        context "when the pl requester does not hold every role" do
+          before { allow(Mp::Variant).to receive(:pl?).and_return(true) }
+
+          let(:user_id) { "test-uid" }
+          let(:user) { create(:user, uid: nil, roles: %i[admin]) }
+          let(:"X-User-Token") { user.authentication_token }
+          let!(:identity) { create(:user_identity, user: user, provider: "checkin", uid: user_id, primary: true) }
 
           run_test!
         end

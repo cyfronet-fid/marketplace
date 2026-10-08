@@ -1,0 +1,32 @@
+.totop-wrapper
+  .container
+    %a{ href: "#" }
+      %i.fa.fa-arrow-up
+      Go back to top
+- if enable_commons
+  %eosc-common-main-footer{ footer_params }
+
+  %eosc-common-eu-information
+- else
+  %footer
+    .container
+      .row
+        .col-lg-3.col-sm-12.footer-logo
+          = image_tag "eoscpl-footer-logo.svg", alt: "EOSC PL", class: "img-fluid"
+        .col-lg-9.col-sm-12.footer-left
+          .footer-row
+            .footer-column
+              %ul
+                %li
+                  .menu-title Kontakt
+                %li
+                  %a{ href: "mailto:support@marketplace.eu" } Researchers - support@marketplace.eu
+                %li
+                  %a{ href: "mailto:onboarding@eosc-portal.eu" } Providers - onboarding@eosc-portal.eu
+                %li
+                  %a{ href: "mailto:business@eosc-dih.eu" } Businesses - business@eosc-dih.eu
+
+          .copyright-row
+            %p
+              Copyright 2024 &nbsp;|&nbsp; All rights reserved &nbsp; | &nbsp;
+              %a{ href: "#" } Privacy policy

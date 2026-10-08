@@ -1,0 +1,22 @@
+.exit-popup.d-none{ role: "document", data: { exit_target: "modal",
+  action: "keyup@window->exit#closeWithKeyboard click@window->exit#closeBackground" } }
+  .modal-overlay
+    .modal-content{ data: { exit_target: "modalContent" } }
+      .modal-header
+        %h3#popup-modal-title.modal-title
+          Exit #{object_type} editor
+        %button.close{ data: { action: "exit#hideModal" },
+          type: "button", aria: { label: _("Close") } }
+          %span{ aria: { hidden: "true" } } &times;
+      .modal-body
+        %p
+          = _("Name your draft to save your #{object_type} draft and complete the configuration later.")
+          = f.input :name,
+            as: :custom,
+            input_html: { class: "form-control-lg", "data-exit-target": "modalNameInput"}
+      .modal-footer
+        .buttons-row
+          = link_to _(exit_title),
+            exit_link,
+            class: "btn-sm btn-secondary", data: { turbo_frame: "_top" }
+          = f.button :submit, save_as_draft_title, class: "btn-sm btn-primary", data: { turbo_frame: "_top" }

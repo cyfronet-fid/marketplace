@@ -1,0 +1,12 @@
+.col-md-6
+  .card.info-card.m-0.mb-5
+    %h5 You can add a dedicated offer for your service
+    %p
+      You can add a dedicated offer for your service. Please click “Add new offer” to create it with all the
+      details about your offer, like technical parameters and any other important info. Remember, the more details
+      you give, the easier it'll be for potential users to understand what you're offering."
+
+    .card-button.text-center
+      = link_to new_offer_link(service, controller_name), "data-e2e": "add-new-offer-btn",
+      class: "btn btn-outline-primary" do
+        = _("Add new offer")

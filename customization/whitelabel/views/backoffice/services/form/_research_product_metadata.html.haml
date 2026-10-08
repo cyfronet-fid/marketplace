@@ -1,0 +1,37 @@
+- collapsed = collapsed?(datasource,
+            [:research_product_access_policies, :link_research_product_metadata_license_urls,
+            :"link_research_product_license_urls.url"])
+
+.card.shadow-sm.rounded{ class: datasource_fields_class, "data-form-target": "datasourceFields" }
+  %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed),
+            data: { toggle: "collapse", target: "#research-product-metadata" },
+            aria: { expanded: true, controls: "research-product-metadata" } }
+    .card-header.text-left{ id: "research-product-metadata-header" }
+      .row
+        .col-10
+          = _("Research Product Metadata")
+        .col-2.text-right
+          .collapse-icon
+            %i.fas.fa-chevron-down
+            %i.fas.fa-chevron-up
+  .collapse{ id: "research-product-metadata", "aria-labelledby": "research-product-metadata-header",
+          "data-parent": "#accordion-form",
+          class: ("show" unless collapsed) }
+    .card-body
+      %h3
+        = _("Research Product Metadata Licensing urls")
+      = f.fields_for :link_research_product_metadata_license_urls,
+        disabled: datasource.upstream_id.present?, multiple: true, as: :array,
+        wrapper_html: { "data-form-target" => "link" } do |link_form|
+        = render_link(link_form, datasource, "researchProductMetadataLicense")
+      = link_to _("Add new research product license"), "#", class: "btn btn-primary disablable",
+              data: { "form-target": "addField",
+              action: "click->form#addField",
+              value: "researchProductMetadataLicense",
+              fields: f.fields_for(:link_research_product_metadata_license_urls,
+              Link::ResearchProductMetadataLicenseUrl.new,
+              child_index: "new_field") { |lf| render_link(lf, datasource, "researchProductMetadataLicense") } }
+      .is-flipped
+        = f.association :research_product_metadata_access_policies,
+        multiple: true, input_html: { data: { choice: true } },
+        wrapper_html: { class: "col-lg-8 pl-0 pr-0" }

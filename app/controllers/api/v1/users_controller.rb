@@ -7,12 +7,17 @@ class Api::V1::UsersController < Api::V1::ApplicationController
   end
 
   def find_user
-    @user = User.find_by!(uid: params[:id])
+    @user =
+      if Mp::Variant.pl?
+        UserIdentity.find_by!(provider: "checkin", uid: params[:id]).user
+      else
+        User.find_by!(uid: params[:id])
+      end
     authorize @user
   rescue ActiveRecord::RecordNotFound
     render json: {
              error: "User not found",
-             message: "User with uid '#{params[:user_id]}' does not exist"
+             message: "User with uid '#{params[:id]}' does not exist"
            },
            status: :not_found
   rescue Pundit::NotAuthorizedError

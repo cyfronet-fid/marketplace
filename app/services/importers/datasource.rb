@@ -10,7 +10,9 @@ class Importers::Datasource < ApplicationService
   end
 
   def call
-    common_service_fields.merge(datasource_fields)
+    attributes = common_service_fields.merge(datasource_fields)
+
+    Mp::Variant.pl? ? attributes.merge(pl_datasource_fields) : attributes
   end
 
   private
@@ -31,9 +33,9 @@ class Importers::Datasource < ApplicationService
       resource_organisation: map_provider(@data["resourceOwner"] || @data["resourceOrganisation"]),
       providers:
         Array(@data["serviceProviders"] || @data["resourceProviders"])
-          .uniq
-          .map { |provider| map_provider(provider) }
-          .compact,
+        .uniq
+        .map { |provider| map_provider(provider) }
+        .compact,
       nodes: map_nodes(Array(@data["nodePID"] || @data["node"])),
       scientific_domains: map_scientific_domains(scientific_domain_eids(@data["scientificDomains"])),
       categories: map_categories(subcategories) || [],
@@ -56,12 +58,35 @@ class Importers::Datasource < ApplicationService
     }
   end
 
+  # pl-marketplace's V5 datasource mapping, added on top of the shared fields.
+  def pl_datasource_fields
+    {
+      submission_policy_url: @data["submissionPolicyURL"] || "",
+      preservation_policy_url: @data["preservationPolicyURL"] || "",
+      persistent_identity_systems:
+        Array.wrap(@data["persistentIdentitySystems"]).map { |s| map_persistent_identity_system(s, "rest") }.compact,
+      research_entity_types: map_entity_types(Array(@data["researchEntityTypes"])),
+      harvestable: @data["harvestable"],
+      link_research_product_license_urls:
+        Array.wrap(@data["researchProductLicensings"]).map { |item| map_link(item, "research_product") }.compact,
+      research_product_access_policies: map_access_policies(Array(@data["researchProductAccessPolicies"])),
+      link_research_product_metadata_license_urls:
+        Array
+        .wrap(@data["researchProductMetadataLicensing"])
+        .map { |item| map_link(item, "research_product_metadata") }
+        .compact,
+      research_product_metadata_access_policies:
+        map_metadata_access_policies(Array(@data["researchProductMetadataAccessPolicies"]))
+    }
+  end
+
   def alt_pids
     @alt_pids ||= Array(@data["alternativePIDs"] || @data["alternativeIdentifiers"])
   end
 
   def subcategories
-    @subcategories ||= @data["categories"]&.map { |category| category["subcategory"] } || []
+    @subcategories ||=
+      @data["categories"]&.map { |category| category.is_a?(Hash) ? category["subcategory"] : category } || []
   end
 
   def datasource_order_type

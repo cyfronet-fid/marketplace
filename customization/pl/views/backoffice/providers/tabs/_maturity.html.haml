@@ -1,0 +1,19 @@
+.new-offer-form
+  = simple_form_for [:backoffice, provider],
+    html: { data: { controller: "form", form_target: "form", disabled: provider.upstream_id.present? } } do |f|
+    = f.error_notification
+    = hidden_field_tag :tab, "maturity"
+    .row
+      .col-lg-9.pl-0
+        = f.input :provider_life_cycle_status,
+                  collection: Vocabulary.where(type: "Vocabulary::ProviderLifeCycleStatus"),
+                  disabled: cant_edit([provider_life_cycle_status_ids: []]),
+                  label_method: :name, value_method: :id,
+                  input_html: { multiple: false, data: { choice: true } }
+        = f.input :certifications,
+                  disabled: cant_edit([certifications: []]), multiple: true,
+                  input_html: { class: "form-control text optional" },
+                  wrapper_html: { "data-form-target" => "certifications" }, as: :array
+        = link_to_add_array_field("provider", "certifications")
+    .row.mt-4
+      = f.button :submit, class: "btn btn-primary"

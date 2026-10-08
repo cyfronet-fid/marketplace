@@ -1,0 +1,20 @@
+# Marketplace deployment variants, per ADR-0001 (single codebase over per-node
+# forks): the `marketplace`, `pl-marketplace`, and `whitelabel-marketplace`
+# repos are consolidating onto this codebase, selected at boot by
+# MARKETPLACE_VARIANT. Add a new node here only after its behavior is wired
+# through Mp::Variant, not before.
+default: &default
+  available:
+    - marketplace
+    - pl
+    - whitelabel
+  current: <%= ENV.fetch("MARKETPLACE_VARIANT", "marketplace") %>
+
+test:
+  <<: *default
+
+development:
+  <<: *default
+
+production:
+  <<: *default

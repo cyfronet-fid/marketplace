@@ -1,0 +1,70 @@
+# Staging deployment of the pl variant (lib/versions/deploy-multi.sh).
+# The image comes from the repository Dockerfile with the variant and its
+# frontend as build arguments: one image per deployment. The connection
+# variables below follow the services of this file. The other runtime
+# settings of the deployment, with the secrets, come from marketplace-pl.env
+# next to this file (not in git, not in the image); the mandatory variables
+# are listed in .env.example.
+x-app: &app
+  build:
+    context: .
+    args:
+      MARKETPLACE_VARIANT: pl
+      CUSTOMIZATION_PATH: /marketplace/customization/pl
+  restart: always
+  volumes:
+    - media:/marketplace/media
+  environment:
+    - MARKETPLACE_VARIANT=pl
+    - CUSTOMIZATION_PATH=/marketplace/customization/pl
+    - ROOT_URL=https://marketplace-16.docker-fid.grid.cyf-kr.edu.pl
+    - DATABASE_URL=postgres://${DB_POSTGRES_USER:-mp}:${DB_POSTGRES_PASSWORD:-mp}@db/${DB_POSTGRES_DB:-mp_production}
+    - ELASTICSEARCH_URL=http://el:9200
+    - REDIS_URL=redis://redis:6379/0
+    - STORAGE_DIR=/marketplace/media
+    - RAILS_LOG_TO_STDOUT=true
+    - MP_VERSION=$COMPOSE_PROJECT_NAME $COMMIT_HASH
+  env_file:
+    - marketplace-pl.env
+  depends_on:
+    - db
+    - el
+    - redis
+
+services:
+  redis:
+    image: redis
+    restart: always
+  el:
+    image: elasticsearch:7.5.0
+    restart: always
+    environment:
+      - discovery.type=single-node
+      - cluster.routing.allocation.disk.threshold_enabled=false
+  db:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_DB: ${DB_POSTGRES_DB:-mp_production}
+      POSTGRES_USER: ${DB_POSTGRES_USER:-mp}
+      POSTGRES_PASSWORD: ${DB_POSTGRES_PASSWORD:-mp}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U mp -d mp_production"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+      start_period: 5s
+  web:
+    <<: *app
+    command: bash -c "./bin/rails db:migrate && ./bin/rake searchkick:reindex:all && mkdir -p tmp/pids && bundle exec puma"
+    ports:
+      - 3016:3000
+  worker:
+    <<: *app
+    command: bundle exec sidekiq -C config/sidekiq.yml
+
+volumes:
+  db-data:
+  media:

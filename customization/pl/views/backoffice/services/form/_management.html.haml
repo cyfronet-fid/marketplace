@@ -1,0 +1,30 @@
+.card.shadow-sm.rounded
+  %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
+              [:helpdesk_url, :manual_url, :terms_of_use_url, :privacy_policy_url,
+              :access_policies_url, :training_information_url, :status_monitoring_url, :maintenance_url])),
+              data: { toggle: "collapse", target: "#management" },
+              aria: { expanded: true, controls: "management" } }
+    .card-header.text-left{ id: "management-header" }
+      .row
+        .col-10
+          = _("Management")
+        .col-2.text-right
+          .collapse-icon
+            %i.fas.fa-chevron-down
+            %i.fas.fa-chevron-up
+  .collapse{ id: "management", "aria-labelledby": "management-header",
+            "data-parent": "#accordion-form",
+            class: ("show" unless collapsed?(service, [:helpdesk_url, :manual_url, :terms_of_use_url,
+                                                      :privacy_policy_url,
+                                                      :access_policies_url, :training_information_url,
+                                                      :status_monitoring_url, :maintenance_url])) }
+    .card-body
+      = f.input :helpdesk_url, disabled: cant_edit(:helpdesk_url)
+      = f.input :manual_url, disabled: cant_edit(:manual_url)
+      = f.input :terms_of_use_url, disabled: cant_edit(:terms_of_use_url)
+      = f.input :privacy_policy_url, disabled: cant_edit(:privacy_policy_url)
+      = f.input :access_policies_url, disabled: cant_edit(:access_policies_url)
+      = f.input :resource_level_url, disabled: cant_edit(:resource_level_url)
+      = f.input :training_information_url, disabled: cant_edit(:training_information_url)
+      = f.input :status_monitoring_url, disabled: cant_edit(:status_monitoring_url)
+      = f.input :maintenance_url, disabled: cant_edit(:maintenance_url)

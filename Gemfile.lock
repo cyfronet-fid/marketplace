@@ -719,12 +719,6 @@ GEM
     snaky_hash (2.0.7)
       hashie (>= 0.1.0, < 6)
       version_gem (~> 1.1, >= 1.1.14)
-    spring (4.7.0)
-    spring-commands-rspec (1.0.4)
-      spring (>= 0.9.1)
-    spring-watcher-listen (2.1.0)
-      listen (>= 2.7, < 4.0)
-      spring (>= 4)
     sprockets (4.2.2)
       concurrent-ruby (~> 1.0)
       logger
@@ -906,9 +900,6 @@ DEPENDENCIES
   sidekiq-limit_fetch (~> 4.4)
   simple_form
   simple_token_authentication
-  spring
-  spring-commands-rspec
-  spring-watcher-listen (~> 2.1)
   sprockets-rails
   stimulus-rails
   stomp
