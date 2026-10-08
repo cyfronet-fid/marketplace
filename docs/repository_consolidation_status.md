@@ -379,6 +379,21 @@ ESS and ordering API:
   production mode for the three variants: pl and whitelabel get their own
   `favicon.ico`, marketplace keeps the repository files, and the number of
   linked images is unchanged.
+- Staging deployment of the discovery hubs (pl: `pl-discovery-hub`,
+  marketplace: `eosc-search-service`) next to the marketplace instances:
+  `lib/versions/deploy-hubs.sh` clones and updates each hub under
+  `ROOT/hubs/<variant>` and runs `docker-compose-hub-<variant>.yml` (api with
+  `alembic upgrade head` at start, postgres in a named volume, nginx serving
+  the Angular build from `lib/versions/hub/ui.Dockerfile` and proxying
+  `/api/` to the api, Solr with Zookeeper and the hub's configsets, and the
+  `transform-service` api and worker with redis). After the first deploy, or
+  with `deploy-hubs.sh seed <variant>`, the transform service creates the
+  collections (prefix `pl_` for pl, none for marketplace) and runs a full
+  load from the variant's `/api/v1/ess` API with a coordinator's token;
+  research products from dumps are not loaded. The login goes through the
+  Keycloak realm `core` of the host, which needs one client per hub. The
+  marketplace instances point at their hub with `SEARCH_SERVICE_BASE_URL`
+  in their env files.
 
 ## Next steps
 

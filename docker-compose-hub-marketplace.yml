@@ -1,0 +1,151 @@
+# Staging deployment of the marketplace discovery hub (eosc-search-service)
+# next to the marketplace instance, see lib/versions/deploy-hubs.sh.
+# MP_HUBS_DIR is the directory of the hub checkouts and env files (the script
+# exports it; set it for a manual `docker compose` call):
+#   $MP_HUBS_DIR/marketplace        eosc-search-service (api, ui, solr configsets)
+#   $MP_HUBS_DIR/transform-service  transform-service (fills Solr from the
+#                                   marketplace API)
+#   $MP_HUBS_DIR/marketplace.env    settings and secrets of the hub
+# The UI image comes from lib/versions/hub/ui.Dockerfile.
+#
+# Solr runs in this project with the configsets of the hub checkout, which
+# are uploaded at the first start; the collections (no prefix) are created
+# and filled by the transform service: `deploy-hubs.sh seed marketplace`, run
+# by the script after the first deploy. The settings below follow the
+# services of this file and the staging hostnames. The env file supplies:
+# MP_API_TOKEN (token of a coordinator of the marketplace instance, for
+# /api/v1/ess), SECRET_KEY, OIDC_CLIENT_ID and OIDC_CLIENT_SECRET (a client
+# of the Keycloak realm below with the redirect URI
+# https://search-18.../api/web/auth/checkin), EOSC_COMMONS_URL and
+# EOSC_COMMONS_ENV (see the hub's .env.template), LOG_LEVEL.
+# Ports: 3118 (UI) must be the ProxyPass target of the Apache vhost
+# search-18.docker-fid.grid.cyf-kr.edu.pl; 8118 (transform api) and 8918
+# (Solr) are bound to localhost for the script and for an ssh tunnel.
+x-keycloak: &keycloak
+  OIDC_HOST: https://keycloak.docker-fid.grid.cyf-kr.edu.pl
+  OIDC_ISSUER: https://keycloak.docker-fid.grid.cyf-kr.edu.pl/realms/core
+  OIDC_AUTH_ENDPOINT: /realms/core/protocol/openid-connect/auth
+  OIDC_TOKEN_ENDPOINT: /realms/core/protocol/openid-connect/token
+  OIDC_USERINFO_ENDPOINT: /realms/core/protocol/openid-connect/userinfo
+  OIDC_JWKS_ENDPOINT: /realms/core/protocol/openid-connect/certs
+  OIDC_AAI_NEW_API: "false"
+
+# The transform service: SOLR_URL needs the trailing slash; the configset
+# names are those of the hub checkout (solr/config/configsets); the empty
+# collections prefix equals COLLECTIONS_PREFIX of the api and
+# NG_COLLECTIONS_PREFIX of the UI.
+x-transform: &transform
+  build:
+    context: ${MP_HUBS_DIR}/transform-service
+  restart: always
+  environment:
+    ENVIRONMENT: production
+    SOLR_URL: http://solr:8983/
+    SOLR_COLS_PREFIX: ""
+    SOLR_ALL_COL_CONF: all_collection_v210
+    SOLR_PROVIDER_CONF: provider_v101
+    SOLR_CAT_CONF: catalogue_v101
+    SOLR_ORG_CONF: organisation_v106
+    SOLR_PROJ_CONF: project_v102
+    MP_API_ADDRESS: https://marketplace-18.docker-fid.grid.cyf-kr.edu.pl
+    STOMP_SUBSCRIPTION: "False"
+    CELERY_BROKER_URL: redis://redis:6379/0
+    CELERY_RESULT_BACKEND: redis://redis:6379/0
+  env_file:
+    - ${MP_HUBS_DIR}/marketplace.env
+  depends_on:
+    - redis
+    - solr
+
+services:
+  db:
+    image: postgres:14
+    restart: always
+    environment:
+      POSTGRES_DB: ${DB_POSTGRES_DB:-ess}
+      POSTGRES_USER: ${DB_POSTGRES_USER:-ess}
+      POSTGRES_PASSWORD: ${DB_POSTGRES_PASSWORD:-ess}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U ess -d ess"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+      start_period: 5s
+  zoo:
+    image: zookeeper:3.7
+    restart: always
+    volumes:
+      - zoo-data:/data
+      - zoo-datalog:/datalog
+    environment:
+      ZOO_4LW_COMMANDS_WHITELIST: mntr, conf, ruok
+  solr:
+    image: solr:8.11
+    restart: always
+    # The configsets of this hub are flat directories; the init script of the
+    # hub uploads every directory under /configsets by name.
+    volumes:
+      - solr-data:/var/solr
+      - ${MP_HUBS_DIR}/marketplace/solr/config/solr.xml:/opt/solr/server/solr/solr.xml:ro
+      - ${MP_HUBS_DIR}/marketplace/solr/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:ro
+      - ${MP_HUBS_DIR}/marketplace/solr/config/configsets:/configsets:ro
+    environment:
+      ZK_HOST: zoo:2181
+      SOLR_HEAP: 512m
+    ports:
+      - 127.0.0.1:8918:8983
+    depends_on:
+      - zoo
+  redis:
+    image: redis:7
+    restart: always
+  transform-api:
+    <<: *transform
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8080
+    ports:
+      - 127.0.0.1:8118:8080
+  transform-worker:
+    <<: *transform
+    command: celery -A app.worker.celery worker --concurrency=2 --loglevel=info
+  api:
+    build:
+      context: ${MP_HUBS_DIR}/marketplace/backend
+    restart: always
+    command: sh -c "alembic upgrade head && uvicorn --host 0.0.0.0 --port 8000 app.main:app"
+    environment:
+      <<: *keycloak
+      ENVIRONMENT: production
+      DATABASE_URI: postgresql+psycopg2://${DB_POSTGRES_USER:-ess}:${DB_POSTGRES_PASSWORD:-ess}@db:5432/${DB_POSTGRES_DB:-ess}
+      SOLR_URL: http://solr:8983/solr/
+      COLLECTIONS_PREFIX: ""
+      BACKEND_BASE_URL: https://search-18.docker-fid.grid.cyf-kr.edu.pl/
+      UI_BASE_URL: https://search-18.docker-fid.grid.cyf-kr.edu.pl/
+      MARKETPLACE_BASE_URL: https://marketplace-18.docker-fid.grid.cyf-kr.edu.pl/
+    env_file:
+      - ${MP_HUBS_DIR}/marketplace.env
+    depends_on:
+      db:
+        condition: service_healthy
+      solr:
+        condition: service_started
+  ui:
+    build:
+      context: ${MP_HUBS_DIR}/marketplace/ui
+      dockerfile: ../../../marketplace/lib/versions/hub/ui.Dockerfile
+      args:
+        NG_COLLECTIONS_PREFIX: ""
+    restart: always
+    volumes:
+      - ./lib/versions/hub/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      - 3118:80
+    depends_on:
+      - api
+
+volumes:
+  db-data:
+  solr-data:
+  zoo-data:
+  zoo-datalog:
