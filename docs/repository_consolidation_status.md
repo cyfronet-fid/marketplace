@@ -393,7 +393,15 @@ ESS and ordering API:
   research products from dumps are not loaded. The login goes through the
   Keycloak realm `core` of the host, which needs one client per hub. The
   marketplace instances point at their hub with `SEARCH_SERVICE_BASE_URL`
-  in their env files.
+  in their env files. Found with the pl hub's first load:
+  `Ess::OfferSerializer` sent `orderable_type` on every variant, a field of
+  marketplace's deployable services that the pl and whitelabel APIs never
+  had and that the transform service rejects as an unknown column; it is
+  now marketplace-only (`spec/serializers/ess/offer_serializer_spec.rb`).
+  Left with the hub maintainers: the transform service also rejects the
+  field for marketplace, and the `catalogue_v101` configset of both hub
+  repositories copies `node` into an undefined `node_str` field, so
+  catalogues fail to index.
 
 ## Next steps
 

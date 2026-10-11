@@ -48,6 +48,9 @@ x-transform: &transform
     SOLR_ORG_CONF: organisation_v106
     SOLR_PROJ_CONF: project_v102
     MP_API_ADDRESS: https://marketplace-16.docker-fid.grid.cyf-kr.edu.pl
+    # The guideline, training and adapter endpoints of the providers component
+    # are public; with PC_AUTH the service needs a refresh token for them.
+    PC_AUTH: "False"
     STOMP_SUBSCRIPTION: "False"
     CELERY_BROKER_URL: redis://redis:6379/0
     CELERY_RESULT_BACKEND: redis://redis:6379/0
