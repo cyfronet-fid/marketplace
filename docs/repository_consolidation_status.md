@@ -401,7 +401,17 @@ ESS and ordering API:
   Left with the hub maintainers: the transform service also rejects the
   field for marketplace, and the `catalogue_v101` configset of both hub
   repositories copies `node` into an undefined `node_str` field, so
-  catalogues fail to index.
+  catalogues fail to index. The hub UI renders only after it has loaded
+  the EOSC commons bundle from `EOSC_COMMONS_URL`; the `pr-eosc-pl` bundle
+  of the pl template answers 403, and the published bundles link to the
+  production or beta hosts. Each hub project thus builds its own commons
+  image (`lib/versions/hub/commons.Dockerfile`, from `eosc-pl-common` or
+  `eosc-portal-common`) with a staging environment of this repository
+  (`lib/versions/hub/commons/<variant>`: `env.staging.js` and the header
+  and footer links to the staging hosts; services without a staging
+  instance keep their production links), served as `/commons/` of the
+  hub; the marketplace instance of the variant loads the same bundle
+  (`EOSC_COMMONS_BASE_URL` in its compose file).
 
 ## Next steps
 

@@ -18,6 +18,10 @@ x-app: &app
     - MARKETPLACE_VARIANT=marketplace
     - ROOT_URL=https://marketplace-18.docker-fid.grid.cyf-kr.edu.pl
     - REDIRECT_URI=https://marketplace-18.docker-fid.grid.cyf-kr.edu.pl/users/auth/checkin/callback
+    # The EOSC commons header and footer of the marketplace hub project, built
+    # with the links of the staging hosts (docker-compose-hub-marketplace.yml).
+    - EOSC_COMMONS_BASE_URL=https://search-18.docker-fid.grid.cyf-kr.edu.pl/commons/
+    - EOSC_COMMONS_ENV=staging
     - DATABASE_URL=postgres://${DB_POSTGRES_USER:-mp}:${DB_POSTGRES_PASSWORD:-mp}@db/${DB_POSTGRES_DB:-mp_production}
     - ELASTICSEARCH_URL=http://el:9200
     - REDIS_URL=redis://redis:6379/0

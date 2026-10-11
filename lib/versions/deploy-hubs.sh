@@ -5,7 +5,9 @@
 #
 #   variant      repository                                   compose file
 #   pl           github.com/cyfronet-fid/pl-discovery-hub     docker-compose-hub-pl.yml
+#                github.com/cyfronet-fid/eosc-pl-common       EOSC commons (header, footer)
 #   marketplace  github.com/cyfronet-fid/eosc-search-service  docker-compose-hub-marketplace.yml
+#                github.com/cyfronet-fid/eosc-portal-common   EOSC commons (header, footer)
 #   (both)       github.com/cyfronet-fid/transform-service    fills Solr, one checkout
 #
 # Layout (ROOT is the parent of this checkout, as for deploy-multi.sh; the
@@ -14,9 +16,16 @@
 #   ROOT/marketplace                 this repository, with the compose files
 #   HUBS/<variant>                   checkout of the hub (cloned on the first run)
 #   HUBS/transform-service           checkout of the transform service
+#   HUBS/eosc-pl-common              checkout of the commons of the pl hub, with
+#                                    the staging environment of
+#                                    lib/versions/hub/commons/pl copied in
+#   HUBS/eosc-portal-common          checkout of the commons of the marketplace
+#                                    hub, with lib/versions/hub/commons/marketplace
 #   HUBS/<variant>.env               settings and secrets of the hub, see the
 #                                    header of its compose file
-#   HUBS/.last-deployed-<variant>    commit of the last complete deploy
+#   HUBS/.last-deployed-<variant>    commits (hub, transform service, commons)
+#                                    and lib/versions/hub tree of the last
+#                                    complete deploy
 # HUBS is ROOT/hubs; MP_HUBS_DIR=<dir> points to another directory. The
 # directory must exist and be writable by the user who runs the script.
 #
@@ -65,13 +74,28 @@ SEED_TIMEOUT=300            # seconds to wait for Solr and for the collections
 
 repository_url() {
     case "$1" in
-        pl)                echo "https://github.com/cyfronet-fid/pl-discovery-hub.git" ;;
-        marketplace)       echo "https://github.com/cyfronet-fid/eosc-search-service.git" ;;
-        transform-service) echo "https://github.com/cyfronet-fid/transform-service.git" ;;
+        pl)                 echo "https://github.com/cyfronet-fid/pl-discovery-hub.git" ;;
+        marketplace)        echo "https://github.com/cyfronet-fid/eosc-search-service.git" ;;
+        transform-service)  echo "https://github.com/cyfronet-fid/transform-service.git" ;;
+        eosc-pl-common)     echo "https://github.com/cyfronet-fid/eosc-pl-common.git" ;;
+        eosc-portal-common) echo "https://github.com/cyfronet-fid/eosc-portal-common.git" ;;
     esac
 }
+# The hubs and the transform service deploy their development branch; the
+# commons repositories have no such branch, their default branch is used.
 repository_branch() {
-    echo "development"
+    case "$1" in
+        eosc-pl-common)     echo "master" ;;
+        eosc-portal-common) echo "develop" ;;
+        *)                  echo "development" ;;
+    esac
+}
+# The commons repository (header and footer) of the hub, see the compose file.
+commons_repository() {
+    case "$1" in
+        pl)          echo "eosc-pl-common" ;;
+        marketplace) echo "eosc-portal-common" ;;
+    esac
 }
 collections_prefix() {
     case "$1" in
@@ -151,6 +175,19 @@ update_checkout() {
     fi
     git -C "$checkout" fetch -q origin || return 1
     git -C "$checkout" reset -q --hard "origin/$branch" || return 1
+}
+
+# Copies the staging environment of the commons of the variant
+# (lib/versions/hub/commons/<variant>: env.staging.js and the configuration
+# JSON files with the links of the staging hosts) into the checkout, where
+# commons.Dockerfile builds it. The checkout is reset at every deploy, the
+# copied files are untracked there and stay.
+install_commons_environment() {
+    local variant="$1"
+    local checkout="$HUBS/$(commons_repository "$variant")"
+    local source="$APP/lib/versions/hub/commons/$variant"
+    cp "$source/env.staging.js" "$checkout/env/" || return 1
+    cp "$source"/*.json "$checkout/configurations/" || return 1
 }
 
 # Waits until the URL answers with 2xx, up to SEED_TIMEOUT seconds.
@@ -236,9 +273,16 @@ deploy_hub() {
     [ -f "$compose_file" ] || { echo "missing $compose_file"; return 1; }
     [ -f "$env_file" ] || { echo "missing $env_file"; return 1; }
 
+    local commons
+    commons=$(commons_repository "$variant")
     update_checkout "$variant" || { echo "checkout update failed"; return 1; }
     update_checkout transform-service || { echo "transform-service update failed"; return 1; }
-    commit="$(git -C "$HUBS/$variant" rev-parse --verify HEAD) $(git -C "$HUBS/transform-service" rev-parse --verify HEAD)"
+    update_checkout "$commons" || { echo "$commons update failed"; return 1; }
+    install_commons_environment "$variant" || { echo "copy of the commons environment failed"; return 1; }
+    # The state holds the three checkouts and the tree of lib/versions/hub
+    # (image recipes, nginx and the commons environment of this repository),
+    # so a change of any of them deploys in cron mode.
+    commit="$(git -C "$HUBS/$variant" rev-parse --verify HEAD) $(git -C "$HUBS/transform-service" rev-parse --verify HEAD) $(git -C "$HUBS/$commons" rev-parse --verify HEAD) $(git -C "$APP" rev-parse --verify HEAD:lib/versions/hub)"
 
     if [ "$FORCE" = 0 ] && [ "$(cat "$state" 2>/dev/null)" = "$commit" ]; then
         echo "[${variant} hub] up-to-date at ${commit:0:8}"

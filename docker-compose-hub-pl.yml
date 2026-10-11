@@ -5,8 +5,11 @@
 #   $MP_HUBS_DIR/pl                 pl-discovery-hub (api, ui, solr configsets)
 #   $MP_HUBS_DIR/transform-service  transform-service (fills Solr from the
 #                                   marketplace API)
+#   $MP_HUBS_DIR/eosc-pl-common     EOSC commons of eosc.pl (header, footer)
 #   $MP_HUBS_DIR/pl.env             settings and secrets of the hub
-# The UI image comes from lib/versions/hub/ui.Dockerfile.
+# The UI image comes from lib/versions/hub/ui.Dockerfile and the commons
+# image from lib/versions/hub/commons.Dockerfile with the staging environment
+# of lib/versions/hub/commons/pl, which the script copies into the checkout.
 #
 # Solr runs in this project with the configsets of the hub checkout, which
 # are uploaded at the first start; the collections (prefix pl_) are created
@@ -15,9 +18,7 @@
 # this file and the staging hostnames. The env file supplies: MP_API_TOKEN
 # (token of a coordinator of the pl instance, for /api/v1/ess), SECRET_KEY,
 # OIDC_CLIENT_ID and OIDC_CLIENT_SECRET (a client of the Keycloak realm below
-# with the redirect URI https://search-16.../api/web/auth/checkin),
-# EOSC_COMMONS_URL and EOSC_COMMONS_ENV (see the hub's .env.template),
-# LOG_LEVEL.
+# with the redirect URI https://search-16.../api/web/auth/checkin), LOG_LEVEL.
 # Ports: 3216 (UI) is the ProxyPass target of the Apache vhost
 # search-16.docker-fid.grid.cyf-kr.edu.pl; 8116 (transform api) and 8916
 # (Solr) are bound to localhost for the script and for an ssh tunnel.
@@ -134,6 +135,10 @@ services:
       BACKEND_BASE_URL: https://search-16.docker-fid.grid.cyf-kr.edu.pl/
       UI_BASE_URL: https://search-16.docker-fid.grid.cyf-kr.edu.pl/
       PL_MARKETPLACE_BASE_URL: https://marketplace-16.docker-fid.grid.cyf-kr.edu.pl/
+      # The UI loads index.<env>.min.js and .css from this URL before it
+      # renders anything: the commons service below, through the ui nginx.
+      EOSC_COMMONS_URL: https://search-16.docker-fid.grid.cyf-kr.edu.pl/commons/
+      EOSC_COMMONS_ENV: staging
     env_file:
       - ${MP_HUBS_DIR}/pl.env
     depends_on:
@@ -141,6 +146,14 @@ services:
         condition: service_healthy
       solr:
         condition: service_started
+  # The EOSC commons of eosc.pl (header and footer) built with the staging
+  # environment of lib/versions/hub/commons/pl (links to search-16 and
+  # marketplace-16); the ui nginx serves the image as /commons/.
+  commons:
+    build:
+      context: ${MP_HUBS_DIR}/eosc-pl-common
+      dockerfile: ${MP_APP_DIR}/lib/versions/hub/commons.Dockerfile
+    restart: always
   ui:
     build:
       context: ${MP_HUBS_DIR}/pl/ui
@@ -154,6 +167,7 @@ services:
       - 3216:80
     depends_on:
       - api
+      - commons
 
 volumes:
   db-data:

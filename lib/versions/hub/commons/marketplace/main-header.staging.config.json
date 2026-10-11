@@ -1,0 +1,26 @@
+[
+  {
+    "label": "About EOSC",
+    "url": "https://www.eosc-beyond.eu/eosc"
+  },
+  {
+    "label": "Discovery Hub",
+    "url": "https://search-18.docker-fid.grid.cyf-kr.edu.pl"
+  },
+  {
+    "label": "Providers Hub",
+    "url": "https://integration.providers.sandbox.eosc-beyond.eu/home"
+  },
+  {
+    "label": "Monitoring",
+    "url": "https://core.sandbox.eosc-beyond.eu/"
+  },
+  {
+    "label": "Status",
+    "url": "https://core.sandbox.eosc-beyond.eu/"
+  },
+  {
+    "label": "Contact us",
+    "url": "mailto:eosc-beyond-po@mailman.egi.eu"
+  }
+]

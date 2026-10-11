@@ -18,6 +18,10 @@ x-app: &app
     - MARKETPLACE_VARIANT=pl
     - CUSTOMIZATION_PATH=/marketplace/customization/pl
     - ROOT_URL=https://marketplace-16.docker-fid.grid.cyf-kr.edu.pl
+    # The EOSC commons header and footer of the pl hub project, built with
+    # the links of the staging hosts (docker-compose-hub-pl.yml).
+    - EOSC_COMMONS_BASE_URL=https://search-16.docker-fid.grid.cyf-kr.edu.pl/commons/
+    - EOSC_COMMONS_ENV=staging
     - DATABASE_URL=postgres://${DB_POSTGRES_USER:-mp}:${DB_POSTGRES_PASSWORD:-mp}@db/${DB_POSTGRES_DB:-mp_production}
     - ELASTICSEARCH_URL=http://el:9200
     - REDIS_URL=redis://redis:6379/0

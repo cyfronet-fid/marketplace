@@ -6,8 +6,13 @@
 #   $MP_HUBS_DIR/marketplace        eosc-search-service (api, ui, solr configsets)
 #   $MP_HUBS_DIR/transform-service  transform-service (fills Solr from the
 #                                   marketplace API)
+#   $MP_HUBS_DIR/eosc-portal-common EOSC commons of the EOSC portal (header,
+#                                   footer)
 #   $MP_HUBS_DIR/marketplace.env    settings and secrets of the hub
-# The UI image comes from lib/versions/hub/ui.Dockerfile.
+# The UI image comes from lib/versions/hub/ui.Dockerfile and the commons
+# image from lib/versions/hub/commons.Dockerfile with the staging environment
+# of lib/versions/hub/commons/marketplace, which the script copies into the
+# checkout.
 #
 # Solr runs in this project with the configsets of the hub checkout, which
 # are uploaded at the first start; the collections (no prefix) are created
@@ -17,8 +22,7 @@
 # MP_API_TOKEN (token of a coordinator of the marketplace instance, for
 # /api/v1/ess), SECRET_KEY, OIDC_CLIENT_ID and OIDC_CLIENT_SECRET (a client
 # of the Keycloak realm below with the redirect URI
-# https://search-18.../api/web/auth/checkin), EOSC_COMMONS_URL and
-# EOSC_COMMONS_ENV (see the hub's .env.template), LOG_LEVEL.
+# https://search-18.../api/web/auth/checkin), LOG_LEVEL.
 # Ports: 3218 (UI) is the ProxyPass target of the Apache vhost
 # search-18.docker-fid.grid.cyf-kr.edu.pl; 8118 (transform api) and 8918
 # (Solr) are bound to localhost for the script and for an ssh tunnel.
@@ -127,6 +131,10 @@ services:
       BACKEND_BASE_URL: https://search-18.docker-fid.grid.cyf-kr.edu.pl/
       UI_BASE_URL: https://search-18.docker-fid.grid.cyf-kr.edu.pl/
       MARKETPLACE_BASE_URL: https://marketplace-18.docker-fid.grid.cyf-kr.edu.pl/
+      # The UI loads index.<env>.min.js and .css from this URL before it
+      # renders anything: the commons service below, through the ui nginx.
+      EOSC_COMMONS_URL: https://search-18.docker-fid.grid.cyf-kr.edu.pl/commons/
+      EOSC_COMMONS_ENV: staging
     env_file:
       - ${MP_HUBS_DIR}/marketplace.env
     depends_on:
@@ -134,6 +142,14 @@ services:
         condition: service_healthy
       solr:
         condition: service_started
+  # The EOSC commons of the EOSC portal (header and footer) built with the
+  # staging environment of lib/versions/hub/commons/marketplace (links to
+  # search-18 and marketplace-18); the ui nginx serves the image as /commons/.
+  commons:
+    build:
+      context: ${MP_HUBS_DIR}/eosc-portal-common
+      dockerfile: ${MP_APP_DIR}/lib/versions/hub/commons.Dockerfile
+    restart: always
   ui:
     build:
       context: ${MP_HUBS_DIR}/marketplace/ui
@@ -147,6 +163,7 @@ services:
       - 3218:80
     depends_on:
       - api
+      - commons
 
 volumes:
   db-data:

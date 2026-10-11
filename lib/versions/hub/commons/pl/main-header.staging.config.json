@@ -1,0 +1,14 @@
+[
+  {
+    "label": "About",
+    "url": "https://eosc.gov.pl/"
+  },
+  {
+    "label": "Browse resources",
+    "url": "https://search-16.docker-fid.grid.cyf-kr.edu.pl/search/all_collection?q=*"
+  },
+  {
+    "label": "Work with data",
+    "url": "https://data.eosc.pl/"
+  }
+]
