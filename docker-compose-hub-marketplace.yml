@@ -18,7 +18,7 @@
 # of the Keycloak realm below with the redirect URI
 # https://search-18.../api/web/auth/checkin), EOSC_COMMONS_URL and
 # EOSC_COMMONS_ENV (see the hub's .env.template), LOG_LEVEL.
-# Ports: 3118 (UI) must be the ProxyPass target of the Apache vhost
+# Ports: 3218 (UI) is the ProxyPass target of the Apache vhost
 # search-18.docker-fid.grid.cyf-kr.edu.pl; 8118 (transform api) and 8918
 # (Solr) are bound to localhost for the script and for an ssh tunnel.
 x-keycloak: &keycloak
@@ -140,7 +140,7 @@ services:
     volumes:
       - ./lib/versions/hub/nginx.conf:/etc/nginx/conf.d/default.conf:ro
     ports:
-      - 3118:80
+      - 3218:80
     depends_on:
       - api
 
