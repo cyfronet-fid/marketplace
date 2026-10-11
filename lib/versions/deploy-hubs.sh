@@ -119,7 +119,10 @@ else
 fi
 
 [ -d "$HUBS" ] || { echo "missing hubs directory $HUBS (MP_HUBS_DIR)"; exit 1; }
+# The compose files take the hub checkouts from MP_HUBS_DIR and the UI image
+# recipe from MP_APP_DIR (this checkout).
 export MP_HUBS_DIR="$HUBS"
+export MP_APP_DIR="$APP"
 
 # Lock against a parallel run, on the hubs directory (shared by every user
 # who can read it); independent of the lock of deploy-multi.sh.

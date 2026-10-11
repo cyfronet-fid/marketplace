@@ -1,7 +1,7 @@
 # Staging deployment of the pl discovery hub (pl-discovery-hub) next to the pl
 # marketplace instance, see lib/versions/deploy-hubs.sh. MP_HUBS_DIR is the
-# directory of the hub checkouts and env files (the script exports it; set it
-# for a manual `docker compose` call):
+# directory of the hub checkouts and env files and MP_APP_DIR this checkout
+# (the script exports both; set them for a manual `docker compose` call):
 #   $MP_HUBS_DIR/pl                 pl-discovery-hub (api, ui, solr configsets)
 #   $MP_HUBS_DIR/transform-service  transform-service (fills Solr from the
 #                                   marketplace API)
@@ -141,7 +141,7 @@ services:
   ui:
     build:
       context: ${MP_HUBS_DIR}/pl/ui
-      dockerfile: ../../../marketplace/lib/versions/hub/ui.Dockerfile
+      dockerfile: ${MP_APP_DIR}/lib/versions/hub/ui.Dockerfile
       args:
         NG_COLLECTIONS_PREFIX: pl_
     restart: always
