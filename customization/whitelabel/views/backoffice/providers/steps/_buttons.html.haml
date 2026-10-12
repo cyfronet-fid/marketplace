@@ -7,11 +7,11 @@
     .col-5.back-link-wrapper
       = link_to back_title, backoffice_provider_wizard_path(params[:provider_id], step: prev_step) unless current_step_index.zero?
     .col-2
-      - if provider.new_record? || provider.draft?
+      - if @provider.new_record? || @provider.draft?
         .btn.btn-back{ data: { exit_target: "display", action: "click->exit#showModal" } }
           Exit
       - else
-        = link_to "Exit", backoffice_provider_exit_path(provider),
+        = link_to "Exit", backoffice_provider_exit_path(@provider),
             class: "btn btn-back",
             data: { exit_target: "display",
             confirm_details: exit_confirm_details,
