@@ -27,7 +27,9 @@
 #                                    and lib/versions/hub tree of the last
 #                                    complete deploy
 # HUBS is ROOT/hubs; MP_HUBS_DIR=<dir> points to another directory. The
-# directory must exist and be writable by the user who runs the script.
+# directory must exist and be writable by the user who runs the script. The
+# public URLs of the hubs and of the marketplace instances, which the compose
+# files read from the environment, come from lib/versions/staging-urls.sh.
 #
 # Each hub project has its own Solr. After the first deploy the script seeds
 # it: the transform service creates the collections and loads the data from
@@ -61,6 +63,8 @@ else
 fi
 ROOT=$(dirname "$APP")
 HUBS="${MP_HUBS_DIR:-$ROOT/hubs}"
+# shellcheck source=staging-urls.sh
+. "$APP/lib/versions/staging-urls.sh" || exit 1
 
 date
 
@@ -158,6 +162,7 @@ cd "$APP" || exit 1
 compose() {
     local variant="$1"
     shift
+    export_staging_urls "$variant" || return 1
     COMPOSE_PROJECT_NAME="${COMPOSE_PREFIX}-${variant}-hub" \
         "$DC" compose -f "docker-compose-hub-${variant}.yml" "$@"
 }

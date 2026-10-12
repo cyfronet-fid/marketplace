@@ -5,7 +5,7 @@
   },
   {
     "label": "Browse resources",
-    "url": "https://search-16.docker-fid.grid.cyf-kr.edu.pl/search/all_collection?q=*"
+    "url": "__DISCOVERY_HUB_URL__/search/all_collection?q=*"
   },
   {
     "label": "Work with data",

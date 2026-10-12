@@ -18,14 +18,22 @@
 # are uploaded at the first start; the collections (no prefix) are created
 # and filled by the transform service: `deploy-hubs.sh seed marketplace`, run
 # by the script after the first deploy. The settings below follow the
-# services of this file and the staging hostnames. The env file supplies:
-# MP_API_TOKEN (token of a coordinator of the marketplace instance, for
-# /api/v1/ess), SECRET_KEY, OIDC_CLIENT_ID and OIDC_CLIENT_SECRET (a client
-# of the Keycloak realm below with the redirect URI
-# https://search-18.../api/web/auth/checkin), LOG_LEVEL.
-# Ports: 3218 (UI) is the ProxyPass target of the Apache vhost
-# search-18.docker-fid.grid.cyf-kr.edu.pl; 8118 (transform api) and 8918
-# (Solr) are bound to localhost for the script and for an ssh tunnel.
+# services of this file. The env file supplies: MP_API_TOKEN (token of a
+# coordinator of the marketplace instance, for /api/v1/ess), SECRET_KEY,
+# OIDC_CLIENT_ID and OIDC_CLIENT_SECRET (a client of the Keycloak realm below
+# with the redirect URI MP_HUB_URL/api/web/auth/checkin), LOG_LEVEL.
+# The public URLs come from the environment of the compose call, without a
+# trailing slash (the deploy script exports the staging values from
+# lib/versions/staging-urls.sh; a local deploy sets them in the shell or in
+# .env next to this file):
+#   MP_HUB_URL   URL of this hub
+#   MP_ROOT_URL  URL of the marketplace instance (docker-compose-marketplace.yml)
+#   MP_API_URL   URL of the marketplace instance for the transform service,
+#                from inside its container; the default is MP_ROOT_URL, a
+#                local deploy sets http://host.docker.internal:<port>
+# Ports: 3218 (UI) is the ProxyPass target of the Apache vhost of the staging
+# hub; 8118 (transform api) and 8918 (Solr) are bound to localhost for the
+# script and for an ssh tunnel.
 x-keycloak: &keycloak
   OIDC_HOST: https://keycloak.docker-fid.grid.cyf-kr.edu.pl
   OIDC_ISSUER: https://keycloak.docker-fid.grid.cyf-kr.edu.pl/realms/core
@@ -52,7 +60,7 @@ x-transform: &transform
     SOLR_CAT_CONF: catalogue_v101
     SOLR_ORG_CONF: organisation_v106
     SOLR_PROJ_CONF: project_v102
-    MP_API_ADDRESS: https://marketplace-18.docker-fid.grid.cyf-kr.edu.pl
+    MP_API_ADDRESS: ${MP_API_URL:-${MP_ROOT_URL:?the URL of the marketplace instance}}
     # The guideline, training and adapter endpoints of the providers component
     # are public; with PC_AUTH the service needs a refresh token for them.
     PC_AUTH: "False"
@@ -61,6 +69,9 @@ x-transform: &transform
     CELERY_RESULT_BACKEND: redis://redis:6379/0
   env_file:
     - ${MP_HUBS_DIR}/marketplace.env
+  # For a local deploy: the marketplace instance published on the host.
+  extra_hosts:
+    - host.docker.internal:host-gateway
   depends_on:
     - redis
     - solr
@@ -128,12 +139,12 @@ services:
       DATABASE_URI: postgresql+psycopg2://${DB_POSTGRES_USER:-ess}:${DB_POSTGRES_PASSWORD:-ess}@db:5432/${DB_POSTGRES_DB:-ess}
       SOLR_URL: http://solr:8983/solr/
       COLLECTIONS_PREFIX: ""
-      BACKEND_BASE_URL: https://search-18.docker-fid.grid.cyf-kr.edu.pl/
-      UI_BASE_URL: https://search-18.docker-fid.grid.cyf-kr.edu.pl/
-      MARKETPLACE_BASE_URL: https://marketplace-18.docker-fid.grid.cyf-kr.edu.pl/
+      BACKEND_BASE_URL: ${MP_HUB_URL:?the URL of this hub}/
+      UI_BASE_URL: ${MP_HUB_URL}/
+      MARKETPLACE_BASE_URL: ${MP_ROOT_URL}/
       # The UI loads index.<env>.min.js and .css from this URL before it
       # renders anything: the commons service below, through the ui nginx.
-      EOSC_COMMONS_URL: https://search-18.docker-fid.grid.cyf-kr.edu.pl/commons/
+      EOSC_COMMONS_URL: ${MP_HUB_URL}/commons/
       EOSC_COMMONS_ENV: staging
     env_file:
       - ${MP_HUBS_DIR}/marketplace.env
@@ -143,12 +154,16 @@ services:
       solr:
         condition: service_started
   # The EOSC commons of the EOSC portal (header and footer) built with the
-  # staging environment of lib/versions/hub/commons/marketplace (links to
-  # search-18 and marketplace-18); the ui nginx serves the image as /commons/.
+  # staging environment of lib/versions/hub/commons/marketplace and the links
+  # to this hub and to the marketplace instance; the ui nginx serves the
+  # image as /commons/.
   commons:
     build:
       context: ${MP_HUBS_DIR}/eosc-portal-common
       dockerfile: ${MP_APP_DIR}/lib/versions/hub/commons.Dockerfile
+      args:
+        DISCOVERY_HUB_URL: ${MP_HUB_URL}
+        MARKETPLACE_URL: ${MP_ROOT_URL}
     restart: always
   ui:
     build:

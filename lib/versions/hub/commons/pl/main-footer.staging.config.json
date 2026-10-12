@@ -6,15 +6,15 @@
       "navBtns": [
         {
           "label": "Browse resources",
-          "url": "https://search-16.docker-fid.grid.cyf-kr.edu.pl/search/all_collection?q=*"
+          "url": "__DISCOVERY_HUB_URL__/search/all_collection?q=*"
         },
         {
           "label": "Your projects",
-          "url": "https://marketplace-16.docker-fid.grid.cyf-kr.edu.pl/projects"
+          "url": "__MARKETPLACE_URL__/projects"
         },
         {
           "label": "Documentation",
-          "url": "https://search-16.docker-fid.grid.cyf-kr.edu.pl/documentation"
+          "url": "__DISCOVERY_HUB_URL__/documentation"
         }
       ]
     },
@@ -24,15 +24,15 @@
       "navBtns": [
         {
           "label": "Backoffice",
-          "url": "https://marketplace-16.docker-fid.grid.cyf-kr.edu.pl/backoffice/services"
+          "url": "__MARKETPLACE_URL__/backoffice/services"
         },
         {
           "label": "Become a provider",
-          "url": "https://marketplace-16.docker-fid.grid.cyf-kr.edu.pl/backoffice/providers"
+          "url": "__MARKETPLACE_URL__/backoffice/providers"
         },
         {
           "label": "Marketplace API",
-          "url": "https://marketplace-16.docker-fid.grid.cyf-kr.edu.pl/api_docs"
+          "url": "__MARKETPLACE_URL__/api_docs"
         }
       ]
     },

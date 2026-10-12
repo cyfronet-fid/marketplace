@@ -392,8 +392,14 @@ ESS and ordering API:
   load from the variant's `/api/v1/ess` API with a coordinator's token;
   research products from dumps are not loaded. The login goes through the
   Keycloak realm `core` of the host, which needs one client per hub. The
-  marketplace instances point at their hub with `SEARCH_SERVICE_BASE_URL`
-  in their env files. Found with the pl hub's first load:
+  compose files hold no hostnames: they read the public URL of the
+  instance (`MP_ROOT_URL`), of its hub (`MP_HUB_URL`) and of the instance
+  as the transform service reaches it (`MP_API_URL`) from the environment
+  of the compose call; the deploy scripts export the staging values from
+  `lib/versions/staging-urls.sh` (one slot per variant), and a local deploy
+  sets local values. Each marketplace instance searches in its own hub
+  (`SEARCH_SERVICE_BASE_URL` from `MP_HUB_URL` in its compose file, which
+  has precedence over the env file). Found with the pl hub's first load:
   `Ess::OfferSerializer` sent `orderable_type` on every variant, a field of
   marketplace's deployable services that the pl and whitelabel APIs never
   had and that the transform service rejects as an unknown column; it is
@@ -408,10 +414,12 @@ ESS and ordering API:
   image (`lib/versions/hub/commons.Dockerfile`, from `eosc-pl-common` or
   `eosc-portal-common`) with a staging environment of this repository
   (`lib/versions/hub/commons/<variant>`: `env.staging.js` and the header
-  and footer links to the staging hosts; services without a staging
-  instance keep their production links), served as `/commons/` of the
-  hub; the marketplace instance of the variant loads the same bundle
-  (`EOSC_COMMONS_BASE_URL` in its compose file).
+  and footer links, with the placeholders `__DISCOVERY_HUB_URL__` and
+  `__MARKETPLACE_URL__` that the build replaces with `MP_HUB_URL` and
+  `MP_ROOT_URL`; services without a staging instance keep their production
+  links), served as `/commons/` of the hub; the marketplace instance of
+  the variant loads the same bundle (`EOSC_COMMONS_BASE_URL` in its compose
+  file).
 
 ## Next steps
 

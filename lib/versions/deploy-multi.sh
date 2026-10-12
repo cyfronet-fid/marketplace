@@ -15,7 +15,9 @@
 #   ROOT/seed/<variant>/media/         copied to MEDIA_PATH in the app container
 #   ROOT/.last-deployed-commit         commit of the last complete deploy
 #
-# MP_SEED_DIR=<dir> points to another seed directory.
+# MP_SEED_DIR=<dir> points to another seed directory. The public URLs of the
+# instances and of their discovery hubs, which the compose files read from
+# the environment, come from lib/versions/staging-urls.sh of the checkout.
 #
 # Usage:  deploy-multi.sh [down] [-f|--force] [variant ...]
 #   no variant           -> all variants (marketplace pl whitelabel), cron mode
@@ -46,6 +48,8 @@ else
 fi
 ROOT=$(dirname "$APP")
 cd "$ROOT" || exit 1
+# shellcheck source=staging-urls.sh
+. "$APP/lib/versions/staging-urls.sh" || exit 1
 
 date
 
@@ -111,6 +115,7 @@ if [ "$MODE" = "down" ]; then
     export COMMIT_HASH="none"
     for variant in "${VARIANTS[@]}"; do
         export COMPOSE_PROJECT_NAME="${COMPOSE_PREFIX}-${variant}"
+        export_staging_urls "$variant" || continue
         echo "=== [${variant}] down ==="
         /usr/bin/docker compose -f "docker-compose-${variant}.yml" \
             down -v --remove-orphans --rmi local \
@@ -159,6 +164,7 @@ deploy_variant() {
     local dc=("$DC" compose -f "$compose_file")
 
     # --- validation BEFORE any removal ---
+    export_staging_urls "$variant" || return 1
     [ -f "$compose_file" ] || { echo "missing $compose_file"; return 1; }
     dump="$seed/mp_db.sql"
     [ -f "$dump" ] || { echo "missing $dump"; return 1; }
