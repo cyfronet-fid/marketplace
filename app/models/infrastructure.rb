@@ -68,8 +68,18 @@ class Infrastructure < ApplicationRecord
     %w[creating configured running failed].include?(state) && im_infrastructure_id.present?
   end
 
+  # TOSCA templates name their access URL output differently (jupyterhub_url, jupyter_url, ...),
+  # so the first output that is an http(s) URL is used
+  def self.deployment_url_from(outputs)
+    outputs&.values&.find do |value|
+      uri = URI.parse(value.to_s)
+      uri.is_a?(URI::HTTP) && uri.host.present?
+    rescue URI::InvalidURIError
+      false
+    end
+  end
+
   def deployment_url
-    # outputs defaults to {} but add nil safety for defensive coding
-    outputs&.dig("jupyterhub_url") || outputs&.dig("public_url") || outputs&.dig("endpoint")
+    self.class.deployment_url_from(outputs)
   end
 end

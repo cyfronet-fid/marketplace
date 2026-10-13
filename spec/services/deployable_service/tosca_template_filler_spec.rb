@@ -6,12 +6,9 @@ RSpec.describe DeployableService::ToscaTemplateFiller, type: :service do
   let(:user) { create(:user) }
   let(:project) { create(:project, user: user) }
   let(:provider) { create(:provider) }
+  let(:deployable_service_url) { "https://github.com/example/jupyterhub_datamount.yml" }
   let(:deployable_service) do
-    create(
-      :deployable_service,
-      resource_organisation: provider,
-      url: "https://github.com/example/jupyterhub_datamount.yml"
-    )
+    create(:deployable_service, resource_organisation: provider, url: deployable_service_url)
   end
   let(:service_category) { create(:service_category) }
   let(:offer) { create(:offer, service: nil, deployable_service: deployable_service, offer_category: service_category) }
@@ -237,15 +234,77 @@ RSpec.describe DeployableService::ToscaTemplateFiller, type: :service do
     end
   end
 
-  describe "#fetch_template" do
-    xit "reads template from config/templates" do # needs fix
-      allow(File).to receive(:read).with(Rails.root.join("config", "templates", "jupyterhub_datamount.yml")).and_return(
+  describe "template selection" do
+    let(:jupyter_notebook_url) { "https://github.com/grycap/tosca/blob/eosc_beyond/templates/jupyter.yml" }
+    let(:jupyter_notebook_template) { <<~YAML }
+      tosca_definitions_version: tosca_simple_yaml_1_0
+      topology_template:
+        inputs:
+          jupyter_token:
+            type: string
+            default: changeme
+          dns_name:
+            type: string
+            default: jupyter.test.fedcloud.eu
+        outputs:
+          jupyter_url:
+            value: { concat: [ 'https://', get_input: dns_name, '/?token=', get_input: jupyter_token ] }
+    YAML
+
+    before do
+      allow(DeployableService::FetchTemplate).to receive(:call).with(deployable_service_url).and_return(
         mock_template_content
       )
+      allow(DeployableService::FetchTemplate).to receive(:call).with(jupyter_notebook_url).and_return(
+        jupyter_notebook_template
+      )
+    end
 
-      result = subject.send(:fetch_template, "any_url")
+    context "with a Jupyter Notebook deployable service" do
+      let(:deployable_service) do
+        create(
+          :deployable_service,
+          resource_organisation: provider,
+          name: "Jupyter Notebook",
+          url: jupyter_notebook_url
+        )
+      end
+      let(:filled_template) { YAML.safe_load(described_class.call(project_item)) }
 
-      expect(result).to eq(mock_template_content)
+      before do
+        allow(project_item).to receive(:properties).and_return(
+          ['{"id": "jupyter_token", "value": "secret"}', '{"id": "dns_name", "value": "user.example.com"}']
+        )
+      end
+
+      it "sends the Jupyter Notebook template instead of the JupyterHub one" do
+        expect(filled_template.dig("topology_template", "outputs").keys).to eq(["jupyter_url"])
+      end
+
+      it "fills user parameters and generates a unique dns_name" do
+        expect(filled_template.dig("topology_template", "inputs")).to match(
+          "jupyter_token" => include("default" => "secret"),
+          "dns_name" => include("default" => match(uuid_dns_pattern))
+        )
+      end
+    end
+
+    context "with a JupyterHub deployable service" do
+      before { allow(project_item).to receive(:properties).and_return(mock_properties) }
+
+      it "sends the JupyterHub template with a generated kube_public_dns_name" do
+        expect(YAML.safe_load(described_class.call(project_item)).dig("topology_template", "inputs")).to include(
+          "fe_cpus" => include("default" => "8"),
+          "kube_public_dns_name" => include("default" => match(uuid_dns_pattern))
+        )
+      end
+    end
+
+    it "propagates template fetch errors" do
+      project_item
+      allow(DeployableService::FetchTemplate).to receive(:call).and_raise(Net::HTTPError.new("HTTP 404 Not Found", nil))
+
+      expect { described_class.call(project_item) }.to raise_error(Net::HTTPError, /HTTP 404/)
     end
   end
 

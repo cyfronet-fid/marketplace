@@ -48,7 +48,7 @@ class DeployableService::CreateDefaultOffer < DeployableService::ApplicationServ
   def parameters_from_template_url(url)
     return if url.blank?
 
-    template = fetch_template(raw_github_url(url))
+    template = DeployableService::FetchTemplate.call(url)
     parsed = YAML.safe_load(template)
     unless parsed.is_a?(Hash)
       Rails.logger.error("Failed to fetch default offer parameters from '#{url}': response is not a YAML mapping")
@@ -65,19 +65,6 @@ class DeployableService::CreateDefaultOffer < DeployableService::ApplicationServ
   rescue Psych::SyntaxError, URI::InvalidURIError, SocketError, SystemCallError, Net::HTTPError => e
     Rails.logger.error "Failed to fetch default offer parameters from '#{url}': #{e.message}"
     nil
-  end
-
-  def fetch_template(url)
-    uri = URI.parse(url)
-    response = Net::HTTP.get_response(uri)
-
-    return response.body if response.is_a?(Net::HTTPSuccess)
-
-    raise Net::HTTPError.new("HTTP #{response.code} #{response.message}", response)
-  end
-
-  def raw_github_url(url)
-    url.sub("github.com", "raw.githubusercontent.com").sub("/blob/", "/")
   end
 
   def parameter_from_tosca_input(id, definition)
