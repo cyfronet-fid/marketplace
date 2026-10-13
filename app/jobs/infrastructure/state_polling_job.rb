@@ -37,8 +37,8 @@ class Infrastructure::StatePollingJob < ApplicationJob
       im_state = result[:data]&.dig("state")
       infrastructure.update_state_from_im!(im_state)
 
-      # If running, also fetch outputs
-      fetch_outputs(infrastructure, im_client) if infrastructure.running?
+      # If running or configured, also fetch outputs
+      fetch_outputs(infrastructure, im_client) if infrastructure.running? || infrastructure.configured?
     else
       Rails.logger.warn "Could not get state for Infrastructure #{infrastructure.id}: #{result[:error]}"
       infrastructure.update_columns(last_state_check_at: Time.current)
@@ -46,7 +46,7 @@ class Infrastructure::StatePollingJob < ApplicationJob
   end
 
   def fetch_outputs(infrastructure, im_client)
-    return if infrastructure.outputs.present? && infrastructure.outputs["jupyterhub_url"].present?
+    return if infrastructure.deployment_url.present?
 
     result = im_client.get_outputs(infrastructure.im_infrastructure_id)
     return unless result[:success] && result[:data]
@@ -59,12 +59,16 @@ class Infrastructure::StatePollingJob < ApplicationJob
   end
 
   def update_project_item_link(infrastructure, outputs)
-    jupyterhub_url = outputs["jupyterhub_url"]
-    return unless jupyterhub_url.present?
+    deployment_url = Infrastructure.deployment_url_from(outputs)
+    return if deployment_url.blank?
 
     project_item = infrastructure.project_item
-    return if project_item.deployment_link == jupyterhub_url
+    return if project_item.deployment_link == deployment_url
 
-    project_item.update!(deployment_link: jupyterhub_url, status: "Deployment ready at #{jupyterhub_url}")
+    project_item.update!(
+      deployment_link: deployment_url,
+      status: "Deployment ready at #{deployment_url}",
+      status_type: :ready
+    )
   end
 end

@@ -102,6 +102,42 @@ RSpec.describe DeployableService::DeploymentJob, type: :job do
       end
     end
 
+    context "when a Jupyter Notebook deployment is successful" do
+      let(:successful_im_response) { { success: true, data: { "uri" => deployment_uri } } }
+      let(:outputs_response) do
+        {
+          success: true,
+          data: {
+            "outputs" => {
+              "jupyter_url" => "https://notebook.vm.fedcloud.eu/?token=secret"
+            }
+          }
+        }
+      end
+
+      before do
+        allow(mock_im_client).to receive(:create_infrastructure).with(filled_template).and_return(
+          successful_im_response
+        )
+        allow(mock_im_client).to receive(:get_outputs).with(infrastructure_id).and_return(outputs_response)
+      end
+
+      it "uses the template URL output as deployment_link" do
+        described_class.perform_now(project_item)
+
+        expect(project_item.reload).to have_attributes(
+          status_type: "ready",
+          deployment_link: "https://notebook.vm.fedcloud.eu/?token=secret"
+        )
+      end
+
+      it "marks infrastructure as running" do
+        described_class.perform_now(project_item)
+
+        expect(Infrastructure.last.state).to eq("running")
+      end
+    end
+
     context "when deployment is successful but outputs are empty" do
       let(:successful_im_response) { { success: true, data: { "uri" => deployment_uri } } }
       let(:outputs_response) { { success: true, data: { "outputs" => {} } } }
@@ -120,11 +156,10 @@ RSpec.describe DeployableService::DeploymentJob, type: :job do
         expect(infrastructure.state).to eq("configured")
       end
 
-      it "uses deployment URI as fallback for deployment_link" do
-        subject.perform(project_item)
+      it "leaves deployment_link blank and the project item status unchanged" do
+        described_class.perform_now(project_item)
 
-        project_item.reload
-        expect(project_item.deployment_link).to eq(deployment_uri)
+        expect(project_item.reload).to have_attributes(deployment_link: nil, status_type: "created")
       end
     end
 
@@ -146,11 +181,10 @@ RSpec.describe DeployableService::DeploymentJob, type: :job do
         expect(infrastructure.state).to eq("configured")
       end
 
-      it "uses deployment URI for deployment_link" do
-        subject.perform(project_item)
+      it "leaves deployment_link blank and the project item status unchanged" do
+        described_class.perform_now(project_item)
 
-        project_item.reload
-        expect(project_item.deployment_link).to eq(deployment_uri)
+        expect(project_item.reload).to have_attributes(deployment_link: nil, status_type: "created")
       end
     end
 

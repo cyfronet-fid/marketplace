@@ -135,7 +135,10 @@ RSpec.describe Infrastructure::StatePollingJob, type: :job do
     before { infrastructure.update_columns(last_state_check_at: 2.minutes.ago) }
 
     it "updates state from IM response" do
-      allow(im_client).to receive(:get_state).and_return({ success: true, data: { "state" => "configured" } })
+      allow(im_client).to receive_messages(
+        get_state: { success: true, data: { "state" => "configured" } },
+        get_outputs: { success: true, data: { "outputs" => {} } }
+      )
 
       described_class.perform_now(infrastructure.id)
 
@@ -196,6 +199,53 @@ RSpec.describe Infrastructure::StatePollingJob, type: :job do
 
       expect(project_item.reload.deployment_link).to eq("https://jupyter.example.com")
       expect(project_item.status).to include("Deployment ready")
+    end
+
+    context "with Jupyter Notebook outputs" do
+      before do
+        allow(im_client).to receive_messages(
+          get_state: { success: true, data: { "state" => "running" } },
+          get_outputs: { success: true, data: { "outputs" => { "jupyter_url" => "https://notebook.vm.fedcloud.eu/" } } }
+        )
+        described_class.perform_now(infrastructure.id)
+      end
+
+      it "updates project_item deployment_link and marks it ready" do
+        expect(project_item.reload).to have_attributes(
+          deployment_link: "https://notebook.vm.fedcloud.eu/",
+          status_type: "ready"
+        )
+      end
+    end
+
+    context "when infrastructure is configured" do
+      before do
+        allow(im_client).to receive_messages(
+          get_state: { success: true, data: { "state" => "configured" } },
+          get_outputs: { success: true, data: { "outputs" => { "jupyter_url" => "https://notebook.vm.fedcloud.eu/" } } }
+        )
+        described_class.perform_now(infrastructure.id)
+      end
+
+      it "fetches outputs and updates project_item deployment_link" do
+        expect(project_item.reload.deployment_link).to eq("https://notebook.vm.fedcloud.eu/")
+      end
+    end
+
+    context "when outputs already have a deployment URL" do
+      before do
+        infrastructure.update!(outputs: { "jupyter_url" => "https://existing.com" })
+        allow(im_client).to receive_messages(
+          get_state: { success: true, data: { "state" => "running" } },
+          get_outputs: nil
+        )
+      end
+
+      it "skips output fetch" do
+        described_class.perform_now(infrastructure.id)
+
+        expect(im_client).not_to have_received(:get_outputs)
+      end
     end
 
     it "does not update project_item if deployment_link matches" do
