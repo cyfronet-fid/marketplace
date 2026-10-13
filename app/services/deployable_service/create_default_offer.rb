@@ -62,7 +62,7 @@ class DeployableService::CreateDefaultOffer < DeployableService::ApplicationServ
     end
 
     inputs.map { |id, definition| parameter_from_tosca_input(id, definition || {}) }
-  rescue Psych::SyntaxError, URI::InvalidURIError, SocketError, SystemCallError, Net::HTTPError => e
+  rescue Psych::SyntaxError, URI::InvalidURIError, SocketError, SystemCallError, Faraday::Error => e
     Rails.logger.error "Failed to fetch default offer parameters from '#{url}': #{e.message}"
     nil
   end
