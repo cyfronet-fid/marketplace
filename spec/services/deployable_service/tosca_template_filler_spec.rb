@@ -302,9 +302,9 @@ RSpec.describe DeployableService::ToscaTemplateFiller, type: :service do
 
     it "propagates template fetch errors" do
       project_item
-      allow(DeployableService::FetchTemplate).to receive(:call).and_raise(Net::HTTPError.new("HTTP 404 Not Found", nil))
+      allow(DeployableService::FetchTemplate).to receive(:call).and_raise(Faraday::ResourceNotFound, "HTTP 404")
 
-      expect { described_class.call(project_item) }.to raise_error(Net::HTTPError, /HTTP 404/)
+      expect { described_class.call(project_item) }.to raise_error(Faraday::ResourceNotFound, /HTTP 404/)
     end
   end
 

@@ -190,6 +190,21 @@ RSpec.describe DeployableService::CreateDefaultOffer, backend: true do
         expect(Rails.logger).to have_received(:error).with(/Failed to fetch default offer parameters/).at_least(:once)
       end
     end
+
+    context "when the template cannot be fetched" do
+      let(:deployable_service) do
+        build(:deployable_service, url: "https://example.com/template.yml", resource_organisation: provider)
+      end
+
+      before do
+        compute_category
+        allow(DeployableService::FetchTemplate).to receive(:call).and_raise(Faraday::ConnectionFailed, "refused")
+      end
+
+      it "returns nil instead of raising" do
+        expect(described_class.call(deployable_service)).to be_nil
+      end
+    end
   end
 
   describe "integration with DeployableService" do
