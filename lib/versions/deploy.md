@@ -246,6 +246,45 @@ documents in Solr, on the host:
 curl -s 'http://127.0.0.1:8916/solr/pl_all_collection/select?q=*:*&rows=0'
 ```
 
+## Local deploy
+
+`deploy-local.sh` deploys one variant and, for pl and marketplace, its hub on
+a developer machine. The script uses the same compose files, builds the
+images from the working tree and sets localhost URLs. The script does not
+update the checkout, takes no lock and writes no state file. The header of
+the script describes the layout under `tmp/local-deploy`, the env files that
+the script writes on the first run and the ports: the slot of the variant
+gives the instance port 30NN, the hub port 32NN, the transform API port 81NN
+and the Solr port 89NN. On an arm64 host the script adds
+`docker-compose-local-arm64.yml`, which replaces the Elasticsearch image with
+the arm64 image of the development setup.
+
+```sh
+./lib/versions/deploy-local.sh pl                   # pl instance and pl hub
+./lib/versions/deploy-local.sh --no-hub whitelabel  # instance only
+./lib/versions/deploy-local.sh seed pl              # full load of Solr again
+./lib/versions/deploy-local.sh down pl              # remove both projects
+```
+
+Without a dump at `tmp/local-deploy/seed/<variant>/mp_db.sql` the database
+gets the schema of `db/schema.rb` and stays empty. A plain dump of the
+development database of the variant (`run_variant_env.sh` names the
+databases) fills the instance with the development data:
+
+```sh
+mkdir -p tmp/local-deploy/seed/pl
+docker exec <postgres container> pg_dump -U mp --no-owner --no-acl mp_pl_dump \
+  > tmp/local-deploy/seed/pl/mp_db.sql
+```
+
+The full load of Solr needs `MP_API_TOKEN` in `tmp/local-deploy/hubs/<variant>.env`,
+the token of a coordinator of the local instance. The script skips the load
+while the variable is empty; `seed <variant>` starts the load later. The
+script clones the hub checkouts once and does not update them: run `git pull`
+in `tmp/local-deploy/hubs/<name>` for a newer version. The `MP VERSION` line
+of the page source reads `mp-local-<variant> <commit>`, with `-dirty` when
+tracked files of the working tree are changed.
+
 ## GitHub Actions
 
 No workflow exists yet. The goal is a workflow that deploys the staging
