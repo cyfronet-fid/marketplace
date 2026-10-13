@@ -46,7 +46,11 @@ class Infrastructure::StatePollingJob < ApplicationJob
   end
 
   def fetch_outputs(infrastructure, im_client)
-    return if infrastructure.deployment_url.present?
+    if infrastructure.deployment_url.present?
+      # Outputs already stored - only reconcile the project item, without querying IM again
+      update_project_item_link(infrastructure, infrastructure.outputs)
+      return
+    end
 
     result = im_client.get_outputs(infrastructure.im_infrastructure_id)
     return unless result[:success] && result[:data]
