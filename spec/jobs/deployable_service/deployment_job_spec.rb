@@ -11,7 +11,7 @@ RSpec.describe DeployableService::DeploymentJob, type: :job do
   let(:offer) { create(:offer, service: nil, deployable_service: deployable_service, offer_category: service_category) }
   let(:project_item) { create(:project_item, project: project, offer: offer, status: "created", status_type: :created) }
 
-  let(:filled_template) { "filled tosca template content" }
+  let(:filled_template) { { "topology_template" => { "outputs" => { "dns_url" => {}, "jupyter_url" => {} } } }.to_yaml }
   let(:mock_im_client) { instance_double(InfrastructureManager::Client) }
   let(:infrastructure_id) { "inf-12345" }
   let(:deployment_uri) { "https://deploy.sandbox.eosc-beyond.eu/infrastructures/#{infrastructure_id}" }
@@ -135,6 +135,39 @@ RSpec.describe DeployableService::DeploymentJob, type: :job do
         described_class.perform_now(project_item)
 
         expect(Infrastructure.last.state).to eq("running")
+      end
+
+      it "records the TOSCA output names in declaration order" do
+        described_class.perform_now(project_item)
+
+        expect(Infrastructure.last.output_names).to eq(%w[dns_url jupyter_url])
+      end
+    end
+
+    context "when several outputs are URLs" do
+      let(:outputs_response) do
+        {
+          success: true,
+          data: {
+            "outputs" => {
+              "jupyter_url" => "https://10.0.0.1/",
+              "dns_url" => "https://notebook.vm.fedcloud.eu/"
+            }
+          }
+        }
+      end
+
+      before do
+        allow(mock_im_client).to receive_messages(
+          create_infrastructure: { success: true, data: { "uri" => deployment_uri } },
+          get_outputs: outputs_response
+        )
+      end
+
+      it "uses the first URL in template declaration order" do
+        described_class.perform_now(project_item)
+
+        expect(project_item.reload.deployment_link).to eq("https://notebook.vm.fedcloud.eu/")
       end
     end
 

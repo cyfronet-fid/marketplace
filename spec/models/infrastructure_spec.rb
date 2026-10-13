@@ -341,11 +341,12 @@ RSpec.describe Infrastructure, type: :model do
       expect(infrastructure.deployment_url).to eq("https://notebook.vm.fedcloud.eu/?token=secret")
     end
 
-    it "returns the first URL output in template order" do
+    it "returns the first URL output in template declaration order after reload" do
       infrastructure.update!(
-        outputs: { "jupyter_url" => "https://10.0.0.1/", "jupyter_url_dns" => "https://notebook.vm.fedcloud.eu/" }
+        outputs: { "jupyter_url" => "https://10.0.0.1/", "dns_url" => "https://notebook.vm.fedcloud.eu/" },
+        output_names: %w[jupyter_url dns_url]
       )
-      expect(infrastructure.deployment_url).to eq("https://10.0.0.1/")
+      expect(infrastructure.reload.deployment_url).to eq("https://10.0.0.1/")
     end
 
     it "skips outputs that are not http(s) URLs with a host" do

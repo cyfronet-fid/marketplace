@@ -10,6 +10,7 @@ class DeployableService::DeploymentJob < ApplicationJob
     infrastructure = create_infrastructure_record(project_item)
 
     filled_template = DeployableService::ToscaTemplateFiller.call(project_item)
+    record_output_names(infrastructure, filled_template)
     deploy_to_infrastructure_manager(project_item, infrastructure, filled_template)
   rescue StandardError => e
     Rails.logger.error "Deployment job failed for ProjectItem #{project_item.id}: #{e.class}: #{e.message}"
@@ -30,6 +31,11 @@ class DeployableService::DeploymentJob < ApplicationJob
       cloud_site: config.dig(:cloud_providers, :default),
       state: "pending"
     )
+  end
+
+  def record_output_names(infrastructure, filled_template)
+    output_names = YAML.safe_load(filled_template).dig("topology_template", "outputs")&.keys
+    infrastructure.update!(output_names: Array(output_names))
   end
 
   def deploy_to_infrastructure_manager(project_item, infrastructure, filled_template)
@@ -69,7 +75,7 @@ class DeployableService::DeploymentJob < ApplicationJob
   def fetch_outputs_and_complete(project_item, infrastructure, im_client, im_infrastructure_id)
     outputs_result = im_client.get_outputs(im_infrastructure_id)
     outputs = outputs_result[:data]["outputs"] if outputs_result[:success] && outputs_result[:data]
-    deployment_address = Infrastructure.deployment_url_from(outputs)
+    deployment_address = Infrastructure.deployment_url_from(outputs, infrastructure.output_names)
 
     if deployment_address.present?
       # We have a usable deployment URL - mark as running
