@@ -1,7 +1,8 @@
 #!/bin/bash
 # Deploys the discovery hubs of the pl and marketplace variants as separate
 # docker compose projects on the staging host, next to the marketplace
-# instances of lib/versions/deploy-multi.sh. Written for a cron job.
+# instances of lib/versions/deploy-multi.sh. The script runs by hand on the
+# host, from a GitHub Actions job or on a local machine.
 #
 #   variant      repository                                   compose file
 #   pl           github.com/cyfronet-fid/pl-discovery-hub     docker-compose-hub-pl.yml
@@ -38,11 +39,15 @@
 # `down <variant>` removes them.
 #
 # Usage:  deploy-hubs.sh [down|seed] [-f|--force] [variant ...]
-#   no variant           -> both hubs, cron mode: deploy when a commit changed
-#   -f / --force         -> deploy without the check for a new commit
+#   no variant           -> both hubs, only when a checkout, the hub compose
+#                           file or lib/versions/hub changed
+#   -f / --force         -> deploy without the check for a change
 #   with variants        -> only the given hubs, forced deploy
 #   seed [variant ...]   -> create the Solr collections (if missing) and run a
 #                           full load, for example after `down`
+# The script exits with status 1 when a hub failed, when `down` or `seed`
+# failed or when another hubs deploy holds the lock, and with status 0 when
+# there was nothing to do.
 # Examples:
 #   deploy-hubs.sh                  # both hubs, only when there are changes
 #   deploy-hubs.sh pl               # forced deploy of the pl hub
@@ -50,7 +55,7 @@
 #   deploy-hubs.sh down marketplace # remove the marketplace hub: containers, images, volumes
 set -uo pipefail
 
-# Cron has a minimal PATH.
+# A fixed PATH, independent of the caller (a shell, a workflow runner).
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 # The host directory is shared by a group.
 umask 002
@@ -155,7 +160,7 @@ export MP_APP_DIR="$APP"
 # Lock against a parallel run, on the hubs directory (shared by every user
 # who can read it); independent of the lock of deploy-multi.sh.
 exec 9<"$HUBS"
-flock -n 9 || { echo "Another hubs deploy is running, exiting"; exit 0; }
+flock -n 9 || { echo "Another hubs deploy is running, exiting"; exit 1; }
 
 cd "$APP" || exit 1
 
@@ -242,13 +247,22 @@ seed_hub() {
 # local images of the given hubs (default: both), and clears their state files.
 # ---------------------------------------------------------------------------
 if [ "$MODE" = "down" ]; then
+    failed=()
     for variant in "${VARIANTS[@]}"; do
         echo "=== [${variant} hub] down ==="
-        compose "$variant" down -v --remove-orphans --rmi local \
-            || echo "[${variant} hub] down FAILED"
+        if compose "$variant" down -v --remove-orphans --rmi local; then
+            echo "[${variant} hub] removed"
+        else
+            echo "[${variant} hub] down FAILED"
+            failed+=("$variant")
+        fi
         state="$HUBS/.last-deployed-${variant}"
         [ -f "$state" ] && : > "$state"
     done
+    if [ ${#failed[@]} -gt 0 ]; then
+        echo "Down finished with errors in: ${failed[*]}"
+        exit 1
+    fi
     echo "Down finished"
     exit 0
 fi
@@ -284,10 +298,12 @@ deploy_hub() {
     update_checkout transform-service || { echo "transform-service update failed"; return 1; }
     update_checkout "$commons" || { echo "$commons update failed"; return 1; }
     install_commons_environment "$variant" || { echo "copy of the commons environment failed"; return 1; }
-    # The state holds the three checkouts and the tree of lib/versions/hub
-    # (image recipes, nginx and the commons environment of this repository),
-    # so a change of any of them deploys in cron mode.
-    commit="$(git -C "$HUBS/$variant" rev-parse --verify HEAD) $(git -C "$HUBS/transform-service" rev-parse --verify HEAD) $(git -C "$HUBS/$commons" rev-parse --verify HEAD) $(git -C "$APP" rev-parse --verify HEAD:lib/versions/hub)"
+    # The state holds the three checkouts, the hub compose file and the tree
+    # of lib/versions/hub (image recipes, nginx and the commons environment of
+    # this repository), so a change of any of them deploys the hub again. The
+    # two hashes of this repository come from HEAD: a local change that is not
+    # committed needs --force or the variant argument.
+    commit="$(git -C "$HUBS/$variant" rev-parse --verify HEAD) $(git -C "$HUBS/transform-service" rev-parse --verify HEAD) $(git -C "$HUBS/$commons" rev-parse --verify HEAD) $(git -C "$APP" rev-parse --verify "HEAD:$compose_file") $(git -C "$APP" rev-parse --verify HEAD:lib/versions/hub)"
 
     if [ "$FORCE" = 0 ] && [ "$(cat "$state" 2>/dev/null)" = "$commit" ]; then
         echo "[${variant} hub] up-to-date at ${commit:0:8}"

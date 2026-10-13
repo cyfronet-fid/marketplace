@@ -1,10 +1,11 @@
 #!/bin/bash
 # Deploys the three deployment variants of this repository (marketplace, pl,
-# whitelabel) as separate docker compose projects on one host. Written for a
-# cron job on the staging host. The database and the media of a variant are
-# seeded from ROOT/seed/<variant> on the first deploy only. Later deploys keep
-# them (the web container runs the migrations), and `down <variant>` removes
-# them, so the next deploy seeds again.
+# whitelabel) as separate docker compose projects on one host. The script runs
+# by hand on the staging host, from a GitHub Actions job or on a local
+# machine. The database and the media of a variant are seeded from
+# ROOT/seed/<variant> on the first deploy only. Later deploys keep them (the
+# web container runs the migrations), and `down <variant>` removes them, so
+# the next deploy seeds again.
 #
 # Layout of the host directory (ROOT, the parent of this checkout). The script
 # runs from lib/versions of the checkout or from a copy at ROOT/deploy-multi.sh;
@@ -19,20 +20,30 @@
 # instances and of their discovery hubs, which the compose files read from
 # the environment, come from lib/versions/staging-urls.sh of the checkout.
 #
-# Usage:  deploy-multi.sh [down] [-f|--force] [variant ...]
-#   no variant           -> all variants (marketplace pl whitelabel), cron mode
+# Usage:  deploy-multi.sh [down] [-f|--force] [--ref <commit>|--no-update] [variant ...]
+#   no variant           -> all variants (marketplace pl whitelabel), only when
+#                           the commit differs from the last complete deploy
 #   -f / --force         -> deploy without the check for a new commit
+#   --ref <commit>       -> reset the checkout to this commit instead of the
+#                           upstream branch (a workflow gives the pushed commit)
+#   --no-update          -> no fetch and no reset, deploy the checkout as it is
+#                           (a local run with uncommitted changes)
 #   with variants        -> only the given variants, forced deploy (no commit
 #                           check) and no write of the state file
+# The script exits with status 1 when a variant failed, when `down` failed or
+# when another deploy holds the lock, and with status 0 when there was nothing
+# to do.
 # Examples:
 #   deploy-multi.sh                 # all variants, only when there are changes
 #   deploy-multi.sh --force         # all variants, always
+#   deploy-multi.sh --ref 1a2b3c4   # all variants at the commit, the workflow call
 #   deploy-multi.sh pl              # forced deploy of pl only, the database stays
+#   deploy-multi.sh --no-update pl  # pl from the checkout as it is, a local run
 #   deploy-multi.sh down pl         # remove pl: containers, images, database, media
 #   deploy-multi.sh down            # remove all variants
 set -uo pipefail
 
-# Cron has a minimal PATH.
+# A fixed PATH, independent of the caller (a shell, a workflow runner).
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 # The host directory is shared by a group: files written here (the checkout,
 # the state file) must stay writable for the other members.
@@ -70,24 +81,36 @@ APP_SERVICE="web"               # application service of the compose file, the m
 MEDIA_PATH="/marketplace/media" # path in the container
 # ---------------------------------------------------------------------------
 
+# The arguments are kept for the restart after a change of the script.
+ARGS=("$@")
 MODE="deploy"
 VARIANTS=()
 FORCE=0
 PARTIAL=0
-for arg in "$@"; do
-    case "$arg" in
+REF=""
+UPDATE=1
+while [ $# -gt 0 ]; do
+    case "$1" in
         down) MODE="down" ;;
         -f|--force) FORCE=1 ;;
+        --ref)
+            [ $# -ge 2 ] || { echo "--ref needs a commit"; exit 2; }
+            REF="$2"; shift ;;
+        --no-update) UPDATE=0 ;;
         -h|--help)
-            echo "Usage: $0 [down] [-f|--force] [${ALL_VARIANTS[*]}]"; exit 0 ;;
+            echo "Usage: $0 [down] [-f|--force] [--ref <commit>|--no-update] [${ALL_VARIANTS[*]}]"; exit 0 ;;
         *)
-            if [[ " ${ALL_VARIANTS[*]} " == *" $arg "* ]]; then
-                VARIANTS+=("$arg")
+            if [[ " ${ALL_VARIANTS[*]} " == *" $1 "* ]]; then
+                VARIANTS+=("$1")
             else
-                echo "Unknown argument: $arg (variants: ${ALL_VARIANTS[*]})"; exit 2
+                echo "Unknown argument: $1 (variants: ${ALL_VARIANTS[*]})"; exit 2
             fi ;;
     esac
+    shift
 done
+if [ -n "$REF" ] && [ "$UPDATE" = 0 ]; then
+    echo "--ref and --no-update exclude each other"; exit 2
+fi
 
 if [ ${#VARIANTS[@]} -eq 0 ]; then
     VARIANTS=("${ALL_VARIANTS[@]}")
@@ -100,7 +123,7 @@ fi
 # user who can read the directory shares the same lock, and no lock file has
 # to be writable by all of them.
 exec 9<"$APP"
-flock -n 9 || { echo "Another deploy is running, exiting"; exit 0; }
+flock -n 9 || { echo "Another deploy is running, exiting"; exit 1; }
 
 cd "$APP" || exit 1
 
@@ -108,44 +131,74 @@ cd "$APP" || exit 1
 # Mode: deploy-multi.sh down [variant ...]
 # Removes the containers, networks, volumes (the database included) and local
 # images of the given variants (default: all). Also clears the state file, so
-# the next run without an argument (for example from cron) does a full deploy
-# from zero.
+# the next run without an argument does a full deploy from zero.
 # ---------------------------------------------------------------------------
 if [ "$MODE" = "down" ]; then
     export COMMIT_HASH="none"
+    failed=()
     for variant in "${VARIANTS[@]}"; do
         export COMPOSE_PROJECT_NAME="${COMPOSE_PREFIX}-${variant}"
-        export_staging_urls "$variant" || continue
         echo "=== [${variant}] down ==="
-        /usr/bin/docker compose -f "docker-compose-${variant}.yml" \
-            down -v --remove-orphans --rmi local \
-            || echo "[${variant}] down FAILED"
+        if export_staging_urls "$variant" \
+            && /usr/bin/docker compose -f "docker-compose-${variant}.yml" \
+                down -v --remove-orphans --rmi local; then
+            echo "[${variant}] removed"
+        else
+            echo "[${variant}] down FAILED"
+            failed+=("$variant")
+        fi
     done
     # Truncated, not removed: a removal needs write permission on ROOT, a
     # truncation only on the file.
     [ -f "$STATE_FILE" ] && : > "$STATE_FILE"
+    if [ ${#failed[@]} -gt 0 ]; then
+        echo "Down finished with errors in: ${failed[*]}"
+        exit 1
+    fi
     echo "Down finished"
     exit 0
 fi
 
-# --- update the checkout to the remote branch ---
+# --- update the checkout ---
 # The checkout is a deploy artifact, not a workspace: local commits and local
 # changes to tracked files are discarded, untracked files (the env files)
-# stay. The comparison of commits does not depend on the language of git's
-# messages.
-git fetch -q origin || { echo "git fetch failed"; exit 1; }
-UPSTREAM=$(git rev-parse --abbrev-ref --symbolic-full-name '@{u}') || { echo "no upstream branch"; exit 1; }
-if [ "$(git rev-parse HEAD)" != "$(git rev-parse "$UPSTREAM")" ]; then
-    git reset -q --hard "$UPSTREAM" || { echo "git reset failed"; exit 1; }
-    echo "Updated to $UPSTREAM $(git rev-parse --short HEAD)"
+# stay. --no-update keeps the checkout as it is, for a local run. The target
+# is the upstream branch or the commit of --ref: a workflow deploys the commit
+# of its push, not the tip of the branch at the time of the run. The reset
+# moves the current branch to the target, so the next run without --ref
+# follows the upstream branch again.
+if [ "$UPDATE" = 1 ]; then
+    git fetch -q origin || { echo "git fetch failed"; exit 1; }
+    if [ -n "$REF" ]; then
+        TARGET=$(git rev-parse --verify --quiet "${REF}^{commit}") || { echo "unknown commit: $REF"; exit 1; }
+    else
+        TARGET=$(git rev-parse --abbrev-ref --symbolic-full-name '@{u}') || { echo "no upstream branch"; exit 1; }
+    fi
+    if [ "$(git rev-parse HEAD)" != "$(git rev-parse "$TARGET")" ]; then
+        # Bash reads the script file while the script runs, and staging-urls.sh
+        # is already sourced. After the reset the old body of the two files is
+        # in effect. When the reset changed one of them, the new script starts
+        # again with the same arguments: it finds the checkout at the target
+        # and continues. MP_DEPLOY_RESTARTED prevents a second restart.
+        script_files=(lib/versions/deploy-multi.sh lib/versions/staging-urls.sh)
+        old_scripts=$(git rev-parse "${script_files[@]/#/HEAD:}" 2>/dev/null)
+        git reset -q --hard "$TARGET" || { echo "git reset failed"; exit 1; }
+        echo "Updated to $TARGET $(git rev-parse --short HEAD)"
+        new_scripts=$(git rev-parse "${script_files[@]/#/HEAD:}" 2>/dev/null)
+        if [ "$old_scripts" != "$new_scripts" ] && [ -z "${MP_DEPLOY_RESTARTED:-}" ]; then
+            echo "The deploy script changed, starting the new version"
+            export MP_DEPLOY_RESTARTED=1
+            exec "$APP/lib/versions/deploy-multi.sh" "${ARGS[@]}"
+        fi
+    fi
 fi
 
 COMMIT_HASH=$(git rev-parse --verify HEAD)
 export COMMIT_HASH
 
 # The state file holds the commit of the last complete deploy. A failed variant
-# is thus deployed again at the next run from cron, although the repository is
-# already current.
+# is thus deployed again at the next run, although the repository is already
+# current.
 if [ "$FORCE" = 0 ] && [ "$(cat "$STATE_FILE" 2>/dev/null)" = "$COMMIT_HASH" ]; then
     echo "Up-to-date"
     exit 0

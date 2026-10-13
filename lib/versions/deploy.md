@@ -7,8 +7,10 @@ Two scripts in this directory deploy the staging environment on one host:
 - `deploy-hubs.sh` deploys the discovery hubs of pl and marketplace, each with
   its own Solr, transform service and EOSC commons.
 
-Both scripts are written for a cron job, but no cron entry exists. Run them by
-hand on the host.
+Run the scripts by hand on the host. The goal is a GitHub Actions workflow
+that runs the scripts after a push to the deploy branch. The workflow does not
+exist yet. The section "GitHub Actions" describes the plan and the open
+point.
 
 ## What runs on the host
 
@@ -83,7 +85,7 @@ ROOT/hubs/.last-deployed-<variant>        state of the last complete hub deploy
 5. Write `ROOT/hubs/<variant>.env` for pl and marketplace. The header of the
    hub compose file lists the variables: `MP_API_TOKEN` of a coordinator of
    the instance, `SECRET_KEY`, `OIDC_CLIENT_ID`, `OIDC_CLIENT_SECRET` and
-   `LOG_LEVEL`. The OIDC client is a client of the Keycloak realm `core` with
+   `LOG_LEVEL`. The OIDC client is a client of the Keycloak `core` of the host with
    the redirect URI `<hub URL>/api/web/auth/checkin`.
 
 ## Run
@@ -103,11 +105,17 @@ cd <ROOT>
 | `deploy-multi.sh`                | All variants, only when origin has a new commit.                             |
 | `deploy-multi.sh --force`        | All variants, always.                                                        |
 | `deploy-multi.sh pl`             | Only pl, always. The state file is not written.                              |
+| `deploy-multi.sh --ref <commit>` | All variants at the commit, only when the commit is not the last deployed.   |
+| `deploy-multi.sh --no-update pl` | Only pl, without fetch and reset: the checkout as it is, for a local run.    |
 | `deploy-multi.sh down pl`        | Remove pl: containers, images, database and media.                           |
-| `deploy-hubs.sh`                 | Both hubs, only when a checkout or `lib/versions/hub` changed.               |
+| `deploy-hubs.sh`                 | Both hubs, only when a checkout, the hub compose file or `lib/versions/hub` changed. |
 | `deploy-hubs.sh pl`              | Only the pl hub, always.                                                     |
 | `deploy-hubs.sh seed pl`         | Create the Solr collections of pl if absent, then start a full load.         |
 | `deploy-hubs.sh down pl`         | Remove the pl hub: containers, images, database, Solr and Zookeeper volumes. |
+
+The scripts exit with status 0 after a complete run and when there was
+nothing to do. A failed variant or hub, a failed `down` or `seed` and a
+parallel run exit with status 1.
 
 The scripts do not set the URLs by hand. `staging-urls.sh` exports
 `MP_ROOT_URL`, `MP_HUB_URL` and `MP_API_URL` of a variant before each compose
@@ -116,13 +124,18 @@ and a hub call also needs `MP_HUBS_DIR` and `MP_APP_DIR`.
 
 ## Steps of deploy-multi.sh
 
-1. Take a lock on the checkout. A parallel run exits at once.
-2. Fetch origin and reset the checkout to the upstream branch. Local commits
-   and local changes to tracked files are lost. Untracked files, for example
-   the env files, stay.
-3. Without `--force` and without a variant argument, compare HEAD with
+1. Take a lock on the checkout. A parallel run exits at once with status 1.
+2. Fetch origin and reset the checkout to the upstream branch, or to the
+   commit of `--ref`. Local commits and local changes to tracked files are
+   lost. Untracked files, for example the env files, stay. `--no-update`
+   skips this step.
+3. When the reset changed `deploy-multi.sh` or `staging-urls.sh`, start the
+   new script with the same arguments. Bash reads the script file while the
+   script runs, so the old body stays in effect without the restart. The new
+   script finds the checkout at the target and continues with step 4.
+4. Without `--force` and without a variant argument, compare HEAD with
    `.last-deployed-commit`. Exit when the two are equal.
-4. For each variant:
+5. For each variant:
    1. Export the URLs of the variant from `staging-urls.sh`.
    2. Make sure that the compose file and the dump exist.
    3. Build the image. The old containers still run.
@@ -133,15 +146,12 @@ and a hub call also needs `MP_HUBS_DIR` and `MP_APP_DIR`.
       in one transaction.
    7. Start all services. `web` runs the migrations and the Searchkick
       reindex, then Puma.
-5. Write HEAD to `.last-deployed-commit` when all variants were deployed.
-
-Bash keeps the old script body after step 2. When the new commit adds a
-variable to a compose file, the first run can fail at the build with
-"required variable ... is missing". The second run of the same command works.
+6. Write HEAD to `.last-deployed-commit` when all variants were deployed.
 
 ## Steps of deploy-hubs.sh
 
-1. Take a lock on the hubs directory.
+1. Take a lock on the hubs directory. A parallel run exits at once with
+   status 1.
 2. Export `MP_HUBS_DIR` and `MP_APP_DIR` for the compose files.
 3. For each hub:
    1. Make sure that the compose file and `hubs/<variant>.env` exist.
@@ -151,9 +161,10 @@ variable to a compose file, the first run can fail at the build with
    3. Copy the staging environment of the commons from
       `hub/commons/<variant>` into the commons checkout: `env/env.staging.js`
       and the `*.staging.*.json` configuration files.
-   4. Compute the state: the three commits and the tree hash of
-      `lib/versions/hub`. Without `--force`, skip the hub when the state equals
-      `.last-deployed-<variant>`.
+   4. Compute the state: the three commits, the blob hash of the hub compose
+      file and the tree hash of `lib/versions/hub`. The two hashes come from
+      HEAD, not from the working tree. Without `--force`, skip the hub when
+      the state equals `.last-deployed-<variant>`.
    5. Build the images:
       - `api` from the backend directory of the hub checkout.
       - `ui` from `hub/ui.Dockerfile`. The build argument
@@ -212,7 +223,7 @@ transform-worker ──> marketplace-NN /api/v1/ess ──> solr
   the same slot. Links to services without a staging instance keep their
   production URLs.
 - The hub api reads Solr with `COLLECTIONS_PREFIX` and its own database. Users
-  of the hub log in through the Keycloak realm `core` of the host.
+  of the hub log in through the Keycloak `core` of the host.
 - The transform service reads the marketplace API at `MP_API_ADDRESS`, which
   is `MP_API_URL` with the default `MP_ROOT_URL`. The instances do not push
   changes to the hubs: STOMP is off.
@@ -234,3 +245,32 @@ documents in Solr, on the host:
 ```sh
 curl -s 'http://127.0.0.1:8916/solr/pl_all_collection/select?q=*:*&rows=0'
 ```
+
+## GitHub Actions
+
+No workflow exists yet. The goal is a workflow that deploys the staging
+environment after a push to the deploy branch:
+
+- A push runs `deploy-multi.sh --ref <commit of the push>`, then
+  `deploy-hubs.sh`, on the host. The commit argument deploys the pushed
+  commit, not the tip of the branch at the time of the run. A manual run
+  (`workflow_dispatch`) takes the variants, the mode and the force flag as
+  inputs. A run of the commit that is already deployed prints "Up-to-date",
+  so a manual run of the same commit needs the force flag.
+- A push to a hub repository, to the transform service or to a commons
+  repository does not reach this repository. Those changes deploy with a
+  manual run, or with a `repository_dispatch` event from that repository.
+- The job runs on the host: with a self-hosted runner on the host, or with an
+  SSH connection from a hosted runner. The decision is open. A self-hosted
+  runner needs an outbound connection only. An SSH connection needs an inbound
+  port on the host and a key in the repository secrets. In both cases the user
+  of the job needs the group of ROOT and the group `docker`.
+- A `concurrency` group serializes the runs of the workflow. The lock of the
+  scripts stays as a safeguard: a parallel run fails.
+
+Open point before the workflow: ROOT is the parent of the checkout of the
+script. A checkout of `actions/checkout` on a self-hosted runner lies in the
+work directory of the runner, without the seed, the env files and the state
+file, and the compose files read `marketplace-<variant>.env` next to them.
+Either the workflow runs the scripts of the host checkout, or the scripts read
+ROOT from `MP_ROOT_DIR`.
