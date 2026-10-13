@@ -246,6 +246,12 @@ RSpec.describe Infrastructure::StatePollingJob, type: :job do
 
         expect(im_client).not_to have_received(:get_outputs)
       end
+
+      it "sets the stored URL on a project item that was not updated yet" do
+        described_class.perform_now(infrastructure.id)
+
+        expect(project_item.reload).to have_attributes(deployment_link: "https://existing.com", status_type: "ready")
+      end
     end
 
     it "does not update project_item if deployment_link matches" do
