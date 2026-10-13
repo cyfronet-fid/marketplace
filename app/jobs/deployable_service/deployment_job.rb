@@ -60,32 +60,24 @@ class DeployableService::DeploymentJob < ApplicationJob
     end
 
     # Fetch outputs and complete deployment
-    fetch_outputs_and_complete(project_item, infrastructure, im_client, im_infrastructure_id, deployment_uri)
+    fetch_outputs_and_complete(project_item, infrastructure, im_client, im_infrastructure_id)
   rescue StandardError => e
     Rails.logger.error "Infrastructure Manager deployment failed: #{e.class}: #{e.message}"
     handle_deployment_failure(project_item, infrastructure, e.message)
   end
 
-  def fetch_outputs_and_complete(project_item, infrastructure, im_client, im_infrastructure_id, deployment_uri)
+  def fetch_outputs_and_complete(project_item, infrastructure, im_client, im_infrastructure_id)
     outputs_result = im_client.get_outputs(im_infrastructure_id)
+    outputs = outputs_result[:data]["outputs"] if outputs_result[:success] && outputs_result[:data]
+    deployment_address = Infrastructure.deployment_url_from(outputs)
 
-    if outputs_result[:success] && outputs_result[:data]
-      outputs = outputs_result[:data]["outputs"] || {}
-      deployment_address = outputs["jupyterhub_url"]
-
-      if deployment_address.present?
-        # We have a usable deployment URL - mark as running
-        infrastructure.mark_running!(outputs)
-        handle_deployment_success(project_item, deployment_address)
-      else
-        # Outputs fetched but no URL yet - mark as configured, polling will update
-        infrastructure.mark_configured!
-        handle_deployment_success(project_item, deployment_uri)
-      end
+    if deployment_address.present?
+      # We have a usable deployment URL - mark as running
+      infrastructure.mark_running!(outputs)
+      handle_deployment_success(project_item, deployment_address)
     else
-      # Failed to fetch outputs - mark as configured, polling will update later
+      # No URL yet - mark as configured, polling will set the deployment link
       infrastructure.mark_configured!
-      handle_deployment_success(project_item, deployment_uri)
     end
   end
 

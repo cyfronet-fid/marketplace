@@ -335,5 +335,25 @@ RSpec.describe Infrastructure, type: :model do
       infrastructure.update!(outputs: {})
       expect(infrastructure.deployment_url).to be_nil
     end
+
+    it "returns the URL output of non-JupyterHub templates" do
+      infrastructure.update!(outputs: { "jupyter_url" => "https://notebook.vm.fedcloud.eu/?token=secret" })
+      expect(infrastructure.deployment_url).to eq("https://notebook.vm.fedcloud.eu/?token=secret")
+    end
+
+    it "returns the first URL output in template order" do
+      infrastructure.update!(
+        outputs: { "jupyter_url" => "https://10.0.0.1/", "jupyter_url_dns" => "https://notebook.vm.fedcloud.eu/" }
+      )
+      expect(infrastructure.deployment_url).to eq("https://10.0.0.1/")
+    end
+
+    it "skips outputs that are not http(s) URLs with a host" do
+      outputs = { "ip" => "10.0.0.1", "ssh" => "ssh://10.0.0.1", "unresolved" => "https:///", "bad" => "https://a b" }
+
+      expect(described_class.deployment_url_from(outputs.merge("url" => "https://public.example.com"))).to eq(
+        "https://public.example.com"
+      )
+    end
   end
 end
