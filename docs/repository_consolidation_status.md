@@ -420,6 +420,67 @@ ESS and ordering API:
   links), served as `/commons/` of the hub; the marketplace instance of
   the variant loads the same bundle (`EOSC_COMMONS_BASE_URL` in its compose
   file).
+- Synchronised with marketplace `de53196f` (4.7.1, merged), pl `b0e19549`
+  (4.6.1) and whitelabel `2536cd18` on 2026-10-14.
+  - pl #170 (provider onboarding emails ONB-01 to ONB-04): `MailerHelper`,
+    the logo and sender of `ApplicationMailer` (`MAIL_LOGO_PATH`; the pl
+    sender only under pl), the four `ProviderMailer` methods,
+    `ApprovalRequest::Review` with `Provider::Approve`, `Reject`,
+    `RequestChanges`, `SubmitForApproval` and `ApprovalDecision`,
+    `Message::Create` and `Provider::Unpublish::Cascading` enqueue after the
+    transaction commits. Under pl, `Backoffice::ApprovalRequestsController`
+    reviews through the service (a rejected provider stays unpublished, the
+    managers get an email) and `Backoffice::ProvidersController#create`
+    submits through `Provider::SubmitForApproval`; marketplace and
+    whitelabel keep the inline review that deletes a rejected provider, and
+    `Message#dispatch_email?` skips approval requests only under pl. The
+    response handling of the controller (flash on redirect, turbo stream
+    with a status) is shared. The templates (the mailer layout, the four
+    emails, `MP_HELPDESK_EMAIL`) are in `customization/pl`;
+    `spec/mailers/provider_spec.rb` prepends that directory.
+  - pl #178: admins and executives reach the backoffice under pl only
+    (`Backoffice::ApplicationPolicy#admin?`, `BackofficePolicy#show?`,
+    `ProviderPolicy`).
+  - pl #185 (catalogue API verification): `Catalogue::ServiceSerializer`
+    sends `{domain, subdomain}` and `{category, subcategory}` pairs and the
+    trl eid, `to` is `from + results`, `Importable#leaf_eids` accepts the
+    pairs of the registry, `normalizes :eid` on the vocabulary models with
+    the migration `20261009120000`; pid of services and catalogues is NOT
+    NULL and unique for every variant (migration `20261012090000`, schema
+    rule): `Service` and `Catalogue` generate a UUID for a blank pid,
+    `Datasource` takes the eid of its first source first; marketplace and
+    whitelabel keep the upstream eid as pid of an imported service. The
+    migration aborts on duplicate pids, so check the production databases
+    first (`SELECT pid FROM services GROUP BY pid HAVING COUNT(*) > 1`, the
+    same for catalogues). Verified on copies of the databases: the pl
+    testing dump migrated by pl-marketplace `development` first, the
+    marketplace staging dump (284 versions) and a database built from
+    whitelabel-marketplace's `db/schema.rb`; after this repository's
+    migrations none needs a migration and the models load, validate and
+    save. The whitelabel database showed the gap noted below in Next steps:
+    whitelabel created the deployable services tables, the polymorphic
+    offers, `project_items.deployment_link` and `infrastructures` under its
+    own migration versions, so those marketplace migrations (`20250806*`,
+    `20250911*`, `20251213211539`, `20251214*`, `20260429160000`) now
+    create, add and remove only what is missing or present
+    (`if_not_exists`, `if_exists`, `column_exists?`).
+  - pl #175 (roles on the profile page), #193 (no error dump in the Check-in
+    alert, every variant), the mailcatcher and `ROOT_URL` settings of
+    `development.rb`, and the `SMTP_*` names in `production.rb` (the
+    misspelled `SMPT_*` names stay as a fallback for the marketplace and
+    whitelabel deployments).
+  - whitelabel #290: `Federation::ServicesController` skips a result it
+    cannot map, tolerates nodes without pid or capabilities and answers 502,
+    503, 504 or 500 instead of 200 on a failure, for every variant
+    (`spec/requests/federation/services_spec.rb`).
+  - Specs: `spec/support/message_delivery.rb` (deliver_later ran deliver_now)
+    is gone, the specs assert `have_enqueued_mail`. Not ported: pl's
+    controller specs of the provider wizard (`finalize_provider_creation`,
+    the approval modal), which this branch does not have, and pl's
+    `.haml-lint.yml`.
+  - `customization/pl` got only the files pl changed or added since
+    `6e10e7f6`; `customization/whitelabel` keeps the `_buttons` fix of
+    #3811 (whitelabel changed no view).
 
 ## Next steps
 

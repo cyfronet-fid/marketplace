@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_09_17_100000) do
+ActiveRecord::Schema[7.2].define(version: 2026_10_12_090000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -188,7 +188,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_09_17_100000) do
 
   create_table "catalogues", force: :cascade do |t|
     t.string "name", null: false
-    t.string "pid"
+    t.string "pid", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "synchronized_at", precision: nil
@@ -211,6 +211,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_09_17_100000) do
     t.string "affiliations", default: [], array: true
     t.integer "upstream_id"
     t.text "scope", default: ""
+    t.index ["pid"], name: "index_catalogues_on_pid", unique: true
   end
 
   create_table "categories", force: :cascade do |t|
@@ -952,7 +953,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_09_17_100000) do
     t.string "order_url", default: "", null: false
     t.string "privacy_policy_url"
     t.datetime "synchronized_at", precision: nil
-    t.string "pid"
+    t.string "pid", null: false
     t.bigint "jurisdiction_id"
     t.bigint "datasource_classification_id"
     t.boolean "version_control"
@@ -967,7 +968,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_09_17_100000) do
     t.string "urls", default: [], array: true
     t.string "research_product_types", default: [], array: true
     t.index ["name"], name: "index_services_on_name"
-    t.index ["pid"], name: "index_services_on_pid"
+    t.index ["pid"], name: "index_services_on_pid", unique: true
     t.index ["resource_organisation_id"], name: "index_services_on_resource_organisation_id"
   end
 

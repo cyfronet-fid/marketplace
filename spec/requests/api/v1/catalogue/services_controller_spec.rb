@@ -68,7 +68,8 @@ RSpec.describe Api::V1::Catalogue::ServicesController, swagger_doc: "v1/catalogu
                    type: :integer
                  },
                  to: {
-                   type: :integer
+                   type: :integer,
+                   description: "Exclusive end index: from + number of returned results"
                  },
                  results: {
                    type: :array,
@@ -102,7 +103,7 @@ RSpec.describe Api::V1::Catalogue::ServicesController, swagger_doc: "v1/catalogu
           body = JSON.parse(response.body)
           expect(body["total"]).to eq(visible_services.count)
           expect(body["from"]).to eq(0)
-          expect(body["to"]).to eq(10)
+          expect(body["to"]).to eq(visible_services.count)
 
           ids = body["results"].map { |r| r["id"] }
           expect(ids).to match_array(visible_services.map(&:pid))
@@ -150,6 +151,31 @@ RSpec.describe Api::V1::Catalogue::ServicesController, swagger_doc: "v1/catalogu
 
           expected_ids = services.sort_by(&:name).map(&:pid).first(10)
           expect(data["results"].map { |r| r["id"] }).to eq(expected_ids)
+        end
+      end
+
+      response(200, "ends to at the last returned result", document: false) do
+        let!(:services) { create_list(:service, 9, status: :published) }
+
+        let(:from) { 5 }
+        let(:quantity) { 5 }
+
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data["results"].size).to eq(4)
+          expect(data["to"]).to eq(9)
+        end
+      end
+
+      response(200, "returns an empty page past the end", document: false) do
+        let!(:services) { create_list(:service, 3, status: :published) }
+
+        let(:from) { 1000 }
+
+        run_test! do |response|
+          data = JSON.parse(response.body)
+          expect(data["results"]).to eq([])
+          expect(data["to"]).to eq(1000)
         end
       end
     end

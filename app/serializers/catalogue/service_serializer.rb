@@ -37,17 +37,47 @@ class Catalogue::ServiceSerializer < ApplicationSerializer
 
   %i[target_users access_modes].each do |method|
     define_method method do
-      object.send(method)&.map(&:eid)
+      object.send(method)&.map(&:eid)&.compact_blank
     end
   end
 
-  %i[scientific_domains categories].each do |method|
-    define_method method do
-      object.send(method)&.map { |el| { method.to_s.singularize => el.eid } }
-    end
+  # The catalogue schema expects the vocabulary id (trl-9), not the label
+  def trls
+    object.trls.first&.eid.presence
+  end
+
+  # The catalogue schema expects {domain, subdomain} pairs, while services are linked to tree nodes
+  def scientific_domains
+    classification_pairs(object.scientific_domains, parent_depth: 0, keys: %i[scientific_domain scientific_subdomain])
+  end
+
+  # Category tree is supercategory > category > subcategory; the schema expects {category, subcategory} pairs
+  def categories
+    classification_pairs(object.categories, parent_depth: 1, keys: %i[category subcategory])
   end
 
   private
+
+  # Nodes above parent_depth (supercategories) have no place in the schema and are dropped.
+  # A parent-level node is emitted alone only when none of its children is linked.
+  # Nodes without an EOSC id (created locally in the backoffice) cannot be published.
+  def classification_pairs(nodes, parent_depth:, keys:)
+    parent_key, child_key = keys
+    nodes = nodes.to_a.select { |node| node.eid.present? }
+    return [] if nodes.empty?
+
+    children = nodes.select { |node| node.depth > parent_depth }
+    parents = nodes.first.class.where(id: children.map(&:parent_id)).index_by(&:id)
+
+    pairs =
+      children.filter_map do |node|
+        parent_eid = parents[node.parent_id]&.eid
+        { parent_key => parent_eid, child_key => node.eid } if parent_eid.present?
+      end
+    lone_parents = nodes.select { |node| node.depth == parent_depth && parents.exclude?(node.id) }
+
+    (pairs + lone_parents.map { |node| { parent_key => node.eid } }).uniq
+  end
 
   def camelize_keys_deep(value)
     case value

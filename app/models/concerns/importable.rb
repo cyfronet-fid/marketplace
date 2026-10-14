@@ -30,7 +30,7 @@ module Importable
   end
 
   def map_categories(categories)
-    Category.where(eid: categories)
+    Category.where(eid: leaf_eids(categories, "category", "subcategory"))
   end
 
   def map_nodes(nodes)
@@ -42,7 +42,13 @@ module Importable
   end
 
   def map_scientific_domains(domains)
-    domains.present? ? ScientificDomain.where(eid: domains) : []
+    domains.present? ? ScientificDomain.where(eid: leaf_eids(domains, "scientificDomain", "scientificSubdomain")) : []
+  end
+
+  # The registry sends {parent, child} pairs, e.g. {scientificDomain, scientificSubdomain};
+  # records are linked to the most specific node. Plain eid strings are passed through.
+  def leaf_eids(items, parent_key, child_key)
+    Array(items).map { |item| item.is_a?(Hash) ? item[child_key].presence || item[parent_key] : item }.compact_blank
   end
 
   def scientific_domain_eids(domains)

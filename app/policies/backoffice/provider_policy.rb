@@ -143,7 +143,7 @@ class Backoffice::ProviderPolicy < Backoffice::ApplicationPolicy
   end
 
   def edit_permissions?
-    !record.deleted? && (coordinator? || record&.owned_by?(user))
+    !record.deleted? && (admin? || coordinator? || record&.owned_by?(user))
   end
 
   def first_provider_registration?
@@ -151,6 +151,6 @@ class Backoffice::ProviderPolicy < Backoffice::ApplicationPolicy
   end
 
   def access?
-    coordinator? || (record&.owned_by?(user) && record&.approval_requests&.none?(&:published?))
+    admin? || coordinator? || (record&.owned_by?(user) && record&.approval_requests&.none?(&:published?))
   end
 end

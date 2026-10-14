@@ -62,6 +62,10 @@ class Catalogue < ApplicationRecord
   accepts_nested_attributes_for :link_multimedia_urls, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :sources, allow_destroy: true
 
+  before_validation :assign_generated_pid
+  before_save :assign_generated_pid
+
+  validates :pid, presence: true, uniqueness: true
   validates :name, presence: true
   validate :logo_variable, on: %i[create update]
 
@@ -121,5 +125,11 @@ class Catalogue < ApplicationRecord
 
   def legal_status=(status_id)
     self.legal_statuses = status_id.blank? ? [] : [Vocabulary.find(status_id)]
+  end
+
+  private
+
+  def assign_generated_pid
+    self.pid = SecureRandom.uuid if pid.blank?
   end
 end

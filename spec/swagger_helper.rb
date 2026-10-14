@@ -124,7 +124,8 @@ RSpec.configure do |config|
               },
               trl: {
                 type: :string,
-                nullable: true
+                nullable: true,
+                example: "trl-9"
               },
               userManual: {
                 type: :string,
@@ -206,7 +207,12 @@ RSpec.configure do |config|
                   type: :object,
                   properties: {
                     scientificDomain: {
-                      type: :string
+                      type: :string,
+                      example: "scientific_domain-natural_sciences"
+                    },
+                    scientificSubdomain: {
+                      type: :string,
+                      example: "scientific_subdomain-natural_sciences-biological_sciences"
                     }
                   },
                   required: ["scientificDomain"]
@@ -218,7 +224,12 @@ RSpec.configure do |config|
                   type: :object,
                   properties: {
                     category: {
-                      type: :string
+                      type: :string,
+                      example: "category-access_physical_and_einfrastructures-compute"
+                    },
+                    subcategory: {
+                      type: :string,
+                      example: "subcategory-access_physical_and_einfrastructures-compute-orchestration"
                     }
                   },
                   required: ["category"]

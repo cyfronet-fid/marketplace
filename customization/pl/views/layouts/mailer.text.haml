@@ -1,0 +1,17 @@
+= yield
+
+-# haml-lint:disable LineLength
+:plain
+  --
+  Best regards,
+  EOSC PL team
+
+  Please be informed that:
+  1. The controller of the personal data provided by you in e-mail correspondence is AGH University of Krakow, Stanisław Staszic University of Science and Technology, Krakow - Academic Computer Centre Cyfronet AGH, al. A. Mickiewicza 30, 30-059 Krakow, Poland, REGON: 00000157700022, NIP: 6750001923.
+  2. Your personal data are processed for the purpose of handling the matter referred to in your message, including any necessary contact with you.
+  3. You have the right to request access to your personal data from the Controller, as well as their rectification, erasure, portability, restriction of processing, withdrawal of consent to processing, and the right to object to processing - in the cases and under the conditions set out in the General Data Protection Regulation of 27 April 2016 (GDPR).
+  4. Detailed information on the processing of your personal data is available here:
+     https://www.cyfronet.pl/pl/documents/personal-data-protection
+- if content_for?(:recipient_reason)
+  \
+  != yield(:recipient_reason)

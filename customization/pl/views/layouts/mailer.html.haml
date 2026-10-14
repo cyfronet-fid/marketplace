@@ -1,110 +1,171 @@
-!!!
-%html
+-# haml-lint:disable InlineStyles, TagName
+!!! 5
+%html{ lang: "en",
+  xmlns: "http://www.w3.org/1999/xhtml",
+  "xmlns:v" => "urn:schemas-microsoft-com:vml",
+  "xmlns:o" => "urn:schemas-microsoft-com:office:office" }
   %head
-    %meta{ content: "text/html; charset=utf-8", "http-equiv" => "Content-Type" }
-    %link{ href: "https://fonts.googleapis.com/css?family=Ubuntu:400,700&subset=latin-ext", rel: "stylesheet" }
+    %meta{ charset: "utf-8" }
+    %meta{ name: "viewport", content: "width=device-width, initial-scale=1" }
+    %meta{ name: "x-apple-disable-message-reformatting" }
+    %meta{ "http-equiv" => "X-UA-Compatible", content: "IE=edge" }
+    %title= message.subject
+
+    /[if mso]
+      %xml
+        %o:OfficeDocumentSettings
+          %o:PixelsPerInch 96
+
+    %link{ href: "https://fonts.googleapis.com/css2?family=Quicksand:wght@600&family=Roboto:wght@400;500&display=swap",
+      rel: "stylesheet" }
+
     :css
-      body {
-        font-family: Ubuntu, Verdana, sans-serif;
-        background: #f8f9fa;
+      /* Clients that support <style>: web fonts + responsive rules.
+         Everything critical is also set inline, so the email still looks right without this block. */
+      @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@600&family=Roboto:wght@400;500&display=swap');
+
+      body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+      table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+      img { -ms-interpolation-mode: bicubic; border: 0; outline: none; text-decoration: none; }
+      a {
+        color: #257B85;
       }
 
-      .wrapper {
-        box-shadow: 0 20px 30px 0 rgba(0, 0, 0, 0.1);
-        background-color: #fff;
-        margin: 40px auto 20px;
-        max-width: 600px;
-        overflow: hidden;
-        padding: 30px 0
-      }
-      .maintable {
-        width: 95%;
-        margin: auto;
-      }
-      .service-table {
-        width: 70%;
-        margin: auto;
-      }
-      .content {
-        padding-top: 25px
+      a:hover {
+        color: #013D44 !important;
       }
 
-      td.footer {
-        font-family: Ubuntu, Verdana, sans-serif;
-        color: #233d4c;
-        font-weight: normal;
+      a:focus,
+      a:focus-visible {
+        color: #013D44 !important;
+        outline: 2px solid #013D44 !important;
+        outline-offset: 2px !important;
       }
 
-      .header {
-        padding-bottom: 30px;
+      .h1 { font-family: 'Quicksand', 'Trebuchet MS', Verdana, sans-serif !important; }
+      .body-text, .footer-text { font-family: 'Roboto', Arial, Helvetica, sans-serif !important; }
+
+      /* Button — default, hover, focus. Inline styles carry the default state for clients
+         that strip <style>; these rules add the interactive states where they are supported. */
+      .btn-a:hover {
+        background-color: #013D44 !important;
+        border-color: #013D44 !important;
+        color: #ffffff !important;
       }
-      .header td {
-        text-align: center;
-      }
-      h3 {
-        font-size: 20px;
-        padding: 0 15px 10px 0;
-        margin: 30px 0 15px 0;
-        font-weight: normal;
-      }
-      h5 {
-        font-size: 18px;
-        padding: 0;
-        margin: 0;
-        font-weight: normal;
-      }
-      p {
-        font-size: 15px;
-        padding: 0;
-        color: #233d4c;
-        line-height: 24px;
+      .btn-a:focus,
+      .btn-a:focus-visible {
+        background-color: #257B85 !important;
+        border-color: #257B85 !important;
+        color: #ffffff !important;
+        outline: 2px solid #013D44 !important;
+        outline-offset: 2px !important;
       }
 
-      .footer {
-        font-size: 14px;
-        border-top: 1px solid #D2D6D8;
-        padding-top: 30px;
+      @media only screen and (max-width: 620px) {
+        .gutter { padding-left: 20px !important; padding-right: 20px !important; }
+        .logo-img { width: 200px !important; height: auto !important; }
+        .h1 { font-size: 21px !important; line-height: 28px !important; }
+        .body-text { font-size: 16px !important; line-height: 25px !important; }
+        .footer-text { font-size: 13px !important; line-height: 20px !important; }
+        /* The button always hugs its label — never full width. */
+        .btn-a { display: inline-block !important; width: auto !important; }
+      }
+      @media (prefers-color-scheme: dark) {
+        /* Keep the brand look; do not let clients invert the text to unreadable colours. */
+        .bg { background-color: #ffffff !important; }
+        .h1 { color: #257B85 !important; }
+        .body-text, .footer-text { color: #363939 !important; }
       }
 
-      .font-bold {
-        font-weight: bold;
+      /* Elements used by existing email templates. */
+      .body-text p { margin: 0 0 16px 0; }
+      .center { text-align: center; }
+      .service-table { width: 70%; margin: 0 auto 16px auto; }
+      .body-text h2, .body-text h5 {
+        font-family: 'Quicksand', 'Trebuchet MS', Verdana, sans-serif; color: #257B85; font-weight: 600;
       }
+      .body-text h2 { font-size: 20px; line-height: 28px; margin: 0 0 16px 0; }
+      .body-text h5 { font-size: 18px; line-height: 24px; margin: 0; }
+      .body-text blockquote { margin: 0 0 16px 0; padding: 0 0 0 16px; border-left: 3px solid #257B85; }
 
-      .center {
-        text-align: center;
-      }
+  %body.bg{ style: "margin:0; padding:0; background-color:#ffffff;" }
+    - if content_for?(:preheader)
+      %div{ style: "display:none; font-size:1px; color:#ffffff; line-height:1px; max-height:0; max-width:0; " \
+        "opacity:0; overflow:hidden;" }
+        = yield(:preheader)
 
-      .button {
-        display: inline-block;
-        color: #fff;
-        background-color: #0c2bd5;
-        background-image: linear-gradient(135deg, #05cae7 0%, #0c2bd5 100%);
-        font-weight: 400;
-        text-align: center;
-        text-decoration: none;
-        vertical-align: middle;
-        border: 0 solid transparent;
-        padding: 0.375rem 2rem;
-        font-size: 1rem;
-        line-height: 1.5;
-        margin-bottom: 20px;
-        border-radius: 2rem;
-      }
+    %table{ email_table_attributes, style: "background-color:#ffffff;" }
+      %tr
+        %td{ align: "left", style: "padding:0;" }
+          %table.wrapper{ email_table_attributes, style: "width:100%; background-color:#ffffff;" }
+            -# Logo
+            - if logo_name
+              %tr
+                %td.gutter{ align: "left", style: "padding:32px 40px 24px 40px;" }
+                  = image_tag attachments[logo_name].url,
+                    class: "logo-img", width: 240, alt: "EOSC Node Poland", style: "display:block; width:240px; height:auto;"
 
+            -# Title
+            %tr
+              %td.gutter{ align: "left", style: "padding:#{logo_name ? 0 : 32}px 40px 16px 40px;" }
+                %h1.h1{ style: "margin:0; font-family:'Quicksand','Trebuchet MS',Verdana,sans-serif; font-size:24px; " \
+                  "line-height:32px; font-weight:600; color:#257B85;" }
+                  = message.subject
 
-  %body
+            -# Body
+            %tr
+              %td.gutter.body-text{ align: "left", style: "padding:0 40px 12px 40px; #{email_body_text_style}" }
+                = yield
 
-    .wrapper
+            -# Signature
+            %tr
+              %td.gutter.body-text{ align: "left", style: "padding:0 40px 32px 40px; #{email_body_text_style}" }
+                %p{ style: "margin:0;" } Best regards,
+                %p{ style: "margin:0;" } EOSC PL team
 
-      %table.maintable{ cellpadding: 0, cellspacing: 0 }
-        %tr.header
-          %td{ valign: "middle;" }
-            = image_tag("white-label-logo.png", width: 240, alt: "Your marketplace logo")
-        %tr
-          %td.content
-            = yield
-        %tr
-          %td.footer{ colspan: 2 }
-            Best regards,
-            %br
-            Operation Team
+            -# Separator
+            %tr
+              %td{ style: "padding:0;" }
+                %table{ email_table_attributes }
+                  %tr
+                    %td{ height: 1, style: "height:1px; line-height:1px; font-size:1px; background-color:#257B85;" } &nbsp;
+
+            -# Legal footer
+            %tr
+              %td.gutter.footer-text{ align: "left", style: "padding:24px 40px 32px 40px; #{email_footer_text_style}" }
+                %p{ style: "margin:0 0 12px 0;" } Please be informed that:
+                %table{ email_table_attributes }
+                  %tr
+                    %td{ width: 22, valign: "top", style: "width:22px; #{email_footer_text_style}" } 1.
+                    %td{ valign: "top", style: "#{email_footer_text_style} padding-bottom:8px;" }
+                      The controller of the personal data provided by you in e-mail correspondence is
+                      AGH University of Krakow, Stanisław Staszic University of Science and Technology, Krakow —
+                      Academic Computer Centre Cyfronet AGH, al. A. Mickiewicza 30, 30-059 Krakow, Poland,
+                      REGON: 00000157700022, NIP: 6750001923.
+                  %tr
+                    %td{ width: 22, valign: "top", style: "width:22px; #{email_footer_text_style}" } 2.
+                    %td{ valign: "top", style: "#{email_footer_text_style} padding-bottom:8px;" }
+                      Your personal data are processed for the purpose of handling the matter referred to in your
+                      message, including any necessary contact with you.
+                  %tr
+                    %td{ width: 22, valign: "top", style: "width:22px; #{email_footer_text_style}" } 3.
+                    %td{ valign: "top", style: "#{email_footer_text_style} padding-bottom:8px;" }
+                      You have the right to request access to your personal data from the Controller, as well as their
+                      rectification, erasure, portability, restriction of processing, withdrawal of consent to
+                      processing, and the right to object to processing — in the cases and under the conditions set out
+                      in the General Data Protection Regulation of 27 April 2016 (GDPR).
+                  %tr
+                    %td{ width: 22, valign: "top", style: "width:22px; #{email_footer_text_style}" } 4.
+                    %td{ valign: "top", style: email_footer_text_style }
+                      Detailed information on the processing of your personal data is available here:
+                      %a{ href: "https://www.cyfronet.pl/pl/documents/personal-data-protection",
+                        target: "_blank", style: "color:#257B85;" }
+                        https://www.cyfronet.pl/pl/documents/personal-data-protection
+
+          - if content_for?(:recipient_reason)
+            -# Why you got this email
+            %table.wrapper{ email_table_attributes, style: "width:100%;" }
+              %tr
+                %td.gutter.footer-text{ align: "left",
+                  style: "padding:16px 40px 8px 40px; #{email_font_style} font-size:12px; line-height:18px; color:#6b7070;" }
+                  = yield(:recipient_reason)

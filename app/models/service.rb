@@ -18,7 +18,9 @@ class Service < ApplicationRecord
   acts_as_taggable
 
   before_save { self.catalogue = Catalogue.find(catalogue_id) if catalogue_id.present? }
-  before_save { self.pid = upstream.eid if upstream_id.present? }
+  # pl generates a pid for every service without one (assign_generated_pid,
+  # pl-marketplace #185); marketplace and whitelabel keep the pid of the upstream source.
+  before_save { self.pid = upstream.eid if upstream_id.present? && !Mp::Variant.pl? }
 
   attr_accessor :catalogue_id, :monitoring_status, :bundle_id, :research_product_types_as_text
 
@@ -248,6 +250,7 @@ class Service < ApplicationRecord
   auto_strip_attributes :urls, nullify_array: false
   auto_strip_attributes :research_product_types, nullify_array: false
 
+  validates :pid, presence: true, uniqueness: true
   validates :type, presence: true
   validates :name, presence: true
   validates :description, presence: true
@@ -266,6 +269,8 @@ class Service < ApplicationRecord
   validates :nodes, length: { maximum: 1 }
   validate :public_contact_emails_format
 
+  before_validation :assign_generated_pid
+  before_save :assign_generated_pid
   after_save :set_first_category_as_main!, if: :main_category_missing?
 
   def self.popular(count)
@@ -348,6 +353,10 @@ class Service < ApplicationRecord
   end
 
   private
+
+  def assign_generated_pid
+    self.pid = SecureRandom.uuid if pid.blank?
+  end
 
   def _search_link(target_name, filter_query, default_path = nil)
     search_base_url = Mp::Application.config.search_service_base_url

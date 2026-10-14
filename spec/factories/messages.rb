@@ -17,6 +17,13 @@ FactoryBot.define do
       sequence(:author_email) { |n| "provider#{n}@provider.pl" }
     end
 
+    factory :coordinator_message do
+      author { association(:user, roles: [:coordinator]) }
+      author_role { "mediator" }
+      scope { "user_direct" }
+      messageable { association(:approval_request) }
+    end
+
     factory :mediator_message do
       sequence(:author) { nil }
       author_role { "mediator" }

@@ -53,7 +53,7 @@ class Api::V1::Catalogue::ServicesController < ActionController::API
     render json: {
       total: total,
       from: from,
-      to: from + quantity,
+      to: from + services.size,
       results: services.map { |s| { id: s.pid, service: Catalogue::ServiceSerializer.new(s).as_json } }
     }
   end

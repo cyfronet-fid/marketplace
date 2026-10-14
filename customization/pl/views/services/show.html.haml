@@ -1,7 +1,8 @@
-- content_for :title, @service.name
-- breadcrumb :service, @service
+:ruby
+  content_for :title, @service.name
+  breadcrumb :service, @service
+  id = h(@service&.main_source&.eid) || h(@service&.slug)
 
-- id = h(@service&.main_source&.eid) || h(@service&q.slug)
 :javascript
   _paq.push(['trackEvent', 'Service', 'Visit', '#{id}']);
 = render "services/errors", service: @service

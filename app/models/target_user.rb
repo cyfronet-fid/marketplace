@@ -10,6 +10,8 @@ class TargetUser < ApplicationRecord
   has_many :bundle_target_users
   has_many :bundles, through: :bundle_target_users
 
+  normalizes :eid, with: ->(eid) { eid.strip.presence }
+
   validates :name, uniqueness: true, presence: true
 
   def to_s

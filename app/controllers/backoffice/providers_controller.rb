@@ -74,7 +74,10 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
     authorize(@provider)
 
     if valid_model_and_urls? && @provider.save(validate: false)
-      if current_user.providers.published.empty? && !current_user.coordinator?
+      if Mp::Variant.pl?
+        # pl also mails the submitting user (pl-marketplace #170).
+        Provider::SubmitForApproval.call(@provider, current_user)
+      elsif current_user.providers.published.empty? && !current_user.coordinator?
         ar = ApprovalRequest.new(approvable: @provider, user: current_user, status: :published)
         ar.save
       end

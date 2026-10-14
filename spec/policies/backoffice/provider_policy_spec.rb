@@ -17,6 +17,11 @@ RSpec.describe Backoffice::ProviderPolicy, :backend do
     it "denies for other users" do
       expect(subject).not_to permit(create(:user), build(:provider))
     end
+
+    # Only pl opens the backoffice to admins (pl-marketplace #178).
+    it "denies for admin" do
+      expect(subject).not_to permit(build(:user, roles: [:admin]), build(:provider))
+    end
   end
 
   permissions :index?, :show? do
@@ -65,6 +70,29 @@ RSpec.describe Backoffice::ProviderPolicy, :backend do
       it "denies for other users" do
         expect(subject).not_to permit(create(:user), build(:provider))
       end
+    end
+
+    # pl-marketplace #178: admins manage every provider.
+    permissions :show?, :edit?, :update?, :destroy? do
+      it "grants access for admin" do
+        expect(subject).to permit(build(:user, roles: [:admin]), build(:provider))
+      end
+
+      it "denies admin for deleted provider" do
+        expect(subject).not_to permit(build(:user, roles: [:admin]), build(:provider, status: :deleted))
+      end
+    end
+
+    permissions :publish? do
+      it "grants access for admin" do
+        expect(subject).to permit(build(:user, roles: [:admin]), build(:provider, status: :unpublished))
+      end
+    end
+
+    it "resolves every provider for admin" do
+      providers = create_list(:provider, 2)
+
+      expect(described_class::Scope.new(create(:user, roles: [:admin]), Provider).resolve).to match_array(providers)
     end
 
     it "does not lock registry-imported providers to internal fields" do

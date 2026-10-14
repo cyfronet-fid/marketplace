@@ -27,7 +27,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
           session["token"] = auth["credentials"]["token"]
         end
       else
-        flash[:alert] = "Cannot register user #{@user.errors.inspect}"
+        flash[:alert] = "Cannot register user: incomplete data"
         session["devise.checkin_data"] = auth
         redirect_to root_url
       end
