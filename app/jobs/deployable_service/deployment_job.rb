@@ -34,8 +34,8 @@ class DeployableService::DeploymentJob < ApplicationJob
   end
 
   def record_output_names(infrastructure, filled_template)
-    output_names = YAML.safe_load(filled_template).dig("topology_template", "outputs")&.keys
-    infrastructure.update!(output_names: Array(output_names))
+    outputs = YAML.safe_load(filled_template).dig("topology_template", "outputs")
+    infrastructure.update!(output_names: outputs.is_a?(Hash) ? outputs.keys : [])
   end
 
   def deploy_to_infrastructure_manager(project_item, infrastructure, filled_template)
