@@ -534,6 +534,29 @@ Found by comparing `app/`, `lib/` and `config/` of this branch with
       `_financial`, `_location`, `_maturity`): views come from
       `CUSTOMIZATION_PATH` (see UI below); the policies and models already
       accept what they post.
+- [x] Backoffice forms under pl, found with `lib/versions/check_forms.sh`
+      (renders every backoffice form and re-submits the edit forms with
+      their own values; 110 form pages on the pl testing dump, 2026-10-14)
+      and fixed for every variant: `Backoffice::ProvidersController#update`
+      accepts a request without `provider` fields (pl's managers tab of a
+      provider without data administrators posts none) and applies the
+      catalogue status to a published provider of an unpublished catalogue
+      (the old `attrs.merge` raised NameError);
+      `Backoffice::Services::OffersController#transform_attributes` no
+      longer sets `service_id`, which offers lost with the polymorphic
+      orderable (every offer update and "Save as draft" raised);
+      `Backoffice::OtherSettings::VocabulariesController` and the new form
+      build the paths from the route of the type (`params[:type]`) instead
+      of the model name, which differs for the pl-only
+      `product_access_policies` (`Vocabulary::ResearchProductAccessPolicy`;
+      pl-marketplace has the same bug); the wizard saves a draft under pl
+      as under whitelabel, because both offer "Save as draft" in the exit
+      modal of their wizard. Request specs: `backoffice/providers_spec.rb`,
+      `backoffice/providers/wizard_spec.rb`, `backoffice/services/offers_spec.rb`,
+      `backoffice/other_settings/vocabularies_spec.rb` (the pl-only type runs
+      in the variants job). Data, not code: a service whose organisation is
+      deleted cannot be saved (the select has no option for it) and 14 of
+      the 16 catalogues of the dump fail pl's validations.
 - [ ] Exit modal (identical in pl and whitelabel:
       `common_parts/modals/_exit_modal`, richer `exit_controller.js`, used by
       provider steps and offer forms) and the PL provider approval and profile

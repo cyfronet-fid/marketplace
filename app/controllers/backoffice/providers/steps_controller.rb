@@ -47,7 +47,7 @@ class Backoffice::Providers::StepsController < Backoffice::ProvidersController
     provider_attrs["logo"] = logo(provider_attrs) if provider_attrs["logo"].present? && current_step_index.zero?
 
     if save_as_draft_requested?
-      return save_as_draft if Mp::Variant.whitelabel?
+      return save_as_draft if Mp::Variant.pl? || Mp::Variant.whitelabel?
 
       return head :unprocessable_content
     end
@@ -64,10 +64,11 @@ class Backoffice::Providers::StepsController < Backoffice::ProvidersController
 
   private
 
-  # whitelabel-only: lets a coordinator save an in-progress registration
+  # pl and whitelabel: lets a coordinator save an in-progress registration
   # mid-wizard instead of finishing all steps (ADR-0001 controller audit,
-  # backoffice-providers-steps-controller.md). Gated in the view by
-  # Mp::Variant.whitelabel? - the button only exists for that variant.
+  # backoffice-providers-steps-controller.md). Both variants offer the button
+  # in the exit modal of their wizard (common_parts/modals/_exit_modal of
+  # CUSTOMIZATION_PATH); marketplace has no such button.
   def save_as_draft
     Provider::Draft.new(@provider).call
     clear_session_data

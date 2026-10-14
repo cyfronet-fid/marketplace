@@ -101,11 +101,13 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
     provider_duplicate = @provider.dup
 
     # IMPORTANT!!! Writing upstream_id from params is required to inject context to policy
-    provider_duplicate.upstream_id = params[:provider][:upstream_id]
-    permitted_attributes = permitted_attributes(provider_duplicate)
+    provider_duplicate.upstream_id = params.dig(:provider, :upstream_id)
+    # pl's provider tabs post no provider fields when the tab has none to show,
+    # for example the managers tab of a provider without data administrators.
+    permitted_attributes = params[:provider].present? ? permitted_attributes(provider_duplicate) : {}
     if provider_duplicate.published? && provider_duplicate.catalogue.present? &&
        !provider_duplicate.catalogue.published?
-      attrs.merge(status: provider_duplicate&.catalogue&.status)
+      permitted_attributes = permitted_attributes.merge(status: provider_duplicate.catalogue.status)
     end
     @provider.assign_attributes(permitted_attributes)
 

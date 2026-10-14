@@ -51,6 +51,26 @@ RSpec.describe "Backoffice: manage providers", :backend do
       new_params.each { |key, value| expect(provider[key]).to eq(value) }
     end
 
+    # pl's provider tabs post no provider fields when the tab has none to
+    # show, for example the managers tab of a provider without data administrators.
+    describe "PATCH /backoffice/providers/:id without provider fields" do
+      let(:provider) { create(:provider, name: "Unchanged") }
+
+      before do
+        patch backoffice_provider_path(provider),
+              params: { tab: "managers" },
+              headers: { "Accept" => "text/vnd.turbo-stream.html" }
+      end
+
+      it "answers with the updated provider" do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it "keeps the provider as it is" do
+        expect(provider.reload.name).to eq("Unchanged")
+      end
+    end
+
     it "can save an in-progress wizard registration as a draft" do
       allow(Mp::Variant).to receive(:whitelabel?).and_return(true)
       provider = create(:provider, status: :unpublished)
@@ -64,8 +84,8 @@ RSpec.describe "Backoffice: manage providers", :backend do
       expect(session[provider.id.to_s.to_sym]).to be_nil
     end
 
-    it "does not expose save-as-draft behavior to another variant" do
-      allow(Mp::Variant).to receive(:whitelabel?).and_return(false)
+    it "does not expose save-as-draft behavior to marketplace" do
+      allow(Mp::Variant).to receive_messages(marketplace?: true, pl?: false, whitelabel?: false)
       provider = create(:provider, status: :unpublished)
       get edit_backoffice_provider_path(provider)
 
