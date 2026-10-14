@@ -2,6 +2,8 @@
 
 class DeployableService::FetchTemplate < ApplicationService
   MAX_REDIRECTS = 3
+  OPEN_TIMEOUT = 5
+  READ_TIMEOUT = 15
 
   def initialize(url)
     super()
@@ -15,22 +17,16 @@ class DeployableService::FetchTemplate < ApplicationService
   private
 
   def connection
-    Faraday.new do |f|
+    Faraday.new(request: { open_timeout: OPEN_TIMEOUT, timeout: READ_TIMEOUT }) do |f|
+      f.proxy = nil # ignore proxies from the environment - SsrfProtection rejects proxied requests
       f.response :raise_error # raise Faraday::Error on 4xx/5xx
-      f.response :follow_redirects, limit: MAX_REDIRECTS, callback: method(:validate_redirect)
-      f.adapter Faraday.default_adapter
+      f.response :follow_redirects, limit: MAX_REDIRECTS # before SsrfProtection, so every redirect hop is checked
+      f.use Faraday::SsrfProtection
+      f.adapter Faraday::SsrfProtection::NetHttp
     end
   end
 
   def raw_github_url(url)
     url.sub("github.com", "raw.githubusercontent.com").sub("/blob/", "/")
-  end
-
-  # Only absolute http(s) URLs with a host are followed
-  def validate_redirect(_response_env, redirect_env)
-    target = redirect_env[:url]
-    return if target.is_a?(URI::HTTP) && target.host.present?
-
-    raise Faraday::Error, "Invalid redirect location: #{target}"
   end
 end
