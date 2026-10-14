@@ -25,8 +25,8 @@
 # Exit status is 1 when any page answers 4xx/5xx. The exception and backtrace
 # of a 500 are in log/development.log of the application.
 BASE=${1:-http://localhost:5000}
-# One session file per port, so the old and the consolidated application can be tested side by side.
-JAR=${TMPDIR:-/tmp}/mp_smoke_cookies_${${BASE##*:}%%/*}.txt
+# One session file per host and port (shared with check_forms.sh), so the old and the consolidated application can be tested side by side.
+JAR=${TMPDIR:-/tmp}/mp_smoke_cookies_${${${BASE#*://}%%/*}//:/_}.txt
 FAILED=0
 
 code() {
@@ -53,18 +53,8 @@ if [ "$(code /)" = 000 ]; then
   exit 1
 fi
 
-if [ "$(code /profile)" != 200 ]; then
-  EMAIL="smoke.$(date +%s)@example.org"
-  curl -s -o /dev/null -c "$JAR" -G "$BASE/users/login" \
-    --data-urlencode "email=$EMAIL" --data-urlencode "password=irrelevant" \
-    --data-urlencode "first_name=Smoke" --data-urlencode "last_name=Test" \
-    --data-urlencode "roles[]=admin" --data-urlencode "roles[]=coordinator" --data-urlencode "roles[]=executive"
-  if [ "$(code /profile)" != 200 ]; then
-    echo "login through the auth mock failed (is AUTH_MOCK=true set?)"
-    exit 1
-  fi
-  echo "logged in as $EMAIL"
-fi
+source "${0:A:h}/smoke_login.sh"
+smoke_login "$BASE" "$JAR" || exit 1
 
 SERVICE=$(first_link /services /services)
 PROVIDER=$(first_link /providers /providers)
