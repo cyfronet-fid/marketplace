@@ -205,6 +205,21 @@ RSpec.describe DeployableService::CreateDefaultOffer, backend: true do
         expect(described_class.call(deployable_service)).to be_nil
       end
     end
+
+    context "when the template URL resolves to an internal address" do
+      let(:deployable_service) do
+        build(:deployable_service, url: "https://internal.example/template.yml", resource_organisation: provider)
+      end
+
+      before do
+        compute_category
+        allow(Addrinfo).to receive(:getaddrinfo).and_return([Addrinfo.tcp("10.0.0.5", 443)])
+      end
+
+      it "returns nil without requesting the template" do
+        expect(described_class.call(deployable_service)).to be_nil
+      end
+    end
   end
 
   describe "integration with DeployableService" do
