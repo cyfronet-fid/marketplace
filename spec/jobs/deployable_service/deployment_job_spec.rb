@@ -144,6 +144,26 @@ RSpec.describe DeployableService::DeploymentJob, type: :job do
       end
     end
 
+    context "when the template outputs are not a mapping" do
+      let(:filled_template) { { "topology_template" => { "outputs" => ["jupyter_url"] } }.to_yaml }
+
+      before do
+        allow(mock_im_client).to receive_messages(
+          create_infrastructure: { success: true, data: { "uri" => deployment_uri } },
+          get_outputs: { success: true, data: { "outputs" => { "jupyter_url" => "https://notebook.vm.fedcloud.eu/" } } }
+        )
+        described_class.perform_now(project_item)
+      end
+
+      it "records no output names" do
+        expect(Infrastructure.last.output_names).to eq([])
+      end
+
+      it "still completes the deployment" do
+        expect(project_item.reload.deployment_link).to eq("https://notebook.vm.fedcloud.eu/")
+      end
+    end
+
     context "when several outputs are URLs" do
       let(:outputs_response) do
         {
