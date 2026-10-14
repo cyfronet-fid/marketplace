@@ -2,6 +2,7 @@
 
 class DeployableService::FetchTemplate < ApplicationService
   MAX_REDIRECTS = 3
+  MAX_SIZE = 1.megabyte
   OPEN_TIMEOUT = 5
   READ_TIMEOUT = 15
 
@@ -22,6 +23,7 @@ class DeployableService::FetchTemplate < ApplicationService
       f.response :raise_error # raise Faraday::Error on 4xx/5xx
       f.response :follow_redirects, limit: MAX_REDIRECTS # before SsrfProtection, so every redirect hop is checked
       f.use Faraday::SsrfProtection
+      f.use Faraday::ResponseSizeLimit, max: MAX_SIZE
       f.adapter Faraday::SsrfProtection::NetHttp
     end
   end

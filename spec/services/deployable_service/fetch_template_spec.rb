@@ -62,6 +62,12 @@ RSpec.describe DeployableService::FetchTemplate, type: :service do
     expect { described_class.call(raw_url) }.to raise_error(FaradayMiddleware::RedirectLimitReached)
   end
 
+  it "raises an error when the template is too large" do
+    stub_request(:get, raw_url).to_return(status: 200, body: "a" * (described_class::MAX_SIZE + 1))
+
+    expect { described_class.call(raw_url) }.to raise_error(Faraday::ResponseSizeLimit::Error)
+  end
+
   describe "SSRF protection" do
     # No stub exists for blocked destinations, so reaching one would raise a WebMock error instead
     [
