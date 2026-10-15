@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Faraday::ResponseSizeLimit do
+RSpec.describe HttpMiddleware::ResponseSizeLimit do
   let(:url) { "https://example.com/template.yml" }
   let(:connection) do
     Faraday.new do |f|
