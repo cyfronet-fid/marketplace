@@ -316,24 +316,22 @@ RSpec.describe Infrastructure, type: :model do
   end
 
   describe "#deployment_url" do
-    it "returns jupyterhub_url from outputs" do
+    it "returns the URL from the stored outputs" do
       infrastructure.update!(outputs: { "jupyterhub_url" => "https://jupyter.example.com" })
       expect(infrastructure.deployment_url).to eq("https://jupyter.example.com")
-    end
-
-    it "falls back to public_url" do
-      infrastructure.update!(outputs: { "public_url" => "https://public.example.com" })
-      expect(infrastructure.deployment_url).to eq("https://public.example.com")
-    end
-
-    it "falls back to endpoint" do
-      infrastructure.update!(outputs: { "endpoint" => "https://endpoint.example.com" })
-      expect(infrastructure.deployment_url).to eq("https://endpoint.example.com")
     end
 
     it "returns nil when no URL outputs" do
       infrastructure.update!(outputs: {})
       expect(infrastructure.deployment_url).to be_nil
+    end
+
+    it "returns the first URL output in template declaration order after reload" do
+      infrastructure.update!(
+        outputs: { "notebook_url" => "https://notebook.vm.fedcloud.eu/", "admin_url" => "https://admin.example.com/" },
+        output_names: %w[admin_url notebook_url]
+      )
+      expect(infrastructure.reload.deployment_url).to eq("https://admin.example.com/")
     end
   end
 end

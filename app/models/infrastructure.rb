@@ -69,7 +69,6 @@ class Infrastructure < ApplicationRecord
   end
 
   def deployment_url
-    # outputs defaults to {} but add nil safety for defensive coding
-    outputs&.dig("jupyterhub_url") || outputs&.dig("public_url") || outputs&.dig("endpoint")
+    Infrastructure::SelectDeploymentUrl.call(outputs, output_names)
   end
 end
