@@ -37,12 +37,23 @@ class Infrastructure::StatePollingJob < ApplicationJob
       im_state = result[:data]&.dig("state")
       infrastructure.update_state_from_im!(im_state)
 
-      # If running or configured, also fetch outputs
-      fetch_outputs(infrastructure, im_client) if infrastructure.running? || infrastructure.configured?
+      if infrastructure.failed?
+        reject_project_item(infrastructure)
+      elsif infrastructure.running? || infrastructure.configured?
+        # If running or configured, also fetch outputs
+        fetch_outputs(infrastructure, im_client)
+      end
     else
       Rails.logger.warn "Could not get state for Infrastructure #{infrastructure.id}: #{result[:error]}"
       infrastructure.update_columns(last_state_check_at: Time.current)
     end
+  end
+
+  def reject_project_item(infrastructure)
+    infrastructure.project_item.update!(
+      status: "Deployment failed: #{infrastructure.last_error}. Please contact support.",
+      status_type: :rejected
+    )
   end
 
   def fetch_outputs(infrastructure, im_client)
