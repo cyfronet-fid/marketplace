@@ -246,6 +246,80 @@ documents in Solr, on the host:
 curl -s 'http://127.0.0.1:8916/solr/pl_all_collection/select?q=*:*&rows=0'
 ```
 
+## Error tracking
+
+GlitchTip receives the exceptions of the instances through the Sentry gems of
+the production group. `docker-compose-glitchtip.yml` runs it on the staging
+host as the compose project `glitchtip`: the application in one container,
+Postgres 18 and Valkey, the UI on the localhost port 3300 for the reverse
+proxy. Production instances send to the same server.
+
+Setup, once:
+
+1. Write `glitchtip.env` next to the compose file. The header of the compose
+   file lists the variables: the secret key, the database password, the
+   public URL, the SMTP URL and the sender address.
+2. Start the project. The migrations run at the start.
+
+   ```sh
+   cd <ROOT>/marketplace
+   docker compose -p glitchtip -f docker-compose-glitchtip.yml up -d
+   ```
+
+3. Add the vhost `glitchtip.DOMAIN` with TLS to the reverse proxy, to the
+   port 3300.
+4. Open the UI and register the first user. Then set
+   `ENABLE_USER_REGISTRATION=False` in `glitchtip.env` and run the `up -d`
+   command again.
+5. Create an organization and one project per variant. The settings of a
+   project show its DSN.
+6. Add two lines to `marketplace-<variant>.env` of each instance, then deploy
+   the variant. A production deployment sets the same two variables with
+   `SENTRY_ENVIRONMENT=production`.
+
+   ```
+   SENTRY_DSN=<DSN of the project>
+   SENTRY_ENVIRONMENT=staging
+   ```
+
+`config/initializers/sentry.rb` activates in every environment that sets
+`SENTRY_DSN`, so a local run can report to a local GlitchTip too (set
+`SENTRY_ENVIRONMENT`, default: the Rails environment). `SENTRY_TRACES_SAMPLE_RATE` (default 0.01) is the share of the
+requests stored as transactions. The release of an event is the commit of
+`MP_VERSION`, so the UI can filter the events of one deploy. The instance
+also sends logs to the Logs view of the project: one entry per request, job
+and mail. `SENTRY_LOGS=false` turns the logs off; `SENTRY_LOGS_QUERIES=true`
+adds one entry per SQL query, which are many. Test from the web container of
+an instance:
+
+```sh
+docker compose -p mp-multitenancy-pl exec web bin/rails runner \
+  'Sentry.capture_message("test"); Sentry.logger.info("test log"); Sentry.get_current_client.flush'
+```
+
+Upgrade with `docker compose -p glitchtip -f docker-compose-glitchtip.yml pull`,
+then the `up -d` command. The data lives in the volumes `glitchtip_pg-data`
+and `glitchtip_uploads`. The retention is 90 days (`GLITCHTIP_RETENTION_DAYS`).
+
+## Logs across deploys
+
+A deploy recreates the containers, and Docker removes the log of a removed
+container. On the staging host the deploy scripts add
+`lib/versions/docker-compose-instance-journald.yml` and
+`lib/versions/docker-compose-hub-journald.yml` to the compose calls: the
+containers log to the journal of the host, which keeps the logs across
+deploys with the retention of journald (`journalctl --disk-usage`,
+`SystemMaxUse` in `journald.conf`). `docker compose logs` still works. Docker
+Desktop has no journald, so the local deploy keeps the default driver. Before
+the first deploy with the driver, make sure that the docker daemon of the
+host accepts it: `docker run --rm --log-driver journald alpine true`. Rails
+writes to stdout, so all lines have the priority info; filter by text:
+
+```sh
+journalctl CONTAINER_NAME=mp-multitenancy-pl-web-1 --since yesterday -o cat | grep -A 25 FATAL
+journalctl CONTAINER_NAME=mp-multitenancy-pl-worker-1 --since "2 days ago" -o cat
+```
+
 ## Local deploy
 
 `deploy-local.sh` deploys one variant and, for pl and marketplace, its hub on

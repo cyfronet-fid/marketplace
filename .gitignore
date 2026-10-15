@@ -56,4 +56,6 @@ yarn-debug.log*
 !.env.test
 # Runtime settings of the docker-compose-<variant>.yml deployments
 /marketplace-*.env
+# Settings and secrets of docker-compose-glitchtip.yml
+/glitchtip.env
 master.key

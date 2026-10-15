@@ -80,6 +80,8 @@ ALL_VARIANTS=(pl marketplace)
 COMPOSE_PREFIX="mp-multitenancy"
 DC=/usr/bin/docker
 SEED_TIMEOUT=300            # seconds to wait for Solr and for the collections
+# The containers log to the journal of the host (see the file).
+LOGGING_FILE="lib/versions/docker-compose-hub-journald.yml"
 
 repository_url() {
     case "$1" in
@@ -169,7 +171,7 @@ compose() {
     shift
     export_staging_urls "$variant" || return 1
     COMPOSE_PROJECT_NAME="${COMPOSE_PREFIX}-${variant}-hub" \
-        "$DC" compose -f "docker-compose-hub-${variant}.yml" "$@"
+        "$DC" compose -f "docker-compose-hub-${variant}.yml" -f "$LOGGING_FILE" "$@"
 }
 
 # Clones the repository on the first run, then resets the checkout to the

@@ -230,11 +230,15 @@ com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.j
 
 ## Sentry integration
 
-In production environment sentry integration can be turned on. To do so create
-dedicated [env variable](#environmental-variables)
-`SENTRY_DSN` with details how to connect to sentry server.
+The Sentry integration is on in every environment that sets the
+[env variable](#environmental-variables) `SENTRY_DSN` with details how to
+connect to the Sentry server (a GlitchTip server accepts the same DSN).
 Sentry environment can also be configured using `SENTRY_ENVIRONMENT`
-[env variable](#environmental-variables) (default set to `production`).
+[env variable](#environmental-variables) (default: the Rails environment).
+The application also sends logs (one entry per request, job and mail) to the
+Logs view of the Sentry server; `SENTRY_LOGS=false` turns them off and
+`SENTRY_LOGS_QUERIES=true` adds the SQL queries. `SENTRY_TRACES_SAMPLE_RATE`
+(default `0.01`) is the share of the requests stored as transactions.
 
 ## Environmental variables
 

@@ -69,6 +69,8 @@ date
 # ---------------------------------------------------------------------------
 ALL_VARIANTS=(marketplace pl whitelabel)
 COMPOSE_PREFIX="mp-multitenancy"
+# The containers log to the journal of the host (see the file).
+LOGGING_FILE="lib/versions/docker-compose-instance-journald.yml"
 
 SEED_DIR="${MP_SEED_DIR:-$ROOT/seed}"
 STATE_FILE="$ROOT/.last-deployed-commit"
@@ -140,7 +142,7 @@ if [ "$MODE" = "down" ]; then
         export COMPOSE_PROJECT_NAME="${COMPOSE_PREFIX}-${variant}"
         echo "=== [${variant}] down ==="
         if export_staging_urls "$variant" \
-            && /usr/bin/docker compose -f "docker-compose-${variant}.yml" \
+            && /usr/bin/docker compose -f "docker-compose-${variant}.yml" -f "$LOGGING_FILE" \
                 down -v --remove-orphans --rmi local; then
             echo "[${variant}] removed"
         else
@@ -214,7 +216,7 @@ deploy_variant() {
     local dump=""
 
     export COMPOSE_PROJECT_NAME="${COMPOSE_PREFIX}-${variant}"
-    local dc=("$DC" compose -f "$compose_file")
+    local dc=("$DC" compose -f "$compose_file" -f "$LOGGING_FILE")
 
     # --- validation BEFORE any removal ---
     export_staging_urls "$variant" || return 1

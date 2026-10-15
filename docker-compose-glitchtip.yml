@@ -1,0 +1,56 @@
+# GlitchTip, the error tracker of the deployments (lib/versions/deploy.md,
+# section "Error tracking"). The instances send their exceptions through the
+# Sentry gems with SENTRY_DSN. One compose project on the staging host:
+#   docker compose -p glitchtip -f docker-compose-glitchtip.yml up -d
+# The settings and the secrets come from glitchtip.env next to this file
+# (not in git):
+#   SECRET_KEY                 openssl rand -hex 32
+#   POSTGRES_PASSWORD          password of the database user glitchtip
+#   DATABASE_URL               postgres://glitchtip:<POSTGRES_PASSWORD>@postgres:5432/glitchtip
+#   GLITCHTIP_DOMAIN           public URL of the UI, for example https://glitchtip.<domain>
+#   ALLOWED_HOSTS              host name of the UI, for example glitchtip.<domain>
+#   EMAIL_URL                  smtp://<user>:<password>@<host>:<port>, or consolemail://
+#   DEFAULT_FROM_EMAIL         sender of the alert mails
+#   ENABLE_USER_REGISTRATION   True until the first user exists, then False
+# Optional: GLITCHTIP_RETENTION_DAYS (default 90), GLITCHTIP_ENABLE_UPTIME and
+# GLITCHTIP_ENABLE_LOGS (default True). The UI port is bound to localhost for
+# the reverse proxy of the host; MP_GLITCHTIP_PORT replaces 3300.
+services:
+  postgres:
+    image: postgres:18
+    restart: always
+    env_file:
+      - glitchtip.env
+    environment:
+      POSTGRES_USER: glitchtip
+      POSTGRES_DB: glitchtip
+    volumes:
+      - pg-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U glitchtip -d glitchtip"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  valkey:
+    image: valkey/valkey:9
+    restart: always
+  web:
+    image: glitchtip/glitchtip:6
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+      valkey:
+        condition: service_started
+    env_file:
+      - glitchtip.env
+    environment:
+      SERVER_ROLE: all_in_one
+      VALKEY_URL: redis://valkey:6379
+    ports:
+      - 127.0.0.1:${MP_GLITCHTIP_PORT:-3300}:8000
+    volumes:
+      - uploads:/code/uploads
+volumes:
+  pg-data:
+  uploads:

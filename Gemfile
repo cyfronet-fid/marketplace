@@ -136,11 +136,11 @@ end
 
 gem "tzinfo-data", platforms: %i[windows jruby]
 
-group :production do
-  gem "sentry-ruby", "~> 5.28"
-  gem "sentry-rails", "~> 5.28"
-  gem "sentry-sidekiq", "~> 5.28"
-end
+# Error tracking and logs; active in every environment that sets SENTRY_DSN
+# (config/initializers/sentry.rb).
+gem "sentry-ruby", "~> 5.28"
+gem "sentry-rails", "~> 5.28"
+gem "sentry-sidekiq", "~> 5.28"
 
 gem "faraday", "~> 1.10"
 gem "faraday_middleware"
