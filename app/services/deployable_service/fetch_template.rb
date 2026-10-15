@@ -22,9 +22,9 @@ class DeployableService::FetchTemplate < ApplicationService
       f.proxy = nil # ignore proxies from the environment - SsrfProtection rejects proxied requests
       f.response :raise_error # raise Faraday::Error on 4xx/5xx
       f.response :follow_redirects, limit: MAX_REDIRECTS # before SsrfProtection, so every redirect hop is checked
-      f.use Faraday::SsrfProtection
-      f.use Faraday::ResponseSizeLimit, max: MAX_SIZE
-      f.adapter Faraday::SsrfProtection::NetHttp
+      f.use HttpMiddleware::SsrfProtection
+      f.use HttpMiddleware::ResponseSizeLimit, max: MAX_SIZE
+      f.adapter HttpMiddleware::SsrfProtection::NetHttp
     end
   end
 

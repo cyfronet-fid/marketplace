@@ -5,10 +5,10 @@
 #
 #   Faraday.new do |f|
 #     f.response :follow_redirects # before ResponseSizeLimit, so each redirect hop gets its own buffer
-#     f.use Faraday::ResponseSizeLimit, max: 1.megabyte
+#     f.use HttpMiddleware::ResponseSizeLimit, max: 1.megabyte
 #     f.adapter :net_http
 #   end
-class Faraday::ResponseSizeLimit < Faraday::Middleware
+class HttpMiddleware::ResponseSizeLimit < Faraday::Middleware
   class Error < Faraday::Error
   end
 

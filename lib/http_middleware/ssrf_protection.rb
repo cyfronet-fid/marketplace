@@ -4,14 +4,14 @@
 #
 #   Faraday.new do |f|
 #     f.response :follow_redirects # before SsrfProtection, so every redirect hop is checked
-#     f.use Faraday::SsrfProtection
-#     f.adapter Faraday::SsrfProtection::NetHttp
+#     f.use HttpMiddleware::SsrfProtection
+#     f.adapter HttpMiddleware::SsrfProtection::NetHttp
 #   end
 #
 # Only http(s) URLs without credentials whose host resolves exclusively to public addresses are allowed.
-# The checked address is passed to Faraday::SsrfProtection::NetHttp, which connects to it instead of resolving
+# The checked address is passed to HttpMiddleware::SsrfProtection::NetHttp, which connects to it instead of resolving
 # the host again, so a second DNS answer (DNS rebinding) cannot point the request at an internal address.
-class Faraday::SsrfProtection < Faraday::Middleware
+class HttpMiddleware::SsrfProtection < Faraday::Middleware
   class Error < Faraday::Error
   end
 

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Faraday::SsrfProtection do
+RSpec.describe HttpMiddleware::SsrfProtection do
   let(:middleware) { described_class.new(->(env) { env }) }
   let(:url) { "https://templates.example/t.yml" }
   let(:env) { Faraday::Env.from(url: URI.parse(url), request: Faraday::RequestOptions.new) }
@@ -104,7 +104,7 @@ RSpec.describe Faraday::SsrfProtection do
     end
   end
 
-  describe Faraday::SsrfProtection::NetHttp do
+  describe HttpMiddleware::SsrfProtection::NetHttp do
     let(:adapter) { described_class.new(->(env) { env }) }
 
     it "connects to the address checked by the middleware" do
@@ -115,7 +115,7 @@ RSpec.describe Faraday::SsrfProtection do
 
     it "refuses requests that were not checked by the middleware" do
       expect { adapter.net_http_connection(env) }.to raise_error(
-        Faraday::SsrfProtection::Error,
+        HttpMiddleware::SsrfProtection::Error,
         "Request was not checked by SsrfProtection"
       )
     end
@@ -123,7 +123,7 @@ RSpec.describe Faraday::SsrfProtection do
     it "refuses an address checked for a different host" do
       env.request.context = { ssrf_target: { host: "other.example", address: "93.184.215.14" } }
 
-      expect { adapter.net_http_connection(env) }.to raise_error(Faraday::SsrfProtection::Error)
+      expect { adapter.net_http_connection(env) }.to raise_error(HttpMiddleware::SsrfProtection::Error)
     end
   end
 end
