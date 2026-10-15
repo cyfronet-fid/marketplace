@@ -68,21 +68,7 @@ class Infrastructure < ApplicationRecord
     %w[creating configured running failed].include?(state) && im_infrastructure_id.present?
   end
 
-  # TOSCA templates name their access URL output differently (jupyterhub_url, jupyter_url, ...),
-  # so the first output that is an http(s) URL is used, in template declaration order (output_names),
-  # as the jsonb outputs column does not keep the key order
-  def self.deployment_url_from(outputs, output_names = [])
-    return if outputs.blank?
-
-    outputs.values_at(*(output_names | outputs.keys)).find do |value|
-      uri = URI.parse(value.to_s)
-      uri.is_a?(URI::HTTP) && uri.host.present?
-    rescue URI::InvalidURIError
-      false
-    end
-  end
-
   def deployment_url
-    self.class.deployment_url_from(outputs, output_names)
+    Infrastructure::SelectDeploymentUrl.call(outputs, output_names)
   end
 end

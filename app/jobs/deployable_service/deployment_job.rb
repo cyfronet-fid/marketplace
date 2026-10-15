@@ -75,7 +75,7 @@ class DeployableService::DeploymentJob < ApplicationJob
   def fetch_outputs_and_complete(project_item, infrastructure, im_client, im_infrastructure_id)
     outputs_result = im_client.get_outputs(im_infrastructure_id)
     outputs = outputs_result[:data]["outputs"] if outputs_result[:success] && outputs_result[:data]
-    deployment_address = Infrastructure.deployment_url_from(outputs, infrastructure.output_names)
+    deployment_address = Infrastructure::SelectDeploymentUrl.call(outputs, infrastructure.output_names)
 
     if deployment_address.present?
       # We have a usable deployment URL - mark as running

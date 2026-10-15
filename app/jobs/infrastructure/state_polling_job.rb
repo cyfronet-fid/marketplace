@@ -63,7 +63,7 @@ class Infrastructure::StatePollingJob < ApplicationJob
   end
 
   def update_project_item_link(infrastructure, outputs)
-    deployment_url = Infrastructure.deployment_url_from(outputs, infrastructure.output_names)
+    deployment_url = Infrastructure::SelectDeploymentUrl.call(outputs, infrastructure.output_names)
     return if deployment_url.blank?
 
     project_item = infrastructure.project_item
