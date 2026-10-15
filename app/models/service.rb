@@ -267,6 +267,15 @@ class Service < ApplicationRecord
   validate :logo_variable, on: %i[create update]
   validates :trls, length: { maximum: 1 }
   validates :nodes, length: { maximum: 1 }
+  # pl-marketplace needs at least one geographical availability. The other
+  # variants dropped the field with the V6 profile and do not validate it.
+  validates :geographical_availabilities,
+            presence: true,
+            length: {
+              minimum: 1,
+              message: "are required. Please add at least one"
+            },
+            if: -> { Mp::Variant.pl? }
   validate :public_contact_emails_format
 
   before_validation :assign_generated_pid

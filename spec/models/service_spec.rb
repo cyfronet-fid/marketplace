@@ -10,6 +10,47 @@ RSpec.describe Service, :backend do
   it { is_expected.to validate_presence_of(:description) }
   it { is_expected.to validate_presence_of(:rating) }
 
+  describe "geographical availabilities" do
+    context "under pl without a country" do
+      let(:service) { build(:service, geographical_availabilities: []) }
+
+      before do
+        allow(Mp::Variant).to receive(:pl?).and_return(true)
+        service.valid?
+      end
+
+      it "needs at least one country" do
+        expect(service.errors[:geographical_availabilities]).to include("are required. Please add at least one")
+      end
+    end
+
+    context "under pl with a country" do
+      let(:service) { build(:service, geographical_availabilities: ["PL"]) }
+
+      before do
+        allow(Mp::Variant).to receive(:pl?).and_return(true)
+        service.valid?
+      end
+
+      it "accepts the service" do
+        expect(service.errors[:geographical_availabilities]).to be_empty
+      end
+    end
+
+    context "under marketplace without a country" do
+      let(:service) { build(:service, geographical_availabilities: []) }
+
+      before do
+        allow(Mp::Variant).to receive(:pl?).and_return(false)
+        service.valid?
+      end
+
+      it "accepts the service" do
+        expect(service.errors[:geographical_availabilities]).to be_empty
+      end
+    end
+  end
+
   it { is_expected.to have_many(:providers) }
   it { is_expected.to have_many(:categorizations).dependent(:destroy) }
   it { is_expected.to have_many(:offers).dependent(:restrict_with_error) }
