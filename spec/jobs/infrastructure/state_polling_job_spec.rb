@@ -154,6 +154,14 @@ RSpec.describe Infrastructure::StatePollingJob, type: :job do
       expect(infrastructure.last_error).to include("failed")
     end
 
+    it "rejects the project item when IM reports a failure" do
+      allow(im_client).to receive(:get_state).and_return({ success: true, data: { "state" => "unconfigured" } })
+
+      described_class.perform_now(infrastructure.id)
+
+      expect(project_item.reload).to have_attributes(status_type: "rejected", status: /reported state: unconfigured/)
+    end
+
     it "logs warning when get_state fails" do
       allow(im_client).to receive(:get_state).and_return({ success: false, error: "Connection timeout" })
 
