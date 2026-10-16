@@ -1,0 +1,13 @@
+.col-md-6
+  .card.m-0.mb-5
+    .row
+      %p
+        = image_tag "icon-tag.png", class: "icon-tag"
+        You can add a dedicated offer for
+        %br your service
+
+    .card-button.text-center
+      %label
+        = link_to new_offer_link(service, controller_name), "data-e2e": "add-new-offer-btn" do
+          %span.btn.btn-outline-secondary.font-weight-bold
+            = _("Add new offer")

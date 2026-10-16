@@ -25,23 +25,23 @@ class Api::V1::Resources::OffersController < Api::V1::ApplicationController
     @offer = Offer::Create.call(offer_temp)
 
     if @offer.persisted?
-      render json: Api::V1::OfferSerializer.new(@offer).as_json, status: 201
+      render json: Api::V1::OfferSerializer.new(@offer).as_json, status: :created
     else
-      render json: { error: @offer.errors.to_hash }, status: 400
+      render json: { error: @offer.errors.to_hash }, status: :bad_request
     end
   end
 
   def update
     template = transform(permitted_attributes(@offer))
     if Offer::Update.call(@offer, template)
-      render json: Api::V1::OfferSerializer.new(@offer).as_json, status: 200
+      render json: Api::V1::OfferSerializer.new(@offer).as_json, status: :ok
     else
-      render json: { error: @offer.errors.to_hash }, status: 400
+      render json: { error: @offer.errors.to_hash }, status: :bad_request
     end
   end
 
   def destroy
-    Offer::Destroy.call(@offer)
+    Offer::Removal.call(@offer)
     head :ok
   end
 
@@ -60,7 +60,7 @@ class Api::V1::Resources::OffersController < Api::V1::ApplicationController
   def find_service
     @service = Service.friendly.find(params[:resource_id])
   rescue ActiveRecord::RecordNotFound
-    render json: { error: "Resource not found" }, status: 404
+    render json: { error: "Resource not found" }, status: :not_found
   end
 
   def load_offers
@@ -71,13 +71,13 @@ class Api::V1::Resources::OffersController < Api::V1::ApplicationController
     @offer = @service.offers.find_by!(iid: params[:id])
     authorize @offer
   rescue ActiveRecord::RecordNotFound
-    render json: { error: "Offer not found" }, status: 404
+    render json: { error: "Offer not found" }, status: :not_found
   end
 
   def validate_payload
     JSON::Validator.validate!(payload_schema_path, request.body.read)
   rescue JSON::Schema::ValidationError => e
-    render json: { error: e.message }, status: 400
+    render json: { error: e.message }, status: :bad_request
   end
 
   def payload_schema_path
@@ -88,10 +88,10 @@ class Api::V1::Resources::OffersController < Api::V1::ApplicationController
   def load_bundled_offers
     main_bundles = params[:main_bundles]
     unless main_bundles.nil?
-      if main_bundles.is_a?(Hash) && main_bundles.values.flatten.all? { |o| o.is_a?(String) }
-        @bundled_offers = main_bundles.map { |val| Offer.find_by_slug_iid!(val) }
+      if main_bundles.is_a?(Hash) && main_bundles.values.flatten.all?(String)
+        @bundled_offers = main_bundles.map { |val| Offer.find_by!(slug_iid: val) }
       else
-        render json: { error: "Bundled offers must be an array of strings" }, status: 400
+        render json: { error: "Bundled offers must be an array of strings" }, status: :bad_request
       end
     end
   rescue ActiveRecord::RecordNotFound => e
@@ -105,7 +105,7 @@ class Api::V1::Resources::OffersController < Api::V1::ApplicationController
         Sentry.capture_message("Unexpected exception message '#{e.message}'")
         "Not found"
       end
-    render json: { error: msg }, status: 400
+    render json: { error: msg }, status: :bad_request
   end
 
   def mapped_bundled_offers

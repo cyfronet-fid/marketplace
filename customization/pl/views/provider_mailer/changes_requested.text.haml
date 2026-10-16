@@ -1,0 +1,11 @@
+Our team reviewed #{@provider.name} and needs this:
+\
+!= @message_text
+\
+Please reply to the email below with the requested information, or contact us through the Helpdesk using the link below.
+\
+You can update the provider in Marketplace: #{backoffice_provider_url(@provider)}
+\
+Contact Helpdesk: mailto:#{@helpdesk_email}
+
+- content_for :recipient_reason, "You received this email because you are a provider manager in EOSC PL."

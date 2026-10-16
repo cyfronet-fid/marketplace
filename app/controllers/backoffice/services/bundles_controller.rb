@@ -10,6 +10,8 @@ class Backoffice::Services::BundlesController < Backoffice::ApplicationControlle
     authorize(@bundle)
   end
 
+  def edit; end
+
   def create
     template = bundle_template
     authorize(template)
@@ -19,11 +21,8 @@ class Backoffice::Services::BundlesController < Backoffice::ApplicationControlle
     if @bundle.persisted?
       redirect_to backoffice_service_offers_path(@service), notice: "New bundle created successfully"
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
-  end
-
-  def edit
   end
 
   def update
@@ -31,16 +30,16 @@ class Backoffice::Services::BundlesController < Backoffice::ApplicationControlle
     if Bundle::Update.call(@bundle, transform_attributes(template))
       redirect_to backoffice_service_offers_path(@service), notice: "Bundle updated successfully"
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 
   def destroy
     @bundle = @service.bundles.find_by(iid: params[:id])
-    if Bundle::Destroy.call(@bundle)
+    if Bundle::Removal.call(@bundle)
       redirect_to backoffice_service_path(@service), notice: "Bundle removed successfully"
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 

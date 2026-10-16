@@ -1,0 +1,9 @@
+= turbo_stream.replace(@provider,
+                       partial: "components/presentable/list_component/item_details",
+                       locals: { obj: @provider, klass: "provider" })
+= turbo_stream.replace("status_management", Presentable::StatusActionsComponent.new(object: @provider,
+      publish: policy([:backoffice, @provider]).publish?,
+      suspend: policy([:backoffice, @provider]).suspend?,
+      unpublish: policy([:backoffice, @provider]).unpublish?,
+      destroy: policy([:backoffice, @provider]).destroy?))
+= render_turbo_stream_flash

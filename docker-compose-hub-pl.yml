@@ -1,0 +1,192 @@
+# Staging deployment of the pl discovery hub (pl-discovery-hub) next to the pl
+# marketplace instance, see lib/versions/deploy-hubs.sh. MP_HUBS_DIR is the
+# directory of the hub checkouts and env files and MP_APP_DIR this checkout
+# (the script exports both; set them for a manual `docker compose` call):
+#   $MP_HUBS_DIR/pl                 pl-discovery-hub (api, ui, solr configsets)
+#   $MP_HUBS_DIR/transform-service  transform-service (fills Solr from the
+#                                   marketplace API)
+#   $MP_HUBS_DIR/eosc-pl-common     EOSC commons of eosc.pl (header, footer)
+#   $MP_HUBS_DIR/pl.env             settings and secrets of the hub
+# The UI image comes from lib/versions/hub/ui.Dockerfile and the commons
+# image from lib/versions/hub/commons.Dockerfile with the staging environment
+# of lib/versions/hub/commons/pl, which the script copies into the checkout.
+#
+# Solr runs in this project with the configsets of the hub checkout, which
+# are uploaded at the first start; the collections (prefix pl_) are created
+# and filled by the transform service: `deploy-hubs.sh seed pl`, run by the
+# script after the first deploy. The settings below follow the services of
+# this file. The env file supplies: MP_API_TOKEN (token of a coordinator of
+# the pl instance, for /api/v1/ess), SECRET_KEY, OIDC_CLIENT_ID and
+# OIDC_CLIENT_SECRET (a client of the Keycloak realm below with the redirect
+# URI MP_HUB_URL/api/web/auth/checkin), LOG_LEVEL.
+# The public URLs come from the environment of the compose call, without a
+# trailing slash (the deploy script exports the staging values from
+# lib/versions/staging-urls.sh; a local deploy sets them in the shell or in
+# .env next to this file):
+#   MP_HUB_URL   URL of this hub
+#   MP_ROOT_URL  URL of the pl marketplace instance (docker-compose-pl.yml)
+#   MP_API_URL   URL of the marketplace instance for the transform service,
+#                from inside its container; the default is MP_ROOT_URL, a
+#                local deploy sets http://host.docker.internal:<port>
+# Ports: 3216 (UI) is the ProxyPass target of the Apache vhost of the staging
+# hub; 8116 (transform api) and 8916 (Solr) are bound to localhost for the
+# script and for an ssh tunnel.
+x-keycloak: &keycloak
+  OIDC_HOST: https://keycloak.docker-fid.grid.cyf-kr.edu.pl
+  OIDC_ISSUER: https://keycloak.docker-fid.grid.cyf-kr.edu.pl/realms/core
+  OIDC_AUTH_ENDPOINT: /realms/core/protocol/openid-connect/auth
+  OIDC_TOKEN_ENDPOINT: /realms/core/protocol/openid-connect/token
+  OIDC_USERINFO_ENDPOINT: /realms/core/protocol/openid-connect/userinfo
+  OIDC_JWKS_ENDPOINT: /realms/core/protocol/openid-connect/certs
+  OIDC_AAI_NEW_API: "false"
+
+# The transform service: SOLR_URL needs the trailing slash; the configset
+# names are those of the hub checkout (solr/config/configsets); the
+# collections prefix equals COLLECTIONS_PREFIX of the api and
+# NG_COLLECTIONS_PREFIX of the UI.
+x-transform: &transform
+  build:
+    context: ${MP_HUBS_DIR}/transform-service
+  restart: always
+  environment:
+    ENVIRONMENT: production
+    SOLR_URL: http://solr:8983/
+    SOLR_COLS_PREFIX: pl_
+    SOLR_ALL_COL_CONF: pl_oag_v10
+    SOLR_PROVIDER_CONF: provider_v102
+    SOLR_CAT_CONF: catalogue_v101
+    SOLR_ORG_CONF: organisation_v106
+    SOLR_PROJ_CONF: project_v102
+    MP_API_ADDRESS: ${MP_API_URL:-${MP_ROOT_URL:?the URL of the pl marketplace instance}}
+    # The guideline, training and adapter endpoints of the providers component
+    # are public; with PC_AUTH the service needs a refresh token for them.
+    PC_AUTH: "False"
+    STOMP_SUBSCRIPTION: "False"
+    CELERY_BROKER_URL: redis://redis:6379/0
+    CELERY_RESULT_BACKEND: redis://redis:6379/0
+  env_file:
+    - ${MP_HUBS_DIR}/pl.env
+  # For a local deploy: the marketplace instance published on the host.
+  extra_hosts:
+    - host.docker.internal:host-gateway
+  depends_on:
+    - redis
+    - solr
+
+services:
+  db:
+    image: postgres:14
+    restart: always
+    environment:
+      POSTGRES_DB: ${DB_POSTGRES_DB:-ess}
+      POSTGRES_USER: ${DB_POSTGRES_USER:-ess}
+      POSTGRES_PASSWORD: ${DB_POSTGRES_PASSWORD:-ess}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U ess -d ess"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+      start_period: 5s
+  zoo:
+    image: zookeeper:3.7
+    restart: always
+    volumes:
+      - zoo-data:/data
+      - zoo-datalog:/datalog
+    environment:
+      ZOO_4LW_COMMANDS_WHITELIST: mntr, conf, ruok
+  solr:
+    image: solr:8.11
+    restart: always
+    # The hub nests its configsets under eu/ and pl/; the init script of the
+    # hub uploads every directory under /configsets by name, so each configset
+    # is mounted by name.
+    volumes:
+      - solr-data:/var/solr
+      - ${MP_HUBS_DIR}/pl/solr/config/solr.xml:/opt/solr/server/solr/solr.xml:ro
+      - ${MP_HUBS_DIR}/pl/solr/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:ro
+      - ${MP_HUBS_DIR}/pl/solr/config/configsets/_default:/configsets/_default:ro
+      - ${MP_HUBS_DIR}/pl/solr/config/configsets/pl/pl_oag_v10:/configsets/pl_oag_v10:ro
+      - ${MP_HUBS_DIR}/pl/solr/config/configsets/eu/all_collection_oag56_v205:/configsets/all_collection_oag56_v205:ro
+      - ${MP_HUBS_DIR}/pl/solr/config/configsets/eu/all_collection_v210:/configsets/all_collection_v210:ro
+      - ${MP_HUBS_DIR}/pl/solr/config/configsets/eu/catalogue_v101:/configsets/catalogue_v101:ro
+      - ${MP_HUBS_DIR}/pl/solr/config/configsets/eu/organisation_v106:/configsets/organisation_v106:ro
+      - ${MP_HUBS_DIR}/pl/solr/config/configsets/eu/project_v102:/configsets/project_v102:ro
+      - ${MP_HUBS_DIR}/pl/solr/config/configsets/eu/provider_v102:/configsets/provider_v102:ro
+    environment:
+      ZK_HOST: zoo:2181
+      SOLR_HEAP: 512m
+    ports:
+      - 127.0.0.1:8916:8983
+    depends_on:
+      - zoo
+  redis:
+    image: redis:7
+    restart: always
+  transform-api:
+    <<: *transform
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8080
+    ports:
+      - 127.0.0.1:8116:8080
+  transform-worker:
+    <<: *transform
+    command: celery -A app.worker.celery worker --concurrency=2 --loglevel=info
+  api:
+    build:
+      context: ${MP_HUBS_DIR}/pl/backend
+    restart: always
+    command: sh -c "alembic upgrade head && uvicorn --host 0.0.0.0 --port 8000 app.main:app"
+    environment:
+      <<: *keycloak
+      ENVIRONMENT: production
+      DATABASE_URI: postgresql+psycopg2://${DB_POSTGRES_USER:-ess}:${DB_POSTGRES_PASSWORD:-ess}@db:5432/${DB_POSTGRES_DB:-ess}
+      SOLR_URL: http://solr:8983/solr/
+      COLLECTIONS_PREFIX: pl_
+      BACKEND_BASE_URL: ${MP_HUB_URL:?the URL of this hub}/
+      UI_BASE_URL: ${MP_HUB_URL}/
+      PL_MARKETPLACE_BASE_URL: ${MP_ROOT_URL}/
+      # The UI loads index.<env>.min.js and .css from this URL before it
+      # renders anything: the commons service below, through the ui nginx.
+      EOSC_COMMONS_URL: ${MP_HUB_URL}/commons/
+      EOSC_COMMONS_ENV: staging
+    env_file:
+      - ${MP_HUBS_DIR}/pl.env
+    depends_on:
+      db:
+        condition: service_healthy
+      solr:
+        condition: service_started
+  # The EOSC commons of eosc.pl (header and footer) built with the staging
+  # environment of lib/versions/hub/commons/pl and the links to this hub and
+  # to the pl marketplace instance; the ui nginx serves the image as
+  # /commons/.
+  commons:
+    build:
+      context: ${MP_HUBS_DIR}/eosc-pl-common
+      dockerfile: ${MP_APP_DIR}/lib/versions/hub/commons.Dockerfile
+      args:
+        DISCOVERY_HUB_URL: ${MP_HUB_URL}
+        MARKETPLACE_URL: ${MP_ROOT_URL}
+    restart: always
+  ui:
+    build:
+      context: ${MP_HUBS_DIR}/pl/ui
+      dockerfile: ${MP_APP_DIR}/lib/versions/hub/ui.Dockerfile
+      args:
+        NG_COLLECTIONS_PREFIX: pl_
+    restart: always
+    volumes:
+      - ./lib/versions/hub/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      - 3216:80
+    depends_on:
+      - api
+      - commons
+
+volumes:
+  db-data:
+  solr-data:
+  zoo-data:
+  zoo-datalog:

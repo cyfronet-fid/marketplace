@@ -10,7 +10,7 @@ RSpec.describe "Services::ChooseOffersController functionality", type: :request 
 
   before { sign_in(user) }
 
-  describe "#check_vo_membership!" do
+  describe "#check_vo_membership!", variant: :marketplace do
     before do
       allow(Checkin::CheckVoMembership).to receive(:call).and_return(check_vo_membership_result)
       create(

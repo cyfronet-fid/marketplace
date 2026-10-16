@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Service::PcCreateOrUpdate, backend: true do
+RSpec.describe Service::PcCreateOrUpdate, :backend do
   let(:logger) { double("Logger").as_null_object }
   let!(:storage) { create(:category, name: "Storage") }
   let!(:training) { create(:category, name: "Training & Support") }
@@ -17,7 +17,7 @@ RSpec.describe Service::PcCreateOrUpdate, backend: true do
 
   let(:provider_eid) { "ten" }
 
-  before(:each) do
+  before do
     provider_response = double(status: 200, body: create(:eosc_registry_provider_response, eid: provider_eid))
     allow_any_instance_of(Importers::Request).to receive(:call).and_return(provider_response)
 
@@ -35,7 +35,7 @@ RSpec.describe Service::PcCreateOrUpdate, backend: true do
   end
 
   describe "#succesfull responses" do
-    it "should create new service without new default offer" do
+    it "creates new service without new default offer" do
       provider = create(:provider, name: "Test Provider 3")
       provider_tp = create(:provider, name: "Test Provider tp")
       create(:provider_source, source_type: "eosc_registry", eid: "new.prov", provider: provider)
@@ -43,9 +43,9 @@ RSpec.describe Service::PcCreateOrUpdate, backend: true do
       create(:provider_source, source_type: "eosc_registry", eid: "tp", provider: provider_tp)
 
       service = create(:jms_service, prov_eid: "new.prov", name: "New supper service")
-      expect {
+      expect do
         described_class.new(service["service"], :published, Time.current).call
-      }.to_not change { Offer.count }
+      end.not_to change { Offer.count }
     end
 
     it "publishes a service with an object-shaped parent scientific domain" do
@@ -65,6 +65,34 @@ RSpec.describe Service::PcCreateOrUpdate, backend: true do
       expect(service.scientific_domains).to contain_exactly(scientific_domain_parent)
     end
 
+    context "when running as pl" do
+      subject(:service) { described_class.new(service_payload, :published, Time.current).call }
+
+      let(:provider) { create(:provider, name: "Test Provider") }
+      let(:provider_source) { create(:provider_source, source_type: "eosc_registry", eid: "tp", provider: provider) }
+      let(:service_payload) { build(:jms_service, prov_eid: provider_source.eid, logo: nil).fetch("service") }
+
+      before do
+        allow(Mp::Variant).to receive(:pl?).and_return(true)
+        allow(Importers::Logo).to receive(:call)
+      end
+
+      it "publishes the service" do
+        expect(service).to be_published
+      end
+
+      it "stores the V5 profile fields" do
+        expect(service.reload).to have_attributes(
+          tagline: service_payload["tagline"],
+          helpdesk_url: service_payload["helpdeskPage"]
+        )
+      end
+
+      it "stores the V5 main contact" do
+        expect(service.reload.main_contact).to have_attributes(email: service_payload.dig("mainContact", "email"))
+      end
+    end
+
     it "publishes a service without scientific domains" do
       provider = create(:provider, name: "Test Provider")
       create(:provider_source, source_type: "eosc_registry", eid: "tp", provider: provider)
@@ -79,7 +107,7 @@ RSpec.describe Service::PcCreateOrUpdate, backend: true do
       expect(service.scientific_domains).to be_empty
     end
 
-    it "should add provider with improper data to the resource" do
+    it "adds provider with improper data to the resource" do
       invalid_provider = create(:provider, name: "Test Provider 3")
 
       invalid_provider.website = nil

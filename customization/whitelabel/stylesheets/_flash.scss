@@ -1,0 +1,26 @@
+.flash {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+
+  &-container {
+    animation: appear-fade-out 8s both;
+    cursor: pointer;
+  }
+}
+
+@keyframes appear-fade-out {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translateY(-4rem);
+  }
+
+  5%,
+  60% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

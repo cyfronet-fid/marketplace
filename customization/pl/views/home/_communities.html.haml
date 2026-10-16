@@ -1,0 +1,16 @@
+.standard-list-wrapper{ "data-shepherd-tour-target": "overview_3" }
+  .standard-list.two-columns
+    = render "home/communities/card",
+      key: :related_platforms, records: platforms,
+      more_path: communities_path, remaining_count: more_platforms_count,
+      cols: 2
+
+  .standard-list
+    = render "home/providers/card",
+      key: :providers, records: providers,
+      more_path: providers_path, remaining_count: more_providers_count
+
+  .standard-list
+    = render "home/communities/card",
+      key: :dedicated_for, records: target_users,
+      more_path: target_users_path, remaining_count: more_target_users_count

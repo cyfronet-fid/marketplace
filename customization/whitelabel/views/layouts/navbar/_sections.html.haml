@@ -1,0 +1,28 @@
+%nav.backoffice
+  .commons-header
+    .eosc-common.top.white-label
+      .container
+        .left-links
+          %a.header-logo-whitelabel{ href: root_path }
+        %ul.menu.center-links
+        %ul.right-links
+          - if user_signed_in?
+            %li
+              %a#dropdown-menu-button.dropdown-toggle{ aria: { expanded: false,
+                                                          haspopup: "true" },
+                                                          data: { e2e: "my-eosc-button",
+                                                          toggle: "dropdown" },
+                                                          type: "button" }
+                %i.fas.fa-user.mr-1
+                #{current_user.first_name} #{current_user.last_name}
+              #main-menu.dropdown-menu.dropdown-menu-right
+                = render "layouts/navbar/navbar_tabs"
+                .tab-content{ role: "tablist" }
+                  = render "layouts/navbar/user_panel"
+                  = render "layouts/navbar/provider_panel"
+                .tab-footer
+                  %strong= button_to _("Logout ->"), destroy_user_session_path, id: "logout-btn", class: "logout-btn",
+                    method: :delete, data: { e2e: "logout" }
+          - else
+            %li
+              %strong= link_to _("Login"), user_checkin_omniauth_authorize_path, "data-e2e": "login-btn"

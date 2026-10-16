@@ -1,0 +1,13 @@
+- content_for :title, @service.name
+- breadcrumb :resource_opinions, @service
+= render "services/wrapper", service: @service, category: @category,
+  comparison_enabled: @comparison_enabled, compare_services: @compare_services,
+  favourite_services: @favourite_services, question: @question, tab_id: "opinions", preview: false do
+  = render "services/opinions", service: @service, preview: @preview,
+  question: @question, service_opinions: @service_opinions
+
+  .related-container.container
+    .row
+      .col-12
+        = render "services/related", related_services: @related_services, title: related_services_title,
+            preview: @preview

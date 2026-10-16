@@ -187,4 +187,77 @@ RSpec.describe Importers::Catalogue, :backend do
       end
     end
   end
+
+  context "when running as pl with a V5 registry payload" do
+    let(:data) do
+      {
+        "id" => "catalogue-pid",
+        "name" => "Test catalogue",
+        "abbreviation" => "TC",
+        "website" => "https://example.org",
+        "inclusionCriteria" => "https://example.org/inclusion",
+        "validationProcess" => "https://example.org/validation",
+        "endOfLife" => "never",
+        "scope" => "national",
+        "location" => {
+          "streetNameAndNumber" => "ul. Nawojki 11",
+          "postalCode" => "30-950",
+          "city" => "Kraków",
+          "region" => "Lesser Poland",
+          "country" => "PL"
+        },
+        "mainContact" => {
+          "firstName" => "Jan",
+          "lastName" => "Kowalski",
+          "email" => "jan@example.com",
+          "position" => "Developer",
+          "organisation" => "Cyfronet"
+        },
+        "publicContacts" => ["firstName" => "Anna", "lastName" => "Nowak", "email" => "anna@example.com"],
+        "users" => ["name" => "Ewa", "surname" => "Lis", "email" => "ewa@example.com"]
+      }
+    end
+
+    before { allow(Mp::Variant).to receive(:pl?).and_return(true) }
+
+    it "maps the V5 profile and location fields" do
+      expect(imported).to include(
+        abbreviation: "TC",
+        website: "https://example.org",
+        inclusion_criteria: "https://example.org/inclusion",
+        validation_process: "https://example.org/validation",
+        end_of_life: "never",
+        scope: "national",
+        street_name_and_number: "ul. Nawojki 11",
+        postal_code: "30-950",
+        city: "Kraków",
+        region: "Lesser Poland",
+        country: "PL"
+      )
+    end
+
+    it "keeps the main contact position and organisation" do
+      expect(imported[:main_contact].attributes).to include("position" => "Developer", "organisation" => "Cyfronet")
+    end
+
+    it "maps public contacts with their names" do
+      expect(imported[:public_contacts].map { |c| [c.first_name, c.last_name, c.email] }).to contain_exactly(
+        %w[Anna Nowak anna@example.com]
+      )
+    end
+
+    it "maps users to data administrators" do
+      expect(imported[:data_administrators].map(&:email)).to contain_exactly("ewa@example.com")
+    end
+  end
+
+  context "when running as pl without users" do
+    let(:data) { { "id" => "catalogue-pid", "name" => "Test catalogue" } }
+
+    before { allow(Mp::Variant).to receive(:pl?).and_return(true) }
+
+    it "builds an empty data administrators list" do
+      expect(imported[:data_administrators]).to eq([])
+    end
+  end
 end

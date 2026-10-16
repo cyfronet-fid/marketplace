@@ -1,0 +1,48 @@
+%li.projects-list
+  = link_to project_item.service.name, project_service_path(project, project_item), class: "project-title"
+  .float-right.status
+    - if project_item.user_has_new_messages?
+      %span.new-message
+        = image_tag "ico_message.svg", class: "new-message-icon"
+        = _("You have a new message")
+    - if project_item.closed?
+      -# TODO: refactor dynamic translation
+      .status-box.status-bg-closed
+        = t("project_items.status.#{project_item.status_type}",
+        class: "status-box status-bg-#{project_item.status_type}")
+    - elsif !project_item.orderable?
+      = link_to _("Visit website"), webpage(project_item)
+    - else
+      = project_item_status(project_item)
+  .d-block
+    .project-resource-type.mt-3
+      = project_item.service.type
+    - if project_item.children.present?
+      .project-resource-type.mt-3.ml-3
+        = _("Bundle")
+  - if project_item.children.present?
+    .separator-line
+  .bottom-action-links.d-block
+  - if project_item.children.present?
+    %a.bundle-more.collapsed.dropdown.projects-links.mb-2{ href: "#collapse-example_#{project_item.id}",
+                    "data-toggle" => "collapse",
+                    "role" => "button",
+                    "aria-expanded" => "false",
+                    type: "button" } Services
+- project_item.children.each do |child|
+  #collapse-example.bundle-box.padding.collapse{ id: "#{project_item.id}" }
+    %li.projects-list
+      = link_to child.service.name, project_service_path(project, child)
+      .float-right.status
+        - if child.user_has_new_messages?
+          %span.new-message
+            = image_tag "ico_message.svg", class: "new-message-icon"
+            = _("You have a new message")
+        - if child.closed?
+          -# TODO: refactor dynamic translation
+          .status-box.status-bg-closed
+            = t("project_items.status.#{child.status_type}")
+        - elsif !child.orderable?
+          = link_to _("Visit website"), webpage(child)
+        - else
+          = project_item_status(child)

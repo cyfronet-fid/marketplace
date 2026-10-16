@@ -1,0 +1,20 @@
+- if step.bundle.present?
+  - step.bundled_property_values.each do |offer, property_values|
+    = render("services/configurations/voucher",
+    step: step, f: f) if step.bundle.nil? || step.bundle.all_offers&.select(&:voucherable?)&.size == 1
+    .row.bundle-info
+      .col-12.col-md-2
+        = presentable_logo(offer.service, "align-self-center img-fluid", [180, 120])
+      .col-12.col-md-10
+        %h3.bundle-configuration-title
+          = offer.name
+        %span.text-muted
+          = _("Provided by #{ offer.service.resource_organisation.name}")
+      .col-12.offer-description
+        .card-body.p-0.pt-5
+          .col-12.col-lg-12.pl-0.additional-information.technical
+            - property_values.each do |attr|
+              = f.simple_fields_for "bundled_property_values[o#{offer.id}]", attr do |field|
+                = render "services/configurations/attributes/#{attr.type}", attr: attr, field: field
+              - rescue StandardError => e
+                = e.message

@@ -1,0 +1,34 @@
+.card.shadow-sm.rounded
+  %button.btn.btn-link{ type: "button",
+              data: { toggle: "collapse", target: "#marketing" },
+              class: ("collapsed" if collapsed?(catalogue, [:logo, :description])),
+              aria: { expanded: true, controls: "marketing" } }
+    .card-header.text-left{ id: "marketing-header" }
+      .row
+        .col-10
+          = _("Marketing")
+        .col-2.text-right
+          .collapse-icon
+            %i.fas.fa-chevron-down
+            %i.fas.fa-chevron-up
+.collapse{ id: "marketing", "aria-labelledby": "marketing-header",
+          "data-parent": "#accordion-form",
+          class: ("show" unless collapsed?(catalogue, [:logo, :description, :link_multimedia_urls])) }
+  .card-body
+    .service-description
+      = f.input :description, disabled: cant_edit_catalogue(:description)
+    - has_logo = catalogue.logo.present? && catalogue.logo.attached? && catalogue.logo.persisted?
+    = f.input :logo, disabled: cant_edit_catalogue(:logo), as: :file,
+      input_html: { value: has_logo ? url_for(catalogue.logo) : nil }
+    %h3
+      = _("Multimedia urls")
+    = f.error :link_multimedia_urls, class: "invalid-feedback d-block"
+    = f.fields_for :link_multimedia_urls, multiple: true, as: :array,
+                wrapper_html: { "data-form-target" => "link" } do |link_form|
+      = render_link(link_form, catalogue, "multimedia")
+    = link_to _("Add new multimedia"), "#", class: "btn btn-primary disablable",
+              data: { "form-target": "addField",
+              action: "click->form#addField",
+              value: "multimedia",
+              fields: f.fields_for(:link_multimedia_urls, Link::MultimediaUrl.new,
+              child_index: "new_field") { |lf| render_link(lf, catalogue, "multimedia") } }

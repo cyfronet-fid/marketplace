@@ -2,6 +2,7 @@
 
 module RecommenderLib
   class SerializeDb
+    # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     def call
       {
         services: Service.all.map { |s| Recommender::ServiceSerializer.new(s).as_json },
@@ -18,12 +19,25 @@ module RecommenderLib
           Vocabulary::AccessType.all.map { |s| Recommender::Vocabulary::AccessTypeSerializer.new(s).as_json },
         trls: Vocabulary::Trl.all.map { |s| Recommender::Vocabulary::TrlSerializer.new(s).as_json },
         life_cycle_statuses:
-          Vocabulary::LifeCycleStatus.all.map { |s| Recommender::Vocabulary::LifeCycleStatusSerializer.new(s).as_json },
-        research_steps:
-          Vocabulary::MarketplaceLocation.all.map do |s|
-            Recommender::Vocabulary::MarketplaceLocationSerializer.new(s).as_json
-          end
-      }.as_json
+          Vocabulary::LifeCycleStatus.all.map { |s| Recommender::Vocabulary::LifeCycleStatusSerializer.new(s).as_json }
+      }.merge(
+        if Mp::Variant.marketplace?
+          {
+            research_steps:
+              Vocabulary::MarketplaceLocation.all.map do |s|
+                Recommender::Vocabulary::MarketplaceLocationSerializer.new(s).as_json
+              end
+          }
+        else
+          {
+            research_activities:
+              Vocabulary::ResearchActivity.all.map do |s|
+                Recommender::Vocabulary::ResearchActivitySerializer.new(s).as_json
+              end
+          }
+        end
+      ).as_json
     end
+    # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   end
 end

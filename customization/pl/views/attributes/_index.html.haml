@@ -1,0 +1,15 @@
+- if property_values.present?
+  %table.table.mb-5
+    %thead
+      %tr
+        %th.pl-0{ scope: "col", colspan: "2" } Parameters
+    %tbody
+      - property_values.each do |attr|
+        %tr
+          %td.pl-0
+            = attr.label || attr["label"]
+          %td
+            - begin
+              = render "attributes/#{attr.type}", attr: attr
+            - rescue StandardError
+              = render "attributes/default", attr: attr

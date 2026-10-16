@@ -1,0 +1,13 @@
+.col-md-4.col-sm-12
+  = yield :item_bar if content_for(:item_bar)
+  .partners-pic
+    - if card.picture.attached? && card.picture.variable?
+      = image_tag card.picture, alt: card.header, class: "img-fluid"
+    - else
+      = image_tag "learn-more-box-default.png"
+  .partners-title= card.header
+  .partners-desc{ "data-toggle": "tooltip", title: (card.body.size > 500 ? card.body : nil) }
+    = card.body.truncate(500)
+  %a.partners-link{ href: card.url, target: "_blank" }
+    Sprawdź
+    %i.fa.fa-arrow-right

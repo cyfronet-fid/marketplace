@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Jira::IssueUpdated, backend: true do
+RSpec.describe Jira::IssueUpdated, :backend do
   include JiraHelper
 
   before { stub_jira }
@@ -54,12 +54,10 @@ RSpec.describe Jira::IssueUpdated, backend: true do
       offer = create(:offer, service: service)
       project_item = create(:project_item, offer: offer)
 
-      expect { described_class.new(project_item, changelog(to: jira_client.wf_ready_id)).call }.to change {
-        ActionMailer::Base.deliveries.count
-      }.by(1)
-      mail = ActionMailer::Base.deliveries.last
-
-      expect(mail.subject).to eq("EGI Applications on Demand service approved")
+      expect { described_class.new(project_item, changelog(to: jira_client.wf_ready_id)).call }.to have_enqueued_mail(
+        ProjectItemMailer,
+        :aod_accepted
+      ).with(project_item)
     end
 
     it "notify if voucher accepted" do
@@ -68,12 +66,10 @@ RSpec.describe Jira::IssueUpdated, backend: true do
       offer = create(:offer, service: service, voucherable: true)
       project_item = create(:project_item, offer: offer, voucher_id: "123456")
 
-      expect { described_class.new(project_item, changelog(to: jira_client.wf_ready_id)).call }.to change {
-        ActionMailer::Base.deliveries.count
-      }.by(1)
-      mail = ActionMailer::Base.deliveries.last
-
-      expect(mail.subject).to eq("Elastic Cloud Compute Cluster (EC3) service with voucher approved")
+      expect { described_class.new(project_item, changelog(to: jira_client.wf_ready_id)).call }.to have_enqueued_mail(
+        ProjectItemMailer,
+        :aod_voucher_accepted
+      ).with(project_item)
     end
 
     it "notify if voucher rejected" do
@@ -82,12 +78,9 @@ RSpec.describe Jira::IssueUpdated, backend: true do
       offer = create(:offer, service: service, voucherable: true)
       project_item = create(:project_item, offer: offer, voucher_id: "123456")
 
-      expect { described_class.new(project_item, changelog(to: jira_client.wf_rejected_id)).call }.to change {
-        ActionMailer::Base.deliveries.count
-      }.by(1)
-      mail = ActionMailer::Base.deliveries.last
-
-      expect(mail.subject).to eq("Elastic Cloud Compute Cluster (EC3) service with voucher rejected")
+      expect do
+        described_class.new(project_item, changelog(to: jira_client.wf_rejected_id)).call
+      end.to have_enqueued_mail(ProjectItemMailer, :aod_voucher_rejected).with(project_item)
     end
 
     it "updates user_secrets if voucher requested and granted" do
@@ -105,6 +98,6 @@ RSpec.describe Jira::IssueUpdated, backend: true do
   end
 
   def changelog(field: "status", to: nil, to_string: nil)
-    { "items" => [{ "field" => field, "to" => to, "toString" => to_string }] }
+    { "items" => ["field" => field, "to" => to, "toString" => to_string] }
   end
 end

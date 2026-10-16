@@ -1,0 +1,4 @@
+= turbo_frame_tag "#{dom_id(offer)}-action-button" do
+  = link_to service_offer_notifications_path(offer.service.id, offer.iid), data: { turbo_method: :post } do
+    %span.btn.btn-secondary.font-weight-bolder
+      = _("Notify me of availability")

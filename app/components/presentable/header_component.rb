@@ -15,7 +15,7 @@ class Presentable::HeaderComponent < ApplicationComponent
     comparison_enabled:,
     preview:,
     subtitle: nil,
-    favourites_enabled: Rails.application.config.whitelabel,
+    favourites_enabled: Mp::Variant.whitelabel?,
     favourite_services: [],
     abbreviation: nil,
     show_checkboxes: true

@@ -183,3 +183,12 @@ RSpec/VariableName:
     - "spec/requests/**/*"
   AllowedPatterns:
     - '^X-.*-Token$'
+
+# lib/versions holds standalone scripts run from a terminal, outside Rails.
+Rails/Output:
+  Exclude:
+    - "lib/versions/**/*"
+
+Rails/Exit:
+  Exclude:
+    - "lib/versions/**/*"

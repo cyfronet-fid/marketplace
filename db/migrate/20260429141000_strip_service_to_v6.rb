@@ -52,6 +52,16 @@ class StripServiceToV6 < ActiveRecord::Migration[7.2]
     add_column :services, :resource_type, :string
     add_column :services, :urls, :string, array: true, default: []
 
+    # pl-marketplace never ran this migration (no matching file in its own
+    # history) and still uses these columns/tables/data live — see
+    # arch_docs: docs/rationale/db-schema-comparison.md §2/§3. Without this
+    # guard, the first `db:migrate` run against a real pl production
+    # database would destroy them. Column data instead moves to
+    # service_pl_profiles via BackfillServicePlProfiles (20260909100200);
+    # the service_relationships/service_related_platforms/service_target_users
+    # tables are kept as-is, already the right shape.
+    return if Mp::Variant.pl?
+
     execute(
       "DELETE FROM service_vocabularies WHERE vocabulary_type IN (#{REMOVED_VOCAB_TYPES.map { |v| quote(v) }.join(",")})"
     )

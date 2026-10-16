@@ -3,14 +3,17 @@
 require "rails_helper"
 require_relative "publishable"
 
-RSpec.describe ScientificDomain, type: :model, backend: true do
+RSpec.describe ScientificDomain, :backend, type: :model do
   include_examples "publishable"
 
-  describe "validations" do
-    it { should validate_presence_of(:name) }
+  it { is_expected.to normalize(:eid).from(" ").to(nil) }
 
+  describe "validations" do
     subject { create(:scientific_domain) }
-    it { should validate_uniqueness_of(:name).scoped_to(:ancestry) }
+
+    it { is_expected.to validate_presence_of(:name) }
+
+    it { is_expected.to validate_uniqueness_of(:name).scoped_to(:ancestry) }
   end
 
   describe "#potential_parents" do

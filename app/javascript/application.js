@@ -6,6 +6,7 @@
 //   } catch (e) {}
 // }
 
+import "./app/sentry";
 import "./app";
 import "./controllers";
 

@@ -47,9 +47,7 @@ class Message < ApplicationRecord
     Set.new(%i[message])
   end
 
-  def eventable_omses
-    messageable.eventable_omses
-  end
+  delegate :eventable_omses, to: :messageable
 
   private
 
@@ -58,11 +56,12 @@ class Message < ApplicationRecord
   end
 
   def dispatch_email?
-    !role_user? && !internal_scope?
+    # pl mails the provider managers through ProviderMailer instead (pl-marketplace #170).
+    !role_user? && !internal_scope? && !(Mp::Variant.pl? && messageable_type == "ApprovalRequest")
   end
 
   def dispatch_create_email
-    action = approval_request.present? ? approval_request.last_action : nil
+    action = approval_request.presence&.last_action
     MessageMailer.new_message(self, action: action).deliver_later
   end
 

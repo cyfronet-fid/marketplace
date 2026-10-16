@@ -1,0 +1,94 @@
+{
+  "cols": [
+    {
+      "label": "For users",
+      "url": "#",
+      "navBtns": [
+        {
+          "label": "Browse resources",
+          "url": "__DISCOVERY_HUB_URL__/search/all_collection?q=*"
+        },
+        {
+          "label": "Your projects",
+          "url": "__MARKETPLACE_URL__/projects"
+        },
+        {
+          "label": "Documentation",
+          "url": "__DISCOVERY_HUB_URL__/documentation"
+        }
+      ]
+    },
+    {
+      "label": "For providers",
+      "url": "#",
+      "navBtns": [
+        {
+          "label": "Backoffice",
+          "url": "__MARKETPLACE_URL__/backoffice/services"
+        },
+        {
+          "label": "Become a provider",
+          "url": "__MARKETPLACE_URL__/backoffice/providers"
+        },
+        {
+          "label": "Marketplace API",
+          "url": "__MARKETPLACE_URL__/api_docs"
+        }
+      ]
+    },
+    {
+      "label": "Partners",
+      "url": "#",
+      "navBtns": [
+        {
+          "label": "National Science Centre",
+          "url": "https://ncn.gov.pl/en"
+        },
+        {
+          "label": "ACC Cyfronet AGH",
+          "url": "https://www.cyfronet.pl/en"
+        },
+        {
+          "label": "Gdańsk University of Technology",
+          "url": "https://pg.edu.pl/en"
+        },
+        {
+          "label": "University of Warsaw",
+          "url": "https://en.uw.edu.pl/"
+        },
+        {
+          "label": "Institute of Oceanology PAN",
+          "url": "https://www.iopan.pl/en/"
+        }
+      ]
+    },
+    {
+      "label": "Contact",
+      "url": "#",
+      "navBtns": [
+        {
+          "label": "contact@eosc.pl",
+          "url": "mailto:contact@eosc.pl"
+        },
+        {
+          "label": "onboarding@eosc.pl",
+          "url": "mailto:onboarding@eosc.pl"
+        },
+        {
+          "label": "support@eosc.pl",
+          "url": "mailto:support@eosc.pl"
+        }
+      ]
+    }
+  ],
+  "socials": [
+    {
+      "class": "social-logo twitter-logo d-inline-block mr-2",
+      "url": "https://x.com/"
+    },
+    {
+      "class": "social-logo yt-logo d-inline-block",
+      "url": "https://www.youtube.com/"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+- if offers&.find(&:voucherable)
+  .container
+    .voucher-box.row.p-3
+      .col-12.col-lg-4.pl-0.pt-2.voucher-title
+        %i.fas.fa-ticket-alt.fa-3x.d-inline
+        .d-inline
+          %span.text-uppercase.mb-3
+            = _("Marketplace")
+          %span.big
+            = _("Vouchers")
+      .col-12.col-lg-7
+        %p.pt-3
+          -# haml-lint:disable MultilinePipe
+          = _("Vouchers allow researchers to test different configurations or different services to choose the " + |
+              "best offer for their needs.") |
+          -# haml-lint:enable MultilinePipe
+- if policy(service).offers_show?
+  .row
+    = render partial: "services/offer", collection: offers, as: :offer, locals: { preview: preview }
+- if policy(service).bundles_show?
+  %h2.mb-3.mt-4.font-weight-bolder
+    = _("Bundles")
+  %p.mb-5
+    -# haml-lint:disable MultilinePipe
+    = _("You can order this service in a bundle, with services connected by scientific domain or type " + |
+              "of research. The bundle is configured to make your research easier and done more efficiently.") |
+    -# haml-lint:enable MultilinePipe
+  .row
+    = render partial: "services/bundle_box", collection: bundles, as: :bundle, locals: { bundled: false, preview: preview}
+    - if bundled.present?
+      .col-md-12
+        %h2.mb-4.font-weight-bolder
+          = _("This service is included in bundles:")
+      = render partial: "services/bundle_box", collection: bundled, as: :bundle, locals: { bundled: true, preview: preview }

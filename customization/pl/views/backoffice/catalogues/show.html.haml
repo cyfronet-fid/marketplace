@@ -1,0 +1,28 @@
+- content_for :title, @catalogue.name
+- breadcrumb :backoffice_catalogue, @catalogue
+
+.container.p-0.backoffice
+  %h1.mb-3= @catalogue.name
+  = render Presentable::StatusActionsComponent.new(object: @catalogue,
+      publish: policy([:backoffice, @catalogue]).publish?,
+      suspend: policy([:backoffice, @catalogue]).suspend?,
+      unpublish: policy([:backoffice, @catalogue]).unpublish?,
+      destroy: policy([:backoffice, @catalogue]).destroy?)
+
+  .service-box.p-4.mt-3.backoffice-form
+    .logo-wrapper
+      %span.helper
+      - if @catalogue.logo.attached? && @catalogue.logo.variable?
+        = image_tag @catalogue.logo.variant(resize_to_limit: [100, 67]), class: "align-self-center mr-4 float-left img-responsive"
+      - else
+        = image_tag("catalogue_logo.svg", size: "100x45", class: "align-self-center mr-4 float-left img-responsive")
+    %hr.bottom-hr.mt-5.mb-4
+    .btn-group-separate
+      - if policy([:backoffice, @catalogue]).edit?
+        = unescaped_link_to _("Edit catalogue"),
+                  edit_backoffice_catalogue_path(@catalogue),
+                  class: "btn btn-primary"
+
+  = link_to backoffice_catalogues_path, class: "backoffice-back-link mt-3" do
+    %i.fa-solid.fa-arrow-left.me-2.mr-1
+    = _("Back to Catalogues")

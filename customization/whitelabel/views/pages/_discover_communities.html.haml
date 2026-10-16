@@ -1,0 +1,14 @@
+
+#home-carousel.communities-carousel.carousel.slide.home-carousel{ "data-ride" => "carousel" }
+  - slices = communities.each_slice(2)
+  .carousel-inner
+    - slices.with_index do |(*slice), i|
+      .carousel-item{ class: i&.zero? ? "active" : nil }
+        .card-deck
+          - slice.each do |community|
+            = render "community_card", item: community
+
+  %ol.carousel-indicators
+    - slices.with_index do |(*_), i|
+      %li{ "data-target" => "#home-carousel", "data-slide-to" => i,
+               class: i&.zero? ? "active" : nil }

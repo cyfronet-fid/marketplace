@@ -1,0 +1,37 @@
+#legal-status.tab-pane{ class: "#{"active" if active}", role: "tabpanel",
+  "aria-labelledby": "legal_status-header", "data-form-target": "tab" }
+  .card-body
+    .row.new-offer-form
+      .col-lg-6.pl-0
+        %h3 Legal status
+        .offer-section-wrapper.pt-0
+          = f.input :legal_entity, as: :boolean, include_hidden: true,
+                    disabled: cant_edit?(:legal_entity),
+                    boolean_style: :inline,
+                    label: "Is the provider a legal entity?",
+                    input_html: {  data: { action: "change->form#refreshRelatedFields", "child-field": "legal_status" } }
+          = f.input :legal_status, disabled: cant_edit([legal_status_ids: []]),
+            collection: Vocabulary.where(type: "Vocabulary::LegalStatus"),
+            label_method: :name, value_method: :id,
+            input_html: { multiple: false, data: { choice: true } }
+
+          = f.input :hosting_legal_entity,
+                collection: Vocabulary.where(type: "Vocabulary::HostingLegalEntity"),
+                disabled: cant_edit(:hosting_legal_entity),
+                label_method: :name,
+                value_method: :id,
+                input_html: { multiple: false, data: { choice: true } }
+      .col-lg-6
+        %h3= _("Alternative Identifiers")
+        .offer-section-wrapper
+          = f.error :alternative_identifiers, class: "invalid-feedback d-block"
+          = f.fields_for :alternative_identifiers, disabled: provider.upstream_id.present?, multiple: true, as: :array,
+                      wrapper_html: { "data-form-target" => "alternativeIdentifier" } do |identifier_form|
+            = render_alternative_identifier(identifier_form, provider)
+        = link_to _("+ Add alternative identifier"), "#", class: "btn-simple d-block mt-3 disablable",
+                  data: { "form-target": "addField",
+                  action: "click->form#addField",
+                  value: "alternativeIdentifier",
+                  fields: f.fields_for(:alternative_identifiers, AlternativeIdentifier.new,
+                  child_index: "new_field") { |idf| render_alternative_identifier(idf, provider) } }
+      = render "backoffice/providers/more_information"

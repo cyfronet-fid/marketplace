@@ -7,10 +7,14 @@ module Service::Recommendable
   extend ActiveSupport::Concern
   include ValidationHelper
 
+  # A recommendation endpoint answered with a status outside the 2xx range.
+  class EndpointError < StandardError
+  end
+
   ALLOWED_SEARCH_DATA_FIELDS = %i[scientific_domains providers sort q order_type rating jurisdiction category_id].freeze
 
   FILTER_PARAM_TRANSFORMERS = {
-    scientific_domains: ->(ids) do
+    scientific_domains: lambda do |ids|
       if ids.instance_of?(Array)
         ids.map(&:to_i) | ids.map { |id| ScientificDomain.find(id).descendant_ids }.flatten
       else
@@ -37,15 +41,24 @@ module Service::Recommendable
         req.options[:timeout] = 5
         req.options[:open_timeout] = 2
       end
-    body = JSON.parse(response.body)
+    raise EndpointError, "similar services endpoint answered #{response.status}" unless response.success?
 
-    raise StandardError if response.status != 200
-
-    ids = body["recommendations"] || []
+    ids = JSON.parse(response.body)["recommendations"] || []
 
     Service.where(id: ids, status: :published)
-  rescue StandardError
-    Sentry.capture_message("Similar services recommendation, similar services endpoint response error")
+  rescue Faraday::Error, JSON::ParserError, EndpointError => e
+    raise if Rails.env.development?
+
+    Sentry.capture_exception(
+      e,
+      extra: {
+        url: url,
+        response_status: response&.status,
+        response_body: response&.body.to_s.truncate(500),
+        service_id: service_id,
+        user_id: user_id
+      }
+    )
     []
   end
 
@@ -72,12 +85,20 @@ module Service::Recommendable
   def get_recommended_services_by(body, size)
     url = Mp::Application.config.recommender_host + "/recommendations"
     response = Faraday.post(url, body.to_json, { "Content-Type": "application/json", Accept: "application/json" })
+
+    raise EndpointError, "recommendation endpoint answered #{response.status}" unless response.success?
+
     ids = JSON.parse(response.body)["recommendations"]
 
     services = Service.where(id: ids, status: :published).sort_by { |s| ids.index(s.id) }.take(size)
     services.empty? ? [] : services
-  rescue StandardError
-    Sentry.capture_message("Recommendation service, recommendation endpoint response error")
+  rescue Faraday::Error, JSON::ParserError, EndpointError => e
+    raise if Rails.env.development?
+
+    Sentry.capture_exception(
+      e,
+      extra: { url: url, response_status: response&.status, response_body: response&.body.to_s.truncate(500) }
+    )
     []
   end
 

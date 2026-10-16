@@ -1,0 +1,12 @@
+%p
+  Our team reviewed
+  %strong= @provider.name
+  and did not approve it. It stays in your account as unpublished, so it is not visible to users.
+
+%p
+  Write to #{mail_to @helpdesk_email} if you want to add missing information or ask about the decision.
+
+%p
+  = email_button "Contact helpdesk", "mailto:#{@helpdesk_email}"
+
+- content_for :recipient_reason, "You received this email because you are a provider manager in EOSC PL."

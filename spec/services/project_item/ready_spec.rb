@@ -2,13 +2,13 @@
 
 require "rails_helper"
 
-RSpec.describe ProjectItem::Ready, backend: true do
+RSpec.describe ProjectItem::Ready, :backend do
   let(:project_item) { create(:project_item) }
   let(:issue) { double("Issue", id: 1) }
   let(:transition) { double("Transition") }
 
   context "(JIRA works without errors)" do
-    before(:each) do
+    before do
       wf_ready_id = 6
       wf_in_progress_id = 7
 
@@ -64,9 +64,10 @@ RSpec.describe ProjectItem::Ready, backend: true do
 
       project_item.new_status(status: "custom_created", status_type: :created)
 
-      expect { described_class.new(project_item).call }.to change { ActionMailer::Base.deliveries.count }.by(1)
-
-      expect(ActionMailer::Base.deliveries.last.subject).to eq("EOSC Portal - Rate your service")
+      expect { described_class.new(project_item).call }.to have_enqueued_mail.once.and have_enqueued_mail(
+        ProjectItemMailer,
+        :rate_service
+      ).with(project_item)
     end
 
     it "do not send email with activate message if not present" do
@@ -76,9 +77,10 @@ RSpec.describe ProjectItem::Ready, backend: true do
 
       project_item.new_status(status: "custom_created", status_type: :created)
 
-      expect { described_class.new(project_item).call }.to change { ActionMailer::Base.deliveries.count }.by(1)
-
-      expect(ActionMailer::Base.deliveries.last.subject).to eq("EOSC Portal - Rate your service")
+      expect { described_class.new(project_item).call }.to have_enqueued_mail.once.and have_enqueued_mail(
+        ProjectItemMailer,
+        :rate_service
+      ).with(project_item)
     end
 
     it "creates new JIRA issue and do the transition" do
@@ -97,16 +99,14 @@ RSpec.describe ProjectItem::Ready, backend: true do
         # project_item change email is sent only when there is more than 1 change
         project_item.new_status(status: "custom_created", status_type: :created)
 
-        expect { described_class.new(project_item).call }.to change { ActionMailer::Base.deliveries.count }.by(2)
-        expect(ActionMailer::Base.deliveries[-2].subject).to eq(
-          "Status of your service access request in the EOSC Portal Marketplace has changed to READY TO USE"
-        )
-        expect(ActionMailer::Base.deliveries.last.subject).to eq("EOSC Portal - Rate your service")
+        expect { described_class.new(project_item).call }.to have_enqueued_mail(ProjectItemMailer, :ready_to_use).with(
+          project_item
+        ).and have_enqueued_mail(ProjectItemMailer, :rate_service).with(project_item)
       end
     end
 
     context "With additional comment" do
-      it "should create first comment message" do
+      it "creates first comment message" do
         expect { described_class.new(project_item, "First message").call }.to change { project_item.messages.count }.by(
           1
         )
@@ -126,20 +126,22 @@ RSpec.describe ProjectItem::Ready, backend: true do
       it "sends only rate service email to owner" do
         project_item.new_status(status: "custom_ready", status_type: :ready)
 
-        expect { described_class.new(project_item).call }.to change { ActionMailer::Base.deliveries.count }.by(1)
-        expect(ActionMailer::Base.deliveries.last.subject).to eq("EOSC Portal - Rate your service")
-        expect(ActionMailer::Base.deliveries.last.subject).to_not start_with("[ProjectItem #")
+        expect { described_class.new(project_item).call }.to have_enqueued_mail.once.and have_enqueued_mail(
+          ProjectItemMailer,
+          :rate_service
+        ).with(project_item)
       end
     end
 
     context "no project issue set" do
       let(:project_register_service) { double("Project:Register") }
-      before(:each) do
+
+      before do
         project_register_class_stub = class_double(Project::Register).as_stubbed_const(transfer_nested_constants: true)
         allow(project_register_class_stub).to receive(:new).and_return(project_register_service)
       end
 
-      it "should call Project::Register" do
+      it "calls Project::Register" do
         project_item.project.jira_uninitialized!
         expect(project_register_service).to receive(:call)
         described_class.new(project_item).call

@@ -2,10 +2,14 @@
 
 class Service::Publish < Service::ApplicationService
   def call
-    Offer::Publish.call(@service.offers.first) if @service.offers.size == 1
     public_before = @service.public?
-    notify_bundled_offers! if @service.update(status: :published) && !public_before
-    Service::Mailer::SendToSubscribers.new(@service).call
+    if @service.update(status: :published)
+      Offer::Publish.call(@service.offers.first) if @service.offers.size == 1
+      notify_bundled_offers! unless public_before
+      Service::Mailer::SendToSubscribers.new(@service).call
+    else
+      false
+    end
   end
 
   private
