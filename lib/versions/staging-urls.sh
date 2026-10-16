@@ -10,6 +10,8 @@
 #   pl           16     marketplace-16.<domain>       search-16.<domain>
 #   whitelabel   17     marketplace-17.<domain>       (no hub)
 #   marketplace  18     marketplace-18.<domain>       search-18.<domain>
+# The slot 20 (marketplace-20.<domain>) is GlitchTip, the error tracker of
+# the instances (docker-compose-glitchtip.yml, not a variant).
 
 STAGING_DOMAIN="docker-fid.grid.cyf-kr.edu.pl"
 

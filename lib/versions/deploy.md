@@ -248,17 +248,19 @@ curl -s 'http://127.0.0.1:8916/solr/pl_all_collection/select?q=*:*&rows=0'
 
 ## Error tracking
 
-GlitchTip receives the exceptions of the instances through the Sentry gems of
-the production group. `docker-compose-glitchtip.yml` runs it on the staging
-host as the compose project `glitchtip`: the application in one container,
-Postgres 18 and Valkey, the UI on the localhost port 3300 for the reverse
-proxy. Production instances send to the same server.
+GlitchTip receives the exceptions of the instances through the Sentry gems.
+`docker-compose-glitchtip.yml` runs it on the staging host as the compose
+project `glitchtip`: the application in one container, Postgres 18 and
+Valkey, the UI on the localhost port 3020. The reverse proxy of the host
+serves the slot names only (`marketplace-N.DOMAIN` to the port `30N`), so
+GlitchTip takes the slot 20: `https://marketplace-20.DOMAIN`. Production
+instances send to the same server.
 
 Setup, once:
 
 1. Write `glitchtip.env` next to the compose file. The header of the compose
    file lists the variables: the secret key, the database password, the
-   public URL, the SMTP URL and the sender address.
+   public URL of the slot, the SMTP URL and the sender address.
 2. Start the project. The migrations run at the start.
 
    ```sh
@@ -266,8 +268,15 @@ Setup, once:
    docker compose -p glitchtip -f docker-compose-glitchtip.yml up -d
    ```
 
-3. Add the vhost `glitchtip.DOMAIN` with TLS to the reverse proxy, to the
-   port 3300.
+3. Make sure that the slot answers. The health check needs the public host
+   name; a request to `127.0.0.1` gets a 400 from `ALLOWED_HOSTS`.
+
+   ```sh
+   curl -sI https://marketplace-20.DOMAIN/_health/
+   ```
+
+   Another host sets `MP_GLITCHTIP_PORT` and the two name variables of
+   `glitchtip.env` to a free slot of that host.
 4. Open the UI and register the first user. Then set
    `ENABLE_USER_REGISTRATION=False` in `glitchtip.env` and run the `up -d`
    command again.
