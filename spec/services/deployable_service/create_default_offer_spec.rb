@@ -118,6 +118,101 @@ RSpec.describe DeployableService::CreateDefaultOffer, backend: true do
       end
     end
 
+    context "with TOSCA input defaults" do
+      let(:template_content) { <<~YAML }
+        tosca_definitions_version: tosca_simple_yaml_1_2
+        topology_template:
+          inputs:
+            image:
+              type: string
+              default: ubuntu-22.04
+            wn_num:
+              type: integer
+              default: "3"
+            mem_size:
+              type: scalar-unit.size
+              default: 4 GiB
+            fe_cpus:
+              type: integer
+              default: 4
+              constraints:
+                - valid_values: [2, 4, 8]
+            fe_mem:
+              type: string
+              default: 64 GB
+              constraints:
+                - valid_values: ["4 GB", "8 GB"]
+            notebook_url:
+              type: string
+            admin_password:
+              type: string
+              default: changeme
+            jupyter_token:
+              type: string
+              default: abc123
+            dns_name:
+              type: string
+              default: jupyter.example.com
+            dataset_ids:
+              type: list
+              default: []
+            enable_gpu:
+              type: boolean
+              default: true
+      YAML
+      let(:deployable_service) do
+        create(:deployable_service, url: "https://example.com/template.yml", resource_organisation: provider)
+      end
+      let(:defaults) { described_class.call(deployable_service).parameters.to_h { |p| [p.id, p.default_value] } }
+
+      before do
+        compute_category
+        allow(DeployableService::FetchTemplate).to receive(:call).and_return(template_content)
+      end
+
+      it "pre-fills string inputs with their default" do
+        expect(defaults["image"]).to eq("ubuntu-22.04")
+      end
+
+      it "casts integer defaults to integers" do
+        expect(defaults["wn_num"]).to eq(3)
+      end
+
+      it "pre-fills scalar-unit inputs with their default" do
+        expect(defaults["mem_size"]).to eq("4 GiB")
+      end
+
+      it "pre-selects a select default that is one of the valid values" do
+        expect(defaults["fe_cpus"]).to eq(4)
+      end
+
+      it "does not pre-select a select default outside the valid values" do
+        expect(defaults["fe_mem"]).to be_nil
+      end
+
+      it "leaves inputs without a default empty" do
+        expect(defaults["notebook_url"]).to be_nil
+      end
+
+      it "never pre-fills sensitive inputs" do
+        expect(defaults.values_at("admin_password", "jupyter_token")).to all(be_nil)
+      end
+
+      it "does not pre-fill generated DNS inputs" do
+        expect(defaults["dns_name"]).to be_nil
+      end
+
+      it "does not pre-fill inputs of other TOSCA types" do
+        expect(defaults.values_at("dataset_ids", "enable_gpu")).to all(be_nil)
+      end
+
+      it "persists defaults with the offer parameters" do
+        offer = described_class.call(deployable_service)
+
+        expect(offer.reload.parameters.find { |p| p.id == "wn_num" }.default_value).to eq(3)
+      end
+    end
+
     context "when compute service category is missing" do
       let(:deployable_service) do
         create(
