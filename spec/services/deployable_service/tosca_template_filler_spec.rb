@@ -290,6 +290,13 @@ RSpec.describe DeployableService::ToscaTemplateFiller, type: :service do
     end
 
     context "with a JupyterHub deployable service" do
+      let(:used_dns_name) do
+        DeployableService::DnsName.generate.tap do |dns_name|
+          attribute = { id: "dns_name", label: "DNS name", type: "input", value_type: "string", value: dns_name }
+          create(:project_item, project: project, offer: offer, properties: [attribute])
+        end
+      end
+
       before { allow(project_item).to receive(:properties).and_return(mock_properties) }
 
       it "sends the JupyterHub template with a generated kube_public_dns_name" do
@@ -298,6 +305,23 @@ RSpec.describe DeployableService::ToscaTemplateFiller, type: :service do
           "kube_public_dns_name" => include("default" => match(uuid_dns_pattern))
         )
       end
+
+      it "deploys the DNS name generated for the order form" do
+        dns_name = DeployableService::DnsName.generate
+        allow(project_item).to receive(:properties).and_return(["id" => "kube_public_dns_name", "value" => dns_name])
+
+        expect(YAML.safe_load(described_class.call(project_item)).dig("topology_template", "inputs")).to include(
+          "kube_public_dns_name" => include("default" => dns_name)
+        )
+      end
+
+      it "does not deploy a DNS name already used by another order" do
+        allow(project_item).to receive(:properties).and_return(["id" => "dns_name", "value" => used_dns_name])
+
+        inputs = YAML.safe_load(described_class.call(project_item)).dig("topology_template", "inputs")
+
+        expect(inputs.dig("kube_public_dns_name", "default")).not_to eq(used_dns_name)
+      end
     end
 
     it "propagates template fetch errors" do
@@ -305,27 +329,6 @@ RSpec.describe DeployableService::ToscaTemplateFiller, type: :service do
       allow(DeployableService::FetchTemplate).to receive(:call).and_raise(Faraday::ResourceNotFound, "HTTP 404")
 
       expect { described_class.call(project_item) }.to raise_error(Faraday::ResourceNotFound, /HTTP 404/)
-    end
-  end
-
-  describe "#generate_unique_dns_name" do
-    xit "generates a DNS name in UUID.vm.fedcloud.eu format" do # needs fix
-      dns_name = subject.send(:generate_unique_dns_name)
-
-      expect(dns_name).to match(uuid_dns_pattern)
-    end
-
-    xit "generates unique DNS names on each call" do # needs fix
-      first_dns_name = subject.send(:generate_unique_dns_name)
-      second_dns_name = subject.send(:generate_unique_dns_name)
-
-      expect(first_dns_name).not_to eq(second_dns_name)
-    end
-
-    xit "generates DNS names ending with .vm.fedcloud.eu" do # needs fix
-      dns_name = subject.send(:generate_unique_dns_name)
-
-      expect(dns_name).to end_with(".vm.fedcloud.eu")
     end
   end
 
