@@ -125,11 +125,12 @@ class Backoffice::Providers::StepsController < Backoffice::ProvidersController
           ar.save
         end
       else
-        render :show, status: :unprocessable_content
+        # Without the return the redirect below raises a DoubleRenderError.
+        return render :show, status: :unprocessable_content
       end
     else
       init_provider(session_key, saved_params.except("logo"))
-      render :show, status: :unprocessable_content unless @provider.update(saved_params)
+      return render :show, status: :unprocessable_content unless @provider.update(saved_params)
     end
     @provider.update_logo!(@logo) if @logo.present?
     action = session.delete(:wizard_action)

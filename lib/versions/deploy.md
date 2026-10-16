@@ -199,7 +199,7 @@ collections prefix is `pl_` for pl and empty for marketplace.
 Watch the load with:
 
 ```sh
-docker compose -p mp-multitenancy-<variant>-hub logs -f transform-worker
+docker logs -f mp-multitenancy-<variant>-hub-transform-worker-1
 ```
 
 ## How the parts connect at runtime
@@ -302,9 +302,26 @@ adds one entry per SQL query, which are many. Test from the web container of
 an instance:
 
 ```sh
-docker compose -p mp-multitenancy-pl exec web bin/rails runner \
+docker exec mp-multitenancy-pl-web-1 bin/rails runner \
   'Sentry.capture_message("test"); Sentry.logger.info("test log"); Sentry.get_current_client.flush'
 ```
+
+The browser reports to the same project as the server. `SentryHelper`
+writes the DSN into meta tags when `SENTRY_DSN` is set, and
+`app/javascript/app/sentry.js` starts the Sentry browser SDK from the tags.
+The browser reports:
+
+- unhandled JS errors and promise rejections,
+- a turbo-frame response without the requested frame (the page shows
+  "Content missing"),
+- a Turbo fetch request that fails on the network level.
+
+A handled response makes no event. A validation error with status 422
+renders the form again and is not an error. The `rescue_from` redirects of
+`ApplicationController` (record not found, not authorized) make no server
+event. In a turbo-frame request such a redirect shows "Content missing",
+and then the browser reports the frame-missing event with the frame id and
+the URL.
 
 Upgrade with `docker compose -p glitchtip -f docker-compose-glitchtip.yml pull`,
 then the `up -d` command. The data lives in the volumes `glitchtip_pg-data`
