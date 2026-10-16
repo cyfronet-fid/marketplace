@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
 class DeployableService::ToscaTemplateFiller < ApplicationService
-  # DNS-related inputs that should not be overridden by users - a unique name is generated instead
-  DNS_INPUTS = %w[kube_public_dns_name public_dns_name dns_name].freeze
-
   def initialize(project_item)
     super()
     @project_item = project_item
@@ -57,7 +54,7 @@ class DeployableService::ToscaTemplateFiller < ApplicationService
 
     parameters.each do |param_id, param_value|
       next unless inputs[param_id]
-      next if DNS_INPUTS.include?(param_id)
+      next if DeployableService::DnsName.input?(param_id)
 
       case param_id
       when "dataset_ids"
@@ -68,12 +65,12 @@ class DeployableService::ToscaTemplateFiller < ApplicationService
       end
     end
 
-    # Generate unique DNS name for the deployment
-    dns_inputs = inputs.slice(*DNS_INPUTS).compact
+    # Use the unique DNS name generated for the order form, or generate one
+    dns_inputs = inputs.slice(*DeployableService::DnsName::INPUTS).compact
     if dns_inputs.any?
-      generated_dns = generate_unique_dns_name
-      dns_inputs.each_value { |input| input["default"] = generated_dns }
-      Rails.logger.info "Generated unique DNS for deployment: #{generated_dns}"
+      dns_name = dns_name_from(parameters)
+      dns_inputs.each_value { |input| input["default"] = dns_name }
+      Rails.logger.info "Unique DNS for deployment: #{dns_name}"
     end
 
     begin
@@ -84,8 +81,14 @@ class DeployableService::ToscaTemplateFiller < ApplicationService
     end
   end
 
-  def generate_unique_dns_name
-    # Generate UUID-based DNS in format: <uuid>.vm.fedcloud.eu
-    "#{SecureRandom.uuid}.vm.fedcloud.eu"
+  def dns_name_from(parameters)
+    submitted = parameters.values_at(*DeployableService::DnsName::INPUTS)
+    submitted.find { |value| DeployableService::DnsName.generated?(value) && !dns_name_taken?(value) } ||
+      DeployableService::DnsName.generate
+  end
+
+  # A generated name could still be copied from another order (e.g. from its deployment link)
+  def dns_name_taken?(dns_name)
+    ProjectItem.where.not(id: @project_item.id).exists?(["properties @> ?", [value: dns_name].to_json])
   end
 end

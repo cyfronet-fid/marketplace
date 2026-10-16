@@ -20,7 +20,20 @@ class ProjectItem::Attributes
   private
 
   def attributes_from_params(parameters)
-    parameters.map { |p| Attribute.from_json(p) }
+    parameters.map do |parameter|
+      Attribute.from_json(parameter).tap { |attr| attr.value = default_value(parameter) if attr.value.nil? }
+    end
+  end
+
+  # Each order of a deployable service gets its own DNS name, so it is generated here instead of stored with the offer
+  def default_value(parameter)
+    return dns_name if offer.deployable_service && DeployableService::DnsName.input?(parameter["id"])
+
+    parameter["default_value"]
+  end
+
+  def dns_name
+    @dns_name ||= DeployableService::DnsName.generate
   end
 
   def update_attribute(id, value)
