@@ -71,6 +71,26 @@ RSpec.describe "Backoffice: manage providers", :backend do
       end
     end
 
+    # An invalid update renders the full edit page again. The edit template
+    # must pass the tab local to the form, or the render raises a NameError.
+    describe "PATCH /backoffice/providers/:id with an invalid value" do
+      let(:provider) { create(:provider, name: "Unchanged") }
+
+      before { patch backoffice_provider_path(provider), params: { provider: { name: "" } } }
+
+      it "answers with the edit page" do
+        expect(response).to have_http_status(:bad_request)
+      end
+
+      it "marks the profile tab as active" do
+        expect(response.body).to include("profile-tab")
+      end
+
+      it "keeps the provider as it is" do
+        expect(provider.reload.name).to eq("Unchanged")
+      end
+    end
+
     it "can save an in-progress wizard registration as a draft" do
       allow(Mp::Variant).to receive(:whitelabel?).and_return(true)
       provider = create(:provider, status: :unpublished)
