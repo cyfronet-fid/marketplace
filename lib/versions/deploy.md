@@ -89,7 +89,9 @@ ROOT/hubs/.last-deployed-<variant>        state of the last complete hub deploy
    Keycloak of `access.eosc.pl`. The OIDC client of the marketplace hub is a
    client of the Keycloak `core` of the host. Both clients need the redirect
    URI `<hub URL>/api/web/auth/checkin`. The compose file of the hub sets the
-   OIDC endpoints; endpoint values in the env file have no effect.
+   OIDC endpoints; endpoint values in the env file have no effect. The pl
+   compose file also sets `OIDC_CLIENT_ID`, thus the pl env file does not
+   need it.
 
 ## Run
 

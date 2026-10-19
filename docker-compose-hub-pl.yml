@@ -16,9 +16,10 @@
 # and filled by the transform service: `deploy-hubs.sh seed pl`, run by the
 # script after the first deploy. The settings below follow the services of
 # this file. The env file supplies: MP_API_TOKEN (token of a coordinator of
-# the pl instance, for /api/v1/ess), SECRET_KEY, OIDC_CLIENT_ID and
-# OIDC_CLIENT_SECRET (a client of the pl-node Keycloak of access.eosc.pl
-# below, with the redirect URI MP_HUB_URL/api/web/auth/checkin), LOG_LEVEL.
+# the pl instance, for /api/v1/ess), SECRET_KEY, OIDC_CLIENT_SECRET (the
+# secret of the OIDC_CLIENT_ID client below, a client of the pl-node
+# Keycloak of access.eosc.pl, with the redirect URI
+# MP_HUB_URL/api/web/auth/checkin), LOG_LEVEL.
 # The public URLs come from the environment of the compose call, without a
 # trailing slash (the deploy script exports the staging values from
 # lib/versions/staging-urls.sh; a local deploy sets them in the shell or in
@@ -39,6 +40,7 @@ x-keycloak: &keycloak
   OIDC_USERINFO_ENDPOINT: /auth/realms/pl-node/protocol/openid-connect/userinfo
   OIDC_JWKS_ENDPOINT: /auth/realms/pl-node/protocol/openid-connect/certs
   OIDC_AAI_NEW_API: "false"
+  OIDC_CLIENT_ID: search-service-dev
 
 # The transform service: SOLR_URL needs the trailing slash; the configset
 # names are those of the hub checkout (solr/config/configsets); the
