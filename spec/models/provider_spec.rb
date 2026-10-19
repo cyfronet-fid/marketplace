@@ -98,6 +98,26 @@ RSpec.describe Provider, :backend, type: :model do
         expect(subject.errors[:public_contact_emails]).to include("invalid is not a valid email")
       end
     end
+
+    context "when contacts step is validated on pl" do
+      subject(:provider) do
+        build(
+          :provider,
+          current_step: "contacts",
+          main_contact: build(:main_contact),
+          public_contacts: build_list(:public_contact, 1)
+        )
+      end
+
+      before { allow(Mp::Variant).to receive(:pl?).and_return(true) }
+
+      it { is_expected.to validate_presence_of(:main_contact) }
+      it { is_expected.to validate_presence_of(:public_contacts) }
+
+      it "is valid with nested contacts and no public contact emails" do
+        expect(provider).to be_valid
+      end
+    end
   end
 
   context "OMS validations" do

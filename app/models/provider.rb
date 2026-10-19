@@ -158,7 +158,17 @@ class Provider < ApplicationRecord
     validates :country, presence: true
   end
 
-  with_options if: -> { required_for_step?("contacts") } do
+  with_options if: -> { required_for_step?("contacts") && Mp::Variant.pl? } do
+    validates :main_contact, presence: true
+    validates :public_contacts,
+              presence: true,
+              length: {
+                minimum: 1,
+                message: "are required. Please add at least one"
+              }
+  end
+
+  with_options if: -> { required_for_step?("contacts") && !Mp::Variant.pl? } do
     validates :public_contact_emails,
               presence: true,
               length: {

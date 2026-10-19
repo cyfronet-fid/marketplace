@@ -34,6 +34,18 @@ class Backoffice::Providers::StepsController < Backoffice::ProvidersController
     managers: [data_administrators_attributes: %i[id first_name last_name email _destroy]]
   }.freeze
 
+  # pl keeps the wizard fields from pl-marketplace: the full address on the
+  # location step and the nested contact forms on the contacts step. The other
+  # variants take only the country and a plain list of public contact emails.
+  PL_FORM_STEPS =
+    FORM_STEPS.merge(
+      location: %i[street_name_and_number postal_code city region country],
+      contacts: [
+        main_contact_attributes: %i[id first_name last_name email country_phone_code phone position],
+        public_contacts_attributes: %i[id first_name last_name email country_phone_code phone position _destroy]
+      ]
+    ).freeze
+
   def show
     @provider.current_step = session[:provider_step]
     prepare_step(@provider.current_step.to_sym)
@@ -141,6 +153,11 @@ class Backoffice::Providers::StepsController < Backoffice::ProvidersController
   def prepare_step(step_to_set)
     find_and_authorize
     case step_to_set
+    when :contacts
+      if Mp::Variant.pl?
+        @provider.build_main_contact if @provider.main_contact.blank?
+        @provider.public_contacts.build if @provider.public_contacts.empty?
+      end
     when :managers
       if @provider.data_administrators.blank?
         @provider.data_administrators << DataAdministrator.new(
@@ -173,7 +190,8 @@ class Backoffice::Providers::StepsController < Backoffice::ProvidersController
 
   def permitted_step_attributes
     if current_step_index + 1 < total_steps
-      params.require(:provider).permit(:current_step, *FORM_STEPS[@provider.current_step.to_sym])
+      form_steps = Mp::Variant.pl? ? PL_FORM_STEPS : FORM_STEPS
+      params.require(:provider).permit(:current_step, *form_steps[@provider.current_step.to_sym])
     else
       {}
     end
