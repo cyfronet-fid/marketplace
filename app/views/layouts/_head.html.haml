@@ -19,6 +19,6 @@
   = render "layouts/version"
   - if Rails.env.production?
     = yield :meta_tags if content_for?(:meta_tags)
-    = render "layouts/matomo"
+    = render "layouts/matomo" if Mp::Application.config.matomo_url.present?
     = render "layouts/google_analytics"
     = render "layouts/hotjar_trackingcode"

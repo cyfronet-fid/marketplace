@@ -44,7 +44,8 @@ module Mp
     config.active_storage.queues.analysis = :active_storage_analysis
     config.active_storage.queues.purge = :active_storage_purge
 
-    config.matomo_url = ENV.fetch("MP_MATOMO_URL", "//providers.eosc-portal.eu/matomo/")
+    # Matomo is off when MP_MATOMO_URL is not set.
+    config.matomo_url = ENV.fetch("MP_MATOMO_URL", nil)
     config.matomo_site_id = ENV.fetch("MP_MATOMO_SITE_ID", 1).to_i
 
     # Hierachical locales file structure
