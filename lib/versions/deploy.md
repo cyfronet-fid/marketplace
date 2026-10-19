@@ -111,10 +111,11 @@ cd <ROOT>
 | `deploy-hubs.sh`                 | Both hubs, only when a checkout, the hub compose file or `lib/versions/hub` changed. |
 | `deploy-hubs.sh pl`              | Only the pl hub, always.                                                     |
 | `deploy-hubs.sh seed pl`         | Create the Solr collections of pl if absent, then start a full load.         |
+| `deploy-hubs.sh up pl`           | Recreate the containers of the pl hub from the current images, without a build, for a changed env file. |
 | `deploy-hubs.sh down pl`         | Remove the pl hub: containers, images, database, Solr and Zookeeper volumes. |
 
 The scripts exit with status 0 after a complete run and when there was
-nothing to do. A failed variant or hub, a failed `down` or `seed` and a
+nothing to do. A failed variant or hub, a failed `down`, `seed` or `up` and a
 parallel run exit with status 1.
 
 The scripts do not set the URLs by hand. `staging-urls.sh` exports

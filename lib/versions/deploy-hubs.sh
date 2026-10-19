@@ -38,20 +38,24 @@
 # dumps are not loaded). The hub database and Solr live in named volumes;
 # `down <variant>` removes them.
 #
-# Usage:  deploy-hubs.sh [down|seed] [-f|--force] [variant ...]
+# Usage:  deploy-hubs.sh [down|seed|up] [-f|--force] [variant ...]
 #   no variant           -> both hubs, only when a checkout, the hub compose
 #                           file or lib/versions/hub changed
 #   -f / --force         -> deploy without the check for a change
 #   with variants        -> only the given hubs, forced deploy
 #   seed [variant ...]   -> create the Solr collections (if missing) and run a
 #                           full load, for example after `down`
-# The script exits with status 1 when a hub failed, when `down` or `seed`
-# failed or when another hubs deploy holds the lock, and with status 0 when
-# there was nothing to do.
+#   up [variant ...]     -> recreate the containers from the current images:
+#                           no checkout update, no build, no seed, for a
+#                           changed env file
+# The script exits with status 1 when a hub failed, when `down`, `seed` or
+# `up` failed or when another hubs deploy holds the lock, and with status 0
+# when there was nothing to do.
 # Examples:
 #   deploy-hubs.sh                  # both hubs, only when there are changes
 #   deploy-hubs.sh pl               # forced deploy of the pl hub
 #   deploy-hubs.sh seed pl          # load the pl hub's Solr again
+#   deploy-hubs.sh up pl            # apply a changed pl.env, no build
 #   deploy-hubs.sh down marketplace # remove the marketplace hub: containers, images, volumes
 set -uo pipefail
 
@@ -135,9 +139,10 @@ for arg in "$@"; do
     case "$arg" in
         down) MODE="down" ;;
         seed) MODE="seed" ;;
+        up)   MODE="up" ;;
         -f|--force) FORCE=1 ;;
         -h|--help)
-            echo "Usage: $0 [down|seed] [-f|--force] [${ALL_VARIANTS[*]}]"; exit 0 ;;
+            echo "Usage: $0 [down|seed|up] [-f|--force] [${ALL_VARIANTS[*]}]"; exit 0 ;;
         *)
             if [[ " ${ALL_VARIANTS[*]} " == *" $arg "* ]]; then
                 VARIANTS+=("$arg")
@@ -277,6 +282,32 @@ if [ "$MODE" = "seed" ]; then
     for variant in "${VARIANTS[@]}"; do
         echo "=== [${variant} hub] seed ==="
         seed_hub "$variant" || { echo "[${variant} hub] seed FAILED"; status=1; }
+    done
+    exit $status
+fi
+
+# ---------------------------------------------------------------------------
+# Mode: deploy-hubs.sh up [variant ...]
+# Recreates the containers of the given hubs (default: both) from the current
+# images: no checkout update, no build, no seed. Use it when only the env
+# file HUBS/<variant>.env changed. Compose keeps the containers whose
+# configuration did not change.
+# ---------------------------------------------------------------------------
+if [ "$MODE" = "up" ]; then
+    status=0
+    for variant in "${VARIANTS[@]}"; do
+        echo "=== [${variant} hub] up ==="
+        if [ ! -s "$HUBS/.last-deployed-${variant}" ]; then
+            echo "[${variant} hub] not deployed yet, run a deploy first"
+            status=1
+            continue
+        fi
+        if compose "$variant" up -d --no-build --remove-orphans; then
+            echo "[${variant} hub] containers are up"
+        else
+            echo "[${variant} hub] up FAILED"
+            status=1
+        fi
     done
     exit $status
 fi
