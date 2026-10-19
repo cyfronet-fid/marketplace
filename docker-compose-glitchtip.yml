@@ -12,6 +12,8 @@
 #   EMAIL_URL                  smtp://<user>:<password>@<host>:<port>, or consolemail://
 #   DEFAULT_FROM_EMAIL         sender of the alert mails
 #   ENABLE_USER_REGISTRATION   True until the first user exists, then False
+#   ENABLE_ORGANIZATION_INVITATION  True permits invitations to new email
+#                              addresses while the registration is off
 # Optional: GLITCHTIP_RETENTION_DAYS (default 90), GLITCHTIP_ENABLE_UPTIME and
 # GLITCHTIP_ENABLE_LOGS (default True). The UI port is bound to localhost for
 # the reverse proxy of the host. The default 3020 is the slot 20 of the staging

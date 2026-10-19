@@ -278,8 +278,10 @@ Setup, once:
    Another host sets `MP_GLITCHTIP_PORT` and the two name variables of
    `glitchtip.env` to a free slot of that host.
 4. Open the UI and register the first user. Then set
-   `ENABLE_USER_REGISTRATION=False` in `glitchtip.env` and run the `up -d`
-   command again.
+   `ENABLE_USER_REGISTRATION=False` and `ENABLE_ORGANIZATION_INVITATION=True`
+   in `glitchtip.env` and run the `up -d` command again. Without the second
+   variable an invitation to a new email address gets the answer "Only
+   existing users may be invited".
 5. Create an organization and one project per variant. The settings of a
    project show its DSN.
 6. Add two lines to `marketplace-<variant>.env` of each instance, then deploy
