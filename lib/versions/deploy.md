@@ -327,6 +327,46 @@ Upgrade with `docker compose -p glitchtip -f docker-compose-glitchtip.yml pull`,
 then the `up -d` command. The data lives in the volumes `glitchtip_pg-data`
 and `glitchtip_uploads`. The retention is 90 days (`GLITCHTIP_RETENTION_DAYS`).
 
+## Mail of the instances
+
+The instances send mail with the `SMTP_*` settings of
+`config/environments/production.rb`; `.env.example` lists the variables.
+`FROM_EMAIL` is the sender address. The SMTP server of the staging host
+listens on the port 3025 of `DOMAIN` without STARTTLS. Add the lines to
+`marketplace-<variant>.env` of each instance, then deploy the variant:
+
+```
+SMTP_ADDRESS=DOMAIN
+SMTP_PORT=3025
+SMTP_STARTTLS=false
+SMTP_USERNAME=marketplace
+SMTP_PASSWORD=marketplace@DOMAIN
+FROM_EMAIL=marketplace@DOMAIN
+```
+
+A restart does not read the env file again; the deploy recreates the
+containers, which does. Test from the web container of an instance:
+
+```sh
+docker exec mp-multitenancy-pl-web-1 bin/rails runner \
+  'ApplicationMailer.new.mail(to: "test@example.com", subject: "test", body: "test").deliver'
+```
+
+GlitchTip sends the alert mails through the same server. Set the two
+variables in `glitchtip.env`, then run the `up -d` command of the error
+tracking section again. Percent-encode the `@` of the password as `%40`:
+
+```
+EMAIL_URL=smtp://marketplace:marketplace%40DOMAIN@DOMAIN:3025
+DEFAULT_FROM_EMAIL=glitchtip@DOMAIN
+```
+
+Test from the GlitchTip web container:
+
+```sh
+docker exec glitchtip-web-1 ./manage.py sendtestemail test@example.com
+```
+
 ## Logs across deploys
 
 A deploy recreates the containers, and Docker removes the log of a removed
