@@ -85,8 +85,11 @@ ROOT/hubs/.last-deployed-<variant>        state of the last complete hub deploy
 5. Write `ROOT/hubs/<variant>.env` for pl and marketplace. The header of the
    hub compose file lists the variables: `MP_API_TOKEN` of a coordinator of
    the instance, `SECRET_KEY`, `OIDC_CLIENT_ID`, `OIDC_CLIENT_SECRET` and
-   `LOG_LEVEL`. The OIDC client is a client of the Keycloak `core` of the host with
-   the redirect URI `<hub URL>/api/web/auth/checkin`.
+   `LOG_LEVEL`. The OIDC client of the pl hub is a client of the `pl-node`
+   Keycloak of `access.eosc.pl`. The OIDC client of the marketplace hub is a
+   client of the Keycloak `core` of the host. Both clients need the redirect
+   URI `<hub URL>/api/web/auth/checkin`. The compose file of the hub sets the
+   OIDC endpoints; endpoint values in the env file have no effect.
 
 ## Run
 

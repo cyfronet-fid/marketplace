@@ -17,8 +17,8 @@
 # script after the first deploy. The settings below follow the services of
 # this file. The env file supplies: MP_API_TOKEN (token of a coordinator of
 # the pl instance, for /api/v1/ess), SECRET_KEY, OIDC_CLIENT_ID and
-# OIDC_CLIENT_SECRET (a client of the Keycloak realm below with the redirect
-# URI MP_HUB_URL/api/web/auth/checkin), LOG_LEVEL.
+# OIDC_CLIENT_SECRET (a client of the pl-node Keycloak of access.eosc.pl
+# below, with the redirect URI MP_HUB_URL/api/web/auth/checkin), LOG_LEVEL.
 # The public URLs come from the environment of the compose call, without a
 # trailing slash (the deploy script exports the staging values from
 # lib/versions/staging-urls.sh; a local deploy sets them in the shell or in
@@ -32,12 +32,12 @@
 # hub; 8116 (transform api) and 8916 (Solr) are bound to localhost for the
 # script and for an ssh tunnel.
 x-keycloak: &keycloak
-  OIDC_HOST: https://keycloak.docker-fid.grid.cyf-kr.edu.pl
-  OIDC_ISSUER: https://keycloak.docker-fid.grid.cyf-kr.edu.pl/realms/core
-  OIDC_AUTH_ENDPOINT: /realms/core/protocol/openid-connect/auth
-  OIDC_TOKEN_ENDPOINT: /realms/core/protocol/openid-connect/token
-  OIDC_USERINFO_ENDPOINT: /realms/core/protocol/openid-connect/userinfo
-  OIDC_JWKS_ENDPOINT: /realms/core/protocol/openid-connect/certs
+  OIDC_HOST: https://access.eosc.pl
+  OIDC_ISSUER: https://access.eosc.pl/auth/realms/pl-node
+  OIDC_AUTH_ENDPOINT: /auth/realms/pl-node/protocol/openid-connect/auth
+  OIDC_TOKEN_ENDPOINT: /auth/realms/pl-node/protocol/openid-connect/token
+  OIDC_USERINFO_ENDPOINT: /auth/realms/pl-node/protocol/openid-connect/userinfo
+  OIDC_JWKS_ENDPOINT: /auth/realms/pl-node/protocol/openid-connect/certs
   OIDC_AAI_NEW_API: "false"
 
 # The transform service: SOLR_URL needs the trailing slash; the configset
