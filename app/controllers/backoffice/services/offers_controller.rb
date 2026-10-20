@@ -19,6 +19,8 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
     authorize(@offer)
   end
 
+  def edit; end
+
   def create
     save_as_draft = params[:commit] == save_as_draft_title
     template = save_as_draft ? offer_draft_template : offer_template
@@ -40,19 +42,16 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
     end
   end
 
-  def edit
-  end
-
   def update
     save_as_draft = params[:commit] == save_as_draft_title
     template = permitted_attributes(Offer)
 
     if save_as_draft
       template[:name] = params["name"]
-      Offer::UpdateAsDraft.call(@offer, transform_attributes(template, @service))
+      Offer::UpdateAsDraft.call(@offer, transform_attributes(template))
       redirect_to backoffice_service_offers_path(@service), notice: "Offer updated successfully and drafted"
       nil
-    elsif Offer::Update.call(@offer, transform_attributes(template, @service))
+    elsif Offer::Update.call(@offer, transform_attributes(template))
       redirect_to backoffice_service_offers_path(@service), notice: "Offer updated successfully"
     else
       render :edit, status: :bad_request
@@ -66,6 +65,10 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
     else
       render :edit, status: :bad_request
     end
+  end
+
+  def exit
+    redirect_to backoffice_service_offers_path(params[:service_id]), status: :see_other
   end
 
   def fetch_subtypes
@@ -100,18 +103,18 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
   end
 
   def offer_template
-    temp = transform_attributes(permitted_attributes(Offer), @service)
+    temp = transform_attributes(permitted_attributes(Offer))
     Offer.new(temp.merge(service: @service, status: :published))
   end
 
   def offer_draft_template
-    temp = transform_attributes(permitted_attributes(Offer), @service)
+    temp = transform_attributes(permitted_attributes(Offer))
     Offer.new(temp.merge(service: @service, status: :draft))
   end
 
-  def transform_attributes(template, service)
-    template["service_id"] = service.id
-
+  # An offer has no service_id since offers became polymorphic (orderable);
+  # create sets the service through `service:`, update keeps the orderable.
+  def transform_attributes(template)
     template["parameters_attributes"] = [] if template["parameters_attributes"].blank?
     template["oms_params"] = {} if template["primary_oms_id"].present? && template["oms_params"].nil?
     template.except(:from)

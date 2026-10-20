@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Service::Publish, backend: true do
+RSpec.describe Service::Publish, :backend do
   context "publish" do
     it "publish service" do
       service = create(:service)
@@ -16,7 +16,12 @@ RSpec.describe Service::Publish, backend: true do
       user = create(:user_with_interests)
       service = create(:service, scientific_domains: user.scientific_domains, categories: user.categories)
 
-      expect { described_class.call(service) }.to change { ActionMailer::Base.deliveries.count }.by(1)
+      expect { described_class.call(service) }.to have_enqueued_mail(ServiceMailer, :new_service).with(
+        service,
+        anything,
+        anything,
+        user.email
+      )
     end
 
     it "sends email only to interested users" do
@@ -24,25 +29,61 @@ RSpec.describe Service::Publish, backend: true do
       common_scientific_domains = users.first.scientific_domains + users.second.scientific_domains
       common_categories = users.first.categories + users.second.categories
       service = create(:service, scientific_domains: common_scientific_domains, categories: common_categories)
-      expect { described_class.call(service) }.to change { ActionMailer::Base.deliveries.count }.by(2)
-      expect(ActionMailer::Base.deliveries.last(2).first.to).to contain_exactly(users.first.email)
-      expect(ActionMailer::Base.deliveries.last.to).to contain_exactly(users.second.email)
+      expect { described_class.call(service) }.to have_enqueued_mail(
+        ServiceMailer,
+        :new_service
+      ).twice.and have_enqueued_mail(ServiceMailer, :new_service).with(
+        service,
+        anything,
+        anything,
+        users.first.email
+      ).and have_enqueued_mail(ServiceMailer, :new_service).with(
+        service,
+        anything,
+        anything,
+        users.second.email
+      )
     end
   end
 
-  context "#bundled_offers" do
+  context "when the service cannot be updated" do
+    subject(:publish) { described_class.call(service) }
+
+    let(:service) { create(:service, status: :draft) }
+    let!(:offer) { create(:offer, service: service, status: :draft) }
+
+    before do
+      allow(service).to receive(:update).and_return(false)
+      allow(Service::Mailer::SendToSubscribers).to receive(:new).and_call_original
+      publish
+    end
+
+    it "returns false" do
+      expect(publish).to be false
+    end
+
+    it "leaves the single offer unpublished" do
+      expect(offer.reload).to be_draft
+    end
+
+    it "does not notify subscribers" do
+      expect(Service::Mailer::SendToSubscribers).not_to have_received(:new)
+    end
+  end
+
+  describe "#bundled_offers" do
     it "doesn't send notification if service wasn't made public" do
       service = build(:service, status: "errored")
       create(:offer, service: service)
       create(:bundle, service: service, offers: [build(:offer)])
-      expect { described_class.call(service) }.not_to change { ActionMailer::Base.deliveries.count }
+      expect { described_class.call(service) }.not_to have_enqueued_mail
     end
 
     it "sends notification if service made public" do
       service = create(:service, status: "draft")
       create(:offer, service: service)
       create(:bundle, service: service)
-      expect { described_class.call(service) }.to change { ActionMailer::Base.deliveries.count }.by(1)
+      expect { described_class.call(service) }.to have_enqueued_mail(OfferMailer, :offer_bundled)
     end
   end
 end

@@ -3,6 +3,7 @@
 class Backoffice::Providers::StepsController < Backoffice::ProvidersController
   include Backoffice::ProvidersHelper
   include UrlHelper
+
   skip_before_action :backoffice_authorization!
   before_action :validate_wizard_action, only: :show
   before_action :current_step, only: :show
@@ -33,6 +34,18 @@ class Backoffice::Providers::StepsController < Backoffice::ProvidersController
     managers: [data_administrators_attributes: %i[id first_name last_name email _destroy]]
   }.freeze
 
+  # pl keeps the wizard fields from pl-marketplace: the full address on the
+  # location step and the nested contact forms on the contacts step. The other
+  # variants take only the country and a plain list of public contact emails.
+  PL_FORM_STEPS =
+    FORM_STEPS.merge(
+      location: %i[street_name_and_number postal_code city region country],
+      contacts: [
+        main_contact_attributes: %i[id first_name last_name email country_phone_code phone position],
+        public_contacts_attributes: %i[id first_name last_name email country_phone_code phone position _destroy]
+      ]
+    ).freeze
+
   def show
     @provider.current_step = session[:provider_step]
     prepare_step(@provider.current_step.to_sym)
@@ -44,21 +57,43 @@ class Backoffice::Providers::StepsController < Backoffice::ProvidersController
     provider_attrs = saved_params.merge permitted_step_attributes
     @provider.assign_attributes provider_attrs.except("logo")
     provider_attrs["logo"] = logo(provider_attrs) if provider_attrs["logo"].present? && current_step_index.zero?
+
+    if save_as_draft_requested?
+      return save_as_draft if Mp::Variant.pl? || Mp::Variant.whitelabel?
+
+      return head :unprocessable_content
+    end
+
     if @provider.valid?
       session[session_key] = provider_attrs
       redirect_to_next_step(params[:commit])
     else
-      render :show, status: :unprocessable_entity
+      render :show, status: :unprocessable_content
     end
   end
 
-  def destroy
-  end
+  def destroy; end
 
   private
 
+  # pl and whitelabel: lets a coordinator save an in-progress registration
+  # mid-wizard instead of finishing all steps (ADR-0001 controller audit,
+  # backoffice-providers-steps-controller.md). Both variants offer the button
+  # in the exit modal of their wizard (common_parts/modals/_exit_modal of
+  # CUSTOMIZATION_PATH); marketplace has no such button.
+  def save_as_draft
+    Provider::Draft.new(@provider).call
+    clear_session_data
+    redirect_to backoffice_providers_path(format: :html), notice: "Provider saved successfully as a draft"
+  end
+
+  def save_as_draft_requested?
+    params[:commit] == save_as_draft_title
+  end
+
   def target_step(commit)
     raise CommitValueError, "Unknown commit value" if commit.blank?
+
     @provider.current_step = session[:provider_step]
 
     case commit
@@ -102,11 +137,12 @@ class Backoffice::Providers::StepsController < Backoffice::ProvidersController
           ar.save
         end
       else
-        render :show, status: :unprocessable_entity
+        # Without the return the redirect below raises a DoubleRenderError.
+        return render :show, status: :unprocessable_content
       end
     else
       init_provider(session_key, saved_params.except("logo"))
-      render :show, status: :unprocessable_entity unless @provider.update(saved_params)
+      return render :show, status: :unprocessable_content unless @provider.update(saved_params)
     end
     @provider.update_logo!(@logo) if @logo.present?
     action = session.delete(:wizard_action)
@@ -117,6 +153,11 @@ class Backoffice::Providers::StepsController < Backoffice::ProvidersController
   def prepare_step(step_to_set)
     find_and_authorize
     case step_to_set
+    when :contacts
+      if Mp::Variant.pl?
+        @provider.build_main_contact if @provider.main_contact.blank?
+        @provider.public_contacts.build if @provider.public_contacts.empty?
+      end
     when :managers
       if @provider.data_administrators.blank?
         @provider.data_administrators << DataAdministrator.new(
@@ -149,14 +190,15 @@ class Backoffice::Providers::StepsController < Backoffice::ProvidersController
 
   def permitted_step_attributes
     if current_step_index + 1 < total_steps
-      params.require(:provider).permit(:current_step, *FORM_STEPS[@provider.current_step.to_sym])
+      form_steps = Mp::Variant.pl? ? PL_FORM_STEPS : FORM_STEPS
+      params.require(:provider).permit(:current_step, *form_steps[@provider.current_step.to_sym])
     else
       {}
     end
   end
 
   def validate_wizard_action
-    if session[:wizard_action].nil? || !%w[create update].include?(session[:wizard_action])
+    if session[:wizard_action].nil? || %w[create update].exclude?(session[:wizard_action])
       raise WizardActionError, "wizard_action parameter not set"
     end
   end
@@ -189,9 +231,9 @@ class Backoffice::Providers::StepsController < Backoffice::ProvidersController
     return unless params.dig(:provider, :public_contact_emails).is_a?(String)
 
     params[:provider][:public_contact_emails] = params[:provider][:public_contact_emails]
-      .split(/\r?\n/)
-      .map(&:strip)
-      .reject(&:blank?)
+                                                .split(/\r?\n/)
+                                                .map(&:strip)
+                                                .compact_blank
   end
 
   def session_key

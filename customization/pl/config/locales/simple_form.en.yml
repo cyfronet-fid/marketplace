@@ -1,0 +1,178 @@
+en:
+  simple_form:
+    add_new_array_item:
+      service:
+        multimedia: multimedia
+        use_cases_url: use case url
+        certifications: certification
+        standards: standard
+        open_source_technologies: open source technology
+        grant_project_names: grant/project name
+        changelog: changelog entry
+        related_platforms: related platform
+      provider:
+        multimedia: multimedia
+        tag_list: tag
+        affiliations: affiliation
+        certifications: certification
+        national_roadmaps: National roadmap
+      catalogue:
+        tags: tag
+        affiliations: affiliation
+      datasource:
+        multimedia: multimedia
+        tag_list: tag
+        use_cases_url: use case url
+        certifications: certification
+        standards: standard
+        open_source_technologies: open source technology
+        grant_project_names: grant/project name
+        changelog: changelog entry
+        related_platforms: related platform
+
+    "yes": 'Yes'
+    "no": 'No'
+    required:
+      text: 'required'
+      mark: '*'
+      # You can uncomment the line below if you need to overwrite the whole required html.
+      # When using html, text and mark won't be used.
+      # html: '<abbr title="required">*</abbr>'
+    error_notification:
+      default_message: "Please review the problems below:"
+    # Examples
+    labels:
+      defaults:
+        terms_and_conditions: Accept terms and conditions
+      question:
+        new: SEND
+        author: Name and surname
+        text: Your question to provider about %{name}
+      report:
+        text: Describe problem precisely
+      project_item:
+        additional_comment: Please enter additional details of your request
+      service:
+        grant_project_names: Grant/Project names
+        required_services: Required Services
+        related_services: Suggested compatible services
+      user:
+        categories: Categories of interests
+        scientific_domains: Scientific domains of interests
+        categories_updates: New Service in Category of interest
+        scientific_domains_updates: New Service in Scientific domain of interest
+      project:
+        name: Project name
+        reason_for_access: Reason to request access to the EOSC resources
+        country_of_origin: Origin country
+        countries_of_partnership: Collaboration countries
+      provider:
+        esfri_type: ESFRI Type
+        esfri_domains: ESFRI Domains
+      offer:
+        internal: Use EOSC Portal as the order management platform
+        order_url: Order / access URL
+        primary_oms_id: Order Management System
+    #   defaults:
+    #     password: 'Password'
+    #   user:
+    #     new:
+    #       email: 'E-mail to sign in.'
+    #     edit:
+    #       email: 'E-mail.'
+    hints:
+      provider:
+        website: &url_hint |
+          Url should start with http:// or https:// prefix [e.g. https://example.com]
+        link_multimedia_urls:
+          url: *url_hint
+      lead_section:
+        slug: |
+          You can add sections with slugs: "learn-more" or "use-cases". You will see
+          them on home page
+      report:
+        text: |
+          We will send your report to our customer service.
+          You will receive an answer to %{email} email address.
+      question:
+        text: |
+          We will send your question to the service provider.
+          You will receive an answer to %{email} email address.
+      lead:
+        header: |
+          Preferred length of header is up to 20 characters for learn more section
+          and up to 60 characters for use cases section
+        body: Preferred length of description is up to 140 characters
+      service:
+        link_multimedia_urls:
+          url: *url_hint
+        link_use_cases_urls:
+          url: *url_hint
+        training_information_url: *url_hint
+        helpdesk_url: *url_hint
+        manual_url: *url_hint
+        webpage_url: |
+          Url should start with http:// or https:// prefix [e.g. https://example.com]<br/>
+          This url will be available under "Webpage" in Support section in the service view
+        resource_level_url: *url_hint
+        access_policies_url: *url_hint
+        terms_of_use_url: *url_hint
+        logo: |
+          Supported logo formats: png, gif, jpg, jpeg, pjpeg, tiff,
+          vnd.adobe.photoshop and vnd.microsoft.icon
+        helpdesk_email: |
+          Email address [e.g. email@example.com]
+      project:
+        email: |
+          Email address in your institute's domain [e.g. email@example.com]
+        project_website_url: *url_hint
+        webpage: *url_hint
+        company_website_url: *url_hint
+      project_item:
+        additional_comment: |
+          Use it to describe your additional comments/questions related to the
+          service. The text is to be sent to the service provider and will be
+          accessible in the "Contact with service provider" tab.
+    #     username: 'User name to sign in.'
+    #     password: 'No special characters, please.'
+    # include_blanks:
+    #   defaults:
+    #     age: 'Rather not say'
+    # prompts:
+    #   defaults:
+    #     age: 'Select your age'
+    options:
+      defaults:
+        customer_typology:
+          single_user: "Single user"
+          research: "Representing a research community"
+          private_company: "Representing a private company"
+          project: "Representing a project"
+          none: "Customer typology not set"
+      service:
+        phase:
+          discovery: "Discovery (min. TRL 1)"
+          planned: "Planned (min. TRL 3)"
+          alpha: "Alpha (min. TRL 5)"
+          beta: "Beta (min. TRL 7)"
+          production: "Production (min. TRL 8)"
+          retired: "Retired (n/a)"
+        status:
+          draft: "Draft"
+          unpublished: "Unpublished"
+          published: "Published"
+          suspended: "Suspended"
+          errored: "Errored"
+          deleted: "Deleted"
+    project_item:
+        status:
+          created: Created
+          registered: Open
+          in_progress: In progress
+          ready: Active
+          rejected: Rejected
+  helpers:
+    submit:
+      user:
+        update: Save changes
+        delete: Delete

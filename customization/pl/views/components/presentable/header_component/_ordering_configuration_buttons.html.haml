@@ -1,0 +1,7 @@
+= link_to _("Back to the service"), service_offers_path(service),
+      class: "btn btn-primary d-block mb-3"
+= link_to _("Set parameters and offers"), service_ordering_configuration_path(service,
+                                                                                anchor: "offers",
+                                                                                from: params[:from]),
+    class: "btn btn-outline-secondary d-block mb-3 no-arrow"
+= render "layouts/common_parts/services/order_type_label", object: service

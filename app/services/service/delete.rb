@@ -1,17 +1,14 @@
 # frozen_string_literal: true
 
-class Service::Delete < ApplicationService
-  def initialize(service_eid, source: "eosc_registry")
-    super()
-    @service =
-      Service.joins(:sources).find_by("service_sources.source_type": source, "service_sources.eid": service_eid)
-  end
-
+class Service::Delete < Service::ApplicationService
   def call
-    if @service
-      @service.update(status: :deleted)
-      @service.offers.each { |o| Offer::Draft.call(o) }
-      @service
+    @service.status = :deleted
+    result = @service.save!(validate: false)
+    if result
+      @service.bundles.each { |b| DeleteJob.perform_later(b) }
+      @service.offers.each { |o| DeleteJob.perform_later(o) }
+      @service.reindex
     end
+    result
   end
 end

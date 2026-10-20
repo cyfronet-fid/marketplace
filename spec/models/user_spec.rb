@@ -3,17 +3,37 @@
 require "rails_helper"
 require_relative "publishable"
 
-RSpec.describe User, backend: true do
+RSpec.describe User, :backend do
   include_examples "publishable"
 
-  it { should validate_presence_of(:first_name) }
-  it { should validate_presence_of(:last_name) }
-  it { should validate_presence_of(:email) }
-  it { should validate_presence_of(:uid) }
+  it { is_expected.to validate_presence_of(:first_name) }
+  it { is_expected.to validate_presence_of(:last_name) }
+  it { is_expected.to validate_presence_of(:email) }
+  it { is_expected.to validate_presence_of(:uid) }
 
-  it { should have_many(:projects).dependent(:destroy) }
+  it { is_expected.to have_many(:projects).dependent(:destroy) }
+  it { is_expected.to have_many(:identities).dependent(:destroy) }
 
-  context "#full_name" do
+  context "when running as pl" do
+    subject { build(:user) }
+
+    before { allow(Mp::Variant).to receive(:pl?).and_return(true) }
+
+    it { is_expected.not_to validate_presence_of(:uid) }
+    it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
+
+    describe "#uid" do
+      subject(:user) { create(:user, uid: nil) }
+
+      let!(:primary_identity) { create(:user_identity, user: user, uid: "checkin-uid", primary: true) }
+
+      it "is read from the primary identity" do
+        expect(user.reload.uid).to eq(primary_identity.uid)
+      end
+    end
+  end
+
+  describe "#full_name" do
     it "is composed from first and last name" do
       user = build(:user, first_name: "John", last_name: "Rambo")
 
@@ -21,7 +41,7 @@ RSpec.describe User, backend: true do
     end
   end
 
-  context "#email" do
+  describe "#email" do
     it "two users with the same emails are created" do
       email = "rambo@john.eu"
       u1 = build(:user, first_name: "john", last_name: "rambo", email: email)
@@ -31,11 +51,11 @@ RSpec.describe User, backend: true do
     end
   end
 
-  context "#service_owner?" do
+  describe "#service_owner?" do
     it "is false when user does not own any services" do
       user = create(:user)
 
-      expect(user).to_not be_service_owner
+      expect(user).not_to be_service_owner
     end
 
     it "is true when user owns services" do
@@ -124,7 +144,7 @@ RSpec.describe User, backend: true do
 
   # This is relevant for users who where created before introducing simple_token_authentication, they will have null
   # authentication_tokens.
-  context "#valid_token?" do
+  describe "#valid_token?" do
     it "is false when token is nil" do
       user = build(:user)
 
@@ -146,7 +166,8 @@ RSpec.describe User, backend: true do
 
   context "OMS validations" do
     subject { build(:user, administrated_omses: build_list(:oms, 2)) }
-    it { should have_many(:administrated_omses) }
+
+    it { is_expected.to have_many(:administrated_omses) }
   end
 
   context "authentication_token" do

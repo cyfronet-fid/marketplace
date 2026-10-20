@@ -1,0 +1,48 @@
+.card.rounded
+  %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
+              [:trls, :life_cycle_statuses, :certifications, :standards,
+              :open_source_technologies, :version, :last_update, :changelog])),
+                data: { toggle: "collapse", target: "#maturity" },
+                aria: { expanded: true, controls: "maturity" } }
+    .card-header.text-left{ id: "maturity-header" }
+      .row
+        .col-10
+          = _("Maturity")
+        .col-2.text-right
+          .collapse-icon
+            %i.fas.fa-chevron-down
+            %i.fas.fa-chevron-up
+  .collapse{ id: "maturity", "aria-labelledby": "maturity-header",
+            "data-parent": "#accordion-form",
+            class: ("show" unless collapsed?(service, [:trls, :life_cycle_statuses, :certifications, :standards,
+                                                      :open_source_technologies, :version,
+                                                      :last_update, :changelog])) }
+    .card-body
+      = f.association :trls, label: "Trl", input_html: { data: { choice: true, multiple: false } },
+                          disabled: cant_edit([trl_ids: []])
+      = f.association :life_cycle_statuses, label: "Life cycle status", input_html: { data: { choice: true } },
+                              disabled: cant_edit([life_cycle_status_ids: []])
+      = f.input :certifications, multiple: true, input_html: { class: "form-control text optional" },
+                wrapper_html: { "data-service-target" => "certifications" },
+                disabled: cant_edit([certifications: []]), as: :array
+      = link_to_add_array_field("service", "certifications")
+      .mt-4
+        = f.input :standards, multiple: true, input_html: { class: "form-control text optional" },
+                  wrapper_html: { "data-service-target" => "standards" },
+                  disabled: cant_edit([standards: []]), as: :array
+        = link_to_add_array_field("service", "standards")
+      .mt-4
+        = f.input :open_source_technologies, multiple: true, input_html: { class: "form-control text optional" },
+                  wrapper_html: { "data-service-target" => "openSourceTechnologies" },
+                  disabled: cant_edit([open_source_technologies: []]), as: :array
+        = link_to_add_array_field("service", "open_source_technologies")
+      .mt-4
+        = f.input :version, disabled: cant_edit(:version)
+      = f.input :last_update, as: :date_time_picker, disabled: cant_edit(:last_update)
+
+      .row.service-changelog
+        .col-12
+          = f.input :changelog, multiple: true, as: :array, disabled: cant_edit([changelog: []]),
+                   wrapper_html: { "data-service-target" => "changelog" },
+                   input_html: { class: "form-control text optional" }
+      = link_to_add_array_field("service", "changelog")

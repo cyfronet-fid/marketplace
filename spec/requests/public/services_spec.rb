@@ -6,6 +6,7 @@ RSpec.describe "Services" do
   context "as a logged in service portfolio manager" do
     let(:user) { create(:user, roles: [:coordinator]) }
     let(:provider) { create(:provider, data_administrators: [build(:data_administrator, email: user.email)]) }
+
     before { login_as(user) }
 
     context "when service has deleted status" do
@@ -313,6 +314,7 @@ RSpec.describe "Services" do
 
   context "as a logged in user" do
     let(:user) { create(:user) }
+
     before { login_as(user) }
 
     context "when service has deleted status" do
@@ -500,6 +502,24 @@ RSpec.describe "Services" do
 
       description = response.parsed_body.at_css(".service-description-container")
       expect(description.text.squish).to eq("A useful service")
+    end
+  end
+
+  context "when the offers page of a service without offers is opened without a previous search" do
+    let(:service) { create(:service) }
+
+    before do
+      login_as(create(:user))
+      stub_request(:post, %r{/similar_services/recommendation}).to_return(
+        status: 200,
+        body: { recommendations: [] }.to_json,
+        headers: { "Content-Type" => "application/json" }
+      )
+      get service_offers_path(service)
+    end
+
+    it "redirects to the service page" do
+      expect(response).to redirect_to(service_path(service))
     end
   end
 end

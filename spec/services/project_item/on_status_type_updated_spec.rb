@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ProjectItem::OnStatusTypeUpdated, backend: true do
+RSpec.describe ProjectItem::OnStatusTypeUpdated, :backend do
   let(:service) { create(:service, order_url: "http://not.empty") }
   let(:offer) { create(:offer, service: service) }
 
@@ -10,44 +10,33 @@ RSpec.describe ProjectItem::OnStatusTypeUpdated, backend: true do
     let(:project_item) { build(:project_item, offer: offer, order_type: :order_required, order_url: "") }
 
     it "sends email on :waiting_for_response" do
-      expect { project_item.update!(status_type: :waiting_for_response) }.to change {
-        ActionMailer::Base.deliveries.count
-      }.by(1)
-
-      expect(ActionMailer::Base.deliveries.last.subject).to eq(
-        "Status of your service access request in the " + "EOSC Portal Marketplace has changed to WAITING FOR RESPONSE"
-      )
+      expect { project_item.update!(status_type: :waiting_for_response) }.to have_enqueued_mail(
+        ProjectItemMailer,
+        :waiting_for_response
+      ).with(project_item)
     end
 
     it "sends email on :approved" do
-      expect { project_item.update!(status_type: :approved) }.to change { ActionMailer::Base.deliveries.count }.by(1)
-
-      expect(ActionMailer::Base.deliveries.last.subject).to eq(
-        "Status of your service access request in the EOSC Portal Marketplace has changed to APPROVED"
+      expect { project_item.update!(status_type: :approved) }.to have_enqueued_mail(ProjectItemMailer, :approved).with(
+        project_item
       )
     end
 
     it "sends email on :ready" do
-      expect { project_item.update!(status_type: :ready) }.to change { ActionMailer::Base.deliveries.count }.by(1)
-
-      expect(ActionMailer::Base.deliveries.last.subject).to eq(
-        "Status of your service access request in the EOSC Portal Marketplace has changed to READY TO USE"
+      expect { project_item.update!(status_type: :ready) }.to have_enqueued_mail(ProjectItemMailer, :ready_to_use).with(
+        project_item
       )
     end
 
     it "sends email on :rejected" do
-      expect { project_item.update!(status_type: :rejected) }.to change { ActionMailer::Base.deliveries.count }.by(1)
-
-      expect(ActionMailer::Base.deliveries.last.subject).to eq(
-        "Status of your service access request in the EOSC Portal Marketplace has changed to REJECTED"
+      expect { project_item.update!(status_type: :rejected) }.to have_enqueued_mail(ProjectItemMailer, :rejected).with(
+        project_item
       )
     end
 
     it "sends email on :closed" do
-      expect { project_item.update!(status_type: :closed) }.to change { ActionMailer::Base.deliveries.count }.by(1)
-
-      expect(ActionMailer::Base.deliveries.last.subject).to eq(
-        "Status of your service access request in the EOSC Portal Marketplace has changed to CLOSED"
+      expect { project_item.update!(status_type: :closed) }.to have_enqueued_mail(ProjectItemMailer, :closed).with(
+        project_item
       )
     end
 
@@ -55,30 +44,27 @@ RSpec.describe ProjectItem::OnStatusTypeUpdated, backend: true do
       before { allow(project_item.service).to receive(:aod?).and_return(true) }
 
       it "sends email on :ready" do
-        expect { project_item.update!(status_type: :ready) }.to change { ActionMailer::Base.deliveries.count }.by(1)
-
-        expect(ActionMailer::Base.deliveries.last.subject).to eq("EGI Applications on Demand service approved")
+        expect { project_item.update!(status_type: :ready) }.to have_enqueued_mail(
+          ProjectItemMailer,
+          :aod_accepted
+        ).with(project_item)
       end
 
       context "for voucherable?" do
         before { allow(project_item.offer).to receive(:voucherable?).and_return(true) }
 
         it "sends email on :ready" do
-          expect { project_item.update!(status_type: :ready) }.to change { ActionMailer::Base.deliveries.count }.by(1)
-
-          expect(ActionMailer::Base.deliveries.last.subject).to eq(
-            "Elastic Cloud Compute Cluster (EC3) service with voucher approved"
-          )
+          expect { project_item.update!(status_type: :ready) }.to have_enqueued_mail(
+            ProjectItemMailer,
+            :aod_voucher_accepted
+          ).with(project_item)
         end
 
         it "sends email on :rejected" do
-          expect { project_item.update!(status_type: :rejected) }.to change { ActionMailer::Base.deliveries.count }.by(
-            1
-          )
-
-          expect(ActionMailer::Base.deliveries.last.subject).to eq(
-            "Elastic Cloud Compute Cluster (EC3) service with voucher rejected"
-          )
+          expect { project_item.update!(status_type: :rejected) }.to have_enqueued_mail(
+            ProjectItemMailer,
+            :aod_voucher_rejected
+          ).with(project_item)
         end
       end
     end

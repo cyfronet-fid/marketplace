@@ -1,0 +1,7 @@
+- if object.nodes.any?
+  %dl.mb-0.d-flex
+    %dt
+      %span
+        = _("EOSC Node") + ":"
+    %dd
+      .categorization-content= node_link(object, preview: local_assigns[:preview])

@@ -2,6 +2,7 @@
 
 class Api::V1::Ess::ApplicationController < ActionController::API
   include Pundit::Authorization
+
   acts_as_token_authentication_handler_for User, fallback: :exception
 
   before_action :perform_authorization
@@ -9,10 +10,16 @@ class Api::V1::Ess::ApplicationController < ActionController::API
   before_action :load_object, only: :show
 
   rescue_from Pundit::NotAuthorizedError do
-    render json: not_authorized, status: 403
+    render json: not_authorized, status: :forbidden
   end
 
-  COLLECTIONS = %w[providers services datasources offers bundles catalogues deployable_services].freeze
+  # Deployable services (and the polymorphic Offer#orderable they hang off)
+  # are a marketplace-only data model per ADR-0001's controller audit -
+  # pl-marketplace and whitelabel-marketplace don't carry that entity.
+  COLLECTIONS = (
+    %w[providers services datasources offers bundles catalogues] +
+      (Mp::Variant.marketplace? ? %w[deployable_services] : [])
+  ).freeze
 
   def policy_scope(scope = controller_class, policy_scope_class: nil)
     if scope == Datasource
@@ -47,7 +54,7 @@ class Api::V1::Ess::ApplicationController < ActionController::API
       policy_scope.respond_to?(:friendly) ? policy_scope.friendly.find(params[:id]) : policy_scope.find(params[:id])
     instance_variable_set("@#{controller_name.singularize}", object)
   rescue ActiveRecord::RecordNotFound
-    render json: { error: "Resource not found" }, status: 404
+    render json: { error: "Resource not found" }, status: :not_found
   end
 
   def controller_class(predefined = nil)

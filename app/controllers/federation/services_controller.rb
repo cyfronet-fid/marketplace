@@ -2,6 +2,7 @@
 
 class Federation::ServicesController < ApplicationController
   include Service::Searchable
+
   layout "clear"
 
   # Avoid initializing local search filters on the federation page to prevent ES queries with external EIDs
@@ -18,6 +19,7 @@ class Federation::ServicesController < ApplicationController
 
     unless api_base_url.present?
       @json_data = { error: "Federation API not configured" }
+      @status = :service_unavailable
       return respond_to_format
     end
 
@@ -52,13 +54,14 @@ class Federation::ServicesController < ApplicationController
           @available_nodes = extract_available_nodes
           load_filter_options
         elsif @aggregator_type == "pc"
+          json_response = JSON.parse(response.body)
+          unless json_response.is_a?(Hash)
+            Rails.logger.error "Federation API returned unexpected format. Expected Hash, got #{json_response.class}"
+            @json_data = { error: "Unexpected response format" }
+            @status = :bad_gateway
+            return respond_to_format
+          end
           begin
-            json_response = JSON.parse(response.body)
-            unless json_response.is_a?(Hash)
-              Rails.logger.error "Federation API returned unexpected format. Expected Hash, got #{json_response.class}"
-              @json_data = { error: "Unexpected response format" }
-              return respond_to_format
-            end
             @json_data = map_federation_response(json_response)
             # Extract highlights from JSON response
             @highlights = @json_data["highlights"] || {}
@@ -68,38 +71,49 @@ class Federation::ServicesController < ApplicationController
           rescue StandardError => e
             Rails.logger.error "ERROR in mapping: #{e.class} - #{e.message}\n#{e.backtrace[0..5].join("\n")}"
             @json_data = { error: "API Mapping Failed" }
+            @status = :internal_server_error
           end
         end
       when "404"
         @json_data = { error: "Federation API endpoint not found" }
+        @status = :bad_gateway
       when "500", "502", "503", "504"
         Rails.logger.error "Federation API server error: #{response.code} - #{response.message}"
         @json_data = { error: "Federation API server error" }
+        @status = :bad_gateway
       else
         Rails.logger.error "Federation API returned #{response.code}: #{response.message}"
         @json_data = { error: "API returned #{response.code}: #{response.message}" }
+        @status = :bad_gateway
       end
     rescue JSON::ParserError => e
       Rails.logger.error "Federation API JSON parse error: #{e.message}"
       @json_data = { error: "Invalid API response format" }
+      @status = :bad_gateway
     rescue Net::ReadTimeout => e
       Rails.logger.error "Federation API read timeout: #{e.message}"
       @json_data = { error: "API request timed out" }
+      @status = :gateway_timeout
     rescue Net::OpenTimeout => e
       Rails.logger.error "Federation API open timeout: #{e.message}"
       @json_data = { error: "Connection timeout" }
+      @status = :gateway_timeout
     rescue OpenSSL::SSL::SSLError => e
       Rails.logger.error "Federation API SSL error: #{e.message}"
       @json_data = { error: "SSL connection failed" }
+      @status = :bad_gateway
     rescue SocketError => e
       Rails.logger.error "Federation API connection error: #{e.message}"
       @json_data = { error: "Cannot connect to Federation API" }
+      @status = :bad_gateway
     rescue Errno::ECONNREFUSED => e
       Rails.logger.error "Federation API connection refused: #{e.message}"
       @json_data = { error: "Cannot connect to Federation API" }
+      @status = :bad_gateway
     rescue StandardError => e
       Rails.logger.error "Federation API request failed: #{e.class}: #{e.message}"
       @json_data = { error: "Failed to fetch data: #{e.message}" }
+      @status = :internal_server_error
     end
 
     respond_to_format
@@ -119,43 +133,57 @@ class Federation::ServicesController < ApplicationController
     scientific_domain_map = build_facet_map(json, "scientific_domains")
     service_providers_map = build_facet_map(json, "service_providers")
 
-    Array(json["results"]).map do |item|
-      service = item["result"] || {}
-      domains = Array(service["scientificDomains"])
-      providers = Array(service["serviceProviders"])
-      node_pid = item["result"]["nodePID"]
-
-      {
-        "pid" => item["result"]["id"],
-        "name" => item["result"]["name"],
-        "slug" => item["id"],
-        "description" => ActionController::Base.helpers.strip_tags(item["result"]["description"]),
-        "score" => item["score"],
-        "path" => item["result"]["webpage"],
-        "logo" => item["result"]["logo"],
-        "scientific_domains" =>
-          domains.map do |domain|
-            value = domain["scientificDomain"].to_s
-            { "name" => scientific_domain_map.fetch(value, value) }
-          end,
-        "target_users" => Array(item["targetUsers"]).map { |u| { "name" => u.to_s } },
-        "platforms" => Array(item["relatedPlatforms"]).map { |p| { "name" => p } },
-        "resource_organisation" => {
-          "name" => item["resourceOrganisation"],
-          "pid" => item["resourceOrganisation"]
-        },
-        "providers" => providers.map { |provider| { "name" => service_providers_map.fetch(provider, provider) } },
-        "webpage" => item["result"]["webpage"] || item["userManual"] || item["order"],
-        "nodePID" => pid_to_name[node_pid] || node_pid
-      }
+    Array(json["results"]).filter_map do |item|
+      map_result(item, pid_to_name, scientific_domain_map, service_providers_map)
+    rescue StandardError => e
+      Rails.logger.error "Skipping federation result #{item.to_s.truncate(200)}: #{e.class} - #{e.message}"
+      nil
     end
+  end
+
+  def map_result(item, pid_to_name, scientific_domain_map, service_providers_map)
+    service = item["result"]
+    return unless service.is_a?(Hash)
+
+    nested = service["service"].is_a?(Hash) ? service["service"] : {}
+    domains = Array(service["scientificDomains"])
+    providers = Array(service["serviceProviders"])
+    node_pid = service["nodePID"]
+
+    {
+      "pid" => service["id"],
+      "name" => service["name"].presence || nested["name"],
+      "slug" => item["id"],
+      "description" =>
+        ActionController::Base.helpers.strip_tags(service["description"].presence || nested["description"]),
+      "score" => item["score"],
+      "path" => service["webpage"].presence || nested["webpage"],
+      "logo" => service["logo"].presence || nested["logo"],
+      "scientific_domains" =>
+        domains.map do |domain|
+          value = domain["scientificDomain"].to_s
+          { "name" => scientific_domain_map.fetch(value, value) }
+        end,
+      "target_users" => Array(item["targetUsers"]).map { |u| { "name" => u.to_s } },
+      "platforms" => Array(item["relatedPlatforms"]).map { |p| { "name" => p } },
+      "resource_organisation" => {
+        "name" => item["resourceOrganisation"],
+        "pid" => item["resourceOrganisation"]
+      },
+      "providers" => providers.map { |provider| { "name" => service_providers_map.fetch(provider, provider) } },
+      "webpage" =>
+        service["webpage"].presence || item["userManual"].presence || item["order"].presence ||
+          nested["webpage"].presence,
+      "nodePID" => pid_to_name[node_pid] || node_pid || nested["nodePID"]
+    }
   end
 
   def map_federation_response(json) # rubocop:disable Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
     metadata = json["metadata"].is_a?(Hash) ? json["metadata"] : {}
     nodes = metadata["nodes"].is_a?(Array) ? metadata["nodes"] : []
 
-    pid_to_name = nodes.each_with_object({}) { |node, hash| hash[node["pid"].strip] = node["name"] }
+    pid_to_name =
+      nodes.each_with_object({}) { |node, hash| hash[node["pid"].strip] = node["name"] if node["pid"].is_a?(String) }
 
     results = map_results(json, pid_to_name)
 
@@ -227,7 +255,7 @@ class Federation::ServicesController < ApplicationController
 
   def create_url_dict(node_dict)
     node_dict.each_with_object({}) do |node, hash|
-      capability = node["capabilities"].find { |c| c["capability_type"] == "Front Office" }
+      capability = Array(node["capabilities"]).find { |c| c["capability_type"] == "Front Office" }
       hash[node["name"]] = capability&.dig("endpoint")
     end
   end
@@ -249,9 +277,11 @@ class Federation::ServicesController < ApplicationController
   end
 
   def respond_to_format
+    @status ||= :ok
+
     respond_to do |format|
-      format.html
-      format.json { render json: @json_data }
+      format.html { render status: @status }
+      format.json { render json: @json_data, status: @status }
     end
   end
 
@@ -259,6 +289,7 @@ class Federation::ServicesController < ApplicationController
     clean_base_url = base_url.to_s.strip.chomp("/")
     uri = URI.parse(clean_base_url)
     raise URI::InvalidURIError unless %w[http https].include?(uri.scheme)
+
     query_string = request.query_string.present? ? "?#{request.query_string}" : ""
     "#{clean_base_url}#{query_string}"
   rescue URI::InvalidURIError => e
@@ -287,6 +318,7 @@ class Federation::ServicesController < ApplicationController
     params.to_unsafe_h.each do |key, val|
       next if reserved_keys.include?(key.to_s)
       next unless val.present?
+
       # next if val == "true" # could be a naive solution for unwanted true value in parameters
 
       values = Array(val).map(&:to_s).reject(&:blank?)
@@ -361,6 +393,7 @@ class Federation::ServicesController < ApplicationController
   def find_option_in_facets(options, eid)
     options.each do |opt|
       return opt if opt["eid"].to_s == eid.to_s
+
       children = opt["children"]
       if children.present?
         found = find_option_in_facets(children, eid)

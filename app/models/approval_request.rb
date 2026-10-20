@@ -4,6 +4,8 @@ class ApprovalRequest < ApplicationRecord
   include Messageable
   include Statusable
 
+  CLOSING_ACTIONS = %w[accepted rejected].freeze
+
   attr_accessor :current_action, :message
 
   enum :last_action, { accepted: "Accept", requested_for_changes: "Request for completion", rejected: "Reject" }.freeze
@@ -40,6 +42,10 @@ class ApprovalRequest < ApplicationRecord
 
   def eventable_omses
     []
+  end
+
+  def pending_decision?
+    status_in_database != "deleted" && CLOSING_ACTIONS.exclude?(last_action_in_database)
   end
 
   def update_last_action

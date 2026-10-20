@@ -2,21 +2,23 @@
 
 require "rails_helper"
 
-RSpec.describe Message, backend: true do
-  it { should belong_to(:messageable) }
-  it { should validate_presence_of(:message) }
-  it { should validate_presence_of(:author_role) }
-  it { should validate_presence_of(:scope) }
+RSpec.describe Message, :backend do
+  it { is_expected.to belong_to(:messageable) }
+  it { is_expected.to validate_presence_of(:message) }
+  it { is_expected.to validate_presence_of(:author_role) }
+  it { is_expected.to validate_presence_of(:scope) }
 
   describe "#author" do
     context "if role_user?" do
       before { allow(subject).to receive(:role_user?).and_return(true) }
-      it { should validate_presence_of(:author) }
+
+      it { is_expected.to validate_presence_of(:author) }
     end
 
     context "if !role_user?" do
       before { allow(subject).to receive(:role_user?).and_return(false) }
-      it { should_not validate_presence_of(:author) }
+
+      it { is_expected.not_to validate_presence_of(:author) }
     end
   end
 
@@ -41,7 +43,7 @@ RSpec.describe Message, backend: true do
     it "is false when there is not message author" do
       message = create(:message, author: nil, author_role: :provider)
 
-      expect(message).to_not be_question
+      expect(message).not_to be_question
     end
 
     it "is false when message author is not project_item owner" do
@@ -57,7 +59,7 @@ RSpec.describe Message, backend: true do
           message: "some question"
         )
 
-      expect(new_message).to_not be_question
+      expect(new_message).not_to be_question
     end
 
     it "is false when message author is not project owner" do
@@ -66,7 +68,7 @@ RSpec.describe Message, backend: true do
       new_message =
         create(:message, messageable: project, author: create(:user), author_role: :provider, message: "some question")
 
-      expect(new_message).to_not be_question
+      expect(new_message).not_to be_question
     end
   end
 
@@ -104,7 +106,7 @@ RSpec.describe Message, backend: true do
       end
     end
 
-    it "should create an event on create" do
+    it "creates an event on create" do
       project = create(:project)
       message1 = create(:message, messageable: project)
 
@@ -123,7 +125,7 @@ RSpec.describe Message, backend: true do
       expect(message2.events.first.action).to eq("create")
     end
 
-    it "should create an event on update" do
+    it "creates an event on update" do
       project = create(:project)
 
       message = create(:message, messageable: project, message: "old")
@@ -146,14 +148,14 @@ RSpec.describe Message, backend: true do
   describe "#edited" do
     subject { create(:message) }
 
-    it "should be false" do
+    it "is false" do
       expect(subject.edited).to be_falsey
     end
 
     context "after update" do
       before { subject.update!(message: "other") }
 
-      it "should be true" do
+      it "is true" do
         expect(subject.edited).to be_truthy
       end
     end
@@ -173,12 +175,10 @@ RSpec.describe Message, backend: true do
                 it "sends email" do
                   expect do
                     create(:message, scope: scope, author_role: author_role, messageable: project_item)
-                  end.to change { ActionMailer::Base.deliveries.count }.by(1)
-                  email = ActionMailer::Base.deliveries.last
-
-                  expect(email.to).to contain_exactly(project_item.user.email)
-                  expect(email.body.encoded).to include("A new message was added to your service request")
-                  expect(email.subject).to eq("Question about your service access request in EOSC Portal Marketplace")
+                  end.to have_enqueued_mail(MessageMailer, :new_message).with(
+                    having_attributes(messageable: project_item),
+                    action: nil
+                  )
                 end
               end
             end
@@ -187,7 +187,7 @@ RSpec.describe Message, backend: true do
               it "doesn't send email" do
                 expect do
                   create(:message, scope: :internal, author_role: author_role, messageable: project_item)
-                end.not_to(change { ActionMailer::Base.deliveries.count })
+                end.not_to have_enqueued_mail
               end
             end
           end
@@ -200,23 +200,21 @@ RSpec.describe Message, backend: true do
             %i[public user_direct].each do |scope|
               context ":#{scope}_scope?" do
                 it "sends email" do
-                  expect { create(:message, scope: scope, author_role: author_role, messageable: project) }.to change {
-                    ActionMailer::Base.deliveries.count
-                  }.by(1)
-                  email = ActionMailer::Base.deliveries.last
-
-                  expect(email.to).to contain_exactly(project.user.email)
-                  expect(email.body.encoded).to include("You have received a message related to your Project")
-                  expect(email.subject).to eq("Question about your Project FancyOne in EOSC Portal Marketplace")
+                  expect do
+                    create(:message, scope: scope, author_role: author_role, messageable: project)
+                  end.to have_enqueued_mail(MessageMailer, :new_message).with(
+                    having_attributes(messageable: project),
+                    action: nil
+                  )
                 end
               end
             end
 
             context ":internal_scope?" do
               it "doesn't send email" do
-                expect { create(:message, scope: :internal, author_role: author_role, messageable: project) }.not_to(
-                  change { ActionMailer::Base.deliveries.count }
-                )
+                expect do
+                  create(:message, scope: :internal, author_role: author_role, messageable: project)
+                end.not_to have_enqueued_mail
               end
             end
           end
@@ -237,14 +235,10 @@ RSpec.describe Message, backend: true do
                 let!(:message) { create(:message, scope: scope, author_role: author_role, messageable: project_item) }
 
                 it "sends email" do
-                  expect { message.update!(message: "something else") }.to change {
-                    ActionMailer::Base.deliveries.count
-                  }.by(1)
-                  email = ActionMailer::Base.deliveries.last
-
-                  expect(email.to).to contain_exactly(project_item.user.email)
-                  expect(email.body.encoded).to include("has been modified by the service provider")
-                  expect(email.subject).to eq("Message updated")
+                  expect { message.update!(message: "something else") }.to have_enqueued_mail(
+                    MessageMailer,
+                    :message_edited
+                  ).with(message)
                 end
               end
             end
@@ -253,9 +247,7 @@ RSpec.describe Message, backend: true do
               let!(:message) { create(:message, scope: :internal, author_role: author_role, messageable: project_item) }
 
               it "doesn't send email" do
-                expect { message.update!(message: "something else") }.not_to(
-                  change { ActionMailer::Base.deliveries.count }
-                )
+                expect { message.update!(message: "something else") }.not_to have_enqueued_mail
               end
             end
           end
@@ -270,14 +262,10 @@ RSpec.describe Message, backend: true do
                 let!(:message) { create(:message, scope: scope, author_role: author_role, messageable: project) }
 
                 it "sends email" do
-                  expect { message.update!(message: "something else") }.to change {
-                    ActionMailer::Base.deliveries.count
-                  }.by(1)
-                  email = ActionMailer::Base.deliveries.last
-
-                  expect(email.to).to contain_exactly(project.user.email)
-                  expect(email.body.encoded).to include("has been modified by the service provider")
-                  expect(email.subject).to eq("Message updated")
+                  expect { message.update!(message: "something else") }.to have_enqueued_mail(
+                    MessageMailer,
+                    :message_edited
+                  ).with(message)
                 end
               end
             end
@@ -286,9 +274,7 @@ RSpec.describe Message, backend: true do
               let!(:message) { create(:message, scope: :internal, author_role: author_role, messageable: project) }
 
               it "doesn't send email" do
-                expect { message.update!(message: "something else") }.not_to(
-                  change { ActionMailer::Base.deliveries.count }
-                )
+                expect { message.update!(message: "something else") }.not_to have_enqueued_mail
               end
             end
           end

@@ -1,0 +1,20 @@
+%div{ "data-controller" => "details-loader", "data-details-loader-url" => projects_path }
+  %h4
+    = _("My projects")
+  .details-content
+    -# haml-lint:disable MultilinePipe
+    %p.mb-4= _("You can organize your services and research products in projects. " + |
+               "Add this resource to a specific project or create a new one.") |
+    -# haml-lint:enable MultilinePipe
+    = f.input :project do
+      .input-group.col
+        = f.input_field :project_id, collection: projects,
+          class: "form-control custom-select #{"is-invalid" unless step.errors[:project].empty?}",
+          "data-action" => "change->details-loader#changed",
+          "data-details-loader-target" => "idSource"
+        .input-group-append.ml-4
+          = link_to _("Add new project"), new_project_path, data: { turbo: true,
+            e2e: "add-new-project-btn", turbo_frame: "modal" },
+            class: "btn btn-primary"
+
+  %div{ "data-details-loader-target" => "details" }

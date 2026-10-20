@@ -2,8 +2,8 @@
 
 require "rails_helper"
 
-RSpec.describe Bundle::Create, backend: true do
-  context "#bundled_offers" do
+RSpec.describe Bundle::Create, :backend do
+  describe "#bundled_offers" do
     it "doesn't send notification if offer invalid" do
       provider1 = build(:provider)
       provider2 = build(:provider)
@@ -11,13 +11,13 @@ RSpec.describe Bundle::Create, backend: true do
       bundle_offer = build(:open_access_offer, service: build(:open_access_service, resource_organisation: provider2))
       bundle = build(:bundle, main_offer: bundle_offer, offers: [bundled_offer], marketplace_locations: [])
 
-      expect { Bundle::Create.call(bundle) }.not_to change { ActionMailer::Base.deliveries.count }
+      expect { Bundle::Create.call(bundle) }.not_to have_enqueued_mail
     end
 
     it "doesn't send notification if offer create" do
       offer = build(:offer)
 
-      expect { Offer::Create.call(offer) }.not_to change { ActionMailer::Base.deliveries.count }
+      expect { Offer::Create.call(offer) }.not_to have_enqueued_mail
     end
 
     it "doesn't send notification if bundled offer is from the same provider" do
@@ -26,7 +26,7 @@ RSpec.describe Bundle::Create, backend: true do
       bundle_offer = build(:offer, service: build(:service, resource_organisation: provider))
       bundle = build(:bundle, main_offer: bundle_offer, offers: [bundled_offer])
 
-      expect { Bundle::Create.call(bundle) }.not_to change { ActionMailer::Base.deliveries.count }
+      expect { Bundle::Create.call(bundle) }.not_to have_enqueued_mail
     end
 
     it "sends notification for bundled offers from different providers" do
@@ -45,7 +45,7 @@ RSpec.describe Bundle::Create, backend: true do
           offers: [bundled_offer1, bundled_offer2, bundled_offer3, bundled_offer4]
         )
 
-      expect { Bundle::Create.call(bundle) }.to change { ActionMailer::Base.deliveries.count }.by(3)
+      expect { Bundle::Create.call(bundle) }.to have_enqueued_mail(OfferMailer, :offer_bundled).exactly(3)
     end
   end
 end

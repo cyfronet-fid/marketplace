@@ -20,6 +20,7 @@ class Projects::Services::ConversationsController < ApplicationController
       )
 
     if Message::Create.new(@message).call
+      Bos::PostMessageJob.perform_later(@message) unless Mp::Variant.marketplace?
       flash[:notice] = _("Message sent successfully")
       redirect_to project_service_conversation_path(@project, @project_item)
     else

@@ -3,14 +3,17 @@
 require "rails_helper"
 require_relative "publishable"
 
-RSpec.describe Category, backend: true do
+RSpec.describe Category, :backend do
   include_examples "publishable"
 
-  describe "validations" do
-    it { should validate_presence_of(:name) }
+  it { is_expected.to normalize(:eid).from(" ").to(nil) }
 
+  describe "validations" do
     subject { create(:category) }
-    it { should validate_uniqueness_of(:name).scoped_to(:ancestry) }
+
+    it { is_expected.to validate_presence_of(:name) }
+
+    it { is_expected.to validate_uniqueness_of(:name).scoped_to(:ancestry) }
   end
 
   it "is hierarchical" do

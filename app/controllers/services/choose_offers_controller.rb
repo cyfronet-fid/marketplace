@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class Services::ChooseOffersController < Services::ApplicationController
-  before_action :check_vo_membership!
+  # Checkin VO membership is a marketplace requirement; pl and whitelabel
+  # have no such step and their sessions carry no token.
+  before_action :check_vo_membership!, if: -> { Mp::Variant.marketplace? }
 
   def show
     pi_init = params[:customizable_project_item]
@@ -44,6 +46,8 @@ class Services::ChooseOffersController < Services::ApplicationController
 
   def check_vo_membership!
     return unless user_signed_in?
+    # The development auth mock has no Checkin token to introspect.
+    return if Rails.env.development? && Mp::Application.config.auth_mock
 
     result = Checkin::CheckVoMembership.call(
       access_token: session["token"],

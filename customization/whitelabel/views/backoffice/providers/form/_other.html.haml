@@ -1,0 +1,48 @@
+#other.tab-pane{ class: "#{"active" if active}", "aria-labelledby": "other-header", role: "tabpanel",
+          "data-form-target": "tab" }
+  .card-body
+    .row.new-offer-form
+      .col-lg-6.pl-0
+        %h3
+          = _("ESFRI")
+        .offer-section-wrapper
+          = f.association :esfri_domains, disabled: cant_edit?([esfri_domain_ids: []]),
+                input_html: { multiple: true, data: { choice: true } }
+          = f.input :esfri_type, disabled: cant_edit?([esfri_type_ids: []]),
+                collection: Vocabulary.where(type: "Vocabulary::EsfriType"),
+                label_method: :name, value_method: :id,
+                input_html: { multiple: false, data: { choice: true } }
+
+        %h3.mt-5
+          = _("MERIL Scientific Categorisation ")
+        .offer-section-wrapper
+          - msd_child_names = Vocabulary.where(type: "Vocabulary::MerilScientificDomain").child_names
+          - msd_non_root_names = msd_child_names.filter_map { |name, sd| [name, sd.id] if sd.parent.present? }
+          = f.association :meril_scientific_domains, disabled: cant_edit?([meril_scientific_domain_ids: []]),
+                input_html: { multiple: true, data: { choice: true } },
+                collection: msd_non_root_names,
+                label_method: :first, value_method: :second
+        .mt-5
+          = f.input :synchronized_at, as: :date_time_picker, disabled: true
+      .col-lg-6
+        %h3
+          = _("Areas of activity")
+        .offer-section-wrapper
+          = f.association :areas_of_activity, disabled: cant_edit?([area_of_activity_ids: []]),
+                input_html: { multiple: true, data: { choice: true } }
+
+        %h3.mt-5
+          = _("Societal grand challenges")
+        .offer-section-wrapper
+          = f.association :societal_grand_challenges, disabled: cant_edit?([societal_grand_challenge_ids: []]),
+                input_html: { multiple: true, data: { choice: true } }
+
+        %h3.mt-5
+          = _("Societal grand challenges")
+        .offer-section-wrapper
+          = f.input :national_roadmaps, disabled: cant_edit?([national_roadmaps: []]), multiple: true,
+                input_html: { class: "form-control text optional" },
+                wrapper_html: { "data-form-target" => "national_roadmaps" }, as: :array
+        = link_to_add_array_field("provider", "national_roadmaps")
+
+      = render "backoffice/providers/more_information"

@@ -1,12 +1,25 @@
-# Stage 0: Get ruby version
+# Stage 0: Build arguments
 ARG RUBY_VERSION=3.3.11
+# One image per deployment. The variant (config/variants.yml) and the directory
+# of its frontend (docs/customization.md) are fixed at build time, because
+# assets:precompile reads them. MARKETPLACE_VARIANT has no default:
+# assets:precompile refuses to run without it. marketplace builds with an
+# empty CUSTOMIZATION_PATH and uses the repository frontend. Example:
+#   docker build --build-arg MARKETPLACE_VARIANT=whitelabel \
+#     --build-arg CUSTOMIZATION_PATH=/marketplace/customization/whitelabel .
+ARG MARKETPLACE_VARIANT
+ARG CUSTOMIZATION_PATH=""
 
 # Stage 1: Building dependencies
 FROM ruby:${RUBY_VERSION}-alpine AS builder
+ARG MARKETPLACE_VARIANT
+ARG CUSTOMIZATION_PATH
 
 # Setting environment variables
 ENV RAILS_ENV=production \
     RACK_ENV=production \
+    MARKETPLACE_VARIANT=${MARKETPLACE_VARIANT} \
+    CUSTOMIZATION_PATH=${CUSTOMIZATION_PATH} \
     BUNDLE_WITHOUT="development:test" \
     BUNDLE_JOBS=4 \
     BUNDLE_RETRY=3
@@ -50,16 +63,20 @@ RUN bundle config set --local without 'development test' && \
 # Copying application code
 COPY . /marketplace
 
-# Compiling assets
+# Compiling assets (.env.build: dummy values for variables that are mandatory at boot)
 RUN set -a && . ./.env.build && set +a && \
     SECRET_KEY_BASE_DUMMY=1 ./bin/rake assets:precompile
 
 # Stage 2: Final image
 FROM ruby:${RUBY_VERSION}-alpine
+ARG MARKETPLACE_VARIANT
+ARG CUSTOMIZATION_PATH
 
 # Setting environment variables
 ENV RAILS_ENV=production \
     RACK_ENV=production \
+    MARKETPLACE_VARIANT=${MARKETPLACE_VARIANT} \
+    CUSTOMIZATION_PATH=${CUSTOMIZATION_PATH} \
     RAILS_SERVE_STATIC_FILES=true
 
 # Installing only required production packages

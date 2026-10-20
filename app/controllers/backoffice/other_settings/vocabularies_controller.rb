@@ -10,33 +10,29 @@ class Backoffice::OtherSettings::VocabulariesController < Backoffice::Applicatio
     @all_types = VOCABULARY_TYPES.map { |k, v| [v[:name], k.to_s.pluralize.to_sym] }
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @vocabulary = vocabulary_type.new
     authorize(@vocabulary)
   end
 
+  def edit; end
+
   def create
     @vocabulary = vocabulary_type.new(permitted_attributes(vocabulary_type))
     authorize(@vocabulary)
 
     if @vocabulary.save
-      redirect_to send("backoffice_other_settings_#{@vocabulary.model_name.element}_path", @vocabulary),
-                  notice: "New #{VOCABULARY_TYPES[@vocabulary.model_name.element.to_sym][:name]} created successfully"
+      redirect_to vocabulary_path, notice: "New #{@type} created successfully"
     else
       render :new, status: :bad_request
     end
   end
 
-  def edit
-  end
-
   def update
     if @vocabulary.update(permitted_attributes(@vocabulary))
-      redirect_to send("backoffice_other_settings_#{@vocabulary.model_name.element}_path", @vocabulary),
-                  notice: "#{VOCABULARY_TYPES[@vocabulary.model_name.element.to_sym][:name]} updated successfully"
+      redirect_to vocabulary_path, notice: "#{@type} updated successfully"
     else
       render :edit, status: :bad_request
     end
@@ -44,28 +40,34 @@ class Backoffice::OtherSettings::VocabulariesController < Backoffice::Applicatio
 
   def destroy
     if @vocabulary.descendant_ids.present?
-      redirect_back fallback_location:
-                      send("backoffice_other_settings_#{@vocabulary.model_name.element}_path", @vocabulary),
-                    alert:
+      redirect_back_or_to(vocabulary_path, alert:
                       "This #{@type} has successors connected to it,
                             therefore is not possible to remove it. If you want to remove it,
-                            edit them so they are not associated with this #{@type} anymore"
+                            edit them so they are not associated with this #{@type} anymore")
     elsif @vocabulary.try(:services).present?
-      redirect_back fallback_location:
-                      send("backoffice_other_settings_#{@vocabulary.model_name.element}_path", @vocabulary),
-                    alert: "This vocabulary has services connected to it, remove associations to delete it."
+      redirect_back_or_to(vocabulary_path,
+                          alert: "This vocabulary has services connected to it, remove associations to delete it.")
     elsif @vocabulary.try(:providers).present?
-      redirect_back fallback_location:
-                      send("backoffice_other_settings_#{@vocabulary.model_name.element}_path", @vocabulary),
-                    alert: "This vocabulary has providers connected to it, remove associations to delete it."
+      redirect_back_or_to(vocabulary_path,
+                          alert: "This vocabulary has providers connected to it, remove associations to delete it.")
     else
       @vocabulary.destroy!
-      redirect_to send("backoffice_other_settings_#{@vocabulary.model_name.element.pluralize}_path"),
-                  notice: "#{@type} removed successfully"
+      redirect_to vocabularies_path, notice: "#{@type} removed successfully"
     end
   end
 
   private
+
+  # The paths of a type follow its route in VOCABULARY_TYPES (params[:type] is
+  # the key); the model name differs for product_access_policy
+  # (Vocabulary::ResearchProductAccessPolicy) and for bundle_capability_of_goal.
+  def vocabulary_path
+    send("backoffice_other_settings_#{params[:type]}_path", @vocabulary)
+  end
+
+  def vocabularies_path
+    send("backoffice_other_settings_#{VOCABULARY_TYPES[params[:type].to_sym][:route]}_path")
+  end
 
   def find_and_authorize
     @vocabulary = vocabulary_type.find(params[:id])

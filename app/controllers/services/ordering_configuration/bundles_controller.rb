@@ -10,6 +10,8 @@ class Services::OrderingConfiguration::BundlesController < Services::OrderingCon
     authorize(@bundle)
   end
 
+  def edit; end
+
   def create
     template = bundle_template
     authorize(template)
@@ -23,9 +25,6 @@ class Services::OrderingConfiguration::BundlesController < Services::OrderingCon
     end
   end
 
-  def edit
-  end
-
   def update
     template = permitted_attributes(Bundle.new)
     if Bundle::Update.call(@bundle, transform_attributes(template))
@@ -37,7 +36,7 @@ class Services::OrderingConfiguration::BundlesController < Services::OrderingCon
 
   def destroy
     @bundle = @service.bundles.find_by(iid: params[:id])
-    Bundle::Destroy.call(@bundle)
+    Bundle::Removal.call(@bundle)
     redirect_to service_ordering_configuration_path(@service), notice: "Bundle removed successfully"
   end
 

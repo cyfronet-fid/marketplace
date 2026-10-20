@@ -4,8 +4,13 @@ class TargetUser < ApplicationRecord
   include Parentable
   include Publishable
 
+  # Edited through the vocabulary form, see Vocabulary#logo.
+  has_one_attached :logo
+
   has_many :bundle_target_users
   has_many :bundles, through: :bundle_target_users
+
+  normalizes :eid, with: ->(eid) { eid.strip.presence }
 
   validates :name, uniqueness: true, presence: true
 

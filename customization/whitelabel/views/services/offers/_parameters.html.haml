@@ -1,0 +1,12 @@
+- if technical_parameters.present?
+  .card-body.pt-0.collapse-group.parameters-wrapper{ "data-controller": "parameter" }
+    %h5.text-uppercase.parameters-title.mb-3{ class: "#{"suspended" if service.suspended?}" }
+      %i.fas.fa-tachometer-alt
+      = _("Technical Parameters")
+    %table.offer-params.table.table-hover
+      %tbody
+        - technical_parameters.each_with_index do |parameter, idx|
+          %tr{ hideable_options(idx) }
+            %td= parameter["label"]
+            %td.text-right.font-weight-bold= parse_offer_parameter_value(parameter)
+    = render "common_parts/show_more_link", id: id if technical_parameters.size > 4

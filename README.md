@@ -230,11 +230,15 @@ com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.j
 
 ## Sentry integration
 
-In production environment sentry integration can be turned on. To do so create
-dedicated [env variable](#environmental-variables)
-`SENTRY_DSN` with details how to connect to sentry server.
+The Sentry integration is on in every environment that sets the
+[env variable](#environmental-variables) `SENTRY_DSN` with details how to
+connect to the Sentry server (a GlitchTip server accepts the same DSN).
 Sentry environment can also be configured using `SENTRY_ENVIRONMENT`
-[env variable](#environmental-variables) (default set to `production`).
+[env variable](#environmental-variables) (default: the Rails environment).
+The application also sends logs (one entry per request, job and mail) to the
+Logs view of the Sentry server; `SENTRY_LOGS=false` turns them off and
+`SENTRY_LOGS_QUERIES=true` adds the SQL queries. `SENTRY_TRACES_SAMPLE_RATE`
+(default `0.01`) is the share of the requests stored as transactions.
 
 ## Environmental variables
 
@@ -272,10 +276,18 @@ We are currently using the following ENV variables:
 - `S3_ENDPOINT` - active storage S3 endpoint
 - `S3_ACCESS_KEY_ID` - active storage S3 access key
 - `S3_SECRET_ACCESS_KEY` - active storage S3 secret access key
-- `SMTP_ADDRESS` - smtp mail server address
-- `SMTP_USERNAME` - smtp user name or email address
-- `SMTP_PASSWORD` - smtp password
-- `FROM_EMAIL` - from email (if not set `from@example.com` will be used)
+- `SMTP_ADDRESS` - smtp mail server address (the misspelled `SMPT_ADDRESS` still works)
+- `SMTP_USERNAME` - smtp user name or email address (or `SMPT_USERNAME`)
+- `SMTP_PASSWORD` - smtp password (or `SMPT_PASSWORD`)
+- `SMTP_PORT` (Optional) - smtp port (default `587`)
+- `SMTP_AUTHENTICATION` (Optional) - smtp authentication method (default `plain`)
+- `SMTP_STARTTLS` (Optional) - turn on automatic STARTTLS; only the exact value `true` turns it on (default `true`)
+- `FROM_EMAIL` (Optional) - full email sender, including the name (default `from@example.com`;
+  `EOSC PL <eosc-noreply@eosc.pl>` under `MARKETPLACE_VARIANT=pl`)
+- `MP_HELPDESK_EMAIL` (Optional) - helpdesk address used for replies and "Contact helpdesk" links
+  in the provider onboarding emails of pl (default `helpdesk@eosc.pl`)
+- `MAIL_LOGO_PATH` (Optional) - logo shown in the email header, absolute or relative to the application root
+  (for example `customization/pl/images/eoscpl-email-logo.png`); no logo is shown when blank (default)
 - `GOOGLE_ANALYTICS` - google analytics key for GMT (if present than analytics
   script is added into head section)
 - `PORTAL_BASE_URL` - portal base URL used to generate footer and other static
@@ -691,7 +703,7 @@ To configure this integration, set the following [env variables](#environmental-
 
 Marketplace authenticates users through an external EGI/EOSC Check-in
 (Keycloak-based OpenID Connect) identity provider via Devise/OmniAuth. After
-sign-in, `Services::ApplicationController#check_vo_membership!` calls
+sign-in, `Services::ChooseOffersController#check_vo_membership!` calls
 `Checkin::CheckVoMembership` (backed by `Checkin::Client`) on every request to
 refresh the user's access token and introspect it against Check-in, gating
 access to service ordering on membership in a configured virtual

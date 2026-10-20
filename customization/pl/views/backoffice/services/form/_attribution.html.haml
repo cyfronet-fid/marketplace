@@ -1,0 +1,27 @@
+.card.rounded
+  %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
+              [:funding_bodies, :funding_programs, :grant_project_names])),
+              data: { toggle: "collapse", target: "#attribution" },
+              aria: { expanded: true, controls: "attribution" } }
+    .card-header.text-left{ id: "attribution-header" }
+      .row
+        .col-10
+          = _("Attribution")
+        .col-2.text-right
+          .collapse-icon
+            %i.fas.fa-chevron-down
+            %i.fas.fa-chevron-up
+  .collapse{ id: "attribution", "aria-labelledby": "attribution-header",
+            "data-parent": "#accordion-form",
+            class: ("show" unless collapsed?(service, [:funding_bodies, :funding_programs, :grant_project_names])) }
+    .card-body
+      = f.association :funding_bodies, input_html: { data: { choice: true } },
+                          disabled: cant_edit([funding_body_ids: []])
+      = f.association :funding_programs, input_html: { data: { choice: true } },
+                              disabled: cant_edit([funding_program_ids: []])
+      .row
+        .col-12
+          = f.input :grant_project_names, input_html: { class: "form-control text optional" },
+                    wrapper_html: { "data-service-target" => "grantProjectNames" },
+                    disabled: cant_edit([grant_project_names: []]), as: :array
+          = link_to_add_array_field("service", "grant_project_names")

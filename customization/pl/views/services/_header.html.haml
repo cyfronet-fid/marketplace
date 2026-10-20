@@ -1,0 +1,15 @@
+.pt-4.service-box-redesign.service-detail{ "data-shepherd-tour-target": "service-box" }
+  = render Presentable::HeaderComponent.new(object: service,
+                          title: service.name,
+                          abbreviation: service.abbreviation,
+                          subtitle: service.tagline,
+                          comparison_enabled: comparison_enabled,
+                          preview: local_assigns[:preview] || service.suspended?,
+                          favourite_services: favourite_services) do |c|
+    - c.buttons do
+      = render "components/presentable/header_component/order_buttons", service: service
+  = render "services/tabs", service: service
+  - dynamic_class = (session[:comparison]&.size || 0).positive? ? "d-block" : "d-none"
+  #comparison-bar.comparison-bar.fixed-bottom{ class: dynamic_class,
+    "data-comparison-target": "bar", "data-e2e": "comparison-bar" }
+    = render "comparisons/bar", services: compare_services, category: category

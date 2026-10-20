@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ProjectItem::Create, backend: true do
+RSpec.describe ProjectItem::Create, :backend do
   let(:user) { create(:user) }
   let(:project) { create(:project, user: user) }
   let(:service) { create(:service) }
@@ -34,6 +34,25 @@ RSpec.describe ProjectItem::Create, backend: true do
     expect(ProjectItem::RegisterJob).to have_been_enqueued.with(non_customizable_project_item, nil)
   end
 
+  context "when running as marketplace" do
+    before { described_class.new(project_item_template).call }
+
+    it "does not order the project item in BOS" do
+      expect(Bos::CreateOrderJob).not_to have_been_enqueued
+    end
+  end
+
+  context "when running as another variant" do
+    before do
+      allow(Mp::Variant).to receive(:marketplace?).and_return(false)
+      described_class.new(project_item_template).call
+    end
+
+    it "orders the project item in BOS" do
+      expect(Bos::CreateOrderJob).to have_been_enqueued
+    end
+  end
+
   context "for service with :eosc_registry upstream" do
     let(:service) { create(:service, pid: "foo") }
     let(:upstream) { build(:eosc_registry_service_source) }
@@ -61,25 +80,28 @@ RSpec.describe ProjectItem::Create, backend: true do
     let(:service) { create(:open_access_service) }
 
     it "sends email to project_item owner - added to the project" do
-      expect { described_class.new(project_item_template).call }.to change { ActionMailer::Base.deliveries.count }.by(1)
+      expect { described_class.new(project_item_template).call }.to have_enqueued_mail(
+        ProjectItemMailer,
+        :added_to_project
+      )
     end
   end
 
   context "when external service has been added to Project" do
     let(:service) { create(:external_service) }
 
-    it "sends email to project_item owner - added to the project" do
-      expect { described_class.new(project_item_template).call }.to change { ActionMailer::Base.deliveries.count }.by(1)
+    it "sends email to project_item owner - created" do
+      expect { described_class.new(project_item_template).call }.to have_enqueued_mail(ProjectItemMailer, :created)
     end
   end
 
   context "when orderable service has been ordered" do
     it "sends email to project_item owner" do
-      expect { described_class.new(project_item_template).call }.to change { ActionMailer::Base.deliveries.count }.by(1)
+      expect { described_class.new(project_item_template).call }.to have_enqueued_mail(ProjectItemMailer, :created)
     end
   end
 
-  context "#bundle" do
+  describe "#bundle" do
     let(:offer) { create(:offer, service: service) }
     let(:child1) { build(:offer) }
     let(:child2) { build(:offer) }
@@ -88,9 +110,10 @@ RSpec.describe ProjectItem::Create, backend: true do
     let(:project_item_template) { build(:project_item, project: project, offer: offer, bundle: bundle) }
 
     it "creates bundled project_items" do
-      expect { described_class.new(project_item_template, "test-msg", bundle_params: {}).call }.to change {
-        ActionMailer::Base.deliveries.count
-      }.by(3).and change { ProjectItem.count }.by(3)
+      expect { described_class.new(project_item_template, "test-msg", bundle_params: {}).call }.to have_enqueued_mail(
+        ProjectItemMailer,
+        :created
+      ).exactly(3).and change { ProjectItem.count }.by(3)
 
       ProjectItem.all.each do |project_item|
         expect(ProjectItem::RegisterJob).to have_been_enqueued.with(project_item, "test-msg")
@@ -101,9 +124,9 @@ RSpec.describe ProjectItem::Create, backend: true do
       let(:child2) { build(:offer_with_parameters) }
 
       it "creates nothing" do
-        expect { described_class.new(project_item_template, "test-msg", bundle_params: {}).call }.to change {
-          ActionMailer::Base.deliveries.count
-        }.by(0).and change { ProjectItem.count }.by(0)
+        expect do
+          described_class.new(project_item_template, "test-msg", bundle_params: {}).call
+        end.to have_enqueued_mail.exactly(0).and change { ProjectItem.count }.by(0)
 
         expect(ProjectItem::RegisterJob).not_to have_been_enqueued
       end
@@ -142,9 +165,9 @@ RSpec.describe ProjectItem::Create, backend: true do
       end
 
       it "enqueues deployment processing without sending immediate emails" do
-        expect { described_class.new(ds_project_item_template).call }.to change {
+        expect { described_class.new(ds_project_item_template).call }.not_to change {
           ActionMailer::Base.deliveries.count
-        }.by(0)
+        }
 
         expect(DeployableService::DeploymentJob).to have_been_enqueued
       end

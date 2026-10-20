@@ -13,9 +13,11 @@ class Datasource < Service
 
   friendly_id :name, use: :slugged
 
-  before_save { self.pid = sources&.first&.eid if pid.blank? }
-
   private
+
+  def assign_generated_pid
+    self.pid = sources&.first&.eid.presence || SecureRandom.uuid if pid.blank?
+  end
 
   def _provider_search_link(target_name, filter_query, default_path = nil)
     search_base_url = Mp::Application.config.search_service_base_url

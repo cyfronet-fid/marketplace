@@ -1,0 +1,42 @@
+.card.shadow-sm.rounded
+  %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed?(service,
+            [:owners, :restrictions, :activate_message, :activate_message, :upstream_id])),
+              data: { toggle: "collapse", target: "#other" },
+              aria: { expanded: true, controls: "other" } }
+    .card-header.text-left{ id: "other-header" }
+      .row
+        .col-10
+          = _("Other")
+        .col-2.text-right
+          .collapse-icon
+            %i.fas.fa-chevron-down
+            %i.fas.fa-chevron-up
+  .collapse{ id: "other", "aria-labelledby": "other-header",
+          "data-parent": "#accordion-form",
+          class: ("show" unless collapsed?(service, [:owners, :restrictions, :activate_message,
+                                                    :activate_message, :upstream_id])) }
+    .card-body
+      .row
+        .col-12
+          = f.input :restrictions, disabled: cant_edit(:restrictions)
+      .row.service-activate-message
+        .col-12
+          = f.input :activate_message, disabled: cant_edit(:activate_message)
+      .row
+        .col-12
+          = f.input :upstream_id, collection: f.object.sources.reject { |source| source.id.nil? },
+                                        include_blank: "MP", label: _("Service Upstream")
+
+          %h3.mt-4
+            = _("External Sources")
+
+          = f.fields_for :sources do |sources_form|
+            = sources_form.hidden_field :id
+            = sources_form.input :source_type, collection: ServiceSource.source_types.keys.map(&:to_sym)
+            = sources_form.input :eid, label: _("EOSC Registry External ID")
+            - unless sources_form.object.id.nil?
+              = sources_form.check_box :_destroy
+              = sources_form.label :_destroy, _("Remove external source")
+      .row
+        .col-12.col-md-4.mt-4
+          = f.input :synchronized_at, as: :date_time_picker, disabled: true

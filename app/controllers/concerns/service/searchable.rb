@@ -7,6 +7,7 @@ module Service::Searchable
     include Paginable
     include Service::Sortable
     include Service::Categorable
+
     before_action :initialize_filters, only: :index
   end
 
@@ -65,7 +66,7 @@ module Service::Searchable
 
   def filter_counters(scope, filters, current_filter)
     {}.tap do |hash|
-      unless current_filter.index.blank?
+      if current_filter.index.present?
         services = search_for_filters(scope, filters, current_filter)
         services.aggregations[current_filter.index][current_filter.index]["buckets"].each_with_object(hash) do |e, h|
           h[e["key"]] = e["doc_count"]
@@ -89,8 +90,11 @@ module Service::Searchable
   end
 
   def common_params
+    fields = %w[name^7 description offer_names provider_names resource_organisation_name]
+    fields.insert(1, "tagline^3") if Mp::Variant.pl?
+
     {
-      fields: %w[name^7 description offer_names provider_names resource_organisation_name],
+      fields: fields,
       operator: "or",
       match: :word_middle
     }
@@ -111,6 +115,7 @@ module Service::Searchable
   def highlights(from_search)
     result = from_search.try(:with_highlights) if (params[:q]&.size || 0) > 2
     return {} if result.blank?
+
     result.to_h.transform_keys(&:id)
   end
 
@@ -121,8 +126,8 @@ module Service::Searchable
   def all_filters
     @all_filters ||=
       filter_classes
-        .map { |f| f.new(params: params) }
-        .tap { |all| all.each { |f| f.counters = filter_counters(scope, all, f) } }
+      .map { |f| f.new(params: params) }
+      .tap { |all| all.each { |f| f.counters = filter_counters(scope, all, f) } }
   end
 
   def active_filters
@@ -133,13 +138,13 @@ module Service::Searchable
     previous_query = session&.dig("query", "q").dup
     session[:query] = {}
     @filters.each do |filter|
-      session[:query][filter.field_name] = params[filter.field_name] unless params[filter.field_name].blank?
-      session[:query]["#{filter.field_name}-all"] = params["#{filter.field_name}-all"] unless params[
+      session[:query][filter.field_name] = params[filter.field_name] if params[filter.field_name].present?
+      session[:query]["#{filter.field_name}-all"] = params["#{filter.field_name}-all"] if params[
         "#{filter.field_name}-all"
-      ].blank?
+      ].present?
     end
     %i[q sort per_page].each do |field_name|
-      session[:query][field_name] = params[field_name] unless params[field_name].blank?
+      session[:query][field_name] = params[field_name] if params[field_name].present?
     end
     session[:query][:page] = params[:page] if params[:page].present? && previous_query == params[:q]
   end
@@ -147,14 +152,30 @@ module Service::Searchable
   def filter_classes
     url_path = URI.parse(request.path).path
     backoffice = url_path.start_with?("/backoffice")
-    [
-      Filter::ScientificDomain,
-      backoffice ? Filter::BackofficeProvider : Filter::Provider,
-      Filter::Jurisdiction,
-      Filter::Rating,
-      Filter::OrderType,
-      Filter::Tag
-    ]
+    provider_filter = backoffice ? Filter::BackofficeProvider : Filter::Provider
+
+    if Mp::Variant.pl?
+      [
+        Filter::ResearchActivity,
+        Filter::ScientificDomain,
+        provider_filter,
+        Filter::TargetUser,
+        Filter::Platform,
+        Filter::Rating,
+        Filter::OrderType,
+        Filter::Location,
+        Filter::Tag
+      ]
+    else
+      [
+        Filter::ScientificDomain,
+        provider_filter,
+        Filter::Jurisdiction,
+        Filter::Rating,
+        Filter::OrderType,
+        Filter::Tag
+      ]
+    end
   end
 
   def initialize_filters

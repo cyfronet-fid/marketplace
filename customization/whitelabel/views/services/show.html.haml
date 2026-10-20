@@ -1,0 +1,11 @@
+- content_for :title, @service.name
+- id = h(@service&.main_source&.eid) || h(@service&q.slug)
+:javascript
+  _paq.push(['trackEvent', 'Service', 'Visit', '#{id}']);
+- breadcrumb :service, @service
+= render "services/errors", service: @service
+= render "services/wrapper", service: @service, category: @category,
+  comparison_enabled: @comparison_enabled, compare_services: @compare_services,
+  favourite_services: @favourite_services, question: @question, tab_id: "desc", preview: false do
+  = render Presentable::DescriptionComponent.new(object: @service,
+    similar_services: @similar_services, related_services: @related_services, question: @question)
