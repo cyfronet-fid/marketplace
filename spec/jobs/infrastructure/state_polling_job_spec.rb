@@ -262,6 +262,29 @@ RSpec.describe Infrastructure::StatePollingJob, type: :job do
       end
     end
 
+    context "when outputs only have an IP address URL" do
+      before do
+        infrastructure.update!(outputs: { "jupyter_url_ip" => "https://10.0.0.1/" })
+        allow(im_client).to receive_messages(
+          get_state: { success: true, data: { "state" => "running" } },
+          get_outputs: {
+            success: true,
+            data: {
+              "outputs" => {
+                "jupyter_url_ip" => "https://10.0.0.1/",
+                "jupyter_dns_url" => "https://notebook.vm.fedcloud.eu/"
+              }
+            }
+          }
+        )
+        described_class.perform_now(infrastructure.id)
+      end
+
+      it "fetches outputs again and switches the project item to the DNS URL" do
+        expect(project_item.reload.deployment_link).to eq("https://notebook.vm.fedcloud.eu/")
+      end
+    end
+
     it "does not update project_item if deployment_link matches" do
       project_item.update!(deployment_link: "https://jupyter.example.com")
       allow(im_client).to receive(:get_state).and_return({ success: true, data: { "state" => "running" } })
