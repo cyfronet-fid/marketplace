@@ -43,10 +43,11 @@ RSpec.describe ProjectItemPolicy, backend: true do
       let!(:infrastructure) do
         Infrastructure.create!(
           project_item: project_item,
-          im_base_url: "https://example.com",
+          api_base_url: "https://example.com",
           cloud_site: "test",
           state: "running",
-          im_infrastructure_id: "infra-123"
+          deployment_id: "infra-123",
+          allocation_id: "alloc-1"
         )
       end
 
@@ -74,7 +75,7 @@ RSpec.describe ProjectItemPolicy, backend: true do
       let!(:infrastructure) do
         Infrastructure.create!(
           project_item: project_item,
-          im_base_url: "https://example.com",
+          api_base_url: "https://example.com",
           cloud_site: "test",
           state: "pending"
         )
@@ -90,10 +91,11 @@ RSpec.describe ProjectItemPolicy, backend: true do
         infra =
           Infrastructure.create!(
             project_item: project_item,
-            im_base_url: "https://example.com",
+            api_base_url: "https://example.com",
             cloud_site: "test",
             state: "running",
-            im_infrastructure_id: "infra-123"
+            deployment_id: "infra-123",
+            allocation_id: "alloc-1"
           )
         infra.update_columns(state: "destroyed")
         infra

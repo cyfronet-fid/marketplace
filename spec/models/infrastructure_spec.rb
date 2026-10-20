@@ -13,7 +13,7 @@ RSpec.describe Infrastructure, type: :model do
   let(:infrastructure) do
     Infrastructure.create!(
       project_item: project_item,
-      im_base_url: "https://deploy.sandbox.eosc-beyond.eu",
+      api_base_url: "https://deploy.sandbox.eosc-beyond.eu",
       cloud_site: "IISAS-FedCloud",
       state: "pending"
     )
@@ -30,19 +30,19 @@ RSpec.describe Infrastructure, type: :model do
     end
 
     it "requires project_item" do
-      infra = Infrastructure.new(im_base_url: "https://example.com", cloud_site: "test", state: "pending")
+      infra = Infrastructure.new(api_base_url: "https://example.com", cloud_site: "test", state: "pending")
       expect(infra).not_to be_valid
       expect(infra.errors[:project_item]).to be_present
     end
 
-    it "requires im_base_url" do
+    it "requires api_base_url" do
       infra = Infrastructure.new(project_item: project_item, cloud_site: "test", state: "pending")
       expect(infra).not_to be_valid
-      expect(infra.errors[:im_base_url]).to include("can't be blank")
+      expect(infra.errors[:api_base_url]).to include("can't be blank")
     end
 
     it "requires cloud_site" do
-      infra = Infrastructure.new(project_item: project_item, im_base_url: "https://example.com", state: "pending")
+      infra = Infrastructure.new(project_item: project_item, api_base_url: "https://example.com", state: "pending")
       expect(infra).not_to be_valid
       expect(infra.errors[:cloud_site]).to include("can't be blank")
     end
@@ -51,7 +51,7 @@ RSpec.describe Infrastructure, type: :model do
       infra =
         Infrastructure.new(
           project_item: project_item,
-          im_base_url: "https://example.com",
+          api_base_url: "https://example.com",
           cloud_site: "test",
           state: "invalid_state"
         )
@@ -64,7 +64,7 @@ RSpec.describe Infrastructure, type: :model do
         infra =
           Infrastructure.new(
             project_item: project_item,
-            im_base_url: "https://example.com",
+            api_base_url: "https://example.com",
             cloud_site: "test",
             state: valid_state
           )
@@ -72,24 +72,24 @@ RSpec.describe Infrastructure, type: :model do
       end
     end
 
-    it "enforces uniqueness of im_infrastructure_id" do
-      infrastructure.update!(im_infrastructure_id: "unique-id-123")
+    it "enforces uniqueness of deployment_id" do
+      infrastructure.update!(deployment_id: "unique-id-123")
 
       project_item2 = create(:project_item, offer: offer, project: project)
       duplicate =
         Infrastructure.new(
           project_item: project_item2,
-          im_base_url: "https://example.com",
+          api_base_url: "https://example.com",
           cloud_site: "test",
           state: "pending",
-          im_infrastructure_id: "unique-id-123"
+          deployment_id: "unique-id-123"
         )
       expect(duplicate).not_to be_valid
-      expect(duplicate.errors[:im_infrastructure_id]).to be_present
+      expect(duplicate.errors[:deployment_id]).to be_present
     end
 
-    it "allows nil im_infrastructure_id" do
-      expect(infrastructure.im_infrastructure_id).to be_nil
+    it "allows nil deployment_id" do
+      expect(infrastructure.deployment_id).to be_nil
       expect(infrastructure).to be_valid
     end
   end
@@ -111,7 +111,7 @@ RSpec.describe Infrastructure, type: :model do
         running_infra =
           Infrastructure.create!(
             project_item: create_project_item_for_infra,
-            im_base_url: "https://example.com",
+            api_base_url: "https://example.com",
             cloud_site: "test",
             state: "running"
           )
@@ -131,29 +131,60 @@ RSpec.describe Infrastructure, type: :model do
       end
     end
 
+    describe ".adm_managed" do
+      it "includes only infrastructures with an ADM allocation" do
+        adm_infra =
+          Infrastructure.create!(
+            project_item: create_project_item_for_infra,
+            api_base_url: "https://example.com",
+            cloud_site: "test",
+            state: "running",
+            allocation_id: "alloc-1"
+          )
+
+        expect(Infrastructure.adm_managed.pluck(:id)).to contain_exactly(adm_infra.id)
+      end
+    end
+
     describe ".pending_state_check" do
       it "includes active infrastructures needing state check" do
         old_check =
           Infrastructure.create!(
             project_item: create_project_item_for_infra,
-            im_base_url: "https://example.com",
+            api_base_url: "https://example.com",
+            cloud_site: "test",
+            state: "running",
+            allocation_id: "alloc-1",
+            last_state_check_at: 2.minutes.ago
+          )
+        never_checked = infrastructure # has nil last_state_check_at
+        never_checked.update!(allocation_id: "alloc-1")
+
+        pending_ids = Infrastructure.pending_state_check.pluck(:id)
+        expect(pending_ids).to include(old_check.id, never_checked.id)
+      end
+
+      it "excludes legacy infrastructures without an ADM allocation" do
+        legacy =
+          Infrastructure.create!(
+            project_item: create_project_item_for_infra,
+            api_base_url: "https://example.com",
             cloud_site: "test",
             state: "running",
             last_state_check_at: 2.minutes.ago
           )
-        never_checked = infrastructure # has nil last_state_check_at
 
-        pending_ids = Infrastructure.pending_state_check.pluck(:id)
-        expect(pending_ids).to include(old_check.id, never_checked.id)
+        expect(Infrastructure.pending_state_check.pluck(:id)).not_to include(legacy.id)
       end
 
       it "excludes recently checked infrastructures" do
         recently_checked =
           Infrastructure.create!(
             project_item: create_project_item_for_infra,
-            im_base_url: "https://example.com",
+            api_base_url: "https://example.com",
             cloud_site: "test",
             state: "running",
+            allocation_id: "alloc-1",
             last_state_check_at: 30.seconds.ago
           )
 
@@ -164,7 +195,7 @@ RSpec.describe Infrastructure, type: :model do
         destroyed =
           Infrastructure.create!(
             project_item: create_project_item_for_infra,
-            im_base_url: "https://example.com",
+            api_base_url: "https://example.com",
             cloud_site: "test",
             state: "running",
             last_state_check_at: 2.minutes.ago
@@ -195,9 +226,9 @@ RSpec.describe Infrastructure, type: :model do
 
   describe "state transition methods" do
     describe "#mark_created!" do
-      it "sets im_infrastructure_id and state to creating" do
+      it "sets deployment_id and state to creating" do
         infrastructure.mark_created!("infra-123")
-        expect(infrastructure.im_infrastructure_id).to eq("infra-123")
+        expect(infrastructure.deployment_id).to eq("infra-123")
         expect(infrastructure.state).to eq("creating")
         expect(infrastructure.last_state_check_at).to be_present
       end
@@ -241,7 +272,7 @@ RSpec.describe Infrastructure, type: :model do
 
     describe "#mark_destroyed!" do
       it "sets state to destroyed" do
-        infrastructure.update_columns(im_infrastructure_id: "infra-123", state: "running")
+        infrastructure.update_columns(deployment_id: "infra-123", state: "running")
         infrastructure.mark_destroyed!
         expect(infrastructure.reload.state).to eq("destroyed")
         expect(infrastructure.last_state_check_at).to be_present
@@ -289,28 +320,33 @@ RSpec.describe Infrastructure, type: :model do
   end
 
   describe "#can_destroy?" do
-    it "returns true for running infrastructure with im_infrastructure_id" do
-      infrastructure.update!(state: "running", im_infrastructure_id: "infra-123")
+    it "returns true for running infrastructure with deployment_id" do
+      infrastructure.update!(state: "running", deployment_id: "infra-123", allocation_id: "alloc-1")
       expect(infrastructure.can_destroy?).to be true
     end
 
-    it "returns true for failed infrastructure with im_infrastructure_id" do
-      infrastructure.update!(state: "failed", im_infrastructure_id: "infra-123")
+    it "returns true for failed infrastructure with deployment_id" do
+      infrastructure.update!(state: "failed", deployment_id: "infra-123", allocation_id: "alloc-1")
       expect(infrastructure.can_destroy?).to be true
     end
 
-    it "returns false for destroyed infrastructure" do
-      infrastructure.update_columns(state: "destroyed", im_infrastructure_id: "infra-123")
+    it "returns false for a legacy IM infrastructure without allocation_id" do
+      infrastructure.update!(state: "running", deployment_id: "infra-123", allocation_id: nil)
       expect(infrastructure.can_destroy?).to be false
     end
 
-    it "returns false without im_infrastructure_id" do
-      infrastructure.update!(state: "running", im_infrastructure_id: nil)
+    it "returns false for destroyed infrastructure" do
+      infrastructure.update_columns(state: "destroyed", deployment_id: "infra-123")
+      expect(infrastructure.can_destroy?).to be false
+    end
+
+    it "returns false without deployment_id" do
+      infrastructure.update!(state: "running", deployment_id: nil)
       expect(infrastructure.can_destroy?).to be false
     end
 
     it "returns false for pending infrastructure" do
-      infrastructure.update!(state: "pending", im_infrastructure_id: "infra-123")
+      infrastructure.update!(state: "pending", deployment_id: "infra-123")
       expect(infrastructure.can_destroy?).to be false
     end
   end

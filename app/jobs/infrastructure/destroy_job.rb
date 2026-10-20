@@ -7,10 +7,10 @@ class Infrastructure::DestroyJob < ApplicationJob
     infrastructure = Infrastructure.find_by(id: infrastructure_id)
     return unless infrastructure&.can_destroy?
 
-    Rails.logger.info "Destroying Infrastructure #{infrastructure.id} (IM ID: #{infrastructure.im_infrastructure_id})"
+    Rails.logger.info "Destroying Infrastructure #{infrastructure.id} (IM ID: #{infrastructure.deployment_id})"
 
     im_client = InfrastructureManager::Client.new
-    result = im_client.destroy_infrastructure(infrastructure.im_infrastructure_id)
+    result = im_client.destroy_infrastructure(infrastructure.deployment_id)
 
     if result[:success]
       infrastructure.mark_destroyed!
