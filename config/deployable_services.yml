@@ -31,6 +31,11 @@ default: &default
 
   cloud_providers:
     default: <%= ENV.fetch('IM_DEFAULT_CLOUD', 'IISAS-FedCloud') %>
+    # ADM allocation of each cloud site: OpenStack Keystone endpoint and project ID
+    sites:
+      IISAS-FedCloud:
+        host: <%= ENV.fetch('ADM_CLOUD_HOST', 'https://cloud.ui.savba.sk:5000') %>
+        domain: <%= ENV.fetch('ADM_CLOUD_DOMAIN', 'ea4f6084f9a74329bd77e466136fd079') %>
     # Available cloud providers can be extended here
     # available:
     #   - id: IISAS-FedCloud
