@@ -1,14 +1,17 @@
-# Configuration for Deployable Services and Infrastructure Manager integration
+# Configuration for Deployable Services and Application Deployment Manager (ADM) integration
 #
 # Environment variables (all optional with defaults):
-#   IM_BASE_URL              - Infrastructure Manager API base URL
+#   ADM_BASE_URL             - ADM API base URL (keep the trailing slash)
+#   ADM_TIMEOUT              - Request timeout in seconds
+#   ADM_OPEN_TIMEOUT         - Connection timeout in seconds
+#   ADM_DEFAULT_CLOUD        - Default cloud site for deployments (a key of cloud_providers.sites)
+#   ADM_CLOUD_HOST           - OpenStack Keystone endpoint of the IISAS-FedCloud site
+#   ADM_CLOUD_DOMAIN         - OpenStack project ID of the IISAS-FedCloud site
 #   EGI_REFRESH_TOKEN_URL    - EGI AAI token refresh endpoint
-#   EGI_VO                   - Virtual Organization for EGI
 #   EGI_CLIENT_ID            - OAuth client ID for token refresh
-#   IM_DEFAULT_CLOUD         - Default cloud site for deployments
-#   IM_TIMEOUT               - Request timeout in seconds
-#   IM_OPEN_TIMEOUT          - Connection timeout in seconds
-#   IM_TOKEN_CACHE_EXPIRY    - Token cache expiry in minutes
+#   EGI_TOKEN_CACHE_EXPIRY   - Token cache expiry in minutes
+#
+# The service account token is read from EGI_ACCESS_TOKEN or refreshed with EGI_REFRESH_ACCESS_TOKEN.
 
 default: &default
   application_deployment_manager:
@@ -27,21 +30,15 @@ default: &default
     vo: <%= ENV.fetch('EGI_VO', 'eosc-beyond.eu') %>
     client_id: <%= ENV.fetch('EGI_CLIENT_ID', 'token-portal') %>
     token_cache_key: egi_access_token
-    token_cache_expiry_minutes: <%= ENV.fetch('IM_TOKEN_CACHE_EXPIRY', 50).to_i %>
+    token_cache_expiry_minutes: <%= ENV.fetch('EGI_TOKEN_CACHE_EXPIRY', 50).to_i %>
 
   cloud_providers:
-    default: <%= ENV.fetch('IM_DEFAULT_CLOUD', 'IISAS-FedCloud') %>
+    default: <%= ENV.fetch('ADM_DEFAULT_CLOUD', 'IISAS-FedCloud') %>
     # ADM allocation of each cloud site: OpenStack Keystone endpoint and project ID
     sites:
       IISAS-FedCloud:
         host: <%= ENV.fetch('ADM_CLOUD_HOST', 'https://cloud.ui.savba.sk:5000') %>
         domain: <%= ENV.fetch('ADM_CLOUD_DOMAIN', 'ea4f6084f9a74329bd77e466136fd079') %>
-    # Available cloud providers can be extended here
-    # available:
-    #   - id: IISAS-FedCloud
-    #     name: "IISAS FedCloud (Slovakia)"
-    #   - id: CESNET-MCC
-    #     name: "CESNET MetaCentrum Cloud (Czech Republic)"
 
   templates:
     local_path: <%= Rails.root.join('config', 'templates') %>
