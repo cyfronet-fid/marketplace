@@ -13,10 +13,11 @@ RSpec.describe Infrastructure::DestroyJob, type: :job do
   let(:infrastructure) do
     Infrastructure.create!(
       project_item: project_item,
-      im_base_url: "https://deploy.sandbox.eosc-beyond.eu",
+      api_base_url: "https://deploy.sandbox.eosc-beyond.eu",
       cloud_site: "IISAS-FedCloud",
       state: "running",
-      im_infrastructure_id: "infra-123"
+      deployment_id: "infra-123",
+      allocation_id: "alloc-1"
     )
   end
 
@@ -92,8 +93,8 @@ RSpec.describe Infrastructure::DestroyJob, type: :job do
         described_class.perform_now(infrastructure.id)
       end
 
-      it "does nothing if infrastructure is pending (no im_infrastructure_id)" do
-        infrastructure.update_columns(state: "pending", im_infrastructure_id: nil)
+      it "does nothing if infrastructure is pending (no deployment_id)" do
+        infrastructure.update_columns(state: "pending", deployment_id: nil)
 
         expect(im_client).not_to receive(:destroy_infrastructure)
         described_class.perform_now(infrastructure.id)

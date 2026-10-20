@@ -12,7 +12,7 @@ class Infrastructure::StatePollingJob < ApplicationJob
 
   def poll_single(infrastructure_id)
     infrastructure = Infrastructure.find_by(id: infrastructure_id)
-    return unless infrastructure&.im_infrastructure_id.present?
+    return unless infrastructure&.deployment_id.present?
     return if infrastructure.destroyed? || infrastructure.failed?
 
     update_infrastructure_state(infrastructure)
@@ -20,7 +20,7 @@ class Infrastructure::StatePollingJob < ApplicationJob
 
   def poll_all_pending
     Infrastructure.pending_state_check.find_each do |infrastructure|
-      next unless infrastructure.im_infrastructure_id.present?
+      next unless infrastructure.deployment_id.present?
 
       update_infrastructure_state(infrastructure)
     rescue StandardError => e
@@ -31,7 +31,7 @@ class Infrastructure::StatePollingJob < ApplicationJob
 
   def update_infrastructure_state(infrastructure)
     im_client = InfrastructureManager::Client.new
-    result = im_client.get_state(infrastructure.im_infrastructure_id)
+    result = im_client.get_state(infrastructure.deployment_id)
 
     if result[:success]
       im_state = result[:data]&.dig("state")
@@ -64,7 +64,7 @@ class Infrastructure::StatePollingJob < ApplicationJob
       return
     end
 
-    result = im_client.get_outputs(infrastructure.im_infrastructure_id)
+    result = im_client.get_outputs(infrastructure.deployment_id)
     return unless result[:success] && result[:data]
 
     outputs = result[:data]["outputs"] || {}

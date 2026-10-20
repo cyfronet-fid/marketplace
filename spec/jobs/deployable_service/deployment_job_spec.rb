@@ -48,7 +48,7 @@ RSpec.describe DeployableService::DeploymentJob, type: :job do
 
         infrastructure = Infrastructure.last
         expect(infrastructure.state).to eq("running")
-        expect(infrastructure.im_infrastructure_id).to eq(infrastructure_id)
+        expect(infrastructure.deployment_id).to eq(infrastructure_id)
       end
 
       it "stores outputs on infrastructure" do
@@ -62,7 +62,7 @@ RSpec.describe DeployableService::DeploymentJob, type: :job do
         subject.perform(project_item)
 
         expect(project_item.reload.infrastructure).to be_present
-        expect(project_item.infrastructure.im_infrastructure_id).to eq(infrastructure_id)
+        expect(project_item.infrastructure.deployment_id).to eq(infrastructure_id)
       end
 
       it "calls ToscaTemplateFiller to get filled template" do

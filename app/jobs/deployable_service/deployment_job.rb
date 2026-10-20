@@ -27,7 +27,7 @@ class DeployableService::DeploymentJob < ApplicationJob
     config = InfrastructureManager::Client.config
     Infrastructure.create!(
       project_item: project_item,
-      im_base_url: config.dig(:infrastructure_manager, :base_url),
+      api_base_url: config.dig(:infrastructure_manager, :base_url),
       cloud_site: config.dig(:cloud_providers, :default),
       state: "pending"
     )
@@ -57,23 +57,23 @@ class DeployableService::DeploymentJob < ApplicationJob
     end
 
     # Extract and store infrastructure ID
-    im_infrastructure_id = extract_infrastructure_id(deployment_uri)
-    if im_infrastructure_id
-      infrastructure.mark_created!(im_infrastructure_id)
+    deployment_id = extract_infrastructure_id(deployment_uri)
+    if deployment_id
+      infrastructure.mark_created!(deployment_id)
     else
       handle_deployment_failure(project_item, infrastructure, "Could not extract infrastructure ID")
       return
     end
 
     # Fetch outputs and complete deployment
-    fetch_outputs_and_complete(project_item, infrastructure, im_client, im_infrastructure_id)
+    fetch_outputs_and_complete(project_item, infrastructure, im_client, deployment_id)
   rescue StandardError => e
     Rails.logger.error "Infrastructure Manager deployment failed: #{e.class}: #{e.message}"
     handle_deployment_failure(project_item, infrastructure, e.message)
   end
 
-  def fetch_outputs_and_complete(project_item, infrastructure, im_client, im_infrastructure_id)
-    outputs_result = im_client.get_outputs(im_infrastructure_id)
+  def fetch_outputs_and_complete(project_item, infrastructure, im_client, deployment_id)
+    outputs_result = im_client.get_outputs(deployment_id)
     outputs = outputs_result[:data]["outputs"] if outputs_result[:success] && outputs_result[:data]
     deployment_address = Infrastructure::SelectDeploymentUrl.call(outputs, infrastructure.output_names)
 

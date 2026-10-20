@@ -6,14 +6,16 @@ class Infrastructure < ApplicationRecord
 
   belongs_to :project_item, autosave: false
 
-  validates :im_base_url, presence: true
+  validates :api_base_url, presence: true
   validates :cloud_site, presence: true
   validates :state, presence: true, inclusion: { in: STATES }
-  validates :im_infrastructure_id, uniqueness: true, allow_nil: true
+  validates :deployment_id, uniqueness: true, allow_nil: true
 
   scope :active, -> { where.not(state: %w[destroyed failed]) }
+  # Legacy Infrastructure Manager rows have no ADM allocation and are left alone
+  scope :adm_managed, -> { where.not(allocation_id: nil) }
   scope :pending_state_check,
-        lambda { active.where("last_state_check_at IS NULL OR last_state_check_at < ?", 1.minute.ago) }
+        lambda { active.adm_managed.where("last_state_check_at IS NULL OR last_state_check_at < ?", 1.minute.ago) }
 
   # State predicates
   STATES.each { |state_name| define_method("#{state_name}?") { state == state_name } }
@@ -22,8 +24,8 @@ class Infrastructure < ApplicationRecord
     project_item.offer.parent_service
   end
 
-  def mark_created!(infrastructure_id)
-    update_columns(im_infrastructure_id: infrastructure_id, state: "creating", last_state_check_at: Time.current)
+  def mark_created!(deployment_id)
+    update_columns(deployment_id: deployment_id, state: "creating", last_state_check_at: Time.current)
   end
 
   def mark_configured!
@@ -65,7 +67,7 @@ class Infrastructure < ApplicationRecord
   end
 
   def can_destroy?
-    %w[creating configured running failed].include?(state) && im_infrastructure_id.present?
+    %w[creating configured running failed].include?(state) && deployment_id.present? && allocation_id.present?
   end
 
   def deployment_url

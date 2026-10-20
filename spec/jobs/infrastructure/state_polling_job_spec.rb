@@ -13,10 +13,11 @@ RSpec.describe Infrastructure::StatePollingJob, type: :job do
   let(:infrastructure) do
     Infrastructure.create!(
       project_item: project_item,
-      im_base_url: "https://deploy.sandbox.eosc-beyond.eu",
+      api_base_url: "https://deploy.sandbox.eosc-beyond.eu",
       cloud_site: "IISAS-FedCloud",
       state: "creating",
-      im_infrastructure_id: "infra-123"
+      deployment_id: "infra-123",
+      allocation_id: "alloc-1"
     )
   end
 
@@ -40,8 +41,8 @@ RSpec.describe Infrastructure::StatePollingJob, type: :job do
         described_class.perform_now(-1)
       end
 
-      it "does nothing if infrastructure has no im_infrastructure_id" do
-        infrastructure.update_columns(im_infrastructure_id: nil)
+      it "does nothing if infrastructure has no deployment_id" do
+        infrastructure.update_columns(deployment_id: nil)
 
         expect(im_client).not_to receive(:get_state)
         described_class.perform_now(infrastructure.id)
@@ -69,10 +70,11 @@ RSpec.describe Infrastructure::StatePollingJob, type: :job do
         infra2 =
           Infrastructure.create!(
             project_item: project_item2,
-            im_base_url: "https://example.com",
+            api_base_url: "https://example.com",
             cloud_site: "test",
             state: "running",
-            im_infrastructure_id: "infra-456",
+            deployment_id: "infra-456",
+            allocation_id: "alloc-1",
             last_state_check_at: 2.minutes.ago
           )
 
@@ -88,8 +90,8 @@ RSpec.describe Infrastructure::StatePollingJob, type: :job do
         expect(infra2.reload.state).to eq("running")
       end
 
-      it "skips infrastructures without im_infrastructure_id" do
-        infrastructure.update_columns(im_infrastructure_id: nil, last_state_check_at: 2.minutes.ago)
+      it "skips infrastructures without deployment_id" do
+        infrastructure.update_columns(deployment_id: nil, last_state_check_at: 2.minutes.ago)
 
         expect(im_client).not_to receive(:get_state)
         described_class.perform_now
@@ -100,10 +102,11 @@ RSpec.describe Infrastructure::StatePollingJob, type: :job do
         infra2 =
           Infrastructure.create!(
             project_item: project_item2,
-            im_base_url: "https://example.com",
+            api_base_url: "https://example.com",
             cloud_site: "test",
             state: "running",
-            im_infrastructure_id: "infra-456",
+            deployment_id: "infra-456",
+            allocation_id: "alloc-1",
             last_state_check_at: 2.minutes.ago
           )
         infrastructure.update_columns(last_state_check_at: 2.minutes.ago)
