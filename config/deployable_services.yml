@@ -19,15 +19,9 @@ default: &default
     timeout: <%= ENV.fetch('ADM_TIMEOUT', 60).to_i %>
     open_timeout: <%= ENV.fetch('ADM_OPEN_TIMEOUT', 10).to_i %>
 
-  infrastructure_manager:
-    base_url: <%= ENV.fetch('IM_BASE_URL', 'https://deploy.sandbox.eosc-beyond.eu') %>
-    timeout: <%= ENV.fetch('IM_TIMEOUT', 300).to_i %>
-    open_timeout: <%= ENV.fetch('IM_OPEN_TIMEOUT', 60).to_i %>
-
   authentication:
     type: service_account
     refresh_token_url: <%= ENV.fetch('EGI_REFRESH_TOKEN_URL', 'https://aai.egi.eu/auth/realms/egi/protocol/openid-connect/token') %>
-    vo: <%= ENV.fetch('EGI_VO', 'eosc-beyond.eu') %>
     client_id: <%= ENV.fetch('EGI_CLIENT_ID', 'token-portal') %>
     token_cache_key: egi_access_token
     token_cache_expiry_minutes: <%= ENV.fetch('EGI_TOKEN_CACHE_EXPIRY', 50).to_i %>
@@ -51,10 +45,6 @@ test:
   <<: *default
   application_deployment_manager:
     base_url: "https://adm.test.example.com/adim/"
-    timeout: 30
-    open_timeout: 10
-  infrastructure_manager:
-    base_url: "https://im.test.example.com"
     timeout: 30
     open_timeout: 10
 
