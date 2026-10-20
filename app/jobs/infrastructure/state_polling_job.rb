@@ -57,8 +57,9 @@ class Infrastructure::StatePollingJob < ApplicationJob
   end
 
   def fetch_outputs(infrastructure, im_client)
-    if infrastructure.deployment_url.present?
-      # Outputs already stored - only reconcile the project item, without querying IM again
+    if Infrastructure::SelectDeploymentUrl.dns_url?(infrastructure.deployment_url)
+      # Preferred DNS URL already stored - only reconcile the project item, without querying IM again.
+      # An IP address URL may be a fallback until IM reports the DNS one, so outputs are fetched again.
       update_project_item_link(infrastructure, infrastructure.outputs)
       return
     end

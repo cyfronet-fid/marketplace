@@ -11,26 +11,34 @@ class Infrastructure::SelectDeploymentUrl < ApplicationService
     @output_names = output_names
   end
 
-  def call
-    return if @outputs.blank?
-
-    urls = @outputs.values_at(*(@output_names | @outputs.keys)).select { |value| host(value) }
-    urls.find { |url| !ip_address?(host(url)) } || urls.first
+  def self.url?(value)
+    host(value).present?
   end
 
-  private
+  def self.dns_url?(value)
+    url?(value) && !ip_address?(host(value))
+  end
 
-  def host(value)
+  def self.host(value)
     uri = URI.parse(value.to_s)
     uri.hostname if uri.is_a?(URI::HTTP) && uri.host.present?
   rescue URI::InvalidURIError
     nil
   end
 
-  def ip_address?(host)
+  def self.ip_address?(host)
     IPAddr.new(host)
     true
   rescue IPAddr::InvalidAddressError
     false
+  end
+
+  private_class_method :host, :ip_address?
+
+  def call
+    return if @outputs.blank?
+
+    urls = @outputs.values_at(*(@output_names | @outputs.keys)).select { |value| self.class.url?(value) }
+    urls.find { |url| self.class.dns_url?(url) } || urls.first
   end
 end

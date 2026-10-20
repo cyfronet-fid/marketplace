@@ -31,6 +31,20 @@ RSpec.describe Infrastructure::SelectDeploymentUrl do
     expect(described_class.call(outputs, %w[jupyter_url_ip ipv6_url])).to eq("https://10.0.0.1/")
   end
 
+  describe ".dns_url?" do
+    it "is true for a URL with a DNS host" do
+      expect(described_class.dns_url?("https://notebook.vm.fedcloud.eu/")).to be(true)
+    end
+
+    it "is false for an IP address URL" do
+      expect(described_class.dns_url?("https://10.0.0.1/")).to be(false)
+    end
+
+    it "is false without a URL" do
+      expect(described_class.dns_url?(nil)).to be(false)
+    end
+  end
+
   it "skips outputs that are not http(s) URLs with a host" do
     outputs = { "ip" => "10.0.0.1", "ssh" => "ssh://10.0.0.1", "unresolved" => "https:///", "bad" => "https://a b" }
 
