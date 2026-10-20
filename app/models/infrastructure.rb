@@ -49,23 +49,6 @@ class Infrastructure < ApplicationRecord
     update_columns(state: "destroyed", last_state_check_at: Time.current)
   end
 
-  def update_state_from_im!(im_state)
-    case im_state&.downcase
-    when "pending"
-      update_columns(state: "creating", last_state_check_at: Time.current)
-    when "configured"
-      mark_configured!
-    when "running", "stopped", "off"
-      # "stopped"/"off" still considered running (infrastructure exists)
-      update_columns(state: "running", last_state_check_at: Time.current)
-    when "failed", "unconfigured"
-      mark_failed!("Infrastructure Manager reported state: #{im_state}")
-    else
-      Rails.logger.warn "Unknown IM state '#{im_state}' for Infrastructure #{id}"
-      update_columns(last_state_check_at: Time.current)
-    end
-  end
-
   def can_destroy?
     %w[creating configured running failed].include?(state) && deployment_id.present? && allocation_id.present?
   end

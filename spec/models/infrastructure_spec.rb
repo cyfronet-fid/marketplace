@@ -280,45 +280,6 @@ RSpec.describe Infrastructure, type: :model do
     end
   end
 
-  describe "#update_state_from_im!" do
-    it "maps 'pending' to creating" do
-      infrastructure.update_state_from_im!("pending")
-      expect(infrastructure.state).to eq("creating")
-    end
-
-    it "maps 'configured' to configured" do
-      infrastructure.update_state_from_im!("configured")
-      expect(infrastructure.state).to eq("configured")
-    end
-
-    it "maps 'running' to running" do
-      infrastructure.update_state_from_im!("running")
-      expect(infrastructure.state).to eq("running")
-    end
-
-    it "maps 'stopped' to running (infrastructure still exists)" do
-      infrastructure.update_state_from_im!("stopped")
-      expect(infrastructure.state).to eq("running")
-    end
-
-    it "maps 'failed' to failed with error" do
-      infrastructure.update_state_from_im!("failed")
-      expect(infrastructure.state).to eq("failed")
-      expect(infrastructure.last_error).to include("failed")
-    end
-
-    it "handles case-insensitive states" do
-      infrastructure.update_state_from_im!("RUNNING")
-      expect(infrastructure.state).to eq("running")
-    end
-
-    it "handles unknown states gracefully" do
-      expect(Rails.logger).to receive(:warn).with(/Unknown IM state/)
-      infrastructure.update_state_from_im!("unknown_state")
-      expect(infrastructure.last_state_check_at).to be_present
-    end
-  end
-
   describe "#can_destroy?" do
     it "returns true for running infrastructure with deployment_id" do
       infrastructure.update!(state: "running", deployment_id: "infra-123", allocation_id: "alloc-1")
