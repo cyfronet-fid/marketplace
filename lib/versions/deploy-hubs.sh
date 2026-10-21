@@ -212,13 +212,20 @@ remove_transform() {
 }
 
 # True when the presence of the transform containers equals the --no-transform
-# setting of this run. `seed` starts the services and `up --no-transform`
-# removes them, and the two modes do not write the state file. Thus the
-# up-to-date check of a deploy must not trust the state file alone.
+# setting of this run. The check examines transform-api, transform-worker and
+# redis one by one: a partial state, for example after a failed removal, does
+# not count as a match and causes a deploy. `seed` starts the services and
+# `up --no-transform` removes them, and the two modes do not write the state
+# file. Thus the up-to-date check of a deploy must not trust the state file
+# alone.
 transform_state_matches() {
-    local variant="$1" running=0
-    [ -n "$(HUB_PROFILES="transform" compose "$variant" ps -q transform-api transform-worker)" ] && running=1
-    [ "$running" = "$TRANSFORM" ]
+    local variant="$1" service running
+    for service in transform-api transform-worker redis; do
+        running=0
+        [ -n "$(HUB_PROFILES="transform" compose "$variant" ps -q "$service")" ] && running=1
+        [ "$running" = "$TRANSFORM" ] || return 1
+    done
+    return 0
 }
 
 # Clones the repository on the first run, then resets the checkout to the
