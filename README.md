@@ -182,7 +182,11 @@ and the commons repositories); `--clone` clones a missing checkout there.
 The first start builds the dependency image and installs the development
 gems and node modules into the volumes, which takes several minutes; the
 next starts are fast. Watch the containers with
-`docker compose -p mp-local-<variant> logs -f web worker assets`.
+`./lib/versions/deploy-local.sh logs <variant>`, or the hub containers with
+`logs --no-instance <variant>`. The mode supplies the compose files and
+their variables, thus the services always resolve; a plain
+`docker compose -p mp-local-<variant> logs -f` also works while the
+containers run.
 
 One run without flags sets up everything of one variant at once: the
 instance, its discovery hub (pl and marketplace only) and the seed of the

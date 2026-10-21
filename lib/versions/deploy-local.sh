@@ -55,6 +55,11 @@
 #   restart       -> restart the web, worker and assets containers of the
 #                    instance, to apply a change of Gemfile, package.json or
 #                    an initializer. A plain code change needs no restart.
+#   logs          -> follow the logs of the instance containers, or of the
+#                    hub containers with --no-instance. The mode supplies the
+#                    compose files and their variables; a plain `docker
+#                    compose -p mp-local-<variant> logs -f` also works while
+#                    the containers run.
 #   down          -> remove the instance and the hub: containers, images, volumes
 #   seed          -> create the Solr collections if absent, then start a full
 #                    load; starts the transform services when they are absent.
@@ -74,6 +79,8 @@
 # Examples:
 #   deploy-local.sh pl                  # everything of pl: instance and hub
 #   deploy-local.sh restart pl          # apply a Gemfile or initializer change
+#   deploy-local.sh logs pl             # follow the instance logs
+#   deploy-local.sh logs --no-instance pl # follow the hub logs
 #   deploy-local.sh --no-hub whitelabel # whitelabel instance
 #   deploy-local.sh --no-instance pl    # pl hub only
 #   deploy-local.sh --no-transform pl   # pl without the transform services
@@ -143,10 +150,10 @@ WITH_INSTANCE=1
 TRANSFORM=1
 PRODUCTION=0
 CLONE=0
-USAGE="Usage: $0 [up|down|seed|restart] [--no-hub|--no-instance] [--no-transform] [--production] [--clone] <${ALL_VARIANTS[*]}>"
+USAGE="Usage: $0 [up|down|seed|restart|logs] [--no-hub|--no-instance] [--no-transform] [--production] [--clone] <${ALL_VARIANTS[*]}>"
 for arg in "$@"; do
     case "$arg" in
-        up|down|seed|restart) MODE="$arg" ;;
+        up|down|seed|restart|logs) MODE="$arg" ;;
         --no-hub) WITH_HUB=0 ;;
         --no-instance) WITH_INSTANCE=0 ;;
         --no-transform) TRANSFORM=0 ;;
@@ -493,6 +500,16 @@ case "$MODE" in
         echo "=== [${VARIANT}] restart ==="
         instance restart "$APP_SERVICE" worker assets || { echo "[${VARIANT}] restart FAILED"; exit 1; }
         echo "[${VARIANT}] instance: $MP_ROOT_URL"
+        exit 0 ;;
+    logs)
+        if [ "$WITH_INSTANCE" = 1 ]; then
+            services=("$APP_SERVICE" worker)
+            # The assets service exists in the development override only.
+            [ "$PRODUCTION" = 0 ] && services+=(assets)
+            instance logs -f --tail=100 "${services[@]}"
+        else
+            hub logs -f --tail=100
+        fi
         exit 0 ;;
 esac
 

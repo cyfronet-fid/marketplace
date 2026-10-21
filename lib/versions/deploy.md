@@ -177,7 +177,11 @@ and a hub call also needs `MP_HUBS_DIR` and `MP_APP_DIR`.
    4. Compute the state: the three commits, the blob hash of the hub compose
       file and the tree hash of `lib/versions/hub`. The two hashes come from
       HEAD, not from the working tree. Without `--force`, skip the hub when
-      the state equals `.last-deployed-<variant>`.
+      the state equals `.last-deployed-<variant>` and the transform
+      containers match the `--no-transform` setting. `seed` and
+      `up --no-transform` change the containers without a state write; the
+      deploy then runs although the state is equal, and reconciles the
+      containers.
    5. Build the images:
       - `api` from the backend directory of the hub checkout.
       - `ui` from `hub/ui.Dockerfile`. The build argument
@@ -433,9 +437,11 @@ checkouts.
 
 The first start of the development environment installs the development gems
 and node modules into the named volumes, which takes several minutes; the
-next starts are fast. The instance logs with
-`docker compose -p mp-local-<variant> logs -f web worker assets`, the hub
-with `docker compose -p mp-local-<variant>-hub logs -f`.
+next starts are fast. `deploy-local.sh logs <variant>` follows the instance
+logs and `logs --no-instance <variant>` the hub logs. The mode supplies the
+compose files and their variables, thus the services always resolve; a plain
+`docker compose -p mp-local-<variant> logs -f` also works while the
+containers run, but does not resolve the services of a stopped project.
 
 Without a flag, one run sets up everything of one variant at once: the
 instance, the hub and the seed of the database and of Solr. The first run
