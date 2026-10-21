@@ -3,11 +3,11 @@
 # Deploys the deployable service of a project item through ADM: registers the allocation of the
 # default cloud site and creates the deployment. Its progress is tracked by Infrastructure::StatePollingJob.
 class Infrastructure::Deploy < ApplicationService
-  def initialize(project_item, client: Adm::Client.new)
+  def initialize(project_item, client: Adm::Client.new, config: Rails.application.config_for(:adm))
     super()
     @project_item = project_item
     @client = client
-    @config = Adm::Client.config
+    @config = config
   end
 
   def call
@@ -15,7 +15,7 @@ class Infrastructure::Deploy < ApplicationService
     template = DeployableService::ToscaTemplate.fetch(deployable_service.url)
     infrastructure.update!(output_names: template.output_names)
 
-    allocation_id = @client.create_allocation(**cloud_site.slice(:host, :domain).symbolize_keys)
+    allocation_id = @client.create_allocation(**cloud_site.slice(:host, :domain))
     infrastructure.update!(allocation_id: allocation_id)
 
     deployment_id =
@@ -50,11 +50,11 @@ class Infrastructure::Deploy < ApplicationService
   end
 
   def cloud_site_name
-    @config.dig(:cloud_providers, :default)
+    @config[:default_cloud_site]
   end
 
   def cloud_site
-    @config.dig(:cloud_providers, :sites, cloud_site_name) ||
-      raise(Adm::Error, "Cloud site #{cloud_site_name} is not configured")
+    @config[:cloud_sites][cloud_site_name.to_sym] || raise(Adm::Error,
+                                                           "Cloud site #{cloud_site_name} is not configured")
   end
 end

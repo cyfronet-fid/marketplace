@@ -1,10 +1,10 @@
-# Configuration for Deployable Services and Application Deployment Manager (ADM) integration
+# Application Deployment Manager (ADM) integration of deployable services
 #
 # Environment variables (all optional with defaults):
 #   ADM_BASE_URL             - ADM API base URL (keep the trailing slash)
 #   ADM_TIMEOUT              - Request timeout in seconds
 #   ADM_OPEN_TIMEOUT         - Connection timeout in seconds
-#   ADM_DEFAULT_CLOUD        - Default cloud site for deployments (a key of cloud_providers.sites)
+#   ADM_DEFAULT_CLOUD        - Default cloud site for deployments (a key of cloud_sites)
 #   ADM_CLOUD_HOST           - OpenStack Keystone endpoint of the IISAS-FedCloud site
 #   ADM_CLOUD_DOMAIN         - OpenStack project ID of the IISAS-FedCloud site
 #   EGI_REFRESH_TOKEN_URL    - EGI AAI token refresh endpoint
@@ -14,39 +14,31 @@
 # The service account token is read from EGI_ACCESS_TOKEN or refreshed with EGI_REFRESH_ACCESS_TOKEN.
 
 default: &default
-  application_deployment_manager:
-    base_url: <%= ENV.fetch('ADM_BASE_URL', 'https://deploy.sandbox.eosc-beyond.eu/adim/') %>
-    timeout: <%= ENV.fetch('ADM_TIMEOUT', 60).to_i %>
-    open_timeout: <%= ENV.fetch('ADM_OPEN_TIMEOUT', 10).to_i %>
+  base_url: <%= ENV.fetch('ADM_BASE_URL', 'https://deploy.sandbox.eosc-beyond.eu/adim/') %>
+  timeout: <%= ENV.fetch('ADM_TIMEOUT', 60).to_i %>
+  open_timeout: <%= ENV.fetch('ADM_OPEN_TIMEOUT', 10).to_i %>
 
+  default_cloud_site: <%= ENV.fetch('ADM_DEFAULT_CLOUD', 'IISAS-FedCloud') %>
+  # ADM allocation of each cloud site: OpenStack Keystone endpoint and project ID
+  cloud_sites:
+    IISAS-FedCloud:
+      host: <%= ENV.fetch('ADM_CLOUD_HOST', 'https://cloud.ui.savba.sk:5000') %>
+      domain: <%= ENV.fetch('ADM_CLOUD_DOMAIN', 'ea4f6084f9a74329bd77e466136fd079') %>
+
+  # EGI Check-in service account used for ADM calls
   authentication:
-    type: service_account
     refresh_token_url: <%= ENV.fetch('EGI_REFRESH_TOKEN_URL', 'https://aai.egi.eu/auth/realms/egi/protocol/openid-connect/token') %>
     client_id: <%= ENV.fetch('EGI_CLIENT_ID', 'token-portal') %>
     token_cache_key: egi_access_token
     token_cache_expiry_minutes: <%= ENV.fetch('EGI_TOKEN_CACHE_EXPIRY', 50).to_i %>
-
-  cloud_providers:
-    default: <%= ENV.fetch('ADM_DEFAULT_CLOUD', 'IISAS-FedCloud') %>
-    # ADM allocation of each cloud site: OpenStack Keystone endpoint and project ID
-    sites:
-      IISAS-FedCloud:
-        host: <%= ENV.fetch('ADM_CLOUD_HOST', 'https://cloud.ui.savba.sk:5000') %>
-        domain: <%= ENV.fetch('ADM_CLOUD_DOMAIN', 'ea4f6084f9a74329bd77e466136fd079') %>
-
-  templates:
-    local_path: <%= Rails.root.join('config', 'templates') %>
-    fetch_timeout: 30
 
 development:
   <<: *default
 
 test:
   <<: *default
-  application_deployment_manager:
-    base_url: "https://adm.test.example.com/adim/"
-    timeout: 30
-    open_timeout: 10
+  base_url: "https://adm.test.example.com/adim/"
+  timeout: 30
 
 production:
   <<: *default

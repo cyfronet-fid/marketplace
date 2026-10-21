@@ -3,11 +3,7 @@
 # HTTP client of the Application Deployment Manager (ADM) API.
 # Request paths are relative, so the /adim/ prefix of the base URL is kept.
 class Adm::Client
-  def self.config
-    Rails.application.config.deployable_services.with_indifferent_access
-  end
-
-  def initialize(access_token: nil, config: self.class.config[:application_deployment_manager])
+  def initialize(access_token: nil, config: Rails.application.config_for(:adm))
     @access_token = access_token
     @config = config
   end
@@ -92,7 +88,7 @@ class Adm::Client
   end
 
   def access_token
-    @access_token ||= Checkin::ServiceAccountToken.call
+    @access_token ||= Checkin::ServiceAccountToken.call(config: @config[:authentication])
   end
 
   def allocation_id(response)

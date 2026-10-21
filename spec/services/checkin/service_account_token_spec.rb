@@ -5,6 +5,14 @@ require "rails_helper"
 RSpec.describe Checkin::ServiceAccountToken, type: :service do
   let(:token_url) { "https://aai.egi.eu/auth/realms/egi/protocol/openid-connect/token" }
   let(:cache) { ActiveSupport::Cache::MemoryStore.new }
+  let(:config) do
+    {
+      refresh_token_url: token_url,
+      client_id: "token-portal",
+      token_cache_key: "egi_access_token",
+      token_cache_expiry_minutes: 50
+    }
+  end
   let(:env) { {} }
 
   before do
@@ -18,7 +26,7 @@ RSpec.describe Checkin::ServiceAccountToken, type: :service do
     let(:env) { { "EGI_ACCESS_TOKEN" => "env-token" } }
 
     it "returns the cached token" do
-      expect(described_class.call).to eq("cached-token")
+      expect(described_class.call(config: config)).to eq("cached-token")
     end
   end
 
@@ -26,11 +34,11 @@ RSpec.describe Checkin::ServiceAccountToken, type: :service do
     let(:env) { { "EGI_ACCESS_TOKEN" => "env-token", "EGI_REFRESH_ACCESS_TOKEN" => "refresh-token" } }
 
     it "returns the environment token" do
-      expect(described_class.call).to eq("env-token")
+      expect(described_class.call(config: config)).to eq("env-token")
     end
 
     it "does not refresh the token" do
-      described_class.call
+      described_class.call(config: config)
       expect(WebMock).not_to have_requested(:post, token_url)
     end
   end
@@ -60,11 +68,11 @@ RSpec.describe Checkin::ServiceAccountToken, type: :service do
       end
 
       it "returns the refreshed token" do
-        expect(described_class.call).to eq("fresh-token")
+        expect(described_class.call(config: config)).to eq("fresh-token")
       end
 
       it "caches the refreshed token" do
-        described_class.call
+        described_class.call(config: config)
         expect(cache.read("egi_access_token")).to eq("fresh-token")
       end
     end
@@ -81,7 +89,9 @@ RSpec.describe Checkin::ServiceAccountToken, type: :service do
       end
 
       it "raises an error" do
-        expect { described_class.call }.to raise_error(Checkin::ServiceAccountToken::Error, /No EGI access token/)
+        expect do
+          described_class.call(config: config)
+        end.to raise_error(Checkin::ServiceAccountToken::Error, /No EGI access token/)
       end
     end
 
@@ -97,7 +107,7 @@ RSpec.describe Checkin::ServiceAccountToken, type: :service do
       end
 
       it "raises an error" do
-        expect { described_class.call }.to raise_error(Checkin::ServiceAccountToken::Error)
+        expect { described_class.call(config: config) }.to raise_error(Checkin::ServiceAccountToken::Error)
       end
     end
 
@@ -105,14 +115,16 @@ RSpec.describe Checkin::ServiceAccountToken, type: :service do
       before { stub_request(:post, token_url).to_timeout }
 
       it "raises an error" do
-        expect { described_class.call }.to raise_error(Checkin::ServiceAccountToken::Error)
+        expect { described_class.call(config: config) }.to raise_error(Checkin::ServiceAccountToken::Error)
       end
     end
   end
 
   context "when no token is available" do
     it "raises an error" do
-      expect { described_class.call }.to raise_error(Checkin::ServiceAccountToken::Error, /No EGI access token/)
+      expect do
+        described_class.call(config: config)
+      end.to raise_error(Checkin::ServiceAccountToken::Error, /No EGI access token/)
     end
   end
 end
