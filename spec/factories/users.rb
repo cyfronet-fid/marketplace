@@ -17,6 +17,15 @@ FactoryBot.define do
       end
     end
 
+    # build_stubbed skips after(:build). Set the target directly: the has_one writer would save,
+    # and the reader would query, as the stubbed user looks persisted.
+    after(:stub) do |user|
+      if Mp::Variant.pl? && user[:uid].present? && user.association(:primary_identity).target.nil?
+        user.association(:primary_identity).target =
+          build_stubbed(:user_identity, user: user, uid: user[:uid], primary: true)
+      end
+    end
+
     factory :user_with_interests do
       sequence(:scientific_domains) { |_n| [create(:scientific_domain)] }
       sequence(:categories) { |_n| [create(:category)] }

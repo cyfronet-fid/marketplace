@@ -58,15 +58,20 @@ class Backoffice::OtherSettings::VocabulariesController < Backoffice::Applicatio
 
   private
 
-  # The paths of a type follow its route in VOCABULARY_TYPES (params[:type] is
-  # the key); the model name differs for product_access_policy
+  # The paths of a type follow its route in VOCABULARY_TYPES, not the model
+  # name, which differs for product_access_policy
   # (Vocabulary::ResearchProductAccessPolicy) and for bundle_capability_of_goal.
+  # The singular path is the one `resources` derives from the route.
   def vocabulary_path
-    send("backoffice_other_settings_#{params[:type]}_path", @vocabulary)
+    send("backoffice_other_settings_#{vocabulary_route.to_s.singularize}_path", @vocabulary)
   end
 
   def vocabularies_path
-    send("backoffice_other_settings_#{VOCABULARY_TYPES[params[:type].to_sym][:route]}_path")
+    send("backoffice_other_settings_#{vocabulary_route}_path")
+  end
+
+  def vocabulary_route
+    VOCABULARY_TYPES[params[:type].to_sym][:route]
   end
 
   def find_and_authorize
