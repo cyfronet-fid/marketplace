@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ApplicationDeploymentManager::Client, type: :service do
+RSpec.describe Adm::Client, type: :service do
   let(:base_url) { "https://adm.test.example.com/adim" }
   let(:client) { described_class.new(access_token: "adm-token") }
   let(:json_headers) { { "Content-Type" => "application/json" } }
@@ -87,7 +87,7 @@ RSpec.describe ApplicationDeploymentManager::Client, type: :service do
       let(:response) { { status: 303 } }
 
       it "raises an error" do
-        expect { create_allocation }.to raise_error(ApplicationDeploymentManager::Error, /allocation id/)
+        expect { create_allocation }.to raise_error(Adm::Error, /allocation id/)
       end
     end
   end
@@ -179,7 +179,7 @@ RSpec.describe ApplicationDeploymentManager::Client, type: :service do
       let(:body) { { id: "not_found", description: "Deployment not found" } }
 
       it "raises NotFound" do
-        expect { deployment }.to raise_error(ApplicationDeploymentManager::NotFound, /Deployment not found/)
+        expect { deployment }.to raise_error(Adm::NotFound, /Deployment not found/)
       end
     end
 
@@ -188,7 +188,7 @@ RSpec.describe ApplicationDeploymentManager::Client, type: :service do
       let(:body) { { id: "unavailable", description: "Try again later" } }
 
       it "raises an error with the ADM description" do
-        expect { deployment }.to raise_error(ApplicationDeploymentManager::Error, /503.*Try again later/)
+        expect { deployment }.to raise_error(Adm::Error, /503.*Try again later/)
       end
     end
 
@@ -198,7 +198,7 @@ RSpec.describe ApplicationDeploymentManager::Client, type: :service do
 
       it "raises an error that is not NotFound" do
         expect { deployment }.to raise_error(
-          an_instance_of(ApplicationDeploymentManager::Error).and(having_attributes(message: /403: Forbidden/))
+          an_instance_of(Adm::Error).and(having_attributes(message: /403: Forbidden/))
         )
       end
     end
@@ -223,7 +223,7 @@ RSpec.describe ApplicationDeploymentManager::Client, type: :service do
     before { stub_request(:get, "#{base_url}/deployment/dep-1").to_timeout }
 
     it "wraps them in an error" do
-      expect { client.deployment("dep-1") }.to raise_error(ApplicationDeploymentManager::Error, /Faraday::/)
+      expect { client.deployment("dep-1") }.to raise_error(Adm::Error, /Faraday::/)
     end
   end
 

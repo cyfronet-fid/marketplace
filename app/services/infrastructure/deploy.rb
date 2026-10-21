@@ -3,11 +3,11 @@
 # Deploys the deployable service of a project item through ADM: registers the allocation of the
 # default cloud site and creates the deployment. Its progress is tracked by Infrastructure::StatePollingJob.
 class Infrastructure::Deploy < ApplicationService
-  def initialize(project_item, client: ApplicationDeploymentManager::Client.new)
+  def initialize(project_item, client: Adm::Client.new)
     super()
     @project_item = project_item
     @client = client
-    @config = ApplicationDeploymentManager::Client.config
+    @config = Adm::Client.config
   end
 
   def call
@@ -55,6 +55,6 @@ class Infrastructure::Deploy < ApplicationService
 
   def cloud_site
     @config.dig(:cloud_providers, :sites, cloud_site_name) ||
-      raise(ApplicationDeploymentManager::Error, "Cloud site #{cloud_site_name} is not configured")
+      raise(Adm::Error, "Cloud site #{cloud_site_name} is not configured")
   end
 end

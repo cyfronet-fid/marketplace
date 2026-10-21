@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe Infrastructure::RefreshState, type: :service do
-  subject(:refresh) { described_class.call(infrastructure, client: ApplicationDeploymentManager::Client.new(access_token: "t")) }
+  subject(:refresh) { described_class.call(infrastructure, client: Adm::Client.new(access_token: "t")) }
 
   let(:infrastructure) do
     create(
@@ -189,7 +189,7 @@ RSpec.describe Infrastructure::RefreshState, type: :service do
     before { stub_request(:get, "https://adm.test.example.com/adim/deployment/dep-1").to_return(status: 503) }
 
     it "raises an error for the polling job to handle" do
-      expect { refresh }.to raise_error(ApplicationDeploymentManager::Error)
+      expect { refresh }.to raise_error(Adm::Error)
     end
   end
 end

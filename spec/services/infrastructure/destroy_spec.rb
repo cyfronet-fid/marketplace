@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe Infrastructure::Destroy, type: :service do
-  subject(:destroy) { described_class.call(infrastructure, client: ApplicationDeploymentManager::Client.new(access_token: "t")) }
+  subject(:destroy) { described_class.call(infrastructure, client: Adm::Client.new(access_token: "t")) }
 
   let(:deployment_url) { "https://adm.test.example.com/adim/deployment/dep-1" }
   let(:infrastructure) do
