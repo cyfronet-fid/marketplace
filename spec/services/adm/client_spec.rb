@@ -28,7 +28,7 @@ RSpec.describe Adm::Client, type: :service do
     context "without an access token" do
       let(:authorization) { "Bearer service-token" }
 
-      before { allow(Checkin::ServiceAccountToken).to receive(:call).and_return("service-token") }
+      before { allow(Adm::AccessToken).to receive(:call).and_return("service-token") }
 
       it "uses the service account token" do
         described_class.new.deployment("dep-1")

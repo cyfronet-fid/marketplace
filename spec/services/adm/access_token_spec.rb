@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Checkin::ServiceAccountToken, type: :service do
+RSpec.describe Adm::AccessToken, type: :service do
   let(:token_url) { "https://aai.egi.eu/auth/realms/egi/protocol/openid-connect/token" }
   let(:cache) { ActiveSupport::Cache::MemoryStore.new }
   let(:config) do
@@ -91,7 +91,7 @@ RSpec.describe Checkin::ServiceAccountToken, type: :service do
       it "raises an error" do
         expect do
           described_class.call(config: config)
-        end.to raise_error(Checkin::ServiceAccountToken::Error, /No EGI access token/)
+        end.to raise_error(Adm::AccessToken::Error, /No EGI access token/)
       end
     end
 
@@ -107,7 +107,7 @@ RSpec.describe Checkin::ServiceAccountToken, type: :service do
       end
 
       it "raises an error" do
-        expect { described_class.call(config: config) }.to raise_error(Checkin::ServiceAccountToken::Error)
+        expect { described_class.call(config: config) }.to raise_error(Adm::AccessToken::Error)
       end
     end
 
@@ -115,16 +115,18 @@ RSpec.describe Checkin::ServiceAccountToken, type: :service do
       before { stub_request(:post, token_url).to_timeout }
 
       it "raises an error" do
-        expect { described_class.call(config: config) }.to raise_error(Checkin::ServiceAccountToken::Error)
+        expect { described_class.call(config: config) }.to raise_error(Adm::AccessToken::Error)
       end
     end
   end
 
   context "when no token is available" do
     it "raises an error" do
-      expect do
-        described_class.call(config: config)
-      end.to raise_error(Checkin::ServiceAccountToken::Error, /No EGI access token/)
+      expect { described_class.call(config: config) }.to raise_error(Adm::AccessToken::Error, /No EGI access token/)
+    end
+
+    it "raises an ADM error" do
+      expect { described_class.call(config: config) }.to raise_error(Adm::Error)
     end
   end
 end

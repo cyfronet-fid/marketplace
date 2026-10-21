@@ -51,12 +51,13 @@ class Adm::Client
 
   def deployment(id)
     body = request(:get, path("deployment", id)).body
+    outputs = Array(body["outputs"]).to_h { |output| [output["name"], output["value"]] }
 
     Adm::Deployment.new(
       id: body["id"],
       status: body["status"],
       details: body["details"],
-      outputs: Array(body["outputs"]).to_h { |output| [output["name"], output["value"]] }
+      outputs: outputs
     )
   end
 
@@ -88,7 +89,7 @@ class Adm::Client
   end
 
   def access_token
-    @access_token ||= Checkin::ServiceAccountToken.call(config: @config[:authentication])
+    @access_token ||= Adm::AccessToken.call(config: @config[:egi_aai])
   end
 
   def allocation_id(response)
