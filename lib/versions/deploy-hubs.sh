@@ -211,6 +211,16 @@ remove_transform() {
     HUB_PROFILES="transform" compose "$1" rm -sf transform-api transform-worker redis
 }
 
+# True when the presence of the transform containers equals the --no-transform
+# setting of this run. `seed` starts the services and `up --no-transform`
+# removes them, and the two modes do not write the state file. Thus the
+# up-to-date check of a deploy must not trust the state file alone.
+transform_state_matches() {
+    local variant="$1" running=0
+    [ -n "$(HUB_PROFILES="transform" compose "$variant" ps -q transform-api transform-worker)" ] && running=1
+    [ "$running" = "$TRANSFORM" ]
+}
+
 # Clones the repository on the first run, then resets the checkout to the
 # remote branch: the checkout is a deploy artifact, local changes are discarded.
 update_checkout() {
@@ -385,8 +395,15 @@ deploy_hub() {
     [ "$TRANSFORM" = 1 ] || commit="$commit no-transform"
 
     if [ "$FORCE" = 0 ] && [ "$(cat "$state" 2>/dev/null)" = "$commit" ]; then
-        echo "[${variant} hub] up-to-date at ${commit:0:8}"
-        return 0
+        if transform_state_matches "$variant"; then
+            echo "[${variant} hub] up-to-date at ${commit:0:8}"
+            return 0
+        fi
+        # After `seed` or after `up --no-transform` the containers differ
+        # from the state file. The deploy below reconciles them: the up
+        # starts the missing transform services, or remove_transform removes
+        # the running ones.
+        echo "[${variant} hub] transform services differ from the state, deploying again"
     fi
     [ -s "$state" ] || first_deploy=1
 
