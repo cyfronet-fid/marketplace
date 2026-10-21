@@ -39,7 +39,7 @@ class Recommender::SimpleRecommender
                           order by count(Services.name) desc
                           limit 1)
       group by Services.id
-      order by count(Services.name) desc
+      order by count(Services.name) desc, Services.id
       limit %{n}
       " \
       ""
