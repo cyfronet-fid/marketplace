@@ -11,9 +11,9 @@ RSpec.describe Infrastructure, type: :model do
   let(:project_item) { create(:project_item, offer: offer, project: project) }
 
   let(:infrastructure) do
-    Infrastructure.create!(
+    described_class.create!(
       project_item: project_item,
-      im_base_url: "https://deploy.sandbox.eosc-beyond.eu",
+      api_base_url: "https://deploy.sandbox.eosc-beyond.eu",
       cloud_site: "IISAS-FedCloud",
       state: "pending"
     )
@@ -30,28 +30,28 @@ RSpec.describe Infrastructure, type: :model do
     end
 
     it "requires project_item" do
-      infra = Infrastructure.new(im_base_url: "https://example.com", cloud_site: "test", state: "pending")
+      infra = described_class.new(api_base_url: "https://example.com", cloud_site: "test", state: "pending")
       expect(infra).not_to be_valid
       expect(infra.errors[:project_item]).to be_present
     end
 
-    it "requires im_base_url" do
-      infra = Infrastructure.new(project_item: project_item, cloud_site: "test", state: "pending")
+    it "requires api_base_url" do
+      infra = described_class.new(project_item: project_item, cloud_site: "test", state: "pending")
       expect(infra).not_to be_valid
-      expect(infra.errors[:im_base_url]).to include("can't be blank")
+      expect(infra.errors[:api_base_url]).to include("can't be blank")
     end
 
     it "requires cloud_site" do
-      infra = Infrastructure.new(project_item: project_item, im_base_url: "https://example.com", state: "pending")
+      infra = described_class.new(project_item: project_item, api_base_url: "https://example.com", state: "pending")
       expect(infra).not_to be_valid
       expect(infra.errors[:cloud_site]).to include("can't be blank")
     end
 
     it "requires state to be a valid value" do
       infra =
-        Infrastructure.new(
+        described_class.new(
           project_item: project_item,
-          im_base_url: "https://example.com",
+          api_base_url: "https://example.com",
           cloud_site: "test",
           state: "invalid_state"
         )
@@ -62,9 +62,9 @@ RSpec.describe Infrastructure, type: :model do
     it "allows all valid states" do
       Infrastructure::STATES.each do |valid_state|
         infra =
-          Infrastructure.new(
+          described_class.new(
             project_item: project_item,
-            im_base_url: "https://example.com",
+            api_base_url: "https://example.com",
             cloud_site: "test",
             state: valid_state
           )
@@ -72,24 +72,24 @@ RSpec.describe Infrastructure, type: :model do
       end
     end
 
-    it "enforces uniqueness of im_infrastructure_id" do
-      infrastructure.update!(im_infrastructure_id: "unique-id-123")
+    it "enforces uniqueness of deployment_id" do
+      infrastructure.update!(deployment_id: "unique-id-123")
 
       project_item2 = create(:project_item, offer: offer, project: project)
       duplicate =
-        Infrastructure.new(
+        described_class.new(
           project_item: project_item2,
-          im_base_url: "https://example.com",
+          api_base_url: "https://example.com",
           cloud_site: "test",
           state: "pending",
-          im_infrastructure_id: "unique-id-123"
+          deployment_id: "unique-id-123"
         )
       expect(duplicate).not_to be_valid
-      expect(duplicate.errors[:im_infrastructure_id]).to be_present
+      expect(duplicate.errors[:deployment_id]).to be_present
     end
 
-    it "allows nil im_infrastructure_id" do
-      expect(infrastructure.im_infrastructure_id).to be_nil
+    it "allows nil deployment_id" do
+      expect(infrastructure.deployment_id).to be_nil
       expect(infrastructure).to be_valid
     end
   end
@@ -109,15 +109,15 @@ RSpec.describe Infrastructure, type: :model do
       it "excludes destroyed and failed infrastructures, includes others" do
         pending_infra = infrastructure
         running_infra =
-          Infrastructure.create!(
+          described_class.create!(
             project_item: create_project_item_for_infra,
-            im_base_url: "https://example.com",
+            api_base_url: "https://example.com",
             cloud_site: "test",
             state: "running"
           )
 
         # Check active scope
-        active_ids = Infrastructure.active.pluck(:id)
+        active_ids = described_class.active.pluck(:id)
         expect(active_ids).to include(pending_infra.id, running_infra.id)
 
         # Now mark one as destroyed and one as failed
@@ -125,81 +125,135 @@ RSpec.describe Infrastructure, type: :model do
         pending_infra.update_column(:state, "failed")
 
         # Re-check - they should be excluded now
-        active_ids = Infrastructure.active.pluck(:id)
+        active_ids = described_class.active.pluck(:id)
         expect(active_ids).not_to include(running_infra.id)
         expect(active_ids).not_to include(pending_infra.id)
+      end
+    end
+
+    describe ".adm_managed" do
+      it "includes only infrastructures with an ADM allocation" do
+        adm_infra =
+          described_class.create!(
+            project_item: create_project_item_for_infra,
+            api_base_url: "https://example.com",
+            cloud_site: "test",
+            state: "running",
+            allocation_id: "alloc-1"
+          )
+
+        expect(described_class.adm_managed.pluck(:id)).to contain_exactly(adm_infra.id)
       end
     end
 
     describe ".pending_state_check" do
       it "includes active infrastructures needing state check" do
         old_check =
-          Infrastructure.create!(
+          described_class.create!(
             project_item: create_project_item_for_infra,
-            im_base_url: "https://example.com",
+            api_base_url: "https://example.com",
+            cloud_site: "test",
+            state: "running",
+            allocation_id: "alloc-1",
+            last_state_check_at: 2.minutes.ago
+          )
+        never_checked = infrastructure # has nil last_state_check_at
+        never_checked.update!(allocation_id: "alloc-1")
+
+        pending_ids = described_class.pending_state_check.pluck(:id)
+        expect(pending_ids).to include(old_check.id, never_checked.id)
+      end
+
+      it "excludes legacy infrastructures without an ADM allocation" do
+        legacy =
+          described_class.create!(
+            project_item: create_project_item_for_infra,
+            api_base_url: "https://example.com",
             cloud_site: "test",
             state: "running",
             last_state_check_at: 2.minutes.ago
           )
-        never_checked = infrastructure # has nil last_state_check_at
 
-        pending_ids = Infrastructure.pending_state_check.pluck(:id)
-        expect(pending_ids).to include(old_check.id, never_checked.id)
+        expect(described_class.pending_state_check.pluck(:id)).not_to include(legacy.id)
       end
 
       it "excludes recently checked infrastructures" do
         recently_checked =
-          Infrastructure.create!(
+          described_class.create!(
             project_item: create_project_item_for_infra,
-            im_base_url: "https://example.com",
+            api_base_url: "https://example.com",
             cloud_site: "test",
             state: "running",
+            allocation_id: "alloc-1",
             last_state_check_at: 30.seconds.ago
           )
 
-        expect(Infrastructure.pending_state_check.pluck(:id)).not_to include(recently_checked.id)
+        expect(described_class.pending_state_check.pluck(:id)).not_to include(recently_checked.id)
       end
 
       it "excludes destroyed infrastructures" do
         destroyed =
-          Infrastructure.create!(
+          described_class.create!(
             project_item: create_project_item_for_infra,
-            im_base_url: "https://example.com",
+            api_base_url: "https://example.com",
             cloud_site: "test",
             state: "running",
             last_state_check_at: 2.minutes.ago
           )
         destroyed.update_column(:state, "destroyed")
 
-        expect(Infrastructure.pending_state_check.pluck(:id)).not_to include(destroyed.id)
+        expect(described_class.pending_state_check.pluck(:id)).not_to include(destroyed.id)
       end
     end
   end
 
   describe "state predicates" do
     Infrastructure::STATES.each do |state_name|
-      describe "##{state_name}?" do
+      describe "#state_#{state_name}?" do
         it "returns true when state is #{state_name}" do
           infrastructure.state = state_name
-          expect(infrastructure.send("#{state_name}?")).to be true
+          expect(infrastructure.send("state_#{state_name}?")).to be true
         end
 
         it "returns false when state is not #{state_name}" do
           other_state = (Infrastructure::STATES - [state_name]).first
           infrastructure.state = other_state
-          expect(infrastructure.send("#{state_name}?")).to be false
+          expect(infrastructure.send("state_#{state_name}?")).to be false
         end
       end
+    end
+
+    it "keeps the ActiveRecord meaning of destroyed? for a destroyed state" do
+      infrastructure.update!(state: "destroyed")
+      expect(infrastructure.reload).not_to be_destroyed
     end
   end
 
   describe "state transition methods" do
     describe "#mark_created!" do
-      it "sets im_infrastructure_id and state to creating" do
+      it "sets deployment_id and state to creating" do
         infrastructure.mark_created!("infra-123")
-        expect(infrastructure.im_infrastructure_id).to eq("infra-123")
+        expect(infrastructure.deployment_id).to eq("infra-123")
         expect(infrastructure.state).to eq("creating")
         expect(infrastructure.last_state_check_at).to be_present
+      end
+    end
+
+    describe "#mark_creating!" do
+      it "sets state to creating and records the state check" do
+        infrastructure.update!(last_state_check_at: 2.minutes.ago)
+        infrastructure.mark_creating!
+        expect(infrastructure.reload).to have_attributes(state: "creating",
+                                                         last_state_check_at: be_within(5.seconds).of(Time.current))
+      end
+    end
+
+    describe "#record_state_check!" do
+      it "only records the state check" do
+        infrastructure.update!(state: "running", last_state_check_at: 2.minutes.ago)
+        infrastructure.record_state_check!
+        expect(infrastructure.reload).to have_attributes(state: "running",
+                                                         last_state_check_at: be_within(5.seconds).of(Time.current))
       end
     end
 
@@ -235,13 +289,13 @@ RSpec.describe Infrastructure, type: :model do
       end
 
       it "increments retry_count" do
-        expect { infrastructure.mark_failed!("error") }.to change { infrastructure.retry_count }.by(1)
+        expect { infrastructure.mark_failed!("error") }.to change(infrastructure, :retry_count).by(1)
       end
     end
 
     describe "#mark_destroyed!" do
       it "sets state to destroyed" do
-        infrastructure.update_columns(im_infrastructure_id: "infra-123", state: "running")
+        infrastructure.update_columns(deployment_id: "infra-123", state: "running")
         infrastructure.mark_destroyed!
         expect(infrastructure.reload.state).to eq("destroyed")
         expect(infrastructure.last_state_check_at).to be_present
@@ -249,68 +303,34 @@ RSpec.describe Infrastructure, type: :model do
     end
   end
 
-  describe "#update_state_from_im!" do
-    it "maps 'pending' to creating" do
-      infrastructure.update_state_from_im!("pending")
-      expect(infrastructure.state).to eq("creating")
-    end
-
-    it "maps 'configured' to configured" do
-      infrastructure.update_state_from_im!("configured")
-      expect(infrastructure.state).to eq("configured")
-    end
-
-    it "maps 'running' to running" do
-      infrastructure.update_state_from_im!("running")
-      expect(infrastructure.state).to eq("running")
-    end
-
-    it "maps 'stopped' to running (infrastructure still exists)" do
-      infrastructure.update_state_from_im!("stopped")
-      expect(infrastructure.state).to eq("running")
-    end
-
-    it "maps 'failed' to failed with error" do
-      infrastructure.update_state_from_im!("failed")
-      expect(infrastructure.state).to eq("failed")
-      expect(infrastructure.last_error).to include("failed")
-    end
-
-    it "handles case-insensitive states" do
-      infrastructure.update_state_from_im!("RUNNING")
-      expect(infrastructure.state).to eq("running")
-    end
-
-    it "handles unknown states gracefully" do
-      expect(Rails.logger).to receive(:warn).with(/Unknown IM state/)
-      infrastructure.update_state_from_im!("unknown_state")
-      expect(infrastructure.last_state_check_at).to be_present
-    end
-  end
-
   describe "#can_destroy?" do
-    it "returns true for running infrastructure with im_infrastructure_id" do
-      infrastructure.update!(state: "running", im_infrastructure_id: "infra-123")
+    it "returns true for running infrastructure with deployment_id" do
+      infrastructure.update!(state: "running", deployment_id: "infra-123", allocation_id: "alloc-1")
       expect(infrastructure.can_destroy?).to be true
     end
 
-    it "returns true for failed infrastructure with im_infrastructure_id" do
-      infrastructure.update!(state: "failed", im_infrastructure_id: "infra-123")
+    it "returns true for failed infrastructure with deployment_id" do
+      infrastructure.update!(state: "failed", deployment_id: "infra-123", allocation_id: "alloc-1")
       expect(infrastructure.can_destroy?).to be true
     end
 
-    it "returns false for destroyed infrastructure" do
-      infrastructure.update_columns(state: "destroyed", im_infrastructure_id: "infra-123")
+    it "returns false for a legacy IM infrastructure without allocation_id" do
+      infrastructure.update!(state: "running", deployment_id: "infra-123", allocation_id: nil)
       expect(infrastructure.can_destroy?).to be false
     end
 
-    it "returns false without im_infrastructure_id" do
-      infrastructure.update!(state: "running", im_infrastructure_id: nil)
+    it "returns false for destroyed infrastructure" do
+      infrastructure.update_columns(state: "destroyed", deployment_id: "infra-123")
+      expect(infrastructure.can_destroy?).to be false
+    end
+
+    it "returns false without deployment_id" do
+      infrastructure.update!(state: "running", deployment_id: nil)
       expect(infrastructure.can_destroy?).to be false
     end
 
     it "returns false for pending infrastructure" do
-      infrastructure.update!(state: "pending", im_infrastructure_id: "infra-123")
+      infrastructure.update!(state: "pending", deployment_id: "infra-123")
       expect(infrastructure.can_destroy?).to be false
     end
   end
