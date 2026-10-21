@@ -12,32 +12,39 @@ class Infrastructure < ApplicationRecord
   validates :deployment_id, uniqueness: true, allow_nil: true
 
   scope :active, -> { where.not(state: %w[destroyed failed]) }
-  # Legacy Infrastructure Manager rows have no ADM allocation and are left alone
   scope :adm_managed, -> { where.not(allocation_id: nil) }
   scope :pending_state_check,
-        lambda { active.adm_managed.where("last_state_check_at IS NULL OR last_state_check_at < ?", 1.minute.ago) }
+        -> { active.adm_managed.where("last_state_check_at IS NULL OR last_state_check_at < ?", 1.minute.ago) }
 
-  # State predicates
-  STATES.each { |state_name| define_method("#{state_name}?") { state == state_name } }
+  # State predicates, prefixed so state_destroyed? does not shadow ActiveRecord#destroyed?
+  STATES.each { |state_name| define_method("state_#{state_name}?") { state == state_name } }
 
   def deployable_service
     project_item.offer.parent_service
   end
 
   def mark_created!(deployment_id)
-    update_columns(deployment_id: deployment_id, state: "creating", last_state_check_at: Time.current)
+    update!(deployment_id: deployment_id, state: "creating", last_state_check_at: Time.current)
+  end
+
+  def mark_creating!
+    update!(state: "creating", last_state_check_at: Time.current)
+  end
+
+  def record_state_check!
+    update!(last_state_check_at: Time.current)
   end
 
   def mark_configured!
-    update_columns(state: "configured", last_state_check_at: Time.current)
+    update!(state: "configured", last_state_check_at: Time.current)
   end
 
   def mark_running!(outputs_data = {})
-    update_columns(state: "running", outputs: outputs_data, last_state_check_at: Time.current, last_error: nil)
+    update!(state: "running", outputs: outputs_data, last_state_check_at: Time.current, last_error: nil)
   end
 
   def mark_failed!(error_message)
-    update_columns(
+    update!(
       state: "failed",
       last_error: error_message,
       retry_count: retry_count + 1,
@@ -46,7 +53,7 @@ class Infrastructure < ApplicationRecord
   end
 
   def mark_destroyed!
-    update_columns(state: "destroyed", last_state_check_at: Time.current)
+    update!(state: "destroyed", last_state_check_at: Time.current)
   end
 
   def can_destroy?

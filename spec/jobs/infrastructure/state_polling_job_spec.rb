@@ -15,10 +15,9 @@ RSpec.describe Infrastructure::StatePollingJob, type: :job do
       end
     end
 
-    %w[failed destroyed].each do |state|
+    %i[failed destroyed].each do |state|
       context "with a #{state} infrastructure" do
-        # The destroyed state shadows ActiveRecord#destroyed?, so it can only be set with update_columns
-        let(:infrastructure) { create(:infrastructure, :running).tap { |infra| infra.update_columns(state: state) } }
+        let(:infrastructure) { create(:infrastructure, state) }
 
         it "does nothing" do
           described_class.perform_now(infrastructure.id)

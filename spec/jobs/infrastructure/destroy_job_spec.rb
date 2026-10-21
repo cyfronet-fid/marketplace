@@ -15,8 +15,7 @@ RSpec.describe Infrastructure::DestroyJob, type: :job do
   end
 
   context "with an infrastructure that cannot be destroyed" do
-    # The destroyed state shadows ActiveRecord#destroyed?, so it can only be set with update_columns
-    let(:infrastructure) { create(:infrastructure, :running).tap { |infra| infra.update_columns(state: "destroyed") } }
+    let(:infrastructure) { create(:infrastructure, :destroyed) }
 
     it "does nothing" do
       described_class.perform_now(infrastructure.id)
