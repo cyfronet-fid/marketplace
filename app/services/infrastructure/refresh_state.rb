@@ -13,7 +13,7 @@ class Infrastructure::RefreshState < ApplicationService
 
     case deployment.status
     when "pending"
-      @infrastructure.update!(state: "creating", last_state_check_at: Time.current)
+      @infrastructure.mark_creating!
     when "configured"
       @infrastructure.mark_configured!
       store_outputs(deployment.outputs)
@@ -28,7 +28,7 @@ class Infrastructure::RefreshState < ApplicationService
       Infrastructure::ProjectItemStatus.closed!(@infrastructure.project_item)
     else
       # "deleting"/"unknown" - the deployment is still there, check again later
-      @infrastructure.update!(last_state_check_at: Time.current)
+      @infrastructure.record_state_check!
     end
   rescue Adm::NotFound => e
     fail!(e.message)

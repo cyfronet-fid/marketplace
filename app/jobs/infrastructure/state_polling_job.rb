@@ -20,7 +20,7 @@ class Infrastructure::StatePollingJob < ApplicationJob
       Infrastructure::RefreshState.call(infrastructure, client: client)
     rescue StandardError => e
       Rails.error.report(e, context: { infrastructure_id: infrastructure.id })
-      infrastructure.update!(last_state_check_at: Time.current)
+      infrastructure.record_state_check!
     end
   end
 
