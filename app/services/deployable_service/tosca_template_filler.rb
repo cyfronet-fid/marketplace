@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class DeployableService::ToscaTemplateFiller < ApplicationService
+  # DNS-related inputs that should not be overridden by users - a unique name is generated instead
+  DNS_INPUTS = %w[kube_public_dns_name public_dns_name dns_name].freeze
+
   def initialize(project_item)
     super()
     @project_item = project_item
@@ -9,18 +12,11 @@ class DeployableService::ToscaTemplateFiller < ApplicationService
   end
 
   def call
-    template_content = fetch_template(@deployable_service.url)
+    template_content = DeployableService::FetchTemplate.call(@deployable_service.url)
     fill_template_inputs(template_content, @parameters)
   end
 
   private
-
-  def fetch_template(_url)
-    # For demo, read from local file (in config/templates)
-    # In production, this would fetch from the actual URL
-    template_path = Rails.root.join("config", "templates", "jupyterhub_datamount.yml")
-    File.read(template_path)
-  end
 
   def extract_user_parameters(properties)
     # ProjectItem.properties can be different formats - handle gracefully
@@ -59,13 +55,9 @@ class DeployableService::ToscaTemplateFiller < ApplicationService
     # Replace default values in inputs section
     inputs = parsed_template.dig("topology_template", "inputs") || {}
 
-    # DNS-related parameters that should not be overridden by users - use template defaults
-    dns_related_params = %w[kube_public_dns_name public_dns_name dns_name]
-
     parameters.each do |param_id, param_value|
       next unless inputs[param_id]
-      # Skip DNS-related parameters - use template defaults
-      next if dns_related_params.include?(param_id)
+      next if DNS_INPUTS.include?(param_id)
 
       case param_id
       when "dataset_ids"
@@ -76,10 +68,11 @@ class DeployableService::ToscaTemplateFiller < ApplicationService
       end
     end
 
-    # Generate unique DNS name for JupyterHub deployment
-    if inputs["kube_public_dns_name"]
+    # Generate unique DNS name for the deployment
+    dns_inputs = inputs.slice(*DNS_INPUTS).compact
+    if dns_inputs.any?
       generated_dns = generate_unique_dns_name
-      inputs["kube_public_dns_name"]["default"] = generated_dns
+      dns_inputs.each_value { |input| input["default"] = generated_dns }
       Rails.logger.info "Generated unique DNS for deployment: #{generated_dns}"
     end
 

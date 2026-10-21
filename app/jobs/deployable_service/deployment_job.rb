@@ -10,6 +10,7 @@ class DeployableService::DeploymentJob < ApplicationJob
     infrastructure = create_infrastructure_record(project_item)
 
     filled_template = DeployableService::ToscaTemplateFiller.call(project_item)
+    record_output_names(infrastructure, filled_template)
     deploy_to_infrastructure_manager(project_item, infrastructure, filled_template)
   rescue StandardError => e
     Rails.logger.error "Deployment job failed for ProjectItem #{project_item.id}: #{e.class}: #{e.message}"
@@ -30,6 +31,11 @@ class DeployableService::DeploymentJob < ApplicationJob
       cloud_site: config.dig(:cloud_providers, :default),
       state: "pending"
     )
+  end
+
+  def record_output_names(infrastructure, filled_template)
+    outputs = YAML.safe_load(filled_template).dig("topology_template", "outputs")
+    infrastructure.update!(output_names: outputs.is_a?(Hash) ? outputs.keys : [])
   end
 
   def deploy_to_infrastructure_manager(project_item, infrastructure, filled_template)
@@ -60,32 +66,24 @@ class DeployableService::DeploymentJob < ApplicationJob
     end
 
     # Fetch outputs and complete deployment
-    fetch_outputs_and_complete(project_item, infrastructure, im_client, im_infrastructure_id, deployment_uri)
+    fetch_outputs_and_complete(project_item, infrastructure, im_client, im_infrastructure_id)
   rescue StandardError => e
     Rails.logger.error "Infrastructure Manager deployment failed: #{e.class}: #{e.message}"
     handle_deployment_failure(project_item, infrastructure, e.message)
   end
 
-  def fetch_outputs_and_complete(project_item, infrastructure, im_client, im_infrastructure_id, deployment_uri)
+  def fetch_outputs_and_complete(project_item, infrastructure, im_client, im_infrastructure_id)
     outputs_result = im_client.get_outputs(im_infrastructure_id)
+    outputs = outputs_result[:data]["outputs"] if outputs_result[:success] && outputs_result[:data]
+    deployment_address = Infrastructure::SelectDeploymentUrl.call(outputs, infrastructure.output_names)
 
-    if outputs_result[:success] && outputs_result[:data]
-      outputs = outputs_result[:data]["outputs"] || {}
-      deployment_address = outputs["jupyterhub_url"]
-
-      if deployment_address.present?
-        # We have a usable deployment URL - mark as running
-        infrastructure.mark_running!(outputs)
-        handle_deployment_success(project_item, deployment_address)
-      else
-        # Outputs fetched but no URL yet - mark as configured, polling will update
-        infrastructure.mark_configured!
-        handle_deployment_success(project_item, deployment_uri)
-      end
+    if deployment_address.present?
+      # We have a usable deployment URL - mark as running
+      infrastructure.mark_running!(outputs)
+      handle_deployment_success(project_item, deployment_address)
     else
-      # Failed to fetch outputs - mark as configured, polling will update later
+      # No URL yet - mark as configured, polling will set the deployment link
       infrastructure.mark_configured!
-      handle_deployment_success(project_item, deployment_uri)
     end
   end
 
