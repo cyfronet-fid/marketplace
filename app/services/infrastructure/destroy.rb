@@ -2,7 +2,7 @@
 
 # Deletes the ADM deployment of an infrastructure and closes its project item.
 class Infrastructure::Destroy < ApplicationService
-  def initialize(infrastructure, client: ApplicationDeploymentManager::Client.new)
+  def initialize(infrastructure, client: Adm::Client.new)
     super()
     @infrastructure = infrastructure
     @client = client
@@ -25,7 +25,7 @@ class Infrastructure::Destroy < ApplicationService
 
   def delete_deployment
     @client.delete_deployment(@infrastructure.deployment_id)
-  rescue ApplicationDeploymentManager::NotFound
+  rescue Adm::NotFound
     Rails.logger.info "Deployment of Infrastructure #{@infrastructure.id} is already gone"
   end
 end

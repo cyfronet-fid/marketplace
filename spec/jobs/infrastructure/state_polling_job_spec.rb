@@ -73,7 +73,7 @@ RSpec.describe Infrastructure::StatePollingJob, type: :job do
     end
 
     it "is shared between the infrastructures" do
-      expect(clients).to contain_exactly(an_instance_of(ApplicationDeploymentManager::Client), equal(clients.first))
+      expect(clients).to contain_exactly(an_instance_of(Adm::Client), equal(clients.first))
     end
   end
 
@@ -83,7 +83,7 @@ RSpec.describe Infrastructure::StatePollingJob, type: :job do
 
     before do
       allow(Infrastructure::RefreshState).to receive(:call).with(broken, client: anything).and_raise(
-        ApplicationDeploymentManager::Error,
+        Adm::Error,
         "ADM request failed: 503"
       )
       described_class.perform_now

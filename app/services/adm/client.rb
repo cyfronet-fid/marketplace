@@ -2,7 +2,7 @@
 
 # HTTP client of the Application Deployment Manager (ADM) API.
 # Request paths are relative, so the /adim/ prefix of the base URL is kept.
-class ApplicationDeploymentManager::Client
+class Adm::Client
   def self.config
     Rails.application.config.deployable_services.with_indifferent_access
   end
@@ -29,7 +29,7 @@ class ApplicationDeploymentManager::Client
         host: host
       )
 
-    allocation_id(response) || raise(ApplicationDeploymentManager::Error, "ADM returned no allocation id")
+    allocation_id(response) || raise(Adm::Error, "ADM returned no allocation id")
   end
 
   def create_deployment(allocation_id:, application_id:, inputs:)
@@ -56,7 +56,7 @@ class ApplicationDeploymentManager::Client
   def deployment(id)
     body = request(:get, path("deployment", id)).body
 
-    ApplicationDeploymentManager::Deployment.new(
+    Adm::Deployment.new(
       id: body["id"],
       status: body["status"],
       details: body["details"],
@@ -74,9 +74,9 @@ class ApplicationDeploymentManager::Client
   def request(method, path, body = nil)
     connection.public_send(method, path, body)
   rescue Faraday::ResourceNotFound => e
-    raise ApplicationDeploymentManager::NotFound, error_message(e)
+    raise Adm::NotFound, error_message(e)
   rescue Faraday::Error => e
-    raise ApplicationDeploymentManager::Error, error_message(e)
+    raise Adm::Error, error_message(e)
   end
 
   def connection

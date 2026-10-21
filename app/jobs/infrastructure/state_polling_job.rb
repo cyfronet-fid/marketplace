@@ -19,8 +19,8 @@ class Infrastructure::StatePollingJob < ApplicationJob
     deployed.pending_state_check.find_each do |infrastructure|
       Infrastructure::RefreshState.call(infrastructure, client: client)
     rescue StandardError => e
-      Rails.logger.error "Failed to poll Infrastructure #{infrastructure.id}: #{e.message}"
-      infrastructure.update_columns(last_state_check_at: Time.current)
+      Rails.error.report(e, context: { infrastructure_id: infrastructure.id })
+      infrastructure.update!(last_state_check_at: Time.current)
     end
   end
 
@@ -29,6 +29,6 @@ class Infrastructure::StatePollingJob < ApplicationJob
   end
 
   def client
-    @client ||= ApplicationDeploymentManager::Client.new
+    @client ||= Adm::Client.new
   end
 end

@@ -2,7 +2,7 @@
 
 # Updates an infrastructure, and its project item, from the status of its ADM deployment.
 class Infrastructure::RefreshState < ApplicationService
-  def initialize(infrastructure, client: ApplicationDeploymentManager::Client.new)
+  def initialize(infrastructure, client: Adm::Client.new)
     super()
     @infrastructure = infrastructure
     @client = client
@@ -30,7 +30,7 @@ class Infrastructure::RefreshState < ApplicationService
       # "deleting"/"unknown" - the deployment is still there, check again later
       @infrastructure.update!(last_state_check_at: Time.current)
     end
-  rescue ApplicationDeploymentManager::NotFound => e
+  rescue Adm::NotFound => e
     fail!(e.message)
   end
 

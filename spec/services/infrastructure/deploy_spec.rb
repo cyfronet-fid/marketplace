@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe Infrastructure::Deploy, type: :service do
-  subject(:deploy) { described_class.call(project_item, client: ApplicationDeploymentManager::Client.new(access_token: "t")) }
+  subject(:deploy) { described_class.call(project_item, client: Adm::Client.new(access_token: "t")) }
 
   let(:adm_url) { "https://adm.test.example.com/adim" }
   let(:project_item) do
@@ -137,7 +137,7 @@ RSpec.describe Infrastructure::Deploy, type: :service do
 
   context "when the default cloud site is not configured" do
     before do
-      allow(ApplicationDeploymentManager::Client).to receive(:config).and_wrap_original do |original|
+      allow(Adm::Client).to receive(:config).and_wrap_original do |original|
         original.call.deep_merge(cloud_providers: { default: "Unknown-Site" })
       end
       deploy
