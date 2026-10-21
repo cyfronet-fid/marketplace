@@ -3,8 +3,7 @@
 # Access token of the service account used for ADM calls, issued by EGI AAI (not the EOSC AAI used by Checkin):
 # cached token, then EGI_ACCESS_TOKEN, then a refresh with EGI_REFRESH_ACCESS_TOKEN.
 class Adm::AccessToken < ApplicationService
-  class Error < Adm::Error
-  end
+  class Error < Adm::Error; end
 
   SCOPE = "openid email profile voperson_id eduperson_entitlement"
 
@@ -34,6 +33,7 @@ class Adm::AccessToken < ApplicationService
 
     token = request_token(refresh_token)
     Rails.cache.write(@config[:token_cache_key], token, expires_in: @config[:token_cache_expiry_minutes].minutes)
+
     token
   rescue Faraday::Error, KeyError => e
     Rails.logger.error "Failed to refresh EGI access token: #{e.class}: #{e.message}"
@@ -49,6 +49,7 @@ class Adm::AccessToken < ApplicationService
         client_id: @config[:client_id],
         scope: SCOPE
       )
+
     response.body.fetch("access_token")
   end
 

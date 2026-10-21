@@ -11,10 +11,12 @@ class DeployableService::DeploymentInputs < ApplicationService
 
   def call
     declared = @template.inputs.keys
+
     inputs = parameters.slice(*declared).reject { |id, _| DeployableService::DnsName.input?(id) }
     inputs["dataset_ids"] = inputs["dataset_ids"].split(",").map(&:strip) if inputs["dataset_ids"].is_a?(String)
 
     dns_inputs = declared & DeployableService::DnsName::INPUTS
+
     if dns_inputs.any?
       dns_name = dns_name_from(parameters)
       dns_inputs.each { |id| inputs[id] = dns_name }
@@ -49,8 +51,9 @@ class DeployableService::DeploymentInputs < ApplicationService
 
   def dns_name_from(parameters)
     submitted = parameters.values_at(*DeployableService::DnsName::INPUTS)
-    submitted.find { |value| DeployableService::DnsName.generated?(value) && !dns_name_taken?(value) } ||
-      DeployableService::DnsName.generate
+    dns_name = submitted.find { |value| DeployableService::DnsName.generated?(value) && !dns_name_taken?(value) }
+
+    dns_name || DeployableService::DnsName.generate
   end
 
   # A generated name could still be copied from another order (e.g. from its deployment link)
