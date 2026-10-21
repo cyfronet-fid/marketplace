@@ -25,8 +25,8 @@ default: &default
       host: <%= ENV.fetch('ADM_CLOUD_HOST', 'https://cloud.ui.savba.sk:5000') %>
       domain: <%= ENV.fetch('ADM_CLOUD_DOMAIN', 'ea4f6084f9a74329bd77e466136fd079') %>
 
-  # EGI Check-in service account used for ADM calls
-  authentication:
+  # EGI AAI service account whose access token authenticates ADM calls
+  egi_aai:
     refresh_token_url: <%= ENV.fetch('EGI_REFRESH_TOKEN_URL', 'https://aai.egi.eu/auth/realms/egi/protocol/openid-connect/token') %>
     client_id: <%= ENV.fetch('EGI_CLIENT_ID', 'token-portal') %>
     token_cache_key: egi_access_token
