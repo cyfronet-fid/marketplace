@@ -136,12 +136,15 @@ RSpec.describe Infrastructure::Deploy, type: :service do
   end
 
   context "when the default cloud site is not configured" do
-    before do
-      allow(Adm::Client).to receive(:config).and_wrap_original do |original|
-        original.call.deep_merge(cloud_providers: { default: "Unknown-Site" })
-      end
-      deploy
+    subject(:deploy) do
+      described_class.call(
+        project_item,
+        client: Adm::Client.new(access_token: "t"),
+        config: Rails.application.config_for(:adm).merge(default_cloud_site: "Unknown-Site")
+      )
     end
+
+    before { deploy }
 
     it "marks the infrastructure failed" do
       expect(project_item.reload.infrastructure).to have_attributes(state: "failed", last_error: /Unknown-Site/)

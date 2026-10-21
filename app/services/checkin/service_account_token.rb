@@ -9,7 +9,7 @@ module Checkin
 
     SCOPE = "openid email profile voperson_id eduperson_entitlement"
 
-    def initialize(config: Rails.application.config.deployable_services.with_indifferent_access[:authentication])
+    def initialize(config:)
       super()
       @config = config
     end
