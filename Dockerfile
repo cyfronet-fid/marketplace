@@ -10,8 +10,11 @@ ARG RUBY_VERSION=3.3.11
 ARG MARKETPLACE_VARIANT
 ARG CUSTOMIZATION_PATH=""
 
-# Stage 1: Building dependencies
-FROM ruby:${RUBY_VERSION}-alpine AS builder
+# Stage 1: Dependencies. Also the image of the local development deploy
+# (lib/versions/docker-compose-local-dev.yml, target deps): the working tree
+# is mounted over /marketplace, and the development gems and node modules
+# complete the volumes at the start of the container.
+FROM ruby:${RUBY_VERSION}-alpine AS deps
 ARG MARKETPLACE_VARIANT
 ARG CUSTOMIZATION_PATH
 
@@ -25,6 +28,8 @@ ENV RAILS_ENV=production \
     BUNDLE_RETRY=3
 
 # Installing necessary packages for compilation
+# libffi-dev: the development gems (fiddle, listen) compile against it at the
+# start of the local development containers
 RUN apk add --no-cache \
     build-base \
     tzdata \
@@ -33,6 +38,7 @@ RUN apk add --no-cache \
     zlib-dev \
     libxml2-dev \
     libxslt-dev \
+    libffi-dev \
     nodejs \
     npm \
     yajl \
@@ -60,6 +66,9 @@ RUN bundle config set --local without 'development test' && \
     bundle install --jobs=4 && \
     yarn install --production --frozen-lockfile
 
+# Stage 2: Building the application
+FROM deps AS builder
+
 # Copying application code
 COPY . /marketplace
 
@@ -67,7 +76,7 @@ COPY . /marketplace
 RUN set -a && . ./.env.build && set +a && \
     SECRET_KEY_BASE_DUMMY=1 ./bin/rake assets:precompile
 
-# Stage 2: Final image
+# Stage 3: Final image
 FROM ruby:${RUBY_VERSION}-alpine
 ARG MARKETPLACE_VARIANT
 ARG CUSTOMIZATION_PATH

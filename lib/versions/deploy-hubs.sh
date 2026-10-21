@@ -38,13 +38,21 @@
 # dumps are not loaded). The hub database and Solr live in named volumes;
 # `down <variant>` removes them.
 #
-# Usage:  deploy-hubs.sh [down|seed|up] [-f|--force] [variant ...]
+# Usage:  deploy-hubs.sh [down|seed|up] [-f|--force] [--no-transform] [variant ...]
 #   no variant           -> both hubs, only when a checkout, the hub compose
 #                           file or lib/versions/hub changed
 #   -f / --force         -> deploy without the check for a change
 #   with variants        -> only the given hubs, forced deploy
+#   --no-transform       -> deploy or up without the transform services
+#                           (transform-api, transform-worker, redis): their
+#                           containers are removed, Solr keeps its data. For
+#                           a hub after the first full load; `seed` starts
+#                           the services again.
 #   seed [variant ...]   -> create the Solr collections (if missing) and run a
-#                           full load, for example after `down`
+#                           full load, for example after `down`; starts the
+#                           transform services when they are absent. A full
+#                           load takes a long time and runs in the background:
+#                           watch the transform-worker log.
 #   up [variant ...]     -> recreate the containers from the current images:
 #                           no checkout update, no build, no seed, for a
 #                           changed env file
@@ -54,6 +62,7 @@
 # Examples:
 #   deploy-hubs.sh                  # both hubs, only when there are changes
 #   deploy-hubs.sh pl               # forced deploy of the pl hub
+#   deploy-hubs.sh --no-transform pl # the pl hub without the transform services
 #   deploy-hubs.sh seed pl          # load the pl hub's Solr again
 #   deploy-hubs.sh up pl            # apply a changed pl.env, no build
 #   deploy-hubs.sh down marketplace # remove the marketplace hub: containers, images, volumes
@@ -135,14 +144,16 @@ solr_port() {
 MODE="deploy"
 VARIANTS=()
 FORCE=0
+TRANSFORM=1
 for arg in "$@"; do
     case "$arg" in
         down) MODE="down" ;;
         seed) MODE="seed" ;;
         up)   MODE="up" ;;
         -f|--force) FORCE=1 ;;
+        --no-transform) TRANSFORM=0 ;;
         -h|--help)
-            echo "Usage: $0 [down|seed|up] [-f|--force] [${ALL_VARIANTS[*]}]"; exit 0 ;;
+            echo "Usage: $0 [down|seed|up] [-f|--force] [--no-transform] [${ALL_VARIANTS[*]}]"; exit 0 ;;
         *)
             if [[ " ${ALL_VARIANTS[*]} " == *" $arg "* ]]; then
                 VARIANTS+=("$arg")
@@ -156,6 +167,19 @@ if [ ${#VARIANTS[@]} -eq 0 ]; then
     VARIANTS=("${ALL_VARIANTS[@]}")
 else
     FORCE=1
+fi
+
+# The transform services of the hub compose files have the compose profile
+# "transform"; HUB_PROFILES activates it for every compose call. With
+# --no-transform a deploy or an up runs without the profile: the transform
+# services are not built and not started. down and seed always need the
+# profile: down removes the transform containers, seed starts them.
+HUB_PROFILES="transform"
+if [ "$TRANSFORM" = 0 ]; then
+    case "$MODE" in
+        down|seed) echo "--no-transform does not apply to $MODE"; exit 2 ;;
+    esac
+    HUB_PROFILES=""
 fi
 
 [ -d "$HUBS" ] || { echo "missing hubs directory $HUBS (MP_HUBS_DIR)"; exit 1; }
@@ -176,7 +200,15 @@ compose() {
     shift
     export_staging_urls "$variant" || return 1
     COMPOSE_PROJECT_NAME="${COMPOSE_PREFIX}-${variant}-hub" \
+    COMPOSE_PROFILES="$HUB_PROFILES" \
         "$DC" compose -f "docker-compose-hub-${variant}.yml" -f "$LOGGING_FILE" "$@"
+}
+
+# Stops and removes the transform containers of the hub, for a deploy or an
+# up with --no-transform. The profile must be active in the call, if not
+# compose does not know the services. The volumes stay.
+remove_transform() {
+    HUB_PROFILES="transform" compose "$1" rm -sf transform-api transform-worker redis
 }
 
 # Clones the repository on the first run, then resets the checkout to the
@@ -281,6 +313,14 @@ if [ "$MODE" = "seed" ]; then
     status=0
     for variant in "${VARIANTS[@]}"; do
         echo "=== [${variant} hub] seed ==="
+        # The seed needs the transform service. The up starts it when it is
+        # absent (after a deploy with --no-transform), with a build when
+        # necessary, and does nothing when it runs.
+        if ! compose "$variant" up -d transform-api transform-worker; then
+            echo "[${variant} hub] transform start FAILED"
+            status=1
+            continue
+        fi
         seed_hub "$variant" || { echo "[${variant} hub] seed FAILED"; status=1; }
     done
     exit $status
@@ -303,6 +343,10 @@ if [ "$MODE" = "up" ]; then
             continue
         fi
         if compose "$variant" up -d --no-build --remove-orphans; then
+            if [ "$TRANSFORM" = 0 ] && ! remove_transform "$variant"; then
+                echo "[${variant} hub] removal of the transform containers FAILED"
+                status=1
+            fi
             echo "[${variant} hub] containers are up"
         else
             echo "[${variant} hub] up FAILED"
@@ -335,8 +379,10 @@ deploy_hub() {
     # of lib/versions/hub (image recipes, nginx and the commons environment of
     # this repository), so a change of any of them deploys the hub again. The
     # two hashes of this repository come from HEAD: a local change that is not
-    # committed needs --force or the variant argument.
+    # committed needs --force or the variant argument. --no-transform adds a
+    # marker, so a deploy with the other setting deploys again.
     commit="$(git -C "$HUBS/$variant" rev-parse --verify HEAD) $(git -C "$HUBS/transform-service" rev-parse --verify HEAD) $(git -C "$HUBS/$commons" rev-parse --verify HEAD) $(git -C "$APP" rev-parse --verify "HEAD:$compose_file") $(git -C "$APP" rev-parse --verify HEAD:lib/versions/hub)"
+    [ "$TRANSFORM" = 1 ] || commit="$commit no-transform"
 
     if [ "$FORCE" = 0 ] && [ "$(cat "$state" 2>/dev/null)" = "$commit" ]; then
         echo "[${variant} hub] up-to-date at ${commit:0:8}"
@@ -350,11 +396,19 @@ deploy_hub() {
     # --- recreate the containers; the named volumes stay ---
     compose "$variant" up -d --remove-orphans || return 1
 
+    if [ "$TRANSFORM" = 0 ]; then
+        remove_transform "$variant" || return 1
+    fi
+
     echo "$commit" > "$state"
     echo "[${variant} hub] deployed ${commit:0:8}"
 
     if [ "$first_deploy" = 1 ]; then
-        seed_hub "$variant" || return 1
+        if [ "$TRANSFORM" = 0 ]; then
+            echo "[${variant} hub] no transform services: no seed. Run: $0 seed ${variant}"
+        else
+            seed_hub "$variant" || return 1
+        fi
     fi
 }
 
