@@ -13,8 +13,9 @@ class Infrastructure::Destroy < ApplicationService
     @infrastructure.mark_destroyed!
     Infrastructure::ProjectItemStatus.closed!(@infrastructure.project_item)
   rescue StandardError => e
-    Rails.logger.error "Failed to destroy Infrastructure #{@infrastructure.id}: #{e.class}: #{e.message}"
+    Rails.error.report(e, context: { infrastructure_id: @infrastructure.id })
     @infrastructure.mark_failed!("Destroy failed: #{e.message}")
+
     Infrastructure::ProjectItemStatus.rejected!(
       @infrastructure.project_item,
       "Failed to destroy infrastructure: #{e.message}"

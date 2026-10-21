@@ -24,10 +24,12 @@ class Infrastructure::Deploy < ApplicationService
         application_id: deployable_service.pid,
         inputs: DeployableService::DeploymentInputs.call(@project_item, template)
       )
+
     infrastructure.mark_created!(deployment_id)
   rescue StandardError => e
-    Rails.logger.error "Deployment failed for ProjectItem #{@project_item.id}: #{e.class}: #{e.message}"
+    Rails.error.report(e, context: { project_item_id: @project_item.id })
     infrastructure&.mark_failed!(e.message)
+
     Infrastructure::ProjectItemStatus.rejected!(
       @project_item,
       "Deployment failed: #{e.message}. Please contact support."
