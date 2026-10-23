@@ -28,13 +28,14 @@ class EnforceNotNullUniquePidOnProviders < ActiveRecord::Migration[7.2]
   end
 
   # Of the rows that share a pid, the newest row that is not deleted keeps
-  # the pid. Each other row gets a UUID, like a backfilled blank pid.
+  # the pid. A NULL status counts as not deleted. Each other row gets a UUID,
+  # like a backfilled blank pid.
   def resolve_duplicate_pids
     select_values("SELECT pid FROM providers GROUP BY pid HAVING COUNT(*) > 1").each do |pid|
       superseded_ids =
         select_values(
           "SELECT id FROM providers WHERE pid = #{quote(pid)} " \
-          "ORDER BY (status = 'deleted') ASC, updated_at DESC, id DESC OFFSET 1"
+          "ORDER BY (status IS NOT DISTINCT FROM 'deleted') ASC, updated_at DESC, id DESC OFFSET 1"
         )
       superseded_ids.each do |id|
         new_pid = SecureRandom.uuid
