@@ -9,7 +9,7 @@ class EnforceNotNullUniquePidOnServicesAndCatalogues < ActiveRecord::Migration[7
   def up
     TABLES.each do |table|
       backfill_blank_pids(table)
-      abort_on_duplicate_pids(table)
+      resolve_duplicate_pids(table)
       change_column_null table, :pid, false
     end
 
@@ -38,12 +38,22 @@ class EnforceNotNullUniquePidOnServicesAndCatalogues < ActiveRecord::Migration[7
     end
   end
 
-  def abort_on_duplicate_pids(table)
-    duplicates = select_values("SELECT pid FROM #{table} GROUP BY pid HAVING COUNT(*) > 1")
-    return if duplicates.empty?
-
-    raise ActiveRecord::MigrationError,
-          "Cannot add unique index on #{table}.pid, duplicate pids found: #{duplicates.join(", ")}"
+  # Of the rows that share a pid, the newest row that is not deleted keeps
+  # the pid. A NULL status counts as not deleted. Each other row gets a UUID,
+  # like a backfilled blank pid.
+  def resolve_duplicate_pids(table)
+    select_values("SELECT pid FROM #{table} GROUP BY pid HAVING COUNT(*) > 1").each do |pid|
+      superseded_ids =
+        select_values(
+          "SELECT id FROM #{table} WHERE pid = #{quote(pid)} " \
+          "ORDER BY (status IS NOT DISTINCT FROM 'deleted') ASC, updated_at DESC, id DESC OFFSET 1"
+        )
+      superseded_ids.each do |id|
+        new_pid = SecureRandom.uuid
+        say "#{table}.id=#{id}: duplicate pid #{pid} replaced with #{new_pid}"
+        update("UPDATE #{table} SET pid = #{quote(new_pid)} WHERE id = #{quote(id)}")
+      end
+    end
   end
 
   def quote(value)
