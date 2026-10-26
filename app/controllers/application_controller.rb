@@ -46,6 +46,14 @@ class ApplicationController < ActionController::Base
 
   private
 
+  # RECAPTCHA_ENABLED (config/initializers/customization.rb) switches the widget off per deployment.
+  # Without the widget, a form sends no reCAPTCHA token. Skip the verification then.
+  def verify_recaptcha(*args)
+    return true unless Rails.application.config.recaptcha_enabled
+
+    super
+  end
+
   # Templates that differ per deployment variant live next to the marketplace
   # ones as `<name>.html+pl.haml` / `<name>.html+whitelabel.haml`
   # (Action Pack variants, also honoured by ViewComponent).
