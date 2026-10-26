@@ -228,6 +228,84 @@ com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/
 com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-UK&collectorId=yyyyy"
 ```
 
+## User Roles and Access Levels
+
+The system uses three user roles:
+
+- **Administrator (`admin`)**
+- **Coordinator (`coordinator`)**
+- **Executive (`executive`)**
+
+Roles are defined in [`app/models/user.rb`](app/models/user.rb) using the
+[role_model](https://github.com/martinrehfeld/role_model) gem and stored in
+the `users.roles_mask` column. Each role has a numeric value assigned to it.
+These values are used internally by the system to keep track of which roles
+a user has.
+
+### How do the numeric values work?
+
+Each role is assigned a different value:
+
+| Role                        | Value |
+| --------------------------- | ----: |
+| Administrator (`admin`)     |     1 |
+| Coordinator (`coordinator`) |     2 |
+| Executive (`executive`)     |     4 |
+
+The values are powers of two. This allows multiple roles to be combined into
+a single value.
+
+For example:
+
+- `1` → Administrator
+- `2` → Coordinator
+- `4` → Executive
+- `3` → Administrator + Coordinator (`1 + 2`)
+- `5` → Administrator + Executive (`1 + 4`)
+- `6` → Coordinator + Executive (`2 + 4`)
+- `7` → Administrator + Coordinator + Executive (`1 + 2 + 4`)
+
+#### Example
+
+If a user has the value **5**, this means that they have:
+
+**Administrator (1) + Executive (4) = 5**
+
+There is no separate "role 5". The value simply represents a combination of
+two roles.
+
+### Important: Do not change the order of the roles
+
+The numeric values are based on the order in which the roles are defined.
+
+The current order is:
+
+`admin → coordinator → executive`
+
+This order should **not be changed** once the system is in use.
+
+If a new role needs to be added in the future, it should be added **after the
+existing roles**, rather than inserted between them.
+
+This ensures that the numeric values already stored for existing users
+continue to represent the same roles.
+
+### How should roles be understood?
+
+In everyday use, there is no need to work with the numeric values. Users
+should simply be described by their roles.
+
+For example:
+
+> The user is an **Administrator and Coordinator**.
+
+Internally, the system stores this combination as the value **3**, but the
+important information for users is that they have the **Administrator** and
+**Coordinator** roles.
+
+The numeric values are an internal mechanism for storing role combinations,
+not additional levels of access.
+
 ## Sentry integration
 
 The Sentry integration is on in every environment that sets the
