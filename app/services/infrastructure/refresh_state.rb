@@ -23,7 +23,7 @@ class Infrastructure::RefreshState < ApplicationService
       @infrastructure.mark_running!(deployment.outputs.presence || @infrastructure.outputs)
       update_deployment_link
     when "failed", "unconfigured"
-      fail!(deployment.details.presence || "ADM reported deployment status: #{deployment.status}")
+      fail!(Adm::Error.new("ADM reported deployment status: #{deployment.status}"), details: deployment.details)
     when "deleted"
       @infrastructure.mark_destroyed!
       Infrastructure::ProjectItemStatus.closed!(@infrastructure.project_item)
@@ -32,7 +32,7 @@ class Infrastructure::RefreshState < ApplicationService
       @infrastructure.record_state_check!
     end
   rescue Adm::NotFound => e
-    fail!(e.message)
+    fail!(e)
   end
 
   private
@@ -50,11 +50,14 @@ class Infrastructure::RefreshState < ApplicationService
     Infrastructure::ProjectItemStatus.ready!(project_item, deployment_url)
   end
 
-  def fail!(error)
-    @infrastructure.mark_failed!(error)
+  # ADM details can hold the whole contextualization log, so they are kept for debugging
+  # in last_error and left out of the project item status shown to the user
+  def fail!(error, details: nil)
+    Rails.error.report(error, context: { infrastructure_id: @infrastructure.id })
+    @infrastructure.mark_failed!(details.presence || error.message)
     Infrastructure::ProjectItemStatus.rejected!(
       @infrastructure.project_item,
-      "Deployment failed: #{error}. Please contact support."
+      "Deployment failed: #{error.message}. Please contact support."
     )
   end
 end

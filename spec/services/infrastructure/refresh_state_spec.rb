@@ -133,16 +133,26 @@ RSpec.describe Infrastructure::RefreshState, type: :service do
     context "when the deployment is #{status}" do
       let(:deployment) { { id: "dep-1", status: status, details: "Error launching the VMs" } }
 
-      before { refresh }
+      before do
+        allow(Rails.error).to receive(:report)
+        refresh
+      end
 
       it "marks the infrastructure failed with the ADM details" do
         expect(infrastructure.reload).to have_attributes(state: "failed", last_error: "Error launching the VMs")
       end
 
-      it "rejects the project item" do
+      it "rejects the project item with the ADM status, leaving the details out" do
         expect(infrastructure.project_item.reload).to have_attributes(
           status_type: "rejected",
-          status: "Deployment failed: Error launching the VMs. Please contact support."
+          status: "Deployment failed: ADM reported deployment status: #{status}. Please contact support."
+        )
+      end
+
+      it "reports the failure to the error reporter" do
+        expect(Rails.error).to have_received(:report).with(
+          an_instance_of(Adm::Error).and(having_attributes(message: "ADM reported deployment status: #{status}")),
+          context: { infrastructure_id: infrastructure.id }
         )
       end
     end
@@ -191,6 +201,7 @@ RSpec.describe Infrastructure::RefreshState, type: :service do
           "Content-Type" => "application/json"
         }
       )
+      allow(Rails.error).to receive(:report)
       refresh
     end
 
@@ -200,6 +211,13 @@ RSpec.describe Infrastructure::RefreshState, type: :service do
 
     it "rejects the project item" do
       expect(infrastructure.project_item.reload.status_type).to eq("rejected")
+    end
+
+    it "reports the failure to the error reporter" do
+      expect(Rails.error).to have_received(:report).with(
+        an_instance_of(Adm::NotFound),
+        context: { infrastructure_id: infrastructure.id }
+      )
     end
   end
 
