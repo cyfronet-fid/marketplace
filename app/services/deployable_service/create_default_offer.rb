@@ -99,7 +99,7 @@ class DeployableService::CreateDefaultOffer < DeployableService::ApplicationServ
     default = definition[:default]
     case definition[:type].to_s
     when "integer"
-      Integer(default.to_s, exception: false)
+      Integer(default.to_s, 10, exception: false)
     when "string"
       default.to_s if default.is_a?(String) || default.is_a?(Numeric)
     when /\Ascalar-unit\./

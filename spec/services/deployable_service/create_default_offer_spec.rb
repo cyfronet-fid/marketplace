@@ -129,6 +129,9 @@ RSpec.describe DeployableService::CreateDefaultOffer, backend: true do
             wn_num:
               type: integer
               default: "3"
+            wn_cpus:
+              type: integer
+              default: "010"
             mem_size:
               type: scalar-unit.size
               default: 4 GiB
@@ -176,6 +179,10 @@ RSpec.describe DeployableService::CreateDefaultOffer, backend: true do
 
       it "casts integer defaults to integers" do
         expect(defaults["wn_num"]).to eq(3)
+      end
+
+      it "parses integer defaults as decimal" do
+        expect(defaults["wn_cpus"]).to eq(10)
       end
 
       it "pre-fills scalar-unit inputs with their default" do
