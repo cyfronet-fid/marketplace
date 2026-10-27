@@ -11,7 +11,7 @@ RSpec.describe DeployableService::DeploymentJob, type: :job do
   let(:offer) { create(:offer, service: nil, deployable_service: deployable_service, offer_category: service_category) }
   let(:project_item) { create(:project_item, project: project, offer: offer, status: "created", status_type: :created) }
 
-  let(:filled_template) { "filled tosca template content" }
+  let(:filled_template) { { "topology_template" => { "outputs" => { "dns_url" => {}, "jupyter_url" => {} } } }.to_yaml }
   let(:mock_im_client) { instance_double(InfrastructureManager::Client) }
   let(:infrastructure_id) { "inf-12345" }
   let(:deployment_uri) { "https://deploy.sandbox.eosc-beyond.eu/infrastructures/#{infrastructure_id}" }
@@ -102,6 +102,95 @@ RSpec.describe DeployableService::DeploymentJob, type: :job do
       end
     end
 
+    context "when a Jupyter Notebook deployment is successful" do
+      let(:successful_im_response) { { success: true, data: { "uri" => deployment_uri } } }
+      let(:outputs_response) do
+        {
+          success: true,
+          data: {
+            "outputs" => {
+              "jupyter_url" => "https://notebook.vm.fedcloud.eu/?token=secret"
+            }
+          }
+        }
+      end
+
+      before do
+        allow(mock_im_client).to receive(:create_infrastructure).with(filled_template).and_return(
+          successful_im_response
+        )
+        allow(mock_im_client).to receive(:get_outputs).with(infrastructure_id).and_return(outputs_response)
+      end
+
+      it "uses the template URL output as deployment_link" do
+        described_class.perform_now(project_item)
+
+        expect(project_item.reload).to have_attributes(
+          status_type: "ready",
+          deployment_link: "https://notebook.vm.fedcloud.eu/?token=secret"
+        )
+      end
+
+      it "marks infrastructure as running" do
+        described_class.perform_now(project_item)
+
+        expect(Infrastructure.last.state).to eq("running")
+      end
+
+      it "records the TOSCA output names in declaration order" do
+        described_class.perform_now(project_item)
+
+        expect(Infrastructure.last.output_names).to eq(%w[dns_url jupyter_url])
+      end
+    end
+
+    context "when the template outputs are not a mapping" do
+      let(:filled_template) { { "topology_template" => { "outputs" => ["jupyter_url"] } }.to_yaml }
+
+      before do
+        allow(mock_im_client).to receive_messages(
+          create_infrastructure: { success: true, data: { "uri" => deployment_uri } },
+          get_outputs: { success: true, data: { "outputs" => { "jupyter_url" => "https://notebook.vm.fedcloud.eu/" } } }
+        )
+        described_class.perform_now(project_item)
+      end
+
+      it "records no output names" do
+        expect(Infrastructure.last.output_names).to eq([])
+      end
+
+      it "still completes the deployment" do
+        expect(project_item.reload.deployment_link).to eq("https://notebook.vm.fedcloud.eu/")
+      end
+    end
+
+    context "when several outputs are URLs" do
+      let(:outputs_response) do
+        {
+          success: true,
+          data: {
+            "outputs" => {
+              "jupyter_url" => "https://10.0.0.1/",
+              "dns_url" => "https://notebook.vm.fedcloud.eu/"
+            }
+          }
+        }
+      end
+
+      before do
+        allow(mock_im_client).to receive_messages(
+          create_infrastructure: { success: true, data: { "uri" => deployment_uri } },
+          get_outputs: outputs_response
+        )
+      end
+
+      it "uses the first URL in template declaration order" do
+        described_class.perform_now(project_item)
+
+        expect(project_item.reload.deployment_link).to eq("https://notebook.vm.fedcloud.eu/")
+      end
+    end
+
     context "when deployment is successful but outputs are empty" do
       let(:successful_im_response) { { success: true, data: { "uri" => deployment_uri } } }
       let(:outputs_response) { { success: true, data: { "outputs" => {} } } }
@@ -120,11 +209,10 @@ RSpec.describe DeployableService::DeploymentJob, type: :job do
         expect(infrastructure.state).to eq("configured")
       end
 
-      it "uses deployment URI as fallback for deployment_link" do
-        subject.perform(project_item)
+      it "leaves deployment_link blank and the project item status unchanged" do
+        described_class.perform_now(project_item)
 
-        project_item.reload
-        expect(project_item.deployment_link).to eq(deployment_uri)
+        expect(project_item.reload).to have_attributes(deployment_link: nil, status_type: "created")
       end
     end
 
@@ -146,11 +234,10 @@ RSpec.describe DeployableService::DeploymentJob, type: :job do
         expect(infrastructure.state).to eq("configured")
       end
 
-      it "uses deployment URI for deployment_link" do
-        subject.perform(project_item)
+      it "leaves deployment_link blank and the project item status unchanged" do
+        described_class.perform_now(project_item)
 
-        project_item.reload
-        expect(project_item.deployment_link).to eq(deployment_uri)
+        expect(project_item.reload).to have_attributes(deployment_link: nil, status_type: "created")
       end
     end
 

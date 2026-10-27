@@ -35,7 +35,7 @@ RSpec.describe DeployableService::CreateDefaultOffer, backend: true do
 
       before do
         compute_category
-        allow_any_instance_of(described_class).to receive(:fetch_template).and_return(template_content)
+        allow(DeployableService::FetchTemplate).to receive(:call).and_return(template_content)
       end
 
       subject(:result) { described_class.call(deployable_service) }
@@ -111,7 +111,7 @@ RSpec.describe DeployableService::CreateDefaultOffer, backend: true do
                 description: Memory size
         YAML
 
-        allow_any_instance_of(described_class).to receive(:fetch_template).and_return(updated_template)
+        allow(DeployableService::FetchTemplate).to receive(:call).and_return(updated_template)
 
         expect { described_class.call(deployable_service) }.not_to change { deployable_service.offers.count }
         expect(existing_offer.reload.parameters.map(&:id)).to eq(["memory"])
@@ -128,7 +128,7 @@ RSpec.describe DeployableService::CreateDefaultOffer, backend: true do
         )
       end
 
-      before { allow_any_instance_of(described_class).to receive(:fetch_template).and_return(template_content) }
+      before { allow(DeployableService::FetchTemplate).to receive(:call).and_return(template_content) }
 
       it "returns nil and logs error" do
         allow(Rails.logger).to receive(:error)
@@ -150,7 +150,7 @@ RSpec.describe DeployableService::CreateDefaultOffer, backend: true do
 
       before do
         compute_category
-        allow_any_instance_of(described_class).to receive(:fetch_template).and_return(template_content)
+        allow(DeployableService::FetchTemplate).to receive(:call).and_return(template_content)
         # Force offer creation to fail by making service invalid
         allow_any_instance_of(Offer).to receive(:save).and_return(false)
         allow_any_instance_of(Offer).to receive(:errors).and_return(double(full_messages: ["Name can't be blank"]))
@@ -178,7 +178,7 @@ RSpec.describe DeployableService::CreateDefaultOffer, backend: true do
 
       before do
         compute_category
-        allow_any_instance_of(described_class).to receive(:fetch_template).and_return(
+        allow(DeployableService::FetchTemplate).to receive(:call).and_return(
           "<html><body>GitHub</body></html>"
         )
       end
@@ -188,6 +188,53 @@ RSpec.describe DeployableService::CreateDefaultOffer, backend: true do
 
         expect(described_class.call(deployable_service)).to be_nil
         expect(Rails.logger).to have_received(:error).with(/Failed to fetch default offer parameters/).at_least(:once)
+      end
+    end
+
+    context "when the template cannot be fetched" do
+      let(:deployable_service) do
+        build(:deployable_service, url: "https://example.com/template.yml", resource_organisation: provider)
+      end
+
+      before do
+        compute_category
+        allow(DeployableService::FetchTemplate).to receive(:call).and_raise(Faraday::ConnectionFailed, "refused")
+        allow(Rails.error).to receive(:report)
+      end
+
+      it "raises the error in development and test" do
+        expect { described_class.call(deployable_service) }.to raise_error(Faraday::ConnectionFailed, "refused")
+      end
+
+      it "returns nil in production" do
+        allow(Rails.env).to receive(:local?).and_return(false)
+
+        expect(described_class.call(deployable_service)).to be_nil
+      end
+
+      it "reports the error with the template URL in production" do
+        allow(Rails.env).to receive(:local?).and_return(false)
+        described_class.call(deployable_service)
+
+        expect(Rails.error).to have_received(:report)
+          .with(be_a(Faraday::ConnectionFailed), context: { url: "https://example.com/template.yml" })
+      end
+    end
+
+    context "when the template URL resolves to an internal address" do
+      let(:deployable_service) do
+        build(:deployable_service, url: "https://internal.example/template.yml", resource_organisation: provider)
+      end
+
+      before do
+        compute_category
+        allow(Addrinfo).to receive(:getaddrinfo).and_return([Addrinfo.tcp("10.0.0.5", 443)])
+      end
+
+      it "raises before requesting the template" do
+        expect { described_class.call(deployable_service) }.to raise_error(
+          HttpMiddleware::SsrfProtection::BlockedRequestError
+        )
       end
     end
   end
@@ -204,7 +251,7 @@ RSpec.describe DeployableService::CreateDefaultOffer, backend: true do
 
     before do
       compute_category
-      allow_any_instance_of(described_class).to receive(:fetch_template).and_return(template_content)
+      allow(DeployableService::FetchTemplate).to receive(:call).and_return(template_content)
     end
 
     it "can be called through service object method" do

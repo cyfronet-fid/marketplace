@@ -14,6 +14,9 @@ if ENV["SENTRY_DSN"]
     # The share of the requests stored as transactions.
     config.traces_sample_rate = ENV.fetch("SENTRY_TRACES_SAMPLE_RATE", "0.01").to_f
     config.send_default_pii = true
+    # Errors reported with Rails.error.report go to Sentry too. Exceptions
+    # Sentry has already captured are not sent again.
+    config.rails.register_error_subscriber = true
 
     # Logs for the Logs view: one entry per request, job and mail
     # (SENTRY_LOGS=false turns them off). SQL queries only with
