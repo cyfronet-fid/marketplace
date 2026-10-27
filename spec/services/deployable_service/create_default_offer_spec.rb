@@ -199,10 +199,25 @@ RSpec.describe DeployableService::CreateDefaultOffer, backend: true do
       before do
         compute_category
         allow(DeployableService::FetchTemplate).to receive(:call).and_raise(Faraday::ConnectionFailed, "refused")
+        allow(Rails.error).to receive(:report)
       end
 
-      it "returns nil instead of raising" do
+      it "raises the error in development and test" do
+        expect { described_class.call(deployable_service) }.to raise_error(Faraday::ConnectionFailed, "refused")
+      end
+
+      it "returns nil in production" do
+        allow(Rails.env).to receive(:local?).and_return(false)
+
         expect(described_class.call(deployable_service)).to be_nil
+      end
+
+      it "reports the error with the template URL in production" do
+        allow(Rails.env).to receive(:local?).and_return(false)
+        described_class.call(deployable_service)
+
+        expect(Rails.error).to have_received(:report)
+          .with(be_a(Faraday::ConnectionFailed), context: { url: "https://example.com/template.yml" })
       end
     end
 
@@ -216,8 +231,10 @@ RSpec.describe DeployableService::CreateDefaultOffer, backend: true do
         allow(Addrinfo).to receive(:getaddrinfo).and_return([Addrinfo.tcp("10.0.0.5", 443)])
       end
 
-      it "returns nil without requesting the template" do
-        expect(described_class.call(deployable_service)).to be_nil
+      it "raises before requesting the template" do
+        expect { described_class.call(deployable_service) }.to raise_error(
+          HttpMiddleware::SsrfProtection::BlockedRequestError
+        )
       end
     end
   end

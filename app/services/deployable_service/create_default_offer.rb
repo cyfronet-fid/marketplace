@@ -29,11 +29,11 @@ class DeployableService::CreateDefaultOffer < DeployableService::ApplicationServ
 
     if offer.save
       Rails.logger.info "#{new_record ? "Created" : "Updated"} default offer for DeployableService " +
-                          "'#{@deployable_service.name}' (ID: #{@deployable_service.id})"
+                        "'#{@deployable_service.name}' (ID: #{@deployable_service.id})"
       offer
     else
       Rails.logger.error "Failed to #{new_record ? "create" : "update"} default offer for DeployableService " +
-                           "'#{@deployable_service.name}': #{offer.errors.full_messages.join(", ")}"
+                         "'#{@deployable_service.name}': #{offer.errors.full_messages.join(", ")}"
       nil
     end
   end
@@ -63,8 +63,10 @@ class DeployableService::CreateDefaultOffer < DeployableService::ApplicationServ
 
     inputs.map { |id, definition| parameter_from_tosca_input(id, definition || {}) }
   rescue Psych::SyntaxError, URI::InvalidURIError, SocketError, SystemCallError, Faraday::Error => e
-    Rails.logger.error "Failed to fetch default offer parameters from '#{url}': #{e.message}"
-    nil
+    Rails.error.report(e, context: { url: url })
+
+    # Surface the failure while developing and testing, a missing default offer is easy to overlook
+    Rails.env.local? ? raise(e) : nil
   end
 
   def parameter_from_tosca_input(id, definition)
