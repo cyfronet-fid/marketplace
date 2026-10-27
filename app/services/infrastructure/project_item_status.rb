@@ -11,7 +11,7 @@ module Infrastructure::ProjectItemStatus
   end
 
   def self.rejected!(project_item, message)
-    project_item.update!(status: message, status_type: :rejected)
+    project_item.update!(status: message, status_type: :rejected, deployment_link: nil)
   end
 
   def self.closed!(project_item)

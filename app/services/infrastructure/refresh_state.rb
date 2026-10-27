@@ -12,12 +12,13 @@ class Infrastructure::RefreshState < ApplicationService
     deployment = @client.deployment(@infrastructure.deployment_id)
 
     case deployment.status
-    when "pending"
+    when "pending", "running"
+      # "running" VMs are still being configured, the deployment is usable once "configured"
       @infrastructure.mark_creating!
     when "configured"
       @infrastructure.mark_configured!
       store_outputs(deployment.outputs)
-    when "running", "stopped", "off"
+    when "stopped", "off"
       # "stopped"/"off" still considered running (infrastructure exists)
       @infrastructure.mark_running!(deployment.outputs.presence || @infrastructure.outputs)
       update_deployment_link

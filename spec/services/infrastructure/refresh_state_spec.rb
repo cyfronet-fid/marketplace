@@ -35,6 +35,22 @@ RSpec.describe Infrastructure::RefreshState, type: :service do
     end
   end
 
+  context "when the deployment is running, still being configured" do
+    let(:deployment) do
+      { id: "dep-1", status: "running", outputs: [name: "jupyter_url", value: "https://hub.vm.fedcloud.eu"] }
+    end
+
+    before { refresh }
+
+    it "keeps the infrastructure creating" do
+      expect(infrastructure.reload.state).to eq("creating")
+    end
+
+    it "does not link the project item to the deployment URL yet" do
+      expect(infrastructure.project_item.reload).to have_attributes(status_type: "created", deployment_link: be_blank)
+    end
+  end
+
   context "when the deployment is configured with a URL output" do
     let(:deployment) do
       { id: "dep-1", status: "configured", outputs: [name: "jupyter_url", value: "https://hub.vm.fedcloud.eu"] }
@@ -58,7 +74,7 @@ RSpec.describe Infrastructure::RefreshState, type: :service do
     end
   end
 
-  %w[running stopped off].each do |status|
+  %w[stopped off].each do |status|
     context "when the deployment is #{status}" do
       let(:deployment) { { id: "dep-1", status: status, outputs: [name: "jupyter_ip", value: "https://10.0.0.1"] } }
 
@@ -72,7 +88,7 @@ RSpec.describe Infrastructure::RefreshState, type: :service do
     let(:deployment) do
       {
         id: "dep-1",
-        status: "running",
+        status: "configured",
         outputs: [{ name: "jupyter_url", value: "https://hub.vm.fedcloud.eu" },
                   { name: "jupyter_ip", value: "https://10.0.0.1" }]
       }
@@ -89,7 +105,9 @@ RSpec.describe Infrastructure::RefreshState, type: :service do
   end
 
   context "when the project item already links to the deployment URL" do
-    let(:deployment) { { id: "dep-1", status: "running", outputs: [name: "jupyter_url", value: "https://hub.vm.fedcloud.eu"] } }
+    let(:deployment) do
+      { id: "dep-1", status: "configured", outputs: [name: "jupyter_url", value: "https://hub.vm.fedcloud.eu"] }
+    end
 
     before { infrastructure.project_item.update!(deployment_link: "https://hub.vm.fedcloud.eu", status: "Custom") }
 
@@ -98,8 +116,8 @@ RSpec.describe Infrastructure::RefreshState, type: :service do
     end
   end
 
-  context "when the deployment is running without outputs" do
-    let(:deployment) { { id: "dep-1", status: "running", outputs: [] } }
+  context "when the deployment is stopped without outputs" do
+    let(:deployment) { { id: "dep-1", status: "stopped", outputs: [] } }
 
     before do
       infrastructure.update!(outputs: { "jupyter_url" => "https://hub.vm.fedcloud.eu" })

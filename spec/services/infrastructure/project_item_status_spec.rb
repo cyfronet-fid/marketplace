@@ -18,13 +18,20 @@ RSpec.describe Infrastructure::ProjectItemStatus, type: :service do
   end
 
   describe ".rejected!" do
-    before { described_class.rejected!(project_item, "Deployment failed: boom. Please contact support.") }
+    before do
+      project_item.update!(deployment_link: "https://hub.example.com")
+      described_class.rejected!(project_item, "Deployment failed: boom. Please contact support.")
+    end
 
     it "marks the project item rejected with the message" do
       expect(project_item.reload).to have_attributes(
         status_type: "rejected",
         status: "Deployment failed: boom. Please contact support."
       )
+    end
+
+    it "removes the link to the failed deployment" do
+      expect(project_item.reload.deployment_link).to be_nil
     end
   end
 
