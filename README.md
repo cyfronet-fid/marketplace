@@ -9,35 +9,48 @@ Marketplace is a place where you can find resources you need for your research:
 - unified order management
 - compatible resources linking to ready to use environments
 
+## Deployment variants
+
+One codebase serves three deployment variants: `marketplace`, `pl` and
+`whitelabel`. The env variable `MARKETPLACE_VARIANT` selects the variant at
+boot; the default is `marketplace`. The file `config/variants.yml` lists the
+variants, and `Mp::Variant` (`lib/mp/variant.rb`) gives the predicates that
+key variant behavior in the code.
+
+The directories `customization/pl` and `customization/whitelabel` hold the
+views, javascript, images and locales of the pl and whitelabel frontends. The
+env variable `CUSTOMIZATION_PATH` points the application to one of them (see
+[Views, locales and scss customization](#views-locales-and-scss-customization)).
+The marketplace variant uses the repository frontend without a customization.
+
+Each variant deploys from its own compose file,
+`docker-compose-<variant>.yml`. The pl and marketplace variants also have a
+discovery hub, `docker-compose-hub-<variant>.yml`. See
+[Local deployment](#local-deployment) and
+[lib/versions/deploy.md](lib/versions/deploy.md).
+
+To develop as the pl or whitelabel variant, run the application through
+`lib/versions/run_variant_env.sh <variant>`. The script sets
+`MARKETPLACE_VARIANT` and `CUSTOMIZATION_PATH` and gives the variant its own
+database, Elasticsearch container and Redis database, isolated from the
+default development environment. The header of the script documents the
+restore and prime modes.
+
 ## Development environment
 
 ### Requirements
 
-We will need:
+You need:
 
-- ruby (specific version can be found in [.tool-versions](.tool-versions)).
-  Recommended way to manage ruby versions is to use [asdf](https://github.com/asdf-vm/asdf)
-  with [asdf-ruby](https://github.com/asdf-vm/asdf-ruby) plugin
-- nodejs (specific version can be found in [.tool-versions](.tool-versions)).
-  Recommended way to manage nodejs versions is to use [asdf](https://github.com/asdf-vm/asdf)
-  with [asdf-nodejs](https://github.com/asdf-vm/asdf-nodejs) plugin.
-- yarn (specific version can be found in [.tool-versions](.tool-versions)).
-  Recommended way to manage yarn versions is to use [asdf](https://github.com/asdf-vm/asdf)
-  with [asdf-yarn](https://github.com/twuni/asdf-yarn) plugin.
-- [vips](https://github.com/libvips/libvips) The images processor
-  included in rails 7 and ImageProcessing gem
-- [docker compose 1](https://docs.docker.com/compose/)
-  (Compose 2 is still in the making)
-
-If you are using [asdf](https://github.com/asdf-vm/asdf) the easiest way to
-install required ruby and nodejs versions is to type
-
-```shell
-asdf install
-```
-
-in marketplace root directory. Ruby and nodejs versions will be set in automatic
-way.
+- ruby, nodejs and yarn. The file [.tool-versions](.tool-versions) holds the
+  versions. Use a version manager that reads `.tool-versions`, for example
+  [asdf](https://github.com/asdf-vm/asdf) (`asdf install` in the repository
+  root installs all three), or [rbenv](https://github.com/rbenv/rbenv) and
+  [nvm](https://github.com/nvm-sh/nvm) with the same versions.
+- [vips](https://github.com/libvips/libvips), the image processor of rails 7
+  and of the ImageProcessing gem
+- [docker compose v2](https://docs.docker.com/compose/) for the background
+  services and for the [local deployment](#local-deployment)
 
 ### Fast Setup Guide
 
@@ -128,14 +141,19 @@ application server.
 
 ## Docker compose
 
-Docker compose is used to manage
-background services: postgresql, Elasticsearch and Redis.
-The service containers are named `db`, `el` and `redis`, accordingly.
-Inspect the `docker-compose.yml` file for their configuration.
+Docker compose manages the background services of development: postgresql,
+Elasticsearch, Redis and ActiveMQ Artemis. The service containers are named
+`db`, `el`, `redis` and `active_mq`. Inspect the `docker-compose.yml` file
+for their configuration.
 
-- postgresql is used to store data,
-- Elasticsearch is used for full text resource search,
-- Redis is used to pass state to sidekiq (for running background jobs).
+- postgresql stores the data,
+- Elasticsearch serves the full text resource search,
+- Redis passes state to sidekiq (background jobs),
+- ActiveMQ Artemis is the STOMP broker of the JMS integration.
+
+`docker-compose.yml` uses arm64 images (Apple silicon). On an x64 host, use
+`docker-compose-x64.yml`: add `-f docker-compose-x64.yml` to each command
+below.
 
 To run all the services at once `$ docker compose up -d` (remove `-d` to run in foreground).
 You can later inspect logs `$ docker compose logs`.
@@ -145,6 +163,62 @@ Lastly, to remove the containers (with data)
 To run specific service `<serv>` in foreground `$ docker compose up <serv>`.
 To stop it `$ docker compose stop <serv>`,
 and to remove its state: `$ docker compose rm <serv>`
+
+## Local deployment
+
+`lib/versions/deploy-local.sh` deploys one variant with docker compose: the
+instance and, for pl and marketplace, its discovery hub, with localhost URLs
+and the compose files of the staging deploy.
+
+By default the instance runs the development environment on the working
+tree: Rails reloads a code change on the next request, and the watchers
+build the js and the css on change. `restart` applies a change of Gemfile,
+package.json or an initializer. With `--production` the instance runs the
+production images of the staging deploy, built from the working tree. The
+hub always runs its production images, built from the hub checkouts next to
+this repository (pl-discovery-hub, eosc-search-service, transform-service
+and the commons repositories); `--clone` clones a missing checkout there.
+
+The first start builds the dependency image and installs the development
+gems and node modules into the volumes, which takes several minutes; the
+next starts are fast. Watch the containers with
+`./lib/versions/deploy-local.sh logs <variant>`, or the hub containers with
+`logs --no-instance <variant>`. The mode supplies the compose files and
+their variables, thus the services always resolve; a plain
+`docker compose -p mp-local-<variant> logs -f` also works while the
+containers run.
+
+One run without flags sets up everything of one variant at once: the
+instance, its discovery hub (pl and marketplace only) and the seed of the
+database and of Solr. Flags deploy the applications separately:
+
+```shell
+./lib/versions/deploy-local.sh pl                   # everything of pl at once
+./lib/versions/deploy-local.sh restart pl           # apply a Gemfile or initializer change
+./lib/versions/deploy-local.sh --production pl      # the staging images, built from the tree
+./lib/versions/deploy-local.sh --no-hub pl          # the instance only
+./lib/versions/deploy-local.sh --no-instance pl     # the hub only
+./lib/versions/deploy-local.sh --no-transform pl    # the hub without the transform services
+./lib/versions/deploy-local.sh seed pl              # full load of Solr again
+./lib/versions/deploy-local.sh down pl              # remove everything of pl
+```
+
+The ports follow the slot of the variant (pl 16, whitelabel 17,
+marketplace 18): the instance answers on `http://localhost:30<slot>` and the
+hub on `http://localhost:32<slot>`. The header of the script documents the
+layout under `tmp/local-deploy`: the env files that the script writes on the
+first run, and the optional database dump and media seed.
+
+The transform service fills the Solr of a hub from the marketplace API. The
+first run with the transform services starts the first full load, which takes
+a long time; the hub search stays incomplete until the load completes. Watch
+the progress in the transform-worker log. Solr
+keeps its data in a named volume, thus after the first full load an up with
+`--no-transform` runs the hub without the transform services; `seed` starts
+them again. The staging hub deploy script (`deploy-hubs.sh`) supports the
+same `--no-transform` flag.
+[lib/versions/deploy.md](lib/versions/deploy.md) describes the staging deploy
+and the local deploy in detail.
 
 ## FriendlyId
 
@@ -170,7 +244,7 @@ to your local application instance. To do so execute following command
 
 ```shell
 ssh -R <port_number - from 9001 to 9015>:
-localhost:5000 mszostak@docker-fid.grid.cyf-kr.edu.pl -N
+localhost:5000 <your_user>@docker-fid.grid.cyf-kr.edu.pl -N
 ```
 
 If you can not connect, try different port -
@@ -333,6 +407,12 @@ ENV[VAR]
 
 We are currently using the following ENV variables:
 
+- `MARKETPLACE_VARIANT` (Optional) - the deployment variant of this process:
+  `marketplace` (default), `pl` or `whitelabel`
+  (see [Deployment variants](#deployment-variants))
+- `CUSTOMIZATION_PATH` (Optional) - directory with the views, javascript and
+  locales of the variant (see
+  [Views, locales and scss customization](#views-locales-and-scss-customization))
 - `MP_VERSION` (Optional) - the application's version
   (default taken from the file `./VERSION`)
 - `PORT` (Optional) - http server port (default 5000)
@@ -580,6 +660,10 @@ This variable should point to the directory with the following structure:
   - javascript
   - config/locales
 ```
+
+The repository holds two such directories, `customization/pl` and
+`customization/whitelabel`: the frontends of the pl and whitelabel
+[deployment variants](#deployment-variants).
 
 **Warning**: when new SCSS / image / asset is added
 to customization directory rails application
