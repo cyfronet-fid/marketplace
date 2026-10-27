@@ -28,7 +28,14 @@ class DeployableService::FetchTemplate < ApplicationService
     end
   end
 
+  # https://github.com/<owner>/<repo>/blob/<ref>/<path> -> https://raw.githubusercontent.com/<owner>/<repo>/<ref>/<path>
   def raw_github_url(url)
-    url.sub("github.com", "raw.githubusercontent.com").sub("/blob/", "/")
+    uri = URI.parse(url)
+    blob_path = %r{\A(/[^/]+/[^/]+)/blob/}
+    return url unless uri.host == "github.com" && uri.path.match?(blob_path)
+
+    uri.host = "raw.githubusercontent.com"
+    uri.path = uri.path.sub(blob_path, '\1/')
+    uri.to_s
   end
 end

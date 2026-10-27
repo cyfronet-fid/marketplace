@@ -30,6 +30,21 @@ RSpec.describe DeployableService::FetchTemplate, type: :service do
     expect(described_class.call("http://example.com/template.yml")).to eq("template")
   end
 
+  it "fetches a non-GitHub URL mentioning github.com and /blob/ as given" do
+    stub_request(:get, "https://example.com/github.com/blob/template.yml").to_return(status: 200, body: "template")
+
+    expect(described_class.call("https://example.com/github.com/blob/template.yml")).to eq("template")
+  end
+
+  it "rewrites only the blob segment that follows the GitHub owner and repository" do
+    stub_request(:get, "https://raw.githubusercontent.com/blob/tosca/main/blob/jupyter.yml").to_return(
+      status: 200,
+      body: "template"
+    )
+
+    expect(described_class.call("https://github.com/blob/tosca/blob/main/blob/jupyter.yml")).to eq("template")
+  end
+
   it "raises an HTTP error when the template cannot be fetched" do
     stub_request(:get, raw_url).to_return(status: [404, "Not Found"])
 
