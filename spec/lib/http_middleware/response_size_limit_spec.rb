@@ -28,7 +28,10 @@ RSpec.describe HttpMiddleware::ResponseSizeLimit do
   it "raises once the streamed body exceeds the limit" do
     stub_request(:get, url).to_return(body: "a" * 11)
 
-    expect { connection.get(url) }.to raise_error(described_class::Error, "Response is larger than 10 bytes")
+    expect { connection.get(url) }.to raise_error(
+      described_class::ResponseTooLargeError,
+      "Response is larger than 10 bytes"
+    )
   end
 
   it "keeps only the final response body after a redirect" do

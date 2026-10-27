@@ -12,7 +12,7 @@
 # The checked address is passed to HttpMiddleware::SsrfProtection::NetHttp, which connects to it instead of resolving
 # the host again, so a second DNS answer (DNS rebinding) cannot point the request at an internal address.
 class HttpMiddleware::SsrfProtection < Faraday::Middleware
-  class Error < Faraday::Error
+  class BlockedRequestError < Faraday::Error
   end
 
   SCHEMES = %w[http https].freeze
@@ -50,7 +50,7 @@ class HttpMiddleware::SsrfProtection < Faraday::Middleware
 
   def on_request(env)
     # A proxy would connect to the host itself, bypassing the checked address
-    raise Error, "Proxied requests are not allowed" if env.request.proxy
+    raise BlockedRequestError, "Proxied requests are not allowed" if env.request.proxy
 
     validate_url!(env.url)
     host = env.url.hostname
@@ -62,16 +62,18 @@ class HttpMiddleware::SsrfProtection < Faraday::Middleware
   def validate_url!(uri)
     return if SCHEMES.include?(uri.scheme) && uri.host.present? && uri.userinfo.nil?
 
-    raise Error, "URL is not allowed"
+    raise BlockedRequestError, "URL is not allowed"
   end
 
   def public_address(host)
     addresses = Addrinfo.getaddrinfo(host, nil, nil, :STREAM).map { |info| IPAddr.new(info.ip_address) }
-    raise Error, "URL host is not allowed" if addresses.empty? || addresses.any? { |address| blocked?(address) }
+    if addresses.empty? || addresses.any? { |address| blocked?(address) }
+      raise BlockedRequestError, "URL host is not allowed"
+    end
 
     addresses.first.to_s
   rescue SocketError, IPAddr::InvalidAddressError
-    raise Error, "URL host could not be resolved"
+    raise BlockedRequestError, "URL host could not be resolved"
   end
 
   def blocked?(address)
@@ -84,7 +86,9 @@ class HttpMiddleware::SsrfProtection < Faraday::Middleware
   class NetHttp < Faraday::Adapter::NetHttp
     def net_http_connection(env)
       target = env.request.context&.dig(:ssrf_target)
-      raise Error, "Request was not checked by SsrfProtection" unless target&.dig(:host) == env.url.hostname
+      unless target&.dig(:host) == env.url.hostname
+        raise BlockedRequestError, "Request was not checked by SsrfProtection"
+      end
 
       super.tap { |http| http.ipaddr = target[:address] }
     end

@@ -65,7 +65,7 @@ RSpec.describe DeployableService::FetchTemplate, type: :service do
   it "raises an error when the template is too large" do
     stub_request(:get, raw_url).to_return(status: 200, body: "a" * (described_class::MAX_SIZE + 1))
 
-    expect { described_class.call(raw_url) }.to raise_error(HttpMiddleware::ResponseSizeLimit::Error)
+    expect { described_class.call(raw_url) }.to raise_error(HttpMiddleware::ResponseSizeLimit::ResponseTooLargeError)
   end
 
   describe "SSRF protection" do
@@ -77,7 +77,7 @@ RSpec.describe DeployableService::FetchTemplate, type: :service do
       "ftp://example.com/t.yml"
     ].each do |url|
       it "rejects #{url} before making a request" do
-        expect { described_class.call(url) }.to raise_error(HttpMiddleware::SsrfProtection::Error)
+        expect { described_class.call(url) }.to raise_error(HttpMiddleware::SsrfProtection::BlockedRequestError)
       end
     end
 
@@ -88,14 +88,14 @@ RSpec.describe DeployableService::FetchTemplate, type: :service do
     it "blocks a redirect to the cloud metadata address" do
       stub_request(:get, raw_url).to_return(status: 302, headers: { "Location" => "http://169.254.169.254/latest/" })
 
-      expect { described_class.call(raw_url) }.to raise_error(HttpMiddleware::SsrfProtection::Error)
+      expect { described_class.call(raw_url) }.to raise_error(HttpMiddleware::SsrfProtection::BlockedRequestError)
     end
 
     it "blocks a redirect to a non-http(s) location" do
       stub_request(:get, raw_url).to_return(status: 301, headers: { "Location" => "file:///etc/passwd" })
 
       expect { described_class.call(raw_url) }.to raise_error(
-        HttpMiddleware::SsrfProtection::Error,
+        HttpMiddleware::SsrfProtection::BlockedRequestError,
         "URL is not allowed"
       )
     end
@@ -111,7 +111,7 @@ RSpec.describe DeployableService::FetchTemplate, type: :service do
 
       it "blocks the internal hop" do
         expect { described_class.call(raw_url) }.to raise_error(
-          HttpMiddleware::SsrfProtection::Error,
+          HttpMiddleware::SsrfProtection::BlockedRequestError,
           "URL host is not allowed"
         )
       end

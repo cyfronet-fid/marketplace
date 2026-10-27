@@ -42,7 +42,10 @@ RSpec.describe HttpMiddleware::SsrfProtection do
         before { allow(Addrinfo).to receive(:getaddrinfo).and_return([Addrinfo.tcp(address, 443)]) }
 
         it "rejects it without exposing the address" do
-          expect { middleware.on_request(env) }.to raise_error(described_class::Error, "URL host is not allowed")
+          expect { middleware.on_request(env) }.to raise_error(
+            described_class::BlockedRequestError,
+            "URL host is not allowed"
+          )
         end
       end
     end
@@ -55,7 +58,7 @@ RSpec.describe HttpMiddleware::SsrfProtection do
       end
 
       it "rejects the host" do
-        expect { middleware.on_request(env) }.to raise_error(described_class::Error)
+        expect { middleware.on_request(env) }.to raise_error(described_class::BlockedRequestError)
       end
     end
 
@@ -63,7 +66,10 @@ RSpec.describe HttpMiddleware::SsrfProtection do
       before { allow(Addrinfo).to receive(:getaddrinfo).and_raise(SocketError, "Name or service not known") }
 
       it "raises a protection error" do
-        expect { middleware.on_request(env) }.to raise_error(described_class::Error, "URL host could not be resolved")
+        expect { middleware.on_request(env) }.to raise_error(
+          described_class::BlockedRequestError,
+          "URL host could not be resolved"
+        )
       end
     end
 
@@ -79,7 +85,10 @@ RSpec.describe HttpMiddleware::SsrfProtection do
         let(:url) { rejected_url }
 
         it "rejects the URL" do
-          expect { middleware.on_request(env) }.to raise_error(described_class::Error, "URL is not allowed")
+          expect { middleware.on_request(env) }.to raise_error(
+            described_class::BlockedRequestError,
+            "URL is not allowed"
+          )
         end
       end
     end
@@ -90,7 +99,10 @@ RSpec.describe HttpMiddleware::SsrfProtection do
         let(:url) { "http://#{host}/t.yml" }
 
         it "rejects the host" do
-          expect { middleware.on_request(env) }.to raise_error(described_class::Error, "URL host is not allowed")
+          expect { middleware.on_request(env) }.to raise_error(
+            described_class::BlockedRequestError,
+            "URL host is not allowed"
+          )
         end
       end
     end
@@ -99,7 +111,10 @@ RSpec.describe HttpMiddleware::SsrfProtection do
       before { env.request.proxy = Faraday::ProxyOptions.from("http://proxy.example:3128") }
 
       it "rejects the request" do
-        expect { middleware.on_request(env) }.to raise_error(described_class::Error, "Proxied requests are not allowed")
+        expect { middleware.on_request(env) }.to raise_error(
+          described_class::BlockedRequestError,
+          "Proxied requests are not allowed"
+        )
       end
     end
   end
@@ -115,7 +130,7 @@ RSpec.describe HttpMiddleware::SsrfProtection do
 
     it "refuses requests that were not checked by the middleware" do
       expect { adapter.net_http_connection(env) }.to raise_error(
-        HttpMiddleware::SsrfProtection::Error,
+        HttpMiddleware::SsrfProtection::BlockedRequestError,
         "Request was not checked by SsrfProtection"
       )
     end
@@ -123,7 +138,7 @@ RSpec.describe HttpMiddleware::SsrfProtection do
     it "refuses an address checked for a different host" do
       env.request.context = { ssrf_target: { host: "other.example", address: "93.184.215.14" } }
 
-      expect { adapter.net_http_connection(env) }.to raise_error(HttpMiddleware::SsrfProtection::Error)
+      expect { adapter.net_http_connection(env) }.to raise_error(HttpMiddleware::SsrfProtection::BlockedRequestError)
     end
   end
 end

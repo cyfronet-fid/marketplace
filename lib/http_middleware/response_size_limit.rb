@@ -9,7 +9,7 @@
 #     f.adapter :net_http
 #   end
 class HttpMiddleware::ResponseSizeLimit < Faraday::Middleware
-  class Error < Faraday::Error
+  class ResponseTooLargeError < Faraday::Error
   end
 
   def initialize(app, max:)
@@ -21,7 +21,7 @@ class HttpMiddleware::ResponseSizeLimit < Faraday::Middleware
     body = +""
     env.request.on_data =
       proc do |chunk, received|
-        raise Error, "Response is larger than #{@max} bytes" if received > @max
+        raise ResponseTooLargeError, "Response is larger than #{@max} bytes" if received > @max
 
         body << chunk
       end
