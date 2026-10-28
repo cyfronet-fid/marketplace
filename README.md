@@ -338,6 +338,8 @@ We are currently using the following ENV variables:
 - `PORT` (Optional) - http server port (default 5000)
 - ENV variables connected to the Checkin integration are described in the
   [Checkin section](#checkin)
+- ENV variables connected to the ADM integration are described in the
+  [ADM deployments section](#adm-deployments)
 - `ROOT_URL` (Optional) - root application URL (default
   `http://localhost:#{ENV["PORT"] || 3000}` (when foreman is used to start
   application 5000 ENV variable is set)
@@ -776,6 +778,43 @@ To configure this integration, set the following [env variables](#environmental-
 | `AMS_TOKEN` | AMS API token, sent as the `x-api-key` header | - | Yes |
 | `AMS_SUBSCRIBE_ALL_CRON` | Cron schedule for the subscribe-all job | `*/3 * * * *` | No |
 | `AMS_SUBSCRIBE_ALL_ENABLED` | Set to `true` to enable the subscribe-all sidekiq-cron job. Unlike most optional variables here, this defaults to `false`, so the job does **not** run unless explicitly enabled | `false` | No |
+
+## ADM deployments
+
+Deployable services are deployed through the Application Deployment Manager
+(ADM). When a user orders a deployable service, `DeployableService::DeploymentJob`
+calls `Infrastructure::Deploy`, which registers an allocation on the default
+cloud site and creates an ADM deployment of the service (its PID) with inputs
+built from the TOSCA template defaults and the order parameters. ADM deploys
+asynchronously: a scheduled `Infrastructure::StatePollingJob` (sidekiq-cron)
+refreshes the deployment status, and once ADM reports it `configured` the
+project item becomes ready with the deployment URL from the template outputs.
+Destroying the infrastructure from the project page enqueues
+`Infrastructure::DestroyJob`, which deletes the ADM deployment and closes the
+project item.
+
+ADM calls authenticate with an access token of an EGI AAI service account (not
+EOSC Check-in). `Adm::AccessToken` uses a cached token, then `EGI_ACCESS_TOKEN`,
+then a token refreshed with `EGI_REFRESH_ACCESS_TOKEN`, which it caches. The
+settings are read from `config/adm.yml`.
+
+To configure this integration, set the following [env variables](#environmental-variables):
+
+| Variable | Description | Default | Required |
+| --- | --- | --- | --- |
+| `ADM_BASE_URL` | ADM API base URL, keep the trailing slash | `https://deploy.sandbox.eosc-beyond.eu/adim/` | No |
+| `ADM_TIMEOUT` | Timeout of an ADM request, in seconds | `60` | No |
+| `ADM_OPEN_TIMEOUT` | Timeout of opening a connection to ADM, in seconds | `10` | No |
+| `ADM_DEFAULT_CLOUD` | Cloud site of new deployments, a key of `cloud_sites` in `config/adm.yml` | `IISAS-FedCloud` | No |
+| `ADM_CLOUD_HOST` | OpenStack Keystone endpoint of the IISAS-FedCloud site | `https://cloud.ui.savba.sk:5000` | No |
+| `ADM_CLOUD_DOMAIN` | OpenStack project ID of the IISAS-FedCloud site | see `config/adm.yml` | No |
+| `EGI_REFRESH_ACCESS_TOKEN` | EGI AAI service account refresh token, exchanged for ADM access tokens | - | Yes, unless `EGI_ACCESS_TOKEN` is set |
+| `EGI_ACCESS_TOKEN` | EGI AAI access token used as is instead of a refreshed one | - | No |
+| `EGI_REFRESH_TOKEN_URL` | EGI AAI endpoint that exchanges the refresh token for an access token | `https://aai.egi.eu/auth/realms/egi/protocol/openid-connect/token` | No |
+| `EGI_CLIENT_ID` | OAuth client ID the refresh token was issued for | `token-portal` | No |
+| `EGI_TOKEN_CACHE_EXPIRY` | Minutes a refreshed access token stays cached | `50` | No |
+| `INFRASTRUCTURE_POLLING_ENABLED` | Set to `true` to enable the deployment state polling sidekiq-cron job. It defaults to `false`, so deployments never become ready unless it is enabled | `false` | No |
+| `INFRASTRUCTURE_POLLING_CRON` | Cron schedule of the deployment state polling job | `* * * * *` | No |
 
 ## Checkin
 
