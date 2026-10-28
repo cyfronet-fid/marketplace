@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_10_13_120000) do
+ActiveRecord::Schema[7.2].define(version: 2026_10_20_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -369,8 +369,8 @@ ActiveRecord::Schema[7.2].define(version: 2026_10_13_120000) do
 
   create_table "infrastructures", force: :cascade do |t|
     t.bigint "project_item_id", null: false
-    t.string "im_infrastructure_id"
-    t.string "im_base_url", null: false
+    t.string "deployment_id"
+    t.string "api_base_url", null: false
     t.string "cloud_site", null: false
     t.string "state", default: "pending", null: false
     t.datetime "last_state_check_at"
@@ -380,7 +380,8 @@ ActiveRecord::Schema[7.2].define(version: 2026_10_13_120000) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "output_names", default: [], array: true
-    t.index ["im_infrastructure_id"], name: "index_infrastructures_on_im_infrastructure_id", unique: true
+    t.string "allocation_id"
+    t.index ["deployment_id"], name: "index_infrastructures_on_deployment_id", unique: true
     t.index ["project_item_id"], name: "index_infrastructures_on_project_item_id"
     t.index ["state"], name: "index_infrastructures_on_state"
   end

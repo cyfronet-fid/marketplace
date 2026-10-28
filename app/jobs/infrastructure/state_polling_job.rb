@@ -11,80 +11,24 @@ class Infrastructure::StatePollingJob < ApplicationJob
   private
 
   def poll_single(infrastructure_id)
-    infrastructure = Infrastructure.find_by(id: infrastructure_id)
-    return unless infrastructure&.im_infrastructure_id.present?
-    return if infrastructure.destroyed? || infrastructure.failed?
-
-    update_infrastructure_state(infrastructure)
+    infrastructure = deployed.active.find_by(id: infrastructure_id)
+    Infrastructure::RefreshState.call(infrastructure, client: client) if infrastructure
   end
 
   def poll_all_pending
-    Infrastructure.pending_state_check.find_each do |infrastructure|
-      next unless infrastructure.im_infrastructure_id.present?
-
-      update_infrastructure_state(infrastructure)
+    deployed.pending_state_check.find_each do |infrastructure|
+      Infrastructure::RefreshState.call(infrastructure, client: client)
     rescue StandardError => e
-      Rails.logger.error "Failed to poll Infrastructure #{infrastructure.id}: #{e.message}"
-      infrastructure.update_columns(last_state_check_at: Time.current)
+      Rails.error.report(e, context: { infrastructure_id: infrastructure.id })
+      infrastructure.record_state_check!
     end
   end
 
-  def update_infrastructure_state(infrastructure)
-    im_client = InfrastructureManager::Client.new
-    result = im_client.get_state(infrastructure.im_infrastructure_id)
-
-    if result[:success]
-      im_state = result[:data]&.dig("state")
-      infrastructure.update_state_from_im!(im_state)
-
-      if infrastructure.failed?
-        reject_project_item(infrastructure)
-      elsif infrastructure.running? || infrastructure.configured?
-        # If running or configured, also fetch outputs
-        fetch_outputs(infrastructure, im_client)
-      end
-    else
-      Rails.logger.warn "Could not get state for Infrastructure #{infrastructure.id}: #{result[:error]}"
-      infrastructure.update_columns(last_state_check_at: Time.current)
-    end
+  def deployed
+    Infrastructure.adm_managed.where.not(deployment_id: nil)
   end
 
-  def reject_project_item(infrastructure)
-    infrastructure.project_item.update!(
-      status: "Deployment failed: #{infrastructure.last_error}. Please contact support.",
-      status_type: :rejected
-    )
-  end
-
-  def fetch_outputs(infrastructure, im_client)
-    if Infrastructure::SelectDeploymentUrl.dns_url?(infrastructure.deployment_url)
-      # Preferred DNS URL already stored - only reconcile the project item, without querying IM again.
-      # An IP address URL may be a fallback until IM reports the DNS one, so outputs are fetched again.
-      update_project_item_link(infrastructure, infrastructure.outputs)
-      return
-    end
-
-    result = im_client.get_outputs(infrastructure.im_infrastructure_id)
-    return unless result[:success] && result[:data]
-
-    outputs = result[:data]["outputs"] || {}
-    infrastructure.update_columns(outputs: outputs) if outputs.present?
-
-    # Update project_item deployment_link if we got a better URL
-    update_project_item_link(infrastructure, outputs)
-  end
-
-  def update_project_item_link(infrastructure, outputs)
-    deployment_url = Infrastructure::SelectDeploymentUrl.call(outputs, infrastructure.output_names)
-    return if deployment_url.blank?
-
-    project_item = infrastructure.project_item
-    return if project_item.deployment_link == deployment_url
-
-    project_item.update!(
-      deployment_link: deployment_url,
-      status: "Deployment ready at #{deployment_url}",
-      status_type: :ready
-    )
+  def client
+    @client ||= Adm::Client.new
   end
 end
