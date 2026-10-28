@@ -72,6 +72,7 @@ class DeployableService::CreateDefaultOffer < DeployableService::ApplicationServ
   def parameter_from_tosca_input(id, definition)
     definition = ActiveSupport::HashWithIndifferentAccess.new(definition)
     values = valid_values(definition)
+    default = default_value(id, definition)
     attrs = {
       id: id,
       name: definition[:label].presence || id.to_s.humanize,
@@ -80,9 +81,29 @@ class DeployableService::CreateDefaultOffer < DeployableService::ApplicationServ
     }
 
     if values.present?
-      Parameter::Select.new(attrs.merge(values: values, mode: "dropdown"))
+      Parameter::Select.new(
+        attrs.merge(values: values, mode: "dropdown", default_value: (default if values.include?(default)))
+      )
     else
-      Parameter::Input.new(attrs.merge(sensitive: sensitive_input?(id)))
+      sensitive = sensitive_input?(id)
+      Parameter::Input.new(attrs.merge(sensitive: sensitive, default_value: (default unless sensitive)))
+    end
+  end
+
+  # Only string, scalar-unit and integer defaults are pre-filled: submitted values overwrite the template default,
+  # so pre-filling other TOSCA types (boolean, list, ...) would change them into strings.
+  def default_value(id, definition)
+    # Each order gets its own DNS name (see ProjectItem::Attributes), so none is stored with the offer
+    return if DeployableService::DnsName.input?(id)
+
+    default = definition[:default]
+    case definition[:type].to_s
+    when "integer"
+      Integer(default.to_s, 10, exception: false)
+    when "string"
+      default.to_s if default.is_a?(String) || default.is_a?(Numeric)
+    when /\Ascalar-unit\./
+      default if default.is_a?(String)
     end
   end
 

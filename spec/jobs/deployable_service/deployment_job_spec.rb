@@ -170,7 +170,7 @@ RSpec.describe DeployableService::DeploymentJob, type: :job do
           success: true,
           data: {
             "outputs" => {
-              "jupyter_url" => "https://10.0.0.1/",
+              "jupyter_url" => "https://jupyter.vm.fedcloud.eu/",
               "dns_url" => "https://notebook.vm.fedcloud.eu/"
             }
           }
