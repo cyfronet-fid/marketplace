@@ -132,7 +132,7 @@ RSpec.describe Infrastructure, type: :model do
     end
 
     describe ".adm_managed" do
-      it "includes only infrastructures with an ADM allocation" do
+      it "includes infrastructures with an ADM allocation" do
         adm_infra =
           described_class.create!(
             project_item: create_project_item_for_infra,
@@ -143,6 +143,10 @@ RSpec.describe Infrastructure, type: :model do
           )
 
         expect(described_class.adm_managed.pluck(:id)).to contain_exactly(adm_infra.id)
+      end
+
+      it "excludes infrastructures without an ADM allocation" do
+        expect(described_class.adm_managed).not_to include(infrastructure)
       end
     end
 
@@ -198,6 +202,7 @@ RSpec.describe Infrastructure, type: :model do
             api_base_url: "https://example.com",
             cloud_site: "test",
             state: "running",
+            allocation_id: "alloc-1",
             last_state_check_at: 2.minutes.ago
           )
         destroyed.update_column(:state, "destroyed")
@@ -320,17 +325,17 @@ RSpec.describe Infrastructure, type: :model do
     end
 
     it "returns false for destroyed infrastructure" do
-      infrastructure.update_columns(state: "destroyed", deployment_id: "infra-123")
+      infrastructure.update_columns(state: "destroyed", deployment_id: "infra-123", allocation_id: "alloc-1")
       expect(infrastructure.can_destroy?).to be false
     end
 
     it "returns false without deployment_id" do
-      infrastructure.update!(state: "running", deployment_id: nil)
+      infrastructure.update!(state: "running", deployment_id: nil, allocation_id: "alloc-1")
       expect(infrastructure.can_destroy?).to be false
     end
 
     it "returns false for pending infrastructure" do
-      infrastructure.update!(state: "pending", deployment_id: "infra-123")
+      infrastructure.update!(state: "pending", deployment_id: "infra-123", allocation_id: "alloc-1")
       expect(infrastructure.can_destroy?).to be false
     end
   end

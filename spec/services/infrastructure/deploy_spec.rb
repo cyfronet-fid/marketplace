@@ -3,9 +3,17 @@
 require "rails_helper"
 
 RSpec.describe Infrastructure::Deploy, type: :service do
-  subject(:deploy) { described_class.call(project_item, client: Adm::Client.new(access_token: "t")) }
+  subject(:deploy) { described_class.call(project_item, client: Adm::Client.new(access_token: "t"), config: config) }
 
   let(:adm_url) { "https://adm.test.example.com/adim" }
+  let(:config) do
+    {
+      default_cloud_site: "IISAS-FedCloud",
+      cloud_sites: {
+        "IISAS-FedCloud": { host: "https://cloud.example.com:5000", domain: "project-id" }
+      }
+    }
+  end
   let(:project_item) do
     deployable_service = create(:deployable_service, url: "https://github.com/example/jupyter.yml", pid: "21.T15999/ds")
     offer = create(:offer, service: nil, deployable_service: deployable_service,
@@ -62,7 +70,7 @@ RSpec.describe Infrastructure::Deploy, type: :service do
 
     it "registers the allocation of the default cloud site" do
       expect(WebMock).to have_requested(:post, "#{adm_url}/allocations").with(
-        body: hash_including("host" => "https://cloud.ui.savba.sk:5000", "domain" => "ea4f6084f9a74329bd77e466136fd079")
+        body: hash_including("host" => "https://cloud.example.com:5000", "domain" => "project-id")
       )
     end
 
@@ -136,13 +144,7 @@ RSpec.describe Infrastructure::Deploy, type: :service do
   end
 
   context "when the default cloud site is not configured" do
-    subject(:deploy) do
-      described_class.call(
-        project_item,
-        client: Adm::Client.new(access_token: "t"),
-        config: Rails.application.config_for(:adm).merge(default_cloud_site: "Unknown-Site")
-      )
-    end
+    let(:config) { super().merge(default_cloud_site: "Unknown-Site") }
 
     before { deploy }
 

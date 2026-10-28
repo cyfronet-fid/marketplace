@@ -23,7 +23,7 @@ default: &default
   cloud_sites:
     IISAS-FedCloud:
       host: <%= ENV.fetch('ADM_CLOUD_HOST', 'https://cloud.ui.savba.sk:5000') %>
-      domain: <%= ENV.fetch('ADM_CLOUD_DOMAIN', 'ea4f6084f9a74329bd77e466136fd079') %>
+      domain: <%= ENV.fetch('ADM_CLOUD_DOMAIN', nil) %>
 
   # EGI AAI service account whose access token authenticates ADM calls
   egi_aai:
