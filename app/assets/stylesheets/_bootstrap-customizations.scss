@@ -3408,7 +3408,18 @@ label[data-multicheckbox].small {
   }
 
   .card-body {
-    padding: 0 0 0 21px;
+    // stretch so the dividers between creators span the full panel width
+    align-self: stretch;
+    padding: 0;
+  }
+
+  .creator {
+    padding-left: 21px;
+
+    & + .creator {
+      border-top: 1px solid $custom-36;
+      padding-top: 16px;
+    }
   }
 
   dl {
