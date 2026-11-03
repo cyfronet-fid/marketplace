@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Deployable services" do
+RSpec.describe "Deployable services", variant: :marketplace do
   describe "GET /deployable_services/:id" do
     let(:deployable_service) { create(:deployable_service, creators: ["Creator One", "Creator Two"]) }
 
