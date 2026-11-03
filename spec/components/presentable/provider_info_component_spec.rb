@@ -127,6 +127,21 @@ RSpec.describe Presentable::ProviderInfoComponent, type: :component do
     end
   end
 
+  context "with a blank creator name and a first and last name" do
+    let(:base) do
+      double(
+        resource_organisation: nil,
+        creators: ["creatorNameTypeInfo" => { "creatorName" => "" }, "firstName" => "Jane", "lastName" => "Doe"]
+      )
+    end
+
+    it "falls back to the full name" do
+      rendered_component
+
+      expect(page).to have_css("dd", text: "Jane Doe")
+    end
+  end
+
   context "with multiple creators" do
     let(:base) { double(resource_organisation: nil, creators: ["First Creator", "Second Creator"]) }
 

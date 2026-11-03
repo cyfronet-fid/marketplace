@@ -50,8 +50,12 @@ class Presentable::ProviderInfoComponent < ApplicationComponent
   end
 
   def creator_name(creator)
-    creator.dig("creatorNameTypeInfo", "creatorName") || creator["creatorName"] || creator["name"] ||
-      creator.values_at("firstName", "lastName").compact_blank.join(" ").presence
+    [
+      creator.dig("creatorNameTypeInfo", "creatorName"),
+      creator["creatorName"],
+      creator["name"],
+      creator.values_at("firstName", "lastName").compact_blank.join(" ")
+    ].find(&:present?)
   end
 
   def safe_creator_pid_url(creator_pid)
