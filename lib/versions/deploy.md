@@ -50,6 +50,12 @@ Services of a hub project, `docker-compose-hub-<variant>.yml`:
 - `transform-api` and `transform-worker`: the transform service, one image. The
   worker reads the marketplace API of the variant and writes to Solr.
 
+The services `transform-api`, `transform-worker` and `redis` have the compose
+profile `transform`. The scripts activate the profile. Solr keeps its data in
+a named volume, thus the transform service is only necessary for a load. After
+the first full load, `--no-transform` deploys a hub without the three
+services.
+
 ## Files on the host
 
 ROOT is the parent directory of the checkout. The scripts derive ROOT from
@@ -115,7 +121,8 @@ cd <ROOT>
 | `deploy-multi.sh down pl`        | Remove pl: containers, images, database and media.                           |
 | `deploy-hubs.sh`                 | Both hubs, only when a checkout, the hub compose file or `lib/versions/hub` changed. |
 | `deploy-hubs.sh pl`              | Only the pl hub, always.                                                     |
-| `deploy-hubs.sh seed pl`         | Create the Solr collections of pl if absent, then start a full load.         |
+| `deploy-hubs.sh --no-transform pl` | The pl hub without the transform services. Their containers are removed; Solr keeps its data. |
+| `deploy-hubs.sh seed pl`         | Create the Solr collections of pl if absent, then start a full load. Starts the transform services when they are absent. |
 | `deploy-hubs.sh up pl`           | Recreate the containers of the pl hub from the current images, without a build, for a changed env file. |
 | `deploy-hubs.sh down pl`         | Remove the pl hub: containers, images, database, Solr and Zookeeper volumes. |
 
@@ -170,7 +177,11 @@ and a hub call also needs `MP_HUBS_DIR` and `MP_APP_DIR`.
    4. Compute the state: the three commits, the blob hash of the hub compose
       file and the tree hash of `lib/versions/hub`. The two hashes come from
       HEAD, not from the working tree. Without `--force`, skip the hub when
-      the state equals `.last-deployed-<variant>`.
+      the state equals `.last-deployed-<variant>` and the transform
+      containers match the `--no-transform` setting. `seed` and
+      `up --no-transform` change the containers without a state write; the
+      deploy then runs although the state is equal, and reconciles the
+      containers.
    5. Build the images:
       - `api` from the backend directory of the hub checkout.
       - `ui` from `hub/ui.Dockerfile`. The build argument
@@ -183,16 +194,21 @@ and a hub call also needs `MP_HUBS_DIR` and `MP_APP_DIR`.
         checkout, one image.
    6. Recreate the containers. The volumes of `db`, `solr` and `zoo` stay.
       Solr uploads the configsets to Zookeeper at the first start of its
-      volume.
-   7. Write the state file.
-   8. On the first deploy, seed Solr.
+      volume. With `--no-transform` the transform services are not built and
+      not started, and the script removes their containers.
+   7. Write the state file. `--no-transform` adds a marker to the state, thus
+      a deploy with the other setting deploys the hub again.
+   8. On the first deploy, seed Solr. With `--no-transform` there is no seed;
+      run `deploy-hubs.sh seed <variant>` later.
 
 ### Seed of Solr
 
 The seed runs after the first deploy and with `deploy-hubs.sh seed <variant>`.
-The script reaches Solr and the transform API on the localhost ports of the
-compose file: 8916 and 8116 for pl, 8918 and 8118 for marketplace. The
-collections prefix is `pl_` for pl and empty for marketplace.
+The seed needs the transform service: the `seed` mode starts the transform
+services when they are absent, for example after a deploy with
+`--no-transform`. The script reaches Solr and the transform API on the
+localhost ports of the compose file: 8916 and 8116 for pl, 8918 and 8118 for
+marketplace. The collections prefix is `pl_` for pl and empty for marketplace.
 
 1. Wait until Solr and the transform API answer.
 2. When `<prefix>all_collection` does not exist, POST `create_collections` to
@@ -202,7 +218,9 @@ collections prefix is `pl_` for pl and empty for marketplace.
    resources from `/api/v1/ess` of the instance with `MP_API_TOKEN`,
    transforms them and writes them to Solr. The load runs in the background.
 
-Watch the load with:
+A full load takes a long time. The first deploy of a hub thus takes a long
+time, and the hub search stays incomplete until the load completes. Watch the
+load with:
 
 ```sh
 docker logs -f mp-multitenancy-<variant>-hub-transform-worker-1
@@ -397,21 +415,59 @@ journalctl CONTAINER_NAME=mp-multitenancy-pl-worker-1 --since "2 days ago" -o ca
 ## Local deploy
 
 `deploy-local.sh` deploys one variant and, for pl and marketplace, its hub on
-a developer machine. The script uses the same compose files, builds the
-images from the working tree and sets localhost URLs. The script does not
-update the checkout, takes no lock and writes no state file. The header of
-the script describes the layout under `tmp/local-deploy`, the env files that
-the script writes on the first run and the ports: the slot of the variant
-gives the instance port 30NN, the hub port 32NN, the transform API port 81NN
-and the Solr port 89NN. On an arm64 host the script adds
-`docker-compose-local-arm64.yml`, which replaces the Elasticsearch image with
-the arm64 image of the development setup.
+a developer machine. The script uses the same compose files and sets
+localhost URLs. The script does not update the checkout, takes no lock and
+writes no state file. The header of the script describes the layout under
+`tmp/local-deploy`, the env files that the script writes on the first run
+and the ports: the slot of the variant gives the instance port 30NN, the hub
+port 32NN, the transform API port 81NN and the Solr port 89NN. On an arm64
+host the script adds `docker-compose-local-arm64.yml`, which replaces the
+Elasticsearch image with the arm64 image of the development setup.
+
+By default the instance runs the development environment on the working
+tree: `docker-compose-local-dev.yml` mounts the tree into the containers,
+builds only the deps stage of the repository Dockerfile, and Rails reloads a
+code change on the next request. The assets service of the override runs the
+js and css watchers of Procfile.dev. `deploy-local.sh restart <variant>`
+applies a change of Gemfile, package.json or an initializer: the containers
+install the dependencies at each start. With `--production` the instance
+runs the production images of the staging deploy, built from the working
+tree. The hub always runs its production images, built from the hub
+checkouts.
+
+The first start of the development environment installs the development gems
+and node modules into the named volumes, which takes several minutes; the
+next starts are fast. `deploy-local.sh logs <variant>` follows the instance
+logs and `logs --no-instance <variant>` the hub logs. The mode supplies the
+compose files and their variables, thus the services always resolve; a plain
+`docker compose -p mp-local-<variant> logs -f` also works while the
+containers run, but does not resolve the services of a stopped project.
+
+Without a flag, one run sets up everything of one variant at once: the
+instance, the hub and the seed of the database and of Solr. The first run
+with the transform services starts the first full load of Solr, which takes
+a long time; watch the progress in the transform-worker log. The flags deploy
+the two applications separately:
+
+- `--no-hub` deploys the instance only.
+- `--no-instance` deploys the hub only. The full load of Solr needs the
+  running instance.
+- `--no-transform` deploys the hub without the transform services, as on
+  staging, and without a seed. Use the flag after the first full load;
+  `seed <variant>` starts the services again.
+
+The flags also limit `down` to one application.
 
 ```sh
-./lib/versions/deploy-local.sh pl                   # pl instance and pl hub
+./lib/versions/deploy-local.sh pl                   # everything of pl at once
+./lib/versions/deploy-local.sh restart pl           # apply a Gemfile or initializer change
+./lib/versions/deploy-local.sh --production pl      # the staging images, built from the tree
 ./lib/versions/deploy-local.sh --no-hub whitelabel  # instance only
+./lib/versions/deploy-local.sh --no-instance pl     # hub only
+./lib/versions/deploy-local.sh --no-transform pl    # without the transform services
 ./lib/versions/deploy-local.sh seed pl              # full load of Solr again
 ./lib/versions/deploy-local.sh down pl              # remove both projects
+./lib/versions/deploy-local.sh down --no-hub pl     # remove the instance only
 ```
 
 Without a dump at `tmp/local-deploy/seed/<variant>/mp_db.sql` the database
@@ -427,9 +483,19 @@ docker exec <postgres container> pg_dump -U mp --no-owner --no-acl mp_pl_dump \
 
 The full load of Solr needs `MP_API_TOKEN` in `tmp/local-deploy/hubs/<variant>.env`,
 the token of a coordinator of the local instance. The script skips the load
-while the variable is empty; `seed <variant>` starts the load later. The
-script clones the hub checkouts once and does not update them: run `git pull`
-in `tmp/local-deploy/hubs/<name>` for a newer version. The `MP VERSION` line
+while the variable is empty; `seed <variant>` starts the load later.
+
+The hub code comes from the checkouts next to this repository
+(`MP_WORKSPACE=<dir>` points to another directory): `pl-discovery-hub`,
+`eosc-search-service`, `transform-service`, `eosc-pl-common` and
+`eosc-portal-common`. `tmp/local-deploy/hubs` holds symlinks to them, next to
+the hub env files. The script never updates the checkouts and builds the hub
+from their current state, local changes included. A missing checkout is an
+error; `--clone` clones it next to this repository. The deploy copies the
+commons environment (`hub/commons/<variant>`) into the commons checkout as
+untracked files, as the staging deploy does.
+
+The `MP VERSION` line
 of the page source reads `mp-local-<variant> <commit>`, with `-dirty` when
 tracked files of the working tree are changed.
 

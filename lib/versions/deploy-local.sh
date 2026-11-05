@@ -2,8 +2,15 @@
 # Deploys one deployment variant of this repository (marketplace, pl or
 # whitelabel) and, for pl and marketplace, its discovery hub on the local
 # machine with docker compose. The compose files are those of the staging
-# deploy (docker-compose-<variant>.yml, docker-compose-hub-<variant>.yml), the
-# images are built from the working tree and the URLs point to localhost.
+# deploy (docker-compose-<variant>.yml, docker-compose-hub-<variant>.yml) and
+# the URLs point to localhost.
+# By default the instance runs the development environment on the working
+# tree (lib/versions/docker-compose-local-dev.yml): Rails reloads a code
+# change on the next request, the watchers build the js and the css on
+# change, and `restart` applies a change of Gemfile, package.json or an
+# initializer. With --production the instance runs the production images of
+# the staging deploy, built from the working tree. The hub always runs its
+# production images, built from the hub checkouts.
 # The script is for a developer machine: no update of the checkout, no lock
 # and no state file. lib/versions/deploy-multi.sh and deploy-hubs.sh deploy
 # the staging host.
@@ -13,14 +20,19 @@
 #                                database gets the schema of db/schema.rb and
 #                                stays empty.
 #   seed/<variant>/media/        media files, optional
-#   hubs/<variant>               checkout of the hub, cloned on the first run.
-#                                The script does not update the checkouts.
-#   hubs/transform-service       checkout of the transform service
-#   hubs/eosc-pl-common          commons checkout of the pl hub
-#   hubs/eosc-portal-common      commons checkout of the marketplace hub
+#   hubs/<name>                  symlinks to the hub checkouts, with the names
+#                                that the hub compose file expects
 #   hubs/<variant>.env           settings of the hub, created on the first run.
 #                                The full load of Solr needs MP_API_TOKEN, the
 #                                token of a coordinator of the local instance.
+# The hub code comes from the checkouts next to this repository
+# (MP_WORKSPACE=<dir> points to another directory): pl-discovery-hub,
+# eosc-search-service, transform-service, eosc-pl-common and
+# eosc-portal-common. The script never updates the checkouts and builds the
+# hub from their current state, local changes included. A missing checkout is
+# an error; with --clone the script clones it there. The deploy copies the
+# commons environment (lib/versions/hub/commons/<variant>) into the commons
+# checkout as untracked files, as the staging deploy does.
 # marketplace-<variant>.env in this checkout holds the settings of the
 # instance. The script creates a minimal file on the first run: the
 # application starts, Check-in does not work with the placeholders.
@@ -35,21 +47,51 @@
 #   transform api  127.0.0.1:81<slot>, Solr 127.0.0.1:89<slot>
 # MP_LOCAL_HOST=<name> replaces localhost in the URLs.
 #
-# Usage:  deploy-local.sh [up|down|seed] [--no-hub] <variant>
+# Usage:  deploy-local.sh [up|down|seed|restart] [--no-hub|--no-instance]
+#                         [--no-transform] [--production] <variant>
 #   up (default)  -> build the images and start the instance, then the hub;
-#                    seed the database and Solr on the first run
+#                    seed the database and Solr on the first run. Without a
+#                    flag this sets up everything of one variant at once.
+#   restart       -> restart the web, worker and assets containers of the
+#                    instance, to apply a change of Gemfile, package.json or
+#                    an initializer. A plain code change needs no restart.
+#   logs          -> follow the logs of the instance containers, or of the
+#                    hub containers with --no-instance. The mode supplies the
+#                    compose files and their variables; a plain `docker
+#                    compose -p mp-local-<variant> logs -f` also works while
+#                    the containers run.
 #   down          -> remove the instance and the hub: containers, images, volumes
-#   seed          -> create the Solr collections if absent, then start a full load
+#   seed          -> create the Solr collections if absent, then start a full
+#                    load; starts the transform services when they are absent.
+#                    A full load takes a long time and runs in the background:
+#                    watch the transform-worker log.
 #   --no-hub      -> the instance only
+#   --no-instance -> the hub only (pl and marketplace); the full load of Solr
+#                    needs the running instance
+#   --no-transform -> up without the transform services (transform-api,
+#                    transform-worker, redis) and without a seed, Solr keeps
+#                    its data. For a hub after the first full load; `seed`
+#                    starts the services again.
+#   --production  -> the instance runs the production images of the staging
+#                    deploy instead of the development environment
+#   --clone       -> clone a missing hub checkout next to this repository
 # The script exits with status 1 when a step failed.
 # Examples:
-#   deploy-local.sh pl                  # pl instance and pl hub
+#   deploy-local.sh pl                  # everything of pl: instance and hub
+#   deploy-local.sh restart pl          # apply a Gemfile or initializer change
+#   deploy-local.sh logs pl             # follow the instance logs
+#   deploy-local.sh logs --no-instance pl # follow the hub logs
 #   deploy-local.sh --no-hub whitelabel # whitelabel instance
+#   deploy-local.sh --no-instance pl    # pl hub only
+#   deploy-local.sh --no-transform pl   # pl without the transform services
+#   deploy-local.sh --production pl     # the staging images, built from the tree
 #   deploy-local.sh seed pl             # load the pl hub's Solr again
 #   deploy-local.sh down pl             # remove the pl instance and the pl hub
 set -uo pipefail
 
 APP=$(git -C "$(dirname "$0")" rev-parse --show-toplevel) || exit 1
+# ROOT holds the hub checkouts, next to this repository.
+ROOT="${MP_WORKSPACE:-$(dirname "$APP")}"
 LOCAL_DIR="${MP_LOCAL_DIR:-$APP/tmp/local-deploy}"
 HUBS="$LOCAL_DIR/hubs"
 SEED_DIR="$LOCAL_DIR/seed"
@@ -104,12 +146,21 @@ collections_prefix() {
 MODE="up"
 VARIANT=""
 WITH_HUB=1
+WITH_INSTANCE=1
+TRANSFORM=1
+PRODUCTION=0
+CLONE=0
+USAGE="Usage: $0 [up|down|seed|restart|logs] [--no-hub|--no-instance] [--no-transform] [--production] [--clone] <${ALL_VARIANTS[*]}>"
 for arg in "$@"; do
     case "$arg" in
-        up|down|seed) MODE="$arg" ;;
+        up|down|seed|restart|logs) MODE="$arg" ;;
         --no-hub) WITH_HUB=0 ;;
+        --no-instance) WITH_INSTANCE=0 ;;
+        --no-transform) TRANSFORM=0 ;;
+        --production) PRODUCTION=1 ;;
+        --clone) CLONE=1 ;;
         -h|--help)
-            echo "Usage: $0 [up|down|seed] [--no-hub] <${ALL_VARIANTS[*]}>"; exit 0 ;;
+            echo "$USAGE"; exit 0 ;;
         *)
             if [[ " ${ALL_VARIANTS[*]} " == *" $arg "* ]] && [ -z "$VARIANT" ]; then
                 VARIANT="$arg"
@@ -118,8 +169,32 @@ for arg in "$@"; do
             fi ;;
     esac
 done
-[ -n "$VARIANT" ] || { echo "Usage: $0 [up|down|seed] [--no-hub] <${ALL_VARIANTS[*]}>"; exit 2; }
+[ -n "$VARIANT" ] || { echo "$USAGE"; exit 2; }
+if [ "$WITH_HUB" = 0 ] && [ "$WITH_INSTANCE" = 0 ]; then
+    echo "--no-hub and --no-instance exclude each other"; exit 2
+fi
 [[ " ${HUB_VARIANTS[*]} " == *" $VARIANT "* ]] || WITH_HUB=0
+if [ "$WITH_INSTANCE" = 0 ] && [ "$WITH_HUB" = 0 ]; then
+    echo "no hub for ${VARIANT}: nothing to deploy"; exit 2
+fi
+if [ "$TRANSFORM" = 0 ] && [ "$MODE" != "up" ]; then
+    echo "--no-transform does not apply to $MODE"; exit 2
+fi
+if [ "$CLONE" = 1 ] && [ "$MODE" != "up" ]; then
+    echo "--clone does not apply to $MODE"; exit 2
+fi
+if [ "$MODE" = "restart" ]; then
+    [ "$WITH_INSTANCE" = 1 ] || { echo "--no-instance does not apply to restart"; exit 2; }
+    [ "$PRODUCTION" = 0 ] || { echo "restart does not apply to --production: the image is fixed, deploy again"; exit 2; }
+fi
+
+# The transform services of the hub compose file have the compose profile
+# "transform"; HUB_PROFILES activates it for every hub compose call. With
+# --no-transform an up runs without the profile: the transform services are
+# not built and not started. down and seed always need the profile: down
+# removes the transform containers, seed starts them.
+HUB_PROFILES="transform"
+[ "$TRANSFORM" = 1 ] || HUB_PROFILES=""
 
 DC=$(command -v docker) || { echo "docker not found"; exit 1; }
 cd "$APP" || exit 1
@@ -148,6 +223,19 @@ INSTANCE_FILES=(-f "docker-compose-${VARIANT}.yml")
 case "$(uname -m)" in
     arm64|aarch64) INSTANCE_FILES+=(-f lib/versions/docker-compose-local-arm64.yml) ;;
 esac
+# The development override: the instance runs the development environment on
+# the working tree (see the header of the file). The assets service of the
+# override reads the two MP_ variables; the variant compose file supplies
+# them to web and worker. --production keeps the compose files of the
+# staging deploy.
+if [ "$PRODUCTION" = 0 ]; then
+    INSTANCE_FILES+=(-f lib/versions/docker-compose-local-dev.yml)
+    export MP_VARIANT="$VARIANT"
+    case "$VARIANT" in
+        marketplace) export MP_CUSTOMIZATION_PATH="" ;;
+        *)           export MP_CUSTOMIZATION_PATH="/marketplace/customization/${VARIANT}" ;;
+    esac
+fi
 
 instance() {
     COMPOSE_PROJECT_NAME="${COMPOSE_PREFIX}-${VARIANT}" \
@@ -155,7 +243,15 @@ instance() {
 }
 hub() {
     COMPOSE_PROJECT_NAME="${COMPOSE_PREFIX}-${VARIANT}-hub" \
+    COMPOSE_PROFILES="$HUB_PROFILES" \
         "$DC" compose -f "docker-compose-hub-${VARIANT}.yml" "$@"
+}
+
+# Stops and removes the transform containers of the hub, for an up with
+# --no-transform. The profile must be active in the call, if not compose does
+# not know the services. The volumes stay.
+remove_transform() {
+    HUB_PROFILES="transform" hub rm -sf transform-api transform-worker redis
 }
 
 # Writes a minimal marketplace-<variant>.env when the file is absent. The
@@ -171,6 +267,11 @@ write_instance_env() {
         echo "# placeholders let the application start without a login."
         echo "SECRET_KEY_BASE=$(openssl rand -hex 64)"
         echo "RECAPTCHA_ENABLED=false"
+        if [[ " ${HUB_VARIANTS[*]} " == *" $VARIANT "* ]]; then
+            echo "# The landing page renders the external search of the hub, as the"
+            echo "# staging instance does. Remove the line for the internal search."
+            echo "MP_ENABLE_EXTERNAL_SEARCH=true"
+        fi
         if [ "$VARIANT" != "pl" ]; then
             echo "CHECKIN_ISSUER_URI=https://checkin.invalid/core"
             echo "CHECKIN_HOST=checkin.invalid"
@@ -204,13 +305,36 @@ write_hub_env() {
     } > "$file"
 }
 
-# Clones the repository on the first run. An existing checkout stays as it is.
-clone_checkout() {
-    local name="$1"
-    local checkout="$HUBS/$name"
-    [ -d "$checkout/.git" ] && return 0
-    echo "cloning $(repository_url "$name") ($(repository_branch "$name")) to $checkout"
-    git clone -q -b "$(repository_branch "$name")" "$(repository_url "$name")" "$checkout"
+# The directory of a checkout in ROOT, named like the repository.
+checkout_dir() {
+    case "$1" in
+        pl)          echo "$ROOT/pl-discovery-hub" ;;
+        marketplace) echo "$ROOT/eosc-search-service" ;;
+        *)           echo "$ROOT/$1" ;;
+    esac
+}
+
+# Makes $HUBS/<name> a symlink to the checkout in ROOT, where the hub compose
+# file expects it. The script never updates the checkouts. A missing checkout
+# is an error; with --clone the script clones it into ROOT.
+link_checkout() {
+    local name="$1" dir link
+    dir=$(checkout_dir "$name")
+    link="$HUBS/$name"
+    if [ ! -d "$dir/.git" ]; then
+        if [ "$CLONE" = 1 ]; then
+            echo "cloning $(repository_url "$name") ($(repository_branch "$name")) to $dir"
+            git clone -q -b "$(repository_branch "$name")" "$(repository_url "$name")" "$dir" || return 1
+        else
+            echo "missing checkout $dir: clone it there or run with --clone"
+            return 1
+        fi
+    fi
+    if [ -d "$link" ] && [ ! -L "$link" ]; then
+        echo "$link is a clone of an earlier run: remove it, the checkouts now live in $ROOT"
+        return 1
+    fi
+    ln -sfn "$dir" "$link"
 }
 
 # Copies the staging environment of the commons (lib/versions/hub/commons/
@@ -279,6 +403,11 @@ deploy_instance() {
 
     # --- build the image, create the containers without a start ---
     instance build || return 1
+    # The web container is created alone first: the creation fills the new
+    # named volumes (bundle, node_modules) from the image. A parallel first
+    # creation fills the same volume from two containers at once and fails
+    # with "failed to mkdir ...: file exists".
+    instance up --no-start "$APP_SERVICE" || return 1
     instance up --no-start --remove-orphans || return 1
 
     # --- start the database and wait for its healthcheck ---
@@ -308,8 +437,16 @@ deploy_instance() {
             echo "[${VARIANT}] database seeded from $dump"
         else
             echo "[${VARIANT}] no $dump: loading db/schema.rb into the empty database"
-            instance run --rm -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 "$APP_SERVICE" \
-                ./bin/rails db:schema:load || return 1
+            # SCHEMA: the development override moves the schema dump away from
+            # db/schema.rb; the load here has to read the repository's file.
+            local schema_command=(./bin/rails db:schema:load)
+            if [ "$PRODUCTION" = 0 ]; then
+                # This one-off command replaces the web startup command, so
+                # complete the fresh bundle volume before booting development.
+                schema_command=(sh -c "bundle config set --local without '' && bundle install && exec ./bin/rails db:schema:load")
+            fi
+            instance run --rm -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 -e SCHEMA=db/schema.rb \
+                "$APP_SERVICE" "${schema_command[@]}" || return 1
         fi
     fi
 
@@ -323,21 +460,28 @@ deploy_hub() {
     mkdir -p "$HUBS" || return 1
     write_hub_env || return 1
 
-    clone_checkout "$VARIANT" || return 1
-    clone_checkout transform-service || return 1
-    clone_checkout "$(commons_repository "$VARIANT")" || return 1
+    link_checkout "$VARIANT" || return 1
+    link_checkout transform-service || return 1
+    link_checkout "$(commons_repository "$VARIANT")" || return 1
     install_commons_environment || return 1
 
     hub build || return 1
     hub up -d --remove-orphans || return 1
+    if [ "$TRANSFORM" = 0 ]; then
+        remove_transform || return 1
+        echo "[${VARIANT} hub] no transform services: no seed. Run: $0 seed ${VARIANT}"
+        return 0
+    fi
     seed_hub first
 }
 
 case "$MODE" in
     down)
         status=0
-        echo "=== [${VARIANT}] down ==="
-        instance down -v --remove-orphans --rmi local || { echo "[${VARIANT}] down FAILED"; status=1; }
+        if [ "$WITH_INSTANCE" = 1 ]; then
+            echo "=== [${VARIANT}] down ==="
+            instance down -v --remove-orphans --rmi local || { echo "[${VARIANT}] down FAILED"; status=1; }
+        fi
         if [ "$WITH_HUB" = 1 ]; then
             echo "=== [${VARIANT} hub] down ==="
             hub down -v --remove-orphans --rmi local || { echo "[${VARIANT} hub] down FAILED"; status=1; }
@@ -346,13 +490,34 @@ case "$MODE" in
     seed)
         [ "$WITH_HUB" = 1 ] || { echo "no hub for ${VARIANT}"; exit 2; }
         echo "=== [${VARIANT} hub] seed ==="
+        # The seed needs the transform service. The up starts it when it is
+        # absent (after an up with --no-transform), with a build when
+        # necessary, and does nothing when it runs.
+        hub up -d transform-api transform-worker || { echo "[${VARIANT} hub] transform start FAILED"; exit 1; }
         seed_hub always || { echo "[${VARIANT} hub] seed FAILED"; exit 1; }
+        exit 0 ;;
+    restart)
+        echo "=== [${VARIANT}] restart ==="
+        instance restart "$APP_SERVICE" worker assets || { echo "[${VARIANT}] restart FAILED"; exit 1; }
+        echo "[${VARIANT}] instance: $MP_ROOT_URL"
+        exit 0 ;;
+    logs)
+        if [ "$WITH_INSTANCE" = 1 ]; then
+            services=("$APP_SERVICE" worker)
+            # The assets service exists in the development override only.
+            [ "$PRODUCTION" = 0 ] && services+=(assets)
+            instance logs -f --tail=100 "${services[@]}"
+        else
+            hub logs -f --tail=100
+        fi
         exit 0 ;;
 esac
 
-echo "=== [${VARIANT}] deploy ==="
-deploy_instance || { echo "[${VARIANT}] FAILED"; exit 1; }
-echo "[${VARIANT}] instance: $MP_ROOT_URL"
+if [ "$WITH_INSTANCE" = 1 ]; then
+    echo "=== [${VARIANT}] deploy ==="
+    deploy_instance || { echo "[${VARIANT}] FAILED"; exit 1; }
+    echo "[${VARIANT}] instance: $MP_ROOT_URL"
+fi
 if [ "$WITH_HUB" = 1 ]; then
     echo "=== [${VARIANT} hub] deploy ==="
     deploy_hub || { echo "[${VARIANT} hub] FAILED"; exit 1; }
