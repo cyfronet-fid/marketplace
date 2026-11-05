@@ -111,4 +111,70 @@ RSpec.describe Presentable::ProviderInfoComponent, type: :component do
       expect(page).to have_text("Creator Name")
     end
   end
+
+  context "with a creator split into first and last name" do
+    let(:base) do
+      double(
+        resource_organisation: nil,
+        creators: ["firstName" => "Jane", "lastName" => "Doe", "creatorAffiliationInfo" => {}]
+      )
+    end
+
+    it "renders the full name as the creator name" do
+      rendered_component
+
+      expect(page).to have_css("dd", text: "Jane Doe")
+    end
+  end
+
+  context "with a blank creator name and a first and last name" do
+    let(:base) do
+      double(
+        resource_organisation: nil,
+        creators: ["creatorNameTypeInfo" => { "creatorName" => "" }, "firstName" => "Jane", "lastName" => "Doe"]
+      )
+    end
+
+    it "falls back to the full name" do
+      rendered_component
+
+      expect(page).to have_css("dd", text: "Jane Doe")
+    end
+  end
+
+  context "with multiple creators" do
+    let(:base) { double(resource_organisation: nil, creators: ["First Creator", "Second Creator"]) }
+
+    it "renders a separate block for each creator" do
+      rendered_component
+
+      expect(page).to have_css(".provider-panel .creator", count: 2)
+    end
+  end
+
+  context "with a creator that has only a name" do
+    let(:base) { double(resource_organisation: nil, creators: ["creatorName" => "Creator Name"]) }
+
+    it "does not render the PID label" do
+      rendered_component
+
+      expect(page).to have_no_css("dt", text: "PID")
+    end
+
+    it "does not render the affiliation label" do
+      rendered_component
+
+      expect(page).to have_no_css("dt", text: "Affiliation")
+    end
+  end
+
+  context "with blank creators only" do
+    let(:base) { double(resource_organisation: nil, creators: [{}, ""]) }
+
+    it "does not render the creators panel" do
+      rendered_component
+
+      expect(page).to have_no_css(".provider-panel")
+    end
+  end
 end
