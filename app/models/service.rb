@@ -6,7 +6,6 @@ class Service < ApplicationRecord
   include Publishable
   include Presentable
   include Propagable
-  include Viewable
   include Service::Search
   include Statusable
   include OrderableResource
