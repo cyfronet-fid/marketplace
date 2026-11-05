@@ -18,7 +18,9 @@
 # Layout under MP_LOCAL_DIR (default: tmp/local-deploy of this checkout):
 #   seed/<variant>/mp_db.sql     plain SQL dump, optional. Without a dump the
 #                                database gets the schema of db/schema.rb and
-#                                stays empty.
+#                                all seeds (db:seed and the internal
+#                                vocabularies), so the backoffice dictionaries
+#                                exist.
 #   seed/<variant>/media/        media files, optional
 #   hubs/<name>                  symlinks to the hub checkouts, with the names
 #                                that the hub compose file expects
@@ -545,6 +547,14 @@ deploy_instance() {
             fi
             instance run --rm -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 -e SCHEMA=db/schema.rb \
                 "$APP_SERVICE" "${schema_command[@]}" || return 1
+            # The empty database gets all seeds: db:seed loads
+            # db/vocabulary.yml, the second task loads
+            # db/internal_vocabulary.yml with the offer categories. The schema
+            # command above completes the bundle volume of the development
+            # mode, thus the seed command needs no bundle install.
+            echo "[${VARIANT}] empty database: running all seeds"
+            instance run --rm "$APP_SERVICE" \
+                ./bin/rails db:seed rdt:add_internal_vocabularies || return 1
         fi
     fi
 
