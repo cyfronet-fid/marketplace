@@ -3,323 +3,101 @@
 require "rails_helper"
 
 RSpec.describe Infrastructure::StatePollingJob, type: :job do
-  let(:provider) { create(:provider) }
-  let(:deployable_service) { create(:deployable_service, resource_organisation: provider) }
-  let(:service_category) { create(:service_category) }
-  let(:offer) { create(:offer, service: nil, deployable_service: deployable_service, offer_category: service_category) }
-  let(:project) { create(:project) }
-  let(:project_item) { create(:project_item, offer: offer, project: project) }
+  before { allow(Infrastructure::RefreshState).to receive(:call) }
 
-  let(:infrastructure) do
-    Infrastructure.create!(
-      project_item: project_item,
-      im_base_url: "https://deploy.sandbox.eosc-beyond.eu",
-      cloud_site: "IISAS-FedCloud",
-      state: "creating",
-      im_infrastructure_id: "infra-123"
-    )
-  end
+  describe "polling a single infrastructure" do
+    context "with an active ADM infrastructure" do
+      let(:infrastructure) { create(:infrastructure, :creating) }
 
-  let(:im_client) { instance_double(InfrastructureManager::Client) }
-
-  before { allow(InfrastructureManager::Client).to receive(:new).and_return(im_client) }
-
-  describe "#perform" do
-    context "with infrastructure_id argument (single polling)" do
-      it "polls the specific infrastructure" do
-        allow(im_client).to receive(:get_state).and_return({ success: true, data: { "state" => "running" } })
-        allow(im_client).to receive(:get_outputs).and_return({ success: true, data: { "outputs" => {} } })
-
+      it "refreshes its state" do
         described_class.perform_now(infrastructure.id)
-
-        expect(infrastructure.reload.state).to eq("running")
-      end
-
-      it "does nothing if infrastructure not found" do
-        expect(im_client).not_to receive(:get_state)
-        described_class.perform_now(-1)
-      end
-
-      it "does nothing if infrastructure has no im_infrastructure_id" do
-        infrastructure.update_columns(im_infrastructure_id: nil)
-
-        expect(im_client).not_to receive(:get_state)
-        described_class.perform_now(infrastructure.id)
-      end
-
-      it "does nothing if infrastructure is destroyed" do
-        infrastructure.update_columns(state: "destroyed")
-
-        expect(im_client).not_to receive(:get_state)
-        described_class.perform_now(infrastructure.id)
-      end
-
-      it "does nothing if infrastructure is failed" do
-        infrastructure.update_columns(state: "failed")
-
-        expect(im_client).not_to receive(:get_state)
-        described_class.perform_now(infrastructure.id)
+        expect(Infrastructure::RefreshState).to have_received(:call).with(infrastructure, client: anything)
       end
     end
 
-    context "without infrastructure_id argument (poll all pending)" do
-      it "polls all pending infrastructures" do
-        # Create another project_item for the second infrastructure
-        project_item2 = create(:project_item, offer: offer, project: project)
-        infra2 =
-          Infrastructure.create!(
-            project_item: project_item2,
-            im_base_url: "https://example.com",
-            cloud_site: "test",
-            state: "running",
-            im_infrastructure_id: "infra-456",
-            last_state_check_at: 2.minutes.ago
-          )
+    %i[failed destroyed].each do |state|
+      context "with a #{state} infrastructure" do
+        let(:infrastructure) { create(:infrastructure, state) }
 
-        # Set infrastructure to also need polling
-        infrastructure.update_columns(last_state_check_at: 2.minutes.ago)
-
-        allow(im_client).to receive(:get_state).and_return({ success: true, data: { "state" => "running" } })
-        allow(im_client).to receive(:get_outputs).and_return({ success: true, data: { "outputs" => {} } })
-
-        described_class.perform_now
-
-        expect(infrastructure.reload.state).to eq("running")
-        expect(infra2.reload.state).to eq("running")
-      end
-
-      it "skips infrastructures without im_infrastructure_id" do
-        infrastructure.update_columns(im_infrastructure_id: nil, last_state_check_at: 2.minutes.ago)
-
-        expect(im_client).not_to receive(:get_state)
-        described_class.perform_now
-      end
-
-      it "continues polling other infrastructures when one fails" do
-        project_item2 = create(:project_item, offer: offer, project: project)
-        infra2 =
-          Infrastructure.create!(
-            project_item: project_item2,
-            im_base_url: "https://example.com",
-            cloud_site: "test",
-            state: "running",
-            im_infrastructure_id: "infra-456",
-            last_state_check_at: 2.minutes.ago
-          )
-        infrastructure.update_columns(last_state_check_at: 2.minutes.ago)
-
-        # First call raises, second succeeds
-        call_count = 0
-        allow(im_client).to receive(:get_state) do
-          call_count += 1
-          if call_count == 1
-            raise StandardError, "Connection failed"
-          else
-            { success: true, data: { "state" => "running" } }
-          end
+        it "does nothing" do
+          described_class.perform_now(infrastructure.id)
+          expect(Infrastructure::RefreshState).not_to have_received(:call)
         end
-        allow(im_client).to receive(:get_outputs).and_return({ success: true, data: { "outputs" => {} } })
+      end
+    end
 
-        expect(Rails.logger).to receive(:error).with(/Failed to poll Infrastructure/)
+    context "with a legacy Infrastructure Manager infrastructure" do
+      let(:infrastructure) { create(:infrastructure, :creating, allocation_id: nil) }
 
-        described_class.perform_now
+      it "does nothing" do
+        described_class.perform_now(infrastructure.id)
+        expect(Infrastructure::RefreshState).not_to have_received(:call)
+      end
+    end
 
-        # Both should have updated last_state_check_at
-        expect(infrastructure.reload.last_state_check_at).to be_present
-        expect(infra2.reload.last_state_check_at).to be_present
+    context "with an unknown infrastructure" do
+      it "does nothing" do
+        described_class.perform_now(0)
+        expect(Infrastructure::RefreshState).not_to have_received(:call)
       end
     end
   end
 
-  describe "state updates" do
-    before { infrastructure.update_columns(last_state_check_at: 2.minutes.ago) }
+  describe "polling all pending infrastructures" do
+    let!(:due) { create(:infrastructure, :running, last_state_check_at: 2.minutes.ago) }
+    let!(:recently_checked) { create(:infrastructure, :running, last_state_check_at: 10.seconds.ago) }
+    let!(:not_deployed_yet) { create(:infrastructure, allocation_id: "alloc-1") }
 
-    it "updates state from IM response" do
-      allow(im_client).to receive_messages(
-        get_state: { success: true, data: { "state" => "configured" } },
-        get_outputs: { success: true, data: { "outputs" => {} } }
+    it "refreshes the infrastructures due for a state check" do
+      described_class.perform_now
+      expect(Infrastructure::RefreshState).to have_received(:call).once.with(due, client: anything)
+    end
+
+    it "skips recently checked and not yet deployed infrastructures" do
+      described_class.perform_now
+      expect(Infrastructure::RefreshState).not_to have_received(:call).with(
+        satisfy { |infra| [recently_checked, not_deployed_yet].include?(infra) },
+        anything
       )
-
-      described_class.perform_now(infrastructure.id)
-
-      expect(infrastructure.reload.state).to eq("configured")
-    end
-
-    it "handles failed state from IM" do
-      allow(im_client).to receive(:get_state).and_return({ success: true, data: { "state" => "failed" } })
-
-      described_class.perform_now(infrastructure.id)
-
-      expect(infrastructure.reload.state).to eq("failed")
-      expect(infrastructure.last_error).to include("failed")
-    end
-
-    it "rejects the project item when IM reports a failure" do
-      allow(im_client).to receive(:get_state).and_return({ success: true, data: { "state" => "unconfigured" } })
-
-      described_class.perform_now(infrastructure.id)
-
-      expect(project_item.reload).to have_attributes(status_type: "rejected", status: /reported state: unconfigured/)
-    end
-
-    it "logs warning when get_state fails" do
-      allow(im_client).to receive(:get_state).and_return({ success: false, error: "Connection timeout" })
-
-      expect(Rails.logger).to receive(:warn).with(/Could not get state/)
-
-      described_class.perform_now(infrastructure.id)
-
-      # State should remain unchanged
-      expect(infrastructure.reload.state).to eq("creating")
     end
   end
 
-  describe "output fetching" do
-    before { infrastructure.update_columns(last_state_check_at: 2.minutes.ago) }
+  describe "the ADM client used for polling" do
+    let(:clients) { [] }
 
-    it "fetches outputs when infrastructure is running" do
-      allow(im_client).to receive(:get_state).and_return({ success: true, data: { "state" => "running" } })
-      allow(im_client).to receive(:get_outputs).and_return(
-        { success: true, data: { "outputs" => { "jupyterhub_url" => "https://jupyter.example.com" } } }
-      )
-
-      described_class.perform_now(infrastructure.id)
-
-      expect(infrastructure.reload.outputs).to eq({ "jupyterhub_url" => "https://jupyter.example.com" })
+    before do
+      create_list(:infrastructure, 2, :running, last_state_check_at: 2.minutes.ago)
+      allow(Infrastructure::RefreshState).to receive(:call) { |_infrastructure, client:| clients << client }
+      described_class.perform_now
     end
 
-    it "skips output fetch if outputs already have jupyterhub_url" do
-      infrastructure.update_columns(outputs: { "jupyterhub_url" => "https://existing.com" })
-      allow(im_client).to receive(:get_state).and_return({ success: true, data: { "state" => "running" } })
-
-      expect(im_client).not_to receive(:get_outputs)
-
-      described_class.perform_now(infrastructure.id)
-    end
-
-    it "updates project_item deployment_link when jupyterhub_url is found" do
-      allow(im_client).to receive(:get_state).and_return({ success: true, data: { "state" => "running" } })
-      allow(im_client).to receive(:get_outputs).and_return(
-        { success: true, data: { "outputs" => { "jupyterhub_url" => "https://jupyter.example.com" } } }
-      )
-
-      described_class.perform_now(infrastructure.id)
-
-      expect(project_item.reload.deployment_link).to eq("https://jupyter.example.com")
-      expect(project_item.status).to include("Deployment ready")
-    end
-
-    context "with Jupyter Notebook outputs" do
-      before do
-        allow(im_client).to receive_messages(
-          get_state: { success: true, data: { "state" => "running" } },
-          get_outputs: { success: true, data: { "outputs" => { "jupyter_url" => "https://notebook.vm.fedcloud.eu/" } } }
-        )
-        described_class.perform_now(infrastructure.id)
-      end
-
-      it "updates project_item deployment_link and marks it ready" do
-        expect(project_item.reload).to have_attributes(
-          deployment_link: "https://notebook.vm.fedcloud.eu/",
-          status_type: "ready"
-        )
-      end
-    end
-
-    context "when infrastructure is configured" do
-      before do
-        allow(im_client).to receive_messages(
-          get_state: { success: true, data: { "state" => "configured" } },
-          get_outputs: { success: true, data: { "outputs" => { "jupyter_url" => "https://notebook.vm.fedcloud.eu/" } } }
-        )
-        described_class.perform_now(infrastructure.id)
-      end
-
-      it "fetches outputs and updates project_item deployment_link" do
-        expect(project_item.reload.deployment_link).to eq("https://notebook.vm.fedcloud.eu/")
-      end
-    end
-
-    context "when outputs already have a deployment URL" do
-      before do
-        infrastructure.update!(outputs: { "jupyter_url" => "https://existing.com" })
-        allow(im_client).to receive_messages(
-          get_state: { success: true, data: { "state" => "running" } },
-          get_outputs: nil
-        )
-      end
-
-      it "skips output fetch" do
-        described_class.perform_now(infrastructure.id)
-
-        expect(im_client).not_to have_received(:get_outputs)
-      end
-
-      it "sets the stored URL on a project item that was not updated yet" do
-        described_class.perform_now(infrastructure.id)
-
-        expect(project_item.reload).to have_attributes(deployment_link: "https://existing.com", status_type: "ready")
-      end
-    end
-
-    context "when outputs only have an IP address URL" do
-      before do
-        infrastructure.update!(outputs: { "jupyter_url_ip" => "https://10.0.0.1/" })
-        allow(im_client).to receive_messages(
-          get_state: { success: true, data: { "state" => "running" } },
-          get_outputs: {
-            success: true,
-            data: {
-              "outputs" => {
-                "jupyter_url_ip" => "https://10.0.0.1/",
-                "jupyter_dns_url" => "https://notebook.vm.fedcloud.eu/"
-              }
-            }
-          }
-        )
-        described_class.perform_now(infrastructure.id)
-      end
-
-      it "fetches outputs again and switches the project item to the DNS URL" do
-        expect(project_item.reload.deployment_link).to eq("https://notebook.vm.fedcloud.eu/")
-      end
-    end
-
-    it "does not update project_item if deployment_link matches" do
-      project_item.update!(deployment_link: "https://jupyter.example.com")
-      allow(im_client).to receive(:get_state).and_return({ success: true, data: { "state" => "running" } })
-      allow(im_client).to receive(:get_outputs).and_return(
-        { success: true, data: { "outputs" => { "jupyterhub_url" => "https://jupyter.example.com" } } }
-      )
-
-      expect(project_item).not_to receive(:update!)
-
-      described_class.perform_now(infrastructure.id)
-    end
-
-    it "handles empty outputs gracefully" do
-      allow(im_client).to receive(:get_state).and_return({ success: true, data: { "state" => "running" } })
-      allow(im_client).to receive(:get_outputs).and_return({ success: true, data: { "outputs" => {} } })
-
-      described_class.perform_now(infrastructure.id)
-
-      expect(infrastructure.reload.outputs).to eq({})
-    end
-
-    it "handles get_outputs failure gracefully" do
-      allow(im_client).to receive(:get_state).and_return({ success: true, data: { "state" => "running" } })
-      allow(im_client).to receive(:get_outputs).and_return({ success: false, error: "Failed" })
-
-      # Should not raise
-      described_class.perform_now(infrastructure.id)
-
-      expect(infrastructure.reload.state).to eq("running")
+    it "is shared between the infrastructures" do
+      expect(clients).to contain_exactly(an_instance_of(Adm::Client), equal(clients.first))
     end
   end
 
-  describe "job configuration" do
-    it "uses the default queue" do
-      expect(described_class.new.queue_name).to eq("default")
+  describe "errors while polling all pending infrastructures" do
+    let!(:broken) { create(:infrastructure, :running, last_state_check_at: 2.minutes.ago) }
+    let!(:healthy) { create(:infrastructure, :running, last_state_check_at: 3.minutes.ago) }
+
+    before do
+      allow(Infrastructure::RefreshState).to receive(:call).with(broken, client: anything).and_raise(
+        Adm::Error,
+        "ADM request failed: 503"
+      )
+      described_class.perform_now
     end
+
+    it "keeps polling the other infrastructures" do
+      expect(Infrastructure::RefreshState).to have_received(:call).with(healthy, client: anything)
+    end
+
+    it "records the state check of the failed one" do
+      expect(broken.reload.last_state_check_at).to be_within(5.seconds).of(Time.current)
+    end
+  end
+
+  it "uses the default queue" do
+    expect(described_class.new.queue_name).to eq("default")
   end
 end
