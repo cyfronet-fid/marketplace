@@ -189,12 +189,6 @@ To run on different than test instance, there is a need do set [env variables](#
 - `MP_XGUS_PASSWORD`
 - `MP_XGUS_WSDL`
 
-## Google Analytics API
-
-Marketplace has integration with Google Analytics
-and shows users with executive roles resources unique visits counter.
-Default period is 1 month,
-
 ## ReCaptcha
 
 ReCaptcha is now used in the ask resource question form.
@@ -368,8 +362,6 @@ We are currently using the following ENV variables:
   in the provider onboarding emails of pl (default `helpdesk@eosc.pl`)
 - `MAIL_LOGO_PATH` (Optional) - logo shown in the email header, absolute or relative to the application root
   (for example `customization/pl/images/eoscpl-email-logo.png`); no logo is shown when blank (default)
-- `GOOGLE_ANALYTICS` - google analytics key for GMT (if present than analytics
-  script is added into head section)
 - `PORTAL_BASE_URL` - portal base URL used to generate footer and other static
   links to EOSC portal
 - `PROVIDERS_DASHBOARD_URL` - Provider's Dashboard URL
@@ -537,18 +529,13 @@ To get the data you have to login
 or authenticate via the user's access_token
 with `coordinator` role
 
-## Statistics update rake task
+## Project item counters repair
 
-Usage statistics are now stored in the db,
-and update everytime someone visit service/provider/bundle page.
-For get current state for all collections (necessary for ESS dump)
-run
+To recount `project_items_count` on services, offers and bundles, run
 
 ```shell
-rake viewable:cache_views_count
+rake project_items:repair_counts
 ```
-
-All data is logged in the `log/cache_views_count.log`
 
 ## OpenAPI docs
 
