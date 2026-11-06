@@ -6,7 +6,6 @@ namespace :project_items do
     logger = Logger.new($stdout)
     [Service, Offer, Bundle].each do |model|
       model
-        .includes(:project_items)
         .find_each do |object|
           previous = object.project_items_count
           # A counter repair must not run, or be blocked by, the records' validations.
