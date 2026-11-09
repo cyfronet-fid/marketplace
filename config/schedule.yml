@@ -8,3 +8,9 @@ infrastructure_state_polling:
   status: "<%= ENV.fetch('INFRASTRUCTURE_POLLING_ENABLED', 'false') == 'true' ? 'enabled' : 'disabled' %>"
   class: "Infrastructure::StatePollingJob"
   queue: default
+# Matomo view sync (ADR-0008 D8); Matomo::Configuration reads MP_MATOMO_ENABLED and MP_MATOMO_SYNC_CRON.
+matomo_sync_views:
+  cron: "<%= Mp::Application.config.matomo.sync_cron %>"
+  status: "<%= Mp::Application.config.matomo.enabled? ? 'enabled' : 'disabled' %>"
+  class: "Matomo::SyncViewsJob"
+  queue: default

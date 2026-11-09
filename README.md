@@ -339,6 +339,41 @@ When `MP_MATOMO_ENABLED` is `true` and `MP_MATOMO_URL` or
 and names the variable. Only `Matomo::Configuration`
 (`lib/matomo/configuration.rb`) reads these variables.
 
+### View sync
+
+The `usage_counts_views` that ESS returns for services and their offers
+come from Matomo. Every night, at `MP_MATOMO_SYNC_CRON`, the
+`Matomo::SyncViewsJob` cron job reads the View events of the last three
+days from Matomo into the `view_statistics` table, with one row per service
+and day. It then sets each service's `usage_counts_views` to the sum of its
+Views, or `0` without any, and copies that total onto the service's offers.
+Each run upserts the same days again, so retries and re-runs give the same
+numbers.
+
+- The job runs only with `MP_MATOMO_ENABLED=true`. Without
+  `MP_MATOMO_TOKEN_AUTH` it logs a warning and does nothing; the tracking
+  works without the token.
+- Create the token for a Matomo user with the *View* role on the Node's site
+  only: the sync only reads reports, and the token never leaves the server.
+  It's sent in the body of a POST request, never in a URL.
+- The sync reads the standard Events report (`Events.getName`) without a
+  segment, so the Matomo site needs no pre-processed segments. Run Matomo's
+  archiving (`core:archive`) from cron, and set `MP_MATOMO_SYNC_CRON` to run
+  after it.
+- Matomo keeps 500 event names a day per report by default and groups the
+  others under "Others", whose Views the sync can't count. A Node with more
+  Viewed resources a day should raise `datatable_archiving_maximum_rows_events`
+  in Matomo's `config.ini.php`.
+- The sync logs and skips event names that match no record, such as the PID
+  of a service removed from this Node.
+- When a sync fails, Sidekiq retries it. To fill in older days, for example
+  after a longer Matomo outage, run the same sync over an explicit date
+  range:
+
+  ```shell
+  bin/rails "matomo:sync_views[2026-01-01,2026-01-31]"
+  ```
+
 ### Local Matomo
 
 `docker-compose-matomo.yml` runs a Matomo (5.14.2) with its database on
@@ -370,7 +405,8 @@ docker compose -f docker-compose-matomo.yml up -d
 Open a service, a provider and a bundle page, then check Visitors → Visits
 Log (one visit with its page views and View events) and Behaviour → Events.
 The `cron` service archives the reports every 5 minutes. The browser keeps
-no Matomo cookies. Tests never need this Matomo: `.env.test` sets
+no Matomo cookies. To read the Views back without waiting for the night, run
+`bin/rails runner "Matomo::SyncViewsJob.perform_now"`. Tests never need this Matomo: `.env.test` sets
 `MP_MATOMO_ENABLED=false`, also over a `.env` that turns it on.
 
 ## Environmental variables
