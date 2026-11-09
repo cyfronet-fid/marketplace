@@ -71,12 +71,15 @@ RSpec.describe "Backoffice: manage providers", :backend do
       end
     end
 
-    # An invalid update renders the full edit page again. The edit template
-    # must pass the tab local to the form, or the render raises a NameError.
+    # Outside pl an invalid update renders the full edit page again. The edit
+    # template must pass the tab local to the form, or the render raises a NameError.
     describe "PATCH /backoffice/providers/:id with an invalid value" do
       let(:provider) { create(:provider, name: "Unchanged") }
 
-      before { patch backoffice_provider_path(provider), params: { provider: { name: "" } } }
+      before do
+        allow(Mp::Variant).to receive(:pl?).and_return(false)
+        patch backoffice_provider_path(provider), params: { provider: { name: "" } }
+      end
 
       it "answers with the edit page" do
         expect(response).to have_http_status(:bad_request)
@@ -88,6 +91,110 @@ RSpec.describe "Backoffice: manage providers", :backend do
 
       it "keeps the provider as it is" do
         expect(provider.reload.name).to eq("Unchanged")
+      end
+    end
+
+    # pl shows the errors in the tab that the user submitted (pl-marketplace #129).
+    describe "PATCH /backoffice/providers/:id with an invalid value under pl" do
+      let(:provider) { create(:provider, name: "Unchanged") }
+
+      before do
+        allow(Mp::Variant).to receive(:pl?).and_return(true)
+        patch backoffice_provider_path(provider),
+              params: { tab: "location", provider: { name: "" } },
+              headers: { "Accept" => "text/vnd.turbo-stream.html" }
+      end
+
+      it "answers with unprocessable content" do
+        expect(response).to have_http_status(:unprocessable_content)
+      end
+
+      it "replaces the tab content" do
+        expect(response.body).to include('<turbo-stream action="replace" target="tab_content">')
+      end
+
+      it "renders the submitted tab" do
+        expect(response).to render_template(partial: "backoffice/providers/tabs/_location")
+      end
+
+      it "keeps the provider as it is" do
+        expect(provider.reload.name).to eq("Unchanged")
+      end
+    end
+
+    # pl's tabs are forms and need an empty row for each blank nested model.
+    describe "GET /backoffice/providers/:id under pl" do
+      let(:provider) { create(:provider) }
+
+      before do
+        allow(Mp::Variant).to receive(:pl?).and_return(true)
+        get backoffice_provider_path(provider, tab: "contacts"), headers: { "Accept" => "text/vnd.turbo-stream.html" }
+      end
+
+      it "builds an empty main contact" do
+        expect(assigns(:provider).main_contact).to be_new_record
+      end
+
+      it "builds an empty public contact" do
+        expect(assigns(:provider).public_contacts.map(&:new_record?)).to eq([true])
+      end
+    end
+
+    describe "GET /backoffice/providers/:id under another variant" do
+      let(:provider) { create(:provider) }
+
+      before do
+        allow(Mp::Variant).to receive(:pl?).and_return(false)
+        get backoffice_provider_path(provider, tab: "contacts"), headers: { "Accept" => "text/vnd.turbo-stream.html" }
+      end
+
+      it "leaves the main contact blank" do
+        expect(assigns(:provider).main_contact).to be_nil
+      end
+    end
+
+    # pl edits its other tabs in place, so edit always opens the wizard.
+    describe "GET /backoffice/providers/:id/edit with a tab step under pl" do
+      let(:provider) { create(:provider) }
+
+      before do
+        allow(Mp::Variant).to receive(:pl?).and_return(true)
+        get edit_backoffice_provider_path(provider, step: "classification")
+      end
+
+      it "opens the wizard" do
+        expect(response).to redirect_to(backoffice_provider_wizard_path(provider))
+      end
+
+      it "starts the wizard at the first step" do
+        expect(session[:provider_step]).to eq("profile")
+      end
+    end
+
+    describe "GET /backoffice/providers/new with an unknown step under pl" do
+      before do
+        allow(Mp::Variant).to receive(:pl?).and_return(true)
+        get new_backoffice_provider_path(step: "../tabs/marketing")
+      end
+
+      it "starts the wizard at the first step" do
+        expect(session[:provider_step]).to eq("profile")
+      end
+    end
+
+    # pl has no new page: the wizard shows the submitted values again.
+    describe "POST /backoffice/providers with an invalid value under pl" do
+      before do
+        allow(Mp::Variant).to receive(:pl?).and_return(true)
+        post backoffice_providers_path, params: { provider: { name: "", abbreviation: "Kept" } }
+      end
+
+      it "opens the wizard" do
+        expect(response).to redirect_to(backoffice_provider_wizard_path("new"))
+      end
+
+      it "keeps the submitted values for the wizard" do
+        expect(session["new"]).to include("abbreviation" => "Kept")
       end
     end
 

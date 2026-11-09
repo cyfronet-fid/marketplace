@@ -180,7 +180,8 @@ class Backoffice::Providers::StepsController < Backoffice::ProvidersController
   end
 
   def current_step
-    session[:provider_step] = params[:step] if params[:step]
+    # pl keeps only a known step for the partial render (pl-marketplace #129).
+    session[:provider_step] = Mp::Variant.pl? ? safe_step(params[:step]) : params[:step] if params[:step]
     session[:provider_step]
   end
 

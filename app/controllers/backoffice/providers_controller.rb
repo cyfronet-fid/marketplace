@@ -19,6 +19,8 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
   end
 
   def show
+    # pl's tabs are forms. They need an empty row for each blank nested model (pl-marketplace #129).
+    add_missing_nested_models if Mp::Variant.pl?
     respond_to do |format|
       current_tab = params[:tab]
       tabs = Mp::Variant.pl? ? extended_steps : provider_tabs
@@ -43,13 +45,14 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
     @provider = Provider.new
     session[:wizard_action] = "create"
     session[:new] ||= {}
-    session[:provider_step] = params[:step] || "profile"
+    session[:provider_step] = Mp::Variant.pl? ? safe_step(params[:step]) : params[:step] || "profile"
     redirect_to backoffice_provider_wizard_path("new")
   end
 
   def edit
     session[:wizard_action] = "update"
-    tab = session[:provider_step] = params[:step] || basic_steps.first
+    # pl edits its other tabs in place, so edit always opens the wizard.
+    tab = session[:provider_step] = Mp::Variant.pl? ? safe_step(params[:step]) : params[:step] || basic_steps.first
     if tab.in?(basic_steps)
       redirect_to backoffice_provider_wizard_path(@provider)
     else
@@ -82,6 +85,11 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
         ar.save
       end
       redirect_to backoffice_provider_path(@provider, page: params[:page]), notice: "New provider created successfully"
+    elsif Mp::Variant.pl?
+      # pl has no new page: the wizard shows the submitted values again.
+      session["new"] = permitted_attributes.to_h.except("logo")
+      session["new"]["logo"] = ImageHelper.to_json(permitted_attributes[:logo]) if permitted_attributes[:logo].present?
+      redirect_to backoffice_provider_wizard_path("new")
     else
       catalogue_scope
       render :new, status: :unprocessable_content
@@ -114,6 +122,21 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
     if valid_model_and_urls? && @provider.save(validate: false)
       flash.now[:notice] = "Provider updated successfully"
       respond_to(&:turbo_stream)
+    elsif Mp::Variant.pl?
+      # pl shows the errors in the tab that the user submitted.
+      catalogue_scope
+      add_missing_nested_models
+      render turbo_stream:
+               turbo_stream.replace(
+                 "tab_content",
+                 partial: "backoffice/providers/tabs/wrapper",
+                 locals: {
+                   tab: safe_tab(params[:tab]),
+                   provider: @provider,
+                   catalogues: @catalogues
+                 }
+               ),
+             status: :unprocessable_content
     else
       catalogue_scope
       add_missing_nested_models
@@ -160,6 +183,11 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
     %i[alternative_identifiers data_administrators link_multimedia_urls].each do |association|
       @provider.send(association).build if @provider.send(association).empty?
     end
+    return unless Mp::Variant.pl?
+
+    # pl's contacts tab edits the main contact and the public contacts.
+    @provider.public_contacts.build if @provider.public_contacts.empty?
+    @provider.build_main_contact if @provider.main_contact.blank?
   end
 
   def valid_model_and_urls?
