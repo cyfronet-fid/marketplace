@@ -21,3 +21,19 @@ Ruby 3.3, Rails 7.2. RSpec (`rspec-rails`) for tests, not Minitest. Style is enf
 - Diffs are Rails-app changes touching ActiveRecord models, Pundit policies, services, or RSpec specs most often — weight review effort there over views/assets.
 - Migrations (`db/migrate/`) are append-only and irreversible once merged — flag anything destructive (dropping columns/tables, non-nullable additions without a default) as high-severity, not a style note.
 - If a method changes on a model or policy, check whether it has RSpec coverage (`spec/` mirrors `app/`); flag missing specs for behavior changes, not for trivial getters.
+
+## Agent skills
+
+Per-developer skill configuration lives in `.agents/` at the repo root. It is gitignored, so each team member keeps their own copy. If a file referenced below is missing, work from the summary here.
+
+### Issue tracker
+
+Issues are tracked in GitHub Issues for `cyfronet-fid/marketplace`, via the `gh` CLI. See `.agents/issue-tracker.md`.
+
+### Triage labels
+
+The five default triage labels (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`). See `.agents/triage-labels.md`.
+
+### Domain docs
+
+The glossary and ADRs live in a separate docs repo, never in this repo, even when a skill names a root `GLOSSARY.md` or `docs/adr/`. Local clone path and how to handle updates: `.agents/domain.md`; without it, ask for the clone path.
