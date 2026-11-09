@@ -312,6 +312,67 @@ Logs view of the Sentry server; `SENTRY_LOGS=false` turns them off and
 `SENTRY_LOGS_QUERIES=true` adds the SQL queries. `SENTRY_TRACES_SAMPLE_RATE`
 (default `0.01`) is the share of the requests stored as transactions.
 
+## Matomo
+
+Every variant can send statistics to a Matomo site of its own. Matomo is off
+by default in every Rails environment, test and e2e included; with it off the
+pages contain nothing of Matomo. With `MP_MATOMO_ENABLED=true` the browser
+(`app/javascript/app/matomo.js`) sends, without cookies:
+
+- one page view per Turbo navigation, with its URL, title and referrer;
+- one View event on each Service (including Datasource), Provider and Bundle
+  detail page: `Service/View/<PID>`, `Provider/View/<PID>` and
+  `Bundle/View/<service PID>:<bundle iid>`. Sub-pages, such as a service's
+  offers list, and deployable service pages send none;
+- clicks on links to other sites, as outlinks.
+
+| Variable | Description | Default | Required |
+| --- | --- | --- | --- |
+| `MP_MATOMO_ENABLED` | Set to `true` to turn the tracking on | `false` | No |
+| `MP_MATOMO_URL` | Absolute URL of the Matomo server, for example `https://matomo.example.org/`. A protocol-relative URL (`//host/`) is rejected | - | When enabled |
+| `MP_MATOMO_SITE_ID` | ID of the Matomo site of this Node. There is no default, so the traffic of a Node never lands in another Node's site | - | When enabled |
+| `MP_MATOMO_TOKEN_AUTH` | View-only token of the Node's reporting user, kept on the server. Only the view sync, which reads Views back from Matomo, uses it; the tracking works without it | - | No |
+| `MP_MATOMO_SYNC_CRON` | Cron schedule of the view sync; set it after the daily archiving of the Matomo server | `15 2 * * *` | No |
+
+When `MP_MATOMO_ENABLED` is `true` and `MP_MATOMO_URL` or
+`MP_MATOMO_SITE_ID` is missing or invalid, the application refuses to boot
+and names the variable. Only `Matomo::Configuration`
+(`lib/matomo/configuration.rb`) reads these variables.
+
+### Local Matomo
+
+`docker-compose-matomo.yml` runs a Matomo (5.14.2) with its database on
+[http://localhost:8080](http://localhost:8080):
+
+```shell
+docker compose -f docker-compose-matomo.yml up -d
+```
+
+1. Open [http://localhost:8080](http://localhost:8080) and follow the install
+   wizard. The database server is `db`, the login `matomo`, the password
+   `password` and the database `matomo`.
+1. Add the first website with the URL `http://localhost:5000` (the
+   application's `PORT`). Note its site ID (the wizard's first site is `1`).
+1. Add to `.env` and restart the application:
+
+   ```shell
+   MP_MATOMO_ENABLED=true
+   MP_MATOMO_URL=http://localhost:8080/
+   MP_MATOMO_SITE_ID=1
+   ```
+
+1. For the view sync, create a token with view access only: in
+   Administration → System → Users invite a user with the *View* role on the
+   site (copy the invite link, the local Matomo sends no mail), accept the
+   invitation, and as that user create a token in Administration → Personal →
+   Security → Auth tokens. Set it as `MP_MATOMO_TOKEN_AUTH` in `.env`.
+
+Open a service, a provider and a bundle page, then check Visitors → Visits
+Log (one visit with its page views and View events) and Behaviour → Events.
+The `cron` service archives the reports every 5 minutes. The browser keeps
+no Matomo cookies. Tests never need this Matomo: `.env.test` sets
+`MP_MATOMO_ENABLED=false`, also over a `.env` that turns it on.
+
 ## Environmental variables
 
 This project can be customized via numerous environmental variables.
@@ -334,6 +395,8 @@ We are currently using the following ENV variables:
   [Checkin section](#checkin)
 - ENV variables connected to the ADM integration are described in the
   [ADM deployments section](#adm-deployments)
+- ENV variables connected to the Matomo integration are described in the
+  [Matomo section](#matomo)
 - `ROOT_URL` (Optional) - root application URL (default
   `http://localhost:#{ENV["PORT"] || 3000}` (when foreman is used to start
   application 5000 ENV variable is set)
