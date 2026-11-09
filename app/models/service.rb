@@ -54,6 +54,7 @@ class Service < ApplicationRecord
   has_many :offers, as: :orderable, dependent: :restrict_with_error
   has_many :bundles, dependent: :restrict_with_error
   has_many :project_items, through: :offers
+  has_many :view_statistics, as: :viewable, dependent: :delete_all
   has_many :categorizations, dependent: :destroy
   has_many :categories, through: :categorizations
   has_many :service_opinions, through: :project_items
