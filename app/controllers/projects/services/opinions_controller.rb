@@ -17,7 +17,7 @@ class Projects::Services::OpinionsController < ApplicationController
     respond_to do |format|
       if @service_opinion.persisted?
         format.html do
-          redirect_to project_service_offers_path(@project, @project_item), notice: "Rating submitted successfully"
+          redirect_to project_service_path(@project, @project_item), notice: "Rating submitted successfully"
         end
       else
         format.html { render :new, status: :unprocessable_entity }
