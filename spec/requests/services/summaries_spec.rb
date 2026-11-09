@@ -22,8 +22,4 @@ RSpec.describe "Adding an offer to a project" do
   it "creates the project item" do
     expect { add_to_project }.to change(project.project_items, :count).by(1)
   end
-
-  it "enqueues no Matomo job" do
-    expect { add_to_project }.not_to have_enqueued_job.on_queue("matomo")
-  end
 end

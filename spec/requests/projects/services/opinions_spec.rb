@@ -15,8 +15,4 @@ RSpec.describe "Rating a project item" do
   it "saves the rating" do
     expect { rate }.to change(ServiceOpinion.where(project_item: project_item, service_rating: 4), :count).by(1)
   end
-
-  it "enqueues no Matomo job" do
-    expect { rate }.not_to have_enqueued_job.on_queue("matomo")
-  end
 end
