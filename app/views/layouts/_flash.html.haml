@@ -1,4 +1,5 @@
 = turbo_frame_tag "flash-messages" do
   .flash
-    - flash.each do |type, msg|
+    - flash.to_hash.except(Matomo::PendingEvents::KEY).each do |type, msg|
       = render "layouts/message", type: type, msg: msg
+  = matomo_pending_event_tags

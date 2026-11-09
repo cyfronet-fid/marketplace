@@ -23,9 +23,18 @@ module MatomoHelper
     matomo_event_tag(Matomo::Event.view(record))
   end
 
+  # The event elements of the events that the action before the redirect left
+  # in the flash (Matomo::PendingEvents); layouts/_flash renders them. They are
+  # sent once: Turbo removes temporary elements before it caches the page, so
+  # going back to it sends the page view again, but not these events.
+  def matomo_pending_event_tags
+    safe_join(Matomo::PendingEvents.new(flash).map { |event| matomo_event_tag(event, turbo_temporary: true) })
+  end
+
   # The event element contract: a hidden element whose data attributes carry
   # the category, action, name and optional numeric value of a Matomo::Event.
-  def matomo_event_tag(event)
+  # A Turbo-temporary element is left out of Turbo's page cache.
+  def matomo_event_tag(event, turbo_temporary: false)
     return unless matomo_configuration.enabled?
 
     tag.div(
@@ -35,7 +44,8 @@ module MatomoHelper
         matomo_category: event.category,
         matomo_action: event.action,
         matomo_name: event.name,
-        matomo_value: event.value
+        matomo_value: event.value,
+        turbo_temporary: (true if turbo_temporary)
       }
     )
   end

@@ -16,6 +16,12 @@ class Projects::Services::OpinionsController < ApplicationController
     @service_opinion = ServiceOpinion::Create.new(template).call
     respond_to do |format|
       if @service_opinion.persisted?
+        Matomo::PendingEvents.new(flash).add(
+          category: "Service",
+          action: "Rate",
+          name: @project_item.service.pid,
+          value: @service_opinion.service_rating
+        )
         format.html do
           redirect_to project_service_path(@project, @project_item), notice: "Rating submitted successfully"
         end
