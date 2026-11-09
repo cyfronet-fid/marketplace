@@ -28,7 +28,7 @@
           - BundlesHelper::BUNDLE_DETAILS_FIELDS.each do |field|
             = render "services/bundles/detail", bundle: @bundle, field: field
 
-          = render "services/offers/bundle_links",
+          = render "services/choose_offers/bundle_links",
              contact_email: @bundle.contact_email || "",
              related_training: @bundle.related_training_url || "",
              helpdesk_url: @bundle.helpdesk_url || ""
