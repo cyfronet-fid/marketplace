@@ -24,6 +24,30 @@ RSpec.describe "Matomo browser tracking" do
     )
   end
 
+  shared_context "with an offer added to a project" do
+    let(:offer) { create(:offer) }
+    let(:project) { create(:project) }
+
+    before do
+      allow(Checkin::CheckVoMembership).to receive(:call).and_return(
+        Checkin::CheckVoMembership::CheckResult.new(status: :member)
+      )
+      sign_in(project.user)
+      put service_choose_offer_path(offer.service), params: { customizable_project_item: { offer_id: offer.iid } }
+      post service_summary_path(offer.service), params: { customizable_project_item: { project_id: project.id } }
+    end
+  end
+
+  shared_context "with a rated project item" do
+    let(:project_item) { create(:project_item, status: "ready", status_type: :ready) }
+
+    before do
+      sign_in(project_item.project.user)
+      post project_service_opinion_path(project_item.project, project_item),
+           params: { service_opinion: { service_rating: 4, order_rating: 5, opinion: "Works well" } }
+    end
+  end
+
   context "when Matomo is on" do
     before do
       allow(Mp::Application.config).to receive(:matomo).and_return(
@@ -104,6 +128,55 @@ RSpec.describe "Matomo browser tracking" do
         expect(events).to be_empty
       end
     end
+
+    context "with the page after adding an offer to a project" do
+      include_context "with an offer added to a project"
+
+      before { follow_redirect! }
+
+      it "carries the AddToProject event of the service" do
+        expect(events).to eq(["category" => "Service", "action" => "AddToProject", "name" => offer.service.pid])
+      end
+
+      it "shows no alert for the event" do
+        expect(page.css("[role=alert]").map { |alert| alert.text.strip }).to eq(["Offer ordered successfully"])
+      end
+
+      it "keeps the event out of Turbo's page cache, so going back to the page does not send it again" do
+        expect(page.at_css("[data-matomo-event]").key?("data-turbo-temporary")).to be(true)
+      end
+    end
+
+    context "with the page after rating a service" do
+      include_context "with a rated project item"
+
+      before { follow_redirect! }
+
+      it "carries the Rate event of the service, with the rating as the value" do
+        expect(events).to eq(
+          ["category" => "Service", "action" => "Rate", "name" => project_item.service.pid, "value" => "4"]
+        )
+      end
+    end
+
+    context "with the page after rating a deployable service without a PID", variant: :marketplace do
+      include_context "with a rated project item" do
+        let(:project_item) do
+          create(
+            :project_item,
+            offer: create(:offer, deployable_service: create(:deployable_service, pid: nil)),
+            status: "ready",
+            status_type: :ready
+          )
+        end
+      end
+
+      before { follow_redirect! }
+
+      it "carries no event, as there is no PID to name it by" do
+        expect(events).to be_empty
+      end
+    end
   end
 
   context "when Matomo is off" do
@@ -137,6 +210,22 @@ RSpec.describe "Matomo browser tracking" do
       get service_bundle_path(bundle.service, bundle.iid)
 
       expect(events).to be_empty
+    end
+
+    context "with an offer added to a project" do
+      include_context "with an offer added to a project"
+
+      it "leaves only the notice in the flash" do
+        expect(flash.to_hash).to eq("notice" => "Offer ordered successfully")
+      end
+    end
+
+    context "with a rated project item" do
+      include_context "with a rated project item"
+
+      it "leaves only the notice in the flash" do
+        expect(flash.to_hash).to eq("notice" => "Rating submitted successfully")
+      end
     end
   end
 end
