@@ -481,9 +481,45 @@ docker exec <postgres container> pg_dump -U mp --no-owner --no-acl mp_pl_dump \
   > tmp/local-deploy/seed/pl/mp_db.sql
 ```
 
-The full load of Solr needs `MP_API_TOKEN` in `tmp/local-deploy/hubs/<variant>.env`,
-the token of a coordinator of the local instance. The script skips the load
-while the variable is empty; `seed <variant>` starts the load later.
+An `up` keeps a database that exists and skips the seed. Only `down` removes
+the database, with the other volumes; the next `up` seeds it again.
+
+The full load of Solr reads the marketplace API with `MP_API_TOKEN` of
+`tmp/local-deploy/hubs/<variant>.env`, the token of a coordinator of the
+local instance. When the variable is empty, the script creates the coordinator
+`local-deploy@localhost` in the instance and writes the token into the file
+before the load. Put the token of another account into the file to load with
+that account. The instance and the login below do not need the token.
+
+### Log in
+
+In the development environment the containers read `.env` of this checkout,
+as `bin/dev` does. With `AUTH_MOCK=true` in `.env` the route
+`GET /users/login` signs a user in without Check-in. A new email creates the
+user with the roles of the query; a known email signs that user in:
+
+```sh
+open "http://localhost:3018/users/login?email=dev@example.org&password=x&first_name=Dev&last_name=User&roles[]=admin&roles[]=coordinator&roles[]=executive"
+```
+
+Log out through the account menu before you log in as another user: the
+route sends a signed-in user to the backoffice. Under pl each email is
+unique, thus each account needs a new email. The route does not exist with
+`--production`.
+
+The API of the instance (`/api/v1/ess/*`) accepts the token of a coordinator
+only (`X-User-Token`). A signed-in user generates or copies the own token on
+`http://localhost:30<slot>/api_docs`.
+
+The Check-in login of an instance takes the `CHECKIN_*` values of
+`marketplace-<variant>.env`, not those of `.env`: a variable that the
+container already has is not replaced by `.env`. The script writes
+placeholders (`checkin.invalid`) for marketplace and whitelabel, thus the
+Check-in login of these instances goes to a host that does not exist. pl gets
+no placeholders and reads `.env`. For a Check-in login put the client into
+`marketplace-<variant>.env`; the client must list
+`http://localhost:30<slot>/users/auth/checkin/callback` as a valid redirect
+URI. Then deploy the variant again: a restart does not read the env file.
 
 The hub code comes from the checkouts next to this repository
 (`MP_WORKSPACE=<dir>` points to another directory): `pl-discovery-hub`,

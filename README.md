@@ -207,7 +207,19 @@ The ports follow the slot of the variant (pl 16, whitelabel 17,
 marketplace 18): the instance answers on `http://localhost:30<slot>` and the
 hub on `http://localhost:32<slot>`. The header of the script documents the
 layout under `tmp/local-deploy`: the env files that the script writes on the
-first run, and the optional database dump and media seed.
+first run, and the optional database dump and media seed. An `up` keeps a
+database that exists; only `down` removes it.
+
+In the development environment the instance reads `.env` of this checkout.
+With `AUTH_MOCK=true` the route `GET /users/login` signs a user in without
+Check-in, for example
+`http://localhost:3018/users/login?email=dev@example.org&password=x&first_name=Dev&last_name=User&roles[]=admin&roles[]=coordinator`.
+The Check-in settings of an instance come from `marketplace-<variant>.env`,
+which has precedence over `.env`; the script writes placeholders there for
+marketplace and whitelabel. The coordinator token `MP_API_TOKEN` of
+`tmp/local-deploy/hubs/<variant>.env` is necessary for the full load of Solr
+only, not for the instance or the login; when it is empty, the script creates
+the coordinator `local-deploy@localhost` in the instance and fills it in.
 
 The transform service fills the Solr of a hub from the marketplace API. The
 first run with the transform services starts the first full load, which takes

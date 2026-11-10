@@ -25,6 +25,9 @@
 #   hubs/<variant>.env           settings of the hub, created on the first run.
 #                                The full load of Solr needs MP_API_TOKEN, the
 #                                token of a coordinator of the local instance.
+#                                Empty, the script creates the coordinator
+#                                local-deploy@localhost in the instance and
+#                                fills the token in.
 # The hub code comes from the checkouts next to this repository
 # (MP_WORKSPACE=<dir> points to another directory): pl-discovery-hub,
 # eosc-search-service, transform-service, eosc-pl-common and
@@ -35,7 +38,9 @@
 # checkout as untracked files, as the staging deploy does.
 # marketplace-<variant>.env in this checkout holds the settings of the
 # instance. The script creates a minimal file on the first run: the
-# application starts, Check-in does not work with the placeholders.
+# application starts, Check-in does not work with the placeholders. In the
+# development environment GET /users/login signs a user in without Check-in
+# (AUTH_MOCK=true in .env; see "Log in" in deploy.md).
 #
 # On an arm64 host (Apple silicon) docker-compose-local-arm64.yml replaces the
 # Elasticsearch image, which has no arm64 build, with the image of the
@@ -264,7 +269,9 @@ write_instance_env() {
     {
         echo "# Settings of the local ${VARIANT} instance, written by lib/versions/deploy-local.sh."
         echo "# .env.example lists the variables. Check-in needs real values; the"
-        echo "# placeholders let the application start without a login."
+        echo "# placeholders let the application start without a login. These values"
+        echo "# have precedence over .env. In the development environment"
+        echo "# GET /users/login signs a user in without Check-in (AUTH_MOCK=true in .env)."
         echo "SECRET_KEY_BASE=$(openssl rand -hex 64)"
         echo "RECAPTCHA_ENABLED=false"
         if [[ " ${HUB_VARIANTS[*]} " == *" $VARIANT "* ]]; then
@@ -296,7 +303,9 @@ write_hub_env() {
         echo "# Settings of the local ${VARIANT} hub, written by lib/versions/deploy-local.sh."
         echo "# The header of docker-compose-hub-${VARIANT}.yml lists the variables."
         echo "# MP_API_TOKEN is the token of a coordinator of the local instance. The"
-        echo "# full load of Solr needs it: fill it in, then run deploy-local.sh seed ${VARIANT}."
+        echo "# full load of Solr needs it. Empty, the deploy creates the coordinator"
+        echo "# local-deploy@localhost in the instance and writes its token here. Put"
+        echo "# the token of another account here to load with that account."
         echo "MP_API_TOKEN="
         echo "SECRET_KEY=$(openssl rand -hex 32)"
         echo "OIDC_CLIENT_ID=local"
@@ -361,6 +370,46 @@ wait_for_url() {
 # from the marketplace API. With the argument "always" the load also starts
 # when the collections exist. The load runs in the transform worker:
 #   docker compose -p mp-local-<variant>-hub logs -f transform-worker
+# Fills MP_API_TOKEN of hubs/<variant>.env in when the variable is empty. The
+# full load of Solr reads the marketplace API with the token of a coordinator.
+# The coordinator is the user local-deploy@localhost of the local instance,
+# created on the first call; simple_token_authentication generates the token
+# when the user is saved without one. The web container runs the Ruby below
+# (rails runner reads it from stdin), thus the instance must answer first.
+ensure_api_token() {
+    local file="$HUBS/${VARIANT}.env" token tmp
+    grep -qE '^MP_API_TOKEN=.+' "$file" && return 0
+    if ! wait_for_url "$MP_ROOT_URL"; then
+        echo "[${VARIANT} hub] MP_API_TOKEN is empty and the instance does not answer at $MP_ROOT_URL"
+        return 1
+    fi
+    echo "[${VARIANT} hub] MP_API_TOKEN is empty: taking the token of local-deploy@localhost from the instance"
+    token=$(instance exec -T "$APP_SERVICE" ./bin/rails runner - <<'RUBY' 2>/dev/null | tail -n 1
+require "bcrypt"
+user = User.find_by(email: "local-deploy@localhost")
+if user.nil?
+  user = User.new(email: "local-deploy@localhost", first_name: "Local", last_name: "Deploy",
+                  encrypted_password: BCrypt::Password.create(SecureRandom.hex(16)).to_s)
+  if Mp::Variant.pl?
+    user.identities.build(provider: "local-deploy", uid: SecureRandom.uuid, primary: true)
+  else
+    user.uid = SecureRandom.uuid
+  end
+end
+user.roles = user.roles.to_a | [:coordinator]
+user.save!
+puts user.authentication_token
+RUBY
+    )
+    if ! [[ "$token" =~ ^[A-Za-z0-9_-]{16,}$ ]]; then
+        echo "[${VARIANT} hub] no token from the instance (${token:-no output}); fill MP_API_TOKEN in $file in by hand"
+        return 1
+    fi
+    tmp=$(mktemp) || return 1
+    sed "s|^MP_API_TOKEN=.*|MP_API_TOKEN=${token}|" "$file" > "$tmp" && mv "$tmp" "$file" || return 1
+    echo "[${VARIANT} hub] MP_API_TOKEN written to $file"
+}
+
 seed_hub() {
     local load="${1:-first}"
     local prefix solr transform
@@ -383,11 +432,7 @@ seed_hub() {
         wait_for_url "$solr/${prefix}all_collection/admin/ping" || { echo "collections not created, see the transform-worker log"; return 1; }
     fi
 
-    if ! grep -qE '^MP_API_TOKEN=.+' "$HUBS/${VARIANT}.env"; then
-        echo "[${VARIANT} hub] MP_API_TOKEN is empty in $HUBS/${VARIANT}.env: no full load."
-        echo "Fill it in, then run: $0 seed ${VARIANT}"
-        return 0
-    fi
+    ensure_api_token || { echo "[${VARIANT} hub] no full load; run later: $0 seed ${VARIANT}"; return 0; }
     echo "[${VARIANT} hub] full load from the marketplace API started:"
     curl -sf -X POST "$transform/full?data_type=all" || return 1
     echo
