@@ -2,7 +2,8 @@
 
 require "rails_helper"
 
-RSpec.describe Projects::ServicesController, type: :request do
+# Deployable services are drawn only under marketplace (config/routes.rb).
+RSpec.describe Projects::ServicesController, type: :request, variant: :marketplace do
   let(:project) { create(:project) }
   let(:deployable_service) { create(:deployable_service, resource_organisation: resource_organisation) }
   let(:offer) { create(:offer, deployable_service: deployable_service) }
