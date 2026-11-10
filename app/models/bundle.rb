@@ -25,6 +25,7 @@ class Bundle < ApplicationRecord
   has_many :bundle_offers
   has_many :offers, through: :bundle_offers, dependent: :destroy, validate: false
   has_many :project_items
+  has_many :view_statistics, as: :viewable, dependent: :delete_all
 
   has_many :bundle_target_users
   has_many :target_users, through: :bundle_target_users

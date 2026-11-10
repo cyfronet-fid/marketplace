@@ -341,12 +341,15 @@ and names the variable. Only `Matomo::Configuration`
 
 ### View sync
 
-The `usage_counts_views` that ESS returns for services and their offers
-come from Matomo. Every night, at `MP_MATOMO_SYNC_CRON`, the
+The `usage_counts_views` that ESS returns for services, offers, providers
+and bundles come from Matomo. Every night, at `MP_MATOMO_SYNC_CRON`, the
 `Matomo::SyncViewsJob` cron job reads the View events of the last three
-days from Matomo into the `view_statistics` table, with one row per service
-and day. It then sets each service's `usage_counts_views` to the sum of its
-Views, or `0` without any, and copies that total onto the service's offers.
+days from Matomo into the `view_statistics` table, with one row per service,
+provider or bundle and day. It then sets the `usage_counts_views` of each
+service, provider and bundle to the sum of its Views, or `0` without any,
+and copies each service's total onto its offers. Last, it recomputes the
+`popularity_ratio` that orders the home page's popular services: 1000 × (the
+service's share of all service Views + its share of all project items).
 Each run upserts the same days again, so retries and re-runs give the same
 numbers.
 

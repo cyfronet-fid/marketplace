@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 module Statistics
-  # Reads the daily Views of Services back from Matomo into view_statistics,
-  # then recounts usage_counts_views of every service and copies it onto the
-  # service's offers (ADR-0008 D8–D10). It only upserts the requested days, so
+  # Reads the daily Views of Services, Providers and Bundles back from Matomo
+  # into view_statistics, then recounts usage_counts_views of every service,
+  # provider and bundle, copies each service's onto its offers and recomputes
+  # popularity_ratio (ADR-0008 D8–D11). It only upserts the requested days, so
   # re-runs over the same days give the same numbers.
   class SyncViews < ApplicationService
     # A kind of record whose View events are named by its PID.
@@ -13,7 +14,23 @@ module Statistics
       end
     end
 
-    VIEWABLES = [NamedByPid.new(Service)].freeze
+    # Bundles, which have no PID: their View events are named
+    # "<service PID>:<bundle iid>". A service PID may contain ":" itself, so a
+    # name is split on its last one.
+    NamedByServicePidAndIid = Data.define(:model) do
+      def ids_by_name(names)
+        pids_and_iids = names.map { |name| name.rpartition(":") }
+
+        model
+          .joins(:service)
+          .where(services: { pid: pids_and_iids.map(&:first) }, iid: pids_and_iids.map(&:last))
+          .pluck("services.pid", :iid, :id)
+          .to_h { |pid, iid, id| ["#{pid}:#{iid}", id] }
+          .slice(*names)
+      end
+    end
+
+    VIEWABLES = [NamedByPid.new(Service), NamedByPid.new(Provider), NamedByServicePidAndIid.new(Bundle)].freeze
 
     def initialize(dates: (Date.current - 2)..Date.current, client: Matomo::ReportingClient.new)
       super()
@@ -29,6 +46,7 @@ module Statistics
         ViewStatistic.upsert_all(rows, unique_by: :index_view_statistics_on_viewable_and_date) if rows.any? # rubocop:disable Rails/SkipsModelValidations
         VIEWABLES.each { |viewable| recount(viewable.model) }
         copy_service_views_to_offers
+        UpdatePopularityRatio.call
       end
     end
 
@@ -46,9 +64,11 @@ module Statistics
     end
 
     # The report has no event category, so a name is looked up in every kind
-    # of viewable record, and the first kind that knows it gets it: PIDs are
-    # unique across kinds. Names of no record, such as the PID of a service
-    # removed from this Node, are logged and skipped.
+    # of viewable record, in VIEWABLES order, and the first kind that knows it
+    # gets it. PIDs are unique across kinds, and bundle names come last, so a
+    # PID that also reads as "<service PID>:<iid>" still names its own record.
+    # Names of no record, such as the PID of a service removed from this Node,
+    # are logged and skipped.
     def viewables_by_name(names)
       found =
         VIEWABLES.each_with_object({}) do |viewable, result|
