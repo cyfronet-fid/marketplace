@@ -2,12 +2,12 @@
 
 require "rails_helper"
 
-RSpec.describe Offer::Destroy, backend: true do
-  context "#bundled_offers" do
+RSpec.describe Offer::Destroy, :backend do
+  describe "#bundled_offers" do
     it "doesn't send notification if no bundle offers" do
       destroyed_offer = create(:offer)
 
-      expect { described_class.call(destroyed_offer) }.not_to change { ActionMailer::Base.deliveries.count }
+      expect { described_class.call(destroyed_offer) }.not_to have_enqueued_mail
     end
 
     it "sends notification if offer unbundled" do
@@ -16,7 +16,7 @@ RSpec.describe Offer::Destroy, backend: true do
       bundle_offer = create(:offer, service: build(:service, resource_organisation: provider))
       bundle = create(:bundle, service: bundle_offer.service, offers: [bundled_offer])
 
-      expect { described_class.call(bundled_offer) }.to change { ActionMailer::Base.deliveries.count }.by(1)
+      expect { described_class.call(bundled_offer) }.to have_enqueued_mail(OfferMailer, :offer_unbundled)
 
       bundle.reload
       expect(bundle).to be_draft
@@ -27,7 +27,7 @@ RSpec.describe Offer::Destroy, backend: true do
         destroyed_offer = create(:offer)
         create(:project_item, offer: destroyed_offer)
 
-        expect { described_class.call(destroyed_offer) }.not_to change { ActionMailer::Base.deliveries.count }
+        expect { described_class.call(destroyed_offer) }.not_to have_enqueued_mail
       end
 
       it "sends notification if offer unbundled" do
@@ -37,7 +37,7 @@ RSpec.describe Offer::Destroy, backend: true do
         bundle = create(:bundle, main_offer: bundle_offer, offers: [destroyed_bundled_offer])
         create(:project_item, offer: destroyed_bundled_offer)
 
-        expect { described_class.call(destroyed_bundled_offer) }.to change { ActionMailer::Base.deliveries.count }.by(1)
+        expect { described_class.call(destroyed_bundled_offer) }.to have_enqueued_mail(OfferMailer, :offer_unbundled)
 
         bundle.reload
         expect(bundle).to be_draft

@@ -1,0 +1,55 @@
+= simple_form_for bundle_form_source_module do |f|
+  = f.hidden_field :from, value: local_assigns[:from]
+
+  .col-lg-8.pl-0{ "data-controller": "ordering" }
+    = f.error_notification
+    = f.hidden_field :id
+    = f.hidden_field :resource_organisation_id, value: service.resource_organisation.id
+    = f.input :name, input_html: { class: "form-control-lg" }
+    = f.association :bundle_goals, input_html: { multiple: true, data: { choice: true } }
+    = f.association :capabilities_of_goals, input_html: { multiple: true, data: { choice: true,
+    "ordering-target": "capabilities", action: "change->ordering#toggleSuggestion" } }
+    = f.input :capability_of_goal_suggestion, wrapper_html: { "data-ordering-target": "suggestion" }
+    = f.association :main_offer, collection: service.offers.published, label_method: :name, value_method: :id,
+            input_html: { multiple: false, data: { choice: true } }
+    = f.input :description, input_html: { rows: 10 }
+    = f.input :tag_list, input_html: { value: bundle.tag_list.to_s, data: { choice: true } }
+
+    = f.association :target_users, multiple: true, input_html: {data: { choice: true } }
+    - sds = ScientificDomain.child_names.filter_map { |name, sd| [name, sd.id] if sd.ancestry_depth.positive? }
+    = f.association :scientific_domains,
+              input_html: { data: { choice: true } },
+              collection: sds,
+              label_method: :first, value_method: :second
+    = f.association :research_activities, multiple: true, input_html: { data: { choice: true } }
+    = f.association :offers, collection: other_offers(service), input_html: { data: { choice: true } }
+    = f.input :related_training,
+      input_html: { "data-ordering-target": "training",
+                    "data-action": "ordering#updateVisibility" }
+    = f.input :related_training_url,
+      wrapper_html: { "data-ordering-target": "trainingWrapper" },
+      input_html: { class: "form-control-lg" }
+    = f.input :contact_email
+    = f.input :helpdesk_url
+
+  %hr.bottom-hr.mb-5
+  .row
+    .col-12
+      = f.button :submit, bundle.new_record? ? _("Publish Bundle") : _("Update Bundle"),
+      class: "btn btn-primary pl-5 pr-5 mobile-bottom-margin", "data-e2e": "create-offer-btn"
+      - if policy([:backoffice, bundle]).delete?
+        = link_to "Delete Bundle", polymorphic_path(bundle_form_source_module),
+        class: "btn btn-danger pl-5 pr-5 mobile-bottom-margin",
+          data: { "turbo-confirm": _("This action cannot be undone. Confirm to delete the Bundle."), "turbo-method": :delete }
+      - if policy([:backoffice, bundle]).draft?
+        = link_to "Unpublish Bundle", polymorphic_path(bundle_form_source_module << :draft),
+        class: "btn btn-info pl-5 pr-5 mobile-bottom-margin",
+        data: { "turbo-confirm": _("Confirm and unpublish the Bundle. It will no longer be visible on the website."),
+                "turbo-method": :post }
+      - if policy([:backoffice, bundle]).publish?
+        = link_to "Publish Bundle", polymorphic_path(bundle_form_source_module << :publish),
+        class: "btn btn-success pl-5 pr-5",
+        data: { "turbo-confirm": _("Confirm and publish the Bundle. It will be accessible on the website."),
+                "turbo-method": :post }
+      = unescaped_link_to _("cancel and back to previous page"), back_link,
+      class: "btn btn-link text-uppercase mobile-bottom-margin"

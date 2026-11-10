@@ -1,0 +1,16 @@
+- if technical_parameters.present?
+  .card-body.pt-0.collapse-group
+    %h5.text-uppercase.parameters-title.mb-2.mt-4
+      %i.fas.fa-tachometer-alt
+      = _("Technical Parameters")
+    %table.offer-params.table.table-hover
+      %tbody
+        - technical_parameters.each do |parameter|
+          %tr
+            %td= parameter["label"]
+            %td.text-right.font-weight-bold= parse_offer_parameter_value(parameter)
+- else
+  .card-body.pt-0.collapse-group
+    %p
+      = image_tag "icon-speed.png", class: "icon-speed"
+      = _("The technical parameters configuration is empty")

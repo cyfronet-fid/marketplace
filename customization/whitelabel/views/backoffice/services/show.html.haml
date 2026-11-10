@@ -1,0 +1,11 @@
+- content_for :title, @service.name
+- breadcrumb :backoffice_service, @service
+
+= render "wrapper", service: @service, comparison_enabled: @comparison_enabled,
+  favourite_services: @favourite_services, question: @question, preview: false do
+  = render Presentable::DescriptionComponent.new(object: @service,
+    similar_services: @similar_services, related_services: @related_services,
+    from: "backoffice_service") do |c|
+    - c.additional_backoffice_info do
+      .right-panel-links.pt-4.pb-4
+        = render "components/presentable/updates", object: @service

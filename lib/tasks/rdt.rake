@@ -10,7 +10,26 @@ namespace :rdt do
   end
 
   task repair_language_data: :environment do
-    puts "Service language availability was removed in the V6 profile."
+    # language_availability lives in the pl profile; the other variants dropped it with V6.
+    unless Mp::Variant.pl?
+      puts "Service language availability was removed in the V6 profile."
+      next
+    end
+
+    Service.find_each do |service|
+      lang_items = []
+      service.language_availability.each do |lang|
+        if lang.length == 2
+          lang_items << lang.upcase
+        elsif lang.length > 2
+          lang_items << I18nData.languages.key(lang.capitalize)
+        end
+        service.language_availability = lang_items
+        service.save!
+      rescue StandardError
+        puts "Cannot cast language #{lang} in service #{service.name} to alpha2"
+      end
+    end
   end
 
   desc "Create new Vocabularies"
@@ -36,13 +55,23 @@ namespace :rdt do
       Vocabulary::BundleCapabilityOfGoal.find_or_create_by(name: hash["name"])
     end
 
+    if Mp::Variant.pl?
+      puts "Creating research activities with descriptions"
+      yaml_hash["research_activities"].each_value do |hash|
+        Vocabulary::ResearchActivity.find_or_create_by(name: hash["name"]).update(
+          description: hash["description"],
+          eid: hash["eid"]
+        )
+      end
+    end
+
     puts "Creating subcategories for service type"
     yaml_hash["service_types"].each_value { |hash| create_category_with_children(hash) }
   end
 
   def create_category_with_children(hash, parent = nil, ancestry_level = 0)
     puts "Create #{hash["name"]} ServiceCategory. #{"Parent: #{parent.name}, " if parent&.name}" +
-           "ancestry_level: #{ancestry_level}, eid: #{hash["eid"]}"
+         "ancestry_level: #{ancestry_level}, eid: #{hash["eid"]}"
     current = Vocabulary::ServiceCategory.find_or_initialize_by(eid: hash["eid"])
     current.update(name: hash["name"], parent: parent)
     if hash.key?("children")
@@ -91,6 +120,7 @@ namespace :rdt do
         end
       end
       next unless klass == Category
+
       puts "Remove categories with no eid"
       to_remove = klass.where(eid: [nil, ""])
       puts "Removing categories #{to_remove.map(&:name)}"

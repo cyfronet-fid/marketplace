@@ -1,0 +1,7 @@
+.taglist-holder{ class: "#{"suspended" if inactive}" }
+  - fields.each do |field|
+    - object.send(field).each do |element|
+      .tag-item
+        - value = nested.present? && nested[field.to_sym].present? ? element.send(nested[field.to_sym]) : element
+        = link_to value, services_filter_link(element, value, filter_query[field.to_sym]),
+          "data-e2e": "#{name.singularize}-btn"

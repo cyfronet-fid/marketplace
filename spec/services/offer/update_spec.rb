@@ -2,15 +2,13 @@
 
 require "rails_helper"
 
-RSpec.describe Offer::Update, backend: true do
-  context "#bundled_offers" do
+RSpec.describe Offer::Update, :backend do
+  describe "#bundled_offers" do
     it "doesn't send notification if offer non-public" do
       bundled_offer = create(:offer, service: build(:service))
       bundle = create(:bundle, status: "draft", service: build(:service, status: "draft"))
 
-      expect { Bundle::Update.call(bundle, { offers: [bundled_offer] }) }.not_to change {
-        ActionMailer::Base.deliveries.count
-      }
+      expect { Bundle::Update.call(bundle, { offers: [bundled_offer] }) }.not_to have_enqueued_mail
     end
 
     it "sends notification if bundled offers updated" do
@@ -24,9 +22,10 @@ RSpec.describe Offer::Update, backend: true do
       bundle = create(:bundle, main_offer: bundle_offer, offers: [bundled_offer1, bundled_offer2])
 
       # ActionMailer should send one mail to bundled and one to unbundled offer.
-      expect { Bundle::Update.call(bundle, { offers: [bundled_offer1, bundled_offer3] }) }.to change {
-        ActionMailer::Base.deliveries.count
-      }.by(2)
+      expect { Bundle::Update.call(bundle, { offers: [bundled_offer1, bundled_offer3] }) }.to have_enqueued_mail(
+        OfferMailer,
+        :offer_bundled
+      ).and have_enqueued_mail(OfferMailer, :offer_unbundled)
     end
 
     it "sends notification if offer unbundled" do
@@ -36,9 +35,10 @@ RSpec.describe Offer::Update, backend: true do
 
       bundle = create(:bundle, main_offer: bundle_offer, offers: [bundled_offer])
 
-      expect { Offer::Update.call(bundled_offer, { status: "draft" }) }.to change {
-        ActionMailer::Base.deliveries.count
-      }.by(1)
+      expect { Offer::Update.call(bundled_offer, { status: "draft" }) }.to have_enqueued_mail(
+        OfferMailer,
+        :offer_unbundled
+      )
 
       bundled_offer.reload
       bundle.reload

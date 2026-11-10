@@ -26,6 +26,7 @@ class ApplicationSerializer < ActiveModel::Serializer
     funding_programs
     target_users
     marketplace_locations
+    research_activities
     networks
     esfri_domains
     areas_of_activity

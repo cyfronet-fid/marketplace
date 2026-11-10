@@ -1,0 +1,12 @@
+.col-md-12.parameters
+  .card.info-card.m-0.mb-5
+    %h5 You can add a dedicated bundle for your service
+    %p
+      If you want to customize your service further, you can create a dedicated bundle. In the EOSC Marketplace, you
+      can combine one or more offers to create a bundle. Bundle offers can include only your offers or a combination
+      of offers from both you and other providers.
+
+    .card-button.text-right
+      = link_to new_bundle_link(service, controller_name), "data-e2e": "add-new-bundle-offer-btn",
+      class: "btn btn-outline-primary float-right w-auto" do
+        = _("Add new bundle")

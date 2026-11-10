@@ -3,16 +3,44 @@
 module Presentable::DetailsHelper
   include Backoffice::ServicesHelper
 
-  def service_details_columns(_object)
-    [[pid, analytics, classification, service_urls, order], [service_public_contact_emails, service_dates].compact, []]
+  # pl shows its V5 profile sections; marketplace and whitelabel share the V6 layout.
+  def service_details_columns(object)
+    if Mp::Variant.pl?
+      [
+        [pid, analytics, classification, marketing, dependencies, attribution, order, geographic_locations],
+        [public_contacts, maturity_information, financial_information(object)].compact,
+        [changelog]
+      ]
+    else
+      [[pid, analytics, classification, service_urls, order], [service_public_contact_emails, service_dates].compact,
+       []]
+    end
   end
 
   def datasource_details_columns(object)
-    [
-      [pid, analytics, classification, marketing, order],
-      [service_public_contact_emails, maturity_information, financial_information(object)].compact,
-      [version_control, datasource_content]
-    ]
+    if Mp::Variant.pl?
+      [
+        [pid, analytics, classification, marketing, dependencies, attribution, geographic_locations, order],
+        [public_contacts, maturity_information, financial_information(object)].compact,
+        [
+          version_control,
+          changelog,
+          datasource_policies,
+          persistent_identity_systems,
+          datasource_content,
+          research_product_licensing,
+          research_product_access_policies,
+          research_product_metadata_licensing,
+          research_product_metadata_access_policies
+        ]
+      ]
+    else
+      [
+        [pid, analytics, classification, marketing, order],
+        [service_public_contact_emails, maturity_information, financial_information(object)].compact,
+        [version_control, datasource_content]
+      ]
+    end
   end
 
   def guidelines_details_columns
@@ -20,7 +48,16 @@ module Presentable::DetailsHelper
   end
 
   def provider_details_columns
-    [[provider_maturity_information, provider_nodes, catalogue], [hosting_legal_entity, provider_public_contact_emails]]
+    if Mp::Variant.pl?
+      [
+        [provider_maturity_information, provider_classification, esfri_types, esfri_domains, meril_scientific_domains],
+        [networks, areas_of_activity, affiliations, certifications, catalogue],
+        [hosting_legal_entity, structure_types, societal_grand_challenges, national_roadmaps]
+      ]
+    else
+      [[provider_maturity_information, provider_nodes, catalogue],
+       [hosting_legal_entity, provider_public_contact_emails]]
+    end
   end
 
   private
@@ -81,26 +118,52 @@ module Presentable::DetailsHelper
   end
 
   def classification
-    {
-      name: "classification",
-      template: "list",
-      fields: %w[access_types jurisdiction],
-      with_desc: true,
-      nested: {
-        access_types: "name",
-        jurisdiction: "name"
-      },
-      active_when_suspended: false
-    }
+    if Mp::Variant.pl?
+      {
+        name: "classification",
+        template: "array",
+        fields: %w[service_categories research_activities access_types access_modes],
+        with_desc: true,
+        nested: {
+          research_activities: "name",
+          access_types: "name",
+          access_modes: "name"
+        },
+        active_when_suspended: false
+      }
+    else
+      {
+        name: "classification",
+        template: "list",
+        fields: %w[access_types jurisdiction],
+        with_desc: true,
+        nested: {
+          access_types: "name",
+          jurisdiction: "name"
+        },
+        active_when_suspended: false
+      }
+    end
   end
 
   def datasource_content
     {
       name: "datasource_content",
       template: "array",
-      fields: %w[jurisdiction datasource_classification thematic research_product_types],
+      fields:
+        (
+          if Mp::Variant.pl?
+            %w[jurisdiction datasource_classification research_entity_types thematic]
+          else
+            %w[jurisdiction datasource_classification thematic research_product_types]
+          end
+        ),
       with_desc: true
     }
+  end
+
+  def datasource_policies
+    { name: "policies", template: "links", fields: %w[submission_policy_url preservation_policy_url], with_desc: true }
   end
 
   def dependencies
@@ -135,8 +198,12 @@ module Presentable::DetailsHelper
     { name: "esfri_type", template: "list", fields: %w[esfri_types], with_desc: true, nested: { esfri_types: "name" } }
   end
 
-  def financial_information(_object)
-    {}
+  def financial_information(object)
+    if Mp::Variant.pl? && object.payment_model_url.present?
+      { name: "financial_information", template: "links", fields: %w[payment_model_url] }
+    else
+      {}
+    end
   end
 
   def geographic_locations
@@ -169,20 +236,40 @@ module Presentable::DetailsHelper
   end
 
   def marketing
-    { name: "marketing", template: "links", fields: [], type: "array", active_when_suspended: false }
+    {
+      name: "marketing",
+      template: "links",
+      fields: Mp::Variant.pl? ? %w[link_multimedia_urls link_use_cases_urls] : [],
+      type: "array",
+      active_when_suspended: false
+    }
   end
 
   def maturity_information
-    {
-      name: "maturity_information",
-      template: "array",
-      fields: %w[trls],
-      with_desc: true,
-      nested: {
-        trls: "name"
-      },
-      active_when_suspended: false
-    }
+    if Mp::Variant.pl?
+      {
+        name: "maturity_information",
+        template: "array",
+        fields: %w[trls life_cycle_statuses certifications standards open_source_technologies version last_update],
+        with_desc: true,
+        nested: {
+          trls: "name",
+          life_cycle_statuses: "name"
+        },
+        active_when_suspended: false
+      }
+    else
+      {
+        name: "maturity_information",
+        template: "array",
+        fields: %w[trls],
+        with_desc: true,
+        nested: {
+          trls: "name"
+        },
+        active_when_suspended: false
+      }
+    end
   end
 
   def meril_scientific_domains
@@ -218,9 +305,23 @@ module Presentable::DetailsHelper
     }
   end
 
+  def persistent_identity_systems
+    {
+      name: "persistent_identity_systems",
+      template: "object",
+      fields: %w[entity_type entity_type_scheme_names],
+      type: "array",
+      with_desc: true,
+      clazz: "persistent_identity_systems",
+      nested: {
+        entity_type: "name"
+      }
+    }
+  end
+
   def pid(type = "Service")
     {
-      name: "#{type == "Provider" ? "Organisation" : type} Identifiers",
+      name: "#{type == "Provider" && !Mp::Variant.pl? ? "Organisation" : type} Identifiers",
       template: "object",
       clazz: "alternative_identifiers",
       fields: %w[value]
@@ -232,15 +333,28 @@ module Presentable::DetailsHelper
   end
 
   def provider_maturity_information
-    {
-      name: "maturity_information",
-      template: "array",
-      fields: %w[legal_statuses],
-      with_desc: true,
-      nested: {
-        legal_statuses: "name"
+    if Mp::Variant.pl?
+      {
+        name: "maturity_information",
+        template: "array",
+        fields: %w[legal_statuses provider_life_cycle_statuses],
+        with_desc: true,
+        nested: {
+          legal_statuses: "name",
+          provider_life_cycle_statuses: "name"
+        }
       }
-    }
+    else
+      {
+        name: "maturity_information",
+        template: "array",
+        fields: %w[legal_statuses],
+        with_desc: true,
+        nested: {
+          legal_statuses: "name"
+        }
+      }
+    end
   end
 
   def public_contacts
@@ -275,6 +389,49 @@ module Presentable::DetailsHelper
 
   def service_dates
     { name: "dates", template: "list", fields: %w[publishing_date] }
+  end
+
+  def research_product_access_policies
+    {
+      name: "research_product_access_policies",
+      template: "list",
+      fields: %w[research_product_access_policies],
+      nested: {
+        research_product_access_policies: "name"
+      },
+      active_when_suspended: true
+    }
+  end
+
+  def research_product_licensing
+    {
+      name: "research_product_licensing",
+      template: "links",
+      fields: %w[link_research_product_license_urls],
+      type: "array"
+    }
+  end
+
+  def research_product_metadata_access_policies
+    {
+      name: "research_product_metadata_access_policies",
+      template: "list",
+      fields: %w[research_product_metadata_access_policies],
+      nested: {
+        research_product_metadata_access_policies: "name"
+      },
+      active_when_suspended: false
+    }
+  end
+
+  def research_product_metadata_licensing
+    {
+      name: "research_product_metadata_licensing",
+      template: "links",
+      fields: %w[link_research_product_metadata_license_urls],
+      type: "array",
+      active_when_suspended: true
+    }
   end
 
   def societal_grand_challenges
@@ -315,7 +472,7 @@ module Presentable::DetailsHelper
     else
       link_to _("Show more details"),
               "#{Mp::Application.config.monitoring_data_ui_url}/#{Mp::Application.config.monitoring_data_path}" +
-                "#{object.pid.to_s.partition(".").last}/details"
+              "#{object.pid.to_s.partition(".").last}/details"
     end
   end
 end

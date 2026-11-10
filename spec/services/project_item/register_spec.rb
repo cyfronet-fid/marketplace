@@ -2,12 +2,12 @@
 
 require "rails_helper"
 
-RSpec.describe ProjectItem::Register, backend: true do
+RSpec.describe ProjectItem::Register, :backend do
   let(:project_item) { create(:project_item, offer: create(:offer)) }
   let(:issue) { double("Issue", id: 1) }
 
   context "(JIRA works without errors)" do
-    before(:each) do
+    before do
       jira_client = double("Jira::Client", jira_project_key: "MP", jira_issue_type_id: 5)
       jira_class_stub = class_double(Jira::Client).as_stubbed_const(transfer_nested_constants: true)
       message_class = double("Message", message: "test1", messageable: project_item)
@@ -49,11 +49,11 @@ RSpec.describe ProjectItem::Register, backend: true do
       # project_item change email is sent only when there is more than 1 change
       project_item.new_status(status: "custom_created", status_type: :created)
 
-      expect { described_class.new(project_item).call }.to_not(change { ActionMailer::Base.deliveries.count })
+      expect { described_class.new(project_item).call }.not_to have_enqueued_mail
     end
 
     context "With message text" do
-      it "should create first comment message" do
+      it "creates first comment message" do
         expect { described_class.new(project_item, "First message").call }.to(
           change { project_item.messages.count }.by(1)
         )

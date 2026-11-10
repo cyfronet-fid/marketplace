@@ -1,0 +1,12 @@
+- content_for :title, _("Edit #{@service.name} Offer")
+- breadcrumb :backoffice_offer_edit, @offer
+
+.container
+  .mb-4.pb-4.border-header
+    = render "form",
+      offer: @offer,
+      service: @service,
+      show_delete_button: true,
+      offer_form_source_module: [:backoffice, @service, @offer],
+      offer_delete_link: backoffice_service_offer_path(@service, @offer),
+      from: params[:from] || local_assigns[:from]

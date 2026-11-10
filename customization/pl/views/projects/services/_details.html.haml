@@ -1,0 +1,37 @@
+%dl
+  %dt
+    = _("Service name") + ":"
+  %dd= link_to project_item.service.name, service_offers_path(project_item.service)
+- if project_item.service.offers_count > 1
+  %dl
+    %dt
+      = _("Service offer") + ":"
+    %dd= project_item.name
+%dl
+  %dt
+    - if project_item.orderable?
+      = _("Order date:")
+    - else
+      = _("Added to the project:")
+  %dd= l project_item.created_at, format: :short
+%dl
+  %dt= _("Service access") + ":"
+  = render Services::InlineOrderTypeComponent.new(:dd, project_item.order_type)
+%dl
+  %dt
+    = _("Project name") + ":"
+  %dd= link_to project.name, project
+- if project_item.service.resource_level_url.present?
+  %dl
+    %dt
+      = _("SLA") + ":"
+    %dd= link_to _("Service Level Agreement"), project_item.service.resource_level_url
+%dl
+  %dt
+    = _("Service Organisation") + ":"
+  %dd= service_resource_organisation(project_item)
+- unless service_providers_list(project_item).blank?
+  %dl
+    %dt
+      = _("Service Providers") + ":"
+    %dd= service_providers_list(project_item)

@@ -2,6 +2,7 @@
 
 class Presentable::ProviderInfoComponent < ApplicationComponent
   include PresentableHelper
+
   def initialize(base:, preview: false)
     super()
     @base = base
@@ -30,7 +31,8 @@ class Presentable::ProviderInfoComponent < ApplicationComponent
   def creators
     return [] unless @base.respond_to?(:creators)
 
-    @creators ||= Array(@base.creators).map { |creator| creator_details(creator) }
+    @creators ||=
+      Array(@base.creators).map { |creator| creator_details(creator) }.select { |details| details.compact_blank.any? }
   end
 
   private
@@ -40,11 +42,20 @@ class Presentable::ProviderInfoComponent < ApplicationComponent
 
     pid = creator["nameIdentifier"]
     {
-      name: creator.dig("creatorNameTypeInfo", "creatorName") || creator["creatorName"] || creator["name"],
+      name: creator_name(creator),
       pid: pid,
       pid_url: safe_creator_pid_url(pid),
       affiliation: creator.dig("creatorAffiliationInfo", "affiliation")
     }
+  end
+
+  def creator_name(creator)
+    [
+      creator.dig("creatorNameTypeInfo", "creatorName"),
+      creator["creatorName"],
+      creator["name"],
+      creator.values_at("firstName", "lastName").compact_blank.join(" ")
+    ].find(&:present?)
   end
 
   def safe_creator_pid_url(creator_pid)

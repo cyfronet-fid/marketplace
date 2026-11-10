@@ -9,8 +9,9 @@ class RemoveDeprecatedOfferColumns < ActiveRecord::Migration[7.2]
 
     # Remove the deprecated columns
     # These were replaced by the polymorphic orderable_type/orderable_id columns
-    remove_column :offers, :service_id, :bigint
-    remove_column :offers, :deployable_service_id, :bigint
+    # (whitelabel-marketplace removed them with its own offers conversion)
+    remove_column :offers, :service_id, :bigint, if_exists: true
+    remove_column :offers, :deployable_service_id, :bigint, if_exists: true
   end
 
   def down
@@ -22,13 +23,13 @@ class RemoveDeprecatedOfferColumns < ActiveRecord::Migration[7.2]
     add_index :offers, %i[service_id iid], unique: true
 
     # Restore data from orderable columns
-    execute <<-SQL.squish
+    execute <<~SQL.squish
       UPDATE offers
       SET service_id = orderable_id
       WHERE orderable_type = 'Service'
     SQL
 
-    execute <<-SQL.squish
+    execute <<~SQL.squish
       UPDATE offers
       SET deployable_service_id = orderable_id
       WHERE orderable_type = 'DeployableService'

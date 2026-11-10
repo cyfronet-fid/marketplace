@@ -228,13 +228,95 @@ com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/
 com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=en-UK&collectorId=yyyyy"
 ```
 
+## User Roles and Access Levels
+
+The system uses three user roles:
+
+- **Administrator (`admin`)**
+- **Coordinator (`coordinator`)**
+- **Executive (`executive`)**
+
+Roles are defined in [`app/models/user.rb`](app/models/user.rb) using the
+[role_model](https://github.com/martinrehfeld/role_model) gem and stored in
+the `users.roles_mask` column. Each role has a numeric value assigned to it.
+These values are used internally by the system to keep track of which roles
+a user has.
+
+### How do the numeric values work?
+
+Each role is assigned a different value:
+
+| Role                        | Value |
+| --------------------------- | ----: |
+| Administrator (`admin`)     |     1 |
+| Coordinator (`coordinator`) |     2 |
+| Executive (`executive`)     |     4 |
+
+The values are powers of two. This allows multiple roles to be combined into
+a single value.
+
+For example:
+
+- `1` → Administrator
+- `2` → Coordinator
+- `4` → Executive
+- `3` → Administrator + Coordinator (`1 + 2`)
+- `5` → Administrator + Executive (`1 + 4`)
+- `6` → Coordinator + Executive (`2 + 4`)
+- `7` → Administrator + Coordinator + Executive (`1 + 2 + 4`)
+
+#### Example
+
+If a user has the value **5**, this means that they have:
+
+**Administrator (1) + Executive (4) = 5**
+
+There is no separate "role 5". The value simply represents a combination of
+two roles.
+
+### Important: Do not change the order of the roles
+
+The numeric values are based on the order in which the roles are defined.
+
+The current order is:
+
+`admin → coordinator → executive`
+
+This order should **not be changed** once the system is in use.
+
+If a new role needs to be added in the future, it should be added **after the
+existing roles**, rather than inserted between them.
+
+This ensures that the numeric values already stored for existing users
+continue to represent the same roles.
+
+### How should roles be understood?
+
+In everyday use, there is no need to work with the numeric values. Users
+should simply be described by their roles.
+
+For example:
+
+> The user is an **Administrator and Coordinator**.
+
+Internally, the system stores this combination as the value **3**, but the
+important information for users is that they have the **Administrator** and
+**Coordinator** roles.
+
+The numeric values are an internal mechanism for storing role combinations,
+not additional levels of access.
+
 ## Sentry integration
 
-In production environment sentry integration can be turned on. To do so create
-dedicated [env variable](#environmental-variables)
-`SENTRY_DSN` with details how to connect to sentry server.
+The Sentry integration is on in every environment that sets the
+[env variable](#environmental-variables) `SENTRY_DSN` with details how to
+connect to the Sentry server (a GlitchTip server accepts the same DSN).
 Sentry environment can also be configured using `SENTRY_ENVIRONMENT`
-[env variable](#environmental-variables) (default set to `production`).
+[env variable](#environmental-variables) (default: the Rails environment).
+The application also sends logs (one entry per request, job and mail) to the
+Logs view of the Sentry server; `SENTRY_LOGS=false` turns them off and
+`SENTRY_LOGS_QUERIES=true` adds the SQL queries. `SENTRY_TRACES_SAMPLE_RATE`
+(default `0.01`) is the share of the requests stored as transactions.
 
 ## Environmental variables
 
@@ -256,6 +338,8 @@ We are currently using the following ENV variables:
 - `PORT` (Optional) - http server port (default 5000)
 - ENV variables connected to the Checkin integration are described in the
   [Checkin section](#checkin)
+- ENV variables connected to the ADM integration are described in the
+  [ADM deployments section](#adm-deployments)
 - `ROOT_URL` (Optional) - root application URL (default
   `http://localhost:#{ENV["PORT"] || 3000}` (when foreman is used to start
   application 5000 ENV variable is set)
@@ -272,10 +356,18 @@ We are currently using the following ENV variables:
 - `S3_ENDPOINT` - active storage S3 endpoint
 - `S3_ACCESS_KEY_ID` - active storage S3 access key
 - `S3_SECRET_ACCESS_KEY` - active storage S3 secret access key
-- `SMTP_ADDRESS` - smtp mail server address
-- `SMTP_USERNAME` - smtp user name or email address
-- `SMTP_PASSWORD` - smtp password
-- `FROM_EMAIL` - from email (if not set `from@example.com` will be used)
+- `SMTP_ADDRESS` - smtp mail server address (the misspelled `SMPT_ADDRESS` still works)
+- `SMTP_USERNAME` - smtp user name or email address (or `SMPT_USERNAME`)
+- `SMTP_PASSWORD` - smtp password (or `SMPT_PASSWORD`)
+- `SMTP_PORT` (Optional) - smtp port (default `587`)
+- `SMTP_AUTHENTICATION` (Optional) - smtp authentication method (default `plain`)
+- `SMTP_STARTTLS` (Optional) - turn on automatic STARTTLS; only the exact value `true` turns it on (default `true`)
+- `FROM_EMAIL` (Optional) - full email sender, including the name (default `from@example.com`;
+  `EOSC PL <eosc-noreply@eosc.pl>` under `MARKETPLACE_VARIANT=pl`)
+- `MP_HELPDESK_EMAIL` (Optional) - helpdesk address used for replies and "Contact helpdesk" links
+  in the provider onboarding emails of pl (default `helpdesk@eosc.pl`)
+- `MAIL_LOGO_PATH` (Optional) - logo shown in the email header, absolute or relative to the application root
+  (for example `customization/pl/images/eoscpl-email-logo.png`); no logo is shown when blank (default)
 - `GOOGLE_ANALYTICS` - google analytics key for GMT (if present than analytics
   script is added into head section)
 - `PORTAL_BASE_URL` - portal base URL used to generate footer and other static
@@ -687,11 +779,48 @@ To configure this integration, set the following [env variables](#environmental-
 | `AMS_SUBSCRIBE_ALL_CRON` | Cron schedule for the subscribe-all job | `*/3 * * * *` | No |
 | `AMS_SUBSCRIBE_ALL_ENABLED` | Set to `true` to enable the subscribe-all sidekiq-cron job. Unlike most optional variables here, this defaults to `false`, so the job does **not** run unless explicitly enabled | `false` | No |
 
+## ADM deployments
+
+Deployable services are deployed through the Application Deployment Manager
+(ADM). When a user orders a deployable service, `DeployableService::DeploymentJob`
+calls `Infrastructure::Deploy`, which registers an allocation on the default
+cloud site and creates an ADM deployment of the service (its PID) with inputs
+built from the TOSCA template defaults and the order parameters. ADM deploys
+asynchronously: a scheduled `Infrastructure::StatePollingJob` (sidekiq-cron)
+refreshes the deployment status, and once ADM reports it `configured` the
+project item becomes ready with the deployment URL from the template outputs.
+Destroying the infrastructure from the project page enqueues
+`Infrastructure::DestroyJob`, which deletes the ADM deployment and closes the
+project item.
+
+ADM calls authenticate with an access token of an EGI AAI service account (not
+EOSC Check-in). `Adm::AccessToken` uses a cached token, then `EGI_ACCESS_TOKEN`,
+then a token refreshed with `EGI_REFRESH_ACCESS_TOKEN`, which it caches. The
+settings are read from `config/adm.yml`.
+
+To configure this integration, set the following [env variables](#environmental-variables):
+
+| Variable | Description | Default | Required |
+| --- | --- | --- | --- |
+| `ADM_BASE_URL` | ADM API base URL, keep the trailing slash | `https://deploy.sandbox.eosc-beyond.eu/adim/` | No |
+| `ADM_TIMEOUT` | Timeout of an ADM request, in seconds | `60` | No |
+| `ADM_OPEN_TIMEOUT` | Timeout of opening a connection to ADM, in seconds | `10` | No |
+| `ADM_DEFAULT_CLOUD` | Cloud site of new deployments, a key of `cloud_sites` in `config/adm.yml` | `IISAS-FedCloud` | No |
+| `ADM_CLOUD_HOST` | OpenStack Keystone endpoint of the IISAS-FedCloud site | `https://cloud.ui.savba.sk:5000` | No |
+| `ADM_CLOUD_DOMAIN` | OpenStack project ID of the IISAS-FedCloud site | see `config/adm.yml` | Yes |
+| `EGI_REFRESH_ACCESS_TOKEN` | EGI AAI service account refresh token, exchanged for ADM access tokens | - | Yes, unless `EGI_ACCESS_TOKEN` is set |
+| `EGI_ACCESS_TOKEN` | EGI AAI access token used as is instead of a refreshed one | - | No |
+| `EGI_REFRESH_TOKEN_URL` | EGI AAI endpoint that exchanges the refresh token for an access token | `https://aai.egi.eu/auth/realms/egi/protocol/openid-connect/token` | No |
+| `EGI_CLIENT_ID` | OAuth client ID the refresh token was issued for | `token-portal` | No |
+| `EGI_TOKEN_CACHE_EXPIRY` | Minutes a refreshed access token stays cached | `50` | No |
+| `INFRASTRUCTURE_POLLING_ENABLED` | Set to `true` to enable the deployment state polling sidekiq-cron job. It defaults to `false`, so deployments never become ready unless it is enabled | `false` | No |
+| `INFRASTRUCTURE_POLLING_CRON` | Cron schedule of the deployment state polling job | `* * * * *` | No |
+
 ## Checkin
 
 Marketplace authenticates users through an external EGI/EOSC Check-in
 (Keycloak-based OpenID Connect) identity provider via Devise/OmniAuth. After
-sign-in, `Services::ApplicationController#check_vo_membership!` calls
+sign-in, `Services::ChooseOffersController#check_vo_membership!` calls
 `Checkin::CheckVoMembership` (backed by `Checkin::Client`) on every request to
 refresh the user's access token and introspect it against Check-in, gating
 access to service ordering on membership in a configured virtual

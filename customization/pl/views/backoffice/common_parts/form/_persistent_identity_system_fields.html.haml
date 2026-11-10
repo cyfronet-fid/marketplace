@@ -1,0 +1,9 @@
+%div{ "data-form-target": "#{name}" }
+  = link_form.input :entity_type_id, as: :select, collection: Vocabulary::EntityType.all,
+    disabled: object.present? ? object&.upstream_id.present? : nil
+  = link_form.association :entity_type_schemes, multiple: true, input_html: { data: { choice: true } },
+    disabled: object.present? ? object&.upstream_id.present? : nil
+  = link_form.hidden_field :_destroy, "data-form-target": "destroy"
+  .text-right
+    = link_to _("Delete #{name.humanize}"), "#", id: "persistent-identity-system-delete-#{link_form.index}",
+    class: "btn-sm disablable btn-danger", "data-action": "click->form#removeField"

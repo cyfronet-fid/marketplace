@@ -33,6 +33,14 @@ RSpec.describe Parameter::Select, backend: true do
     end
   end
 
+  context "with a default value" do
+    subject(:parameter) { build(:select_parameter, default_value: "b") }
+
+    it "keeps the default value through dump and load" do
+      expect(described_class.load(parameter.dump).default_value).to eq("b")
+    end
+  end
+
   context "with numerical string value type" do
     subject { build(:select_parameter, value_type: "string", values: %w[1 2 3 >4]) }
 

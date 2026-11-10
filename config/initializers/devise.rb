@@ -9,7 +9,7 @@ Devise.setup do |config|
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
   # config.secret_key = 'a6d3c687f41d5ba8b5f84d17b444ef4af8b4cc1bc2463cac9b1dcd4296f8c3dd86352bee5477c6c6eaf99855726432486d267139cbfc10207409994238f54ca4'
-  config.secret_key = Rails.application.credentials.secret_key_base
+  config.secret_key = Rails.application.secret_key_base
 
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
@@ -259,27 +259,74 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
-
-  config.omniauth :openid_connect,
-                  name: :checkin,
-                  response_type: :code,
-                  issuer: ENV.fetch("CHECKIN_ISSUER_URI"),
-                  discovery: ENV.fetch("CHECKIN_DISCOVERY", "true") == "true",
-                  scope: ENV.fetch("CHECKIN_SCOPE", "openid,basic,profile,email,offline_access,aarc,entitlements").split(","),
-                  pkce: ENV.fetch("CHECKIN_PKCE", "true") == "true",
-                  client_options: {
-                    port: ENV.fetch("CHECKIN_PORT", nil),
-                    scheme: ENV.fetch("CHECKIN_SCHEME", "https"),
-                    host: ENV.fetch("CHECKIN_HOST"),
-                    identifier: ENV.fetch("CHECKIN_IDENTIFIER"),
-                    secret: ENV.fetch("CHECKIN_SECRET"),
-                    redirect_uri: ENV.fetch("REDIRECT_URI"),
-                    authorization_endpoint: ENV.fetch("CHECKIN_AUTHORIZATION_ENDPOINT", nil),
-                    introspection_endpoint: ENV.fetch("CHECKIN_INTROSPECTION_ENDPOINT", nil),
-                    token_endpoint: ENV.fetch("CHECKIN_TOKEN_ENDPOINT", nil),
-                    userinfo_endpoint: ENV.fetch("CHECKIN_USERINFO_ENDPOINT", nil),
-                    jwks_uri: ENV.fetch("CHECKIN_JWKS_URI", nil)
-                  }
+  # Mp::Variant is not loaded yet in initializers, so the variant is read from
+  # config/variants.yml.
+  variant = Rails.application.config_for(:variants)[:current].to_s
+  if variant == "pl"
+    # pl configures Check-in through ENV with the EOSC Check-in defaults and a
+    # credentials fallback, names the path variables CHECKIN_*_ENDPOINT and
+    # does not request the entitlements scope.
+    checkin_host = ENV.fetch("CHECKIN_HOST", "aai.eosc-portal.eu")
+    root_url = ENV.fetch("ROOT_URL", "http://localhost:#{ENV["PORT"] || 3000}")
+    checkin_credentials = Rails.application.credentials.checkin.presence || {}
+    endpoints = {
+      issuer: ENV.fetch("CHECKIN_ISSUER_ENDPOINT", "auth/realms/core"),
+      authorize: ENV.fetch("CHECKIN_AUTHORIZE_ENDPOINT", "/auth/realms/core/protocol/openid-connect/auth"),
+      token: ENV.fetch("CHECKIN_TOKEN_ENDPOINT", "/auth/realms/core/protocol/openid-connect/token"),
+      userinfo: ENV.fetch("CHECKIN_USERINFO_ENDPOINT", "/auth/realms/core/protocol/openid-connect/userinfo"),
+      jwk: ENV.fetch("CHECKIN_JWK_ENDPOINT", "/auth/realms/core/protocol/openid-connect/certs")
+    }
+    scope = ENV["CHECKIN_SCOPE"].nil? ? %w[openid profile email aarc offline_access] : ENV["CHECKIN_SCOPE"].split(",")
+    config.omniauth :openid_connect,
+                    name: :checkin,
+                    scope: scope,
+                    response_type: :code,
+                    issuer: ENV.fetch("CHECKIN_ISSUER_URI", "https://#{checkin_host}/#{endpoints[:issuer]}"),
+                    discovery: true,
+                    pkce: ENV["CHECKIN_PKCE"] || false,
+                    client_options: {
+                      port: nil,
+                      scheme: "https",
+                      host: checkin_host,
+                      identifier: ENV.fetch("CHECKIN_IDENTIFIER", checkin_credentials[:identifier].to_s),
+                      secret: ENV.fetch("CHECKIN_SECRET", checkin_credentials[:secret].to_s),
+                      redirect_uri: ENV["REDIRECT_URI"] || "#{root_url}/users/auth/checkin/callback",
+                      authorization_endpoint: ENV.fetch("CHECKIN_AUTHORIZATION_ENDPOINT", endpoints[:authorize]),
+                      token_endpoint: ENV.fetch("CHECKIN_TOKEN_ENDPOINT", endpoints[:token]),
+                      userinfo_endpoint: ENV.fetch("CHECKIN_USERINFO_ENDPOINT", endpoints[:userinfo]),
+                      jwks_uri: ENV.fetch("CHECKIN_JWKS_ENDPOINT", endpoints[:jwk])
+                    }
+  else
+    # marketplace and whitelabel configure Check-in (Keycloak) through ENV only:
+    # the variables fetched without a default are mandatory at boot, and
+    # discovery can be switched off (the endpoint variables are used then).
+    # whitelabel does not request the aarc and entitlements scopes and keeps
+    # Keycloak's endpoint paths as defaults for a deployment without discovery.
+    whitelabel = variant == "whitelabel"
+    default_scope =
+      whitelabel ? "openid,basic,profile,email,offline_access" : "openid,basic,profile,email,offline_access,aarc,entitlements"
+    config.omniauth :openid_connect,
+                    name: :checkin,
+                    response_type: :code,
+                    issuer: ENV.fetch("CHECKIN_ISSUER_URI"),
+                    discovery: ENV.fetch("CHECKIN_DISCOVERY", "true") == "true",
+                    scope: ENV.fetch("CHECKIN_SCOPE", default_scope).split(","),
+                    pkce: ENV.fetch("CHECKIN_PKCE", "true") == "true",
+                    client_options: {
+                      port: ENV.fetch("CHECKIN_PORT", nil),
+                      scheme: ENV.fetch("CHECKIN_SCHEME", "https"),
+                      host: ENV.fetch("CHECKIN_HOST"),
+                      identifier: ENV.fetch("CHECKIN_IDENTIFIER"),
+                      secret: ENV.fetch("CHECKIN_SECRET"),
+                      redirect_uri: ENV.fetch("REDIRECT_URI"),
+                      authorization_endpoint: ENV.fetch("CHECKIN_AUTHORIZATION_ENDPOINT", whitelabel ? "/authorize" : nil),
+                      introspection_endpoint: ENV.fetch("CHECKIN_INTROSPECTION_ENDPOINT", nil),
+                      token_endpoint: ENV.fetch("CHECKIN_TOKEN_ENDPOINT", whitelabel ? "/token" : nil),
+                      userinfo_endpoint: ENV.fetch("CHECKIN_USERINFO_ENDPOINT", whitelabel ? "/userinfo" : nil),
+                      jwks_uri: ENV.fetch("CHECKIN_JWKS_URI", whitelabel ? "/jwk" : nil),
+                      end_session_endpoint: ENV.fetch("CHECKIN_END_SESSION_ENDPOINT", whitelabel ? "/logout" : nil)
+                    }
+  end
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

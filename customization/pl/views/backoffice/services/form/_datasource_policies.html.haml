@@ -1,0 +1,33 @@
+- collapsed = collapsed?(datasource, [:submission_policy_url, :preservation_policy_url,
+  :version_control, :persistent_identity_systems])
+.card.shadow-sm.rounded{ class: datasource_fields_class, "data-form-target": "datasourceFields" }
+  %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed),
+            data: { toggle: "collapse", target: "#policies" },
+            aria: { expanded: true, controls: "policies" } }
+    .card-header.text-left{ id: "policies-header" }
+      .row
+        .col-10
+          = _("Datasource policies")
+        .col-2.text-right
+          .collapse-icon
+            %i.fas.fa-chevron-down
+            %i.fas.fa-chevron-up
+  .collapse{ id: "policies", "aria-labelledby": "policies-header",
+          "data-parent": "#accordion-form",
+          class: ("show" unless collapsed) }
+    .card-body
+      = f.input :submission_policy_url, disabled: cant_edit(:submission_policy_url)
+      = f.input :preservation_policy_url, disabled: cant_edit(:preservation_policy_url)
+      = f.input :version_control, include_hidden: true, disabled: cant_edit(:version_control)
+      %h3
+        = _("Persistent identity systems")
+      = f.fields_for :persistent_identity_systems,
+        disabled: datasource.upstream_id.present?, multiple: true, as: :array,
+        wrapper_html: { "data-form-target" => "persistentIdentitySystem" } do |id_form|
+        = render_persistent_identity_system(id_form, datasource)
+      = link_to _("Add new Persistent identity system"), "#", class: "btn btn-primary disablable",
+        data: { "form-target": "addField",
+        action: "click->form#addField",
+        value: "persistentIdentitySystems",
+        fields: f.fields_for(:persistent_identity_systems, PersistentIdentitySystem.new,
+        child_index: "new_field") { |idf| render_persistent_identity_system(idf, datasource) } }

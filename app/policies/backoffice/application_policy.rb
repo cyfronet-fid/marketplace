@@ -3,7 +3,7 @@
 class Backoffice::ApplicationPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      if user&.coordinator?
+      if (Mp::Variant.pl? && user&.admin?) || user&.coordinator?
         scope.all
       elsif user&.data_administrator?
         scope.managed_by(user)
@@ -56,10 +56,15 @@ class Backoffice::ApplicationPolicy < ApplicationPolicy
   end
 
   def management_role?
-    coordinator? || data_administrator?
+    admin? || coordinator? || data_administrator?
   end
 
   private
+
+  # Only pl opens the backoffice to admins (pl-marketplace #178).
+  def admin?
+    Mp::Variant.pl? && user&.admin?
+  end
 
   def coordinator?
     user&.coordinator?
@@ -70,7 +75,7 @@ class Backoffice::ApplicationPolicy < ApplicationPolicy
   end
 
   def access?
-    coordinator? || record&.owned_by?(user)
+    admin? || coordinator? || record&.owned_by?(user)
   end
 
   def actionable?

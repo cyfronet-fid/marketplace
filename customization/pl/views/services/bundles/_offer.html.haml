@@ -1,0 +1,30 @@
+.col-12.mb-3.pl-0.pr-0
+  .card.border-0
+    .card-body.service-box.pt-4.pb-0
+      .row.mb-2
+        .col-3.col-md-3.mt-2.text-center
+          = presentable_logo(service)
+        .col-9.col-md-9
+          %h3
+            = link_to truncate(service.name, length: 40, escape: false),
+                      service_offers_path(service)
+            - if service.horizontal
+              %span.horizontal-badge-new Horizontal service
+          - if providers_text(service).present?
+            .meta-info
+              #{_("Provided by")}:
+              %span= providers_text(service).truncate(24)
+          .meta-info
+            #{_("Organisation")}:
+            %span= resource_organisation_text(service).truncate(24)
+          %article.mt-3
+            %p
+              = truncate(service.tagline, length: 1000, escape: false)
+          .bundle-parameters-list
+            = render "services/offers/parameters",
+              technical_parameters: offer.attributes.map(&:to_json), service: offer.service, id: offer.id
+
+      .row.service-links
+        .col-12.col-lg-12.row
+        .col-12.col-sm-12
+          = render Presentable::LinksComponent.new(object: service, preview: false)

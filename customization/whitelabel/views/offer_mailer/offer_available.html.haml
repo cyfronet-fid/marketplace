@@ -1,0 +1,13 @@
+%p Dear #{@user.full_name},
+%p
+  We are pleased to inform you that your resource #{@offer.name} is now available.
+  You can access it using the link below:
+
+= link_to service_choose_offer_url(@offer.service,
+          customizable_project_item: { offer_id: @offer.iid }),
+          data: { probe: "", "service-id": @offer.service.id, e2e: "select-offer-btn",
+          "preview-target": local_assigns[:preview] ? "link" : "", "turbo-method": :put } do
+  %span.btn.btn-secondary.font-weight-bolder
+    = _("Select an offer")
+
+%p If you have any questions, please do not hesitate to contact us.

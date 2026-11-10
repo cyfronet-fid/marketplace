@@ -1,0 +1,253 @@
+.order-nav {
+  font-weight: bold;
+  border: 1px solid $border-color;
+  border-radius: 100px;
+  overflow: hidden;
+  margin-bottom: 30px;
+  $color-1: #1c353d;
+  $color-2: #f7f7f7;
+
+  li {
+    &:not(:first-child) .active::before {
+      position: absolute;
+      top: 0;
+      height: 40px;
+      width: 40px;
+      background: $white;
+      content: " ";
+      left: -28px;
+      transform: rotate(-45deg);
+      -webkit-transform: rotate(-45deg);
+    }
+
+    a {
+      color: $color-1;
+      padding: 0.5rem 0.5rem 0.5rem 1.1rem;
+      position: relative;
+
+      &.active {
+        color: $white;
+        background: $color-1;
+
+        &::after {
+          border-left: 60px solid $color-1;
+        }
+      }
+
+      &::after {
+        width: 0;
+        height: 0;
+        border-top: 90px solid transparent;
+        border-bottom: 90px solid transparent;
+        border-left: 60px solid $white;
+        position: absolute;
+        top: -70px;
+        content: " ";
+        right: -21px;
+      }
+    }
+
+    .disabled {
+      background: $palette-gray-5;
+      color: $palette-gray-30;
+    }
+  }
+}
+
+.datepicker {
+  padding: 5px;
+  text-align: center;
+
+  &:hover,
+  &:active,
+  &:focus {
+    cursor: pointer;
+  }
+
+  th,
+  td {
+    padding: 2px 5px;
+    font-size: 0.8em;
+    border-radius: 20%;
+    width: calc(100% / 7);
+
+    &.new.day,
+    &.old.day {
+      color: $palette-solid-30;
+    }
+
+    &.active {
+      background-color: $link-color;
+      color: $palette-solid-5;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  h1 {
+    font-size: 1.4rem;
+  }
+
+  .order-nav {
+    border: none;
+    border-radius: 0;
+
+    li {
+      width: 100%;
+      margin-bottom: 9px;
+
+      a {
+        &::after,
+        &.active::after,
+        &.active::before {
+          display: none;
+        }
+      }
+    }
+  }
+
+  /*
+  .order-top-nav {
+    a {
+      margin-bottom: 25px;
+      float: right;
+    }
+  } */
+
+  .order-bottom-nav {
+    a {
+      margin-bottom: 25px;
+      float: right;
+    }
+
+    .ml-3 {
+      margin: 0 !important;
+    }
+  }
+
+  .card {
+    .card-body {
+      padding: 0.9rem 0.5rem 0.5rem !important;
+    }
+  }
+}
+
+.order-container {
+  h3 {
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 8px;
+
+    a {
+      margin-left: 10px;
+      font-weight: normal;
+    }
+  }
+
+  h4 {
+    border: none;
+  }
+
+  h5::after {
+    content: none;
+  }
+
+  .offer-description {
+    border-color: $border-color;
+
+    h4 {
+      font-weight: bold;
+      font-size: 17px;
+      padding-bottom: 0;
+    }
+
+    .card-text {
+      margin-bottom: 20px;
+    }
+
+    td {
+      border-top: none;
+      border-bottom: 1px solid $border-color;
+    }
+  }
+
+  .additional-information {
+    h4 {
+      text-transform: uppercase;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      padding: 0;
+    }
+
+    dl {
+      padding-left: 15px;
+      margin: 15px 0 35px;
+      border-left: 3px solid $border-color;
+
+      dd {
+        font-size: 16px;
+        margin-bottom: 1rem;
+
+        h4 {
+          text-transform: none;
+          font-size: 16px;
+          font-weight: 600;
+          line-height: 25px;
+          margin: 0;
+        }
+      }
+
+      .form-control-label {
+        font-size: 16px;
+        line-height: 25px;
+        font-weight: 600;
+      }
+    }
+
+    dt {
+      margin-top: 15px;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 25px;
+
+      &:first-of-type {
+        margin-top: 0;
+      }
+    }
+  }
+
+  .bottom-hr {
+    background-color: lighten($border-color, 5%);
+    border: 0 none;
+    color: lighten($border-color, 5%);
+    height: 5px;
+  }
+
+  .sc-head {
+    border-bottom: 1px solid $border-color;
+    border-top: none;
+    text-transform: uppercase;
+    padding: 0;
+    margin-bottom: 20px;
+    margin-top: 25px;
+  }
+
+  .bundle-configuration-title {
+    font-size: 22px;
+    text-transform: none;
+    font-weight: 400;
+    margin: 15px 0 10px;
+  }
+
+  .bundle-info {
+    margin: 0 0 30px;
+    border: 1px solid $palette-gray-10;
+    border-radius: 4px;
+    padding: 30px 30px 45px;
+
+    p {
+      color: $palette-gray-70;
+    }
+  }
+}

@@ -6,11 +6,11 @@ class Importers::Token
   class RequestError < StandardError
     def initialize(
       msg = "" \
-        "Access Token can't be received from a refresh token. " \
-        "Cause can be: \n" \
-        "- expired/missing REFRESH_TOKEN \n" \
-        "- incorrect IMPORTER_AAI_CLIENT_ID for which the refresh token was generated \n" \
-        "- incorrect IMPORTER_AAI_HOST/CHECKIN_HOST for which the refresh token was generated\n"
+            "Access Token can't be received from a refresh token. " \
+            "Cause can be: \n" \
+            "- expired/missing REFRESH_TOKEN \n" \
+            "- incorrect IMPORTER_AAI_CLIENT_ID for which the refresh token was generated \n" \
+            "- incorrect IMPORTER_AAI_HOST/CHECKIN_HOST for which the refresh token was generated\n"
     )
       super
     end
@@ -31,6 +31,7 @@ class Importers::Token
     data = { grant_type: "refresh_token", refresh_token: REFRESH_TOKEN, client_id: CLIENT_ID }
     response = @faraday.post("#{AAI_BASE_URL}#{AAI_TOKEN_PATH}", data)
     raise RequestError if response.blank? || !response.body&.include?("access_token")
+
     JSON.parse(response.body)["access_token"]
   end
 end

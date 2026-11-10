@@ -1,0 +1,54 @@
+= form_tag url_for, method: :get, role: "search",
+           "data-autocomplete-target": "form search.form",
+           "data-search-target": "form",
+           "data-controller": "search autocomplete external",
+           "data-autocomplete-url": "service_autocomplete",
+           "data-search-services-path": services_path,
+           "data-search-categories-path": "/services/c",
+           "data-shepherd-tour-target": "overview_8",
+           class: "searchbar whitelabel" do
+  = hidden_field_tag "object_id", nil, "data-autocomplete-target": "hidden"
+  = hidden_field_tag "type", nil, "data-autocomplete-target": "type", "data-search-target": "type"
+  = hidden_field_tag "anchor", nil, "data-autocomplete-target": "anchor"
+  = hidden_field_tag "sort", "_score", id: nil
+  - query_params.except(:q, :sort).each do |key, value|
+    = render "layouts/hidden_fields", key: key, value: value
+
+  .searchbar__input
+    %label.sr-only{ for: "search" }= _("Search")
+    = text_field_tag :q, params[:q],  class: "autocomplete-input",
+                                     placeholder: "Odkryj nasz katalog",
+                                     data: { autocomplete_target: "input",
+                                             external_target: "query",
+                                             toggle: "dropdown",
+                                             e2e: "searchbar-input",
+                                             action: "keydown.esc->external#clear input->external#toggleClear",
+                                             probe: "" }
+    %a.search-clear{ href: url_for(params.permitted? ? params.except(:q, :sort, :page) : {}),
+                            class: "#{"d-none" unless params[:q]}",
+                            title: _("Wyczyść"),
+                            data: { external_target: "clear",
+                                    action: "click->external#clear",
+                                    e2e: "search-clear-btn" } }
+      .fas.fa-times
+    %ul.autocomplete-results{ "data-autocomplete-target": "results", "data-e2e": "autocomplete-results" }
+  .searchbar__select{ "data-probe": "" }
+    %span{ "data-search-target": "selected" }
+      = _("Wszystkie serwisy")
+    %select#category-select.container-select{ "data-action": "change->search#refresh",
+                                              "data-e2e": "category-select",
+                                              "data-search-target": "categorySelect" }
+      %option{ value: "", selected: "selected" }
+        = _("Wszystkie serwisy")
+      = options_for_select categories.partition { |cat|  cat.name != "Other" }.flatten(1).map { |cat| [cat.name,
+        cat.slug] }, params[:category]
+  .input-group-append
+    %button#query-submit.input-group-text.bg-white{ "data-e2e": "query-submit-btn" }
+      %i.fas.fa-search
+
+.browse.d-flex.whitelabel
+  .browse-label
+    Popularne frazy:
+  .popular-box
+    - ["nanotechnologie", "zasoby obliczeniowe", "pamięć masowa"].each do |phrase|
+      = link_to phrase, services_path(q: phrase)

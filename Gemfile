@@ -114,9 +114,6 @@ end
 group :development do
   gem "web-console", "~> 4.2"
   gem "listen"
-  gem "spring"
-  gem "spring-watcher-listen", "~> 2.1"
-  gem "spring-commands-rspec"
   gem "rubocop", require: false
   gem "rubocop-rails", require: false
   gem "rubocop-rspec", require: false
@@ -139,11 +136,11 @@ end
 
 gem "tzinfo-data", platforms: %i[windows jruby]
 
-group :production do
-  gem "sentry-ruby", "~> 5.28"
-  gem "sentry-rails", "~> 5.28"
-  gem "sentry-sidekiq", "~> 5.28"
-end
+# Error tracking and logs; active in every environment that sets SENTRY_DSN
+# (config/initializers/sentry.rb).
+gem "sentry-ruby", "~> 5.28"
+gem "sentry-rails", "~> 5.28"
+gem "sentry-sidekiq", "~> 5.28"
 
 gem "faraday", "~> 1.10"
 gem "faraday_middleware"

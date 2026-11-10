@@ -1,0 +1,17 @@
+.service-info-box.recommendation.ver-1
+  %header
+    = link_to truncate(recommendation_v1.send(:name), length: 40, escape: false),
+              service_offers_path(recommendation_v1, fromc: category.present? ? category.slug : nil,
+              from_recommendation_panel: true), "data-probe": "recommendation-panel",
+              "data-service-id" => recommendation_v1.id
+  %article
+    %p
+      = truncate(recommendation_v1.send(:tagline), length: 110, escape: false)
+  %footer
+    .column-left
+      %p
+        %small
+          = _("Organisation") + ":"
+        %br
+          %span
+            = resource_organisation_text(recommendation_v1).truncate(24)

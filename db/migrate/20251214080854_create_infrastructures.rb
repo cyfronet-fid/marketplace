@@ -1,7 +1,9 @@
 # frozen_string_literal: true
+
 class CreateInfrastructures < ActiveRecord::Migration[7.2]
   def change
-    create_table :infrastructures do |t|
+    # whitelabel-marketplace created this table under its own migration version.
+    create_table :infrastructures, if_not_exists: true do |t|
       t.references :project_item, null: false, foreign_key: true
 
       # Infrastructure Manager details
@@ -23,7 +25,7 @@ class CreateInfrastructures < ActiveRecord::Migration[7.2]
       t.timestamps
     end
 
-    add_index :infrastructures, :im_infrastructure_id, unique: true
-    add_index :infrastructures, :state
+    add_index :infrastructures, :im_infrastructure_id, unique: true, if_not_exists: true
+    add_index :infrastructures, :state, if_not_exists: true
   end
 end

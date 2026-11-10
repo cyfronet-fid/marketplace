@@ -1,0 +1,161 @@
+:ruby
+  content_for :title, _("Service comparison")
+  i = 3 - @services&.size
+  row_idx = 0
+  breadcrumb :comparison
+.container
+  %table.services-comparison.bordered.table-responsive{ "data-e2e": "services-comparison-table" }
+    %thead
+      %tr
+        %th{ colspan: 4 }
+          = _("Comparison")
+          .float-right
+            = button_to comparisons_path, class: "image-replaced", method: :delete, data: { probe: "", turbo: false } do
+              %span.font-weight-light.text-uppercase
+                = _("Clear all")
+    %tbody
+      %tr
+        %th.title-col
+        - @services.each do |service|
+          %th.title-col
+            .logo-wrapper
+              %span.helper
+              = image_tag service.logo.variant(resize_to_limit: [100, 100]) if service.logo.attached? && service.logo.variable?
+            = button_to comparisons_services_path(slug: service.slug, fromc: params[:fromc], params: @query_params),
+              method: :delete, class: "image-replaced",
+              data: { e2e: "delete-service-btn", probe: "", "service-id": service.id, turbo: false,
+              "turbo-method": :delete } do
+              %i.far.fa-trash-alt
+            .service-title
+              = link_to service.name.truncate(30, separator: " "),
+                service_offers_path(service, fromc: params[:fromc], comp_link: true),
+                "data-probe": "", "data-service-id": service.id
+            .service-description
+              = service.description.truncate(80, separator: " ")
+        - i.times do
+          %td.title-col.empty.text-uppercase
+            = link_to _("Add next service"), services_comparison_link(@query_params),
+              "data-e2e": "add-next-resource-btn", "data-probe": ""
+      %tr{ class: row_class(row_idx) }
+        %th{ "data-toggle": "tooltip",
+        title: "The name(s) (or abbreviation(s)) of Provider that manage the Service in |
+        federated scenarios." } |
+          = _("Service Organisation")
+        - @services.each do |service|
+          %td= service.resource_organisation.name
+        - row_idx += 1
+      - if @services.any? { |s| s.providers.reject { |p| p == s.resource_organisation }.present? }
+        %tr{ class: row_class(row_idx) }
+          %th{ "data-toggle": "tooltip",
+          title: "The name(s) (or abbreviation(s)) of Provider(s) that deliver the Service in |
+          federated scenarios." } |
+            = _("Service Providers")
+          - @services.each do |service|
+            %td= service.providers.reject { |p| p == service.resource_organisation }.map(&:name).join(", ")
+          - row_idx += 1
+      %tr{ class: row_idx.even? ? nil : "lightgrey-row" }
+        %th{ "data-toggle": "tooltip",
+        title: "The branch of science, scientific discipline that is related to the Service." }
+          = _("Scientific Domain")
+        - @services.each do |service|
+          %td
+            %dl
+              - field_tree(service, :scientific_domains).each do |parent, children|
+                %dt
+                  %span
+                    = parent
+                - children.each do |child|
+                  %dd
+                    %span= child
+        - row_idx += 1
+      %tr{ class: row_class(row_idx) }
+        %th{ "data-toggle": "tooltip",
+        title: "A named group of Services that offer access to the same type of Resource or capabilities." }
+          = _("Categorisation")
+        - @services.each do |service|
+          %td
+            %dl
+              - field_tree(service, :categories).each do |parent, children|
+                %dt
+                  %span
+                    = parent
+                - children.each do |child|
+                  %dd
+                    %span= child
+        - row_idx += 1
+      - if @services.any? { |s| s.target_users.present? }
+        %tr{ class: row_class(row_idx) }
+          %th{ "data-toggle": "tooltip",
+          title: "Type of users/customers that commissions a Provider to deliver a Service." }
+            = _("Target Users")
+          - @services.each do |service|
+            %td= service.target_users.map(&:name).join(", ")
+          - row_idx += 1
+      - if @services.any? { |s| s.access_types.present? }
+        %tr{ class: row_class(row_idx) }
+          %th{ "data-toggle": "tooltip",
+          title: "The way a user can access the Service (Remote, Physical, Virtual, etc.)" }
+            = _("Service Access Type")
+          - @services.each do |service|
+            %td= service.access_types.map(&:name).join(", ")
+          - row_idx += 1
+      - if @services.any? { |s| s.access_modes.present? }
+        %tr{ class: row_class(row_idx) }
+          %th{ "data-toggle": "tooltip",
+          title: "Eligibility/criteria for granting access to users (excellence-based, free-conditionally, free etc.)" }
+            = _("Service Access Mode")
+          - @services.each do |service|
+            %td= service.access_modes.map(&:name).join(", ")
+          - row_idx += 1
+      - if @services.any? { |s| s.tags.present? }
+        %tr{ class: row_class(row_idx) }
+          %th{ "data-toggle": "tooltip",
+          title: "Keywords associated to the Service to simplify search by relevant keywords." }
+            = _("Tags")
+          - @services.each do |service|
+            %td
+              - service.tag_list.sort.each do |tag|
+                = link_to tag, services_filter_link(tag, tag), class: "badge badge-light"
+          - row_idx += 1
+      - if @services.any? { |s| s.geographical_availabilities.present? }
+        %tr{ class: row_class(row_idx) }
+          %th{ "data-toggle": "tooltip", title: "Locations where the Service is offered." }
+            = _("Geographical Availability")
+          - @services.each do |service|
+            %td= service.geographical_availabilities.join(", ")
+          - row_idx += 1
+      - if @services.any? { |s| s.language_availability.present? }
+        %tr{ class: row_class(row_idx) }
+          %th{ "data-toggle": "tooltip", title: "Languages of the (user interface of the) Service." }
+            = _("Language Availability")
+          - @services.each do |service|
+            %td
+              %ul
+              - service.language_availability.each do |language|
+                %li= I18nData.languages[language.upcase] || language
+          - row_idx += 1
+      - if @services.any? { |s| s.trls.present? }
+        %tr{ class: row_class(row_idx) }
+          %th{ "data-toggle": "tooltip",
+          title: "The Technology Readiness Level of the Service updated in the context of the EOSC." }
+            = _("Technology Readiness Level")
+          - @services.each do |service|
+            %td{ "data-toggle": "tooltip", title: service.trls.present? ? trl_description_text(service) : nil }
+              = service.trls.map { |trl| trl.name.upcase }.join(", ")
+          - row_idx += 1
+      - if @services.any? { |s| s.life_cycle_statuses.present? }
+        %tr{ class: row_class(row_idx) }
+          %th{ "data-toggle": "tooltip", title: "Phase of the Service life-cycle." }
+            = _("Service Life Cycle Status")
+          - @services.each do |service|
+            - next unless service.life_cycle_statuses.present?
+            %td= service.life_cycle_statuses.first.name
+          - row_idx += 1
+      %tr{ class: row_class(row_idx) }
+        %th{ "data-toggle": "tooltip",
+        title: "Information on the order type (requires an ordering procedure, or no ordering and if fully open or |
+        requires authentication)" } |
+          = _("Service Order Type")
+        - @services.each do |service|
+          %td
+            = render Services::InlineOrderTypeComponent.new(:span, order_type(service))

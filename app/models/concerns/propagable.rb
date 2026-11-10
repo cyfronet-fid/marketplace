@@ -14,8 +14,12 @@ module Propagable
 
   included { after_save :propagate_to_ess }
 
-  def propagate_to_ess
-    public? && !destroyed? ? Ess::Add.call(self, propagable_type) : Ess::Delete.call(id, propagable_type)
+  def propagate_to_ess(propagate_offers: true)
+    if public? && !destroyed?
+      Ess::Add.call(self, propagable_type, propagate_offers: propagate_offers)
+    else
+      Ess::Delete.call(id, propagable_type)
+    end
   end
 
   def propagable_type

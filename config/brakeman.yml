@@ -1,0 +1,5 @@
+# The customization directories are deployment frontends read through
+# CUSTOMIZATION_PATH, not application code. When they are scanned, their views
+# replace the same-named views of app/views in the analysis.
+:skip_files:
+  - customization/

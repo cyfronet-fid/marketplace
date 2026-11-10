@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Service::Update, backend: true do
+RSpec.describe Service::Update, :backend do
   it "updates attributes" do
     service = create(:service)
 
@@ -45,15 +45,16 @@ RSpec.describe Service::Update, backend: true do
     expect(service.offers.size).to eq(0)
   end
 
-  context "#bundled_offers" do
+  describe "#bundled_offers" do
     it "sends notification if service made public" do
       service = build(:service, status: "draft")
       bundled_offer = build(:offer)
       create(:bundle, service: service, offers: [bundled_offer])
 
-      expect { described_class.call(service, { status: "published" }) }.to change {
-        ActionMailer::Base.deliveries.count
-      }.by(1)
+      expect { described_class.call(service, { status: "published" }) }.to have_enqueued_mail(
+        OfferMailer,
+        :offer_bundled
+      )
     end
 
     it "sends notification and unbundles if service made non-public" do
@@ -64,9 +65,7 @@ RSpec.describe Service::Update, backend: true do
 
       service.reload
 
-      expect { described_class.call(service, { status: "draft" }) }.to change {
-        ActionMailer::Base.deliveries.count
-      }.by(1)
+      expect { described_class.call(service, { status: "draft" }) }.to have_enqueued_mail(OfferMailer, :offer_unbundled)
 
       bundle.reload
       expect(bundle).to be_draft

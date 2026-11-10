@@ -4,6 +4,7 @@ class Parameter::Input < Parameter
   attribute :unit, :string
   attribute :value_type, :string
   attribute :sensitive, :boolean, default: false
+  attribute :default_value
 
   validates :value_type, presence: true, inclusion: %w[string integer]
 
@@ -15,7 +16,8 @@ class Parameter::Input < Parameter
       description: hint,
       unit: unit,
       value_type: value_type,
-      sensitive: sensitive
+      sensitive: sensitive,
+      default_value: default_value
     )
   end
 
@@ -26,7 +28,8 @@ class Parameter::Input < Parameter
       hint: hsh["description"],
       unit: hsh["unit"],
       value_type: hsh["value_type"],
-      sensitive: hsh["sensitive"]
+      sensitive: hsh["sensitive"],
+      default_value: hsh["default_value"]
     )
   end
 end

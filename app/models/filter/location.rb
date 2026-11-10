@@ -14,14 +14,15 @@ class Filter::Location < Filter
   private
 
   def fetch_options
-    [{ name: "Any", id: "" }] +
+    [name: "Any", id: ""] +
       Service
-        .where(status: :published)
-        .pluck(:geographical_availabilities)
-        .flatten
-        .uniq
-        .sort
-        .map { |s| { name: s, id: s } }
+      .where(status: :published)
+      .pluck(:geographical_availabilities)
+      .flatten
+      .compact
+      .uniq
+      .sort
+      .map { |s| { name: s, id: s } }
   end
 
   def where_constraint

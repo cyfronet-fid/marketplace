@@ -4,7 +4,8 @@
 // deleting this file will break booting this application
 //= link_tree ../builds
 //= link_tree ../fonts
-//= link_tree ../images/
+// ../images is linked by logical path in config/initializers/assets.rb, so
+// that a same-named image of a customization replaces the repository image.
 //= link_tree ../stylesheets/
 //= link jquery.js
 //= link trix.css

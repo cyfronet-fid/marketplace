@@ -29,11 +29,11 @@ class DeployableService::CreateDefaultOffer < DeployableService::ApplicationServ
 
     if offer.save
       Rails.logger.info "#{new_record ? "Created" : "Updated"} default offer for DeployableService " +
-                          "'#{@deployable_service.name}' (ID: #{@deployable_service.id})"
+                        "'#{@deployable_service.name}' (ID: #{@deployable_service.id})"
       offer
     else
       Rails.logger.error "Failed to #{new_record ? "create" : "update"} default offer for DeployableService " +
-                           "'#{@deployable_service.name}': #{offer.errors.full_messages.join(", ")}"
+                         "'#{@deployable_service.name}': #{offer.errors.full_messages.join(", ")}"
       nil
     end
   end
@@ -48,7 +48,7 @@ class DeployableService::CreateDefaultOffer < DeployableService::ApplicationServ
   def parameters_from_template_url(url)
     return if url.blank?
 
-    template = fetch_template(raw_github_url(url))
+    template = DeployableService::FetchTemplate.call(url)
     parsed = YAML.safe_load(template)
     unless parsed.is_a?(Hash)
       Rails.logger.error("Failed to fetch default offer parameters from '#{url}': response is not a YAML mapping")
@@ -62,27 +62,17 @@ class DeployableService::CreateDefaultOffer < DeployableService::ApplicationServ
     end
 
     inputs.map { |id, definition| parameter_from_tosca_input(id, definition || {}) }
-  rescue Psych::SyntaxError, URI::InvalidURIError, SocketError, SystemCallError, Net::HTTPError => e
-    Rails.logger.error "Failed to fetch default offer parameters from '#{url}': #{e.message}"
-    nil
-  end
+  rescue Psych::SyntaxError, URI::InvalidURIError, SocketError, SystemCallError, Faraday::Error => e
+    Rails.error.report(e, context: { url: url })
 
-  def fetch_template(url)
-    uri = URI.parse(url)
-    response = Net::HTTP.get_response(uri)
-
-    return response.body if response.is_a?(Net::HTTPSuccess)
-
-    raise Net::HTTPError.new("HTTP #{response.code} #{response.message}", response)
-  end
-
-  def raw_github_url(url)
-    url.sub("github.com", "raw.githubusercontent.com").sub("/blob/", "/")
+    # Surface the failure while developing and testing, a missing default offer is easy to overlook
+    Rails.env.local? ? raise(e) : nil
   end
 
   def parameter_from_tosca_input(id, definition)
     definition = ActiveSupport::HashWithIndifferentAccess.new(definition)
     values = valid_values(definition)
+    default = default_value(id, definition)
     attrs = {
       id: id,
       name: definition[:label].presence || id.to_s.humanize,
@@ -91,9 +81,29 @@ class DeployableService::CreateDefaultOffer < DeployableService::ApplicationServ
     }
 
     if values.present?
-      Parameter::Select.new(attrs.merge(values: values, mode: "dropdown"))
+      Parameter::Select.new(
+        attrs.merge(values: values, mode: "dropdown", default_value: (default if values.include?(default)))
+      )
     else
-      Parameter::Input.new(attrs.merge(sensitive: sensitive_input?(id)))
+      sensitive = sensitive_input?(id)
+      Parameter::Input.new(attrs.merge(sensitive: sensitive, default_value: (default unless sensitive)))
+    end
+  end
+
+  # Only string, scalar-unit and integer defaults are pre-filled: submitted values overwrite the template default,
+  # so pre-filling other TOSCA types (boolean, list, ...) would change them into strings.
+  def default_value(id, definition)
+    # Each order gets its own DNS name (see ProjectItem::Attributes), so none is stored with the offer
+    return if DeployableService::DnsName.input?(id)
+
+    default = definition[:default]
+    case definition[:type].to_s
+    when "integer"
+      Integer(default.to_s, 10, exception: false)
+    when "string"
+      default.to_s if default.is_a?(String) || default.is_a?(Numeric)
+    when /\Ascalar-unit\./
+      default if default.is_a?(String)
     end
   end
 

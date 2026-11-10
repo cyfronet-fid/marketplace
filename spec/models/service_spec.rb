@@ -3,21 +3,62 @@
 require "rails_helper"
 require_relative "publishable"
 
-RSpec.describe Service, backend: true do
+RSpec.describe Service, :backend do
   include_examples "publishable"
 
-  it { should validate_presence_of(:name) }
-  it { should validate_presence_of(:description) }
-  it { should validate_presence_of(:rating) }
+  it { is_expected.to validate_presence_of(:name) }
+  it { is_expected.to validate_presence_of(:description) }
+  it { is_expected.to validate_presence_of(:rating) }
 
-  it { should have_many(:providers) }
-  it { should have_many(:categorizations).dependent(:destroy) }
-  it { should have_many(:offers).dependent(:restrict_with_error) }
-  it { should have_many(:categories) }
-  it { should have_many(:service_scientific_domains).dependent(:destroy) }
-  it { should have_many(:service_vocabularies).dependent(:destroy) }
+  describe "geographical availabilities" do
+    context "under pl without a country" do
+      let(:service) { build(:service, geographical_availabilities: []) }
 
-  it { should belong_to(:upstream).required(false) }
+      before do
+        allow(Mp::Variant).to receive(:pl?).and_return(true)
+        service.valid?
+      end
+
+      it "needs at least one country" do
+        expect(service.errors[:geographical_availabilities]).to include("are required. Please add at least one")
+      end
+    end
+
+    context "under pl with a country" do
+      let(:service) { build(:service, geographical_availabilities: ["PL"]) }
+
+      before do
+        allow(Mp::Variant).to receive(:pl?).and_return(true)
+        service.valid?
+      end
+
+      it "accepts the service" do
+        expect(service.errors[:geographical_availabilities]).to be_empty
+      end
+    end
+
+    context "under marketplace without a country" do
+      let(:service) { build(:service, geographical_availabilities: []) }
+
+      before do
+        allow(Mp::Variant).to receive(:pl?).and_return(false)
+        service.valid?
+      end
+
+      it "accepts the service" do
+        expect(service.errors[:geographical_availabilities]).to be_empty
+      end
+    end
+  end
+
+  it { is_expected.to have_many(:providers) }
+  it { is_expected.to have_many(:categorizations).dependent(:destroy) }
+  it { is_expected.to have_many(:offers).dependent(:restrict_with_error) }
+  it { is_expected.to have_many(:categories) }
+  it { is_expected.to have_many(:service_scientific_domains).dependent(:destroy) }
+  it { is_expected.to have_many(:service_vocabularies).dependent(:destroy) }
+
+  it { is_expected.to belong_to(:upstream).required(false) }
 
   it "allows scientific domains to be omitted" do
     expect(build(:service, scientific_domains: [])).to be_valid
@@ -52,7 +93,7 @@ RSpec.describe Service, backend: true do
     expect(create(:service).rating).to eq(0.0)
   end
 
-  context "#owned_by?" do
+  describe "#owned_by?" do
     it "is true when user is in the owners list" do
       owner = create(:user)
       service = create(:service, owners: [owner])
@@ -84,13 +125,14 @@ RSpec.describe Service, backend: true do
 
   context "OMS validations" do
     subject { build(:service, omses: build_list(:resource_dedicated_oms, 2)) }
-    it { should have_many(:omses) }
+
+    it { is_expected.to have_many(:omses) }
   end
 
-  context "#available_omses" do
+  describe "#available_omses" do
     subject { build(:service) }
 
-    it "should return empty if there are no OMSes" do
+    it "returns empty if there are no OMSes" do
       expect(subject.available_omses).to eq([])
     end
 
@@ -117,7 +159,7 @@ RSpec.describe Service, backend: true do
     end
   end
 
-  context "#propagate_to_ess" do
+  describe "#propagate_to_ess" do
     context "adds" do
       Service::PUBLIC_STATUSES.each do |public_status|
         it "a new #{public_status} service" do
@@ -187,6 +229,75 @@ RSpec.describe Service, backend: true do
 
       matcher :be_a_delete_operation do
         match { |payload| expect(payload["action"]).to eq("delete") }
+      end
+    end
+  end
+
+  describe "pid" do
+    let(:service) { build(:service) }
+
+    context "when pid is nil" do
+      before { service.pid = nil }
+
+      it "assigns a generated pid" do
+        expect { service.valid? }.to change(service, :pid).from(nil).to(be_present)
+      end
+    end
+
+    context "when pid is blank" do
+      before { service.pid = "  " }
+
+      it "assigns a generated pid" do
+        expect { service.valid? }.to change(service, :pid).from("  ").to(be_present)
+      end
+    end
+
+    context "when pid is nil and validations are skipped" do
+      before do
+        service.pid = nil
+        service.save(validate: false)
+      end
+
+      it "persists a generated pid" do
+        expect(service.reload.pid).to be_present
+      end
+    end
+
+    context "when pid is blank and validations are skipped" do
+      before do
+        service.pid = "  "
+        service.save(validate: false)
+      end
+
+      it "persists a generated pid" do
+        expect(service.reload.pid).to be_present
+      end
+    end
+
+    context "when pid is present" do
+      let(:service) { build(:service, pid: "custom-pid") }
+
+      it "keeps the given pid" do
+        expect { service.valid? }.not_to change(service, :pid).from("custom-pid")
+      end
+    end
+
+    context "when pid is already taken by another service" do
+      let(:service) { build(:service, pid: "taken-pid") }
+
+      before { create(:service, pid: "taken-pid") }
+
+      it "is invalid" do
+        expect(service).not_to be_valid
+      end
+
+      it "reports the pid as taken" do
+        service.valid?
+        expect(service.errors[:pid]).to include("has already been taken")
+      end
+
+      it "is rejected by the database when validations are skipped" do
+        expect { service.save(validate: false) }.to raise_error(ActiveRecord::RecordNotUnique)
       end
     end
   end

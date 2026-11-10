@@ -4,30 +4,32 @@ class Backoffice::ApprovalRequestsController < Backoffice::ApplicationController
   before_action :find_and_authorize, only: %i[show update]
 
   def index
-    list_approvals
+    @approval_requests = ApprovalRequest.active.order(created_at: :desc)
   end
 
-  def edit
-  end
-
-  def show
-  end
+  def show; end
+  def edit; end
 
   def update
-    current_action = permitted_attributes(ApprovalRequest).fetch("current_action", nil)
-    @approval_request.assign_attributes(
-      permitted_attributes(ApprovalRequest).merge(status: assign_status(current_action), last_action: current_action)
-    )
-    provider_action_successful = process_provider_action(current_action)
-    @message = create_message
-    list_approvals
-    respond_to do |format|
-      if @approval_request.save && Message::Create.call(@message) && provider_action_successful
-        respond_with_success(format)
-      else
-        respond_with_error(format)
-      end
+    if Mp::Variant.pl?
+      # pl decides through ApprovalRequest::Review: a rejected provider stays
+      # unpublished and the provider managers get an email (pl-marketplace #170).
+      result = ApprovalRequest::Review.call(@approval_request, reviewer: current_user, **review_params)
+      @message = result.message
+      success = result.success?
+    else
+      # marketplace and whitelabel delete a rejected provider and send no email.
+      current_action = permitted_attributes(ApprovalRequest).fetch("current_action", nil)
+      @approval_request.assign_attributes(
+        permitted_attributes(ApprovalRequest).merge(status: assign_status(current_action), last_action: current_action)
+      )
+      provider_action_successful = process_provider_action(current_action)
+      @message = create_message
+      success = @approval_request.save && Message::Create.call(@message) && provider_action_successful
     end
+    @approval_requests = ApprovalRequest.active.order(created_at: :desc)
+
+    respond_to { |format| success ? respond_with_success(format) : respond_with_error(format) }
   end
 
   private
@@ -36,8 +38,9 @@ class Backoffice::ApprovalRequestsController < Backoffice::ApplicationController
     @approval_request = authorize(ApprovalRequest.includes(:messages).find(params[:id]))
   end
 
-  def list_approvals
-    @approval_requests = ApprovalRequest.active.order(created_at: :desc)
+  def review_params
+    attributes = permitted_attributes(ApprovalRequest)
+    { action: attributes["current_action"], text: attributes["message"] }
   end
 
   def assign_status(action)
@@ -68,14 +71,17 @@ class Backoffice::ApprovalRequestsController < Backoffice::ApplicationController
 
   def respond_with_success(format)
     notice = _("Message sent successfully")
-    format.turbo_stream { flash.now[:notice] = notice }
-    format.html { redirect_to backoffice_providers_path(notice: notice) }
+    format.html { redirect_to backoffice_providers_path, notice: notice }
+    format.turbo_stream do
+      flash.now[:notice] = notice
+      render :update, status: :ok
+    end
   end
 
   def respond_with_error(format)
-    alert = _("Message not sent")
-    flash.now[:alert] = alert
-    format.json { render :edit, status: :unprocessable_entity }
-    format.html { render :show, status: :unprocessable_entity, alert: alert }
+    flash.now[:alert] = _("Message not sent")
+    format.html { render :show, status: :unprocessable_content }
+    format.json { render :edit, status: :unprocessable_content }
+    format.turbo_stream { render :update, status: :unprocessable_content }
   end
 end

@@ -13,11 +13,13 @@ class Matomo::CreateEvent
   end
 
   def call
+    url = Mp::Application.config.matomo_url
+    return if url.blank?
+
     # Use parent_service to support both Service and DeployableService
     parent = @project_item.service
     first_source = parent&.sources&.first
     sid = first_source&.eid || parent&.slug
-    url = Mp::Application.config.matomo_url
     site_id = Mp::Application.config.matomo_site_id
     request = "https:" + url + "matomo.php?e_c=#{@category}&e_a=#{@action}&e_n=#{sid}&idsite=#{site_id}&rec=1"
     request += "&e_v=#{@value}" if @action == ACTIONS[:rate] && @value.present?

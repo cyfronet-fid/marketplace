@@ -1,0 +1,8 @@
+# Override of docker-compose-<variant>.yml for a local deploy on an arm64
+# host (Apple silicon). elasticsearch:7.5.0 of the compose files has no arm64
+# image; the development setup (lib/versions/run_variant_env.sh) runs the
+# arm64 image of 7.8.0, and so does the local deploy. deploy-local.sh adds
+# this file to the compose call when `uname -m` is arm64 or aarch64.
+services:
+  el:
+    image: arm64v8/elasticsearch:7.8.0

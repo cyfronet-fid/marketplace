@@ -24,6 +24,7 @@ FactoryBot.define do
       sequence(:version_control) { false }
       research_product_types { [] }
     end
+    geographical_availabilities { ["EU"] }
     sequence(:webpage_url) { "https://wabpage.url" }
     sequence(:terms_of_use_url) { "https://terms.of.use.url" }
     sequence(:access_policies_url) { "https://access.policies.url" }

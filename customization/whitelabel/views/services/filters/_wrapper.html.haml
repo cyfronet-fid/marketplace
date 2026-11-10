@@ -1,0 +1,23 @@
+- collapsed = filter.blank?
+%a{ href: "#collapse_#{filter.field_name}", "data-toggle": "collapse",
+    id: "#{filter.field_name}-filter",
+    "data-action": "click->filter#toggle",
+    "data-parent": "#filters", role: "button",
+    class: ("collapsed" if collapsed) }
+  .row
+    .col-10
+      - if filter.field_name == "geographical_availabilities"
+        %h6.panel-heading{ "data-toggle": "tooltip",
+        title: "Service available in the territory of the entire selected region" }
+          = filter.title
+      - else
+        %h6.panel-heading= filter.title
+    .col-2
+      .collapse-icon
+        %i.fas.fa-chevron-down
+        %i.fas.fa-chevron-up
+
+.row
+  .col-md-12.panel-collapse.collapse{ id: "collapse_#{filter.field_name}",
+    "data-filters-target": "filter", class: ("show" unless collapsed) }
+    = yield

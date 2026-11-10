@@ -2,7 +2,11 @@
 
 class HomeController < ApplicationController
   include LandingPageHelper
+
   before_action :load_services, :load_root_categories!, :load_providers, :load_opinion
+  # pl and whitelabel show the home page as a landing page without the main
+  # navigation (their HomeController renders in the clear layout).
+  layout :home_layout
 
   def index
     @learn_more_section = LeadSection.includes(:leads).find_by(slug: "learn-more")
@@ -61,6 +65,7 @@ class HomeController < ApplicationController
 
     @main_scientific_domains =
       ScientificDomain.with_attached_logo.roots.partition { |sd| sd.name != "Other" }.flatten(1)
+    @action = "landing_page" unless Mp::Variant.marketplace?
   end
 
   def robots
@@ -70,11 +75,16 @@ class HomeController < ApplicationController
 
   private
 
+  # nil keeps the default layout lookup of marketplace.
+  def home_layout
+    "clear" unless Mp::Variant.marketplace?
+  end
+
   def load_services
     @providers_number = Provider.visible.size
     @services_number = Service.visible.size
     @countries_number = 32
-    @services = Service.popular(6)
+    @services = Service.popular(Mp::Variant.marketplace? ? 6 : 4)
   end
 
   def load_providers
@@ -85,9 +95,9 @@ class HomeController < ApplicationController
   def load_opinion
     @opinion =
       ServiceOpinion
-        .joins(project_item: :offer)
-        .joins(Offer::JOIN_SERVICE_SQL)
-        .where(services: { status: %i[published errored] })
-        .sample
+      .joins(project_item: :offer)
+      .joins(Offer::JOIN_SERVICE_SQL)
+      .where(services: { status: %i[published errored] })
+      .sample
   end
 end

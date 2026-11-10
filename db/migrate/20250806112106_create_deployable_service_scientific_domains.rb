@@ -1,7 +1,9 @@
 # frozen_string_literal: true
+
 class CreateDeployableServiceScientificDomains < ActiveRecord::Migration[7.2]
   def change
-    create_table :deployable_service_scientific_domains do |t|
+    # whitelabel-marketplace created this table under its own migration version.
+    create_table :deployable_service_scientific_domains, if_not_exists: true do |t|
       t.references :deployable_service, null: false, foreign_key: true
       t.references :scientific_domain, null: false, foreign_key: true
 

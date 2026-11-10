@@ -1,0 +1,16 @@
+= simple_form_for [:backoffice, :other_settings, vocabulary], url: url do |f|
+  = f.input :name
+  = f.input :description
+  = f.input :logo
+  = f.input :parent_id,
+    collection: ancestry_id_tree(vocabulary.potential_parents.sort_by(&:name)),
+    label_method: :first, value_method: :last, as: :select, include_blank: true
+  = f.input :eid
+
+  %hr.bottom-hr.mt-5.mb-4
+  .row.mt-5
+    .col-12
+      = f.button :submit, button_name, class: "btn btn-primary pl-5 pr-5 mr-5 mobile-bottom-margin",
+      "data-e2e": "create-vocabulary-btn"
+      = link_to "Back", :back
+      = link_to "Cancel and back to previous page", :back, class: "text-left flex-grow-1 text-uppercase mobile-bottom-margin"

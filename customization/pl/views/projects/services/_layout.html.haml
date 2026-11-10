@@ -1,0 +1,44 @@
+- breadcrumb :project_item, project_item
+
+= render "projects/layout", project: project, projects: projects do
+  .pt-4.pl-3.pr-3.rounded.service-box.service-detail.mb-4.project-heading
+    .row
+      .col-md-8.d-flex.align-items-center
+        .box-wrapper
+          %h1.flex-grow-1.text-break
+            #{project_item.service.name}
+          .col-md-12.back-link
+          %i.fas.fa-chevron-left.fa-xs.mr-1
+          - if project_item.is_root?
+            = link_to _("back to %{pn} project services") % { pn: project.name }, [project, :services]
+          - else
+            = link_to _("back to %{pn}") % { pn: project_item.parent.name },
+                project_service_path(project, project_item.parent)
+      .col-md-4.float-right.justify-content-center
+        = render Services::InlineOrderUrlComponent.new(offerable: project_item,
+          classes: "btn btn-primary float-right pl-4 pr-4")
+        - if project_item.orderable?
+          .project-badge.text-uppercase.d-inline.float-right.text-secondary.project-resource-type.ml-2.mr-0
+            -# TODO: refactor dynamic translation
+            %span{ class: "status-#{project_item.status_type}" }= t("project_items.status.#{project_item.status_type}")
+
+        - if project_item.bundle?
+          .project-badge.text-uppercase.d-inline.float-right.mb-0.ml-2.project-resource-type.mr-0
+            = _("BUNDLE")
+    %ul.nav.nav-tabs.mt-5.pl-3.row.services-menu
+      %li.nav-item
+        = link_to _("Details"), project_service_path(project, project_item),
+          class: "nav-link #{"active" if controller.controller_name == "services"} text-uppercase"
+      - if project_item.orderable?
+        %li.nav-item
+          = link_to _("Order history"), project_service_timeline_path(project, project_item),
+            class: "nav-link #{"active" if controller.controller_name == "timelines"} text-uppercase"
+      %li.nav-item.contact-nav
+        = link_to _("Contact with service provider"),
+          project_service_conversation_path(project, project_item),
+          class: "nav-link #{"active" if controller.controller_name == "conversations"} text-uppercase"
+        - if project_item.user_has_new_messages?
+          .new-message-icon
+            = image_tag "ico_message.svg"
+  .container.p-0
+    = yield

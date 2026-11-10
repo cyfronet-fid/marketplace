@@ -1,0 +1,22 @@
+%h2 What's new?
+%p
+  New service is now available.
+  %table.service-table
+    %tr
+      %td{ width: "125" }
+        = image_tag attachments["logo.png"].url if attachments["logo.png"].present?
+      %td
+        %h5
+          = @service.name
+  %p.center
+    = email_button "Check now", service_url(@service)
+  %small
+    You are receiving this message because
+    you have opted up for updates in
+    - if @common_categories.present?
+      %strong category:
+      = @common_categories.map(&:name).join(", ")
+    = "and " if @common_categories.present? && @common_scientific_domains.present?
+    - if @common_scientific_domains.present?
+      %strong scientific domain:
+      = @common_scientific_domains.map(&:name).join(", ")

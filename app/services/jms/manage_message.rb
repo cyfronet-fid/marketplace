@@ -24,9 +24,10 @@ class Jms::ManageMessage < ApplicationService
     resource_type = INBOUND_TOPIC_ALIASES.fetch(raw_type, raw_type)
     action = @message.headers["destination"].split(".").last
     event_body = body["resource"] || body
+    event_body = JSON.parse(event_body) if event_body.is_a?(String)
     resource = event_body[raw_type.camelize(:lower)] || event_body[resource_type.camelize(:lower)]
 
-    raise Importable::ResourceParseError, "Cannot parse resource" if resource.nil? || resource.empty?
+    raise Importable::ResourceParseError, "Cannot parse resource" if resource.blank?
 
     case resource_type
     when "service", "infra_service"
@@ -75,6 +76,8 @@ class Jms::ManageMessage < ApplicationService
         Datasource::DeleteJob.perform_later(hash["id"])
       end
     when "deployable_service"
+      raise Importable::WrongMessageError unless Mp::Variant.marketplace?
+
       hash = resource.to_hash
 
       if action != "delete"
@@ -115,7 +118,7 @@ class Jms::ManageMessage < ApplicationService
 
   def modified_at(resource)
     m = resource.dig("metadata", "modifiedAt")
-    m ? Time.at(m.to_i / 1000) : Time.now # V6 keeps Unix ms; ISO 8601 applies to entity fields only.
+    m ? Time.zone.at(m.to_i / 1000) : Time.zone.now # V6 keeps Unix ms; ISO 8601 applies to entity fields only.
   end
 
   def resource_extras(resource)

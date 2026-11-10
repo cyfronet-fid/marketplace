@@ -1,0 +1,18 @@
+#multimedia.tab-pane{ class: "#{"active" if active}", "aria-labelledby": "maturity-header", role: "tabpanel",
+          "data-form-target": "tab" }
+  .card-body
+    .row.new-offer-form
+      .col-lg-6.pl-0
+        %h3
+          = _("Multimedia")
+        .offer-section-wrapper
+          = f.error :link_multimedia_urls, class: "invalid-feedback d-block"
+          = f.fields_for :link_multimedia_urls, multiple: true, as: :array,
+                      wrapper_html: { "data-form-target" => "link" } do |link_form|
+            = render_link(link_form, provider, "multimedia")
+        = link_to _("+ Add new multimedia"), "#", class: "btn-simple disablable mt-3 d-block",
+                  data: { "form-target": "addField",
+                  action: "click->form#addField",
+                  value: "multimedia",
+                  fields: f.fields_for(:link_multimedia_urls, Link::MultimediaUrl.new,
+                  child_index: "new_field") { |lf| render_link(lf, provider, "multimedia") } }

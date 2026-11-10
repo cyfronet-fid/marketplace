@@ -1,0 +1,14 @@
+# Override of docker-compose-<variant>.yml on the staging host: the containers
+# log to the journal of the host, so the logs stay after the recreation of
+# the containers at a deploy. deploy-multi.sh adds this file to each compose
+# call. Docker Desktop has no journald, so the local deploy does not use it.
+#   journalctl CONTAINER_NAME=mp-multitenancy-pl-web-1 --since yesterday
+x-journald: &journald
+  logging:
+    driver: journald
+services:
+  web: *journald
+  worker: *journald
+  db: *journald
+  el: *journald
+  redis: *journald

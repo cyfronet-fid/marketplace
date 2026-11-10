@@ -1,0 +1,19 @@
+- content_for :title, _("Edit #{@provider.name} Provider")
+- breadcrumb :backoffice_provider_edit, @provider
+
+.container.p-0.backoffice.provider-wrapper
+  .service-box-redesign.p-0.mt-10.backoffice-form.provider
+  .pt-4.service-box-redesign.service-detail
+
+    = render Presentable::StatusActionsComponent.new(object: @provider,
+      publish: policy([:backoffice, @provider]).publish?,
+      suspend: policy([:backoffice, @provider]).suspend?,
+      unpublish: policy([:backoffice, @provider]).unpublish?,
+      destroy: policy([:backoffice, @provider]).destroy?)
+
+    .title-column.mt-5
+      %h2= _("Edit #{@provider.name} Provider")
+
+
+  .edit-provider
+    = render "backoffice/providers/form", provider: @provider, catalogues: @catalogues, tab: @tab

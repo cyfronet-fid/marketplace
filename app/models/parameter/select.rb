@@ -5,6 +5,7 @@ class Parameter::Select < Parameter
 
   attribute :mode, :string
   attribute :unit, :string
+  attribute :default_value
 
   validates :mode, presence: true, inclusion: %w[dropdown buttons]
 
@@ -19,7 +20,8 @@ class Parameter::Select < Parameter
         mode: mode
       },
       value_type: value_type,
-      unit: unit
+      unit: unit,
+      default_value: default_value
     )
   end
 
@@ -31,7 +33,8 @@ class Parameter::Select < Parameter
       values: hsh.dig("config", "values"),
       mode: hsh.dig("config", "mode"),
       value_type: hsh["value_type"],
-      unit: hsh["unit"]
+      unit: hsh["unit"],
+      default_value: hsh["default_value"]
     )
   end
 end

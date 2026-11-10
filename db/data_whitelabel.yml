@@ -1,0 +1,2504 @@
+platforms:
+  EGI:
+    name: &egiPlatform "EGI"
+  EUDAT:
+    name: &eudatPlatform "EUDAT"
+  WENMR:
+    name: &wenmr "WeNMR Suite"
+  CLARIN:
+    name: &clarinPlatform "CLARIN"
+  D4Science:
+    name: &d4sciencePlatform "D4Science"
+  EOPillar:
+    name: &eopillar "EO Pillar"
+  EC3:
+    name: &ec3 "EC3 Portal"
+  INSTRUCT:
+    name: &instruct "INSTRUCT-ERIC"
+  BIOEXCEL:
+    name: &bioexcel "BIOEXCEL"
+  ECOPOTENTIAL:
+    name: &ecopotential "ECOPOTENTIAL Virtual Laboratory"
+  GEOSS:
+    name: &geossPlatform "Global Earth Observation system of Systems (GEOSS)"
+  Europeana:
+    name: &europeana "Europeana"
+  AoDP:
+    name: &aodp "EGI Applications on Demand"
+  ENES:
+    name: &enesPlatform "IS-ENES"
+  ELIXIR:
+    name: &elixirPlatform "ELIXIR"
+  GBIF:
+    name: &gbif "GBIF"
+  OBIS:
+    name: &obis "OBIS"
+  SeaDataCloud:
+    name: &seaDataCloud "SeaDataCloud"
+  gCube:
+    name: &gCube "gCube System"
+  EOSC PAN:
+    name: &eoscPan "EOSC PaN"
+  GEO:
+    name: &geo "Group on Earth Observation (GEO)"
+  ESA:
+    name: &esaPlatform "European Space Agency (ESA)"
+  GEP:
+    name: &gepPlatform "Geohazards Thematic Exploitation Platform (GEP)"
+  OpenGConsortium:
+    name: &openGC "Open Geospatial Consortium"
+  Copernicus:
+    name: &copernicus "Copernicus"
+  EOSCHub:
+    name: &eoscHub "EOSC-hub project"
+  NIRD:
+    name: &nird "National Infrastructure for Research Data (NIRD)"
+
+categories:
+  Sharing & Discovery:
+    name: &sharingAndDicoveryParent "Sharing & Discovery"
+    description: Services to search and discover data, publications, tools and other resources useful for your research
+  Processing & Analysis:
+    name: &processingAndAnalysisParent "Processing & Analysis"
+    description: Software, platforms, tools, analytics and end-user applications offered-as-a-service or deployed-on-demand also specialised by discipline or research domain
+  Compute:
+    name: &computeParent "Compute"
+    description: Services to access virtual machines, containers and job processing to support your general computing needs
+  Storage:
+    name: &storageParent "Storage"
+    description: Service to use storage for your data
+  Data management:
+    name: &dataManagementParent "Data management"
+    description: Service to manage your data
+  Networking:
+    name: &networkingParent "Networking"
+    description: Ultra-fast connectivity and ubiquitous access to the eInfrastructures' resources and services you need
+  Training & Support:
+    name: &trainingAndSupportParent "Training & Support"
+    description: Grow your research knowledge and skills with specialised trainings or seek dedicated professional support for a wide range of scientific disciplines and research activities
+  Security & Operations:
+    name: &securityAndOperationsParent "Security & Operations"
+    description: Services to integrate identity management, authorisation and other security services to comply with policies and regulations or access services to support the operations of your infrastructures and services
+
+domain:
+  Humanities:
+    name: &humanities "Humanities"
+  OtherHumanities:
+    name: &otherHumanities "Other Humanities"
+    parent: *humanities
+  Philosophy:
+    name: &philosophy "Philosophy, Ethics & Religion"
+    parent: *humanities
+  Arts:
+    name: &arts "Arts"
+    parent: *humanities
+  SocialScience:
+    name: &socialSciences "Social Sciences"
+  OtherSocialScienes:
+    name: &otherSocialSciences "Other Social Sciences"
+    parent: *socialSciences
+  Political:
+    name: &political "Political Sciences"
+    parent: *socialSciences
+  Psychology:
+    name: &psychology "Psychology"
+    parent: *socialSciences
+  engineering:
+    name: &engineering "Engineering & Technology"
+  electrical:
+    name: &electrical "Electrical, Electronic & Information Engineering"
+    parent: *engineering
+  environmental:
+    name: &environmental "Environmental Engineering"
+    parent: *engineering
+  agricultural:
+    name: &agricultural "Agricultural Sciences"
+  medical:
+    name: &medical "Medical & Health Sciences"
+  natural:
+    name: &natural "Natural Sciences"
+  EnvironmentalScience:
+    name: &earthAndEnvironmentalScience "Earth & Related Environmental Sciences"
+    parent: *natural
+  BiologicalSciences:
+    name: &biologicalSciences "Biological Sciences"
+    parent: *natural
+  PhysicalSciences:
+    name: &physicalSciences "Physical Sciences"
+    parent: *engineering
+  Other:
+    name: &other "Other"
+  OtherOther:
+    name: &otherOther "Other"
+    parent: *other
+
+catalogues:
+  EOSC:
+    name: &eosc "EOSC"
+    pid: "eosc-catalogue"
+    image_base_64: &catalogue_default_logo |
+      data:image/png;base64,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
+
+    multimedia: &default_multimedia
+      - https://google.com
+    abbreviation: "European Open Science Cloud"
+    description: "Something something open science, but european"
+    legal_entity: true
+    hosting_legal_entities: ["provider_hosting_legal_entity-100pit"]
+    legal_statuses: ["provider_legal_status-private_company"]
+    website: "https://eosc.eu/"
+    domains: [*natural]
+    structure_type: ["Single-sited"]
+    participating_countries: ["FR"]
+    affiliations: ["EOSC"]
+    networks: ["provider_network-fao"]
+    tag_list: ["open data"]
+    street: "Easy Street"
+    postal_code: "FR12345"
+    city: "Paris"
+    region: "Paris Region"
+    country_alpha2: "FR"
+    end_of_life: "EOM"
+    inclusion_criteria: "https://example.com"
+    validation_process: "https://example.com"
+  CatRIS:
+    name: &catris "CatRIS"
+    pid: "catris-catalogue"
+    image_base_64: *catalogue_default_logo
+    multimedia: *default_multimedia
+    abbreviation: "CatRIS"
+    description: "Something something open science"
+    legal_entity: false
+    hosting_legal_entities: ["provider_hosting_legal_entity-100pit"]
+    legal_statuses: ["provider_legal_status-private_company"]
+    website: "https://catris.eu/"
+    domains: [*natural]
+    structure_type: ["Single-sited"]
+    participating_countries: ["PL", "US"]
+    affiliations: ["EOSC"]
+    networks: ["provider_network-fao"]
+    tag_list: ["open data"]
+    street: "Street 10"
+    postal_code: "GR12345"
+    city: "Thessaloniki"
+    region: "Central Macedonia"
+    country_alpha2: "US"
+    end_of_life: "EOW"
+    inclusion_criteria: "https://example.com"
+    validation_process: "https://example.com"
+
+providers:
+  EGI Federation:
+    status: "published"
+    name: &egi "EGI Federation"
+    abbreviation: "egi-federation"
+    catalogue: *catris
+    website: "http://egi-federation.com"
+    legal_entity: true
+    description: |
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+      Sed luctus tristique est, nec sollicitudin magna blandit ac.
+      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+      Sed maximus odio neque, sed ullamcorper purus tristique a.
+      Ut gravida venenatis nunc placerat cursus.
+    multimedia: &default_multimedia
+      - https://google.com
+    street_name_and_number: "Malcolm St. 4"
+    postal_code: "332-332"
+    city: "Test City"
+    country_alpha2: "PL"
+    image_base_64: &provider_default_logo |
+      data:image/png;base64,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
+  EUDAT:
+    status: "published"
+    name: &eudat "EUDAT"
+    abbreviation: "eudat"
+    catalogue: *eosc
+    website: "http://eudat.com"
+    legal_entity: true
+    description: |
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+      Sed luctus tristique est, nec sollicitudin magna blandit ac.
+      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+      Sed maximus odio neque, sed ullamcorper purus tristique a.
+      Ut gravida venenatis nunc placerat cursus.
+    multimedia: *default_multimedia
+    street_name_and_number: "Malcolm St. 4"
+    postal_code: "332-332"
+    city: "Test City"
+    country_alpha2: "PL"
+    image_base_64: *provider_default_logo
+  JSC:
+    status: "published"
+    name: &jsc "JSC"
+    abbreviation: "jsc"
+    catalogue: *catris
+    website: "http://jsc.com"
+    legal_entity: true
+    description: |
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+      Sed luctus tristique est, nec sollicitudin magna blandit ac.
+      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+      Sed maximus odio neque, sed ullamcorper purus tristique a.
+      Ut gravida venenatis nunc placerat cursus.
+    multimedia: *default_multimedia
+    street_name_and_number: "Malcolm St. 4"
+    postal_code: "332-332"
+    city: "Test City"
+    country_alpha2: "PL"
+    image_base_64: *provider_default_logo
+  Deutsches Klimarechenzentrum (DKRZ):
+    status: "published"
+    name: &dkrz "Deutsches Klimarechenzentrum (DKRZ)"
+    abbreviation: "dkrz"
+    catalogue: *catris
+    website: "http://dkrz.com"
+    legal_entity: true
+    description: |
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+      Sed luctus tristique est, nec sollicitudin magna blandit ac.
+      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+      Sed maximus odio neque, sed ullamcorper purus tristique a.
+      Ut gravida venenatis nunc placerat cursus.
+    multimedia: *default_multimedia
+    street_name_and_number: "Malcolm St. 4"
+    postal_code: "332-332"
+    city: "Test City"
+    country_alpha2: "PL"
+    image_base_64: *provider_default_logo
+  GRNET:
+    status: "published"
+    name: &grnet "GRNET"
+    abbreviation: "grnet"
+    catalogue: *catris
+    website: "http://grnet.com"
+    legal_entity: true
+    description: |
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+      Sed luctus tristique est, nec sollicitudin magna blandit ac.
+      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+      Sed maximus odio neque, sed ullamcorper purus tristique a.
+      Ut gravida venenatis nunc placerat cursus.
+    multimedia: *default_multimedia
+    street_name_and_number: "Malcolm St. 4"
+    postal_code: "332-332"
+    city: "Test City"
+    country_alpha2: "PL"
+    image_base_64: *provider_default_logo
+  SURFsara:
+    status: "published"
+    name: &surfsara "SURFsara"
+    abbreviation: "surfsara"
+    catalogue: *catris
+    website: "http://surfsara.com"
+    legal_entity: true
+    description: |
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+      Sed luctus tristique est, nec sollicitudin magna blandit ac.
+      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+      Sed maximus odio neque, sed ullamcorper purus tristique a.
+      Ut gravida venenatis nunc placerat cursus.
+    multimedia: *default_multimedia
+    street_name_and_number: "Malcolm St. 4"
+    postal_code: "332-332"
+    city: "Test City"
+    country_alpha2: "PL"
+    image_base_64: *provider_default_logo
+  All generic CDI Level 1 providers:
+    status: "published"
+    name: &all "all generic CDI Level 1 providers"
+    abbreviation: "cdi-1"
+    catalogue: *catris
+    website: "http://cdi1.com"
+    legal_entity: true
+    description: |
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+      Sed luctus tristique est, nec sollicitudin magna blandit ac.
+      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+      Sed maximus odio neque, sed ullamcorper purus tristique a.
+      Ut gravida venenatis nunc placerat cursus.
+    multimedia: *default_multimedia
+    street_name_and_number: "Malcolm St. 4"
+    postal_code: "332-332"
+    city: "Test City"
+    country_alpha2: "PL"
+    image_base_64: *provider_default_logo
+  CSC:
+    status: "published"
+    name: &csc "CSC"
+    abbreviation: "csc"
+    catalogue: *catris
+    website: "http://csc.com"
+    legal_entity: true
+    description: |
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+      Sed luctus tristique est, nec sollicitudin magna blandit ac.
+      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+      Sed maximus odio neque, sed ullamcorper purus tristique a.
+      Ut gravida venenatis nunc placerat cursus.
+    multimedia: *default_multimedia
+    street_name_and_number: "Malcolm St. 4"
+    postal_code: "332-332"
+    city: "Test City"
+    country_alpha2: "PL"
+    image_base_64: *provider_default_logo
+  GryCAP-I3M-UPV:
+    status: "published"
+    name: &grycap "GryCAP-I3M-UPV"
+    abbreviation: "gry-cap-i3m-upv"
+    catalogue: *catris
+    website: "http://gry-cap-i3m-upv.com"
+    legal_entity: true
+    description: |
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      Duis venenatis purus ut augue efficitur, eu gravida libero aliquet.
+      Sed luctus tristique est, nec sollicitudin magna blandit ac.
+      Fusce vulputate erat leo, sed commodo nisl sagittis nec.
+      Morbi fermentum ex dui, interdum pharetra justo gravida quis.
+      Mauris mollis suscipit tincidunt. Integer fringilla at magna ut euismod.
+      Sed maximus odio neque, sed ullamcorper purus tristique a.
+      Ut gravida venenatis nunc placerat cursus.
+    multimedia: *default_multimedia
+    street_name_and_number: "Malcolm St. 4"
+    postal_code: "332-332"
+    city: "Test City"
+    country_alpha2: "PL"
+    image_base_64: *provider_default_logo
+
+target_users:
+  Researchers:
+    name: &researchers "Researchers"
+    description: "Someone who conducts scientific research, i.e., an organized and systematic investigation by using scientific methods."
+    eid: "target_user-researchers"
+  Research organisations:
+    name: &research_organisations "Research organisations"
+    description: "A public or private legal entity (e.g. academia, business, industry, public services, etc.) representing the User."
+    eid: "target_user-research_organisations"
+  Businesses:
+    name: &business "Businesses"
+    description: "An organization or economic system where goods and services are exchanged for one another or for money. Businesses can be privately owned, not-for-profit or state-owned."
+    eid: "target_user-businesses"
+  Research group:
+    name: &research_groups "Research groups"
+    description: "A research group is a group of researchers working together on a particular issue or topic. Research groups may be composed of researchers all from the same subject/discipline or from different subjects/disciplines."
+    eid: "target_user-research_groups"
+  Providers:
+    name: &providers "Providers"
+    description: "A Provider is an organisation that provides different kind of solutions and/or services or other Resources to end users and other organizations. This broad term incorporates all businesses and organisations that provide products and solutions that are offered for free, on-demand, pay per use or a hybrid delivery model."
+    eid: "target_user-providers"
+  Research communities:
+    name: &research_communities "Research communities"
+    description: "Research communities provide an infrastructure through which scientists of discipline-specific scientific areas are able to advance their research goals, reaching out to other researchers."
+    eid: "target_user-research_communities"
+  Research projects:
+    name: &research_projects "Research projects"
+    description: "A privately or publicly funded project on a research topic."
+    eid: "target_user-research_projects"
+  Research networks:
+    name: &research_network "Research networks"
+    desctiption: "Research networks aim to stimulate interaction between researchers and promote information exchange."
+    eid: "target_user-research_networks"
+  Research managers:
+    name: &research_manager "Research managers"
+    description: "Someone in an organization whose job is to manage a research initiative aiming to the development of new scientific results, products or ideas."
+    eid: "target_user-research_managers"
+  Students:
+    name: &students "Students"
+    desctiption: "A person who is studying at a university or other place of higher education."
+    eid: "target_user-students"
+  Innowators:
+    name: &innowators "Innovators"
+    description: "The group or individual which is the first to try new ideas, processes, goods and services. Innovators are followed by early adopters, early majority, late majority, and laggards, in that order."
+    eid: "target_user-innovators"
+  Funders:
+    name: &funders "Funders"
+    description: "Individual or organization financing a part or all of a project's cost as a grant, investment, or loan."
+    eid: "target_user-funders"
+  Policy Makers:
+    name: &policy_makers "Policy Makers"
+    description: "Individuals (usually members of the board of directors) who have the authority to set the policy framework of an organization."
+    eid: "target_user-policy_makers"
+  Research Infrastructure Managers:
+    name: &research_infrastructure_managers "Research Infrastructure Managers"
+    description: "A RI Manager is a type of Project Coordinator who specializes in research infrastructures. They are responsible for things like managing researchers, making sure costs are on budget and serving as a liaison between reserach staff and project stakeholders."
+    eid: "target_user-research_infrastructure_managers"
+  Provider Managers:
+    name: &provider_managers "Provider Managers"
+    description: "A Provider Manager is an individual within an organisation that is responsible for the quality of the Resources provided and monitors the delivery of the Resource."
+    eid: "target_user-provider_managers"
+  Resource Managers:
+    name: &resource_manager "Resource Managers"
+    description: "Resource Managers are typically responsible for managing Service level agreements with customers and external Providers."
+    eid: "target_user-resource_managers"
+  Other:
+    name: &other "Other"
+    description: ""
+    eid: "target_user-other"
+
+services:
+  Cloud compute:
+    name: &egiCloud EGI Cloud compute
+    parents: *computeParent
+    providers: [*egi]
+    catalogue: *catris
+    logo: cloud-compute.png
+    open_access: false
+    webpage_url: https://www.egi.eu/services/cloud-compute/
+    manual_url: https://wiki.egi.eu/wiki/Federated_Cloud_user_support
+    helpdesk_url: https://www.egi.eu/more-information/
+    training_information_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
+    terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
+    resource_level_url: https://documents.egi.eu/document/2733
+    access_policies_url: https://marketplace.egi.eu/content/7-access-policy
+    language_availability: &english EN
+    geographical_availabilities: &poland PL
+    domain: *otherOther
+    target_users: [*researchers, *research_organisations]
+    restrictions: &notSpecified not yet specified
+    funding_bodies: ["funding_body-innoviris", "funding_body-ec"]
+    funding_programs: ["funding_program-icfs", "funding_program-insc2020", "funding_program-isf"]
+    trl: &trl_9 ["trl-9"]
+    life_cycle_status: &prod ["life_cycle_status-production"]
+    tagline: Run virtual machines on-demand with complete control over computing resources
+    platforms: [*egiPlatform]
+    description: |
+      With Cloud Compute you can deploy and scale virtual machines
+      on­demand. Cloud Compute offers guaranteed computational resources in
+      a secure and isolated environment with standard API
+      access, without the overhead of managing physical servers.
+      Cloud Compute offers the possibility to select pre­configured virtual
+      appliances (e.g. CPU, memory, disk, operating system or software)
+      from a catalogue replicated across all EGI cloud providers.
+
+      ### To access the service you need to:
+
+       1. Request access selecting one of the service options below.
+       2. Set the relevant parameters and add the service to the cart.
+       3. Go to the cart and submit your order.
+       4. You will receive an email summarising your order.
+       5. You will be contacted by the EGI support team.
+
+      ### Featured use cases:
+
+
+      [How to predict social media trends?][1] how Cloud Compute helps to
+      test new ways to detect trends on social networks
+
+      [The genetics of Salmonella infections:][2] how Cloud Compute
+      helped scientists to understand what happens during when a human cell meets Salmonella
+
+
+      [1]: https://www.egi.eu/use-cases/research-stories/how-to-predict-social-media-trends/
+
+
+      [2]: https://www.egi.eu/use-cases/research-stories/the-genetics-of-salmonella-infections/
+
+    offers: &cloudComputeOffers
+      1:
+        name: General purpose
+        description: |
+          Base preformance instance type. Features:
+          Accessible in opportunistic or reserved ways, CPU cores could be overcommitted.
+          Ideal for: Web services, Micro-services, Development environtments,
+          Building server, Small database, Test environments.
+        parameters:
+          - id: "id1"
+            label: "Number of CPU Cores"
+            description: "Select number of cores you want"
+            type: "select"
+            value_type: "integer"
+            config:
+              mode: "buttons"
+              values: [1, 2, 4, 8]
+          - id: "id2"
+            label: "Amount of RAM per CPU core"
+            description: "Select amount of RAM per core"
+            type: "select"
+            value_type: "integer"
+            unit: "GB"
+            config:
+              mode: "buttons"
+              values: [1, 2, 4]
+          - id: "id3"
+            label: "Local disk"
+            description: "Amount of local disk space"
+            type: "select"
+            value_type: "integer"
+            unit: "GB"
+            config:
+              mode: "buttons"
+              values: [10, 20, 40]
+          - id: "id4"
+            label: "Number of VM instances"
+            description: "Type number of VM instances from 1-50"
+            type: "range"
+            value_type: "integer"
+            config:
+              minimum: 1
+              maximum: 50
+          - id: "id5"
+            label: "Access type"
+            description: "Choose access type"
+            type: "select"
+            value_type: "string"
+            config:
+              mode: "buttons"
+              values: ["opportunistic", "reserved"]
+          - id: "id6"
+            label: "Start of service"
+            description: "Please choose start date"
+            type: "date"
+            value_type: "string"
+          - id: "id7"
+            label: "Number of days"
+            description: "Choose number of days"
+            type: "range"
+            value_type: "integer"
+            config:
+              minimum: 1
+              maximum: 730
+      2:
+        name: Compute-intensive
+        description: |
+          Optimised instance for computing tasks. Feattures: High perfromance CPU cores,
+          Until 64 CPU cores, Real CPU cors (non-overcommitted), Low latency network, Reserved instances.
+          Ideal for: Batch computing, High-perfromance applications and web services,
+          Distributed analysis. Video encoding.
+        parameters:
+          - id: "id1"
+            label: "Number of CPU Cores"
+            description: "Select number of cores you want"
+            type: "select"
+            value_type: "integer"
+            config:
+              mode: "buttons"
+              values: [8, 12, 16, 20, 24, 28, 32, 64]
+          - id: "id2"
+            label: "Amount of RAM per CPU core"
+            description: "Select amount of RAM per core"
+            type: "select"
+            value_type: "integer"
+            unit: "GB"
+            config:
+              mode: "buttons"
+              values: [2, 4, 8]
+          - id: "id3"
+            label: "Local disk"
+            description: "Amount of local disk space"
+            type: "select"
+            value_type: "integer"
+            unit: "GB"
+            config:
+              mode: "buttons"
+              values: [10, 20, 40]
+          - id: "id4"
+            label: "Number of VM instances"
+            description: "Type number of VM instances from 1-50"
+            type: "range"
+            value_type: "integer"
+            config:
+              minimum: 1
+              maximum: 50
+          - id: "id5"
+            label: "Access type"
+            description: "Access type for this offer is constant"
+            type: "attribute"
+            value_type: "string"
+            value: "reserved"
+          - id: "id6"
+            label: "Start of service"
+            description: "Please choose start date"
+            type: "date"
+            value_type: "string"
+          - id: "id7"
+            label: "Number of days"
+            description: "Choose number of days"
+            type: "range"
+            value_type: "integer"
+            config:
+              minimum: 1
+              maximum: 730
+      3:
+        name: High-memory
+        description: |
+          Optimised instances for tasks that require more memory relative to virtual CPUs.
+          Features: High amout od RAM per CPU core, Up to 240 GB of  RAm in total, Reserved instances.
+          Ideal for: Running in-memory database, Running in-memory stores (e.g. redis, memcached),
+          In-memory big data processing engines (e.g. Apache Spark)
+        parameters:
+          - id: "id1"
+            label: "Number of CPU Cores"
+            description: "Select number of cores you want"
+            type: "select"
+            value_type: "integer"
+            config:
+              mode: "buttons"
+              values: [2, 4, 8, 12, 16]
+          - id: "id2"
+            label: "Amount of RAM per CPU core"
+            description: "Select amount of RAM per core"
+            type: "select"
+            value_type: "integer"
+            unit: "GB"
+            config:
+              mode: "buttons"
+              values: [16, 32, 48, 64, 80, 96, 112, 120]
+          - id: "id3"
+            label: "Local disk"
+            description: "Amount of local disk space"
+            type: "select"
+            value_type: "integer"
+            unit: "GB"
+            config:
+              mode: "buttons"
+              values: [10, 20, 40]
+          - id: "id4"
+            label: "Number of VM instances"
+            description: "Type number of VM instances from 1-50"
+            type: "range"
+            value_type: "integer"
+            config:
+              minimum: 1
+              maximum: 50
+          - id: "id5"
+            label: "Access type"
+            description: "Access type for this offer is constant"
+            type: "attribute"
+            value_type: "string"
+            value: "reserved"
+          - id: "id6"
+            label: "Start of service"
+            description: "Please choose start date"
+            type: "date"
+            value_type: "string"
+          - id: "id7"
+            label: "Number of days"
+            description: "Choose number of days"
+            type: "range"
+            value_type: "integer"
+            config:
+              minimum: 1
+              maximum: 730
+      4:
+        name: GPU
+        description: |
+          GPU-enabled instances. Features: 1 or 2 GPU cores, 9 CPU cores for each GPU core, large memory.
+          Ideal for: Graphics and general purpose GPu compute applications.
+        parameters:
+          - id: "id1"
+            label: "Number of GPU cores"
+            description: "Select number of GPU cores you want"
+            type: "select"
+            value_type: "integer"
+            config:
+              mode: "buttons"
+              values: [1, 2]
+          - id: "id2"
+            label: "Number of CPU Cores"
+            description: "For GPU instance number of CPU cores is constant"
+            type: "attribute"
+            value_type: "integer"
+            value: 8
+          - id: "id3"
+            label: "Amount of RAM"
+            description: "Select amount of RAM per core"
+            type: "select"
+            value_type: "integer"
+            unit: "GB"
+            config:
+              mode: "buttons"
+              values: [24, 50]
+          - id: "id4"
+            label: "Local disk"
+            description: "Amount of local disk space is constant"
+            type: "attribute"
+            value_type: "integer"
+            value: 280
+            unit: "GB"
+          - id: "id5"
+            label: "Number of VM instances"
+            description: "Type number of VM instances from 1-50"
+            type: "range"
+            value_type: "integer"
+            config:
+              minimum: 1
+              maximum: 50
+          - id: "id6"
+            label: "Access type"
+            description: "Access type for this offer is constant"
+            type: "attribute"
+            value_type: "string"
+            value: "reserved"
+          - id: "id7"
+            label: "Start of service"
+            description: "Please choose start date"
+            type: "date"
+            value_type: "string"
+          - id: "id8"
+            label: "Number of days"
+            description: "Choose number of days"
+            type: "range"
+            value_type: "integer"
+            config:
+              minimum: 1
+              maximum: 730
+  High-Throughput compute:
+    name: &egiHTC EGI High-Throughput compute
+    parents: *computeParent
+    providers: [*egi]
+    catalogue: *catris
+    logo: high-throughput-compute.png
+    open_access: false
+    webpage_url: https://www.egi.eu/services/high-throughput-compute/
+    manual_url: https://wiki.egi.eu/wiki/Federated_Cloud_user_support
+    helpdesk_url: https://www.egi.eu/more-information/
+    training_information_url: https://www.eosc-hub.eu/training-material/egi-cloud-compute
+    terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
+    resource_level_url: https://documents.egi.eu/document/2733
+    access_policies_url: https://marketplace.egi.eu/content/7-access-policy
+    language_availability: *english
+    geographical_availabilities: *poland
+    domain: *otherOther
+    target_users: [*researchers, *research_organisations]
+    #        #restrictions: *notSpecified
+    trl: *trl_9
+    life_cycle_status: *prod
+    tagline: Execute thousands of computational tasks to analyse large datasets
+    platforms: [*egiPlatform]
+    description: |
+      With High-Throughput Compute you can run computational jobs at scale on the EGI infrastructure. It allows you to analyse large datasets and execute thousands of parallel computing tasks.
+
+      EGI offers more than 650,000 cores of installed capacity, supporting about 1.6 million computing jobs per day.
+
+      ### To access the service you need to:
+
+        1. Request access selecting one of the service options below.
+        2. Set the relevant parameters and add the service to the cart.
+        3. Go to the cart and submit your order.
+        4. You will receive an email summarising your order.
+        5. You will be contacted by the EGI support team.
+
+      ### Featured use cases:
+
+      [What happens when molecules collide?][1] How High-Throughput Compute helps researchers to simulate chemical reactions. <br>
+      [Small settlements coalesce into larger cities][2]: how the OpenMOLE platform and High-Throughput Compute helped to validate a long-held theory in geography
+
+      [1]: https://www.egi.eu/use-cases/research-stories/what-happens-when-molecules-collide/
+
+      [2]: https://www.egi.eu/use-cases/research-stories/cities/
+    offers:
+      1:
+        name: Base
+        description: |
+          It allows the execution of large numbers of independent or loosely coupled computing tasks.
+          Limited parallel and multi-thread computing can be supported as well.
+        parameters:
+          - id: "id1"
+            label: "Number of CPU hours"
+            description: "Choose number of hours"
+            type: "range"
+            value_type: "integer"
+            unit: "h"
+            config:
+              minimum: 1
+              maximum: 10000000
+          - id: "id2"
+            label: "Guaranteed number of CPU cores"
+            description: "Choose number of cores between 1 and 32"
+            type: "range"
+            value_type: "integer"
+            config:
+              minimum: 1
+              maximum: 32
+          - id: "id3"
+            label: "Amount of RAM per CPU core"
+            description: "Choose amount of RAM"
+            unit: "GB"
+            type: "select"
+            value_type: "integer"
+            config:
+              mode: "buttons"
+              values: [4, 8]
+          - id: "id4"
+            label: "Access type"
+            description: "Choose access type"
+            type: "select"
+            value_type: "string"
+            config:
+              mode: "buttons"
+              values: ["opportunistic", "reserved"]
+          - id: "id5"
+            label: "Other technical requirements"
+            description: "Type other requirements"
+            type: "input"
+            value_type: "string"
+          - id: "id6"
+            label: "Start of service"
+            description: "Please choose start date"
+            type: "date"
+            value_type: "string"
+          - id: "id7"
+            label: "Number of days"
+            description: "Choose number of days"
+            type: "range"
+            value_type: "integer"
+            config:
+              minimum: 1
+              maximum: 730
+      2:
+        name: MPI
+        description: |
+          It allows parallel computing, with support of MPI protocol and libraries.
+        parameters:
+          - id: "id1"
+            label: "Number of CPU hours"
+            description: "Choose number of hours"
+            type: "range"
+            value_type: "integer"
+            unit: "h"
+            config:
+              minimum: 1
+              maximum: 10000000
+          - id: "id2"
+            label: "Guaranteed number of CPU cores"
+            description: "Choose number of cores between 1 and 32"
+            type: "range"
+            value_type: "integer"
+            config:
+              minimum: 1
+              maximum: 32
+          - id: "id3"
+            label: "Amount of RAM per CPU core"
+            description: "Choose amount of RAM"
+            unit: "GB"
+            type: "select"
+            value_type: "integer"
+            config:
+              mode: "buttons"
+              values: [4, 8]
+          - id: "id4"
+            label: "Parallelism (Threads)"
+            description: "Choose number of threads from 8 to 24"
+            type: "range"
+            value_type: "integer"
+            config:
+              minimum: 8
+              maximum: 24
+          - id: "id5"
+            label: "Access type"
+            description: "Choose access type"
+            type: "select"
+            value_type: "string"
+            config:
+              mode: "buttons"
+              values: ["opportunistic", "reserved"]
+          - id: "id6"
+            label: "Other technical requirements"
+            description: "Type other requirements"
+            type: "input"
+            value_type: "string"
+          - id: "id7"
+            label: "Start of service"
+            description: "Please choose start date"
+            type: "date"
+            value_type: "string"
+          - id: "id8"
+            label: "Number of days"
+            description: "Choose number of days"
+            type: "range"
+            value_type: "integer"
+            config:
+              minimum: 1
+              maximum: 730
+
+  Cloud container compute:
+    name: EGI Cloud container compute BETA
+    parents: *computeParent
+    providers: [*egi]
+    catalogue: *catris
+    logo: cloud-container-compute.png
+    open_access: false
+    webpage_url: https://www.egi.eu/services/cloud-compute/
+    manual_url: https://wiki.egi.eu/wiki/Federated_Cloud_user_support
+    helpdesk_url: https://www.egi.eu/more-information/
+    training_information_url: https://www.eosc-hub.eu/training-material/egi-cloud-container-compute-training-material
+    terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
+    resource_level_url: https://documents.egi.eu/document/2733
+    access_policies_url: https://marketplace.egi.eu/content/7-access-policy
+    language_availability: *english
+    geographical_availabilities: *poland
+    domain: *otherOther
+    target_users: [*researchers, *research_organisations]
+    #        #restrictions: *notSpecified
+    trl: *trl_9
+    life_cycle_status: *prod
+    tagline: Run Docker containers in a lightweight virtualised environment
+    platforms: [*egiPlatform]
+    description: |
+      With Cloud Container Compute you can deploy and scale Docker containers on-demand. It offers guaranteed computational resources in a secure and isolated environment with standard API access, without the overhead of managing the operating system.
+
+      The result is improved performance, ideal for development.
+
+      ### To access the service you need to:
+
+        1. Request access selecting one of the service options below.
+        2. Set the relevant parameters and add the service to the cart.
+        3. Go to the cart and submit your order.
+        4. You will receive an email summarising your order.
+        5. You will be contacted by the EGI support team.
+    offers: *cloudComputeOffers
+
+  B2DROP:
+    name: &b2drop B2DROP
+    parents: [*storageParent, *sharingAndDicoveryParent]
+    providers: [*eudat, *jsc]
+    catalogue: *catris
+    logo: b2drop.png
+    open_access: false
+    webpage_url: https://b2drop.eudat.eu
+    manual_url: https://eudat.eu/services/userdoc/b2drop
+    helpdesk_url: https://www.eudat.eu/support-request?service=B2DROP
+    training_information_url: https://eudat.eu/services/userdoc/b2drop
+    terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
+    resource_level_url:
+    access_policies_url: https://eudat.eu/policy
+    language_availability: *english
+    geographical_availabilities: *poland
+    domain: *otherOther
+    target_users: [*researchers, *research_organisations]
+    #        #restrictions: *notSpecified
+    trl: *trl_9
+    life_cycle_status: *prod
+    tagline: Secure and trusted data exchange service for researchers
+    platforms: [*eudatPlatform]
+    description: |
+      B2DROP is a secure and trusted data exchange service for researchers and scientists to keep their research data synchronized and up-to-date and to exchange with other researchers. B2DROP is an ideal solution to store and exchange data with colleagues and team members, synchronise multiple versions of data, ensure automatic desktop synchronisation of large files.
+
+      For the individuals researchers who need to synchronise and exchange data with one or multiple users, B2DROP Service is a customer-facing solution to store and exchange data with colleagues and team members.
+
+      ### Uses cases:
+
+        - define with whom to exchange data, for how long and how
+        - are offered up to 20GB of storage space for research data
+        - access and manage permissions to files from any device and any location
+
+      ### To access the service you need to:
+
+      1.  The EUDAT public B2DROP service (https://b2drop.eudat.eu) is offered as a fairshare free-to-use service, users can register themselves via the B2DROP service. Users get a default quota of 20GB.
+      2.  Requests for higher quotas or a dedicated instance can by selecting one of the service options below.
+      3.  Set the relevant parameters and add the service to the cart.
+      4.  Go to the cart and submit your order.
+      5.  You will receive an email summarising your order.
+      6.  You will be contacted by the EUDAT support team.
+
+      ### Service provided by
+
+      EUDAT and JSC.
+    offers:
+      1:
+        name: B2DROP For Researchers
+        description: |
+          B2DROP is a secure and trusted data exchange service for researchers and scientists to keep their
+          research data synchronized and up-to-date and to exchange with other researchers.
+          B2DROP is an ideal solution to store and exchange data with colleagues and team members,
+          synchronise multiple versions of data, ensure automatic desktop synchronisation of large files.
+          Features: Public service, Self registering, Quota 20GB, Web access, Sharing files with local users,
+          Sharing files across other B2DROP and ownCloud/Nextcloud instances, Desktop synchronisation,
+          Support for WebDAV mounts, Publish data to B2SHARE.
+          Ideal for: Researchers seeking a central place to dtorage and ahre research data.
+        parameters:
+          - id: "id1"
+            label: "Start of service"
+            description: "Please choose start date"
+            type: "date"
+            value_type: "string"
+          - id: "id2"
+            label: "Number of days"
+            description: "Choose number of days"
+            type: "input"
+            value_type: "integer"
+      2:
+        name: B2DROP For Data Managers
+        description: |
+          The public B2DROP service has a per user quota limit of 20GB. Communities, organisations
+          or PI's which have a need for higher quota’s, higher storage capacity, specific requirements
+          and/or (Nextcloud) applications enabled can submit support request. Depending on the requirements
+          and/or requested storage capacity the B2DROP service is offered as a paid service.
+          Features: Public service, Self registering, Higher quota's as default, Web access,
+          Sharing files with local users, Sharing files across other B2DROP and ownCloud/Nextcloud instances,
+          Desktop synchronisation, Support for WebDAV mounts, Publish data to B2SHARE.
+          Ideal for: Data managers with higher quota, storage and/or any specific requirements.
+        parameters: &b2dropParameters
+          - id: "id1"
+            label: "Requested storage capacity"
+            description: "Please choose storage capacity"
+            type: "select"
+            value_type: "integer"
+            unit: "TB"
+            config:
+              mode: "buttons"
+              values: [0.5, 1, 5, 10]
+          - id: "id2"
+            label: "Requested quota per user"
+            description: "Choose quota per user"
+            type: "select"
+            value_type: "integer"
+            unit: "GB"
+            config:
+              mode: "buttons"
+              values: [100, 200, 500]
+          - id: "id3"
+            label: "Access type"
+            description: "Choose number of days"
+            type: "select"
+            value_type: "string"
+            config:
+              mode: "buttons"
+              values: ["opportunistic", "reserved"]
+          - id: "id4"
+            label: "Start of service"
+            description: "Please choose start date"
+            type: "date"
+            value_type: "string"
+          - id: "id5"
+            label: "Number of days"
+            description: "Choose number of days"
+            type: "input"
+            value_type: "integer"
+          - id: "id6"
+            label: "Special requirements"
+            description: "Write about special requirements"
+            type: "input"
+            value_type: "string"
+      3:
+        name: B2DROP For Communities And Organisations
+        description: |
+          The public B2DROP service is provided on a fair-share basis.
+          Communities and/or organisations with specific requirements which can not be support via
+          the public fair-share service or or need higher level of security or access control can request
+          consultancy in setting up and deploying a local B2DROP instance or can request
+          a B2DROP instance which is hosted at one of the EUDAT partners.
+          Features: dedicated B2DROP instace, Requirements are negotiable.
+          Ideal for: Community/organisational data managers.
+        parameters: *b2dropParameters
+  B2FIND:
+    name: &b2find B2FIND
+    parents: [*sharingAndDicoveryParent, *dataManagementParent]
+    providers: [*eudat, *dkrz]
+    catalogue: *catris
+    logo: b2find.png
+    open_access: false
+    webpage_url: http://b2find.eudat.eu/
+    manual_url: http://eudat.eu/services/userdoc/b2find
+    helpdesk_url: http://www.egi.eu/more-information/
+    training_information_url: http://eudat.eu/services/userdoc/b2find
+    terms_of_use_url: http://marketplace.egi.eu/content/3-terms-and-conditions-of-use
+    resource_level_url:
+    access_policies_url: http://eudat.eu/policy
+    language_availability: *english
+    geographical_availabilities: *poland
+    domain: *otherOther
+    target_users: [*researchers, *providers, *research_organisations]
+    #        #restrictions: *notSpecified
+    trl: *trl_9
+    life_cycle_status: *prod
+    tagline: Metadata based data-discovery
+    platforms: [*eudatPlatform]
+    funding_bodies: ["funding_body-fapesp", "funding_body-rpf"]
+    funding_programs: ["funding_program-icfs", "funding_program-insc2020", "funding_program-iter"]
+    description: |
+      B2FIND is the EUDAT metadata service and provides a discovery portal which allows users
+      to find data collections within an international and inter-disciplinary scope.
+      It is based on a comprehensive metadata catalogue of research data collections stored
+      in EUDAT data centres and other repositories. Harmonization of the metadata descriptions collected
+      from heterogeneous sources enables not only the presentation in a consistent form but as well
+      the faceted search across scientific domain boundaries.
+
+      B2FIND is for communities and other providers of research data who need to publish and give visibility
+      to their metadata and individual researchers who need to search data from everywhere,
+      and see data in the context with an accross community approach.
+
+      ### Features:
+
+         - based on a comprehensive joint catalogue of EUDAT services and external metadata
+         - metadata is mapped onto standardized facets
+         - supports faceted, geospatial and temporal metadata searches
+         - allows users to search and browse datasets via keyword searches
+         - results displayed in user-friendly format and listed in order of relevance
+         - access to the scientific data objects is given through references provided in the metadata
+         - available for communities in the EUDAT registered domain of data
+
+      ### Uses cases:
+
+         - define with whom to exchange data, for how long and how
+         - are offered up to 20GB of storage space for research data
+         - access and manage permissions to files from any device and any location
+
+
+      ### To access the service you need to:
+
+         1. The EUDAT public B2FIND [service][1]  is offered as a fairshare free-to-use service,
+         no registration is required to search through the B2FIND service.
+         2. Request for metadata data harvesting of an existing data repository select the service option below.
+         3. Provide URL to data repository
+         4. Provide URL endpoint for harvesting, see B2FIND [guidelines][2] for harvesting
+         5. Go to the cart and submit your order.
+         6. You will receive an email summarising your order.
+         7. You will be contacted by the EUDAT support team
+
+      ### Service provided by
+
+      EUDAT and Deutsches Klimarechenzentrum (DKRZ)
+
+      [1]: https://b2find.eudat.eu/
+      [2]: http://b2find.eudat.eu/guidelines/harvesting.html
+    offers:
+      1:
+        name: B2FIND For Researchers
+        description: |
+          B2FIND is a discovery service based on metadata steadily harvested from research data collections
+          from EUDAT data centres and other community repositories. The service offers faceted browsing
+          and it allows in particular to discover data that is stored through the B2SAFE and B2SHARE services.
+          Features: Public service supporting cross disciplinary research, No registration required.
+          Ideal for: Researchers seeking interesting datasets.
+      2:
+        name: B2FIND For Data Providers
+        description: |
+          To enlarge the discovery of existing datasets, data repository owners can make their research
+          data collections stored in existing data repositories harvestable and discoverable
+          via public B2FIND service. To ease the process of harvesting data repository owners can assess the
+          B2FIND guidelines for data providers.
+          Features: Comprehensive joint catalogue of EUDAT services and external metadata,
+          Metadata is mapped onto standardized facets, Supports faceted, geospatial and temporal metadata searches,
+          Allows suse to search and browse datasets via keyword searches,
+          user-friendly format and listed in order of relevance,
+          Access to the scintific data objects is given through references provided in the metadata.
+          Ideal for: Data providers.
+        parameters:
+          - id: "id1"
+            label: "Data repository name"
+            description: "Type data repository name"
+            type: "input"
+            value_type: "string"
+          - id: "id2"
+            label: "Harvesting method"
+            description: "Choose harvesting method"
+            type: "select"
+            value_type: "string"
+            config:
+              mode: "buttons"
+              values: ["OAI-PMH", "JSON-API", "CSW 2.0", "Other"]
+          - id: "id3"
+            label: "Harvesting endpoint"
+            description: "Type harvesting endpoint"
+            type: "input"
+            value_type: "string"
+          - id: "id4"
+            label: "Reference to md schema"
+            description: "Reference to md schema"
+            type: "input"
+            value_type: "string"
+      3:
+        name: B2FIND For Communities And Organisations
+        description: |
+          A way to deploy a local instance use the B2FIND technology.
+          Community data managers can adapt this local instance to support community specific facets.
+          The community and/or organisation local B2FIND instances can again be made harvestable
+          by the public B2FIND service. To explore the feasibility of B2FIND as data discovery service,
+          community data managers can assess the B2FIND training module on Github.
+          Features: Comprehensive joint catalogue of EUDAT services and external metadata,
+          Metadata in mapped onto standardized facetes, Supports faceted search,
+          facets can be adapted to domain specific facets, Geospatial and temporal metadata searches,
+          Allows users to search and browse datasets via keyword searches, user-friendly format and listed
+          in order of relevance, Access to the scientifc data objects in given through references provided
+          in the metadata, Local B2FIND instace. Ideal for: Community/organisational data managers.
+  B2HANDLE:
+    name: &b2handle B2HANDLE
+    parents: [*dataManagementParent, *sharingAndDicoveryParent]
+    providers: [*eudat, *surfsara, *grnet]
+    catalogue: *catris
+    logo: b2handle.png
+    open_access: false
+    webpage_url: https://www.eudat.eu/services/b2handle
+    manual_url: https://eudat.eu/services/userdoc/b2handle
+    helpdesk_url: https://www.egi.eu/more-information/
+    training_information_url: https://eudat.eu/services/userdoc/b2handle
+    terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
+    resource_level_url:
+    access_policies_url: https://eudat.eu/policy
+    language_availability: *english
+    geographical_availabilities: *poland
+    domain: *otherOther
+    target_users: [*researchers, *research_organisations]
+    #        #restrictions: *notSpecified
+    trl: *trl_9
+    life_cycle_status: *prod
+    tagline: Secure and trusted data exchange service for researchers
+    platforms: [*eudatPlatform]
+    description: |
+      B2HANDLE is the distributed service for minting, storing, managing and accessing persistent identifiers (PIDs) and essential metadata (PID records) as well as managing PID namespaces. The implementation of the service relies on the DONA/Handle persistent identifier solution.
+
+      B2HANDLE can be used by middleware applications, end-user tools and other service to reliably identify data objects over longer timespans and through changes in object location or ownership. The B2HANDLE service encompasses management of identifier namespaces (Handle prefixes), establishment of policies and business workflows, operation of Handle servers and technical services, and a user-friendly Python library for general interaction with Handle servers and EUDAT-specific extensions. B2HANDLE is mostly transparents to end-users, shielding them from the complexity of infrastructure details. In the background, B2HANDLE operates as a federation and based on policies that aim to ensure high availability of Handle resolution by cross-site mirroring of Handles. B2HANDLE supports a dedicated Handle record structure (a PID profile) for the safe data management within an infrastructure with a given topology. By relying on features of the PID profile, end-users can, for instance, ensure authenticity of objects with checksums and timestamps and account for replicated objects across multiple locations.
+
+      ### Note:
+
+      To mint PIDs a prefix is required.
+
+
+      ### To access the service you need to:
+
+         1. Requests access to PID service or namespace (Prefix) select one of service options below.
+         2. Set the relevant parameters and add the service to the cart.
+         3. Go to the cart and submit your order.
+         4. You will receive an email summarising your order.
+         5. You will be contacted by the EUDAT support team.
+
+      ### Service provided by
+
+      EUDAT and SURFsara, GRNET
+    offers:
+      1:
+        name: B2HANDLE For Researchers
+        description: |
+          B2HANDLE is the distributed service for minting, storing, managing and accessing persistent
+          identifiers (PIDs) and essential metadata (PID records) as well as managing PID namespaces.
+          PID are used to create persistent reference which can be used to identify and access data collections
+          and objects over long periods of time. PIDs are normally automatically minted at and
+          within data management and data repository systems.
+          Features: Unique and persistent reference which are globally resolvable,
+          Network of service providers for high available PIDs and PID services,
+          Sustainability framework to sustain PIDs over long periods of time.
+          Ideal for: Data Providers
+        parameters:
+          - id: "id1"
+            label: "Access type"
+            description: "Access type is constant"
+            type: "attribute"
+            value_type: "string"
+            value: "reserved"
+          - id: "id2"
+            label: "Start of service"
+            description: "Choose start of the service"
+            type: "date"
+            value_type: "string"
+          - id: "id3"
+            label: "Number of days"
+            description: "Type number of days"
+            type: "input"
+            value_type: "integer"
+            value: 365
+      2:
+        name: B2HANDLE For Data Managers, Communities and/or Organisations
+        description: |
+          B2HANDLE is the distributed service for minting, storing, managing and accessing persistent
+          identifiers (PIDs) and essential metadata (PID records) as well as managing PID namespaces.
+          The implementation of the service relies on the DONA/Handle persistent identifier solution.
+          Features: Unique and persistent reference which are globally resolvable,
+          Network of service providers for high PIDs and PID services, Sustainability framework to sustain PIDs
+          over long periods of time, Unified technical interface for access, registration and modification
+          of PIDs and PID records, Operational management of PID namespaces (prefixes) transparent
+          to user communities, including replication. Local reverse-lookups to retrive Handles base
+          on target location or other fields, Client0side application support through a Python library.
+          Compatible with common standards and practices (e.g. RDA).
+          Ideal for: Data Providers
+        parameters:
+          - id: "id1"
+            label: "Access type"
+            description: "Access type is constant"
+            type: "attribute"
+            value_type: "string"
+            value: "reserved"
+          - id: "id2"
+            label: "Prefix"
+            description: "Prefix"
+            type: "select"
+            value_type: "string"
+            config:
+              mode: "buttons"
+              values: ["yes", "no"]
+          - id: "id3"
+            label: "Prefered service provider"
+            description: "Choose preferred service provider"
+            type: "select"
+            value_type: "string"
+            config:
+              mode: "buttons"
+              values: ["SURFsara", "GRNET"]
+          - id: "id4"
+            label: "Start of service"
+            description: "Choose start of the service"
+            type: "date"
+            value_type: "string"
+          - id: "id5"
+            label: "Number of days"
+            description: "Type number of days"
+            type: "input"
+            value_type: "integer"
+            value: 365
+
+  B2SAFE:
+    name: &b2safe B2SAFE
+    parents: [*dataManagementParent, *storageParent]
+    providers: [*eudat, *all]
+    catalogue: *catris
+    logo: b2safe.png
+    open_access: false
+    webpage_url: https://www.eudat.eu/services/b2safe
+    manual_url: https://eudat.eu/services/userdoc/configure-b2safe
+    helpdesk_url: https://eudat.eu/contact-support-request
+    training_information_url:
+    terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
+    resource_level_url:
+    access_policies_url: https://eudat.eu/policy
+    language_availability: *english
+    geographical_availabilities: *poland
+    domain: *otherOther
+    target_users: [*researchers, *research_organisations]
+    #        #restrictions: *notSpecified
+    trl: *trl_9
+    life_cycle_status: *prod
+    tagline: Distribute and store large volumes of data based on data policies
+    platforms: [*eudatPlatform]
+    description: |
+      B2SAFE is a robust, safe and highly available service which allows community
+      and departmental repositories to implement data management policies on their research data across
+      multiple administrative domains in a trustworthy manner. The service provides an abstraction layer
+      of large scale, heterogeneous data storages and guards against data loss in long-term archiving.
+      It allows to optimize access for users (e.g. from different regions) and brings data closer to facilities
+      for compute-intensive analysis.
+
+
+      ### To access the service you need to:
+
+         1. Request access selecting one of the service options below.
+         2. Set the relevant parameters and add the service to the cart.
+         3. Go to the cart and submit your order.
+         4. You will receive an email summarising your order..
+         5. You will be contacted by the EUDAT support team.
+
+      ### Service provided by
+
+      EUDAT and all generic CDI Level 1 providers
+    offers:
+      1:
+        name: B2SAFE
+        description: |
+          For the communities who need to guard against data loss; a customer facing service that allows
+          data replication and policy-driven data management using different storage services provided
+          by geographicallydistributed centres in the EUDAT CDI. Features: based on the execution of auditable
+          data policy rules and the use of persistent identifiers (PIDs), respects the rights of the data owners
+          to define teh access rights for their data and to decide how and when it is made publicly referenceable,
+          able to aggregate data from different disciplines into a storage system of thrustworthy and capable data
+          service providers, support for DSPACE repository packages and a lightweight HTTP-based solution,
+          integration between B2ACCSS and B2SAFE to provide federated authentication
+          (expected in the next stable release).
+  B2SHARE:
+    name: &b2share B2SHARE
+    parents: [*sharingAndDicoveryParent, *dataManagementParent]
+    providers: [*eudat, *csc]
+    catalogue: *catris
+    logo: b2share.png
+    open_access: false
+    webpage_url: https://www.eudat.eu/services/b2share
+    manual_url: https://eudat.eu/services/userdoc/b2share
+    helpdesk_url: https://eudat.eu/contact-support-request
+    training_information_url:
+    terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
+    resource_level_url:
+    access_policies_url: https://eudat.eu/policy
+    language_availability: *english
+    geographical_availabilities: *poland
+    domain: *otherOther
+    target_users: [*researchers, *providers, *research_organisations]
+    #        #restrictions: *notSpecified
+    trl: *trl_9
+    life_cycle_status: *prod
+    tagline: Store and publish research data
+    platforms: [*eudatPlatform]
+    description: |
+      B2SHARE is a user-friendly, reliable and trustworthy way for researchers,
+      scientific communities and citizen scientists to store and publish small-scale
+      research data from diverse contexts. B2SHARE is a solution that facilitates research data storage,
+      guarantees long-term persistence of data and allows data, results or ideas to be shared worldwide.
+
+         - The basic production service comprises the following features:
+         - self-service registration for any scientists and researchers,
+         - free upload and registration of stable research data,
+         - data access policy is defined by the data owner,
+         - metadata is openly accessible and harvestable,
+         - customised metadata handling and customized user interfaces (e.g. for metadata acquisition),
+         - data integrity is ensured by checksums which are calculated during data ingest,
+         - the data is kept online, the storage usage base on the principle of fair share.
+
+      Perfect for the individuals researchers who do not have adequate facilities for storing,
+      preserving and sharing data, B2SHARE Service is a customer-facing service which provides
+      a safe repository for scientific data and a easy way to share it in the research community.
+
+
+      ### To access the service you need to:
+
+         1. The EUDAT public B2SHARE service (https://b2share.eudat.eu) is offered as a fairshare free-to-use service, users can register themselves via the B2SHARE service.
+         2. Requests for a specific community domain and metadata template or a dedicated instance can by selecting one of the service options below.
+         3. Set the relevant parameters and add the service to the cart.
+         4. Go to the cart and submit your order.
+         5. You will receive an email summarising your order.
+         6. You will be contacted by the EUDAT support team.
+
+      ### Service provided by
+
+      EUDAT and CSC
+    offers:
+      1:
+        name: B2SHARE For Researchers
+        description: |
+          B2SHARE is a user-friendly, reliable and trustworthy way for researchers, scientific communities
+          and citizen scientists to store and publish small-scale research data from diverse contexts.
+          Features: Public service supporting cross disciplinary research,
+          Self-service registration for any scientists and researchers,
+          Free upload and registration of stable research data, Data access policy is defined by the data owner,
+          Community metadata schema's available, Metadata in openly accessible and harvestable (e.g. OAI-PMH),
+          metadata is made discoverable via B2FIND, Direct uploads from B2DROP, Data integrity is ensured
+          by checksums which are calculated during data ingest, The data is kept online,
+          the storage usage base on the principle of fair share.
+          Ideal for: Researchers who what to publish datasets.
+        parameters:
+          - id: "id1"
+            label: "Start of service"
+            description: "Please choose the start date"
+            type: "date"
+            value_type: "string"
+          - id: "id2"
+            label: "Number of days"
+            description: "Choose number of days"
+            type: "input"
+            value_type: "integer"
+            value: 365
+      2:
+        name: B2SHARE For Data Providers
+        description: |
+          To enlarge the discovery of existing datasets, data repository owners can make their research
+          data collections stored in existing data repositories harvestable and discoverable
+          via public B2FIND service. To ease the process of harvesting data repository owners can assess
+          the B2FIND guidelines for data providers. Features: Comprehensive joint catalogue
+          of EUDAT services and external metadata, Metadata is mapped onto standardized facets,
+          Supports faceted, geospatial and temporal metadata searches,  Allows users to search
+          and browse datasets via keyword searches, User-friendly format and listed in order of relevance,
+          Access to the scientific data objects is given through references provided in the metadata.
+          Ideal for: Data providers.
+        parameters:
+          - id: "id1"
+            label: "Data repository name"
+            description: "Please choose storage capacity"
+            type: "input"
+            value_type: "string"
+          - id: "id2"
+            label: "Harvesting method"
+            description: "Choose harvesting method"
+            type: "select"
+            value_type: "string"
+            config:
+              mode: "buttons"
+              values: ["OAI-PMH", "JSON-API", "CSW 2.0", "Other"]
+          - id: "id3"
+            label: "Harvesting endpoint"
+            description: "Choose number of days"
+            type: "input"
+            value_type: "string"
+          - id: "id4"
+            label: "Reference to md schema"
+            description: "Reference to md schema"
+            type: "input"
+            value_type: "string"
+      3:
+        name: B2SHARE For Communities And Organisations
+        description: |
+          A way to deploy a local instance use the B2FIND technology.
+          Community data managers can adapt this local instance to support community specific facets.
+          The community and/or organisation local B2FIND instances can again be made harvestable
+          by the public B2FIND service. To explore the feasibility of B2FIND as data discovery service,
+          community data managers can assess the B2FIND training module on Github.
+          Features: Comprehensive joint catalogue of EUDAT services and external metadata,
+          Metadata in mapped onto standardized facetes, Supports faceted search, facets can be adapted
+          to domain specific facets, Geospatial and temporal metadata searches, Allows users to search
+          and browse datasets via keyword searches, user-friendly format and listed in order of relevance,
+          Access to the scientifc data objects in given through references provided in the metadata,
+          Local B2FIND instace. Ideal for: Community/organisational data managers.
+  B2ACCESS:
+    name: &b2access B2ACCESS
+    parents: *securityAndOperationsParent
+    providers: [*eudat, *all]
+    catalogue: *catris
+    logo: b2access.png
+    open_access: false
+    webpage_url: https://b2access.eudat.eu
+    manual_url: https://eudat.eu/services/userdoc/b2stage
+    helpdesk_url: https://eudat.eu/contact-support-request
+    training_information_url:
+    terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
+    resource_level_url: http://hdl.handle.net/11304/e43b2e3f-83c5-4e3f-b8b7-18d38d37a6cd
+    access_policies_url: https://eudat.eu/policy
+    language_availability: *english
+    domain: *otherOther
+    geographical_availabilities: *poland
+    target_users: [*researchers, *research_organisations]
+    #        #restrictions: *notSpecified
+    trl: *trl_9
+    life_cycle_status: *prod
+    tagline: AAI platform for federated authentication to EUDAT services
+    platforms: [*eudatPlatform]
+    description: |
+      The B2ACCESS AAI proxy service is arbitrating access to registered Service Providers via different protocols.
+      Integrated Service Providers consume Attribute assertions from the B2ACCESS service when the End User
+      accesses them. B2ACCESS allows EUDAT users to authenticate themselves using a variety of other Identity
+      Providers or credentials.
+
+      ### The features of B2ACCESS:
+
+        - supports several methods of authentication via the users' primary identity providers (OpenID, SAML, x.509)
+        - can be used as primary identity provider, if necessary
+        - can be integrated with any service of the CDI service provider federation
+        - is integrated with EduGain and supports identities from theoretically hundreds of Universities
+          and Research institutions worldwide.
+        - provides unique and persistent EUDAT-wide meaningful identifiers.
+
+    offers:
+      1:
+        name: b2accessDemo
+        description: |
+          Demo
+  EGI Online Storage:
+    name: &egiOnlineStorage EGI Online Storage
+    parents: *storageParent
+    providers: [*egi]
+    catalogue: *catris
+    logo: archive-storage.png
+    open_access: false
+    webpage_url: https://www.egi.eu/services/online-storage/
+    manual_url: https://wiki.egi.eu/wiki/Online_Storage
+    helpdesk_url: https://www.egi.eu/more-information/
+    training_information_url: https://wiki.egi.eu/wiki/Online_Storage
+    terms_of_use_url: https://marketplace.egi.eu/content/3-terms-and-conditions-of-use
+    resource_level_url:
+    access_policies_url: https://marketplace.egi.eu/content/7-access-policy
+    language_availability: *english
+    geographical_availabilities: *poland
+    domain: *otherOther
+    target_users: [*researchers, *research_organisations]
+    #        #restrictions: *notSpecified
+    trl: *trl_9
+    life_cycle_status: *prod
+    tagline: Store, share and access your files and their metadata on a global scale.
+    platforms: [*egiPlatform]
+    description: |
+      Store, share and access your files and their metadata on a global scale.
+
+      Online Storage allows you to store data in a reliable and high-­quality environment and share it
+      across distributed teams. Your data can be accessed through different standard protocols and can be
+      replicated across different providers to increase fault­-tolerance.
+
+      Online Storage gives you complete control over the data you share and with whom.
+
+
+      ### To access the service you need to:
+
+        1. Request access selecting one of the service options below.
+        2. Set the relevant parameters and add the service to the cart.
+        3. Go to the cart and submit your order.
+        4. You will receive an email summarising your order.
+        5. You will be contacted by the EGI support team.
+    offers:
+      1:
+        name: EGI Block storage
+        description: |
+          Block Storage is a block-level storage solution that allows you to expand the storage capacity
+          of your instances in the EGI Federated Cloud. This means you can increase your storage
+          without increasing the size or capacity of your instance or by provisioning new ones.
+          Once you mount and format your drive, you can use it just like a regular hard drive
+          attached to your server. Or you can detach your block storage volume from one server
+          and attach it to another. Or you can delete your server, keeping your data intact
+          and ready for the next time you need it.
+        parameters:
+          - id: "id1"
+            label: "Storage capacity"
+            description: "Type amount of data"
+            type: "input"
+            unit: "GB"
+            value_type: "integer"
+          - id: "id2"
+            label: "Access type"
+            description: "Choose access type"
+            type: "select"
+            value_type: "string"
+            config:
+              mode: "buttons"
+              values: ["opportunistic", "reserved"]
+          - id: "id3"
+            label: "Special requirements"
+            description: "Type special requirements"
+            type: "input"
+            value_type: "string"
+          - id: "id4"
+            label: "Start of service"
+            description: "Please choose the start date"
+            type: "date"
+            value_type: "string"
+          - id: "id5"
+            label: "Number of days"
+            description: "Choose number of days"
+            type: "input"
+            value_type: "integer"
+            value: 365
+      2:
+        name: EGI Object storage
+        description: |
+          Object storage manages data as objects. Each object includes the data itself,
+          a variable amount of metadata, and a globally unique identifier.
+          Cloud object storage allows relatively inexpensive, scalable
+          and self-healing retention of massive amounts of unstructured data.
+        parameters:
+          - id: "id1"
+            label: "Storage capacity"
+            description: "Type amount of data"
+            type: "input"
+            unit: "GB"
+            value_type: "integer"
+          - id: "id2"
+            label: "Interfaces"
+            description: "Choose interfaces"
+            type: "multiselect"
+            value_type: "string"
+            config:
+              minItems: 1
+              values: ["CDMI", "POSIX", "SWIFT", "Others"]
+          - id: "id3"
+            label: "Access type"
+            description: "Choose access type"
+            type: "select"
+            value_type: "string"
+            config:
+              mode: "buttons"
+              values: ["opportunistic", "reserved"]
+          - id: "id4"
+            label: "Special requirements"
+            description: "Type special requirements"
+            type: "input"
+            value_type: "string"
+          - id: "id5"
+            label: "Start of service"
+            description: "Please choose the start date"
+            type: "date"
+            value_type: "string"
+          - id: "id6"
+            label: "Number of days"
+            description: "Choose number of days"
+            type: "input"
+            value_type: "integer"
+            value: 365
+      3:
+        name: EGI File storage
+        description: |
+          Highly scalable storage system accessible from anywhere allowing
+          to easily share data through different standard interfaces.
+          It assigns global identifiers to files and allows to organise your data
+          using a flexible hierarchical structure.
+        parameters:
+          - id: "id1"
+            label: "Storage capacity"
+            description: "Type amount of data"
+            type: "input"
+            unit: "GB"
+            value_type: "integer"
+          - id: "id2"
+            label: "Technology"
+            description: "Choose technology"
+            type: "multiselect"
+            value_type: "string"
+            config:
+              minItems: 1
+              values: ["DPM", "DCache", "Storm", "Others"]
+          - id: "id3"
+            label: "Access type"
+            description: "Choose access type"
+            type: "select"
+            value_type: "string"
+            config:
+              mode: "buttons"
+              values: ["opportunistic", "reserved"]
+          - id: "id4"
+            label: "Special requirements"
+            description: "Type special requirements"
+            type: "input"
+            value_type: "string"
+          - id: "id5"
+            label: "Start of service"
+            description: "Please choose the start date"
+            type: "date"
+            value_type: "string"
+          - id: "id6"
+            label: "Number of days"
+            description: "Choose number of days"
+            type: "input"
+            value_type: "integer"
+            value: 365
+  EGI Notebooks:
+    pid: egi-fed.notebook
+    name: &notebook EGI Notebooks
+    parents: *processingAndAnalysisParent
+    providers: [*egi]
+    catalogue: *catris
+    open_access: false
+    webpage_url: https://www.egi.eu/services/notebooks/
+    manual_url: https://wiki.egi.eu/wiki/EGI_Notebooks
+    helpdesk_url:
+    training_information_url:
+    terms_of_use_url:
+    resource_level_url:
+    access_policies_url:
+    target_users: [*researchers, *research_organisations]
+    language_availability: *english
+    domain: *otherOther
+    geographical_availabilities: *poland
+    #restrictions: *notSpecified
+    trl: *trl_9
+    life_cycle_status: *prod
+    tagline: Create interactive documents with live code, visualisations and narrative text powered by the Jupyter technology
+    platforms: [*egiPlatform]
+    description: |
+      The service provides a browser-based tool for interactive analysis of data using EGI storage
+      and compute infrastructures based on the JupyterHub technology. The notebooks can combine text,
+      mathematics, computations and their rich media output using Jupyter technology, and can scale
+      to multiple servers and multiple users (hub) with the EGI cloud service.
+
+      ### The service is proposed in two options:
+
+        1. For individual users EGI hosts and offers a JupyterHub within the Applications On Demand Service.
+        Users (after lightweight approval) can login, write and play notebooks
+        using storage and compute capacity from the access.egi.eu VO.
+        2. For user communities EGI offers consultancy and technology
+        to setup a community-specific JupyterHub on top of community VO
+        (together with EGI-enbled compute and storage resources), and with community-specific storage/data.
+    offers:
+      1:
+        name: "AoD/Catch-all"
+        description: Run your own notebooks with persistent storage on EGI Cloud resources.
+        parameters:
+          - id: "id1"
+            label: "Amount of RAM"
+            description: "Please choose amount of RAM"
+            type: "select"
+            unit: "GB"
+            value_type: "integer"
+            config:
+              mode: "buttons"
+              values: [0.5, 1]
+          - id: "id2"
+            label: "Number of cores"
+            description: "Choose number of cores"
+            type: "select"
+            value_type: "integer"
+            config:
+              mode: "buttons"
+              values: [1, 2, 4]
+          - id: "id3"
+            label: "Persistent storage"
+            unit: "GB"
+            description: "Choose amount of storage"
+            type: "select"
+            value_type: "integer"
+            config:
+              mode: "buttons"
+              values: [1, 10, 20]
+      2:
+        name: Community Notebook
+        description: |
+          Community specific deployment to provide notebooks for all the users of a community.
+          Allows further customisation to meet the community needs (e.g. shared storage)
+        parameters:
+          - id: "id1"
+            label: "Number of users"
+            description: "Please type number of users"
+            type: "range"
+            value_type: "integer"
+            config:
+              minimum: 1
+              maximum: 99999
+          - id: "id2"
+            label: "Amount of RAM"
+            description: "Please choose amount of RAM"
+            type: "input"
+            unit: "GB"
+            value_type: "integer"
+          - id: "id3"
+            label: "Number of cores per user"
+            description: "Choose number of cores"
+            type: "select"
+            value_type: "integer"
+            config:
+              mode: "buttons"
+              values: [1, 2, 4]
+          - id: "id4"
+            label: "Storage per user"
+            unit: "GB"
+            description: "Choose amount of storage"
+            type: "input"
+            value_type: "integer"
+
+  Check-in:
+    name: &checkIn EGI Check-in
+    parents: *securityAndOperationsParent
+    providers: [*egi]
+    catalogue: *catris
+    open_access: false
+    webpage_url: https://www.egi.eu/services/check-in/
+    manual_url:
+    helpdesk_url:
+    training_information_url:
+    terms_of_use_url:
+    resource_level_url:
+    access_policies_url:
+    geographical_availabilities: *poland
+    language_availability: *english
+    target_users: [*research_organisations]
+    domain: *otherOther
+    #restrictions: *notSpecified
+    trl: *trl_9
+    life_cycle_status: *prod
+    tagline: Handle transparent Single Sign-On from multiple heterogeneous identity providers
+    platforms: [*egiPlatform]
+    description: |
+      Check-in is a proxy service that operates as a central hub to connect federated Identity Providers (IdPs)
+      with service providers. Check-in allows users to select their preferred IdP so that they can access and use
+      services in a uniform and easy way. For the user the feature is transparent:
+      as soon as their IdP is integrated with the proxy, they are redirected by the service to their own IdP.
+      Once integrated the IdP with the proxy, all the services using the IdP proxy will be available.
+      The service providers will get all the AuthN/AuthZ information needed from the IdP Proxy
+      (in form of attributes), without the need to deal with individual IdPs.
+
+      Other components that can be attached to the IdP Proxy are credential translation services
+      and attribute authorities.
+
+      ### Main characteristics:
+
+        - Enables multiple federated authentication sources using
+        different technologies
+        - Increased productivity and security
+        - Federated in eduGAIN as a service provider, publishingREFEDS RnSandSirtficompliance
+        - User registration portal to allow accounts-linkingo
+        - Combines user attributes originating from various authoritative sources
+        (IdPs and attribute provider services) and delivers them to the connected service providers
+        in a transparent way.
+
+      ### Features:
+
+      - Enables federated access to services:
+          *Support for IdPs: SAML2.0, OIDC
+          * Support for SPs: SAML2.0, OIDC
+      - Connection with the CILogon TTS
+      - Enables multiple federated authentication sources using different technologies
+      - Direct integration with the communities AAI services
+      - User registration portal to allow accounts-linkingProvisioning to SPs of an EGI User UID
+
+
+      Brochure: https://www.egi.eu/wp-content/uploads/2017/09/Check-in.pdf
+  FitSM:
+    name: FitSM
+    parents: *trainingAndSupportParent
+    providers: [*egi]
+    catalogue: *catris
+    logo: fitsm.png
+    open_access: false
+    webpage_url: https://www.egi.eu/services/fitsm-training/
+    manual_url: https://www.egi.eu/services/fitsm-training/
+    helpdesk_url: https://www.egi.eu/more-information/
+    training_information_url: https://www.egi.eu/services/fitsm-training/
+    terms_of_use_url: https://www.egi.eu/services/fitsm-training/terms-and-conditions/
+    resource_level_url: https://documents.egi.eu/document/2733
+    access_policies_url: https://marketplace.egi.eu/content/7-access-policy
+    geographical_availabilities: *poland
+    language_availability: *english
+    target_users: [*research_organisations]
+    domain: *otherOther
+    #restrictions: *notSpecified
+    trl: *trl_9
+    life_cycle_status: *prod
+    tagline: Learn how to manage IT services with a pragmatic and lightweight standard
+    platforms: [*egiPlatform]
+    description: |
+      FitSM is a lightweight standards family aimed at facilitating service management in IT service provision,
+      including federated scenarios. FitSM training aims at providing those involved in operating
+      federated infrastructures with the professional skills they need in order
+      to effectively manage their services.
+
+      FitSM professional training is certified by TÜV SÜD, a global leader in standardisation and certification.
+      The qualification programme offers three training levels: Foundation, Advanced and Expert.
+
+
+      ### To request a training you need to:
+
+      1. Choose the training courses that best fit with your needs below.
+      2. Add the courses to the cart.
+      3. Go to the cart and submit your order.
+      4. You will receive an email summarising your order.
+      5. You will be contacted by the EGI support team."
+    offers:
+      1:
+        name: FitSM Foundation Level
+        description: |
+          Target audience: All individuals involved in the provisioning of (federated) IT services,
+          Candidates who wish to progress to advance level of the qualification and certification scheme
+        parameters: &fitSMParameters
+          - id: "id1"
+            label: "Location"
+            description: "Type your location"
+            type: "input"
+            value_type: "string"
+          - id: "id2"
+            label: "Start of service"
+            description: "Please choose start date"
+            type: "date"
+            value_type: "string"
+          - id: "id3"
+            label: "Number of students"
+            description: "Type number of students"
+            type: "range"
+            value_type: "integer"
+            config:
+              minimum: 1
+              maximum: 99999
+      2:
+        name: Advanced Level in Service Planning and Delivery
+        description: |
+          Target audience: Individuals aiming to fulfil a coordinating role
+          in the ITSM processes related to the planning and delivery of IT services,
+          Candidates who wish to progress to expert level of the qualification and certification scheme.
+        parameters: *fitSMParameters
+      3:
+        name: Advanced Level in Service Operation and Control
+        description: |
+          Target audience: Individuals aiming to fulfil a coordinating role
+          in the ITSM processes related to the operation and control of IT services,
+          Candidates who wish to progress to expert level of the qualification and certification scheme.
+        parameters: *fitSMParameters
+      4:
+        name: Expert Level
+        description: |
+          Target audience: Individuals aiming to fulfil the role of internal or external consultant
+          or auditor in the topic area of IT service management (ITSM).
+        parameters: *fitSMParameters
+      5:
+        name: Consultancy
+        description: |
+          Advise on how to manage IT services with a pragmatic and lightweight standard.
+        parameters:
+          - id: "id1"
+            label: "Description of the consultancy"
+            description: "Type description of the consultancy"
+            type: "input"
+            value_type: "string"
+  Elastic Cloud Compute Cluster (EC3):
+    name: &ec3Service Elastic Cloud Compute Cluster (EC3)
+    parents: *processingAndAnalysisParent
+    providers: [*grycap]
+    catalogue: *catris
+    logo: ec3.png
+    open_access: false
+    webpage_url: https://servproject.i3m.upv.es/ec3-ltos/index.php
+    manual_url: https://ec3.readthedocs.io/en/devel/
+    helpdesk_url: https://wiki.egi.eu/wiki/GGUS:EC3_FAQ
+    training_information_url: https://github.com/grycap/ec3
+    terms_of_use_url: https://servproject.i3m.upv.es/ec3-ltos/terms.html
+    resource_level_url: https://documents.egi.eu/document/2733
+    access_policies_url: https://documents.egi.eu/public/ShowDocument?docid=2635
+    geographical_availabilities: *poland
+    language_availability: *english
+    target_users: [*researchers, *research_organisations, *business]
+    domain: *otherOther
+    restrictions: Research affiliation needed
+    trl: *trl_9
+    life_cycle_status: *prod
+    tagline: Deploy a virtual cluster on top of IaaS infrastructures with a few clicks.
+    platforms: [*eoscHub, *aodp]
+    description: |
+      The Elastic Cloud Computing Cluster (EC3) is a platform that allows creating elastic virtual clusters
+      on top of Infrastructure as a Service (IaaS) providers, either public (such as Amazon Web Services,
+      Google Cloud or Microsoft Azure) or on-premises (such as OpenNebula and OpenStack).
+      Through a 'job wizard' interface, the user can configure the virtual cluster with a predefined set
+      of applications that will be deployed in the clouds underpinning the EGI Applications On Demand infrastructure.
+      The installation and the configuration of the cluster are performed by means of the execution
+      of Ansible receipts. The cluster configured by EC3 is private: as soon as it is configured
+      the user will have root access to the environment, and can setup and configure the cluster
+      installing additional libraries and software to their needs.
+
+      ### Features:
+
+        - Federated authentication through the EGI Applications on Demand service.
+        - Web based access.
+        - Interoperability with most widely used IaaS cloud technologies
+        - Wizard interface to streamline the configuration and the deployment of the virtual cluster on top of Infrastructure as a Service (IaaS) providers.
+        - Several Ansible receipts are available to deploy applications and tools in the cluster nodes.
+        - Nodes of the clusters will be self-managed by CLUES. Working nodes will be undeployed when they are idle.
+        - Use of ‘per-user subproxies’ from EGI to access X.509-protected resources on the users’ behalf.
+    offers:
+      1:
+        name: EC3 Demo
+        description: |
+          demo
+
+relations:
+  # HaddockToPowerFit:
+  #   both: true
+  #   source: *haddock
+  #   target: *powerFit
+  # HaddockToDisVis:
+  #   both: true
+  #   source: *haddock
+  #   target: *disVis
+  # HaddockToRoseta:
+  #   both: true
+  #   source: *haddock
+  #   target: *csRoseta
+  # HaddockToAmber:
+  #   both: true
+  #   source: *haddock
+  #   target: *amber
+  # HaddockToFanten:
+  #   both: true
+  #   source: *haddock
+  #   target: *fanten
+  # HaddockToSpotOn:
+  #   both: true
+  #   source: *haddock
+  #   target: *spotOn
+  # PowerFitToDisVis:
+  #   both: true
+  #   source: *powerFit
+  #   target: *disVis
+  # PowerFitToRoseta:
+  #   both: true
+  #   source: *powerFit
+  #   target: *csRoseta
+  # PowerFitToAmber:
+  #   both: true
+  #   source: *powerFit
+  #   target: *amber
+  # PowerFitToFanten:
+  #   both: true
+  #   source: *powerFit
+  #   target: *fanten
+  # PowerFitToSpotOn:
+  #   both: true
+  #   source: *powerFit
+  #   target: *spotOn
+  # DisVisToRoseta:
+  #   both: true
+  #   source: *disVis
+  #   target: *csRoseta
+  # DisVisToAmber:
+  #   both: true
+  #   source: *disVis
+  #   target: *amber
+  # DisVisToFanten:
+  #   both: true
+  #   source: *disVis
+  #   target: *fanten
+  # DisVisToSpotOn:
+  #   both: true
+  #   source: *disVis
+  #   target: *spotOn
+  # csRosetaToAmber:
+  #   both: true
+  #   source: *csRoseta
+  #   target: *amber
+  # csRosetaToFanten:
+  #   both: true
+  #   source: *csRoseta
+  #   target: *fanten
+  # csRosetaToSpotOn:
+  #   both: true
+  #   source: *csRoseta
+  #   target: *spotOn
+  # AmberToFanten:
+  #   both: true
+  #   source: *amber
+  #   target: *fanten
+  # AmberToSpotOn:
+  #   both: true
+  #   source: *amber
+  #   target: *spotOn
+  # FantenToSpotOn:
+  #   both: true
+  #   source: *fanten
+  #   target: *spotOn
+  # notebookToD4Science:
+  #   both: true
+  #   source: *notebook
+  #   target: *spotOn
+  # egiToD4Science:
+  #   both: true
+  #   source: *egiCloud
+  #   target: *d4scienceService
+  # vloToB2Find:
+  #   both: false
+  #   source: *vloService
+  #   target: *b2find
+  # vloToB2Share:
+  #   both: false
+  #   source: *vloService
+  #   target: *b2share
+  # vloToEGICompute:
+  #   both: false
+  #   source: *vloService
+  #   target: *egiCloud
+  # lrsToB2Find:
+  #   both: false
+  #   source: *lrsService
+  #   target: *b2find
+  # lrsToB2Drop:
+  #   both: false
+  #   source: *lrsService
+  #   target: *b2drop
+  # lrsToB2Share:
+  #   both: false
+  #   source: *lrsService
+  #   target: *b2share
+  # lrsToEGICompute:
+  #   both: false
+  #   source: *lrsService
+  #   target: *egiCloud
+  # vcrToB2Find:
+  #   both: false
+  #   source: *vcrService
+  #   target: *b2find
+  # vcrToB2Share:
+  #   both: false
+  #   source: *vcrService
+  #   target: *b2share
+  # vcrToEGICompute:
+  #   both: false
+  #   source: *vcrService
+  #   target: *egiCloud
+  # vloToVcr:
+  #   both: true
+  #   source: *vloService
+  #   target: *vcrService
+  # VloToLrs:
+  #   both: true
+  #   source: *vloService
+  #   target: *lrsService
+  # vcrToLrs:
+  #   both: true
+  #   source: *vcrService
+  #   target: *lrsService
+  b2findToB2Share:
+    both: true
+    source: *b2find
+    target: *b2share
+  # egiToGeossPortal:
+  #   both: true
+  #   source: *egiCloud
+  #   target: *geossPortal
+  # egiToGeossDab:
+  #   both: true
+  #   source: *egiCloud
+  #   target: *geossDab
+  # geossPortalToDab:
+  #   both: true
+  #   source: *geossDab
+  #   target: *geossPortal
+  # cloudFerroEOFTocloudFerroDCC:
+  #   both: false
+  #   source: *cfdrsEOF
+  #   target: *cfdcc
+  # enesTob2find:
+  #   both: true
+  #   source: *enes
+  #   target: *b2find
+  # enesTob2handle:
+  #   both: true
+  #   source: *enes
+  #   target: *b2handle
+  # dariahToEgiCloud:
+  #   both: false
+  #   source: *dariah
+  #   target: *egiCloud
+  # dariahToCheckIn:
+  #   both: false
+  #   source: *dariah
+  #   target: *checkIn
+  # openCoastsToEgiCloud:
+  #   both: false
+  #   source: *openCoastS
+  #   target: *egiCloud
+  # gepHRCMToegiCloud:
+  #   both: true
+  #   source: *gepHRCM
+  #   target: *egiCloud
+  # gepEOToegiVloud:
+  #   both: false
+  #   source: *gepEO
+  #   target: *egiCloud
+  # eodcJHToEodcDCS:
+  #   both: false
+  #   source: *eodcJH
+  #   target: *eodcDCS
+  # amberToEgiCloud:
+  #   both: false
+  #   source: *amber
+  #   target: *egiCloud
+  # amberToEgiHTC:
+  #   both: false
+  #   source: *amber
+  #   target: *egiHTC
+  # amberToCheckIn:
+  #   both: false
+  #   source: *amber
+  #   target: *checkIn
+  # gepEOToCFI:
+  #   both: true
+  #   source: *gepEO
+  #   target: *cfi
+  # cfiToGEPAlpine:
+  #   both: false
+  #   source: *cfi
+  #   target: *gepHRCM
+  # cfiToRasdamanDatacube:
+  #   both: false
+  #   source: *cfi
+  #   target: *rasdamanDatacube
+  # cfiToSentinelHub:
+  #   both: false
+  #   source: *cfi
+  #   target: *sentinelHub
+  # EObrowserToSentinelHub:
+  #   both: true
+  #   source: *cfdrsEOB
+  #   target: *sentinelHub
+
+  # csRosetaToEgiCloud:
+  #   both: false
+  #   source: *csRoseta
+  #   target: *egiCloud
+  # csRosetaToEgiHTC:
+  #   both: false
+  #   source: *csRoseta
+  #   target: *egiHTC
+  # csRosetaToCheckIn:
+  #   both: false
+  #   source: *csRoseta
+  #   target: *checkIn
+
+  # disVisToEgiCloud:
+  #   both: false
+  #   source: *disVis
+  #   target: *egiCloud
+  # disVisToEgiHTC:
+  #   both: false
+  #   source: *disVis
+  #   target: *egiHTC
+  # disVisToCheckIn:
+  #   both: false
+  #   source: *disVis
+  #   target: *checkIn
+
+  # fantenToEgiCloud:
+  #   both: false
+  #   source: *fanten
+  #   target: *egiCloud
+  # fantenToEgiHTC:
+  #   both: false
+  #   source: *fanten
+  #   target: *egiHTC
+  # fantenToCheckIn:
+  #   both: false
+  #   source: *fanten
+  #   target: *checkIn
+
+  # haddockToEgiCloud:
+  #   both: false
+  #   source: *haddock
+  #   target: *egiCloud
+  # haddockToEgiHTC:
+  #   both: false
+  #   source: *haddock
+  #   target: *egiHTC
+  # haddockToCheckIn:
+  #   both: false
+  #   source: *haddock
+  #   target: *checkIn
+
+  # powerFitToEgiCloud:
+  #   both: false
+  #   source: *powerFit
+  #   target: *egiCloud
+  # powerFitToEgiHTC:
+  #   both: false
+  #   source: *powerFit
+  #   target: *egiHTC
+  # powerFitToCheckIn:
+  #   both: false
+  #   source: *powerFit
+  #   target: *checkIn
+
+  # spotOnToEgiCloud:
+  #   both: false
+  #   source: *spotOn
+  #   target: *egiCloud
+  # spotOnToEgiHTC:
+  #   both: false
+  #   source: *spotOn
+  #   target: *egiHTC
+  # spotOnToCheckIn:
+  #   both: false
+  #   source: *spotOn
+  #   target: *checkIn
+  # particleFormationToEgiNotebook:
+  #   both: true
+  #   source: *d4scienceService
+  #   target: *notebook
+  # particleFormationToAlien:
+  #   both: true
+  #   source: *d4scienceService
+  #   target: *alien
+  # egiCloudToProminence:
+  #   both: true
+  #   source: *egiCloud
+  #   target: *prominence
+  # egiCLoudToAlien:
+  #   both: true
+  #   source: *egiCloud
+  #   target: *alien
+
+  # lifewatchERICPlantsToEgiCloud:
+  #   both: true
+  #   source: *lifewatchERICPlants
+  #   target: *egiCloud
+  egiCloudToCheckIn:
+    both: false
+    source: *egiCloud
+    target: *checkIn
+  # panDataToPanFaas:
+  #   both: true
+  #   source: *panData
+  #   target: *panFaas
+  # panDataToPanGitlab:
+  #   both: true
+  #   source: *panData
+  #   target: *panGitlab
+  # panDataToPanNotebook:
+  #   both: true
+  #   source: *panData
+  #   target: *panNotebook
+  # panFaasToPanNotebook:
+  #   both: true
+  #   source: *panFaas
+  #   target: *panNotebook
+  # panFaasToPanGitlab:
+  #   both: true
+  #   source: *panFaas
+  #   target: *panGitlab
+  # panNotebookToPanGitlab:
+  #   both: true
+  #   source: *panNotebook
+  #   target: *panGitlab
+  # chipsterToCheckin:
+  #   both: false
+  #   source: *chipster
+  #   target: *checkIn
+  # WSPtoCheckIn:
+  #   both: false
+  #   source: *wsPgrade
+  #   target: *checkIn
+  # ePoutaToTDS:
+  #   both: true
+  #   source: *cscEpouta
+  #   target: *tds
+  # EC3ToTDS:
+  #   both: true
+  #   source: *ec3Service
+  #   target: *tds

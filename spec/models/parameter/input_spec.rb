@@ -15,4 +15,10 @@ RSpec.describe Parameter::Input, backend: true do
 
     expect(attribute).to be_value_valid
   end
+
+  it "keeps the default value through dump and load" do
+    parameter = build(:input_parameter, value_type: "integer", default_value: 3)
+
+    expect(described_class.load(parameter.dump).default_value).to eq(3)
+  end
 end

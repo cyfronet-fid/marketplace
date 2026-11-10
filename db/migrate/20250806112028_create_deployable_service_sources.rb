@@ -1,7 +1,9 @@
 # frozen_string_literal: true
+
 class CreateDeployableServiceSources < ActiveRecord::Migration[7.2]
   def change
-    create_table :deployable_service_sources do |t|
+    # whitelabel-marketplace created this table under its own migration version.
+    create_table :deployable_service_sources, if_not_exists: true do |t|
       t.string :eid, null: false
       t.string :source_type, null: false
       t.references :deployable_service, null: false, foreign_key: true

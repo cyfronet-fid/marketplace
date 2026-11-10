@@ -2,6 +2,7 @@
 
 class Category < ApplicationRecord
   extend FriendlyId
+
   friendly_id :slug_candidates, use: :slugged
 
   include Parentable
@@ -21,6 +22,8 @@ class Category < ApplicationRecord
 
   has_many :user_categories, autosave: true, dependent: :destroy
   has_many :users, through: :user_categories
+
+  normalizes :eid, with: ->(eid) { eid.strip.presence }
 
   validates :name, presence: true, uniqueness: { scope: :ancestry }
   validates :logo, blob: { content_type: :image }

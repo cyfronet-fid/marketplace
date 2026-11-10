@@ -2,23 +2,26 @@
 
 class MakeOfferOrderablePolymorphic < ActiveRecord::Migration[7.2]
   def up
+    # whitelabel-marketplace did the same conversion under its own migration version.
+    return if column_exists?(:offers, :orderable_type)
+
     # Add polymorphic columns (nullable initially for safe data migration)
     add_column :offers, :orderable_type, :string
     add_column :offers, :orderable_id, :bigint
 
     # Migrate existing data from service_id
-    execute <<-SQL.squish
+    execute <<~SQL.squish
       UPDATE offers
       SET orderable_type = 'Service', orderable_id = service_id
       WHERE service_id IS NOT NULL
     SQL
 
     # Migrate existing data from deployable_service_id (if column exists)
-    execute <<-SQL.squish if column_exists?(:offers, :deployable_service_id)
-        UPDATE offers
-        SET orderable_type = 'DeployableService', orderable_id = deployable_service_id
-        WHERE deployable_service_id IS NOT NULL AND orderable_id IS NULL
-      SQL
+    execute <<~SQL.squish if column_exists?(:offers, :deployable_service_id)
+      UPDATE offers
+      SET orderable_type = 'DeployableService', orderable_id = deployable_service_id
+      WHERE deployable_service_id IS NOT NULL AND orderable_id IS NULL
+    SQL
 
     # Log warning about orphan offers (no service_id or deployable_service_id)
     # These are legacy data that will be excluded from queries via the polymorphic association

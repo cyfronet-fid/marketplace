@@ -1,0 +1,35 @@
+- collapsed = collapsed?(datasource,
+            [:research_product_access_policies, :link_research_product_license_urls,
+            :"link_research_product_license_urls.url"])
+
+.card.shadow-sm.rounded{ class: datasource_fields_class, "data-form-target": "datasourceFields" }
+  %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed),
+            data: { toggle: "collapse", target: "#research-product-policies" },
+            aria: { expanded: true, controls: "research-product-policies" } }
+    .card-header.text-left{ id: "research-product-policies-header" }
+      .row
+        .col-10
+          = _("Research Product Policies")
+        .col-2.text-right
+          .collapse-icon
+            %i.fas.fa-chevron-down
+            %i.fas.fa-chevron-up
+  .collapse{ id: "research-product-policies", "aria-labelledby": "research-product-policies-header",
+          "data-parent": "#accordion-form",
+          class: ("show" unless collapsed) }
+    .card-body
+      %h3
+        = _("Research Product Licensing urls")
+      = f.fields_for :link_research_product_license_urls,
+      disabled: datasource.upstream_id.present?, multiple: true, as: :array,
+                wrapper_html: { "data-form-target" => "link" } do |link_form|
+        = render_link(link_form, datasource, "researchProductLicense")
+      = link_to _("Add new research product license"), "#", class: "btn btn-primary disablable",
+              data: { "form-target": "addField",
+              action: "click->form#addField",
+              value: "researchProductLicense",
+              fields: f.fields_for(:link_research_product_license_urls, Link::MultimediaUrl.new,
+              child_index: "new_field") { |lf| render_link(lf, datasource, "researchProductLicense")} }
+      .is-flipped
+        = f.association :research_product_access_policies, multiple: true, input_html: { data: { choice: true } },
+                wrapper_html: { class: "col-lg-8 pl-0 pr-0" }

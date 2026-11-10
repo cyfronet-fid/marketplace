@@ -1,0 +1,16 @@
+.col-lg-4
+  .card.m-0.mb-5
+    = render "services/offers/description", offer: offer
+    = render "services/offers/parameters", id: offer.id,
+      technical_parameters: offer.attributes.map(&:to_json), service: offer.service
+
+    .card-button.text-center
+      %label
+        = f.radio_button :offer_id, offer.iid, checked: project_item.offer == offer && project_item.bundle.blank?,
+          "data-order-target": "checkbox"
+        %span.btn.btn-light.border.border-secondary.font-weight-bold{ "data-action": "click->order#uncheck" }
+          .unchecked
+            = _("Select an offer")
+          .checked
+            = _("Selected offer")
+          %i.fas.fa-check

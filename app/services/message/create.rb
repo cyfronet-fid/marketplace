@@ -8,7 +8,7 @@ class Message::Create < ApplicationService
 
   def call
     if @message.save
-      Message::RegisterMessageJob.perform_later(@message)
+      ActiveRecord.after_all_transactions_commit { Message::RegisterMessageJob.perform_later(@message) }
       true
     end
   end

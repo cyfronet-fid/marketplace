@@ -3,7 +3,6 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
-
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
@@ -57,7 +56,7 @@ Rails.application.configure do
   config.log_level = :info
 
   # Prepend all log lines with the following tags.
-  config.log_tags = [ :request_id ]
+  config.log_tags = [:request_id]
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
@@ -128,14 +127,15 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: ENV.fetch("ROOT_URL", nil) }
   config.action_mailer.delivery_method = :smtp
 
-  # SMTP settings
+  # SMTP settings. The misspelled SMPT_* names stay as a fallback: the
+  # marketplace and whitelabel deployments set them.
   config.action_mailer.smtp_settings = {
-      address: ENV.fetch("SMPT_ADDRESS", nil),
-      port: ENV.fetch("SMTP_PORT", 587),
-      user_name: ENV.fetch("SMPT_USERNAME", nil),
-      password: ENV.fetch("SMPT_PASSWORD", nil),
-      authentication: ENV.fetch("SMTP_AUTHENTICATION", "plain"),
-      enable_starttls_auto: ENV.fetch("SMTP_STARTTLS", true)
+    address: ENV.fetch("SMTP_ADDRESS", nil).presence || ENV.fetch("SMPT_ADDRESS", nil),
+    port: ENV.fetch("SMTP_PORT", 587).to_i,
+    user_name: ENV.fetch("SMTP_USERNAME", nil).presence || ENV.fetch("SMPT_USERNAME", nil),
+    password: ENV.fetch("SMTP_PASSWORD", nil).presence || ENV.fetch("SMPT_PASSWORD", nil),
+    authentication: ENV.fetch("SMTP_AUTHENTICATION", "plain"),
+    enable_starttls_auto: ENV.fetch("SMTP_STARTTLS", "true") == "true"
   }
 
   # custom error pages with webpage layout

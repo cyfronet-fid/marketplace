@@ -1,0 +1,24 @@
+%ul.list-group{ class: "#{"suspended" if inactive}" }
+  - fields.each do |field|
+    - if type == "tree"
+      - field_tree(object, field).each do |parent, children|
+        %li.list-group-item
+          %span
+            = parent
+          %ul
+            - children.each do |child|
+              %li
+                %span= child
+    - else
+      - object.send(field).each do |element|
+        %li.list-group-item
+          - if nested.present? && nested[field.to_sym].present?
+            - value = element.respond_to?(nested[field.to_sym]) ? element.send(nested[field.to_sym]) : element
+            %span
+              - if nested[field.to_sym] == "email"
+                = mail_to value, value
+              - else
+                = value
+          - else
+            %span
+              = element

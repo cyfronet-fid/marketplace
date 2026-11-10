@@ -2,6 +2,8 @@
 
 class Presentable::StatusActionsComponent < ApplicationComponent
   include FormsHelper
+  include Turbo::FramesHelper
+
   def initialize(object:, publish: false, unpublish: false, suspend: false, destroy: false)
     super()
     @object = object
@@ -16,7 +18,12 @@ class Presentable::StatusActionsComponent < ApplicationComponent
     @object.class.name.downcase == "datasource" ? "service" : @object.class.name.downcase
   end
 
+  # whitelabel routes every unpublish/suspend through an unpublish resource
+  # (Backoffice::Services::UnpublishesController for services); marketplace
+  # and pl send services through drafts.
   def suspend_path
+    return polymorphic_path([:backoffice, @object, :unpublish], suspend: true) if Mp::Variant.whitelabel?
+
     case @object
     when Service
       backoffice_service_draft_path(@object, suspend: true)
@@ -28,6 +35,8 @@ class Presentable::StatusActionsComponent < ApplicationComponent
   end
 
   def unpublish_path
+    return polymorphic_path([:backoffice, @object, :unpublish]) if Mp::Variant.whitelabel?
+
     case @object
     when Service
       backoffice_service_draft_path(@object)

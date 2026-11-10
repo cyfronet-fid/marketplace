@@ -1,0 +1,12 @@
+- content_for :title, _("Providers")
+- breadcrumb(:providers)
+%main.pages
+  .container
+    %h1{ "data-e2e": "provider-list" }
+      = _("Providers")
+    .media.border-0
+      .media-body
+        %ul.special-list
+          - @providers.each do |provider|
+            %li.special-list-item
+              = link_to provider.name, provider_path(provider)

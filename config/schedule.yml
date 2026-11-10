@@ -3,3 +3,8 @@ ams_subscribe_all:
   status: "<%= ENV.fetch('AMS_SUBSCRIBE_ALL_ENABLED', 'false') == 'true' ? 'enabled' : 'disabled' %>"
   class: "Ams::SubscribeAllJob"
   queue: ams_subscriber
+infrastructure_state_polling:
+  cron: "<%= ENV.fetch('INFRASTRUCTURE_POLLING_CRON', '* * * * *') %>"
+  status: "<%= ENV.fetch('INFRASTRUCTURE_POLLING_ENABLED', 'false') == 'true' ? 'enabled' : 'disabled' %>"
+  class: "Infrastructure::StatePollingJob"
+  queue: default

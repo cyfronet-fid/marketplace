@@ -1,0 +1,31 @@
+.card.shadow-sm.rounded
+  %button.btn.btn-link{ type: "button",
+                data: { toggle: "collapse", target: "#dependencies" },
+                class: ("collapsed" if collapsed?(catalogue, [:participating_countries, :affiliations, :networks])),
+                aria: { expanded: true, controls: "dependencies" } }
+    .card-header.text-left{ id: "dependencies-header" }
+      .row
+        .col-10
+          = _("Dependencies")
+        .col-2.text-right
+          .collapse-icon
+            %i.fas.fa-chevron-down
+            %i.fas.fa-chevron-up
+.collapse{ id: "dependencies", "aria-labelledby": "dependencies-header",
+          "data-parent": "#accordion-form",
+          class: ("show" unless collapsed?(catalogue, [:participating_countries, :affiliations, :networks])) }
+  .card-body
+    .row
+      .col-12
+        = f.input :participating_countries, disabled: cant_edit_catalogue([participating_countries: []]), as: :select,
+                  collection: Country.options.map { |c| [ c.iso_short_name, "value" => c.alpha2 ] },
+                  input_html: { data: { choice: true },  multiple: true }
+    .row
+      .col-12
+        = f.input :affiliations, multiple: true, input_html: { class: "form-control text optional" },
+              wrapper_html: { "data-form-target" => "affiliations" },
+              disabled:  cant_edit_catalogue([affiliations: []]), as: :array
+        = link_to_add_array_field("catalogue", "affiliations")
+        .mt-4
+        = f.association :networks, disabled:  cant_edit_catalogue([network_ids: []]),
+              input_html: { multiple: true, data: { choice: true } }

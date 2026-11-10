@@ -17,7 +17,9 @@ class Ess::OfferSerializer < ApplicationSerializer
   # Resource ID (service or deployable_service) - uses polymorphic orderable
   # Include orderable_type to allow ESS to differentiate between Service and DeployableService
   attribute :orderable_id, key: :service_id
-  attribute :orderable_type
+  # Only marketplace has deployable services; the pl and whitelabel APIs never
+  # sent the field, and their transform service rejects an unknown column.
+  attribute :orderable_type, if: -> { Mp::Variant.marketplace? }
 
   attribute :created_at, key: :publication_date
 

@@ -1,0 +1,49 @@
+- content_for :title, _("About Marketplace")
+- breadcrumb :about
+-# haml-lint:disable MultilinePipe
+%main
+  .container
+    %h1.mb-4.display-1
+      = _("About Marketplace")
+    .media.border-0
+      .media-body
+        .row
+          .col-lg-4.col-md-12.eosc-hub-logo.pt-3.align-self-center.rounded.mx-auto.d-block
+            = image_tag "eosc-hub-web.png", class: "img-fluid"
+          .col-lg-8.col-md-12
+            %p
+              = _("The Marketplace is the EOSC Portal tool where researchers can discover, order and access the " + |
+                  "services, analytical tools, data management tools, storage and computing services they need " + |
+                  "for their work.") |
+            %p
+              = _("Marketplace services and services conform to community best-practices and standards, and are " + |
+                  "validated to meet operational quality requirements. In the Marketplace users get assistance " + |
+                  "from international technical teams who provide advice on the most suitable solutions to address " + |
+                  "their digital needs.") |
+        .row.col-12
+          %p
+            = _("The Marketplace offers the opportunity to advertise services and services from local, national " + |
+                "and international providers, like European e-Infrastructures and Research Infrastructures, with " + |
+                "the aim of promoting access to a broader international user group.") |
+          %p
+            = _("The Marketplace services offer capabilities to manage the entire research data lifecycle from " + |
+                "creation to processing, analysis, preservation, access and reuse.") |
+          %h2.mt-4.mb-3
+            = _("How does this work in practice?")
+          %ul.simple-list
+            %li
+              %a{ href: "https://www.youtube.com/watch?v=_Iomkr4GtdM" }
+                = _("From language data to insight: the CLARIN use case")
+              = _("– how the EOSC Marketplace can support a political scientist who studies the use of nouns by" + |
+                  "female and male members of parliament, to find out whether there is a difference in the topics" + |
+                  "brought forward by both groups.") |
+            %li
+              %a{ href: "https://www.youtube.com/watch?v=amXdNV7ZbdA" }
+                = _("Making research effective and reproducible: The pufferfish case")
+              = _("– how scientists used the EOSC Marketplace to deploy a Virtual Laboratory (named “Alien and " + |
+                  "Invasive Species”) connecting heterogeneous services provided by several European " + |
+                  "Infrastructures (SeaDataCloud, D4Science, EGI Federation, and Copernicus).") |
+          %p
+            = _("The EOSC Marketplace is developed and operated by the EOSC-hub project, a collaboration between " + |
+                "the EGI Federation, the EUDAT CDI and the INDIGO-DataCloud consortium.") |
+-# haml-lint:enable MultilinePipe

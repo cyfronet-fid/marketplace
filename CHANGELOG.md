@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [4.7.1](https://github.com/cyfronet-fid/marketplace/compare/v4.7.0...v4.7.1) (2026-10-01)
+
+
+### Bug Fixes
+
+* [[#3744](https://github.com/cyfronet-fid/marketplace/issues/3744)] rework check-in membership verification ([#3761](https://github.com/cyfronet-fid/marketplace/issues/3761)) ([f77decf](https://github.com/cyfronet-fid/marketplace/commit/f77decff84211be81eeae6a6a897d4eb9695e030))
+
 ## [4.7.0](https://github.com/cyfronet-fid/marketplace/compare/v4.6.2...v4.7.0) (2026-09-29)
 
 

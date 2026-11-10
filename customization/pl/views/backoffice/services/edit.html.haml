@@ -1,0 +1,13 @@
+- content_for :title, _("Edit #{@service.name} Service")
+- breadcrumb :backoffice_service_edit, @service
+
+.container.p-0.backoffice
+  %h1= _("Edit #{@service.name} Service")
+  .container.p-0.backoffice
+    = render Presentable::StatusActionsComponent.new(object: @service,
+      publish: policy([:backoffice, @service]).publish?,
+      suspend: policy([:backoffice, @service]).suspend?,
+      unpublish: policy([:backoffice, @service]).unpublish?,
+      destroy: policy([:backoffice, @service]).destroy?)
+  .edit-service
+    = render "form", service: @service, providers: @providers, catalogues: @catalogues

@@ -1,0 +1,13 @@
+- content_for :title, _("Target users")
+- breadcrumb :target_users
+
+%main.pages
+  .container
+    %h1{ "data-e2e": "target_user-list" }
+      = _("Target Users")
+    .media.border-0
+      .media-body
+        %ul.special-list
+          - @target_users.each do |target_user|
+            %li.special-list-item
+              = link_to target_user.name, target_users_link(target_user)

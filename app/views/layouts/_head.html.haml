@@ -10,6 +10,7 @@
     = _("Users space")
   = csrf_meta_tags
   = csp_meta_tag
+  = sentry_browser_tags
   = favicon_link_tag "favicon.ico"
   = favicon_link_tag "favicon-180x180.png", rel: "apple-touch-icon", type: "image/png"
   = stylesheet_link_tag "application.css"
@@ -18,6 +19,6 @@
   = render "layouts/version"
   - if Rails.env.production?
     = yield :meta_tags if content_for?(:meta_tags)
-    = render "layouts/matomo"
+    = render "layouts/matomo" if Mp::Application.config.matomo_url.present?
     = render "layouts/google_analytics"
     = render "layouts/hotjar_trackingcode"

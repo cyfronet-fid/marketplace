@@ -1,0 +1,25 @@
+- collapsed = collapsed?(datasource, [:provider_life_cycle_status, :certifications])
+.card.shadow-sm.rounded{ class: datasource_fields_class, "data-form-target": "datasourceFields" }
+  %button.btn.btn-link{ type: "button", class: ("collapsed" if collapsed),
+                data: { toggle: "collapse", target: "#datasource-content" },
+                aria: { expanded: true, controls: "datasource-content" } }
+    .card-header.text-left{ id: "datasource-content-header" }
+      .row
+        .col-10
+          = _("Datasource Content")
+        .col-2.text-right
+          .collapse-icon
+            %i.fas.fa-chevron-down
+            %i.fas.fa-chevron-up
+.collapse{ id: "datasource-content", "aria-labelledby": "datasource-content-header",
+          "data-parent": "#accordion-form",
+          class: ("show" unless collapsed) }
+  .card-body
+    = f.association :jurisdiction, input_html: { data: { choice: true } },
+                          disabled: cant_edit(:jurisdiction_id)
+    = f.association :datasource_classification, input_html: { data: { choice: true } },
+                              disabled: cant_edit(:datasource_classification_id)
+    = f.association :research_entity_types, input_html: { data: { choice: true } },
+                              disabled: cant_edit([research_entity_type_ids: []])
+    = f.input :thematic, as: :boolean, include_hidden: true
+    = f.input :harvestable, as: :boolean, include_hidden: true

@@ -1,0 +1,99 @@
+.landing-header
+  %section.heading
+    .container
+      .row.py-lg-3
+        .col-lg-6.col-sm-12.pr-0
+          %h1 Polska Platforma Otwartej Nauki
+          %p.intro-text
+            Wspieramy rozwój polskiej nauki i innowacji, oferując nowoczesne narzędzia
+            oraz dostęp do unikalnych danych badawczych.
+          = render "services/search",
+          categories: @siblings || @root_categories,
+          query_params: @query_params || {}
+%section.research-activity
+  .container
+    .row
+      .col-md-4.col-sm-12
+        = image_tag "eoscpl-pic-01.jpg", alt: "Service name", class: "img-fluid"
+      .col-md-8.col-sm-12
+        .eoscpl-intro.right-intro
+          .eoscpl-intro-title
+            Zasoby Polskie
+          .eoscpl-intro-desc
+            Znajdź treści i narzędzia dedykowane polskiej społeczności badawczej.
+            Wybieraj spośród tysięcy zasobów, które ułatwią Ci prowadzenie badań.
+            Korzystaj z bogatej oferty informacji oraz wsparcia, które pomogą Ci
+            w rozwoju innowacyjnych projektów w kraju i za granicą.
+          %a.eoscpl-more-link{ href: "#" }
+            Przeglądaj zasoby Polskie
+            %i.fas.fa-arrow-right.ml-2
+
+        .eoscpl-intro.right-intro
+          .eoscpl-intro-title
+            Zasoby Unii Europejskiej
+          .eoscpl-intro-desc
+            Przeglądaj jedną z największych baz danych naukowych w Europie. Dostęp do milionów publikacji,
+            serwisów, oprogramowania i innych narzędzi, które wspierają międzynarodową współpracę
+            i rozwój Twoich projektów badawczych.
+          %a.eoscpl-more-link{ href: "#" }
+            Przeglądaj zasoby europejskie
+            %i.fas.fa-arrow-right.ml-2
+
+%section.partners
+  .container
+    = render_sections("use-cases")
+
+%section.open-science
+  .container
+    .row
+      .col-md-8.col-sm-12
+        = render_sections("learn-more")
+      .col-md-4.col-sm-12
+        = image_tag "eoscpl-pic-02.jpg", alt: "Service name", class: "img-fluid"
+
+%section.programme
+  .container
+    .row
+      .col-md-3.col-sm-12
+        %h4
+          Polski Węzeł EOSC
+      .col-md-6.col-sm-12
+        %p
+          Polska Platforma Otwartej Nauki jest częścią europejskiej inicjatywy European Open Science Cloud,
+          której celem jest rozwój otwartych i dostępnych zasobów badawczych na skalę europejską.
+          Jako jeden z krajowych węzłów, Polska wspiera naukowców w dostępie do danych,
+          publikacji oraz infrastruktury, która umożliwia prowadzenie zaawansowanych badań i współpracę międzynarodową.
+          Krajowe, regionalne i temetyczne węzły EOSC, w tym PPON, stanowią punkty dostępu do Federacji EOSC,
+          oferującej własne i zewnętrzne usługi, w tym zarządzanie danymi oraz ich udostępnianie.
+      .col-md-3.col-sm-12.d-flex
+        %a.programme-link{ href: "#" }
+          Przeglądaj wszystkie zasoby
+          %i.fa.fa-arrow-right
+
+-# Here should be = render_sections("use-cases") - below is a placeholder
+%section.research
+  .container
+    %h3 Popularne serwisy
+    .row
+      - @services.each do |service|
+        .col-md-3.col-sm-12.d-flex.align-items-stretch
+          .popular-services-box.card
+            .popular-top
+              - if service.logo.attached?
+                = image_tag service.logo.variant(resize: "100x80")
+              - else
+                = image_tag "eosc-img.png", alt: "Service name"
+              .badge.access-information.fa-pull-right.badge-right{ class: "style_#{order_type(service)}" }
+                %i{ class: "ordertype #{order_type(service)}" }
+                -# TODO: refactor dynamic translation
+                = t("offers.type.#{order_type(service)}")
+            %a.popular-title{ href: service_offers_path(service) }= service.name
+            %a.popular-provider{ href: services_path(providers: service.resource_organisation.id) }
+              = service.resource_organisation.name
+            .popular-description{ data_toggle: "tooltip", title: service.description }
+              = service.description.truncate(72)
+            - if service.tag_list.present?
+              .taglist-holder
+                - service.tags.each do |tag|
+                  .tag-item
+                    = link_to tag, services_path(tag: tag.name)

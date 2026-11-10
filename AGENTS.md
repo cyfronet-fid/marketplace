@@ -2,6 +2,11 @@
 
 Ruby 3.3, Rails 7.2. RSpec (`rspec-rails`) for tests, not Minitest. Style is enforced by RuboCop (`.rubocop.yml`) — don't flag pure style/formatting, that's covered separately.
 
+## Communication
+
+- Start responses directly with useful information. Avoid conversational validation or praise such as "you're right," "great question," "good point," and similar filler.
+- Keep acknowledgements factual and concise, especially when correcting a mistake or responding to feedback.
+
 ## Architecture patterns to know
 
 - **Authorization**: Pundit policies in `app/policies/`, one per model, method names like `*_managed_by_user?`. Controllers call `authorize`/`policy_scope`; don't suggest ad-hoc `current_user ==` checks where a policy already exists.

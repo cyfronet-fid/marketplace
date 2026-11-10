@@ -20,12 +20,19 @@ module ServiceHelper
     Provider.all
   end
 
-  def dedicated_for_links(_service)
-    []
+  # pl-only: Service#target_users only ever has rows under pl (see
+  # app/models/service.rb), so marketplace/whitelabel keep returning [] here
+  # unchanged rather than calling an association that's always empty for them.
+  def dedicated_for_links(service)
+    return [] unless Mp::Variant.pl?
+
+    service.target_users.map { |target| link_to(target.name, services_path(target_users: target)) }
   end
 
-  def dedicated_for_text(_service)
-    []
+  def dedicated_for_text(service)
+    return [] unless Mp::Variant.pl?
+
+    service.target_users.map(&:name)
   end
 
   def scientific_domains(service)
@@ -57,7 +64,7 @@ module ServiceHelper
   end
 
   def providers_text(service)
-    service.providers.reject(&:blank?).reject { |p| p == service.resource_organisation }.map(&:name).join(", ")
+    service.providers.compact_blank.reject { |p| p == service.resource_organisation }.map(&:name).join(", ")
   end
 
   def filtered_offers(offers)

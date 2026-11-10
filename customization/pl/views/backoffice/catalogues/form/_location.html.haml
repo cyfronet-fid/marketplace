@@ -1,0 +1,25 @@
+.card.shadow-sm.rounded
+  %button.btn.btn-link{ type: "button",
+              data: { toggle: "collapse", target: "#location" },
+              class: ("collapsed" if collapsed?(catalogue,
+              [:street_name_and_number, :postal_code, :city, :region, :country])),
+              aria: { expanded: true, controls: "location" } }
+    .card-header.text-left{ id: "location-header" }
+      .row
+        .col-10
+          = _("Location")
+        .col-2.text-right
+          .collapse-icon
+            %i.fas.fa-chevron-down
+            %i.fas.fa-chevron-up
+.collapse{ id: "location", "aria-labelledby": "location-header",
+          "data-parent": "#accordion-form",
+          class: ("show" unless collapsed?(catalogue, [:street_name_and_number, :postal_code,
+                                                      :city, :region, :country])) }
+  .card-body
+    = f.input :street_name_and_number, disabled: cant_edit_catalogue(:street_name_and_number)
+    = f.input :postal_code, disabled: cant_edit_catalogue(:postal_code)
+    = f.input :city, disabled: cant_edit_catalogue(:city)
+    = f.input :region, disabled: cant_edit_catalogue(:region)
+    = f.input :country, disabled: cant_edit_catalogue(:country), as: :select,
+              collection: Country.options.map { |c| [ c.iso_short_name, "value" => c.alpha2 ] }

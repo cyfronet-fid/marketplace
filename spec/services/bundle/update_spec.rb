@@ -2,8 +2,8 @@
 
 require "rails_helper"
 
-RSpec.describe Bundle::Update, backend: true do
-  context "#bundled_offers" do
+RSpec.describe Bundle::Update, :backend do
+  describe "#bundled_offers" do
     it "doesn't send notification if bundle invalid" do
       provider1 = build(:provider)
       provider2 = build(:provider)
@@ -11,9 +11,7 @@ RSpec.describe Bundle::Update, backend: true do
       bundle_offer = create(:open_access_offer, service: build(:open_access_service, resource_organisation: provider2))
       bundle = build(:bundle, main_offer: bundle_offer, marketplace_locations: [])
 
-      expect { described_class.call(bundle, { offers: [bundled_offer] }.stringify_keys) }.not_to change {
-        ActionMailer::Base.deliveries.count
-      }
+      expect { described_class.call(bundle, { offers: [bundled_offer] }.stringify_keys) }.not_to have_enqueued_mail
     end
 
     it "doesn't send notification if bundled offer is from the same provider" do
@@ -22,9 +20,7 @@ RSpec.describe Bundle::Update, backend: true do
       bundle_offer = create(:offer, service: build(:service, resource_organisation: provider))
       bundle = build(:bundle, main_offer: bundle_offer, offers: [])
 
-      expect { described_class.call(bundle, { offers: [bundled_offer] }.stringify_keys) }.not_to change {
-        ActionMailer::Base.deliveries.count
-      }
+      expect { described_class.call(bundle, { offers: [bundled_offer] }.stringify_keys) }.not_to have_enqueued_mail
     end
 
     it "doesn't send notification for offers added previously" do
@@ -44,7 +40,7 @@ RSpec.describe Bundle::Update, backend: true do
           bundle,
           { offers: [bundled_offer1, bundled_offer2, bundled_offer3, bundled_offer4, bundled_offer5] }
         )
-      end.to change { ActionMailer::Base.deliveries.count }.by(3)
+      end.to have_enqueued_mail(OfferMailer, :offer_bundled).exactly(3)
     end
 
     it "send notification for added and removed offer" do
@@ -56,9 +52,10 @@ RSpec.describe Bundle::Update, backend: true do
       bundle_offer = create(:offer, service: build(:service, resource_organisation: provider2))
       bundle = build(:bundle, main_offer: bundle_offer, offers: [bundled_offer1])
 
-      expect { described_class.call(bundle, { offers: [bundled_offer2] }) }.to change {
-        ActionMailer::Base.deliveries.count
-      }.by(2)
+      expect { described_class.call(bundle, { offers: [bundled_offer2] }) }.to have_enqueued_mail(
+        OfferMailer,
+        :offer_bundled
+      ).and have_enqueued_mail(OfferMailer, :offer_unbundled)
     end
   end
 end

@@ -260,7 +260,7 @@ RSpec.describe DeployableService, backend: true do
 
       before do
         compute_category # Ensure category exists
-        allow_any_instance_of(DeployableService::CreateDefaultOffer).to receive(:fetch_template).and_return(
+        allow(DeployableService::FetchTemplate).to receive(:call).and_return(
           template_content
         )
       end
@@ -312,7 +312,7 @@ RSpec.describe DeployableService, backend: true do
         it "updates the default offer after template URL changes" do
           ds = create(:deployable_service, jupyter_service_attrs)
           offer = ds.offers.first
-          allow_any_instance_of(DeployableService::CreateDefaultOffer).to receive(:fetch_template).and_return(
+          allow(DeployableService::FetchTemplate).to receive(:call).and_return(
             updated_template_content
           )
 

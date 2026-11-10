@@ -1,0 +1,39 @@
+- state = current_step_index + 1 < total_steps
+.container
+  .row.new-offer-form-controls
+    = render "common_parts/modals/exit_modal", object_type: "provider",
+                                               f: f,
+                                               exit_link: backoffice_providers_path
+    .col-5.back-link-wrapper
+      .btn.btn-back
+        = link_to back_title, backoffice_provider_wizard_path(params[:provider_id], step: prev_step),
+          class: "add-left-arrow" unless current_step_index.zero?
+
+    .col-2
+      - if provider.new_record? || provider.draft?
+        .btn.btn-back{ data: { exit_target: "display", action: "click->exit#showModal" } }
+          Exit
+      - else
+        = link_to "Exit", backoffice_provider_exit_path(provider),
+            class: "btn btn-back",
+            data: { exit_target: "display",
+            confirm_details: exit_confirm_details,
+            turbo_method: :post, turbo_frame: "_top" }
+    .col-2
+      - if current_step_index == 4 && params[:provider_id] != "new"
+        = link_to _("Delete"),
+          backoffice_provider_path(params[:provider_id]),
+          class: "btn btn-danger",
+          data: { turbo_confirm: action_prompt("provider", "remove"), turbo_method: :delete }
+    .col-3.text-right.pr-0
+      - title = state ? next_title : submit_title
+      = button_tag title,
+          type: :submit,
+          name: "commit",
+          value: title,
+          class: "btn btn-primary next-link d-inline-flex align-items-center",
+          data: { disable_with: title } do
+        = title
+        %i.fa-solid.fa-arrow-right.ml-2
+
+      -# data: state ? {} : { controller: "form-redirect", action: "turbo:submit-end->form-redirect#next" }
