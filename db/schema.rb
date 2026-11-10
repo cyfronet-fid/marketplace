@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_10_20_120000) do
+ActiveRecord::Schema[7.2].define(version: 2026_11_09_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -1117,6 +1117,15 @@ ActiveRecord::Schema[7.2].define(version: 2026_10_20_120000) do
     t.integer "catalogues_count", default: 0, null: false
     t.index ["authentication_token"], name: "index_users_on_authentication_token", unique: true
     t.index ["email"], name: "index_users_on_email"
+  end
+
+  create_table "view_statistics", force: :cascade do |t|
+    t.string "viewable_type", null: false
+    t.bigint "viewable_id", null: false
+    t.date "date", null: false
+    t.integer "views", default: 0, null: false
+    t.integer "visits", default: 0, null: false
+    t.index ["viewable_type", "viewable_id", "date"], name: "index_view_statistics_on_viewable_and_date", unique: true
   end
 
   create_table "vocabularies", force: :cascade do |t|
