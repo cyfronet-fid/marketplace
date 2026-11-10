@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Matomo
-  # The nightly view sync (ADR-0008 D8, D10). config/schedule.yml runs it on
+  # The nightly view sync (ADR-0008 D8, D10, D11). config/schedule.yml runs it on
   # MP_MATOMO_SYNC_CRON while Matomo is on. A failed request to Matomo fails
   # the job, so Sidekiq retries it; re-runs are safe, as the sync only upserts.
   class SyncViewsJob < ApplicationJob

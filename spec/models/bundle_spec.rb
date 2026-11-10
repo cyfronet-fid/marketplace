@@ -19,6 +19,7 @@ RSpec.describe Bundle, type: :model, backend: true do
     it { should belong_to(:service).required(true) }
     it { should belong_to(:main_offer).required(true) }
     it { should belong_to(:resource_organisation).required(true) }
+    it { is_expected.to have_many(:view_statistics).dependent(:delete_all) }
   end
 
   context "bundle" do

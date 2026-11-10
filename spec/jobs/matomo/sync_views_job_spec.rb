@@ -68,6 +68,70 @@ RSpec.describe Matomo::SyncViewsJob, type: :job do
     end
   end
 
+  context "with a provider" do
+    let(:provider) { create(:provider) }
+    let(:report) do
+      {
+        "2026-11-08" => ["label" => "#{provider.pid} - View", "nb_events" => 5, "nb_visits" => 3],
+        "2026-11-09" => ["label" => "#{provider.pid} - View", "nb_events" => 2, "nb_visits" => 2]
+      }
+    end
+
+    it "stores its Views and visits per day" do
+      described_class.perform_now
+
+      expect(statistics).to eq(
+        [["Provider", provider.id, Date.new(2026, 11, 8), 5, 3], ["Provider", provider.id, Date.new(2026, 11, 9), 2, 2]]
+      )
+    end
+
+    it "sums its Views into its usage_counts_views" do
+      expect { described_class.perform_now }.to change { provider.reload.usage_counts_views }.from(0).to(7)
+    end
+  end
+
+  # A bundle has no PID: its View events are named "<service PID>:<bundle iid>".
+  context "with a bundle" do
+    let(:bundle) { create(:bundle) }
+    let(:report) do
+      {
+        "2026-11-08" => ["label" => "#{bundle.service.pid}:#{bundle.iid} - View", "nb_events" => 4, "nb_visits" => 4],
+        "2026-11-09" => ["label" => "#{bundle.service.pid}:#{bundle.iid} - View", "nb_events" => 1, "nb_visits" => 1]
+      }
+    end
+
+    it "stores its Views and visits per day" do
+      described_class.perform_now
+
+      expect(statistics).to eq(
+        [["Bundle", bundle.id, Date.new(2026, 11, 8), 4, 4], ["Bundle", bundle.id, Date.new(2026, 11, 9), 1, 1]]
+      )
+    end
+
+    it "sums its Views into its usage_counts_views" do
+      expect { described_class.perform_now }.to change { bundle.reload.usage_counts_views }.from(0).to(5)
+    end
+
+    # An iid is unique only within its service.
+    it "leaves alone the bundle of another service with the same iid" do
+      other_bundle = create(:bundle, iid: bundle.iid)
+
+      described_class.perform_now
+
+      expect(other_bundle.view_statistics).to be_empty
+    end
+
+    context "with a service PID that contains a colon" do
+      let(:bundle) { create(:bundle, main_offer: create(:offer, service: create(:service, pid: "21.T15999/eosc:svc"))) }
+
+      it "stores its Views" do
+        described_class.perform_now
+
+        expect(bundle.view_statistics.sum(:views)).to eq(5)
+      end
+    end
+  end
+
   describe "the request to Matomo" do
     let(:report_params) do
       {
@@ -129,11 +193,52 @@ RSpec.describe Matomo::SyncViewsJob, type: :job do
       expect { described_class.perform_now }.to change { service.reload.usage_counts_views }.from(0).to(14)
     end
 
-    context "with a service with no Views" do
-      let(:unviewed) { create(:service, usage_counts_views: 42) }
+    %i[service provider bundle].each do |kind|
+      context "with a #{kind} with no Views" do
+        let(:unviewed) { create(kind, usage_counts_views: 42) }
 
-      it "sets it to 0" do
-        expect { described_class.perform_now }.to change { unviewed.reload.usage_counts_views }.from(42).to(0)
+        it "sets it to 0" do
+          expect { described_class.perform_now }.to change { unviewed.reload.usage_counts_views }.from(42).to(0)
+        end
+      end
+    end
+  end
+
+  # 1000 × (the service's share of all service Views + its share of all project items)
+  describe "popularity_ratio" do
+    let(:other) { create(:service) }
+    let(:report) do
+      {
+        "2026-11-09" => [
+          { "label" => "#{service.pid} - View", "nb_events" => 3, "nb_visits" => 3 },
+          { "label" => "#{other.pid} - View", "nb_events" => 1, "nb_visits" => 1 }
+        ]
+      }
+    end
+
+    it "is the share of all service Views when there are no project items" do
+      described_class.perform_now
+
+      expect([service.reload.popularity_ratio, other.reload.popularity_ratio]).to eq([750.0, 250.0])
+    end
+
+    context "with project items" do
+      before { create(:project_item, offer: create(:offer, service: service)) }
+
+      it "adds the share of all project items" do
+        described_class.perform_now
+
+        expect([service.reload.popularity_ratio, other.reload.popularity_ratio]).to eq([1750.0, 250.0])
+      end
+    end
+
+    context "with project items and no Views" do
+      let(:report) { { "2026-11-09" => [] } }
+
+      before { create(:project_item, offer: create(:offer, service: service)) }
+
+      it "is the share of all project items" do
+        expect { described_class.perform_now }.to change { service.reload.popularity_ratio }.to(1000.0)
       end
     end
   end
