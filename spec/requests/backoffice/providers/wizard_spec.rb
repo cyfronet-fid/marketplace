@@ -26,12 +26,11 @@ RSpec.describe "Backoffice: provider wizard", :backend do
     end
   end
 
-  # pl keeps only a known step for the partial render (pl-marketplace #129).
-  context "when running as pl with an unknown step" do
+  # The wizard keeps only a known step (pl-marketplace #129).
+  context "with an unknown step" do
     let(:provider) { create(:provider) }
 
     before do
-      allow(Mp::Variant).to receive_messages(marketplace?: false, pl?: true, whitelabel?: false)
       get edit_backoffice_provider_path(provider)
       get backoffice_provider_wizard_path(provider, step: "../tabs/marketing")
     end

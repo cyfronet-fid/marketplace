@@ -1,3 +1,19 @@
-- if user_signed_in? && show_manage_button?(datasource)
-  = render "components/presentable/header_component/datasource_drop_down_menu", datasource: datasource
-  = render "layouts/common_parts/services/order_type_label", object: datasource
+- if service.webpage_url.present?
+  = link_to _("Visit the Data Source"), service.webpage_url, target: "_blank", class: "btn btn-primary d-block mb-3 py-2"
+
+- if params[:from] == "backoffice_service" && policy([:backoffice, service]).edit?
+  = link_to _("Edit #{service.type.downcase}"), edit_backoffice_service_path(service), class: "btn btn-primary d-block mb-3"
+  = link_to _("Set parameters and offers"), service_ordering_configuration_path(service, anchor: "offers", from: params[:from]), class: "btn btn-outline-secondary d-block mb-3 no-arrow"
+
+- if user_signed_in? && show_manage_button?(service)
+  %a#dropdown-menu-button.dropdown-toggle.btn.btn-outline-secondary.d-block.mb-3.datasource{ "aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", type: "button" }
+    .menu__label= _("Manage the datasource")
+  .dropdown-menu.shadow
+    %ul
+      %li
+        = link_to _("Datasource dashboard"), pc_dashboard_link(service), target: "_blank", class: "dropdown-item dropdown-details"
+      - if catalogue_pid(service) == "eosc"
+        %li
+          = link_to _("Edit datasource details"), pc_edit_link(service), target: "_blank", class: "dropdown-item dropdown-details"
+
+= render "layouts/common_parts/services/order_type_label", object: service

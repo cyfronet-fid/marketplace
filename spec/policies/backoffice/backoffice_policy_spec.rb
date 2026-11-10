@@ -12,25 +12,13 @@ RSpec.describe Backoffice::BackofficePolicy, :backend do
       expect(subject).to permit(build(:user, roles: [:coordinator]), record)
     end
 
-    # Only pl opens the backoffice to executives and admins (pl-marketplace #178).
-    it "denies for executive" do
-      expect(subject).not_to permit(build(:user, roles: [:executive]), record)
+    # Executives and admins reach the backoffice (pl-marketplace #178).
+    it "grants access for executive" do
+      expect(subject).to permit(build(:user, roles: [:executive]), record)
     end
 
-    it "denies for admin" do
-      expect(subject).not_to permit(build(:user, roles: [:admin]), record)
-    end
-
-    context "when running as pl" do
-      before { allow(Mp::Variant).to receive(:pl?).and_return(true) }
-
-      it "grants access for executive" do
-        expect(subject).to permit(build(:user, roles: [:executive]), record)
-      end
-
-      it "grants access for admin" do
-        expect(subject).to permit(build(:user, roles: [:admin]), record)
-      end
+    it "grants access for admin" do
+      expect(subject).to permit(build(:user, roles: [:admin]), record)
     end
 
     it "grants access for provider data administrator" do

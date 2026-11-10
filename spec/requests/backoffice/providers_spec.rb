@@ -51,8 +51,8 @@ RSpec.describe "Backoffice: manage providers", :backend do
       new_params.each { |key, value| expect(provider[key]).to eq(value) }
     end
 
-    # pl's provider tabs post no provider fields when the tab has none to
-    # show, for example the managers tab of a provider without data administrators.
+    # The tabs post no provider fields when the tab has none to show, for
+    # example the managers tab of a provider without data administrators.
     describe "PATCH /backoffice/providers/:id without provider fields" do
       let(:provider) { create(:provider, name: "Unchanged") }
 
@@ -71,35 +71,11 @@ RSpec.describe "Backoffice: manage providers", :backend do
       end
     end
 
-    # Outside pl an invalid update renders the full edit page again. The edit
-    # template must pass the tab local to the form, or the render raises a NameError.
+    # An invalid update shows the errors in the submitted tab (pl-marketplace #129).
     describe "PATCH /backoffice/providers/:id with an invalid value" do
       let(:provider) { create(:provider, name: "Unchanged") }
 
       before do
-        allow(Mp::Variant).to receive(:pl?).and_return(false)
-        patch backoffice_provider_path(provider), params: { provider: { name: "" } }
-      end
-
-      it "answers with the edit page" do
-        expect(response).to have_http_status(:bad_request)
-      end
-
-      it "marks the profile tab as active" do
-        expect(response.body).to include("profile-tab")
-      end
-
-      it "keeps the provider as it is" do
-        expect(provider.reload.name).to eq("Unchanged")
-      end
-    end
-
-    # pl shows the errors in the tab that the user submitted (pl-marketplace #129).
-    describe "PATCH /backoffice/providers/:id with an invalid value under pl" do
-      let(:provider) { create(:provider, name: "Unchanged") }
-
-      before do
-        allow(Mp::Variant).to receive(:pl?).and_return(true)
         patch backoffice_provider_path(provider),
               params: { tab: "location", provider: { name: "" } },
               headers: { "Accept" => "text/vnd.turbo-stream.html" }
@@ -122,12 +98,11 @@ RSpec.describe "Backoffice: manage providers", :backend do
       end
     end
 
-    # pl's tabs are forms and need an empty row for each blank nested model.
-    describe "GET /backoffice/providers/:id under pl" do
+    # The tabs are forms and need an empty row for each blank nested model.
+    describe "GET /backoffice/providers/:id" do
       let(:provider) { create(:provider) }
 
       before do
-        allow(Mp::Variant).to receive(:pl?).and_return(true)
         get backoffice_provider_path(provider, tab: "contacts"), headers: { "Accept" => "text/vnd.turbo-stream.html" }
       end
 
@@ -140,27 +115,11 @@ RSpec.describe "Backoffice: manage providers", :backend do
       end
     end
 
-    describe "GET /backoffice/providers/:id under another variant" do
+    # The tabs save in place, so edit always opens the wizard.
+    describe "GET /backoffice/providers/:id/edit with a tab step" do
       let(:provider) { create(:provider) }
 
-      before do
-        allow(Mp::Variant).to receive(:pl?).and_return(false)
-        get backoffice_provider_path(provider, tab: "contacts"), headers: { "Accept" => "text/vnd.turbo-stream.html" }
-      end
-
-      it "leaves the main contact blank" do
-        expect(assigns(:provider).main_contact).to be_nil
-      end
-    end
-
-    # pl edits its other tabs in place, so edit always opens the wizard.
-    describe "GET /backoffice/providers/:id/edit with a tab step under pl" do
-      let(:provider) { create(:provider) }
-
-      before do
-        allow(Mp::Variant).to receive(:pl?).and_return(true)
-        get edit_backoffice_provider_path(provider, step: "classification")
-      end
+      before { get edit_backoffice_provider_path(provider, step: "classification") }
 
       it "opens the wizard" do
         expect(response).to redirect_to(backoffice_provider_wizard_path(provider))
@@ -171,23 +130,17 @@ RSpec.describe "Backoffice: manage providers", :backend do
       end
     end
 
-    describe "GET /backoffice/providers/new with an unknown step under pl" do
-      before do
-        allow(Mp::Variant).to receive(:pl?).and_return(true)
-        get new_backoffice_provider_path(step: "../tabs/marketing")
-      end
+    describe "GET /backoffice/providers/new with an unknown step" do
+      before { get new_backoffice_provider_path(step: "../tabs/marketing") }
 
       it "starts the wizard at the first step" do
         expect(session[:provider_step]).to eq("profile")
       end
     end
 
-    # pl has no new page: the wizard shows the submitted values again.
-    describe "POST /backoffice/providers with an invalid value under pl" do
-      before do
-        allow(Mp::Variant).to receive(:pl?).and_return(true)
-        post backoffice_providers_path, params: { provider: { name: "", abbreviation: "Kept" } }
-      end
+    # There is no new page: the wizard shows the submitted values again.
+    describe "POST /backoffice/providers with an invalid value" do
+      before { post backoffice_providers_path, params: { provider: { name: "", abbreviation: "Kept" } } }
 
       it "opens the wizard" do
         expect(response).to redirect_to(backoffice_provider_wizard_path("new"))
@@ -223,12 +176,12 @@ RSpec.describe "Backoffice: manage providers", :backend do
       expect(provider.reload.status).to eq("unpublished")
     end
 
-    context "when listing providers under pl" do
+    # A deleted provider leaves the list (pl-marketplace #156).
+    describe "GET /backoffice/providers" do
       let(:deleted_provider) { create(:provider, name: "Removed provider", status: :deleted) }
       let(:listed_provider) { create(:provider, name: "Listed provider") }
 
       before do
-        allow(Mp::Variant).to receive(:pl?).and_return(true)
         deleted_provider
         listed_provider
         get backoffice_providers_path
@@ -240,20 +193,6 @@ RSpec.describe "Backoffice: manage providers", :backend do
 
       it "lists the other provider" do
         expect(response.body).to include("Listed provider")
-      end
-    end
-
-    context "when listing providers under another variant" do
-      let(:deleted_provider) { create(:provider, name: "Removed provider", status: :deleted) }
-
-      before do
-        allow(Mp::Variant).to receive(:pl?).and_return(false)
-        deleted_provider
-        get backoffice_providers_path
-      end
-
-      it "lists the deleted provider" do
-        expect(response.body).to include("Removed provider")
       end
     end
   end

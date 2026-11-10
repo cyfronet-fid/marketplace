@@ -3,8 +3,7 @@
 class ArrayInput < SimpleForm::Inputs::TextInput
   def input(_wrapper_options)
     input_html_options[:type] ||= input_type
-    # pl adds space around the remove link (pl-marketplace #129).
-    remove_class = "btn-sm btn-danger remove float-right disablable#{" mt-1 mb-2" if Mp::Variant.pl?}"
+    remove_class = "btn-sm btn-danger remove float-right disablable mt-1 mb-2"
     existing_value =
       Array(object.public_send(attribute_name)).map.with_index do |array_el, index|
         @builder.text_area(
