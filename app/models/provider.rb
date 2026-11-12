@@ -5,7 +5,6 @@ class Provider < ApplicationRecord
   include LogoAttachable
   include ImageHelper
   include Publishable
-  include Viewable
   include Propagable
   include Statusable
   include Backoffice::ProvidersHelper

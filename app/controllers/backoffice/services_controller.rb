@@ -109,7 +109,6 @@ class Backoffice::ServicesController < Backoffice::ApplicationController
       render :edit, status: :unprocessable_content
       return
     end
-    @service.store_analytics
     remove_temp_data!
     redirect_to backoffice_service_offers_path(@service), notice: "Service updated successfully"
   end
