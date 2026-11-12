@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 class Services::ChooseOffersController < Services::ApplicationController
-  # Checkin VO membership is a marketplace requirement; pl and whitelabel
-  # have no such step and their sessions carry no token.
-  before_action :check_vo_membership!, if: -> { Mp::Variant.marketplace? }
+  # Checkin VO membership is a marketplace requirement for the deployment of a
+  # deployable service (#3590). The order of a service has no such step. pl and
+  # whitelabel have no such step and their sessions carry no token.
+  before_action :check_vo_membership!, if: -> { Mp::Variant.marketplace? && @service.is_a?(DeployableService) }
 
   def show
     pi_init = params[:customizable_project_item]
