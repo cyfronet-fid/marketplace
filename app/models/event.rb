@@ -10,10 +10,8 @@ class Event < ApplicationRecord
         field: {
           type: "string"
         },
-        before: {
-        },
-        after: {
-        }
+        before: {},
+        after: {}
       },
       additionalProperties: false,
       required: %i[field before after]
@@ -35,6 +33,31 @@ class Event < ApplicationRecord
              optional: true
 
   enum :action, { create: "create", update: "update" }, prefix: true
+
+  # The joins of .of_omses compare only the id of the eventable and of the messageable.
+  # Each condition thus names the type, or a record of another type with the same id matches.
+  OMS_CONDITIONS = [
+    "events.eventable_type = 'ProjectItem' AND offers.primary_oms_id IN (:oms_ids)",
+    "events.eventable_type = 'Project' AND offers_project_items.primary_oms_id IN (:oms_ids)",
+    "events.eventable_type = 'Message' AND messages.messageable_type = 'ProjectItem' " \
+    "AND offers_project_items_2.primary_oms_id IN (:oms_ids)",
+    "events.eventable_type = 'Message' AND messages.messageable_type = 'Project' " \
+    "AND offers_project_items_3.primary_oms_id IN (:oms_ids)"
+  ].freeze
+
+  # Events of ProjectItem OR Project OR Message eventables
+  # with one of the OMSes inside their respective offers.primary_oms
+  scope :of_omses,
+        lambda { |oms_ids|
+          where(OMS_CONDITIONS.map { |condition| "(#{condition})" }.join(" OR "), oms_ids: oms_ids)
+            .left_outer_joins(
+              { project_item: :offer },
+              { project: { project_items: :offer } },
+              { message: { project_item: :offer } },
+              { message: { project: { project_items: :offer } } }
+            )
+            .distinct
+        }
 
   validates :action, presence: true
   validates :updates, presence: true, if: :action_update?
