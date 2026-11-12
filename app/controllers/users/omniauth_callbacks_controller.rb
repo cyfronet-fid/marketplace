@@ -21,11 +21,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
           cookies.delete(:favourites)
         end
         flash[:notice] = I18n.t "devise.omniauth_callbacks.success", kind: "Checkin"
-        # Only marketplace's order flow reads the tokens (Services::ChooseOffersController).
-        if Mp::Variant.marketplace?
-          session["refresh_token"] = auth["credentials"]["refresh_token"]
-          session["token"] = auth["credentials"]["token"]
-        end
+        # The order flow of a deployable service reads the tokens (Services::ChooseOffersController).
+        session["refresh_token"] = auth["credentials"]["refresh_token"]
+        session["token"] = auth["credentials"]["token"]
       else
         flash[:alert] = "Cannot register user: incomplete data"
         session["devise.checkin_data"] = auth

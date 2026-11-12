@@ -49,12 +49,12 @@ RSpec.describe Users::OmniauthCallbacksController, type: :request do
       expect(User.find_by(email: email).read_attribute(:uid)).to be_nil
     end
 
-    it "keeps no checkin token in the session" do
-      expect(session["token"]).to be_nil
+    it "keeps the checkin token in the session" do
+      expect(session["token"]).to eq("checkin-token")
     end
 
-    it "keeps no checkin refresh token in the session" do
-      expect(session["refresh_token"]).to be_nil
+    it "keeps the checkin refresh token in the session" do
+      expect(session["refresh_token"]).to eq("checkin-refresh-token")
     end
   end
 end

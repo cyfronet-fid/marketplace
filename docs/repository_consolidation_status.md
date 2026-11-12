@@ -352,8 +352,9 @@ ESS and ordering API:
   marketplace and whitelabel with the whitelabel scope and endpoint defaults
   inline, and pl keeps its own block. The VO membership check moved to
   `Services::ChooseOffersController` (`Checkin::CheckVoMembership` refreshes
-  and introspects the token); it stays marketplace-only, as does storing the
-  Check-in tokens in the session. `MP_STOMP_PUBLISHER_ENABLED` keeps this
+  and introspects the token). Since #3857 the check and the Check-in tokens
+  in the session are not gated: the check runs on every variant, only for the
+  order of a deployable service. `MP_STOMP_PUBLISHER_ENABLED` keeps this
   branch's default of `true`.
 - The home page of pl and whitelabel renders as a landing page in the
   `clear` layout (`@action = "landing_page"`, four popular services), as the
