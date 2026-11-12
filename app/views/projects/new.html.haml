@@ -1,5 +1,6 @@
 - content_for :title, _("Create new Project")
 - breadcrumb :project_new
+
 - if turbo_frame_request?
   = render TurboModalComponent.new(title: "New Project") do
     = render "form", project: @project, show_recaptcha: true, turbo_enabled: true

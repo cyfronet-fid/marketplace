@@ -1,8 +1,0 @@
-.tab-pane{ id: "location", class: "#{"active" if active}", "aria-labelledby": "location-header", role: "tabpanel",
-          "data-form-target": "tab" }
-  .card-body
-    .row
-      .col-lg-7.pl-0
-        = f.input :country, disabled: cant_edit?(:country), as: :select,
-                  collection: Country.options.map { |c| [ c.iso_short_name, "value" => c.alpha2 ] }
-      = render "backoffice/providers/more_information"

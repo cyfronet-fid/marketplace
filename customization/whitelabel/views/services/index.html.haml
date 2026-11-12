@@ -8,7 +8,7 @@
       _("All service")
     end
 .container
-  - @category ? breadcrumb(:category, @category) : breadcrumb(:services)
+  - breadcrumb :services
   = render "services/index", services: @services,
                              presentable: @presentable,
                              pagy: @pagy,

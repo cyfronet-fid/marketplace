@@ -1,1 +1,16 @@
-contact
+.new-offer-form
+  = simple_form_for [:backoffice, provider],
+    html: { data: { controller: "form", form_target: "form", disabled: provider.upstream_id.present? } } do |f|
+    = f.error_notification
+    = hidden_field_tag :tab, "contacts"
+    .row
+      .col-lg-9.pl-0
+        .row.service-contact-emails{ "data-service-target": "publicContacts" }
+          .col-12
+            %h3
+              = _("Public contacts")
+            = f.input :public_contact_emails, as: :text, label: _("Public contact emails (one per line)"),
+                      input_html: { rows: 4, value: Array(provider.public_contact_emails).join("\n") },
+                      disabled: provider.upstream_id.present?
+    .row.mt-4
+      = f.button :submit, class: "btn btn-primary"

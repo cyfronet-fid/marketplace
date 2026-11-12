@@ -26,6 +26,24 @@ RSpec.describe "Backoffice: provider wizard", :backend do
     end
   end
 
+  # The wizard keeps only a known step (pl-marketplace #129).
+  context "with an unknown step" do
+    let(:provider) { create(:provider) }
+
+    before do
+      get edit_backoffice_provider_path(provider)
+      get backoffice_provider_wizard_path(provider, step: "../tabs/marketing")
+    end
+
+    it "renders the wizard" do
+      expect(response).to have_http_status(:ok)
+    end
+
+    it "keeps the first step" do
+      expect(session[:provider_step]).to eq("profile")
+    end
+  end
+
   context "when running as whitelabel" do
     before do
       allow(Mp::Variant).to receive_messages(marketplace?: false, pl?: false, whitelabel?: true)

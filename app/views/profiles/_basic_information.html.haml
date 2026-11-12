@@ -9,6 +9,12 @@
           = current_user.last_name
         %p.display-2.font-weight-light
           = current_user.email
+        %p.text-muted
+          - if current_user.roles.any?
+            %span= _("Roles:")
+            = current_user.roles.map { _1.to_s.titleize }.join(", ")
+          - else
+            = _("You have no special roles assigned.")
     .col-12.col-md-5.profile-info
       %p
         -# haml-lint:disable MultilinePipe
