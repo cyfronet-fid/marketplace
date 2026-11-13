@@ -819,13 +819,17 @@ To configure this integration, set the following [env variables](#environmental-
 ## Checkin
 
 Marketplace authenticates users through an external EGI/EOSC Check-in
-(Keycloak-based OpenID Connect) identity provider via Devise/OmniAuth. After
-sign-in, `Services::ChooseOffersController#check_vo_membership!` calls
-`Checkin::CheckVoMembership` (backed by `Checkin::Client`) on every request to
-refresh the user's access token and introspect it against Check-in, gating
-access to service ordering on membership in a configured virtual
-organisation (VO); the refreshed tokens are persisted back into the session,
-and users who aren't VO members are redirected to a "become a member" URL.
+(Keycloak-based OpenID Connect) identity provider via Devise/OmniAuth.
+
+When a signed-in user starts the order of a deployable service,
+`Services::ChooseOffersController#check_vo_membership!` calls
+`Checkin::CheckVoMembership`. `Checkin::CheckVoMembership` uses
+`Checkin::Client` to refresh the access token of the user and to introspect
+the token against Check-in. Only a member of the configured virtual
+organisation (VO) can deploy a deployable service. The controller keeps the
+refreshed tokens in the session. The controller redirects a user who is not a
+VO member to a "become a member" URL. The order of a service has no VO
+membership check.
 
 To configure this integration, set the following [env variables](#environmental-variables):
 
@@ -836,8 +840,8 @@ To configure this integration, set the following [env variables](#environmental-
 | `CHECKIN_IDENTIFIER` | OAuth client identifier registered with Check-in | - | Yes |
 | `CHECKIN_SECRET` | OAuth client secret registered with Check-in | - | Yes |
 | `REDIRECT_URI` | OAuth callback URL, e.g. `https://your-domain/users/auth/checkin/callback` | - | Yes |
-| `VO_GROUP_NAME` | VO entitlement group a user must belong to (checked as `group:<VO_GROUP_NAME>`) to access service ordering. If unset, every request is treated as misconfigured | - | Yes |
-| `BECOME_VO_MEMBER_URL` | URL a user who isn't a VO member is redirected to so they can join. If unset, every request is treated as misconfigured | - | Yes |
+| `VO_GROUP_NAME` | VO entitlement group a user must belong to (checked as `group:<VO_GROUP_NAME>`) to deploy a deployable service. If unset, every deployable service order is treated as misconfigured | - | Yes |
+| `BECOME_VO_MEMBER_URL` | URL a user who isn't a VO member is redirected to so they can join. If unset, every deployable service order is treated as misconfigured | - | Yes |
 | `CHECKIN_SCOPE` | Comma-separated OAuth scopes requested from Check-in | `openid,basic,profile,email,offline_access,aarc,entitlements` | No |
 | `CHECKIN_DISCOVERY` | Set to `true` to discover endpoints from the issuer's `.well-known/openid-configuration` document instead of the `CHECKIN_*_ENDPOINT` variables below | `true` | No |
 | `CHECKIN_PKCE` | Set to `true` to use PKCE for the authorization code flow | `true` | No |

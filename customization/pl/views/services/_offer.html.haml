@@ -17,7 +17,7 @@
               = link_to service_choose_offer_path(offer.service,
               customizable_project_item: { offer_id: offer.iid }),
               data: { probe: "", "service-id": offer.service.id, e2e: "select-offer-btn",
-              "preview-target": local_assigns[:preview] ? "link" : "", "turbo-method": :put, "turbo-frame": "_top" } do
+              "preview-target": local_assigns[:preview] ? "link" : "", "turbo-frame": "_top" } do
                 %span.btn.btn-secondary.font-weight-bolder
                   = _("Select an offer")
             - elsif policy(offer).disable_notification?

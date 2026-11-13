@@ -21,7 +21,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
           cookies.delete(:favourites)
         end
         flash[:notice] = I18n.t "devise.omniauth_callbacks.success", kind: "Checkin"
-        # Only marketplace's order flow reads the tokens (Services::ChooseOffersController).
+        # Only the order flow of a deployable service reads the tokens (Services::ChooseOffersController).
+        # Deployable service pages are routed only under marketplace.
         if Mp::Variant.marketplace?
           session["refresh_token"] = auth["credentials"]["refresh_token"]
           session["token"] = auth["credentials"]["token"]
