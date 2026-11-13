@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 Please view this file on the master branch, on stable branches it's out of date.
 
+## [4.8.0](https://github.com/cyfronet-fid/marketplace/compare/v4.7.1...v4.8.0) (2026-11-13)
+
+
+### Features
+
+* [[#3696](https://github.com/cyfronet-fid/marketplace/issues/3696)] deploy deployable services through ADM instead of IM ([#3834](https://github.com/cyfronet-fid/marketplace/issues/3834)) ([118a266](https://github.com/cyfronet-fid/marketplace/commit/118a2662dfc3221b40026c553421d6b118f0f15d))
+* [[#3803](https://github.com/cyfronet-fid/marketplace/issues/3803)] pre-fill deployable service order form with TOSCA defaults ([#3829](https://github.com/cyfronet-fid/marketplace/issues/3829)) ([ab2afd8](https://github.com/cyfronet-fid/marketplace/commit/ab2afd812532c7b6dc12626219958308da5f9751))
+* add MARKETPLACE_VARIANT support for repo consolidation ([#3760](https://github.com/cyfronet-fid/marketplace/issues/3760)) ([74b36da](https://github.com/cyfronet-fid/marketplace/commit/74b36da40e8240e83b5123676de375c76f86a96c))
+* **backoffice:** [[#3832](https://github.com/cyfronet-fid/marketplace/issues/3832)] share the pl code of the eosc.pl differences ([#3856](https://github.com/cyfronet-fid/marketplace/issues/3856)) ([aeb2e99](https://github.com/cyfronet-fid/marketplace/commit/aeb2e9910bfe0b173c63c70b4cfb6883f458999b))
+* release monorepo, adm ([6e553f8](https://github.com/cyfronet-fid/marketplace/commit/6e553f864deee531e10546370bc971bcd9c4a32b))
+
+
+### Bug Fixes
+
+* [[#3800](https://github.com/cyfronet-fid/marketplace/issues/3800)] align creators box with figma design ([#3844](https://github.com/cyfronet-fid/marketplace/issues/3844)) ([fe7dd51](https://github.com/cyfronet-fid/marketplace/commit/fe7dd512b09d9d617be7e14a521eb1764abe1c9b))
+* [[#3807](https://github.com/cyfronet-fid/marketplace/issues/3807)] remove JupyterHub hardcoding from deployments ([#3823](https://github.com/cyfronet-fid/marketplace/issues/3823)) ([57ccb6a](https://github.com/cyfronet-fid/marketplace/commit/57ccb6ab171d6bf97fc43a8df04ad39f6da3ae67))
+* [[#3857](https://github.com/cyfronet-fid/marketplace/issues/3857)] send a user who selects an offer to the offer configuration ([#3862](https://github.com/cyfronet-fid/marketplace/issues/3862)) ([6808720](https://github.com/cyfronet-fid/marketplace/commit/6808720acf0ad6bf977e15b0586590f8c0e35d4e))
+* repair pl variant spec and Brakeman failures after [#3760](https://github.com/cyfronet-fid/marketplace/issues/3760) ([#3833](https://github.com/cyfronet-fid/marketplace/issues/3833)) ([76a97f1](https://github.com/cyfronet-fid/marketplace/commit/76a97f1c1c85e949a5eb9b6df34caea4a3ede75d))
+* resolve duplicate pids in the pid migrations instead of an abort ([#3838](https://github.com/cyfronet-fid/marketplace/issues/3838)) ([971d5b9](https://github.com/cyfronet-fid/marketplace/commit/971d5b98ea0b1ff64991e07da9e7cc30b1ca9407))
+* show project services without a resource organisation ([#3861](https://github.com/cyfronet-fid/marketplace/issues/3861)) ([65a037d](https://github.com/cyfronet-fid/marketplace/commit/65a037d4b3e1d0d169be1728ba9866730762ff8e))
+* skip the reCAPTCHA verification when the widget is off ([#3836](https://github.com/cyfronet-fid/marketplace/issues/3836)) ([b8b0581](https://github.com/cyfronet-fid/marketplace/commit/b8b0581aa2c0f281814b6d8effc076b7a203c1a4))
+
 ## [4.7.1](https://github.com/cyfronet-fid/marketplace/compare/v4.7.0...v4.7.1) (2026-10-01)
 
 
