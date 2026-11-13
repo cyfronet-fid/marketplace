@@ -17,7 +17,12 @@
 # Solr runs in this project with the configsets of the hub checkout, which
 # are uploaded at the first start; the collections (no prefix) are created
 # and filled by the transform service: `deploy-hubs.sh seed marketplace`, run
-# by the script after the first deploy. The settings below follow the
+# by the script after the first deploy. The services transform-api,
+# transform-worker and redis have the compose profile "transform". The deploy
+# scripts activate the profile; a manual `docker compose` call needs
+# COMPOSE_PROFILES=transform to include the three services. Solr keeps its
+# data in a named volume, so after the first full load the hub can run
+# without them: deploy with --no-transform. The settings below follow the
 # services of this file. The env file supplies: MP_API_TOKEN (token of a
 # coordinator of the marketplace instance, for /api/v1/ess), SECRET_KEY,
 # OIDC_CLIENT_ID and OIDC_CLIENT_SECRET (a client of the Keycloak realm below
@@ -51,6 +56,7 @@ x-transform: &transform
   build:
     context: ${MP_HUBS_DIR}/transform-service
   restart: always
+  profiles: ["transform"]
   environment:
     ENVIRONMENT: production
     SOLR_URL: http://solr:8983/
@@ -117,9 +123,11 @@ services:
       - 127.0.0.1:8918:8983
     depends_on:
       - zoo
+  # The broker of the transform service, in the same profile.
   redis:
     image: redis:7
     restart: always
+    profiles: ["transform"]
   transform-api:
     <<: *transform
     command: uvicorn app.main:app --host 0.0.0.0 --port 8080

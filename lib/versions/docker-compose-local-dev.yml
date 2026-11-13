@@ -1,0 +1,69 @@
+# Development override of docker-compose-<variant>.yml for a local deploy
+# (lib/versions/deploy-local.sh, the default mode; --production leaves this
+# file out). The instance runs the development environment on the working
+# tree instead of the production image:
+#   - The working tree is mounted over /marketplace. Rails reloads the code
+#     on each request; a code change shows without a build.
+#   - The images build only the deps stage of the repository Dockerfile.
+#   - The gems and the node modules live in the named volumes below. Docker
+#     fills them from the image on the first start; `bundle install` and
+#     `yarn install` complete them at each start of the containers, so a
+#     change of Gemfile or package.json needs a restart only:
+#       deploy-local.sh restart <variant>
+#   - The assets service runs the js and css watchers of Procfile.dev and
+#     writes the builds into the mounted tree (app/assets/builds).
+# The variant compose file gives web and worker their environment. The assets
+# service is only in this file, thus deploy-local.sh exports MP_VARIANT and
+# MP_CUSTOMIZATION_PATH (the container path of the frontend) for it.
+services:
+  web:
+    build:
+      target: deps
+    # `bundle config set --local without ''`: the image excludes the
+    # development and test groups through the bundler config file in
+    # /usr/local/bundle (BUNDLE_APP_CONFIG of the ruby image), which comes
+    # into the bundle volume and has precedence over environment variables.
+    # The reset lets `bundle install` add the development gems.
+    # db:migrate in development dumps the schema of the connected database;
+    # SCHEMA moves the dump away from db/schema.rb of the working tree.
+    command: sh -c "bundle config set --local without '' && bundle install && ./bin/rails db:migrate && ./bin/rake searchkick:reindex:all && ./bin/rails s -b 0.0.0.0 -p 3000"
+    environment:
+      - RAILS_ENV=development
+      - RACK_ENV=development
+      - SCHEMA=tmp/local-deploy-schema.rb
+    volumes:
+      - .:/marketplace
+      - bundle:/usr/local/bundle
+      - node_modules:/marketplace/node_modules
+  worker:
+    build:
+      target: deps
+    command: sh -c "bundle config set --local without '' && bundle install && bundle exec sidekiq -C config/sidekiq.yml"
+    environment:
+      - RAILS_ENV=development
+      - RACK_ENV=development
+      - SCHEMA=tmp/local-deploy-schema.rb
+    volumes:
+      - .:/marketplace
+      - bundle:/usr/local/bundle
+      - node_modules:/marketplace/node_modules
+  # The js and css watchers of Procfile.dev: one build at the start, then a
+  # build on each change of app/javascript, app/assets/stylesheets or the
+  # customization directory.
+  assets:
+    build:
+      context: .
+      target: deps
+    restart: always
+    command: sh -c "yarn install --frozen-lockfile && yarn build && yarn build:css && (yarn build --watch & yarn build:css --watch & wait)"
+    environment:
+      - MARKETPLACE_VARIANT=${MP_VARIANT:?the variant, from deploy-local.sh}
+      - CUSTOMIZATION_PATH=${MP_CUSTOMIZATION_PATH}
+      - NODE_ENV=development
+    volumes:
+      - .:/marketplace
+      - node_modules:/marketplace/node_modules
+
+volumes:
+  bundle:
+  node_modules:
