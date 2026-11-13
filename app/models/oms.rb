@@ -89,24 +89,7 @@ class OMS < ApplicationRecord
   end
 
   def events
-    if default?
-      Event.all
-    else
-      # Outer join Event with ProjectItem OR Project OR Message eventables
-      # and look for OMS inside their respective offers.primary_oms
-      Event
-        .where("offers.primary_oms_id = ?", self)
-        .or(Event.where("offers_project_items.primary_oms_id = ?", self))
-        .or(Event.where("offers_project_items_2.primary_oms_id = ?", self))
-        .or(Event.where("offers_project_items_3.primary_oms_id = ?", self))
-        .left_outer_joins(
-          { project_item: :offer },
-          { project: { project_items: :offer } },
-          { message: { project_item: :offer } },
-          { message: { project: { project_items: :offer } } }
-        )
-        .distinct
-    end
+    default? ? Event.all : Event.of_omses(id)
   end
 
   private

@@ -6,6 +6,31 @@ RSpec.describe Event, type: :model, backend: true do
   it { should belong_to(:eventable) }
   it { should validate_presence_of(:action) }
 
+  describe ".of_omses" do
+    let(:oms) { create(:oms) }
+    let(:project_item) { create(:project_item, id: 900_001, offer: build(:offer, primary_oms: oms)) }
+    let(:project_with_the_same_id) { create(:project, id: project_item.id) }
+    let(:message_with_the_same_id) do
+      create(
+        :message,
+        id: project_item.id,
+        messageable: create(:project_item, offer: build(:offer, primary_oms: create(:oms)))
+      )
+    end
+    let(:message_of_the_project_with_the_same_id) { create(:message, messageable: project_with_the_same_id) }
+
+    before do
+      project_item
+      project_with_the_same_id
+      message_with_the_same_id
+      message_of_the_project_with_the_same_id
+    end
+
+    it "has only the events of the project item of the OMS and of the project of this item" do
+      expect(described_class.of_omses(oms.id).map(&:eventable)).to contain_exactly(project_item, project_item.project)
+    end
+  end
+
   context "create event" do
     subject { create(:event) }
 
