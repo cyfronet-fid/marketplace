@@ -88,13 +88,15 @@ Rules for migrations:
   `CHECKIN_JWK_ENDPOINT` names. The test and build environments take the
   mandatory values from `.env.test` and `.env.build`.
 - Order flow VO membership (`Services::ChooseOffersController`,
-  `Checkin::CheckVoMembership`, #3761) — not gated: the check runs on every
-  variant, only for the order of a deployable service (#3857). The order of a
-  service has no VO step. Every variant stores the Check-in tokens in the
-  session. Deployable service pages are routed only under `marketplace`, thus
-  only a `marketplace` deployment needs `VO_GROUP_NAME` and
-  `BECOME_VO_MEMBER_URL`. The development auth mock skips the check (no token
-  to introspect).
+  `Checkin::CheckVoMembership`, #3761) — the check is not gated: the check
+  runs on every variant, only for the order of a deployable service (#3857).
+  The order of a service has no VO step. Deployable service pages are routed
+  only under `marketplace`, thus only a `marketplace` deployment needs
+  `VO_GROUP_NAME` and `BECOME_VO_MEMBER_URL`, and only `marketplace` stores
+  the Check-in tokens in the session. A variant that routes deployable
+  service pages must also store the tokens
+  (`Users::OmniauthCallbacksController`). The development auth mock skips the
+  check (no token to introspect).
 - `Backoffice::ProvidersController#index` — `pl` hides deleted providers (its
   destroy turbo stream removes the list item); the others list them.
 - `Backoffice::ServicesController#index` — authorizes after

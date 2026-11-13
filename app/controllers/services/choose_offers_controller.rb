@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Services::ChooseOffersController < Services::ApplicationController
-  # Checkin VO membership is a requirement for the deployment of a deployable
-  # service (#3590). The order of a service has no such step.
+  # Checkin VO membership is a requirement for the deployment of a
+  # deployable service (#3590). The order of an offer has no such step.
   before_action :check_vo_membership!, if: -> { @service.is_a?(DeployableService) }
 
   def show
