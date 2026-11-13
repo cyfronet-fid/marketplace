@@ -6,7 +6,7 @@ RSpec.describe "Services::ChooseOffersController functionality", type: :request 
   let(:user) { create(:user) }
   let(:provider) { create(:provider) }
   let(:service_category) { create(:service_category) }
-  let(:service_resource) { create(:service, resource_organisation: provider, status: :published) }
+  let(:service_resource) { create(:deployable_service, resource_organisation: provider, status: :published) }
 
   before { sign_in(user) }
 
@@ -15,15 +15,15 @@ RSpec.describe "Services::ChooseOffersController functionality", type: :request 
       allow(Checkin::CheckVoMembership).to receive(:call).and_return(check_vo_membership_result)
       create(
         :offer,
-        service: service_resource,
-        deployable_service: nil,
+        service: nil,
+        deployable_service: service_resource,
         offer_category: service_category,
         status: :published
       )
       create(
         :offer,
-        service: service_resource,
-        deployable_service: nil,
+        service: nil,
+        deployable_service: service_resource,
         offer_category: service_category,
         name: "Alternative Offer",
         status: :published
@@ -33,7 +33,7 @@ RSpec.describe "Services::ChooseOffersController functionality", type: :request 
     context "when the status is misconfiguration" do
       let(:check_vo_membership_result) { Checkin::CheckVoMembership::CheckResult.new(status: :misconfiguration) }
 
-      before { get service_choose_offer_path(service_resource) }
+      before { get deployable_service_choose_offer_path(service_resource) }
 
       it "redirects to root" do
         expect(response).to redirect_to(root_path)
@@ -47,7 +47,7 @@ RSpec.describe "Services::ChooseOffersController functionality", type: :request 
     context "when the status is session_expired" do
       let(:check_vo_membership_result) { Checkin::CheckVoMembership::CheckResult.new(status: :session_expired) }
 
-      before { get service_choose_offer_path(service_resource) }
+      before { get deployable_service_choose_offer_path(service_resource) }
 
       it "redirects to Check-in to re-authenticate" do
         expect(response).to redirect_to(user_checkin_omniauth_authorize_path)
@@ -57,7 +57,7 @@ RSpec.describe "Services::ChooseOffersController functionality", type: :request 
     context "when the status is verification_failed" do
       let(:check_vo_membership_result) { Checkin::CheckVoMembership::CheckResult.new(status: :verification_failed) }
 
-      before { get service_choose_offer_path(service_resource) }
+      before { get deployable_service_choose_offer_path(service_resource) }
 
       it "redirects to root" do
         expect(response).to redirect_to(root_path)
@@ -73,7 +73,7 @@ RSpec.describe "Services::ChooseOffersController functionality", type: :request 
         Checkin::CheckVoMembership::CheckResult.new(status: :not_member, become_vo_member_url: "https://example.com/enroll")
       end
 
-      before { get service_choose_offer_path(service_resource) }
+      before { get deployable_service_choose_offer_path(service_resource) }
 
       it "redirects to the become_vo_member_url" do
         expect(response).to redirect_to("https://example.com/enroll")
@@ -84,7 +84,7 @@ RSpec.describe "Services::ChooseOffersController functionality", type: :request 
       let(:check_vo_membership_result) { Checkin::CheckVoMembership::CheckResult.new(status: :member) }
 
       it "proceeds to the requested action" do
-        get service_choose_offer_path(service_resource)
+        get deployable_service_choose_offer_path(service_resource)
         expect(response).to have_http_status(:success)
       end
     end
@@ -98,14 +98,14 @@ RSpec.describe "Services::ChooseOffersController functionality", type: :request 
       end
 
       it "logs a warning" do
-        get service_choose_offer_path(service_resource)
+        get deployable_service_choose_offer_path(service_resource)
 
         expect(Rails.logger.tagged("CHECKIN"))
           .to have_received(:warn).with("Unhandled VO membership status: :something_new")
       end
 
       it "proceeds to the requested action" do
-        get service_choose_offer_path(service_resource)
+        get deployable_service_choose_offer_path(service_resource)
         expect(response).to have_http_status(:success)
       end
     end
@@ -119,11 +119,37 @@ RSpec.describe "Services::ChooseOffersController functionality", type: :request 
         )
       end
 
-      before { get service_choose_offer_path(service_resource) }
+      before { get deployable_service_choose_offer_path(service_resource) }
 
       it "syncs the refreshed tokens into the session before redirecting" do
         expect(session.to_h).to include("token" => "new-token", "refresh_token" => "new-refresh")
       end
+    end
+  end
+
+  describe "the order of a service", variant: :marketplace do
+    let(:service) { create(:service, resource_organisation: provider, status: :published) }
+
+    before do
+      allow(Checkin::CheckVoMembership).to receive(:call)
+      create(:offer, service: service, deployable_service: nil, offer_category: service_category, status: :published)
+      create(
+        :offer,
+        service: service,
+        deployable_service: nil,
+        offer_category: service_category,
+        name: "Alternative Offer",
+        status: :published
+      )
+      get service_choose_offer_path(service)
+    end
+
+    it "does not check the VO membership" do
+      expect(Checkin::CheckVoMembership).not_to have_received(:call)
+    end
+
+    it "proceeds to the requested action" do
+      expect(response).to have_http_status(:success)
     end
   end
 end

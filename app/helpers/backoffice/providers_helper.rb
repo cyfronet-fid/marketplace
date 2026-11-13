@@ -3,7 +3,7 @@
 module Backoffice::ProvidersHelper
   BASIC_STEPS = %w[profile location contacts managers summary].freeze
   PROVIDER_TABS = %w[profile location contacts managers].freeze
-  # pl's provider page tabs (its views come from CUSTOMIZATION_PATH).
+  # pl's provider page tabs: the fields of Provider::PlProfile (its tab views come from CUSTOMIZATION_PATH).
   EXTENDED_STEPS = %w[profile classification location contacts maturity dependencies managers other].freeze
 
   def cant_edit?(attribute)
@@ -47,8 +47,9 @@ module Backoffice::ProvidersHelper
     BASIC_STEPS
   end
 
+  # pl shows the tabs of its profile fields. The other variants show the wizard's tabs.
   def provider_tabs
-    PROVIDER_TABS
+    Mp::Variant.pl? ? EXTENDED_STEPS : PROVIDER_TABS
   end
 
   def extended_steps
@@ -56,7 +57,7 @@ module Backoffice::ProvidersHelper
   end
 
   def safe_tab(tab)
-    extended_steps.include?(tab) ? tab : "profile"
+    provider_tabs.include?(tab) ? tab : "profile"
   end
 
   def safe_step(step)

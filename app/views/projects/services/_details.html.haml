@@ -1,16 +1,17 @@
-.offer-section-wrapper
-  .bordered-header Organisation
-  %dl
-    %dt
-      = _("Name") + ":"
-    %dd= service_resource_organisation(project_item)
-  - unless service_providers_list(project_item).blank?
+- if project_item.service.resource_organisation.present?
+  .offer-section-wrapper.mb-4
+    .bordered-header Organisation
     %dl
       %dt
-        = _("Service Providers") + ":"
-      %dd= service_providers_list(project_item)
+        = _("Name") + ":"
+      %dd= service_resource_organisation(project_item)
+    - unless service_providers_list(project_item).blank?
+      %dl
+        %dt
+          = _("Service Providers") + ":"
+        %dd= service_providers_list(project_item)
 
-.offer-section-wrapper.mt-4
+.offer-section-wrapper
   .bordered-header Informations
   %dl
     %dt

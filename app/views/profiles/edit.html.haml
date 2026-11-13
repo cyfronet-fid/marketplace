@@ -1,9 +1,7 @@
-.container
-  - breadcrumb :profile
+- breadcrumb :profile
 
-  %h1
-    = _("Edit additional information")
+.container
+  %h1= _("Edit additional information")
 
   = render "basic_information"
-
   = render "form", user: @user

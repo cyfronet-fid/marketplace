@@ -180,7 +180,8 @@ class Backoffice::Providers::StepsController < Backoffice::ProvidersController
   end
 
   def current_step
-    session[:provider_step] = params[:step] if params[:step]
+    # Only a known step goes into the partial path (pl-marketplace #129).
+    session[:provider_step] = safe_step(params[:step]) if params[:step]
     session[:provider_step]
   end
 

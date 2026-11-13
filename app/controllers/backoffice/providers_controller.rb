@@ -12,24 +12,22 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
 
   def index
     authorize(Provider)
-    # pl removes a deleted provider from the list (its destroy turbo stream drops the list item).
-    providers = Mp::Variant.pl? ? Provider.where.not(status: "deleted") : Provider
-    @pagy, @providers = pagy(policy_scope(providers).order(:name))
+    # A deleted provider leaves the list. Its destroy turbo stream drops the list item.
+    @pagy, @providers = pagy(policy_scope(Provider.where.not(status: "deleted")).order(:name))
     @approval_requests = policy_scope(ApprovalRequest.includes(:approvable).active.order(created_at: :desc))
   end
 
   def show
+    # The tabs are forms. They need an empty row for each blank nested model.
+    add_missing_nested_models
     respond_to do |format|
-      current_tab = params[:tab]
-      tabs = Mp::Variant.pl? ? extended_steps : provider_tabs
-      partial = current_tab&.in?(tabs) ? current_tab : "profile"
       format.turbo_stream do
         render turbo_stream:
                  turbo_stream.replace(
                    "tab_content",
                    partial: "backoffice/providers/tabs/wrapper",
                    locals: {
-                     tab: partial,
+                     tab: safe_tab(params[:tab]),
                      provider: @provider,
                      catalogues: @catalogues
                    }
@@ -43,28 +41,15 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
     @provider = Provider.new
     session[:wizard_action] = "create"
     session[:new] ||= {}
-    session[:provider_step] = params[:step] || "profile"
+    session[:provider_step] = safe_step(params[:step])
     redirect_to backoffice_provider_wizard_path("new")
   end
 
   def edit
+    # The tabs save in place, so edit always opens the wizard.
     session[:wizard_action] = "update"
-    tab = session[:provider_step] = params[:step] || basic_steps.first
-    if tab.in?(basic_steps)
-      redirect_to backoffice_provider_wizard_path(@provider)
-    else
-      add_missing_nested_models
-      render turbo_stream:
-               turbo_stream.replace(
-                 "tab_content",
-                 partial: "backoffice/providers/form",
-                 locals: {
-                   provider: @provider,
-                   catalogues: @catalogues,
-                   tab: tab
-                 }
-               )
-    end
+    session[:provider_step] = safe_step(params[:step])
+    redirect_to backoffice_provider_wizard_path(@provider)
   end
 
   def create
@@ -83,8 +68,10 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
       end
       redirect_to backoffice_provider_path(@provider, page: params[:page]), notice: "New provider created successfully"
     else
-      catalogue_scope
-      render :new, status: :unprocessable_content
+      # There is no new page: the wizard shows the submitted values again.
+      session["new"] = permitted_attributes.to_h.except("logo")
+      session["new"]["logo"] = ImageHelper.to_json(permitted_attributes[:logo]) if permitted_attributes[:logo].present?
+      redirect_to backoffice_provider_wizard_path("new")
     end
   end
 
@@ -102,7 +89,7 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
 
     # IMPORTANT!!! Writing upstream_id from params is required to inject context to policy
     provider_duplicate.upstream_id = params.dig(:provider, :upstream_id)
-    # pl's provider tabs post no provider fields when the tab has none to show,
+    # The tabs post no provider fields when the tab has none to show,
     # for example the managers tab of a provider without data administrators.
     permitted_attributes = params[:provider].present? ? permitted_attributes(provider_duplicate) : {}
     if provider_duplicate.published? && provider_duplicate.catalogue.present? &&
@@ -115,9 +102,20 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
       flash.now[:notice] = "Provider updated successfully"
       respond_to(&:turbo_stream)
     else
+      # The submitted tab shows the errors.
       catalogue_scope
       add_missing_nested_models
-      render :edit, status: :bad_request
+      render turbo_stream:
+               turbo_stream.replace(
+                 "tab_content",
+                 partial: "backoffice/providers/tabs/wrapper",
+                 locals: {
+                   tab: safe_tab(params[:tab]),
+                   provider: @provider,
+                   catalogues: @catalogues
+                 }
+               ),
+             status: :unprocessable_content
     end
   end
 
@@ -157,9 +155,10 @@ class Backoffice::ProvidersController < Backoffice::ApplicationController
   end
 
   def add_missing_nested_models
-    %i[alternative_identifiers data_administrators link_multimedia_urls].each do |association|
+    %i[alternative_identifiers data_administrators public_contacts link_multimedia_urls].each do |association|
       @provider.send(association).build if @provider.send(association).empty?
     end
+    @provider.build_main_contact if @provider.main_contact.blank?
   end
 
   def valid_model_and_urls?
