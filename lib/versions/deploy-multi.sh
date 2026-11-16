@@ -12,7 +12,11 @@
 # ROOT is derived from the location of the script in both cases.
 #   ROOT/marketplace                   this repository, with one
 #                                      docker-compose-<variant>.yml per variant
-#   ROOT/seed/<variant>/mp_db.sql      plain SQL dump of the database
+#   ROOT/seed/<variant>/mp_db.sql      plain SQL dump, optional. Without a dump
+#                                      the database gets the schema of
+#                                      db/schema.rb and all seeds (db:seed and
+#                                      the internal vocabularies), so the
+#                                      backoffice dictionaries exist.
 #   ROOT/seed/<variant>/media/         copied to MEDIA_PATH in the app container
 #   ROOT/.last-deployed-commit         commit of the last complete deploy
 #
@@ -222,7 +226,6 @@ deploy_variant() {
     export_staging_urls "$variant" || return 1
     [ -f "$compose_file" ] || { echo "missing $compose_file"; return 1; }
     dump="$seed/mp_db.sql"
-    [ -f "$dump" ] || { echo "missing $dump"; return 1; }
 
     # --- build the new image (the old environment still runs) ---
     "${dc[@]}" build || return 1
@@ -265,15 +268,27 @@ deploy_variant() {
             | "${dc[@]}" exec -T -e PGOPTIONS='-c client_min_messages=warning' "$DB_SERVICE" \
                 psql -q -v ON_ERROR_STOP=1 -U "$DB_USER" -d postgres > /dev/null || return 1
 
-        # --- restore the dump in one transaction ---
-        # A failed restore leaves the database empty, so the next deploy seeds
-        # again. -q: no information messages, > /dev/null: no output of
-        # set_config and similar. Errors go to stderr, so they stay visible;
-        # NOTICE messages are silenced by PGOPTIONS.
-        "${dc[@]}" exec -T -e PGOPTIONS='-c client_min_messages=warning' "$DB_SERVICE" \
-            psql -q -v ON_ERROR_STOP=1 --single-transaction -U "$DB_USER" -d "$DB_NAME" -f - \
-            < "$dump" > /dev/null || return 1
-        echo "[${variant}] database seeded from $dump"
+        if [ -f "$dump" ]; then
+            # --- restore the dump in one transaction ---
+            # A failed restore leaves the database empty, so the next deploy
+            # seeds again. -q: no information messages, > /dev/null: no output
+            # of set_config and similar. Errors go to stderr, so they stay
+            # visible; NOTICE messages are silenced by PGOPTIONS.
+            "${dc[@]}" exec -T -e PGOPTIONS='-c client_min_messages=warning' "$DB_SERVICE" \
+                psql -q -v ON_ERROR_STOP=1 --single-transaction -U "$DB_USER" -d "$DB_NAME" -f - \
+                < "$dump" > /dev/null || return 1
+            echo "[${variant}] database seeded from $dump"
+        else
+            # --- no dump: schema plus all seeds ---
+            # db:seed loads db/vocabulary.yml, the second task loads
+            # db/internal_vocabulary.yml with the offer categories. The
+            # backoffice dictionaries thus exist on a fresh instance.
+            echo "[${variant}] no $dump: loading db/schema.rb and running all seeds"
+            "${dc[@]}" run --rm -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 "$APP_SERVICE" \
+                ./bin/rails db:schema:load || return 1
+            "${dc[@]}" run --rm "$APP_SERVICE" \
+                ./bin/rails db:seed rdt:add_internal_vocabularies || return 1
+        fi
     fi
 
     # --- the rest of the application ---
