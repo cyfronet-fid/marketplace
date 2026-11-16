@@ -1,0 +1,10 @@
+{
+  "allOf": [{ "$ref": "#/components/schemas/offer" }],
+  "properties": {
+    "id": {
+      "type": "integer",
+      "readOnly": true
+    }
+  },
+  "required": ["name", "description", "order_type"]
+}

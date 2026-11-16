@@ -139,7 +139,7 @@ Rules for migrations:
   role) and `OrderingApi::AddProviderOMS` (`underscore` instead of
   `downcase`) — pl behavior under `pl`, unchanged elsewhere.
 - `Api::V1::Catalogue::ServicesController` (`/api/v1/catalogue/services`,
-  `v1/catalogue_swagger.json`) — pl's public catalogue API; the route is drawn
+  tag `Catalogue services` in `swagger/v1/spec.json`) — pl's public catalogue API; the route is drawn
   only under `pl`. `Service#access_modes` and `Service#logo_url` exist on
   every variant for its serializer.
 - `Federation::ServicesController#map_results` — whitelabel's fallbacks to

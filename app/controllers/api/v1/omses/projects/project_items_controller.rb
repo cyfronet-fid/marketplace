@@ -58,11 +58,7 @@ class Api::V1::OMSes::Projects::ProjectItemsController < Api::V1::ApplicationCon
   end
 
   def validate_payload
-    schema_file = "project_item_update.json"
-    JSON::Validator.validate!(
-      Rails.root.join("swagger", "v1", "project_item", schema_file).to_s,
-      params[:project_item].as_json
-    )
+    Api::V1::ComponentSchema.new("project_item_update").validate!(params[:project_item].as_json)
   rescue JSON::Schema::ValidationError => e
     render json: { error: e.message }, status: 400
   end

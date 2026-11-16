@@ -1,0 +1,72 @@
+{
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/stub_parameter"
+    }
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "select"
+      ]
+    },
+    "config": {
+      "type": "object",
+      "properties": {
+        "values": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "integer"
+              }
+            ]
+          }
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "dropdown",
+            "buttons"
+          ]
+        }
+      },
+      "required": [
+        "values",
+        "mode"
+      ]
+    },
+    "value_type": {
+      "type": "string",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "integer"
+        }
+      ]
+    },
+    "unit": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "type",
+    "config",
+    "value_type"
+  ]
+}

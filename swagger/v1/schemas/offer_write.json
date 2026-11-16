@@ -1,0 +1,4 @@
+{
+  "allOf": [{ "$ref": "#/components/schemas/offer" }],
+  "required": ["name", "description", "order_type"]
+}

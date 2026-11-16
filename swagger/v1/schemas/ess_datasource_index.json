@@ -1,0 +1,7 @@
+{
+  "type": "array",
+  "items": {
+    "$ref": "#/components/schemas/ess_datasource_read"
+  },
+  "additionalProperties": false
+}

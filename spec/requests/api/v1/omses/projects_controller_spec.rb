@@ -3,15 +3,7 @@
 require "swagger_helper"
 require "rails_helper"
 
-RSpec.describe Api::V1::OMSes::ProjectsController, swagger_doc: "v1/ordering_swagger.json", backend: true do
-  before(:all) do
-    Dir.chdir Rails.root.join("swagger", "v1") # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
-  end
-
-  after(:all) do
-    Dir.chdir Rails.root # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
-  end
-
+RSpec.describe Api::V1::OMSes::ProjectsController, backend: true do
   path "/api/v1/oms/{oms_id}/projects" do
     parameter name: :oms_id, in: :path, type: :integer, description: "OMS id"
 
@@ -27,7 +19,7 @@ RSpec.describe Api::V1::OMSes::ProjectsController, swagger_doc: "v1/ordering_swa
       parameter name: :limit, in: :query, type: :integer, required: false, description: "Limit of projects listed"
 
       response 200, "projects found" do
-        schema "$ref" => "project/project_index.json"
+        schema "$ref" => "#/components/schemas/project_index"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
         let(:other_oms) { create(:oms, administrators: [oms_admin]) }
@@ -60,7 +52,7 @@ RSpec.describe Api::V1::OMSes::ProjectsController, swagger_doc: "v1/ordering_swa
       end
 
       response 200, "projects found but were empty", document: false do
-        schema "$ref" => "project/project_index.json"
+        schema "$ref" => "#/components/schemas/project_index"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:default_oms, administrators: [oms_admin]) }
 
@@ -74,7 +66,7 @@ RSpec.describe Api::V1::OMSes::ProjectsController, swagger_doc: "v1/ordering_swa
       end
 
       response 401, "user not recognized" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:oms_id) { 1 }
         let(:"X-User-Token") { "asdasdasd" }
 
@@ -85,7 +77,7 @@ RSpec.describe Api::V1::OMSes::ProjectsController, swagger_doc: "v1/ordering_swa
       end
 
       response 403, "user not authorized to access this OMS" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:oms_admin) { create(:user) }
         let(:user) { create(:user) }
         let(:oms) { create(:default_oms, administrators: [oms_admin]) }
@@ -100,7 +92,7 @@ RSpec.describe Api::V1::OMSes::ProjectsController, swagger_doc: "v1/ordering_swa
       end
 
       response 404, "OMS not found" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:user) { create(:user) }
 
         let(:oms_id) { 9999 }
@@ -124,7 +116,7 @@ RSpec.describe Api::V1::OMSes::ProjectsController, swagger_doc: "v1/ordering_swa
       security [authentication_token: []]
 
       response 200, "project found" do
-        schema "$ref" => "project/project_read.json"
+        schema "$ref" => "#/components/schemas/project_read"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
         let(:project) do
@@ -142,7 +134,7 @@ RSpec.describe Api::V1::OMSes::ProjectsController, swagger_doc: "v1/ordering_swa
       end
 
       response 401, "user not recognized" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:oms_id) { 1 }
         let(:p_id) { 1 }
         let(:"X-User-Token") { "asdasdasd" }
@@ -154,7 +146,7 @@ RSpec.describe Api::V1::OMSes::ProjectsController, swagger_doc: "v1/ordering_swa
       end
 
       response 403, "user not authorized" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:oms1_admin) { create(:user) }
         let(:oms2_admin) { create(:user) }
         let(:oms1) { create(:oms, administrators: [oms1_admin]) }
@@ -174,7 +166,7 @@ RSpec.describe Api::V1::OMSes::ProjectsController, swagger_doc: "v1/ordering_swa
       end
 
       response 403, "user not authorized to access this OMS" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:oms_admin) { create(:user) }
         let(:user) { create(:user) }
         let(:oms) { create(:default_oms, administrators: [oms_admin]) }
@@ -190,7 +182,7 @@ RSpec.describe Api::V1::OMSes::ProjectsController, swagger_doc: "v1/ordering_swa
       end
 
       response 404, "OMS not found" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:user) { create(:user) }
 
         let(:oms_id) { 9999 }
@@ -204,7 +196,7 @@ RSpec.describe Api::V1::OMSes::ProjectsController, swagger_doc: "v1/ordering_swa
       end
 
       response 404, "project not found" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
         let(:other_oms) { create(:oms) }

@@ -1,0 +1,65 @@
+{
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/stub_parameter"
+    }
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "quantity_price"
+      ]
+    },
+    "unit": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "value_type": {
+      "type": "string",
+      "enum": [
+        "integer"
+      ]
+    },
+    "config": {
+      "type": "object",
+      "properties": {
+        "start_price": {
+          "type": "integer"
+        },
+        "step_price": {
+          "type": "integer"
+        },
+        "max": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "currency": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "start_price",
+        "step_price",
+        "currency"
+      ]
+    }
+  },
+  "required": [
+    "type",
+    "value_type",
+    "config"
+  ]
+}

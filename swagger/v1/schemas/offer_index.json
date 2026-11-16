@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "offers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/offer_read"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": ["offers"]
+}

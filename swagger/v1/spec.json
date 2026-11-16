@@ -1,0 +1,5108 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "EOSC Marketplace API",
+    "version": "v1",
+    "description": "REST API of the EOSC Marketplace. The API has these parts:\n\n- Offering (`/api/v1/resources`): the offers of the resources that a user administers.\n- Ordering (`/api/v1/oms`): the integration of an Order Management System with the ordering process.\n- ESS (`/api/v1/ess`): the collections that the Search Service reads.\n- Users (`/api/v1/users`): the user configuration for external clients.\n- Search (`/api/v1/search`): the search and the filters of the services.\n- Catalogue (`/api/v1/catalogue`): the public catalogue of the services. Only the pl variant has this part.\n"
+  },
+  "paths": {
+    "/api/v1/catalogue/services": {
+      "get": {
+        "summary": "List catalogue services",
+        "tags": [
+          "Catalogue services"
+        ],
+        "parameters": [
+          {
+            "name": "keyword",
+            "in": "query",
+            "required": false,
+            "description": "Full-text search keyword",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0
+            },
+            "required": false,
+            "description": "Offset of the first record"
+          },
+          {
+            "name": "quantity",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 10
+            },
+            "required": false,
+            "description": "Number of records to return"
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ],
+              "default": "asc"
+            },
+            "required": false,
+            "description": "Sort order for name/sort_name"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "returns a paginated list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "from": {
+                      "type": "integer"
+                    },
+                    "to": {
+                      "type": "integer",
+                      "description": "Exclusive end index: from + number of returned results"
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "service": {
+                            "$ref": "#/components/schemas/CatalogueService"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "service"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "total",
+                    "from",
+                    "to",
+                    "results"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ess/bundles": {
+      "get": {
+        "summary": "lists published bundles",
+        "tags": [
+          "ESS bundles"
+        ],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "bundle found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ess_bundle_index"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ess/bundles/{bundle_id}": {
+      "parameters": [
+        {
+          "name": "bundle_id",
+          "in": "path",
+          "description": "bundle identifier id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "retrieves a bundle by id",
+        "tags": [
+          "ESS bundles"
+        ],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "bundle found by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ess_bundle_read"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "draft bundle not found by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "bundle not found by unpermitted user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ess/catalogues": {
+      "get": {
+        "summary": "lists catalogues",
+        "tags": [
+          "ESS catalogues"
+        ],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "catalogues found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ess_catalogue_index"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ess/catalogues/{catalogue_id}": {
+      "parameters": [
+        {
+          "name": "catalogue_id",
+          "in": "path",
+          "description": "Catalogue identifier (id or pid)",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "retrieves a catalogue by id",
+        "tags": [
+          "ESS catalogues"
+        ],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "catalogue found by pid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ess_catalogue_read"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "draft catalogue not found by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "catalogue not found by unpermitted user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ess/datasources": {
+      "get": {
+        "summary": "lists datasources",
+        "tags": [
+          "ESS datasources"
+        ],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "datasources found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ess_datasource_index"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ess/datasources/{datasource_id}": {
+      "parameters": [
+        {
+          "name": "datasource_id",
+          "in": "path",
+          "description": "Datasource identifier (id or eid)",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "retrieves a datasource by id",
+        "tags": [
+          "ESS datasources"
+        ],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "datasource found by slug",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ess_datasource_read"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ess/deployable_services": {
+      "get": {
+        "summary": "lists deployable services",
+        "tags": [
+          "ESS deployable services"
+        ],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "deployable services found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ess_deployable_service_index"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ess/deployable_services/{deployable_service_id}": {
+      "parameters": [
+        {
+          "name": "deployable_service_id",
+          "in": "path",
+          "description": "Deployable Service identifier (id or slug)",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "retrieves a deployable service by id",
+        "tags": [
+          "ESS deployable services"
+        ],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "deployable service found by slug",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ess_deployable_service_read"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "draft deployable service not found by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "deployable service not found by unpermitted user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ess/offers": {
+      "get": {
+        "summary": "lists published offers",
+        "tags": [
+          "ESS offers"
+        ],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "offer found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ess_offer_index"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ess/offers/{offer_id}": {
+      "parameters": [
+        {
+          "name": "offer_id",
+          "in": "path",
+          "description": "Offer identifier id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "retrieves a offer by id",
+        "tags": [
+          "ESS offers"
+        ],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "offer found by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ess_offer_read"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "draft offer not found by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "offer not found by unpermitted user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ess/providers": {
+      "get": {
+        "summary": "lists providers",
+        "tags": [
+          "ESS providers"
+        ],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "providers found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ess_provider_index"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ess/providers/{provider_id}": {
+      "parameters": [
+        {
+          "name": "provider_id",
+          "in": "path",
+          "description": "Provider identifier (id or pid)",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "retrieves a provider by id",
+        "tags": [
+          "ESS providers"
+        ],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "provider found by pid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ess_provider_read"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "draft provider not found by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "provider not found by unpermitted user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ess/services": {
+      "get": {
+        "summary": "lists services",
+        "tags": [
+          "ESS services"
+        ],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "services found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ess_service_index"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ess/services/{service_id}": {
+      "parameters": [
+        {
+          "name": "service_id",
+          "in": "path",
+          "description": "Service identifier (id or eid)",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "retrieves a service by id",
+        "tags": [
+          "ESS services"
+        ],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "service found by slug",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ess_service_read"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "draft service not found by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "service not found by unpermitted user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/oms/{oms_id}/events": {
+      "parameters": [
+        {
+          "name": "oms_id",
+          "in": "path",
+          "description": "OMS id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "lists events",
+        "tags": [
+          "Events"
+        ],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "from_timestamp",
+            "in": "query",
+            "required": true,
+            "description": "List events after, ISO8601 format, e.g. 2021-04-07T15:31:46.123456Z",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "number of returned elements",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "events found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/event_index"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "user not authorized to access this OMS",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "OMS not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/oms/{oms_id}/messages": {
+      "parameters": [
+        {
+          "name": "oms_id",
+          "in": "path",
+          "description": "OMS id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "lists messages",
+        "tags": [
+          "Messages"
+        ],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "query",
+            "required": true,
+            "description": "The project to list messages of",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "project_item_id",
+            "in": "query",
+            "required": false,
+            "description": "the project item to list messages items of",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "from_id",
+            "in": "query",
+            "required": false,
+            "description": "List messages with id greater than from_id",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Number of returned elements",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "messages found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/message_index"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "user not authorized to access this OMS",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "project item not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "creates a message",
+        "tags": [
+          "Messages"
+        ],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "message created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/message_read"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "user not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "project item not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/message_write"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/oms/{oms_id}/messages/{m_id}": {
+      "parameters": [
+        {
+          "name": "oms_id",
+          "in": "path",
+          "description": "OMS id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "m_id",
+          "in": "path",
+          "description": "Message id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "retrieves a message",
+        "tags": [
+          "Messages"
+        ],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "message found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/message_read"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "user not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "message not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "updates a message",
+        "tags": [
+          "Messages"
+        ],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "message updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/message_read"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "user not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "message not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/message_update"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/oms/{oms_id}/projects/{p_id}/project_items": {
+      "parameters": [
+        {
+          "name": "oms_id",
+          "in": "path",
+          "description": "OMS id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "p_id",
+          "in": "path",
+          "description": "Project id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "lists project items",
+        "tags": [
+          "Project items"
+        ],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "from_id",
+            "in": "query",
+            "required": false,
+            "description": "List project items with project_item_id greater than from_id",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Number of returned elements",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "project items found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/project_item_index"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "user not authorized to access this OMS",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "project not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/oms/{oms_id}/projects/{p_id}/project_items/{pi_id}": {
+      "parameters": [
+        {
+          "name": "oms_id",
+          "in": "path",
+          "description": "OMS id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "p_id",
+          "in": "path",
+          "description": "Project id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "pi_id",
+          "in": "path",
+          "description": "Project item id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "retrieves a project item",
+        "tags": [
+          "Project items"
+        ],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "project item found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/project_item_read"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "user not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "project item not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "updates a project item",
+        "tags": [
+          "Project items"
+        ],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "project item updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/project_item_read"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "user not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "project item not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/project_item_update"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/oms/{oms_id}/projects": {
+      "parameters": [
+        {
+          "name": "oms_id",
+          "in": "path",
+          "description": "OMS id",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "get": {
+        "summary": "lists projects",
+        "tags": [
+          "Projects"
+        ],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "from_id",
+            "in": "query",
+            "required": false,
+            "description": "List projects with id greater than from_id",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Limit of projects listed",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "projects found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/project_index"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "user not authorized to access this OMS",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "OMS not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/oms/{oms_id}/projects/{p_id}": {
+      "parameters": [
+        {
+          "name": "oms_id",
+          "in": "path",
+          "description": "OMS id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "p_id",
+          "in": "path",
+          "description": "Project id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "retrieves a project",
+        "tags": [
+          "Projects"
+        ],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "project found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/project_read"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "user not authorized to access this OMS",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "project not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/oms": {
+      "get": {
+        "summary": "lists OMSes",
+        "tags": [
+          "OMS"
+        ],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OMSes found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ordering_oms_index"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/oms/{oms_id}": {
+      "parameters": [
+        {
+          "name": "oms_id",
+          "in": "path",
+          "description": "OMS id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "retrieves an OMS",
+        "tags": [
+          "OMS"
+        ],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OMS found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ordering_oms_read"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "user not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "OMS not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/resources/{resource_id}/offers": {
+      "get": {
+        "summary": "lists offers for an administered resource",
+        "tags": [
+          "Offers"
+        ],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "resource_id",
+            "in": "path",
+            "description": "Resource identifier (id or eid)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "offers found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/offer_index"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "resource not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "creates an offer for an administered resource",
+        "tags": [
+          "Offers"
+        ],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "resource_id",
+            "in": "path",
+            "description": "Resource identifier (id or eid)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "offer created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/offer_read"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "user not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "resource not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/offer_write"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/resources/{resource_id}/offers/{id}": {
+      "get": {
+        "summary": "retrieves an offer for an administered resource",
+        "tags": [
+          "Offers"
+        ],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "resource_id",
+            "in": "path",
+            "description": "Resource identifier (id or eid)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Offer identifier",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "offer found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/offer_read"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "user not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "offer not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "updates an offer for an administered resource",
+        "tags": [
+          "Offers"
+        ],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "resource_id",
+            "in": "path",
+            "description": "Resource identifier (id or eid)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Offer identifier",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "doesn't update primary_oms and oms_params and internal if not order_required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/offer_read"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "user not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "offer not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/offer_update"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "deletes an offer for an administered resource",
+        "tags": [
+          "Offers"
+        ],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "resource_id",
+            "in": "path",
+            "description": "Resource identifier (id or eid)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Offer identifier",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "offer deleted"
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "offer not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/resources": {
+      "get": {
+        "summary": "lists resources administered by user",
+        "tags": [
+          "Resources"
+        ],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "resources found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/resource_index"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/resources/{id}": {
+      "get": {
+        "summary": "retrieves an administered resource",
+        "tags": [
+          "Resources"
+        ],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Resource identifier (id or eid)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "resource found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/resource_read"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "user not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "resource not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/search/services": {
+      "get": {
+        "summary": "Search services",
+        "tags": [
+          "Search Services"
+        ],
+        "description": "Search and filter services using Elasticsearch with EID-based filtering. Supports full-text search and multiple filter criteria.",
+        "operationId": "searchServices",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "description": "Search query string. Searches in service name, description, offer names, and provider names using Elasticsearch",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "scientific_domains",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "required": false,
+            "description": "Array of scientific domain EIDs to filter by. Use external IDs (EIDs) from scientific domain vocabulary",
+            "schema": {
+              "type": "array"
+            }
+          },
+          {
+            "name": "providers",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "required": false,
+            "description": "Array of provider EIDs to filter by. Use external IDs (EIDs) from provider registry",
+            "schema": {
+              "type": "array"
+            }
+          },
+          {
+            "name": "jurisdiction",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "required": false,
+            "description": "Array of jurisdiction EIDs to filter by",
+            "schema": {
+              "type": "array"
+            }
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "required": false,
+            "description": "Array of tag EIDs to filter by. Use external IDs (EIDs) from tag vocabulary",
+            "schema": {
+              "type": "array"
+            }
+          },
+          {
+            "name": "rating",
+            "in": "query",
+            "required": false,
+            "minimum": 1,
+            "maximum": 5,
+            "description": "Filter by minimum rating (1-5). Shows services with rating equal or higher than specified value",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "order_type",
+            "in": "query",
+            "required": false,
+            "description": "Filter by order type. Determines how the service can be accessed:\n * `open_access` \n * `fully_open_access` \n * `order_required` \n * `other` \n ",
+            "enum": [
+              "open_access",
+              "fully_open_access",
+              "order_required",
+              "other"
+            ],
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "default": 1,
+            "minimum": 1,
+            "description": "Page number for pagination. Must be a positive integer",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "required": false,
+            "default": 25,
+            "minimum": 1,
+            "maximum": 100,
+            "description": "Number of results per page. Maximum allowed is 100",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "default": "_score",
+            "description": "Sort order for results. Default is by relevance score",
+            "enum": [
+              "_score",
+              "name",
+              "-name",
+              "rating",
+              "-rating",
+              "created_at",
+              "-created_at"
+            ],
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful search",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "basic_search": {
+                    "value": {
+                      "results": [
+                        {
+                          "id": 123,
+                          "eid": "ml-platform-v2.1",
+                          "name": "Machine Learning Platform",
+                          "slug": "machine-learning-platform",
+                          "description": "A comprehensive machine learning platform providing tools for data analysis,  model training, and deployment for research purposes.",
+                          "rating": 4.5,
+                          "score": 1.2345,
+                          "logo_url": "https://example.com/logo.png",
+                          "path": "/services/machine-learning-platform",
+                          "providers": [
+                            {
+                              "id": 456,
+                              "eid": "research-institute-eu",
+                              "name": "European Research Institute"
+                            }
+                          ],
+                          "scientific_domains": [
+                            {
+                              "id": 789,
+                              "eid": "computer-science",
+                              "name": "Computer Science"
+                            },
+                            {
+                              "id": 790,
+                              "eid": "artificial-intelligence",
+                              "name": "Artificial Intelligence"
+                            }
+                          ],
+                          "jurisdiction": {
+                            "id": 202,
+                            "eid": "eu",
+                            "name": "European Union"
+                          },
+                          "tags": [
+                            {
+                              "id": 404,
+                              "eid": "machine-learning",
+                              "name": "Machine Learning"
+                            },
+                            {
+                              "id": 405,
+                              "eid": "python",
+                              "name": "Python"
+                            }
+                          ]
+                        }
+                      ],
+                      "offers": {
+                        "123": [
+                          {
+                            "id": 111,
+                            "name": "Basic ML Plan",
+                            "service_id": 123,
+                            "score": 0.9876,
+                            "highlights": [
+                              "Basic <mark>machine</mark> learning features",
+                              "<mark>ML</mark> model training"
+                            ]
+                          },
+                          {
+                            "id": 112,
+                            "name": "Premium ML Plan",
+                            "service_id": 123,
+                            "score": 0.8765,
+                            "highlights": [
+                              "Premium <mark>ML</mark> capabilities",
+                              "Advanced <mark>machine learning</mark> tools"
+                            ]
+                          }
+                        ]
+                      },
+                      "pagination": {
+                        "current_page": 1,
+                        "total_pages": 5,
+                        "total_count": 125,
+                        "per_page": 25
+                      },
+                      "highlights": {
+                        "123": [
+                          "Advanced <mark>ML</mark> platform for researchers",
+                          "<mark>Machine learning</mark> tools"
+                        ]
+                      },
+                      "facets": {
+                        "categories": [
+                          {
+                            "name": "Category 1",
+                            "eid": "cat-1",
+                            "count": 3,
+                            "children": []
+                          }
+                        ],
+                        "scientific_domains": [
+                          {
+                            "name": "Computer Science",
+                            "eid": "computer-science",
+                            "count": 4,
+                            "children": []
+                          }
+                        ],
+                        "providers": [
+                          {
+                            "name": "European Research Institute",
+                            "eid": "research-institute-eu",
+                            "count": 10
+                          }
+                        ],
+                        "jurisdiction": [
+                          {
+                            "name": "European Union",
+                            "eid": "eu",
+                            "count": 2
+                          }
+                        ],
+                        "rating": [
+                          {
+                            "name": "4+ stars",
+                            "eid": "4",
+                            "count": 8
+                          }
+                        ],
+                        "order_type": [
+                          {
+                            "name": "Open Access",
+                            "eid": "open_access",
+                            "count": 12
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "empty_search": {
+                    "value": {
+                      "results": [],
+                      "offers": {},
+                      "pagination": {
+                        "current_page": 1,
+                        "total_pages": 0,
+                        "total_count": 0,
+                        "per_page": 25
+                      },
+                      "highlights": {},
+                      "facets": {}
+                    }
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/SearchResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "invalid_per_page": {
+                    "value": {
+                      "error": "Invalid per_page parameter. Maximum allowed is 100."
+                    }
+                  },
+                  "invalid_page": {
+                    "value": {
+                      "error": "Invalid page parameter. Must be a positive integer."
+                    }
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "validation_errors": {
+                    "value": {
+                      "errors": [
+                        "Invalid scientific domain EID: 'invalid-domain'",
+                        "Invalid provider EID: 'non-existent-provider'"
+                      ]
+                    }
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "server_error": {
+                    "value": {
+                      "error": "Internal server error occurred during search processing"
+                    }
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users/{user_id}": {
+      "parameters": [
+        {
+          "name": "user_id",
+          "in": "path",
+          "required": true,
+          "description": "User unique identifier",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Get user roles",
+        "tags": [
+          "Users"
+        ],
+        "description": "Returns roles for a specific user",
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "description": "Unique identifier of the user",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/user_read"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "user not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "authentication_token": {
+        "type": "apiKey",
+        "name": "X-User-Token",
+        "in": "header"
+      }
+    },
+    "schemas": {
+      "attribute_parameter": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/stub_parameter"
+          }
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "attribute"
+            ]
+          },
+          "value": {
+            "type": "string"
+          },
+          "value_type": {
+            "type": "string",
+            "enum": [
+              "string",
+              "integer"
+            ]
+          }
+        },
+        "required": [
+          "type",
+          "value",
+          "value_type"
+        ]
+      },
+      "date_parameter": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/stub_parameter"
+          }
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "date"
+            ]
+          },
+          "value_type": {
+            "type": "string",
+            "enum": [
+              "string"
+            ]
+          }
+        },
+        "required": [
+          "type",
+          "value_type"
+        ]
+      },
+      "error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "required": [
+          "error"
+        ]
+      },
+      "ess_bundle_index": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ess_bundle_read"
+        },
+        "additionalProperties": false
+      },
+      "ess_bundle_read": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "iid": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "catalogues": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "bundle_goals": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "capabilities_of_goals": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "main_offer_id": {
+            "type": "integer"
+          },
+          "description": {
+            "type": "string"
+          },
+          "eosc_if": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "tag_list": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "target_users": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "scientific_domains": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "research_steps": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "research_activities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "offer_ids": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "related_training": {
+            "type": "boolean"
+          },
+          "contact_email": {
+            "type": "string"
+          },
+          "helpdesk_url": {
+            "type": "string"
+          },
+          "service_id": {
+            "type": "integer"
+          },
+          "resource_organisation": {
+            "type": "string"
+          },
+          "providers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "usage_counts_downloads": {
+            "type": "integer"
+          },
+          "usage_counts_views": {
+            "type": "integer"
+          },
+          "publication_date": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "description"
+        ]
+      },
+      "ess_catalogue_index": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ess_catalogue_read"
+        },
+        "additionalProperties": false
+      },
+      "ess_catalogue_read": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "pid": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "node": {
+            "type": "string",
+            "nullable": true
+          },
+          "abbreviation": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "legal_entity": {
+            "type": "boolean"
+          },
+          "description": {
+            "type": "string"
+          },
+          "multimedia_urls": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/ess_link_read"
+            }
+          },
+          "scientific_domains": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "street_name_and_number": {
+            "type": "string"
+          },
+          "postal_code": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "region": {
+            "type": "string",
+            "nullable": true
+          },
+          "country": {
+            "type": "string",
+            "nullable": true
+          },
+          "public_contacts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ess_contact_read"
+            }
+          },
+          "participating_countries": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "networks": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "affiliations": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "hosting_legal_entity": {
+            "type": "string",
+            "nullable": true
+          },
+          "legal_status": {
+            "type": "string",
+            "nullable": true
+          },
+          "webpage_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "updated_at": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "tag_list": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "pid",
+          "abbreviation",
+          "name",
+          "description"
+        ]
+      },
+      "ess_contact_read": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "first_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "last_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "country_phone_code": {
+            "type": "string",
+            "nullable": true
+          },
+          "position": {
+            "type": "string",
+            "nullable": true
+          },
+          "organisation": {
+            "type": "string",
+            "nullable": true
+          },
+          "contactable_type": {
+            "type": "string"
+          },
+          "contactable_id": {
+            "type": "integer"
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "email"
+        ]
+      },
+      "ess_datasource_index": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ess_datasource_read"
+        },
+        "additionalProperties": false
+      },
+      "ess_datasource_read": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "pid": {
+            "type": "string"
+          },
+          "nodes": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "node": {
+            "type": "string",
+            "nullable": true
+          },
+          "catalogues": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "abbreviation": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "published"
+            ]
+          },
+          "order_type": {
+            "type": "string",
+            "enum": [
+              "open_access",
+              "fully_open_access",
+              "order_required",
+              "other"
+            ]
+          },
+          "categories": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "guidelines": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "resource_organisation": {
+            "type": "string"
+          },
+          "providers": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "thematic": {
+            "type": "boolean"
+          },
+          "version_control": {
+            "type": "boolean"
+          },
+          "scientific_domains": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "access_types": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "terms_of_use_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "webpage_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "order_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "tag_list": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "privacy_policy_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "upstream_id": {
+            "type": "integer",
+            "nullable": true
+          },
+          "publication_date": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string"
+          },
+          "synchronized_at": {
+            "type": "string",
+            "nullable": true
+          },
+          "datasource_classification": {
+            "type": "string",
+            "nullable": true
+          },
+          "jurisdiction": {
+            "type": "string",
+            "nullable": true
+          },
+          "research_product_types": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "usage_counts_downloads": {
+            "type": "integer"
+          },
+          "usage_counts_views": {
+            "type": "integer"
+          },
+          "public_contact_emails": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": true,
+        "required": [
+          "id",
+          "name",
+          "description",
+          "status"
+        ]
+      },
+      "ess_deployable_service_index": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ess_deployable_service_read"
+        },
+        "additionalProperties": false
+      },
+      "ess_deployable_service_read": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "pid": {
+            "type": "string",
+            "nullable": true
+          },
+          "slug": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "abbreviation": {
+            "type": "string",
+            "nullable": true
+          },
+          "tagline": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "nullable": true
+          },
+          "urls": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "node": {
+            "type": "string",
+            "nullable": true
+          },
+          "version": {
+            "type": "string",
+            "nullable": true
+          },
+          "publishing_date": {
+            "type": "string",
+            "nullable": true
+          },
+          "resource_type": {
+            "type": "string",
+            "nullable": true
+          },
+          "public_contact_emails": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "license_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "license_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "last_update": {
+            "type": "string",
+            "nullable": true
+          },
+          "creators": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "published"
+            ]
+          },
+          "resource_organisation": {
+            "type": "string"
+          },
+          "catalogue": {
+            "type": "string",
+            "nullable": true
+          },
+          "scientific_domains": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "upstream_id": {
+            "type": "integer",
+            "nullable": true
+          },
+          "publication_date": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string"
+          },
+          "synchronized_at": {
+            "type": "string",
+            "nullable": true
+          },
+          "tag_list": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "tagline",
+          "description",
+          "status"
+        ]
+      },
+      "ess_link_read": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "url": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "url"
+        ]
+      },
+      "ess_offer_index": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ess_offer_read"
+        },
+        "additionalProperties": false
+      },
+      "ess_offer_read": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "iid": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "eosc_if": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "tag_list": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "service_id": {
+            "type": "integer"
+          },
+          "orderable_type": {
+            "type": "string",
+            "enum": [
+              "Service",
+              "DeployableService"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "published",
+              "draft",
+              "deleted"
+            ]
+          },
+          "order_type": {
+            "type": "string",
+            "enum": [
+              "open_access",
+              "fully_open_access",
+              "order_required",
+              "other"
+            ]
+          },
+          "internal": {
+            "type": "boolean"
+          },
+          "voucherable": {
+            "type": "boolean"
+          },
+          "parameters": {
+            "type": "array",
+            "nullable": true,
+            "uniqueItems": true,
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/attribute_parameter"
+                },
+                {
+                  "$ref": "#/components/schemas/input_parameter"
+                },
+                {
+                  "$ref": "#/components/schemas/select_parameter"
+                },
+                {
+                  "$ref": "#/components/schemas/multiselect_parameter"
+                },
+                {
+                  "$ref": "#/components/schemas/date_parameter"
+                },
+                {
+                  "$ref": "#/components/schemas/range_parameter"
+                },
+                {
+                  "$ref": "#/components/schemas/quantity_price_parameter"
+                }
+              ]
+            }
+          },
+          "usage_counts_downloads": {
+            "type": "integer"
+          },
+          "usage_counts_views": {
+            "type": "integer"
+          },
+          "publication_date": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "description",
+          "status",
+          "order_type"
+        ]
+      },
+      "ess_persistent_identity_system_read": {
+        "type": "object",
+        "properties": {
+          "entity_type": {
+            "type": "string",
+            "nullable": true
+          },
+          "entity_type_schemes": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "url"
+        ]
+      },
+      "ess_provider_index": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ess_provider_read"
+        },
+        "additionalProperties": false
+      },
+      "ess_provider_read": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "pid": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "node": {
+            "type": "string",
+            "nullable": true
+          },
+          "catalogues": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "abbreviation": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "legal_entity": {
+            "type": "boolean"
+          },
+          "description": {
+            "type": "string"
+          },
+          "multimedia_urls": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/ess_link_read"
+            }
+          },
+          "country": {
+            "type": "string"
+          },
+          "public_contact_emails": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "hosting_legal_entity": {
+            "type": "string",
+            "nullable": true
+          },
+          "legal_status": {
+            "type": "string",
+            "nullable": true
+          },
+          "webpage_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "usage_counts_downloads": {
+            "type": "integer"
+          },
+          "usage_counts_views": {
+            "type": "integer"
+          },
+          "publication_date": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "pid",
+          "abbreviation",
+          "name",
+          "description"
+        ]
+      },
+      "ess_service_index": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/ess_service_read"
+        },
+        "additionalProperties": false
+      },
+      "ess_service_read": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "pid": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "nodes": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "node": {
+            "type": "string",
+            "nullable": true
+          },
+          "catalogues": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "abbreviation": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "published"
+            ]
+          },
+          "order_type": {
+            "type": "string",
+            "enum": [
+              "open_access",
+              "fully_open_access",
+              "order_required",
+              "other"
+            ]
+          },
+          "categories": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "resource_organisation": {
+            "type": "string"
+          },
+          "providers": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "scientific_domains": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "access_types": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "terms_of_use_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "webpage_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "order_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "access_policies_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "guidelines": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "tag_list": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "privacy_policy_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "upstream_id": {
+            "type": "integer",
+            "nullable": true
+          },
+          "publication_date": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string"
+          },
+          "synchronized_at": {
+            "type": "string",
+            "nullable": true
+          },
+          "offers_count": {
+            "type": "integer"
+          },
+          "service_opinion_count": {
+            "type": "integer"
+          },
+          "project_items_count": {
+            "type": "integer"
+          },
+          "rating": {
+            "type": "string",
+            "nullable": true
+          },
+          "usage_counts_downloads": {
+            "type": "integer"
+          },
+          "usage_counts_views": {
+            "type": "integer"
+          },
+          "public_contact_emails": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": true,
+        "required": [
+          "id",
+          "name",
+          "description",
+          "status"
+        ]
+      },
+      "event_index": {
+        "type": "object",
+        "properties": {
+          "events": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/event_read"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "events"
+        ]
+      },
+      "event_read": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "create",
+              "update",
+              "delete"
+            ]
+          },
+          "resource": {
+            "type": "string",
+            "enum": [
+              "project",
+              "project_item",
+              "message"
+            ]
+          },
+          "project_id": {
+            "type": "integer"
+          },
+          "project_item_id": {
+            "type": "integer"
+          },
+          "message_id": {
+            "type": "integer"
+          },
+          "changes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "field": {
+                  "type": "string"
+                },
+                "before": {
+                  "type": "string"
+                },
+                "after": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false,
+              "required": [
+                "field",
+                "before",
+                "after"
+              ]
+            }
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "timestamp",
+          "type",
+          "resource"
+        ]
+      },
+      "input_parameter": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/stub_parameter"
+          }
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "input"
+            ]
+          },
+          "unit": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "value_type": {
+            "type": "string",
+            "enum": [
+              "string",
+              "integer"
+            ]
+          }
+        },
+        "required": [
+          "type",
+          "value_type"
+        ]
+      },
+      "message_index": {
+        "type": "object",
+        "properties": {
+          "messages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/message_read"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "messages"
+        ]
+      },
+      "message_read": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "author": {
+            "type": "object",
+            "properties": {
+              "uid": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "role": {
+                "type": "string",
+                "enum": [
+                  "user",
+                  "provider",
+                  "mediator"
+                ]
+              }
+            },
+            "additionalProperties": false,
+            "required": [
+              "email",
+              "name",
+              "role"
+            ]
+          },
+          "content": {
+            "type": "string"
+          },
+          "scope": {
+            "type": "string",
+            "enum": [
+              "public",
+              "internal",
+              "user_direct"
+            ]
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "author",
+          "content",
+          "scope",
+          "created_at",
+          "updated_at"
+        ]
+      },
+      "message_update": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "content"
+        ]
+      },
+      "message_write": {
+        "type": "object",
+        "properties": {
+          "project_id": {
+            "type": "integer"
+          },
+          "project_item_id": {
+            "type": "integer"
+          },
+          "author": {
+            "type": "object",
+            "properties": {
+              "uid": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "role": {
+                "type": "string",
+                "enum": [
+                  "provider",
+                  "mediator"
+                ]
+              }
+            },
+            "additionalProperties": false,
+            "required": [
+              "email",
+              "name",
+              "role"
+            ]
+          },
+          "content": {
+            "type": "string"
+          },
+          "scope": {
+            "type": "string",
+            "enum": [
+              "public",
+              "internal",
+              "user_direct"
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "project_id",
+          "author",
+          "content",
+          "scope"
+        ]
+      },
+      "multiselect_parameter": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/stub_parameter"
+          }
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "multiselect"
+            ]
+          },
+          "config": {
+            "type": "object",
+            "properties": {
+              "values": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "integer"
+                    }
+                  ]
+                }
+              },
+              "minItems": {
+                "oneOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "maxItems": {
+                "oneOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "values"
+            ]
+          },
+          "value_type": {
+            "type": "string",
+            "enum": [
+              "string",
+              "integer"
+            ]
+          },
+          "unit": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "type",
+          "config",
+          "value_type"
+        ]
+      },
+      "offer": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "order_type": {
+            "type": "string",
+            "enum": [
+              "open_access",
+              "fully_open_access",
+              "order_required",
+              "other"
+            ]
+          },
+          "offer_category": {
+            "type": "string",
+            "enum": [
+              "service_category-compute",
+              "service_category-data_source",
+              "service_category-storage",
+              "service_category-training",
+              "service_category-other"
+            ]
+          },
+          "primary_oms_id": {
+            "type": "integer"
+          },
+          "oms_params": {
+            "type": "object"
+          },
+          "order_url": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "internal": {
+            "type": "boolean"
+          },
+          "bundled_offers": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object"
+                }
+              ]
+            }
+          },
+          "parameters": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/attribute_parameter"
+                },
+                {
+                  "$ref": "#/components/schemas/input_parameter"
+                },
+                {
+                  "$ref": "#/components/schemas/select_parameter"
+                },
+                {
+                  "$ref": "#/components/schemas/multiselect_parameter"
+                },
+                {
+                  "$ref": "#/components/schemas/date_parameter"
+                },
+                {
+                  "$ref": "#/components/schemas/range_parameter"
+                },
+                {
+                  "$ref": "#/components/schemas/quantity_price_parameter"
+                }
+              ]
+            }
+          }
+        },
+        "not": {
+          "required": [
+            "status"
+          ]
+        }
+      },
+      "offer_index": {
+        "type": "object",
+        "properties": {
+          "offers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/offer_read"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "offers"
+        ]
+      },
+      "offer_read": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/offer"
+          }
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true
+          }
+        },
+        "required": [
+          "name",
+          "description",
+          "order_type"
+        ]
+      },
+      "offer_update": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/offer"
+          }
+        ]
+      },
+      "offer_write": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/offer"
+          }
+        ],
+        "required": [
+          "name",
+          "description",
+          "order_type"
+        ]
+      },
+      "offering_oms_read": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "global",
+              "provider_group",
+              "resource_dedicated"
+            ]
+          },
+          "custom_params": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "type"
+        ]
+      },
+      "ordering_oms_index": {
+        "type": "object",
+        "properties": {
+          "omses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ordering_oms_read"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "omses"
+        ]
+      },
+      "ordering_oms_read": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "global",
+              "provider_group",
+              "resource_dedicated"
+            ]
+          },
+          "default": {
+            "type": "boolean"
+          },
+          "custom_params": {
+            "type": "object"
+          },
+          "trigger": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string"
+              },
+              "method": {
+                "type": "string",
+                "enum": [
+                  "get",
+                  "post",
+                  "put"
+                ]
+              },
+              "authorization": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "basic"
+                  },
+                  "user": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "user",
+                  "password"
+                ]
+              }
+            },
+            "additionalProperties": false,
+            "required": [
+              "url",
+              "method"
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "type",
+          "default"
+        ]
+      },
+      "project_index": {
+        "type": "object",
+        "properties": {
+          "projects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/project_read"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "projects"
+        ]
+      },
+      "project_item_index": {
+        "type": "object",
+        "properties": {
+          "project_items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/project_item_read"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "project_items"
+        ]
+      },
+      "project_item_read": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "project_id": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "created",
+                  "rejected",
+                  "waiting_for_response",
+                  "registered",
+                  "in_progress",
+                  "ready",
+                  "closed",
+                  "approved"
+                ]
+              }
+            },
+            "additionalProperties": false,
+            "required": [
+              "value",
+              "type"
+            ]
+          },
+          "attributes": {
+            "type": "object"
+          },
+          "user_secrets": {
+            "type": "object"
+          },
+          "oms_params": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "project_id",
+          "status"
+        ]
+      },
+      "project_item_update": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "rejected",
+                  "waiting_for_response",
+                  "registered",
+                  "in_progress",
+                  "ready",
+                  "closed",
+                  "approved"
+                ]
+              }
+            },
+            "additionalProperties": false,
+            "required": [
+              "value",
+              "type"
+            ]
+          },
+          "user_secrets": {
+            "type": "object"
+          }
+        },
+        "anyOf": [
+          {
+            "required": [
+              "status"
+            ]
+          },
+          {
+            "required": [
+              "user_secrets"
+            ]
+          }
+        ],
+        "additionalProperties": false
+      },
+      "project_read": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "owner": {
+            "type": "object",
+            "properties": {
+              "uid": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "first_name": {
+                "type": "string"
+              },
+              "last_name": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false,
+            "required": [
+              "uid",
+              "email",
+              "name",
+              "first_name",
+              "last_name"
+            ]
+          },
+          "project_items": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "attributes": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "owner",
+          "project_items"
+        ]
+      },
+      "quantity_price_parameter": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/stub_parameter"
+          }
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "quantity_price"
+            ]
+          },
+          "unit": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "value_type": {
+            "type": "string",
+            "enum": [
+              "integer"
+            ]
+          },
+          "config": {
+            "type": "object",
+            "properties": {
+              "start_price": {
+                "type": "integer"
+              },
+              "step_price": {
+                "type": "integer"
+              },
+              "max": {
+                "oneOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "currency": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "start_price",
+              "step_price",
+              "currency"
+            ]
+          }
+        },
+        "required": [
+          "type",
+          "value_type",
+          "config"
+        ]
+      },
+      "range_parameter": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/stub_parameter"
+          }
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "range"
+            ]
+          },
+          "unit": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "value_type": {
+            "type": "string",
+            "enum": [
+              "integer"
+            ]
+          },
+          "config": {
+            "type": "object",
+            "properties": {
+              "minimum": {
+                "type": "integer"
+              },
+              "maximum": {
+                "type": "integer"
+              },
+              "exclusiveMinimum": {
+                "oneOf": [
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "exclusiveMaximum": {
+                "oneOf": [
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "minimum",
+              "maximum"
+            ]
+          }
+        },
+        "required": [
+          "type",
+          "value_type",
+          "config"
+        ]
+      },
+      "resource_index": {
+        "type": "object",
+        "properties": {
+          "resources": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/resource_read"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "resources"
+        ]
+      },
+      "resource_read": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "status": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "eid": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "available_omses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/offering_oms_read"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "description",
+          "status",
+          "available_omses"
+        ]
+      },
+      "select_parameter": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/stub_parameter"
+          }
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "select"
+            ]
+          },
+          "config": {
+            "type": "object",
+            "properties": {
+              "values": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "integer"
+                    }
+                  ]
+                }
+              },
+              "mode": {
+                "type": "string",
+                "enum": [
+                  "dropdown",
+                  "buttons"
+                ]
+              }
+            },
+            "required": [
+              "values",
+              "mode"
+            ]
+          },
+          "value_type": {
+            "type": "string",
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "integer"
+              }
+            ]
+          },
+          "unit": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "type",
+          "config",
+          "value_type"
+        ]
+      },
+      "stub_parameter": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "description": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "label"
+        ]
+      },
+      "user_read": {
+        "type": "object",
+        "properties": {
+          "uid": {
+            "type": "string"
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "coordinator",
+                "admin",
+                "executive"
+              ]
+            }
+          },
+          "providers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "catalogues": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "uid",
+          "roles",
+          "providers",
+          "catalogues"
+        ]
+      },
+      "CatalogueService": {
+        "type": "object",
+        "description": "Subset of the Service entity as published in Catalogue API",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "PID"
+          },
+          "webpage": {
+            "type": "string",
+            "nullable": true
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "languageAvailabilities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "trl": {
+            "type": "string",
+            "nullable": true,
+            "example": "trl-9"
+          },
+          "userManual": {
+            "type": "string",
+            "nullable": true
+          },
+          "termsOfUse": {
+            "type": "string",
+            "nullable": true
+          },
+          "privacyPolicy": {
+            "type": "string",
+            "nullable": true
+          },
+          "accessPolicy": {
+            "type": "string",
+            "nullable": true
+          },
+          "orderType": {
+            "type": "string",
+            "example": "order_type-open_access"
+          },
+          "logo": {
+            "type": "string",
+            "format": "uri"
+          },
+          "alternativeIdentifiers": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "type",
+                "value"
+              ]
+            }
+          },
+          "abbreviation": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "tagline": {
+            "type": "string",
+            "nullable": true
+          },
+          "targetUsers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "accessModes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "helpdeskEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "securityContactEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "scientificDomains": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "scientificDomain": {
+                  "type": "string",
+                  "example": "scientific_domain-natural_sciences"
+                },
+                "scientificSubdomain": {
+                  "type": "string",
+                  "example": "scientific_subdomain-natural_sciences-biological_sciences"
+                }
+              },
+              "required": [
+                "scientificDomain"
+              ]
+            }
+          },
+          "categories": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "type": "string",
+                  "example": "category-access_physical_and_einfrastructures-compute"
+                },
+                "subcategory": {
+                  "type": "string",
+                  "example": "subcategory-access_physical_and_einfrastructures-compute-orchestration"
+                }
+              },
+              "required": [
+                "category"
+              ]
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "logo",
+          "orderType"
+        ]
+      },
+      "SearchResponse": {
+        "type": "object",
+        "properties": {
+          "results": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "offers": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            }
+          },
+          "pagination": {
+            "type": "object",
+            "properties": {
+              "current_page": {
+                "type": "integer"
+              },
+              "total_pages": {
+                "type": "integer"
+              },
+              "total_count": {
+                "type": "integer"
+              },
+              "per_page": {
+                "type": "integer"
+              }
+            }
+          },
+          "highlights": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "facets": {
+            "type": "object",
+            "properties": {
+              "categories": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "scientific_domains": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "providers": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "research_activities": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "rating": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "order_type": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string"
+          }
+        }
+      },
+      "ValidationErrorResponse": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

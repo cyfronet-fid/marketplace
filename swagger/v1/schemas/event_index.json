@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "events": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/event_read"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": ["events"]
+}

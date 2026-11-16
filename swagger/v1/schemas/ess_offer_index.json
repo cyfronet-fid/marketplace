@@ -1,0 +1,7 @@
+{
+  "type": "array",
+  "items": {
+    "$ref": "#/components/schemas/ess_offer_read"
+  },
+  "additionalProperties": false
+}

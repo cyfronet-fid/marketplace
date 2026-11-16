@@ -2,7 +2,7 @@
 
 require "swagger_helper"
 
-RSpec.describe "Api::V1::Search::ServicesController", type: :request, swagger_doc: "v1/search_swagger.json" do
+RSpec.describe "Api::V1::Search::ServicesController", type: :request do
   path "/api/v1/search/services" do
     get("Search services") do
       tags "Search Services"

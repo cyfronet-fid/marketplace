@@ -3,23 +3,15 @@
 require "swagger_helper"
 require "rails_helper"
 
-RSpec.describe Api::V1::Ess::ServicesController, swagger_doc: "v1/ess_swagger.json" do
-  before(:all) do
-    Dir.chdir Rails.root.join("swagger", "v1") # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
-  end
-
-  after(:all) do
-    Dir.chdir Rails.root # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
-  end
-
+RSpec.describe Api::V1::Ess::ServicesController do
   path "/api/v1/ess/services" do
     get "lists services" do
-      tags "services"
+      tags "ESS services"
       produces "application/json"
       security [authentication_token: []]
 
       response 200, "services found" do
-        schema "$ref" => "ess/service/service_index.json"
+        schema "$ref" => "#/components/schemas/ess_service_index"
 
         let!(:manager) { create(:user, roles: [:coordinator]) }
         let!(:services) { create_list(:service, 3) }
@@ -38,7 +30,7 @@ RSpec.describe Api::V1::Ess::ServicesController, swagger_doc: "v1/ess_swagger.js
       end
 
       response 403, "user doesn't have manager role", document: false do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:regular_user) { create(:user) }
         let(:manager) { create(:user, roles: [:coordinator]) }
         let(:services) { create_list(:service, 3) }
@@ -52,7 +44,7 @@ RSpec.describe Api::V1::Ess::ServicesController, swagger_doc: "v1/ess_swagger.js
       end
 
       response 401, "user not recognized" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:"X-User-Token") { "asdasdasd" }
 
         run_test! do |response|
@@ -67,13 +59,13 @@ RSpec.describe Api::V1::Ess::ServicesController, swagger_doc: "v1/ess_swagger.js
     parameter name: :service_id, in: :path, type: :string, description: "Service identifier (id or eid)"
 
     get "retrieves a service by id" do
-      tags "services"
+      tags "ESS services"
       produces "application/json"
       security [authentication_token: []]
 
       %i[id pid slug].each do |id_form|
         response 200, "service found by #{id_form}" do
-          schema "$ref" => "ess/service/service_read.json"
+          schema "$ref" => "#/components/schemas/ess_service_read"
           let!(:manager) { create(:user, roles: [:coordinator]) }
           let!(:service) { create(:service) }
 
@@ -88,7 +80,7 @@ RSpec.describe Api::V1::Ess::ServicesController, swagger_doc: "v1/ess_swagger.js
       end
 
       response 404, "draft service not found by id" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let!(:manager) { create(:user, roles: [:coordinator]) }
         let!(:service) { create(:service, status: :draft) }
 
@@ -102,7 +94,7 @@ RSpec.describe Api::V1::Ess::ServicesController, swagger_doc: "v1/ess_swagger.js
       end
 
       response 403, "service not found by unpermitted user" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let!(:regular_user) { create(:user) }
         let!(:service) { create(:service, status: :draft) }
 
@@ -116,7 +108,7 @@ RSpec.describe Api::V1::Ess::ServicesController, swagger_doc: "v1/ess_swagger.js
       end
 
       response 401, "user not recognized" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:"X-User-Token") { "asdasdasd" }
         let(:service_id) { "test" }
 

@@ -3,23 +3,15 @@
 require "swagger_helper"
 require "rails_helper"
 
-RSpec.describe Api::V1::Ess::BundlesController, swagger_doc: "v1/ess_swagger.json" do
-  before(:all) do
-    Dir.chdir Rails.root.join("swagger", "v1") # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
-  end
-
-  after(:all) do
-    Dir.chdir Rails.root # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
-  end
-
+RSpec.describe Api::V1::Ess::BundlesController do
   path "/api/v1/ess/bundles" do
     get "lists published bundles" do
-      tags "bundles"
+      tags "ESS bundles"
       produces "application/json"
       security [authentication_token: []]
 
       response 200, "bundle found" do
-        schema "$ref" => "ess/bundle/bundle_index.json"
+        schema "$ref" => "#/components/schemas/ess_bundle_index"
 
         let!(:manager) { create(:user, roles: [:coordinator]) }
         let!(:bundles) { create_list(:bundle, 2) }
@@ -39,7 +31,7 @@ RSpec.describe Api::V1::Ess::BundlesController, swagger_doc: "v1/ess_swagger.jso
       end
 
       response 403, "user doesn't have manager role", document: false do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let!(:regular_user) { create(:user) }
         let!(:manager) { create(:user, roles: [:coordinator]) }
         let!(:bundles) { create_list(:bundle, 3) }
@@ -56,7 +48,7 @@ RSpec.describe Api::V1::Ess::BundlesController, swagger_doc: "v1/ess_swagger.jso
       end
 
       response 401, "user not recognized" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:"X-User-Token") { "asdasdasd" }
 
         run_test! do |response|
@@ -71,12 +63,12 @@ RSpec.describe Api::V1::Ess::BundlesController, swagger_doc: "v1/ess_swagger.jso
     parameter name: :bundle_id, in: :path, type: :string, description: "bundle identifier id"
 
     get "retrieves a bundle by id" do
-      tags "bundles"
+      tags "ESS bundles"
       produces "application/json"
       security [authentication_token: []]
 
       response 200, "bundle found by id" do
-        schema "$ref" => "ess/bundle/bundle_read.json"
+        schema "$ref" => "#/components/schemas/ess_bundle_read"
         let!(:manager) { create(:user, roles: [:coordinator]) }
         let!(:bundle) { create(:bundle) }
 
@@ -91,7 +83,7 @@ RSpec.describe Api::V1::Ess::BundlesController, swagger_doc: "v1/ess_swagger.jso
       end
 
       response 404, "draft bundle not found by id" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let!(:manager) { create(:user, roles: [:coordinator]) }
         let!(:bundle) { create(:bundle, status: :draft) }
 
@@ -105,7 +97,7 @@ RSpec.describe Api::V1::Ess::BundlesController, swagger_doc: "v1/ess_swagger.jso
       end
 
       response 403, "bundle not found by unpermitted user" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let!(:regular_user) { create(:user) }
         let!(:bundle) { create(:bundle, status: :draft) }
 
@@ -119,7 +111,7 @@ RSpec.describe Api::V1::Ess::BundlesController, swagger_doc: "v1/ess_swagger.jso
       end
 
       response 401, "user not recognized" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:"X-User-Token") { "asdasdasd" }
         let(:bundle_id) { "test" }
 

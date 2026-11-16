@@ -7,9 +7,7 @@ Rswag::Ui.configure do |c|
   # NOTE: If you're using rspec-api to expose Swagger files (under swagger_root) as JSON or YAML endpoints,
   # then the list below should correspond to the relative paths for those endpoints
 
-  Dir["swagger/**/*_swagger.json"].each do |file|
-    c.openapi_endpoint "/api_docs/#{file}", JSON.parse(File.read(file)).dig("info", "title")
-  end
+  c.openapi_endpoint "/api_docs/swagger/v1/spec.json", "EOSC Marketplace API"
 
   # Add Basic Auth in case your API is private
   # c.basic_auth_enabled = true

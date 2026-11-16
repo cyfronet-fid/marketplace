@@ -1,0 +1,25 @@
+{
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/stub_parameter"
+    }
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "date"
+      ]
+    },
+    "value_type": {
+      "type": "string",
+      "enum": [
+        "string"
+      ]
+    }
+  },
+  "required": [
+    "type",
+    "value_type"
+  ]
+}

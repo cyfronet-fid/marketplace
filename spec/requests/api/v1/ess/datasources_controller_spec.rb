@@ -3,23 +3,15 @@
 require "swagger_helper"
 require "rails_helper"
 
-RSpec.describe Api::V1::Ess::DatasourcesController, swagger_doc: "v1/ess_swagger.json" do
-  before(:all) do
-    Dir.chdir Rails.root.join("swagger", "v1") # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
-  end
-
-  after(:all) do
-    Dir.chdir Rails.root # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
-  end
-
+RSpec.describe Api::V1::Ess::DatasourcesController do
   path "/api/v1/ess/datasources" do
     get "lists datasources" do
-      tags "datasources"
+      tags "ESS datasources"
       produces "application/json"
       security [authentication_token: []]
 
       response 200, "datasources found" do
-        schema "$ref" => "ess/datasource/datasource_index.json"
+        schema "$ref" => "#/components/schemas/ess_datasource_index"
 
         let!(:manager) { create(:user, roles: [:coordinator]) }
         let!(:datasources) { create_list(:datasource, 3) }
@@ -39,7 +31,7 @@ RSpec.describe Api::V1::Ess::DatasourcesController, swagger_doc: "v1/ess_swagger
       end
 
       response 403, "user doesn't have manager role", document: false do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:regular_user) { create(:user) }
         let(:manager) { create(:user, roles: [:coordinator]) }
         let!(:datasources) { create_list(:datasource, 3) }
@@ -53,7 +45,7 @@ RSpec.describe Api::V1::Ess::DatasourcesController, swagger_doc: "v1/ess_swagger
       end
 
       response 401, "user not recognized" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:"X-User-Token") { "asdasdasd" }
 
         run_test! do |response|
@@ -68,13 +60,13 @@ RSpec.describe Api::V1::Ess::DatasourcesController, swagger_doc: "v1/ess_swagger
     parameter name: :datasource_id, in: :path, type: :string, description: "Datasource identifier (id or eid)"
 
     get "retrieves a datasource by id" do
-      tags "datasources"
+      tags "ESS datasources"
       produces "application/json"
       security [authentication_token: []]
 
       %i[id pid slug].each do |id_form|
         response 200, "datasource found by #{id_form}" do
-          schema "$ref" => "ess/datasource/datasource_read.json"
+          schema "$ref" => "#/components/schemas/ess_datasource_read"
           let!(:manager) { create(:user, roles: [:coordinator]) }
           let!(:datasource) { create(:datasource) }
 
@@ -89,7 +81,7 @@ RSpec.describe Api::V1::Ess::DatasourcesController, swagger_doc: "v1/ess_swagger
       end
 
       response 401, "user not recognized" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:"X-User-Token") { "asdasdasd" }
         let(:datasource_id) { "test" }
 

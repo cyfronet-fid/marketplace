@@ -1,0 +1,42 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "status": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "eid": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "available_omses": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/offering_oms_read"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": ["id", "name", "description", "status", "available_omses"]
+}

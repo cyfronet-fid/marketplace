@@ -552,24 +552,30 @@ All data is logged in the `log/cache_views_count.log`
 
 ## OpenAPI docs
 
-Marketplace is using OpenAPI documentation
-standard([swagger](https://swagger.io/)). To do this we are using `rswag` gem.
-To check API documentation go to `/api-docs`.
+Marketplace uses the OpenAPI standard ([swagger](https://swagger.io/)) for the
+API documentation. The `rswag` gem generates the documentation.
 
-The docs are generated from specs (`/spec/requests/api/{api_version}`).
-There is a special DSL <https://github.com/rswag/rswag>
-for writing specs in OpenAPI fashion.
+- The Swagger UI is at `/api_docs/swagger`.
+- The complete OpenAPI document is at `/api_docs/swagger/v1/spec.json`.
 
-When you write/change api specs run:
+The request specs in `spec/requests/api/v1` are the source of the document.
+The specs use the DSL of <https://github.com/rswag/rswag>.
+Each file in `swagger/v1/schemas` is one component schema of the document.
+The name of the file is the name of the component.
+A spec refers to a component schema with `"$ref" => "#/components/schemas/<name>"`.
+The API controllers use the same files to validate the request bodies.
+
+The file `swagger/v1/spec.json` is generated. Do not change this file by hand.
+When you change an API spec or a component schema, generate the document again:
 
 ```shell
 ./bin/rails rswag
 ```
 
-...to generate and deploy new swagger docs (no server restart required).
+Commit the result. The CI fails when the committed document is not up to date.
 
-You can also customize OpenAPI metadata (such as default port,
-authentication scheme etc.) in `spec/swagger_helper.rb`
+The metadata of the document, for example the title and the authentication
+scheme, is in `spec/swagger_helper.rb`.
 
 ## Views, locales and scss customization
 

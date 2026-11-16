@@ -3,15 +3,7 @@
 require "swagger_helper"
 require "rails_helper"
 
-RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.json", backend: true do
-  before(:all) do
-    Dir.chdir Rails.root.join("swagger", "v1") # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
-  end
-
-  after(:all) do
-    Dir.chdir Rails.root # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
-  end
-
+RSpec.describe "Ordering ProjectItems API", backend: true do
   path "/api/v1/oms/{oms_id}/projects/{p_id}/project_items" do
     parameter name: :oms_id, in: :path, type: :string, description: "OMS id"
     parameter name: :p_id, in: :path, type: :string, description: "Project id"
@@ -28,7 +20,7 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
       parameter name: :limit, in: :query, type: :integer, required: false, description: "Number of returned elements"
 
       response 200, "project items found" do
-        schema "$ref" => "project_item/project_item_index.json"
+        schema "$ref" => "#/components/schemas/project_item_index"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
         let(:other_oms) { create(:oms, administrators: [oms_admin]) }
@@ -75,7 +67,7 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
       end
 
       response 200, "project items found but were empty", document: false do
-        schema "$ref" => "project_item/project_item_index.json"
+        schema "$ref" => "#/components/schemas/project_item_index"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:default_oms, administrators: [oms_admin]) }
         let(:project) { create(:project) }
@@ -91,7 +83,7 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
       end
 
       response 401, "user not recognized" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:oms_id) { 1 }
         let(:p_id) { 1 }
         let(:"X-User-Token") { "asdasdasd" }
@@ -103,7 +95,7 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
       end
 
       response 403, "user not authorized to access this OMS" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:oms_admin) { create(:user) }
         let(:user) { create(:user) }
         let(:oms) { create(:default_oms, administrators: [oms_admin]) }
@@ -119,7 +111,7 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
       end
 
       response 404, "OMS not found" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:user) { create(:user) }
 
         let(:oms_id) { 9999 }
@@ -133,7 +125,7 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
       end
 
       response 404, "project not found" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:default_oms, administrators: [oms_admin]) }
 
@@ -160,7 +152,7 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
       security [authentication_token: []]
 
       response 200, "project item found" do
-        schema "$ref" => "project_item/project_item_read.json"
+        schema "$ref" => "#/components/schemas/project_item_read"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
         let(:project) { create(:project) }
@@ -191,7 +183,7 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
       end
 
       response 401, "user not recognized" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:oms_id) { 1 }
         let(:p_id) { 1 }
         let(:pi_id) { 1 }
@@ -204,7 +196,7 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
       end
 
       response 403, "user not authorized to access this OMS" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:oms_admin) { create(:user) }
         let(:user) { create(:user) }
         let(:oms) { create(:default_oms, administrators: [oms_admin]) }
@@ -221,7 +213,7 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
       end
 
       response 403, "user not authorized" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:oms_admin) { create(:user) }
         let(:other_oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
@@ -242,7 +234,7 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
       end
 
       response 404, "OMS not found" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:user) { create(:user) }
 
         let(:oms_id) { 9999 }
@@ -257,7 +249,7 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
       end
 
       response 404, "project not found" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:default_oms, administrators: [oms_admin]) }
 
@@ -273,7 +265,7 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
       end
 
       response 404, "project item not found" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
         let(:other_oms) { create(:oms, administrators: [oms_admin]) }
@@ -298,10 +290,10 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
       produces "application/json"
       consumes "application/json"
       security [authentication_token: []]
-      parameter name: :project_item_payload, in: :body, schema: { "$ref" => "project_item/project_item_update.json" }
+      parameter name: :project_item_payload, in: :body, schema: { "$ref" => "#/components/schemas/project_item_update" }
 
       response 200, "project item updated" do
-        schema "$ref" => "project_item/project_item_read.json"
+        schema "$ref" => "#/components/schemas/project_item_read"
 
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
@@ -337,7 +329,7 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
       end
 
       response 400, "bad request" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
 
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
@@ -367,7 +359,7 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
       end
 
       response 400, "fails json validation on wrong user secrets", document: false do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
 
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
@@ -389,7 +381,7 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
       end
 
       response 403, "user not authorized to access this OMS" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:oms_admin) { create(:user) }
         let(:user) { create(:user) }
         let(:oms) { create(:default_oms, administrators: [oms_admin]) }
@@ -407,7 +399,7 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
       end
 
       response 403, "user not authorized" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:default_oms_admin) { create(:user) }
         let(:default_oms) { create(:default_oms, administrators: [default_oms_admin]) }
         let(:other_oms) { create(:oms) }
@@ -439,7 +431,7 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
       end
 
       response 404, "OMS not found" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:user) { create(:user) }
 
         let(:oms_id) { 9999 }
@@ -455,7 +447,7 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
       end
 
       response 404, "project not found" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:default_oms, administrators: [oms_admin]) }
 
@@ -472,7 +464,7 @@ RSpec.describe "Ordering ProjectItems API", swagger_doc: "v1/ordering_swagger.js
       end
 
       response 404, "project item not found" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:default_oms, administrators: [oms_admin]) }
         let(:project) { create(:project, project_items: []) }

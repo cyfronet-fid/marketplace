@@ -1,0 +1,7 @@
+{
+  "type": "array",
+  "items": {
+    "$ref": "#/components/schemas/ess_bundle_read"
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "messages": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/message_read"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": ["messages"]
+}

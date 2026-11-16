@@ -1,7 +1,0 @@
-{
-  "type": "array",
-  "items": {
-    "$ref": "bundle_read.json"
-  },
-  "additionalProperties": false
-}

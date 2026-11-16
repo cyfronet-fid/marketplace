@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "projects": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/project_read"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": ["projects"]
+}

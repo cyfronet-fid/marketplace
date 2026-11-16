@@ -1,7 +1,0 @@
-{
-  "type": "array",
-  "items": {
-    "$ref": "catalogue_read.json"
-  },
-  "additionalProperties": false
-}

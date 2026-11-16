@@ -1,0 +1,7 @@
+{
+  "type": "array",
+  "items": {
+    "$ref": "#/components/schemas/ess_deployable_service_read"
+  },
+  "additionalProperties": false
+}

@@ -3,15 +3,7 @@
 require "swagger_helper"
 require "rails_helper"
 
-RSpec.describe Api::V1::OMSesController, swagger_doc: "v1/ordering_swagger.json", backend: true do
-  before(:all) do
-    Dir.chdir Rails.root.join("swagger", "v1") # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
-  end
-
-  after(:all) do
-    Dir.chdir Rails.root # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
-  end
-
+RSpec.describe Api::V1::OMSesController, backend: true do
   path "/api/v1/oms" do
     get "lists OMSes" do
       tags "OMS"
@@ -19,7 +11,7 @@ RSpec.describe Api::V1::OMSesController, swagger_doc: "v1/ordering_swagger.json"
       security [authentication_token: []]
 
       response 200, "OMSes found" do
-        schema "$ref" => "oms/ordering/oms_index.json"
+        schema "$ref" => "#/components/schemas/ordering_oms_index"
         let(:oms_admin) { create(:user) }
         let!(:oms) { create_list(:oms, 2, administrators: [oms_admin]) }
 
@@ -34,7 +26,7 @@ RSpec.describe Api::V1::OMSesController, swagger_doc: "v1/ordering_swagger.json"
       end
 
       response 200, "user doesn't administrate any OMSes", document: false do
-        schema "$ref" => "oms/ordering/oms_index.json"
+        schema "$ref" => "#/components/schemas/ordering_oms_index"
         let(:regular_user) { create(:user) }
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
@@ -48,7 +40,7 @@ RSpec.describe Api::V1::OMSesController, swagger_doc: "v1/ordering_swagger.json"
       end
 
       response 401, "user not recognized" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:"X-User-Token") { "asdasdasd" }
 
         run_test! do |response|
@@ -68,7 +60,7 @@ RSpec.describe Api::V1::OMSesController, swagger_doc: "v1/ordering_swagger.json"
       security [authentication_token: []]
 
       response 200, "OMS found" do
-        schema "$ref" => "oms/ordering/oms_read.json"
+        schema "$ref" => "#/components/schemas/ordering_oms_read"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
 
@@ -82,7 +74,7 @@ RSpec.describe Api::V1::OMSesController, swagger_doc: "v1/ordering_swagger.json"
       end
 
       response 401, "user not recognized" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:"X-User-Token") { "asdasdasd" }
         let(:oms_id) { 9999 }
 
@@ -93,7 +85,7 @@ RSpec.describe Api::V1::OMSesController, swagger_doc: "v1/ordering_swagger.json"
       end
 
       response 403, "user not authorized" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:oms_admin) { create(:user) }
         let(:user) { create(:user) }
         let(:oms) { create(:default_oms, administrators: [oms_admin]) }
@@ -108,7 +100,7 @@ RSpec.describe Api::V1::OMSesController, swagger_doc: "v1/ordering_swagger.json"
       end
 
       response 404, "OMS not found" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:user) { create(:user) }
 
         let(:oms_id) { 9999 }

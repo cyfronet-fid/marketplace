@@ -3,23 +3,15 @@
 require "swagger_helper"
 require "rails_helper"
 
-RSpec.describe Api::V1::Ess::ProvidersController, swagger_doc: "v1/ess_swagger.json" do
-  before(:all) do
-    Dir.chdir Rails.root.join("swagger", "v1") # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
-  end
-
-  after(:all) do
-    Dir.chdir Rails.root # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
-  end
-
+RSpec.describe Api::V1::Ess::ProvidersController do
   path "/api/v1/ess/providers" do
     get "lists providers" do
-      tags "providers"
+      tags "ESS providers"
       produces "application/json"
       security [authentication_token: []]
 
       response 200, "providers found" do
-        schema "$ref" => "ess/provider/provider_index.json"
+        schema "$ref" => "#/components/schemas/ess_provider_index"
 
         let!(:manager) { create(:user, roles: [:coordinator]) }
         let!(:providers) { create_list(:provider, 2) }
@@ -36,7 +28,7 @@ RSpec.describe Api::V1::Ess::ProvidersController, swagger_doc: "v1/ess_swagger.j
       end
 
       response 403, "user doesn't have manager role", document: false do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:regular_user) { create(:user) }
         let(:manager) { create(:user, roles: [:coordinator]) }
         let(:providers) { create_list(:provider, 3) }
@@ -50,7 +42,7 @@ RSpec.describe Api::V1::Ess::ProvidersController, swagger_doc: "v1/ess_swagger.j
       end
 
       response 401, "user not recognized" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:"X-User-Token") { "asdasdasd" }
 
         run_test! do |response|
@@ -65,13 +57,13 @@ RSpec.describe Api::V1::Ess::ProvidersController, swagger_doc: "v1/ess_swagger.j
     parameter name: :provider_id, in: :path, type: :string, description: "Provider identifier (id or pid)"
 
     get "retrieves a provider by id" do
-      tags "providers"
+      tags "ESS providers"
       produces "application/json"
       security [authentication_token: []]
 
       %i[id pid].each do |id_form|
         response 200, "provider found by #{id_form}" do
-          schema "$ref" => "ess/provider/provider_read.json"
+          schema "$ref" => "#/components/schemas/ess_provider_read"
           let!(:manager) { create(:user, roles: [:coordinator]) }
           let!(:provider) { create(:provider) }
 
@@ -86,7 +78,7 @@ RSpec.describe Api::V1::Ess::ProvidersController, swagger_doc: "v1/ess_swagger.j
       end
 
       response 404, "draft provider not found by id" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let!(:manager) { create(:user, roles: [:coordinator]) }
         let!(:provider) { create(:provider, status: :draft) }
 
@@ -100,7 +92,7 @@ RSpec.describe Api::V1::Ess::ProvidersController, swagger_doc: "v1/ess_swagger.j
       end
 
       response 403, "provider not found by unpermitted user" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let!(:regular_user) { create(:user) }
         let!(:provider) { create(:provider, status: :draft) }
 
@@ -114,7 +106,7 @@ RSpec.describe Api::V1::Ess::ProvidersController, swagger_doc: "v1/ess_swagger.j
       end
 
       response 401, "user not recognized" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:"X-User-Token") { "asdasdasd" }
         let(:provider_id) { "test" }
 

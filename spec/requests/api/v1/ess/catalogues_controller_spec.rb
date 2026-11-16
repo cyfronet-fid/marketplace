@@ -3,23 +3,15 @@
 require "swagger_helper"
 require "rails_helper"
 
-RSpec.describe Api::V1::Ess::CataloguesController, swagger_doc: "v1/ess_swagger.json" do
-  before(:all) do
-    Dir.chdir Rails.root.join("swagger", "v1") # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
-  end
-
-  after(:all) do
-    Dir.chdir Rails.root # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
-  end
-
+RSpec.describe Api::V1::Ess::CataloguesController do
   path "/api/v1/ess/catalogues" do
     get "lists catalogues" do
-      tags "catalogues"
+      tags "ESS catalogues"
       produces "application/json"
       security [authentication_token: []]
 
       response 200, "catalogues found" do
-        schema "$ref" => "ess/catalogue/catalogue_index.json"
+        schema "$ref" => "#/components/schemas/ess_catalogue_index"
 
         let!(:manager) { create(:user, roles: [:coordinator]) }
         let!(:catalogues) { create_list(:catalogue, 2) }
@@ -36,7 +28,7 @@ RSpec.describe Api::V1::Ess::CataloguesController, swagger_doc: "v1/ess_swagger.
       end
 
       response 403, "user doesn't have manager role", document: false do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:regular_user) { create(:user) }
         let(:manager) { create(:user, roles: [:coordinator]) }
         let(:catalogues) { create_list(:catalogue, 3) }
@@ -50,7 +42,7 @@ RSpec.describe Api::V1::Ess::CataloguesController, swagger_doc: "v1/ess_swagger.
       end
 
       response 401, "user not recognized" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:"X-User-Token") { "asdasdasd" }
 
         run_test! do |response|
@@ -65,13 +57,13 @@ RSpec.describe Api::V1::Ess::CataloguesController, swagger_doc: "v1/ess_swagger.
     parameter name: :catalogue_id, in: :path, type: :string, description: "Catalogue identifier (id or pid)"
 
     get "retrieves a catalogue by id" do
-      tags "catalogues"
+      tags "ESS catalogues"
       produces "application/json"
       security [authentication_token: []]
 
       %i[id pid].each do |id_form|
         response 200, "catalogue found by #{id_form}" do
-          schema "$ref" => "ess/catalogue/catalogue_read.json"
+          schema "$ref" => "#/components/schemas/ess_catalogue_read"
           let!(:manager) { create(:user, roles: [:coordinator]) }
           let!(:catalogue) { create(:catalogue) }
 
@@ -86,7 +78,7 @@ RSpec.describe Api::V1::Ess::CataloguesController, swagger_doc: "v1/ess_swagger.
       end
 
       response 404, "draft catalogue not found by id" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let!(:manager) { create(:user, roles: [:coordinator]) }
         let!(:catalogue) { create(:catalogue, status: :draft) }
 
@@ -100,7 +92,7 @@ RSpec.describe Api::V1::Ess::CataloguesController, swagger_doc: "v1/ess_swagger.
       end
 
       response 403, "catalogue not found by unpermitted user" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let!(:regular_user) { create(:user) }
         let!(:catalogue) { create(:catalogue, status: :draft) }
 
@@ -114,7 +106,7 @@ RSpec.describe Api::V1::Ess::CataloguesController, swagger_doc: "v1/ess_swagger.
       end
 
       response 401, "user not recognized" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:"X-User-Token") { "asdasdasd" }
         let(:catalogue_id) { "test" }
 

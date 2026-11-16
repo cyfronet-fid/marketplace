@@ -3,23 +3,15 @@
 require "swagger_helper"
 require "rails_helper"
 
-RSpec.describe Api::V1::Ess::OffersController, swagger_doc: "v1/ess_swagger.json" do
-  before(:all) do
-    Dir.chdir Rails.root.join("swagger", "v1") # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
-  end
-
-  after(:all) do
-    Dir.chdir Rails.root # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
-  end
-
+RSpec.describe Api::V1::Ess::OffersController do
   path "/api/v1/ess/offers" do
     get "lists published offers" do
-      tags "offers"
+      tags "ESS offers"
       produces "application/json"
       security [authentication_token: []]
 
       response 200, "offer found" do
-        schema "$ref" => "ess/offer/offer_index.json"
+        schema "$ref" => "#/components/schemas/ess_offer_index"
 
         let!(:manager) { create(:user, roles: [:coordinator]) }
         let!(:offers) { create_list(:offer, 2) }
@@ -40,7 +32,7 @@ RSpec.describe Api::V1::Ess::OffersController, swagger_doc: "v1/ess_swagger.json
       end
 
       response 403, "user doesn't have manager role", document: false do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let!(:regular_user) { create(:user) }
         let!(:manager) { create(:user, roles: [:coordinator]) }
         let!(:offers) { create_list(:offer, 3) }
@@ -57,7 +49,7 @@ RSpec.describe Api::V1::Ess::OffersController, swagger_doc: "v1/ess_swagger.json
       end
 
       response 401, "user not recognized" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:"X-User-Token") { "asdasdasd" }
 
         run_test! do |response|
@@ -72,12 +64,12 @@ RSpec.describe Api::V1::Ess::OffersController, swagger_doc: "v1/ess_swagger.json
     parameter name: :offer_id, in: :path, type: :string, description: "Offer identifier id"
 
     get "retrieves a offer by id" do
-      tags "offers"
+      tags "ESS offers"
       produces "application/json"
       security [authentication_token: []]
 
       response 200, "offer found by id" do
-        schema "$ref" => "ess/offer/offer_read.json"
+        schema "$ref" => "#/components/schemas/ess_offer_read"
         let!(:manager) { create(:user, roles: [:coordinator]) }
         let!(:offer) { create(:offer) }
 
@@ -91,7 +83,7 @@ RSpec.describe Api::V1::Ess::OffersController, swagger_doc: "v1/ess_swagger.json
       end
 
       response 404, "draft offer not found by id" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let!(:manager) { create(:user, roles: [:coordinator]) }
         let!(:offer) { create(:offer, status: :draft) }
 
@@ -105,7 +97,7 @@ RSpec.describe Api::V1::Ess::OffersController, swagger_doc: "v1/ess_swagger.json
       end
 
       response 403, "offer not found by unpermitted user" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let!(:regular_user) { create(:user) }
         let!(:offer) { create(:offer, status: :draft) }
 
@@ -119,7 +111,7 @@ RSpec.describe Api::V1::Ess::OffersController, swagger_doc: "v1/ess_swagger.json
       end
 
       response 401, "user not recognized" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:"X-User-Token") { "asdasdasd" }
         let(:offer_id) { "test" }
 

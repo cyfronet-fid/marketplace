@@ -77,8 +77,8 @@ class Api::V1::OMSes::MessagesController < Api::V1::ApplicationController
   end
 
   def validate_payload
-    schema_file = action_name == "create" ? "message_write.json" : "message_update.json"
-    JSON::Validator.validate!(Rails.root.join("swagger", "v1", "message", schema_file).to_s, params[:message].as_json)
+    schema = action_name == "create" ? "message_write" : "message_update"
+    Api::V1::ComponentSchema.new(schema).validate!(params[:message].as_json)
   rescue JSON::Schema::ValidationError => e
     render json: { error: e.message }, status: 400
   end

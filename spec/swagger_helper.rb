@@ -8,20 +8,25 @@ RSpec.configure do |config|
   # to ensure that it's configured to serve Swagger from the same folder
   config.openapi_root = Rails.root.join("swagger")
 
-  # Define one or more Swagger documents and provide global metadata for each one
-  # When you run the 'rswag:specs:swaggerize' rake task, the complete Swagger will
-  # be generated at the provided relative path under swagger_root
-  # By default, the operations defined in spec files are added to the first
-  # document below. You can override this behavior by adding a swagger_doc tag to the
-  # the root example_group in your specs, e.g. describe '...', swagger_doc: 'v2/swagger.json'
+  # The 'rswag:specs:swaggerize' rake task writes the complete document
+  # to the relative path below, under openapi_root.
+  # All spec files add their operations to this document.
   config.openapi_specs = {
-    "v1/offering_swagger.json" => {
+    "v1/spec.json" => {
       openapi: "3.0.1",
       info: {
-        title: "EOSC Marketplace Offering API",
+        title: "EOSC Marketplace API",
         version: "v1",
-        # TODO: Change description
-        description: "Documentation of the EOSC Marketplace REST API for integration of other software systems"
+        description: <<~DESCRIPTION
+          REST API of the EOSC Marketplace. The API has these parts:
+
+          - Offering (`/api/v1/resources`): the offers of the resources that a user administers.
+          - Ordering (`/api/v1/oms`): the integration of an Order Management System with the ordering process.
+          - ESS (`/api/v1/ess`): the collections that the Search Service reads.
+          - Users (`/api/v1/users`): the user configuration for external clients.
+          - Search (`/api/v1/search`): the search and the filters of the services.
+          - Catalogue (`/api/v1/catalogue`): the public catalogue of the services. Only the pl variant has this part.
+        DESCRIPTION
       },
       paths: {},
       components: {
@@ -31,73 +36,9 @@ RSpec.configure do |config|
             name: "X-User-Token",
             in: :header
           }
-        }
-      }
-    },
-    "v1/ordering_swagger.json" => {
-      openapi: "3.0.1",
-      info: {
-        title: "EOSC Marketplace Ordering API",
-        version: "v1",
-        description: "API for Order Management Systems to integrate with EOSC Marketplace ordering process"
-      },
-      paths: {},
-      components: {
-        securitySchemes: {
-          authentication_token: {
-            type: :apiKey,
-            name: "X-User-Token",
-            in: :header
-          }
-        }
-      }
-    },
-    "v1/ess_swagger.json" => {
-      openapi: "3.0.1",
-      info: {
-        title: "EOSC Marketplace search API",
-        version: "v1",
-        description: "API for Search Service to integrate with EOSC Marketplace collections"
-      },
-      paths: {},
-      components: {
-        securitySchemes: {
-          authentication_token: {
-            type: :apiKey,
-            name: "X-User-Token",
-            in: :header
-          }
-        }
-      }
-    },
-    "v1/users_swagger.json" => {
-      openapi: "3.0.1",
-      info: {
-        title: "EOSC User API",
-        version: "v1",
-        description: "API for external clients loading user configuration"
-      },
-      paths: {},
-      components: {
-        securitySchemes: {
-          authentication_token: {
-            type: :apiKey,
-            name: "X-User-Token",
-            in: :header
-          }
-        }
-      }
-    },
-    "v1/catalogue_swagger.json" => {
-      openapi: "3.0.1",
-      info: {
-        title: "Catalogue API",
-        version: "v1",
-        description: "Public Catalogue endpoints for EOSC Marketplace"
-      },
-      paths: {},
-      components: {
+        },
         schemas: {
+          **Api::V1::ComponentSchema.all,
           CatalogueService: {
             type: :object,
             description: "Subset of the Service entity as published in Catalogue API",
@@ -237,27 +178,7 @@ RSpec.configure do |config|
               }
             },
             required: %w[id name logo orderType]
-          }
-        }
-      }
-    },
-    "v1/search_swagger.json" => {
-      openapi: "3.0.1",
-      info: {
-        title: "EOSC Marketplace Search API",
-        version: "v1",
-        description: "API for searching and filtering services with advanced Elasticsearch capabilities"
-      },
-      paths: {},
-      components: {
-        securitySchemes: {
-          authentication_token: {
-            type: :apiKey,
-            name: "X-User-Token",
-            in: :header
-          }
-        },
-        schemas: {
+          },
           SearchResponse: {
             type: :object,
             properties: {

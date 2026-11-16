@@ -3,15 +3,7 @@
 require "swagger_helper"
 require "rails_helper"
 
-RSpec.describe Api::V1::ResourcesController, swagger_doc: "v1/offering_swagger.json", backend: true do
-  before(:all) do
-    Dir.chdir Rails.root.join("swagger", "v1") # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
-  end
-
-  after(:all) do
-    Dir.chdir Rails.root # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
-  end
-
+RSpec.describe Api::V1::ResourcesController, backend: true do
   path "/api/v1/resources" do
     get "lists resources administered by user" do
       tags "Resources"
@@ -19,7 +11,7 @@ RSpec.describe Api::V1::ResourcesController, swagger_doc: "v1/offering_swagger.j
       security [authentication_token: []]
 
       response 200, "resources found" do
-        schema "$ref" => "resource/resource_index.json"
+        schema "$ref" => "#/components/schemas/resource_index"
 
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
@@ -38,7 +30,7 @@ RSpec.describe Api::V1::ResourcesController, swagger_doc: "v1/offering_swagger.j
       end
 
       response 200, "resources found but were empty", document: false do
-        schema "$ref" => "resource/resource_index.json"
+        schema "$ref" => "#/components/schemas/resource_index"
 
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
@@ -56,7 +48,7 @@ RSpec.describe Api::V1::ResourcesController, swagger_doc: "v1/offering_swagger.j
       end
 
       response 401, "user not recognized" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:"X-User-Token") { "asdasdasd" }
 
         run_test! do |response|
@@ -75,7 +67,7 @@ RSpec.describe Api::V1::ResourcesController, swagger_doc: "v1/offering_swagger.j
       parameter name: :id, in: :path, type: :string, description: "Resource identifier (id or eid)"
 
       response 200, "resource found" do
-        schema "$ref" => "resource/resource_read.json"
+        schema "$ref" => "#/components/schemas/resource_read"
 
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
@@ -92,7 +84,7 @@ RSpec.describe Api::V1::ResourcesController, swagger_doc: "v1/offering_swagger.j
       end
 
       response 200, "resource found with an eid", document: false do
-        schema "$ref" => "resource/resource_read.json"
+        schema "$ref" => "#/components/schemas/resource_read"
 
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
@@ -113,7 +105,7 @@ RSpec.describe Api::V1::ResourcesController, swagger_doc: "v1/offering_swagger.j
       end
 
       response 200, "resource along with its available oms found", document: false do
-        schema "$ref" => "resource/resource_read.json"
+        schema "$ref" => "#/components/schemas/resource_read"
 
         let(:data_admin_user) { create(:user) }
         let!(:data_admin) { create(:data_administrator, email: data_admin_user.email) }
@@ -170,7 +162,7 @@ RSpec.describe Api::V1::ResourcesController, swagger_doc: "v1/offering_swagger.j
       end
 
       response 401, "user not recognized" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:"X-User-Token") { "asdasdasd" }
         let(:id) { 9999 }
 
@@ -181,7 +173,7 @@ RSpec.describe Api::V1::ResourcesController, swagger_doc: "v1/offering_swagger.j
       end
 
       response 403, "user not authorized" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
 
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
@@ -202,7 +194,7 @@ RSpec.describe Api::V1::ResourcesController, swagger_doc: "v1/offering_swagger.j
       end
 
       response 404, "resource not found" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
 
         let(:data_admin_user) { create(:user) }
         let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }

@@ -3,16 +3,9 @@
 require "swagger_helper"
 require "rails_helper"
 
-RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_swagger.json", backend: true do
-  before(:all) do
-    Dir.chdir Rails.root.join("swagger", "v1") # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
-  end
-
+RSpec.describe Api::V1::Resources::OffersController, backend: true do
   before(:each) { create(:default_oms) }
 
-  after(:all) do
-    Dir.chdir Rails.root # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
-  end
   context "predefined variables" do
     let(:service_category) { create(:service_category_other) }
 
@@ -24,7 +17,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         parameter name: :resource_id, in: :path, type: :string, description: "Resource identifier (id or eid)"
 
         response 200, "offers found" do
-          schema "$ref" => "offer/offer_index.json"
+          schema "$ref" => "#/components/schemas/offer_index"
 
           let(:published_offer1) { build(:offer_with_all_parameters, offer_category: service_category) }
           let(:published_offer2) { build(:offer_with_all_parameters, offer_category: service_category) }
@@ -81,7 +74,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 200, "offers found but were empty", document: false do
-          schema "$ref" => "offer/offer_index.json"
+          schema "$ref" => "#/components/schemas/offer_index"
 
           let(:data_admin_user) { create(:user) }
           let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
@@ -102,7 +95,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 401, "user not recognized" do
-          schema "$ref" => "error.json"
+          schema "$ref" => "#/components/schemas/error"
           let(:"X-User-Token") { "asdasdasd" }
           let(:resource_id) { 9999 }
 
@@ -113,7 +106,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 404, "resource not found" do
-          schema "$ref" => "error.json"
+          schema "$ref" => "#/components/schemas/error"
 
           let(:data_admin_user) { create(:user) }
           let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
@@ -133,10 +126,10 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         consumes "application/json"
         security [authentication_token: []]
         parameter name: :resource_id, in: :path, type: :string, description: "Resource identifier (id or eid)"
-        parameter name: :offer_payload, in: :body, schema: { "$ref" => "offer/offer_write.json" }
+        parameter name: :offer_payload, in: :body, schema: { "$ref" => "#/components/schemas/offer_write" }
 
         response 201, "offer created" do
-          schema "$ref" => "offer/offer_read.json"
+          schema "$ref" => "#/components/schemas/offer_read"
 
           let(:data_admin_user) { create(:user) }
           let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
@@ -165,7 +158,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 201, "open_access offer created", document: false do
-          schema "$ref" => "offer/offer_read.json"
+          schema "$ref" => "#/components/schemas/offer_read"
 
           let(:data_admin_user) { create(:user) }
           let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
@@ -200,7 +193,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 201, "offer with oms_params created", document: false do
-          schema "$ref" => "offer/offer_read.json"
+          schema "$ref" => "#/components/schemas/offer_read"
 
           let(:oms) { create(:oms, type: :global, custom_params: { a: { mandatory: true, default: "qwe" } }) }
           let(:data_admin_user) { create(:user) }
@@ -242,7 +235,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 201, "ignores internal, primary_oms and oms_params if open_access", document: false do
-          schema "$ref" => "offer/offer_read.json"
+          schema "$ref" => "#/components/schemas/offer_read"
 
           let(:data_admin_user) { create(:user) }
           let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
@@ -286,7 +279,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 201, "ignores primary_oms and oms_params if not internal", document: false do
-          schema "$ref" => "offer/offer_read.json"
+          schema "$ref" => "#/components/schemas/offer_read"
 
           let(:data_admin_user) { create(:user) }
           let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
@@ -330,7 +323,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 400, "bad request" do
-          schema "$ref" => "error.json"
+          schema "$ref" => "#/components/schemas/error"
 
           let(:data_admin_user) { create(:user) }
           let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
@@ -351,7 +344,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 400, "fails model validation on non-existent primary_oms_id", document: false do
-          schema "$ref" => "error.json"
+          schema "$ref" => "#/components/schemas/error"
 
           let(:data_admin_user) { create(:user) }
           let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
@@ -378,7 +371,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 400, "fails json validation on wrong parameter type", document: false do
-          schema "$ref" => "error.json"
+          schema "$ref" => "#/components/schemas/error"
 
           let(:data_admin_user) { create(:user) }
           let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
@@ -415,7 +408,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 400, "fails json validation on missing key", document: false do
-          schema "$ref" => "error.json"
+          schema "$ref" => "#/components/schemas/error"
 
           let(:data_admin_user) { create(:user) }
           let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
@@ -451,7 +444,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 400, "fails json validation on wrong select config values", document: false do
-          schema "$ref" => "error.json"
+          schema "$ref" => "#/components/schemas/error"
 
           let(:data_admin_user) { create(:user) }
           let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
@@ -492,7 +485,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 400, "fails json validation on repeated parameters", document: false do
-          schema "$ref" => "error.json"
+          schema "$ref" => "#/components/schemas/error"
 
           let(:data_admin_user) { create(:user) }
           let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
@@ -535,7 +528,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 400, "fails model validation on wrong input type", document: false do
-          schema "$ref" => "error.json"
+          schema "$ref" => "#/components/schemas/error"
 
           let(:data_admin_user) { create(:user) }
           let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
@@ -570,7 +563,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 400, "doesn't allow to create an offer with draft status", document: false do
-          schema "$ref" => "error.json"
+          schema "$ref" => "#/components/schemas/error"
 
           let(:data_admin_user) { create(:user) }
           let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
@@ -596,7 +589,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 401, "user not recognized" do
-          schema "$ref" => "error.json"
+          schema "$ref" => "#/components/schemas/error"
           let(:"X-User-Token") { "asdasdasd" }
           let(:resource_id) { 9999 }
           let(:offer_payload) { {} }
@@ -608,7 +601,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 403, "user not authorized" do
-          schema "$ref" => "error.json"
+          schema "$ref" => "#/components/schemas/error"
 
           let(:data_admin_user) { create(:user) }
           let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
@@ -627,7 +620,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 404, "resource not found" do
-          schema "$ref" => "error.json"
+          schema "$ref" => "#/components/schemas/error"
 
           let(:data_admin_user) { create(:user) }
           let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
@@ -654,7 +647,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         parameter name: :id, in: :path, type: :string, description: "Offer identifier"
 
         response 200, "offer found" do
-          schema "$ref" => "offer/offer_read.json"
+          schema "$ref" => "#/components/schemas/offer_read"
 
           let(:offer) { build(:offer_with_all_parameters, offer_category: service_category) }
           let(:data_admin_user) { create(:user) }
@@ -684,7 +677,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 200, "retrieves an offer without parameters", document: false do
-          schema "$ref" => "offer/offer_read.json"
+          schema "$ref" => "#/components/schemas/offer_read"
 
           let(:offer) { build(:offer, offer_category: service_category) }
           let(:data_admin_user) { create(:user) }
@@ -712,7 +705,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 200, "doesn't show primary_oms_id and oms_params if not internal", document: false do
-          schema "$ref" => "offer/offer_read.json"
+          schema "$ref" => "#/components/schemas/offer_read"
 
           let(:offer) { build(:offer, internal: false, order_type: :order_required, offer_category: service_category) }
           let(:data_admin_user) { create(:user) }
@@ -741,7 +734,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 200, "doesn't show internal, oms_params and primary_oms_id if not order_required", document: false do
-          schema "$ref" => "offer/offer_read.json"
+          schema "$ref" => "#/components/schemas/offer_read"
 
           let(:offer) { build(:offer, order_type: :open_access, internal: false, offer_category: service_category) }
           let(:data_admin_user) { create(:user) }
@@ -770,7 +763,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 401, "user not recognized" do
-          schema "$ref" => "error.json"
+          schema "$ref" => "#/components/schemas/error"
           let(:"X-User-Token") { "asdasdasd" }
           let(:resource_id) { 9999 }
           let(:id) { 9999 }
@@ -782,7 +775,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 403, "user not authorized" do
-          schema "$ref" => "error.json"
+          schema "$ref" => "#/components/schemas/error"
 
           let(:draft_offer) { build(:offer, status: "draft") }
           let(:data_admin_user) { create(:user) }
@@ -805,7 +798,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 404, "resource not found" do
-          schema "$ref" => "error.json"
+          schema "$ref" => "#/components/schemas/error"
 
           let(:data_admin_user) { create(:user) }
           let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
@@ -820,7 +813,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 404, "offer not found" do
-          schema "$ref" => "error.json"
+          schema "$ref" => "#/components/schemas/error"
 
           let(:offer) { build(:offer_with_all_parameters) }
           let(:data_admin_user) { create(:user) }
@@ -850,10 +843,10 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         security [authentication_token: []]
         parameter name: :resource_id, in: :path, type: :string, description: "Resource identifier (id or eid)"
         parameter name: :id, in: :path, type: :string, description: "Offer identifier"
-        parameter name: :offer_payload, in: :body, schema: { "$ref" => "offer/offer_update.json" }
+        parameter name: :offer_payload, in: :body, schema: { "$ref" => "#/components/schemas/offer_update" }
 
         response 200, "offer updated" do
-          schema "$ref" => "offer/offer_read.json"
+          schema "$ref" => "#/components/schemas/offer_read"
 
           let(:previous_oms) { create(:oms, type: :global) }
           let(:oms) { create(:oms, type: :global, custom_params: { a: { mandatory: true, default: "qwe" } }) }
@@ -898,7 +891,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 200, "deletes offer parameters", document: false do
-          schema "$ref" => "offer/offer_read.json"
+          schema "$ref" => "#/components/schemas/offer_read"
 
           let(:offer) { build(:offer, offer_category: service_category) }
           let(:data_admin_user) { create(:user) }
@@ -931,7 +924,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
 
         response 200, "updates an offers parameters", document: false do
           # TODO: For now - parameters are updated as a whole - can't update individual parameter with some id
-          schema "$ref" => "offer/offer_read.json"
+          schema "$ref" => "#/components/schemas/offer_read"
 
           let(:offer) { build(:offer, offer_category: service_category) }
           let(:data_admin_user) { create(:user) }
@@ -976,7 +969,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 200, "doesn't update primary_oms and oms_params if not internal" do
-          schema "$ref" => "offer/offer_read.json"
+          schema "$ref" => "#/components/schemas/offer_read"
 
           let(:previous_oms) { create(:oms, type: :global) }
           let(:oms) { create(:oms, type: :global, custom_params: { a: { mandatory: true, default: "qwe" } }) }
@@ -1021,7 +1014,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 200, "doesn't update primary_oms and oms_params and internal if not order_required" do
-          schema "$ref" => "offer/offer_read.json"
+          schema "$ref" => "#/components/schemas/offer_read"
 
           let(:previous_oms) { create(:oms, type: :global) }
           let(:oms) { create(:oms, type: :global, custom_params: { a: { mandatory: true, default: "qwe" } }) }
@@ -1069,7 +1062,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 400, "primary_oms model validation failed", document: false, skip: true do
-          schema "$ref" => "error.json"
+          schema "$ref" => "#/components/schemas/error"
           let(:oms) { create(:oms, type: :global, custom_params: { a: { mandatory: true, default: "qwe" } }) }
           let(:offer) { build(:offer, offer_category: service_category) }
           let(:data_admin_user) { create(:user) }
@@ -1093,7 +1086,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 400, "doesnt allow to update status", document: false do
-          schema "$ref" => "error.json"
+          schema "$ref" => "#/components/schemas/error"
 
           let(:offer) { build(:offer) }
           let(:data_admin_user) { create(:user) }
@@ -1119,7 +1112,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 400, "fails model validation on incorrect bundled offer id", document: false do
-          schema "$ref" => "error.json"
+          schema "$ref" => "#/components/schemas/error"
 
           let(:offer) { build(:offer) }
           let(:data_admin_user) { create(:user) }
@@ -1145,7 +1138,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 401, "user not recognized" do
-          schema "$ref" => "error.json"
+          schema "$ref" => "#/components/schemas/error"
           let(:"X-User-Token") { "asdasdasd" }
           let(:resource_id) { 9999 }
           let(:id) { 9999 }
@@ -1158,7 +1151,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 403, "user not authorized" do
-          schema "$ref" => "error.json"
+          schema "$ref" => "#/components/schemas/error"
 
           let(:draft_offer) { build(:offer, status: "draft") }
           let(:data_admin_user) { create(:user) }
@@ -1182,7 +1175,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 404, "resource not found" do
-          schema "$ref" => "error.json"
+          schema "$ref" => "#/components/schemas/error"
 
           let(:data_admin_user) { create(:user) }
           let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
@@ -1198,7 +1191,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 404, "offer not found" do
-          schema "$ref" => "error.json"
+          schema "$ref" => "#/components/schemas/error"
 
           let(:offer) { build(:offer_with_all_parameters) }
           let(:data_admin_user) { create(:user) }
@@ -1258,7 +1251,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 401, "user not recognized" do
-          schema "$ref" => "error.json"
+          schema "$ref" => "#/components/schemas/error"
           let(:"X-User-Token") { "asdasdasd" }
           let(:resource_id) { 9999 }
           let(:id) { 9999 }
@@ -1270,7 +1263,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 403, "not authorized" do
-          schema "$ref" => "error.json"
+          schema "$ref" => "#/components/schemas/error"
 
           let(:draft_offer) { build(:offer, status: "draft") }
           let(:offer) { build(:offer) }
@@ -1295,7 +1288,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 404, "resource not found" do
-          schema "$ref" => "error.json"
+          schema "$ref" => "#/components/schemas/error"
 
           let(:data_admin_user) { create(:user) }
           let!(:data_administrator) { create(:data_administrator, email: data_admin_user.email) }
@@ -1310,7 +1303,7 @@ RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_s
         end
 
         response 404, "offer not found" do
-          schema "$ref" => "error.json"
+          schema "$ref" => "#/components/schemas/error"
 
           let(:offer) { build(:offer_with_all_parameters) }
           let(:data_admin_user) { create(:user) }

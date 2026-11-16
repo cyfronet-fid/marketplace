@@ -1,7 +1,0 @@
-{
-  "type": "array",
-  "items": {
-    "$ref": "service_read.json"
-  },
-  "additionalProperties": false
-}

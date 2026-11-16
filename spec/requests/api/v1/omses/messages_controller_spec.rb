@@ -3,15 +3,7 @@
 require "swagger_helper"
 require "rails_helper"
 
-RSpec.describe Api::V1::OMSes::MessagesController, :backend, swagger_doc: "v1/ordering_swagger.json" do
-  before(:all) do
-    Dir.chdir Rails.root.join("swagger/v1") # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
-  end
-
-  after(:all) do
-    Dir.chdir Rails.root # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
-  end
-
+RSpec.describe Api::V1::OMSes::MessagesController, :backend do
   path "/api/v1/oms/{oms_id}/messages" do
     parameter name: :oms_id, in: :path, type: :string, description: "OMS id"
 
@@ -37,7 +29,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, :backend, swagger_doc: "v1/or
       parameter name: :limit, in: :query, type: :integer, required: false, description: "Number of returned elements"
 
       response 200, "messages found" do
-        schema "$ref" => "message/message_index.json"
+        schema "$ref" => "#/components/schemas/message_index"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
         let(:other_oms) { create(:oms, administrators: [oms_admin]) }
@@ -72,7 +64,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, :backend, swagger_doc: "v1/or
       end
 
       response 200, "project_item messages found", document: false do
-        schema "$ref" => "message/message_index.json"
+        schema "$ref" => "#/components/schemas/message_index"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
         let(:other_oms) { create(:oms, administrators: [oms_admin]) }
@@ -108,7 +100,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, :backend, swagger_doc: "v1/or
       end
 
       response 200, "messages found but were empty", document: false do
-        schema "$ref" => "message/message_index.json"
+        schema "$ref" => "#/components/schemas/message_index"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
         let(:project_item) { create(:project_item, offer: create(:offer, primary_oms: oms), iid: 1) }
@@ -126,7 +118,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, :backend, swagger_doc: "v1/or
       end
 
       response 401, "user not recognized" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:oms_id) { 1 }
         let(:project_id) { 1 }
         let(:"X-User-Token") { "asdasdasd" }
@@ -138,7 +130,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, :backend, swagger_doc: "v1/or
       end
 
       response 403, "user not authorized to access this OMS" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:oms_admin) { create(:user) }
         let(:user) { create(:user) }
         let(:oms) { create(:default_oms, administrators: [oms_admin]) }
@@ -154,7 +146,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, :backend, swagger_doc: "v1/or
       end
 
       response 404, "OMS not found" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:user) { create(:user) }
 
         let(:oms_id) { 9999 }
@@ -168,7 +160,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, :backend, swagger_doc: "v1/or
       end
 
       response 404, "project not found" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:default_oms, administrators: [oms_admin]) }
 
@@ -183,7 +175,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, :backend, swagger_doc: "v1/or
       end
 
       response 404, "project item not found" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:default_oms, administrators: [oms_admin]) }
         let(:project) { create(:project) }
@@ -205,10 +197,10 @@ RSpec.describe Api::V1::OMSes::MessagesController, :backend, swagger_doc: "v1/or
       produces "application/json"
       consumes "application/json"
       security [authentication_token: []]
-      parameter name: :message_payload, in: :body, schema: { "$ref" => "message/message_write.json" }
+      parameter name: :message_payload, in: :body, schema: { "$ref" => "#/components/schemas/message_write" }
 
       response 201, "message created" do
-        schema "$ref" => "message/message_read.json"
+        schema "$ref" => "#/components/schemas/message_read"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
         let(:project) do
@@ -253,7 +245,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, :backend, swagger_doc: "v1/or
       end
 
       response 201, "project item message created", document: false do
-        schema "$ref" => "message/message_read.json"
+        schema "$ref" => "#/components/schemas/message_read"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
         let(:project_item) { create(:project_item, offer: create(:offer, primary_oms: oms), iid: 1) }
@@ -296,7 +288,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, :backend, swagger_doc: "v1/or
       end
 
       response 400, "bad request" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
         let(:project) do
@@ -320,7 +312,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, :backend, swagger_doc: "v1/or
       end
 
       response 401, "user not recognized" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:oms_id) { 1 }
         let(:project_id) { 1 }
 
@@ -334,7 +326,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, :backend, swagger_doc: "v1/or
       end
 
       response 403, "user not authorized to access this OMS" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:oms_admin) { create(:user) }
         let(:user) { create(:user) }
         let(:oms) { create(:default_oms, administrators: [oms_admin]) }
@@ -352,7 +344,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, :backend, swagger_doc: "v1/or
       end
 
       response 403, "user not authorized" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
         let(:project) do
@@ -383,7 +375,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, :backend, swagger_doc: "v1/or
       end
 
       response 403, "project_item message not authorized", document: false do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:default_oms_admin) { create(:user) }
         let(:oms) { create(:default_oms, administrators: [default_oms_admin]) }
         let(:other_oms) { create(:oms) }
@@ -415,7 +407,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, :backend, swagger_doc: "v1/or
       end
 
       response 404, "OMS not found" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:user) { create(:user) }
 
         let(:oms_id) { 9999 }
@@ -431,7 +423,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, :backend, swagger_doc: "v1/or
       end
 
       response 404, "project not found" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:default_oms, administrators: [oms_admin]) }
 
@@ -456,7 +448,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, :backend, swagger_doc: "v1/or
       end
 
       response 404, "project item not found" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:default_oms, administrators: [oms_admin]) }
         let(:project) { create(:project, project_items: []) }
@@ -494,7 +486,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, :backend, swagger_doc: "v1/or
       security [authentication_token: []]
 
       response 200, "message found" do
-        schema "$ref" => "message/message_read.json"
+        schema "$ref" => "#/components/schemas/message_read"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
         let(:project) do
@@ -513,7 +505,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, :backend, swagger_doc: "v1/or
       end
 
       response 401, "user not recognized" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:oms_id) { 1 }
         let(:m_id) { 1 }
         let(:"X-User-Token") { "asdasdasd" }
@@ -525,7 +517,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, :backend, swagger_doc: "v1/or
       end
 
       response 403, "user not authorized to access this OMS" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:oms_admin) { create(:user) }
         let(:user) { create(:user) }
         let(:oms) { create(:default_oms, administrators: [oms_admin]) }
@@ -541,7 +533,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, :backend, swagger_doc: "v1/or
       end
 
       response 403, "user not authorized" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:user) { create(:user) }
         let(:oms) { create(:default_oms) }
         let(:message) { create(:message, messageable: create(:project)) }
@@ -557,7 +549,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, :backend, swagger_doc: "v1/or
       end
 
       response 404, "OMS not found" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:user) { create(:user) }
 
         let(:oms_id) { 9999 }
@@ -571,7 +563,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, :backend, swagger_doc: "v1/or
       end
 
       response 404, "message not found" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
         let(:other_oms) { create(:oms, administrators: [oms_admin]) }
@@ -598,10 +590,10 @@ RSpec.describe Api::V1::OMSes::MessagesController, :backend, swagger_doc: "v1/or
       produces "application/json"
       consumes "application/json"
       security [authentication_token: []]
-      parameter name: :message_payload, in: :body, schema: { "$ref" => "message/message_update.json" }
+      parameter name: :message_payload, in: :body, schema: { "$ref" => "#/components/schemas/message_update" }
 
       response 200, "message updated" do
-        schema "$ref" => "message/message_read.json"
+        schema "$ref" => "#/components/schemas/message_read"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
         let(:project) do
@@ -635,7 +627,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, :backend, swagger_doc: "v1/or
       end
 
       response 200, "project item message updated", document: false do
-        schema "$ref" => "message/message_read.json"
+        schema "$ref" => "#/components/schemas/message_read"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
         let(:project_item) { create(:project_item, project: build(:project), offer: build(:offer, primary_oms: oms)) }
@@ -669,7 +661,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, :backend, swagger_doc: "v1/or
       end
 
       response 400, "bad request" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:default_oms, administrators: [oms_admin]) }
         let(:project) { create(:project) }
@@ -698,7 +690,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, :backend, swagger_doc: "v1/or
       end
 
       response 401, "user not recognized" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:oms_id) { 1 }
         let(:m_id) { 1 }
         let(:"X-User-Token") { "asdasdasd" }
@@ -711,7 +703,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, :backend, swagger_doc: "v1/or
       end
 
       response 403, "user not authorized to access this OMS" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:oms_admin) { create(:user) }
         let(:user) { create(:user) }
         let(:oms) { create(:default_oms, administrators: [oms_admin]) }
@@ -728,7 +720,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, :backend, swagger_doc: "v1/or
       end
 
       response 403, "user not authorized" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:default_oms, administrators: [oms_admin]) }
         let(:other_oms) { create(:oms) }
@@ -756,7 +748,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, :backend, swagger_doc: "v1/or
       end
 
       response 404, "OMS not found" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:user) { create(:user) }
 
         let(:oms_id) { 9999 }
@@ -771,7 +763,7 @@ RSpec.describe Api::V1::OMSes::MessagesController, :backend, swagger_doc: "v1/or
       end
 
       response 404, "message not found" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:oms_admin) { create(:user) }
         let(:oms) { create(:oms, administrators: [oms_admin]) }
 

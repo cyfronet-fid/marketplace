@@ -4,23 +4,15 @@ require "swagger_helper"
 require "rails_helper"
 
 # The ESS deployable_services API is routed only under marketplace.
-RSpec.describe Api::V1::Ess::DeployableServicesController, swagger_doc: "v1/ess_swagger.json", variant: :marketplace do
-  before(:all) do
-    Dir.chdir Rails.root.join("swagger/v1") # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
-  end
-
-  after(:all) do
-    Dir.chdir Rails.root # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
-  end
-
+RSpec.describe Api::V1::Ess::DeployableServicesController, variant: :marketplace do
   path "/api/v1/ess/deployable_services" do
     get "lists deployable services" do
-      tags "deployable_services"
+      tags "ESS deployable services"
       produces "application/json"
       security [authentication_token: []]
 
       response 200, "deployable services found" do
-        schema "$ref" => "ess/deployable_service/deployable_service_index.json"
+        schema "$ref" => "#/components/schemas/ess_deployable_service_index"
 
         let!(:manager) { create(:user, roles: [:coordinator]) }
         let!(:deployable_services) { create_list(:deployable_service, 3) }
@@ -40,7 +32,7 @@ RSpec.describe Api::V1::Ess::DeployableServicesController, swagger_doc: "v1/ess_
       end
 
       response 403, "user doesn't have manager role", document: false do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:regular_user) { create(:user) }
         let(:manager) { create(:user, roles: [:coordinator]) }
         let(:deployable_services) { create_list(:deployable_service, 3) }
@@ -54,7 +46,7 @@ RSpec.describe Api::V1::Ess::DeployableServicesController, swagger_doc: "v1/ess_
       end
 
       response 401, "user not recognized" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:"X-User-Token") { "asdasdasd" }
 
         run_test! do |response|
@@ -72,13 +64,13 @@ RSpec.describe Api::V1::Ess::DeployableServicesController, swagger_doc: "v1/ess_
               description: "Deployable Service identifier (id or slug)"
 
     get "retrieves a deployable service by id" do
-      tags "deployable_services"
+      tags "ESS deployable services"
       produces "application/json"
       security [authentication_token: []]
 
       %i[id pid slug].each do |id_form|
         response 200, "deployable service found by #{id_form}" do
-          schema "$ref" => "ess/deployable_service/deployable_service_read.json"
+          schema "$ref" => "#/components/schemas/ess_deployable_service_read"
           let!(:manager) { create(:user, roles: [:coordinator]) }
           let!(:deployable_service) { create(:deployable_service) }
 
@@ -93,7 +85,7 @@ RSpec.describe Api::V1::Ess::DeployableServicesController, swagger_doc: "v1/ess_
       end
 
       response 404, "draft deployable service not found by id" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let!(:manager) { create(:user, roles: [:coordinator]) }
         let!(:deployable_service) { create(:deployable_service, status: :draft) }
 
@@ -107,7 +99,7 @@ RSpec.describe Api::V1::Ess::DeployableServicesController, swagger_doc: "v1/ess_
       end
 
       response 403, "deployable service not found by unpermitted user" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let!(:regular_user) { create(:user) }
         let!(:deployable_service) { create(:deployable_service, status: :draft) }
 
@@ -121,7 +113,7 @@ RSpec.describe Api::V1::Ess::DeployableServicesController, swagger_doc: "v1/ess_
       end
 
       response 401, "user not recognized" do
-        schema "$ref" => "error.json"
+        schema "$ref" => "#/components/schemas/error"
         let(:"X-User-Token") { "asdasdasd" }
         let(:deployable_service_id) { "test" }
 

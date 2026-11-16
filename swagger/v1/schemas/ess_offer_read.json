@@ -1,0 +1,82 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "iid": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "eosc_if": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "tag_list": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "service_id": {
+      "type": "integer"
+    },
+    "orderable_type": {
+      "type": "string",
+      "enum": ["Service", "DeployableService"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["published", "draft", "deleted"]
+    },
+    "order_type": {
+      "type": "string",
+      "enum": ["open_access", "fully_open_access", "order_required", "other"]
+    },
+    "internal": {
+      "type": "boolean"
+    },
+    "voucherable": {
+      "type": "boolean"
+    },
+    "parameters": {
+      "type": "array",
+      "nullable": true,
+      "uniqueItems": true,
+      "items": {
+        "oneOf": [
+          { "$ref": "#/components/schemas/attribute_parameter" },
+          { "$ref": "#/components/schemas/input_parameter" },
+          { "$ref": "#/components/schemas/select_parameter" },
+          { "$ref": "#/components/schemas/multiselect_parameter" },
+          { "$ref": "#/components/schemas/date_parameter" },
+          { "$ref": "#/components/schemas/range_parameter" },
+          { "$ref": "#/components/schemas/quantity_price_parameter" }
+        ]
+      }
+    },
+    "usage_counts_downloads": {
+      "type": "integer"
+    },
+    "usage_counts_views": {
+      "type": "integer"
+    },
+    "publication_date": {
+      "type": "string"
+    },
+    "updated_at": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "required": ["id", "name", "description", "status", "order_type"]
+}

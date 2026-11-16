@@ -75,14 +75,13 @@ class Api::V1::Resources::OffersController < Api::V1::ApplicationController
   end
 
   def validate_payload
-    JSON::Validator.validate!(payload_schema_path, request.body.read)
+    Api::V1::ComponentSchema.new(payload_schema).validate!(request.body.read)
   rescue JSON::Schema::ValidationError => e
     render json: { error: e.message }, status: :bad_request
   end
 
-  def payload_schema_path
-    schema_file = action_name == "create" ? "offer_write.json" : "offer_update.json"
-    Rails.root.join("swagger", "v1", "offer", schema_file).to_s
+  def payload_schema
+    action_name == "create" ? "offer_write" : "offer_update"
   end
 
   def load_bundled_offers
