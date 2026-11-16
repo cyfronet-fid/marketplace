@@ -44,6 +44,17 @@ jobs:
         bundle exec rake db:drop db:create db:schema:load RAILS_ENV=test
         bundle exec rake test:prepare
         bundle exec parallel_rspec -n 4 --only-group ${{ matrix.ci_node }} --group-by filesize -- -t "~end_user_frontend" -t "~manager_frontend" -- spec
+    # swagger/v1/spec.json is generated from the API request specs and from
+    # swagger/v1/schemas. This step fails when the committed file is not up to date.
+    - name: Check that the OpenAPI document is up to date
+      if: matrix.ci_node == 1
+      env:
+        RAILS_ENV: test
+        RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+      run: |
+        bundle exec rake rswag:specs:swaggerize
+        git add --intent-to-add swagger
+        git diff --exit-code -- swagger
     - name: Containers logs
       if: failure()
       run: docker compose logs
