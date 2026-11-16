@@ -14,7 +14,7 @@
         "authorization": {
           "type": "object",
           "properties": {
-            "type": { "type": "string", "const": "basic" },
+            "type": { "type": "string", "enum": ["basic"] },
             "user": { "type": "string" },
             "password": { "type": "string" }
           },

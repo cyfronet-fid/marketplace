@@ -12,14 +12,8 @@
       ]
     },
     "unit": {
-      "oneOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ]
+      "type": "string",
+      "nullable": true
     },
     "value_type": {
       "type": "string",
@@ -37,24 +31,12 @@
           "type": "integer"
         },
         "exclusiveMinimum": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "type": "boolean",
+          "nullable": true
         },
         "exclusiveMaximum": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "type": "boolean",
+          "nullable": true
         }
       },
       "required": [

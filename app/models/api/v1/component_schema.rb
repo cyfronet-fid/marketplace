@@ -12,6 +12,10 @@ class Api::V1::ComponentSchema
     end
   end
 
+  def self.json_schemas
+    @json_schemas ||= all.transform_values { |schema| Api::V1::JsonSchema.new(schema).to_h }
+  end
+
   def initialize(name)
     @name = name
   end
@@ -23,6 +27,6 @@ class Api::V1::ComponentSchema
   private
 
   def to_h
-    { "$ref" => "#/components/schemas/#{@name}", "components" => { "schemas" => self.class.all } }
+    { "$ref" => "#/components/schemas/#{@name}", "components" => { "schemas" => self.class.json_schemas } }
   end
 end

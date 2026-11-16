@@ -11,24 +11,12 @@
       "type": "string"
     },
     "status": {
-      "oneOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ]
+      "type": "string",
+      "nullable": true
     },
     "eid": {
-      "oneOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ]
+      "type": "string",
+      "nullable": true
     },
     "available_omses": {
       "type": "array",

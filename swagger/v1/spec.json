@@ -2205,118 +2205,118 @@
           {
             "name": "scientific_domains",
             "in": "query",
-            "items": {
-              "type": "string"
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             },
             "required": false,
-            "description": "Array of scientific domain EIDs to filter by. Use external IDs (EIDs) from scientific domain vocabulary",
-            "schema": {
-              "type": "array"
-            }
+            "description": "Array of scientific domain EIDs to filter by. Use external IDs (EIDs) from scientific domain vocabulary"
           },
           {
             "name": "providers",
             "in": "query",
-            "items": {
-              "type": "string"
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             },
             "required": false,
-            "description": "Array of provider EIDs to filter by. Use external IDs (EIDs) from provider registry",
-            "schema": {
-              "type": "array"
-            }
+            "description": "Array of provider EIDs to filter by. Use external IDs (EIDs) from provider registry"
           },
           {
             "name": "jurisdiction",
             "in": "query",
-            "items": {
-              "type": "string"
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             },
             "required": false,
-            "description": "Array of jurisdiction EIDs to filter by",
-            "schema": {
-              "type": "array"
-            }
+            "description": "Array of jurisdiction EIDs to filter by"
           },
           {
             "name": "tags",
             "in": "query",
-            "items": {
-              "type": "string"
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
             },
             "required": false,
-            "description": "Array of tag EIDs to filter by. Use external IDs (EIDs) from tag vocabulary",
-            "schema": {
-              "type": "array"
-            }
+            "description": "Array of tag EIDs to filter by. Use external IDs (EIDs) from tag vocabulary"
           },
           {
             "name": "rating",
             "in": "query",
-            "required": false,
-            "minimum": 1,
-            "maximum": 5,
-            "description": "Filter by minimum rating (1-5). Shows services with rating equal or higher than specified value",
             "schema": {
-              "type": "number"
-            }
+              "type": "number",
+              "minimum": 1,
+              "maximum": 5
+            },
+            "required": false,
+            "description": "Filter by minimum rating (1-5). Shows services with rating equal or higher than specified value"
           },
           {
             "name": "order_type",
             "in": "query",
-            "required": false,
-            "description": "Filter by order type. Determines how the service can be accessed:\n * `open_access` \n * `fully_open_access` \n * `order_required` \n * `other` \n ",
-            "enum": [
-              "open_access",
-              "fully_open_access",
-              "order_required",
-              "other"
-            ],
             "schema": {
-              "type": "string"
-            }
+              "type": "string",
+              "enum": [
+                "open_access",
+                "fully_open_access",
+                "order_required",
+                "other"
+              ]
+            },
+            "required": false,
+            "description": "Filter by order type. Determines how the service can be accessed"
           },
           {
             "name": "page",
             "in": "query",
-            "required": false,
-            "default": 1,
-            "minimum": 1,
-            "description": "Page number for pagination. Must be a positive integer",
             "schema": {
-              "type": "integer"
-            }
+              "type": "integer",
+              "default": 1,
+              "minimum": 1
+            },
+            "required": false,
+            "description": "Page number for pagination. Must be a positive integer"
           },
           {
             "name": "per_page",
             "in": "query",
-            "required": false,
-            "default": 25,
-            "minimum": 1,
-            "maximum": 100,
-            "description": "Number of results per page. Maximum allowed is 100",
             "schema": {
-              "type": "integer"
-            }
+              "type": "integer",
+              "default": 25,
+              "minimum": 1,
+              "maximum": 100
+            },
+            "required": false,
+            "description": "Number of results per page. Maximum allowed is 100"
           },
           {
             "name": "sort",
             "in": "query",
-            "required": false,
-            "default": "_score",
-            "description": "Sort order for results. Default is by relevance score",
-            "enum": [
-              "_score",
-              "name",
-              "-name",
-              "rating",
-              "-rating",
-              "created_at",
-              "-created_at"
-            ],
             "schema": {
-              "type": "string"
-            }
+              "type": "string",
+              "default": "_score",
+              "enum": [
+                "_score",
+                "name",
+                "-name",
+                "rating",
+                "-rating",
+                "created_at",
+                "-created_at"
+              ]
+            },
+            "required": false,
+            "description": "Sort order for results. Default is by relevance score"
           }
         ],
         "responses": {
@@ -3823,14 +3823,8 @@
             ]
           },
           "unit": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ]
+            "type": "string",
+            "nullable": true
           },
           "value_type": {
             "type": "string",
@@ -4022,24 +4016,12 @@
                 }
               },
               "minItems": {
-                "oneOf": [
-                  {
-                    "type": "integer"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ]
+                "type": "integer",
+                "nullable": true
               },
               "maxItems": {
-                "oneOf": [
-                  {
-                    "type": "integer"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ]
+                "type": "integer",
+                "nullable": true
               }
             },
             "required": [
@@ -4054,14 +4036,8 @@
             ]
           },
           "unit": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ]
+            "type": "string",
+            "nullable": true
           }
         },
         "required": [
@@ -4105,14 +4081,8 @@
             "type": "object"
           },
           "order_url": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ]
+            "type": "string",
+            "nullable": true
           },
           "internal": {
             "type": "boolean"
@@ -4301,7 +4271,9 @@
                 "properties": {
                   "type": {
                     "type": "string",
-                    "const": "basic"
+                    "enum": [
+                      "basic"
+                    ]
                   },
                   "user": {
                     "type": "string"
@@ -4525,14 +4497,8 @@
             ]
           },
           "unit": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ]
+            "type": "string",
+            "nullable": true
           },
           "value_type": {
             "type": "string",
@@ -4550,14 +4516,8 @@
                 "type": "integer"
               },
               "max": {
-                "oneOf": [
-                  {
-                    "type": "integer"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ]
+                "type": "integer",
+                "nullable": true
               },
               "currency": {
                 "type": "string"
@@ -4590,14 +4550,8 @@
             ]
           },
           "unit": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ]
+            "type": "string",
+            "nullable": true
           },
           "value_type": {
             "type": "string",
@@ -4615,24 +4569,12 @@
                 "type": "integer"
               },
               "exclusiveMinimum": {
-                "oneOf": [
-                  {
-                    "type": "boolean"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ]
+                "type": "boolean",
+                "nullable": true
               },
               "exclusiveMaximum": {
-                "oneOf": [
-                  {
-                    "type": "boolean"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ]
+                "type": "boolean",
+                "nullable": true
               }
             },
             "required": [
@@ -4675,24 +4617,12 @@
             "type": "string"
           },
           "status": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ]
+            "type": "string",
+            "nullable": true
           },
           "eid": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ]
+            "type": "string",
+            "nullable": true
           },
           "available_omses": {
             "type": "array",
@@ -4766,14 +4696,8 @@
             ]
           },
           "unit": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ]
+            "type": "string",
+            "nullable": true
           }
         },
         "required": [
@@ -4792,14 +4716,8 @@
             "type": "string"
           },
           "description": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ]
+            "type": "string",
+            "nullable": true
           }
         },
         "required": [

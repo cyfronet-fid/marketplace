@@ -20,9 +20,11 @@ RSpec.describe "Api::V1::Search::ServicesController", type: :request do
                     "offer names, and provider names using Elasticsearch"
       parameter name: :scientific_domains,
                 in: :query,
-                type: :array,
-                items: {
-                  type: :string
+                schema: {
+                  type: :array,
+                  items: {
+                    type: :string
+                  }
                 },
                 required: false,
                 description:
@@ -30,64 +32,80 @@ RSpec.describe "Api::V1::Search::ServicesController", type: :request do
                     "from scientific domain vocabulary"
       parameter name: :providers,
                 in: :query,
-                type: :array,
-                items: {
-                  type: :string
+                schema: {
+                  type: :array,
+                  items: {
+                    type: :string
+                  }
                 },
                 required: false,
                 description: "Array of provider EIDs to filter by. Use external IDs (EIDs) from provider registry"
       parameter name: :jurisdiction,
                 in: :query,
-                type: :array,
-                items: {
-                  type: :string
+                schema: {
+                  type: :array,
+                  items: {
+                    type: :string
+                  }
                 },
                 required: false,
                 description: "Array of jurisdiction EIDs to filter by"
       parameter name: :tags,
                 in: :query,
-                type: :array,
-                items: {
-                  type: :string
+                schema: {
+                  type: :array,
+                  items: {
+                    type: :string
+                  }
                 },
                 required: false,
                 description: "Array of tag EIDs to filter by. Use external IDs (EIDs) from tag vocabulary"
       parameter name: :rating,
                 in: :query,
-                type: :number,
+                schema: {
+                  type: :number,
+                  minimum: 1,
+                  maximum: 5
+                },
                 required: false,
-                minimum: 1,
-                maximum: 5,
                 description:
                   "Filter by minimum rating (1-5). Shows services with rating equal or higher than specified value"
       parameter name: :order_type,
                 in: :query,
-                type: :string,
+                schema: {
+                  type: :string,
+                  enum: %w[open_access fully_open_access order_required other]
+                },
                 required: false,
-                description: "Filter by order type. Determines how the service can be accessed",
-                enum: %w[open_access fully_open_access order_required other]
+                description: "Filter by order type. Determines how the service can be accessed"
       parameter name: :page,
                 in: :query,
-                type: :integer,
+                schema: {
+                  type: :integer,
+                  default: 1,
+                  minimum: 1
+                },
                 required: false,
-                default: 1,
-                minimum: 1,
                 description: "Page number for pagination. Must be a positive integer"
       parameter name: :per_page,
                 in: :query,
-                type: :integer,
+                schema: {
+                  type: :integer,
+                  default: 25,
+                  minimum: 1,
+                  maximum: 100
+                },
                 required: false,
-                default: 25,
-                minimum: 1,
-                maximum: 100,
                 description: "Number of results per page. Maximum allowed is 100"
       parameter name: :sort,
                 in: :query,
-                type: :string,
+                schema: {
+                  type: :string,
+                  default: "_score",
+                  enum: %w[_score name -name rating -rating created_at -created_at]
+                },
                 required: false,
-                default: "_score",
-                description: "Sort order for results. Default is by relevance score",
-                enum: %w[_score name -name rating -rating created_at -created_at]
+                description: "Sort order for results. Default is by relevance score"
 
       response(200, "Successful search") do
         schema "$ref" => "#/components/schemas/SearchResponse"

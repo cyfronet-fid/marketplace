@@ -47,5 +47,21 @@ RSpec.describe Api::V1::ComponentSchema, :backend do
         expect { validation }.to raise_error(JSON::Schema::ValidationError, /parameters/)
       end
     end
+
+    context "when a nullable property is null" do
+      let(:payload) { { name: "Offer", description: "Description", order_type: "open_access", order_url: nil } }
+
+      it "returns true" do
+        expect(validation).to be(true)
+      end
+    end
+
+    context "when a nullable property has the wrong type" do
+      let(:payload) { { name: "Offer", description: "Description", order_type: "open_access", order_url: 1 } }
+
+      it "raises a validation error" do
+        expect { validation }.to raise_error(JSON::Schema::ValidationError, /order_url/)
+      end
+    end
   end
 end

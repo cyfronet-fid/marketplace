@@ -8,14 +8,8 @@
       "type": "string"
     },
     "description": {
-      "oneOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ]
+      "type": "string",
+      "nullable": true
     }
   },
   "required": [

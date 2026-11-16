@@ -30,24 +30,12 @@
           }
         },
         "minItems": {
-          "oneOf": [
-            {
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "type": "integer",
+          "nullable": true
         },
         "maxItems": {
-          "oneOf": [
-            {
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "type": "integer",
+          "nullable": true
         }
       },
       "required": [
@@ -62,14 +50,8 @@
       ]
     },
     "unit": {
-      "oneOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ]
+      "type": "string",
+      "nullable": true
     }
   },
   "required": [

@@ -12,14 +12,8 @@
       ]
     },
     "unit": {
-      "oneOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ]
+      "type": "string",
+      "nullable": true
     },
     "value_type": {
       "type": "string",
@@ -37,14 +31,8 @@
           "type": "integer"
         },
         "max": {
-          "oneOf": [
-            {
-              "type": "integer"
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "type": "integer",
+          "nullable": true
         },
         "currency": {
           "type": "string"
