@@ -5,11 +5,30 @@ require "rails_helper"
 RSpec.describe Api::V1::OpenapiBundle, :backend do
   subject(:bundle) { described_class.call(file_fixture("openapi_bundle")) }
 
-  let(:inlined_offer_index) do
+  let(:schemas) do
     {
-      "type" => "array",
-      "items" => {
-        "allOf" => ["type" => "object", "properties" => { "parameter" => { "type" => "string" } }]
+      "SearchResponse" => {
+        "type" => "object"
+      },
+      "offer_offer_index" => {
+        "type" => "array",
+        "items" => {
+          "$ref" => "#/components/schemas/offer_offer_read"
+        }
+      },
+      "offer_offer_read" => {
+        "allOf" => ["$ref" => "#/components/schemas/definitions_offer"]
+      },
+      "definitions_offer" => {
+        "type" => "object",
+        "properties" => {
+          "parameter" => {
+            "$ref" => "#/components/schemas/definitions_parameter"
+          }
+        }
+      },
+      "definitions_parameter" => {
+        "type" => "string"
       }
     }
   end
@@ -26,8 +45,14 @@ RSpec.describe Api::V1::OpenapiBundle, :backend do
     expect(bundle["info"]).to eq(described_class::INFO)
   end
 
-  it "replaces the references to files with the content of the files" do
-    expect(bundle.dig("paths", "/offers", "get", "responses", "200", "schema")).to eq(inlined_offer_index)
+  it "replaces the references to files with references to components" do
+    expect(bundle.dig("paths", "/offers", "get", "responses", "200", "schema")).to eq(
+      "$ref" => "#/components/schemas/offer_offer_index"
+    )
+  end
+
+  it "has a component for each schema that comes from a file" do
+    expect(bundle.dig("components", "schemas")).to eq(schemas)
   end
 
   it "keeps the references to the components" do
