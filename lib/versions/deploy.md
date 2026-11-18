@@ -466,8 +466,9 @@ The flags also limit `down` to one application.
 ./lib/versions/deploy-local.sh --no-instance pl     # hub only
 ./lib/versions/deploy-local.sh --no-transform pl    # without the transform services
 ./lib/versions/deploy-local.sh seed pl              # full load of Solr again
-./lib/versions/deploy-local.sh down pl              # remove both projects
+./lib/versions/deploy-local.sh down pl              # remove both projects, keep the data
 ./lib/versions/deploy-local.sh down --no-hub pl     # remove the instance only
+./lib/versions/deploy-local.sh down --volumes pl    # remove both projects and their data
 ```
 
 Without a dump at `tmp/local-deploy/seed/<variant>/mp_db.sql` the database
@@ -481,8 +482,10 @@ docker exec <postgres container> pg_dump -U mp --no-owner --no-acl mp_pl_dump \
   > tmp/local-deploy/seed/pl/mp_db.sql
 ```
 
-An `up` keeps a database that exists and skips the seed. Only `down` removes
-the database, with the other volumes; the next `up` seeds it again.
+An `up` keeps a database that exists and skips the seed. A `down` removes the
+containers and the images and keeps the volumes: the database, the media and
+the Solr data. Only `down --volumes` removes the volumes; the next `up` seeds
+the database and Solr again.
 
 The full load of Solr reads the marketplace API with `MP_API_TOKEN` of
 `tmp/local-deploy/hubs/<variant>.env`, the token of a coordinator of the

@@ -200,7 +200,8 @@ database and of Solr. Flags deploy the applications separately:
 ./lib/versions/deploy-local.sh --no-instance pl     # the hub only
 ./lib/versions/deploy-local.sh --no-transform pl    # the hub without the transform services
 ./lib/versions/deploy-local.sh seed pl              # full load of Solr again
-./lib/versions/deploy-local.sh down pl              # remove everything of pl
+./lib/versions/deploy-local.sh down pl              # remove the containers of pl, keep the data
+./lib/versions/deploy-local.sh down --volumes pl    # remove everything of pl
 ```
 
 The ports follow the slot of the variant (pl 16, whitelabel 17,
@@ -208,7 +209,7 @@ marketplace 18): the instance answers on `http://localhost:30<slot>` and the
 hub on `http://localhost:32<slot>`. The header of the script documents the
 layout under `tmp/local-deploy`: the env files that the script writes on the
 first run, and the optional database dump and media seed. An `up` keeps a
-database that exists; only `down` removes it.
+database that exists; a `down` keeps it and only `down --volumes` removes it.
 
 In the development environment the instance reads `.env` of this checkout.
 With `AUTH_MOCK=true` the route `GET /users/login` signs a user in without

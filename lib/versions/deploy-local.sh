@@ -53,7 +53,7 @@
 # MP_LOCAL_HOST=<name> replaces localhost in the URLs.
 #
 # Usage:  deploy-local.sh [up|down|seed|restart] [--no-hub|--no-instance]
-#                         [--no-transform] [--production] <variant>
+#                         [--no-transform] [--production] [--volumes] <variant>
 #   up (default)  -> build the images and start the instance, then the hub;
 #                    seed the database and Solr on the first run. Without a
 #                    flag this sets up everything of one variant at once.
@@ -65,7 +65,9 @@
 #                    compose files and their variables; a plain `docker
 #                    compose -p mp-local-<variant> logs -f` also works while
 #                    the containers run.
-#   down          -> remove the instance and the hub: containers, images, volumes
+#   down          -> remove the containers and the images of the instance and
+#                    of the hub. The volumes stay: the database, the media and
+#                    the Solr data. The next up starts with the same data.
 #   seed          -> create the Solr collections if absent, then start a full
 #                    load; starts the transform services when they are absent.
 #                    A full load takes a long time and runs in the background:
@@ -80,6 +82,9 @@
 #   --production  -> the instance runs the production images of the staging
 #                    deploy instead of the development environment
 #   --clone       -> clone a missing hub checkout next to this repository
+#   --volumes     -> down also removes the volumes: the database, the media
+#                    and the Solr data. The next up seeds the database and
+#                    Solr again.
 # The script exits with status 1 when a step failed.
 # Examples:
 #   deploy-local.sh pl                  # everything of pl: instance and hub
@@ -91,7 +96,8 @@
 #   deploy-local.sh --no-transform pl   # pl without the transform services
 #   deploy-local.sh --production pl     # the staging images, built from the tree
 #   deploy-local.sh seed pl             # load the pl hub's Solr again
-#   deploy-local.sh down pl             # remove the pl instance and the pl hub
+#   deploy-local.sh down pl             # remove the pl instance and the pl hub, keep the data
+#   deploy-local.sh down --volumes pl   # remove the data of pl too
 set -uo pipefail
 
 APP=$(git -C "$(dirname "$0")" rev-parse --show-toplevel) || exit 1
@@ -155,7 +161,8 @@ WITH_INSTANCE=1
 TRANSFORM=1
 PRODUCTION=0
 CLONE=0
-USAGE="Usage: $0 [up|down|seed|restart|logs] [--no-hub|--no-instance] [--no-transform] [--production] [--clone] <${ALL_VARIANTS[*]}>"
+VOLUMES=0
+USAGE="Usage: $0 [up|down|seed|restart|logs] [--no-hub|--no-instance] [--no-transform] [--production] [--clone] [--volumes] <${ALL_VARIANTS[*]}>"
 for arg in "$@"; do
     case "$arg" in
         up|down|seed|restart|logs) MODE="$arg" ;;
@@ -164,6 +171,7 @@ for arg in "$@"; do
         --no-transform) TRANSFORM=0 ;;
         --production) PRODUCTION=1 ;;
         --clone) CLONE=1 ;;
+        --volumes) VOLUMES=1 ;;
         -h|--help)
             echo "$USAGE"; exit 0 ;;
         *)
@@ -187,6 +195,9 @@ if [ "$TRANSFORM" = 0 ] && [ "$MODE" != "up" ]; then
 fi
 if [ "$CLONE" = 1 ] && [ "$MODE" != "up" ]; then
     echo "--clone does not apply to $MODE"; exit 2
+fi
+if [ "$VOLUMES" = 1 ] && [ "$MODE" != "down" ]; then
+    echo "--volumes does not apply to $MODE"; exit 2
 fi
 if [ "$MODE" = "restart" ]; then
     [ "$WITH_INSTANCE" = 1 ] || { echo "--no-instance does not apply to restart"; exit 2; }
@@ -465,7 +476,7 @@ deploy_instance() {
     # --- seed when the database has no schema_migrations table ---
     if [ "$(instance exec -T "$DB_SERVICE" psql -tA -U "$DB_USER" -d "$DB_NAME" \
             -c "SELECT to_regclass('public.schema_migrations') IS NOT NULL" 2>/dev/null)" = "t" ]; then
-        echo "[${VARIANT}] database present, kept (reset with: $0 down ${VARIANT})"
+        echo "[${VARIANT}] database present, kept (reset with: $0 down --volumes ${VARIANT})"
     else
         if [ -d "$seed/media" ]; then
             instance cp "$seed/media/." "${APP_SERVICE}:${MEDIA_PATH}/" || return 1
@@ -525,11 +536,11 @@ case "$MODE" in
         status=0
         if [ "$WITH_INSTANCE" = 1 ]; then
             echo "=== [${VARIANT}] down ==="
-            instance down -v --remove-orphans --rmi local || { echo "[${VARIANT}] down FAILED"; status=1; }
+            instance down "${down_options[@]}" || { echo "[${VARIANT}] down FAILED"; status=1; }
         fi
         if [ "$WITH_HUB" = 1 ]; then
             echo "=== [${VARIANT} hub] down ==="
-            hub down -v --remove-orphans --rmi local || { echo "[${VARIANT} hub] down FAILED"; status=1; }
+            hub down "${down_options[@]}" || { echo "[${VARIANT} hub] down FAILED"; status=1; }
         fi
         exit $status ;;
     seed)
@@ -565,6 +576,10 @@ if [ "$WITH_INSTANCE" = 1 ]; then
 fi
 if [ "$WITH_HUB" = 1 ]; then
     echo "=== [${VARIANT} hub] deploy ==="
+        # The volumes stay, thus the next up finds the database, the media and
+        # the Solr data. --volumes removes them.
+        down_options=(--remove-orphans --rmi local)
+        [ "$VOLUMES" = 1 ] && down_options+=(-v)
     deploy_hub || { echo "[${VARIANT} hub] FAILED"; exit 1; }
     echo "[${VARIANT}] hub: $MP_HUB_URL"
 fi
