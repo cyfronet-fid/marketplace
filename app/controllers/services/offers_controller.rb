@@ -17,7 +17,6 @@ class Services::OffersController < ApplicationController
     # A direct visit (for example from the discovery hub) has no search in the
     # session; pl-marketplace reads it the same way.
     redirect_to service_path(@service, q: session.dig(:query, :q)) if @service.offers.inclusive.published.empty?
-    @service.store_analytics
     @service.monitoring_status = fetch_status(@service.pid)
     @offers = policy_scope(@service.offers.inclusive).order(:iid)
     @bundles = policy_scope(@service.bundles.published).order(:iid)

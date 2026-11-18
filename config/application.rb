@@ -44,10 +44,6 @@ module Mp
     config.active_storage.queues.analysis = :active_storage_analysis
     config.active_storage.queues.purge = :active_storage_purge
 
-    # Matomo is off when MP_MATOMO_URL is not set.
-    config.matomo_url = ENV.fetch("MP_MATOMO_URL", nil)
-    config.matomo_site_id = ENV.fetch("MP_MATOMO_SITE_ID", 1).to_i
-
     # Hierachical locales file structure
     # see https://guides.rubyonrails.org/i18n.html#configure-the-i18n-module
     config.i18n.load_path += Rails.root.glob("config/locales/**/*.{rb,yml}")
@@ -69,7 +65,6 @@ module Mp
 
     config.providers_dashboard_url = ENV.fetch("PROVIDERS_DASHBOARD_URL", "https://integration.providers.sandbox.eosc-beyond.eu/")
 
-    config.google_api_key_path = ENV.fetch("GOOGLE_AUTH_KEY_FILEPATH", "config/google_api_key.json")
     config.monitoring_data_enabled = ActiveModel::Type::Boolean.new.cast(ENV.fetch("MONITORING_DATA_ENABLED", false))
     config.monitoring_data_host = ENV.fetch("MONITORING_DATA_URL", "https://api.devel.argo.grnet.gr/api")
     config.monitoring_data_token = ENV.fetch("MONITORING_DATA_TOKEN",
@@ -116,7 +111,6 @@ module Mp
     config.mail_logo_path = ENV["MAIL_LOGO_PATH"].presence&.then { |path| Rails.root.join(path) }
 
     config.enable_external_search = ActiveModel::Type::Boolean.new.cast(ENV.fetch("MP_ENABLE_EXTERNAL_SEARCH", false))
-    config.analytics_enabled = ActiveModel::Type::Boolean.new.cast(ENV.fetch("ANALYTICS_ENABLED", false))
 
     config.bos_base_url = ENV.fetch("BOS_API_URL", "http://localhost:8000")
     config.bos_api_key = ENV.fetch("BOS_API_KEY", "")

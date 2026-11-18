@@ -6,7 +6,6 @@ class DeployableService < ApplicationRecord
   include OrderableResource
   include Publishable
   include Statusable
-  include Viewable
 
   extend FriendlyId
   friendly_id :name, use: :slugged
@@ -272,10 +271,6 @@ class DeployableService < ApplicationRecord
 
   def should_index?
     published?
-  end
-
-  # Analytics (no-op for DeployableService)
-  def store_analytics
   end
 
   def monitoring_status

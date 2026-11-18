@@ -15,7 +15,6 @@ queues:
   - orders
   - mailers
   - reports
-  - matomo
   - probes
   - default
   - pc_publisher

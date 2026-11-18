@@ -16,7 +16,6 @@ class Projects::Services::OpinionsController < ApplicationController
     @service_opinion = ServiceOpinion::Create.new(template).call
     respond_to do |format|
       if @service_opinion.persisted?
-        Matomo::SendRequestJob.perform_later(@project_item, "Rate", @service_opinion.service_rating)
         format.html do
           redirect_to project_service_offers_path(@project, @project_item), notice: "Rating submitted successfully"
         end

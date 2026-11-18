@@ -7,7 +7,6 @@ class ProvidersController < ApplicationController
 
   def show
     @provider = Provider.with_attached_logo.friendly.find(params[:id])
-    @provider.store_analytics
     authorize(@provider)
 
     @related_services = @provider.services.order(created_at: :desc).uniq.first(2)

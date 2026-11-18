@@ -84,8 +84,6 @@ gem "jira-ruby"
 # soap
 gem "savon", "~> 2.15"
 
-gem "google-apis-analyticsreporting_v4", "~> 0.5"
-
 gem "sidekiq", ">= 8.0.9"
 gem "sidekiq-cron", "~> 2.4"
 gem "sidekiq-limit_fetch", "~>4.4"

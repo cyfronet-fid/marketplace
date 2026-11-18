@@ -4,7 +4,6 @@ class Bundle < ApplicationRecord
   include Offerable
   include Propagable
   include Statusable
-  include Viewable
 
   # include Offer::Parameters
 

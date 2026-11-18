@@ -471,12 +471,6 @@ RSpec.describe DeployableService, backend: true do
       end
     end
 
-    describe "#store_analytics" do
-      it "does not raise error" do
-        expect { deployable_service.store_analytics }.not_to raise_error
-      end
-    end
-
     describe "#monitoring_status" do
       it "returns nil" do
         expect(deployable_service.monitoring_status).to be_nil

@@ -7,12 +7,12 @@ module Presentable::DetailsHelper
   def service_details_columns(object)
     if Mp::Variant.pl?
       [
-        [pid, analytics, classification, marketing, dependencies, attribution, order, geographic_locations],
+        [pid, classification, marketing, dependencies, attribution, order, geographic_locations],
         [public_contacts, maturity_information, financial_information(object)].compact,
         [changelog]
       ]
     else
-      [[pid, analytics, classification, service_urls, order], [service_public_contact_emails, service_dates].compact,
+      [[pid, classification, service_urls, order], [service_public_contact_emails, service_dates].compact,
        []]
     end
   end
@@ -20,7 +20,7 @@ module Presentable::DetailsHelper
   def datasource_details_columns(object)
     if Mp::Variant.pl?
       [
-        [pid, analytics, classification, marketing, dependencies, attribution, geographic_locations, order],
+        [pid, classification, marketing, dependencies, attribution, geographic_locations, order],
         [public_contacts, maturity_information, financial_information(object)].compact,
         [
           version_control,
@@ -36,7 +36,7 @@ module Presentable::DetailsHelper
       ]
     else
       [
-        [pid, analytics, classification, marketing, order],
+        [pid, classification, marketing, order],
         [service_public_contact_emails, maturity_information, financial_information(object)].compact,
         [version_control, datasource_content]
       ]
@@ -64,10 +64,6 @@ module Presentable::DetailsHelper
 
   def affiliations
     { name: "affiliations", template: "list", fields: %w[affiliations] }
-  end
-
-  def analytics
-    { name: "Statistics", fields: %w[analytics], template: "analytics", active_when_suspended: false }
   end
 
   def areas_of_activity
