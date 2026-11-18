@@ -121,5 +121,41 @@ RSpec.describe Backoffice::ProviderPolicy, :backend do
 
       expect(policy.permitted_attributes).to include(:node_ids)
     end
+
+    # The fields of the classification, maturity, dependencies and other tabs.
+    it "permits the fields of the provider page tabs" do
+      policy = described_class.new(build(:user, roles: [:coordinator]), build(:provider))
+
+      expect(policy.permitted_attributes).to include([scientific_domain_ids: []], :tag_list, [esfri_domain_ids: []])
+    end
+
+    it "does not permit the fields of the PL profile" do
+      policy = described_class.new(build(:user, roles: [:coordinator]), build(:provider))
+
+      expect(policy.permitted_attributes).not_to include([certifications: []], [affiliations: []])
+    end
+  end
+
+  context "when running as marketplace" do
+    before { allow(Mp::Variant).to receive_messages(marketplace?: true, pl?: false, whitelabel?: false) }
+
+    # The fields of the classification, maturity, dependencies and other tabs.
+    it "permits the fields of the provider page tabs" do
+      policy = described_class.new(build(:user, roles: [:coordinator]), build(:provider))
+
+      expect(policy.permitted_attributes).to include([scientific_domain_ids: []], :tag_list, [esfri_domain_ids: []])
+    end
+
+    it "does not permit the fields of the PL profile" do
+      policy = described_class.new(build(:user, roles: [:coordinator]), build(:provider))
+
+      expect(policy.permitted_attributes).not_to include([certifications: []], [affiliations: []])
+    end
+
+    it "locks the tab fields of a registry-imported provider" do
+      policy = described_class.new(build(:user, roles: [:coordinator]), build(:provider, upstream_id: 1))
+
+      expect(policy.permitted_attributes).not_to include([network_ids: []])
+    end
   end
 end
