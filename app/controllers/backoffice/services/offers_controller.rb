@@ -70,7 +70,9 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
 
   # POST /backoffice/services/<service_slug>/offers/:id/duplicate
   def duplicate
-    original_offer = @service.offers.find_by(iid: params[:offer_id])
+    original_offer = @service.offers.find_by!(iid: params[:offer_id])
+    authorize(original_offer, :duplicate?)
+
     new_offer = original_offer.dup
     new_offer.iid = nil
     new_offer.id = nil
@@ -83,7 +85,9 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
     if @offer.persisted?
       redirect_to backoffice_service_offers_path(@service), notice: "Offer duplicated successfully"
     else
-      redirect_to backoffice_service_offers_path(@service), notice: "Offer duplication errored"
+      # The full messages of this application leave the attribute out, thus the reason names the attribute.
+      reason = @offer.errors.map { |error| "#{error.attribute} #{error.message}" }.to_sentence
+      redirect_to backoffice_service_offers_path(@service), alert: "Offer duplication errored: #{reason}"
     end
   end
 
