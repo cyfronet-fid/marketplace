@@ -218,12 +218,20 @@ remove_transform() {
 # `up --no-transform` removes them, and the two modes do not write the state
 # file. Thus the up-to-date check of a deploy must not trust the state file
 # alone.
+# With --no-transform a stopped container counts as present: Docker starts a
+# stopped container with `restart: always` again after a restart of the
+# daemon. Without the option only a running container counts as present.
+# A failed query is not a match. The deploy that follows shows the error of
+# Docker.
 transform_state_matches() {
-    local variant="$1" service running
+    local variant="$1" service id present
+    local -a ps_options=(-q)
+    [ "$TRANSFORM" = 1 ] || ps_options=(--all -q)
     for service in transform-api transform-worker redis; do
-        running=0
-        [ -n "$(HUB_PROFILES="transform" compose "$variant" ps -q "$service")" ] && running=1
-        [ "$running" = "$TRANSFORM" ] || return 1
+        id=$(HUB_PROFILES="transform" compose "$variant" ps "${ps_options[@]}" "$service") || return 1
+        present=0
+        [ -n "$id" ] && present=1
+        [ "$present" = "$TRANSFORM" ] || return 1
     done
     return 0
 }
