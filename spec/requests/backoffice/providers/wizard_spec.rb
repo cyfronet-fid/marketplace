@@ -6,7 +6,7 @@ require "rails_helper"
 # marketplace has no such button and refuses the request.
 RSpec.describe "Backoffice: provider wizard", :backend do
   let(:coordinator) { create(:user, roles: [:coordinator]) }
-  let(:draft_params) { { provider: { name: "Draft provider" }, commit: "Save as draft" } }
+  let(:draft_params) { { provider: { name: "Draft provider" }, save_as_draft: "Save as draft" } }
 
   before { login_as(coordinator) }
 

@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Backoffice::Services::OffersController < Backoffice::ApplicationController
-  include Backoffice::OffersHelper
-
   before_action :find_service
   before_action :find_offer_and_authorize, only: %i[edit update]
   before_action :load_form_data, only: %i[fetch_subtypes]
@@ -22,31 +20,22 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
   def edit; end
 
   def create
-    save_as_draft = params[:commit] == save_as_draft_title
-    template = save_as_draft ? offer_draft_template : offer_template
-    authorize(template)
+    @offer = save_as_draft? ? offer_draft_template : offer_template
+    authorize(@offer)
+    (save_as_draft? ? Offer::CreateAsDraft : Offer::Create).call(@offer)
 
-    if save_as_draft
-      template.name = params["name"]
-      @offer = Offer::CreateAsDraft.call(template)
+    # An offer that is not saved shows its errors in the form.
+    if @offer.persisted?
       redirect_to backoffice_service_offers_path(@service), notice: "New offer created successfully"
-      return
     else
-      @offer = Offer::Create.call(template)
-    end
-
-    if @offer.invalid?
       render :new, status: :bad_request
-    else
-      redirect_to backoffice_service_offers_path(@service), notice: "New offer created successfully"
     end
   end
 
   def update
-    save_as_draft = params[:commit] == save_as_draft_title
     template = permitted_attributes(Offer)
 
-    if save_as_draft
+    if save_as_draft?
       template[:name] = params["name"]
       Offer::UpdateAsDraft.call(@offer, transform_attributes(template))
       redirect_to backoffice_service_offers_path(@service), notice: "Offer updated successfully and drafted"
@@ -109,9 +98,15 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
     Offer.new(temp.merge(service: @service, status: :published))
   end
 
+  # The exit modal posts the name of the draft outside the offer attributes.
   def offer_draft_template
     temp = transform_attributes(permitted_attributes(Offer))
-    Offer.new(temp.merge(service: @service, status: :draft))
+    Offer.new(temp.merge(service: @service, status: :draft, name: params[:name]))
+  end
+
+  # The submit button of the exit modal has the name save_as_draft.
+  def save_as_draft?
+    params.key?(:save_as_draft)
   end
 
   # An offer has no service_id since offers became polymorphic (orderable);
