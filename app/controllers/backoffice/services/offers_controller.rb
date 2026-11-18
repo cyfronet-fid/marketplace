@@ -88,7 +88,9 @@ class Backoffice::Services::OffersController < Backoffice::ApplicationController
     new_offer.name = params["custom_form"][:new_name]
     new_offer.status = "draft"
 
-    @offer = Offer::Create.call(new_offer)
+    # The copy is a draft. It saves without validation, as the draft of the offer form does.
+    # A copy of an offer without an offer category fails the validation of Offer::Create.
+    @offer = Offer::CreateAsDraft.call(new_offer)
     if @offer.persisted?
       redirect_to backoffice_service_offers_path(@service), notice: "Offer duplicated successfully"
     else
