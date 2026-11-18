@@ -377,24 +377,54 @@ wait_for_url() {
     done
 }
 
-# Creates the Solr collections when they are absent, then starts a full load
-# from the marketplace API. With the argument "always" the load also starts
-# when the collections exist. The load runs in the transform worker:
-#   docker compose -p mp-local-<variant>-hub logs -f transform-worker
-# Fills MP_API_TOKEN of hubs/<variant>.env in when the variable is empty. The
-# full load of Solr reads the marketplace API with the token of a coordinator.
-# The coordinator is the user local-deploy@localhost of the local instance,
-# created on the first call; simple_token_authentication generates the token
-# when the user is saved without one. The web container runs the Ruby below
-# (rails runner reads it from stdin), thus the instance must answer first.
+# Prints the HTTP status that the instance gives for the token: 200 for the
+# token of a coordinator, 401 for an unknown token, 403 for a user who is not
+# a coordinator. The request reads /api/v1/ess/catalogues, one of the
+# resources of the full load.
+api_token_status() {
+    curl -s -o /dev/null -w '%{http_code}' -H "accept: application/json" \
+        -H "X-User-Token: $1" "$MP_ROOT_URL/api/v1/ess/catalogues"
+}
+
+# Creates the transform containers again and waits for the transform API. A
+# container gets MP_API_TOKEN from the env file at its creation only, thus a
+# container that runs keeps the old value.
+recreate_transform() {
+    hub up -d --force-recreate --no-deps transform-api transform-worker || return 1
+    wait_for_url "http://127.0.0.1:${TRANSFORM_PORT}/docs"
+}
+
+# Makes sure that MP_API_TOKEN of hubs/<variant>.env is a token that the
+# instance accepts. The full load of Solr reads the marketplace API with the
+# token of a coordinator. A token that the instance accepts stays. An empty
+# token or a token that the instance rejects, for example after a
+# `down --volumes` removed the database, is replaced with the token of the
+# coordinator local-deploy@localhost. The function creates this user on the
+# first call;
+# simple_token_authentication generates the token when the user is saved
+# without one. The web container runs the Ruby below (rails runner reads it
+# from stdin), thus the instance must answer first. After the write the
+# function creates the transform containers again.
 ensure_api_token() {
-    local file="$HUBS/${VARIANT}.env" token tmp
-    grep -qE '^MP_API_TOKEN=.+' "$file" && return 0
+    local file="$HUBS/${VARIANT}.env" token status tmp
     if ! wait_for_url "$MP_ROOT_URL"; then
-        echo "[${VARIANT} hub] MP_API_TOKEN is empty and the instance does not answer at $MP_ROOT_URL"
+        echo "[${VARIANT} hub] the instance does not answer at $MP_ROOT_URL: no check of MP_API_TOKEN"
         return 1
     fi
-    echo "[${VARIANT} hub] MP_API_TOKEN is empty: taking the token of local-deploy@localhost from the instance"
+    token=$(sed -n 's/^MP_API_TOKEN=//p' "$file" | tail -n 1)
+    if [ -n "$token" ]; then
+        status=$(api_token_status "$token")
+        case "$status" in
+            200) return 0 ;;
+            401|403)
+                echo "[${VARIANT} hub] the instance rejects MP_API_TOKEN of $file (HTTP $status): taking the token of local-deploy@localhost from the instance" ;;
+            *)
+                echo "[${VARIANT} hub] the check of MP_API_TOKEN failed (HTTP $status from $MP_ROOT_URL/api/v1/ess/catalogues)"
+                return 1 ;;
+        esac
+    else
+        echo "[${VARIANT} hub] MP_API_TOKEN is empty: taking the token of local-deploy@localhost from the instance"
+    fi
     token=$(instance exec -T "$APP_SERVICE" ./bin/rails runner - <<'RUBY' 2>/dev/null | tail -n 1
 require "bcrypt"
 user = User.find_by(email: "local-deploy@localhost")
@@ -419,8 +449,13 @@ RUBY
     tmp=$(mktemp) || return 1
     sed "s|^MP_API_TOKEN=.*|MP_API_TOKEN=${token}|" "$file" > "$tmp" && mv "$tmp" "$file" || return 1
     echo "[${VARIANT} hub] MP_API_TOKEN written to $file"
+    recreate_transform || { echo "[${VARIANT} hub] transform services not ready after the write of the token"; return 1; }
 }
 
+# Creates the Solr collections when they are absent, then starts a full load
+# from the marketplace API. With the argument "always" the load also starts
+# when the collections exist. The load runs in the transform worker:
+#   docker compose -p mp-local-<variant>-hub logs -f transform-worker
 seed_hub() {
     local load="${1:-first}"
     local prefix solr transform
@@ -443,7 +478,14 @@ seed_hub() {
         wait_for_url "$solr/${prefix}all_collection/admin/ping" || { echo "collections not created, see the transform-worker log"; return 1; }
     fi
 
-    ensure_api_token || { echo "[${VARIANT} hub] no full load; run later: $0 seed ${VARIANT}"; return 0; }
+    # Without a token there is no load. The seed mode has the load as its one
+    # task, thus it fails. A deploy stays successful: the hub runs, and the
+    # line below tells how to start the load.
+    if ! ensure_api_token; then
+        echo "[${VARIANT} hub] no full load; run later: $0 seed ${VARIANT}"
+        [ "$load" = "always" ] && return 1
+        return 0
+    fi
     echo "[${VARIANT} hub] full load from the marketplace API started:"
     curl -sf -X POST "$transform/full?data_type=all" || return 1
     echo
@@ -534,6 +576,10 @@ deploy_hub() {
 case "$MODE" in
     down)
         status=0
+        # The volumes stay, thus the next up finds the database, the media and
+        # the Solr data. --volumes removes them.
+        down_options=(--remove-orphans --rmi local)
+        [ "$VOLUMES" = 1 ] && down_options+=(-v)
         if [ "$WITH_INSTANCE" = 1 ]; then
             echo "=== [${VARIANT}] down ==="
             instance down "${down_options[@]}" || { echo "[${VARIANT}] down FAILED"; status=1; }
@@ -576,10 +622,6 @@ if [ "$WITH_INSTANCE" = 1 ]; then
 fi
 if [ "$WITH_HUB" = 1 ]; then
     echo "=== [${VARIANT} hub] deploy ==="
-        # The volumes stay, thus the next up finds the database, the media and
-        # the Solr data. --volumes removes them.
-        down_options=(--remove-orphans --rmi local)
-        [ "$VOLUMES" = 1 ] && down_options+=(-v)
     deploy_hub || { echo "[${VARIANT} hub] FAILED"; exit 1; }
     echo "[${VARIANT}] hub: $MP_HUB_URL"
 fi

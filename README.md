@@ -219,8 +219,9 @@ The Check-in settings of an instance come from `marketplace-<variant>.env`,
 which has precedence over `.env`; the script writes placeholders there for
 marketplace and whitelabel. The coordinator token `MP_API_TOKEN` of
 `tmp/local-deploy/hubs/<variant>.env` is necessary for the full load of Solr
-only, not for the instance or the login; when it is empty, the script creates
-the coordinator `local-deploy@localhost` in the instance and fills it in.
+only, not for the instance or the login; when it is empty or the instance
+rejects it, the script creates the coordinator `local-deploy@localhost` in the
+instance and fills it in.
 
 The transform service fills the Solr of a hub from the marketplace API. The
 first run with the transform services starts the first full load, which takes

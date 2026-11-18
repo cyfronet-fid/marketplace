@@ -489,10 +489,15 @@ the database and Solr again.
 
 The full load of Solr reads the marketplace API with `MP_API_TOKEN` of
 `tmp/local-deploy/hubs/<variant>.env`, the token of a coordinator of the
-local instance. When the variable is empty, the script creates the coordinator
-`local-deploy@localhost` in the instance and writes the token into the file
-before the load. Put the token of another account into the file to load with
-that account. The instance and the login below do not need the token.
+local instance. Before the load the script asks the instance if it accepts the
+token. When the variable is empty or the instance rejects the token, for
+example after a `down --volumes` removed the database, the script creates the
+coordinator `local-deploy@localhost` in the instance and writes the token into
+the file. Then the script creates the transform containers again, because a
+container reads the file at its creation only. Put the token of another
+coordinator into the file to load with that account. A `seed` without a load
+ends with an error; an `up` without a load stays successful and shows the
+`seed` command. The instance and the login below do not need the token.
 
 ### Log in
 
