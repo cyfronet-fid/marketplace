@@ -45,6 +45,12 @@ function eventFrom(element) {
   return event;
 }
 
+// Project pages carry the user's own project name in their title, so they
+// go to Matomo under one fixed title; the other pages keep document.title.
+function pageTitle() {
+  return window.location.pathname.startsWith("/projects/") ? "Project" : document.title;
+}
+
 const url = meta("matomo-url");
 const siteId = meta("matomo-site-id");
 
@@ -83,7 +89,7 @@ if (url && siteId) {
       track(["setReferrerUrl", previousUrl]);
     }
     track(["setCustomUrl", window.location.href]);
-    track(["setDocumentTitle", document.title]);
+    track(["setDocumentTitle", pageTitle()]);
     track(["trackPageView"]);
     document.querySelectorAll("[data-matomo-event]").forEach((element) => track(eventFrom(element)));
     previousUrl = window.location.href;
