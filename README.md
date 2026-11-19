@@ -453,10 +453,22 @@ interleave.
   segment, so the Matomo site needs no pre-processed segments. Run Matomo's
   archiving (`core:archive`) from cron, and set `MP_MATOMO_SYNC_CRON` to run
   after it.
-- Matomo keeps 500 event names a day per report by default and groups the
-  others under "Others", whose Views the sync can't count. A Node with more
-  Viewed resources a day should raise `datatable_archiving_maximum_rows_events`
-  in Matomo's `config.ini.php`.
+- Matomo keeps 500 event names a day per report by default, counting the
+  names of every event, not only of Views, and groups the others under
+  "Others", whose Views the sync can't count. A Node with more event names a
+  day should raise `datatable_archiving_maximum_rows_events` in Matomo's
+  `config.ini.php`. That doesn't change the reports Matomo has already
+  archived. To recover the Views of those days, check that Matomo still has
+  their raw data (unless it's set to delete old raw data, it does),
+  invalidate and rebuild their reports, then run the backfill below over the
+  same days:
+
+  ```shell
+  ./console core:invalidate-report-data \
+    --dates=2026-01-01,2026-01-31 --sites=<site ID>
+  ./console core:archive
+  ```
+
 - The sync logs and skips event names that match no record, such as the PID
   of a service removed from this Node.
 - When a sync fails, Sidekiq retries it over the same days, also on a later
@@ -465,6 +477,15 @@ interleave.
 
   ```shell
   bin/rails "matomo:sync_views[2026-01-01,2026-01-31]"
+  ```
+
+  The sync adds and updates rows but never deletes them, so a service,
+  provider or bundle that drops out of a day's report, for example after its
+  data was deleted in Matomo, keeps its old Views. Before a backfill over
+  such days, delete their rows in `bin/rails console`:
+
+  ```ruby
+  ViewStatistic.where(date: "2026-01-01".."2026-01-31").delete_all
   ```
 
 ### Local Matomo
