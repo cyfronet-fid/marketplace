@@ -8,6 +8,10 @@ module Matomo
     queue_as :default
 
     def perform
+      # The cron entry is disabled while Matomo is off, but a retry from before
+      # or a manual run can still start the job.
+      return unless Mp::Application.config.matomo.enabled?
+
       # Tracking works without the token, so a Node can collect Views before
       # its reporting user exists.
       if Mp::Application.config.matomo.token_auth.blank?

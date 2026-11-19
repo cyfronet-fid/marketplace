@@ -261,6 +261,23 @@ RSpec.describe Matomo::SyncViewsJob, type: :job do
     end
   end
 
+  # The cron entry is disabled then, but a retry or a manual run still starts the job.
+  context "with Matomo off" do
+    let(:unviewed) { create(:service, usage_counts_views: 42) }
+
+    before { allow(Mp::Application.config.matomo).to receive(:enabled?).and_return(false) }
+
+    it "doesn't call Matomo" do
+      described_class.perform_now
+
+      expect(a_request(:post, "https://matomo.example.org/index.php")).not_to have_been_made
+    end
+
+    it "leaves usage_counts_views alone" do
+      expect { described_class.perform_now }.not_to change { unviewed.reload.usage_counts_views }
+    end
+  end
+
   describe "failures, which Sidekiq retries" do
     context "with a Matomo error result" do
       let(:report) { { result: "error", message: "Unable to authenticate with the provided token." } }
