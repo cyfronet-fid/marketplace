@@ -53,6 +53,10 @@ if (url && siteId) {
   track(["disableCookies"]);
   track(["setTrackerUrl", `${url}matomo.php`]);
   track(["setSiteId", siteId]);
+  // client_uid, the visitor's recommender ID that links from the search
+  // portal carry (ServicesController#override_user_action_info), stays out of
+  // the url and urlref Matomo sends; the other parameters are kept.
+  track(["setExcludedQueryParams", ["client_uid"]]);
   // Outlinks. enableLinkTracking listens on document.body, once, and Turbo
   // replaces the body on every visit; a listener on document, which Turbo
   // keeps, sees the link clicks of every body.
