@@ -20,10 +20,19 @@ function track(command) {
   window._paq.push(command);
 }
 
-function loadTracker(url) {
+// Calls onFailure when matomo.js does not run as the tracker: the request
+// fails (an ad blocker, Matomo down), or the file loads but leaves
+// window._paq an array, which matomo.js replaces with its tracker as it runs.
+function loadTracker(url, onFailure) {
   const script = document.createElement("script");
   script.async = true;
   script.src = `${url}matomo.js`;
+  script.addEventListener("load", () => {
+    if (Array.isArray(window._paq)) {
+      onFailure();
+    }
+  });
+  script.addEventListener("error", onFailure);
   document.head.appendChild(script);
 }
 
@@ -59,12 +68,24 @@ if (url && siteId) {
   track(["disableCookies"]);
   track(["setTrackerUrl", `${url}matomo.php`]);
   track(["setSiteId", siteId]);
-  loadTracker(url);
+
+  // Without the tracker nothing sends the queue, so a failed load drops it
+  // and later visits queue nothing until the next full page load. No retry:
+  // it can't get past an ad blocker, and hits replayed after an outage would
+  // be recorded at the time they're sent, not at the time of the visit.
+  let trackerFailed = false;
+  loadTracker(url, () => {
+    trackerFailed = true;
+    window._paq = [];
+  });
 
   // The first page view keeps Matomo's default referrer, document.referrer.
   let previousUrl = null;
 
   document.addEventListener("turbo:load", () => {
+    if (trackerFailed) {
+      return;
+    }
     if (previousUrl) {
       track(["setReferrerUrl", previousUrl]);
     }
