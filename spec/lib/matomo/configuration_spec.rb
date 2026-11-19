@@ -67,6 +67,22 @@ RSpec.describe Matomo::Configuration do
     end
   end
 
+  context "when enabled with a MP_MATOMO_SITE_ID of 0" do
+    let(:env) { site.merge("MP_MATOMO_ENABLED" => "true", "MP_MATOMO_SITE_ID" => "0") }
+
+    it "refuses to boot" do
+      expect { configuration }.to raise_error(Matomo::Configuration::Error, /MP_MATOMO_SITE_ID must be a positive/)
+    end
+  end
+
+  context "when enabled with a MP_MATOMO_SITE_ID that is not a number" do
+    let(:env) { site.merge("MP_MATOMO_ENABLED" => "true", "MP_MATOMO_SITE_ID" => "12a") }
+
+    it "refuses to boot" do
+      expect { configuration }.to raise_error(Matomo::Configuration::Error, /MP_MATOMO_SITE_ID must be a positive/)
+    end
+  end
+
   context "with MP_MATOMO_URL without a trailing slash" do
     let(:env) { site.merge("MP_MATOMO_ENABLED" => "true", "MP_MATOMO_URL" => "https://matomo.example.org") }
 
@@ -77,6 +93,62 @@ RSpec.describe Matomo::Configuration do
     let(:env) { site.merge("MP_MATOMO_ENABLED" => "true", "MP_MATOMO_URL" => "http://example.org/matomo") }
 
     it { is_expected.to have_attributes(url: "http://example.org/matomo/") }
+  end
+
+  context "with MP_MATOMO_URL ending in several slashes" do
+    let(:env) { site.merge("MP_MATOMO_ENABLED" => "true", "MP_MATOMO_URL" => "https://example.org/matomo//") }
+
+    it { is_expected.to have_attributes(url: "https://example.org/matomo/") }
+  end
+
+  context "with a query in MP_MATOMO_URL" do
+    let(:env) { site.merge("MP_MATOMO_ENABLED" => "true", "MP_MATOMO_URL" => "https://example.org/matomo?site=1") }
+
+    it "refuses to boot" do
+      expect { configuration }.to raise_error(Matomo::Configuration::Error, /without a query or fragment/)
+    end
+  end
+
+  context "with a fragment in MP_MATOMO_URL" do
+    let(:env) { site.merge("MP_MATOMO_ENABLED" => "true", "MP_MATOMO_URL" => "https://example.org/matomo#setup") }
+
+    it "refuses to boot" do
+      expect { configuration }.to raise_error(Matomo::Configuration::Error, /without a query or fragment/)
+    end
+  end
+
+  context "with MP_MATOMO_TOKEN_AUTH and an http MP_MATOMO_URL" do
+    let(:env) do
+      site.merge(
+        "MP_MATOMO_ENABLED" => "true",
+        "MP_MATOMO_URL" => "http://matomo.example.org/",
+        "MP_MATOMO_TOKEN_AUTH" => "secret"
+      )
+    end
+
+    it "refuses to boot, as the token would travel unencrypted" do
+      expect { configuration }.to raise_error(Matomo::Configuration::Error, /must use https/)
+    end
+  end
+
+  context "with MP_MATOMO_TOKEN_AUTH and an http MP_MATOMO_URL on this host" do
+    let(:env) do
+      site.merge(
+        "MP_MATOMO_ENABLED" => "true",
+        "MP_MATOMO_URL" => "http://localhost:8080/",
+        "MP_MATOMO_TOKEN_AUTH" => "secret"
+      )
+    end
+
+    it { is_expected.to have_attributes(url: "http://localhost:8080/", token_auth: "secret") }
+  end
+
+  context "with MP_MATOMO_TOKEN_AUTH and an http MP_MATOMO_URL on a loopback address" do
+    let(:env) do
+      site.merge("MP_MATOMO_ENABLED" => "true", "MP_MATOMO_URL" => "http://[::1]/", "MP_MATOMO_TOKEN_AUTH" => "secret")
+    end
+
+    it { is_expected.to have_attributes(url: "http://[::1]/") }
   end
 
   context "with a protocol-relative MP_MATOMO_URL" do

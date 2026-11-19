@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "ipaddr"
+
 module Matomo
   # Every Matomo setting of this Node, read from the MP_MATOMO_* env vars
   # (ADR-0008 D2, D3). config/application.rb builds it once at boot as
@@ -15,6 +17,8 @@ module Matomo
     end
 
     DEFAULT_SYNC_CRON = "15 2 * * *"
+    # Matomo numbers its sites from 1.
+    SITE_ID_FORMAT = /\A[1-9]\d*\z/
 
     attr_reader :url, :site_id, :token_auth, :sync_cron
 
@@ -45,23 +49,48 @@ module Matomo
     # The tracker appends matomo.js and matomo.php, the reporting client index.php.
     def with_trailing_slash(value)
       value = value&.strip
-      "#{value.delete_suffix("/")}/" if value.present?
+      "#{value.sub(%r{/+\z}, "")}/" if value.present?
     end
 
     def validate!
-      raise Error, "MP_MATOMO_URL is required when MP_MATOMO_ENABLED is true" if url.blank?
-      unless absolute_http_url?(url)
-        # Protocol-relative URLs (//host/), which the old integration required, are rejected too.
-        raise Error, "MP_MATOMO_URL must be an absolute http(s) URL, such as https://matomo.example.org/ " \
-                     "(got #{url.inspect})"
-      end
+      validate_url!
       raise Error, "MP_MATOMO_SITE_ID is required when MP_MATOMO_ENABLED is true" if site_id.blank?
+      return if SITE_ID_FORMAT.match?(site_id)
+
+      raise Error, "MP_MATOMO_SITE_ID must be a positive whole number, such as 12 (got #{site_id.inspect})"
     end
 
-    def absolute_http_url?(value)
-      uri = URI.parse(value)
-      uri.is_a?(URI::HTTP) && uri.host.present?
+    def validate_url!
+      raise Error, "MP_MATOMO_URL is required when MP_MATOMO_ENABLED is true" if url.blank?
+
+      uri = parse_url
+      unless base_url?(uri)
+        raise Error, "MP_MATOMO_URL must be an absolute http(s) URL without a query or fragment, " \
+                     "such as https://matomo.example.org/ (got #{url.inspect})"
+      end
+      return if token_auth.nil? || uri.scheme == "https" || loopback?(uri.hostname)
+
+      # The reporting client sends the token in its request body.
+      raise Error, "MP_MATOMO_URL must use https while MP_MATOMO_TOKEN_AUTH is set, " \
+                   "unless Matomo runs on this host (got #{url.inspect})"
+    end
+
+    def parse_url
+      URI.parse(url)
     rescue URI::InvalidURIError
+      nil
+    end
+
+    # Protocol-relative URLs (//host/), which the old integration required, are
+    # rejected too. A query or fragment would come before the file names
+    # appended to the URL.
+    def base_url?(uri)
+      uri.is_a?(URI::HTTP) && uri.host.present? && uri.query.nil? && uri.fragment.nil?
+    end
+
+    def loopback?(host)
+      host == "localhost" || IPAddr.new(host).loopback?
+    rescue IPAddr::InvalidAddressError
       false
     end
   end

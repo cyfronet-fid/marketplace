@@ -417,9 +417,9 @@ pages contain nothing of Matomo. With `MP_MATOMO_ENABLED=true` the browser
 | Variable | Description | Default | Required |
 | --- | --- | --- | --- |
 | `MP_MATOMO_ENABLED` | Set to `true` to turn the tracking on | `false` | No |
-| `MP_MATOMO_URL` | Absolute URL of the Matomo server, for example `https://matomo.example.org/`. A protocol-relative URL (`//host/`) is rejected | - | When enabled |
-| `MP_MATOMO_SITE_ID` | ID of the Matomo site of this Node. There is no default, so the traffic of a Node never lands in another Node's site | - | When enabled |
-| `MP_MATOMO_TOKEN_AUTH` | View-only token of the Node's reporting user, kept on the server. Only the view sync, which reads Views back from Matomo, uses it; the tracking works without it | - | No |
+| `MP_MATOMO_URL` | Absolute URL of the Matomo server, without a query or fragment, for example `https://matomo.example.org/`. A protocol-relative URL (`//host/`) is rejected. Use `https`: browsers block an `http` tracker on an `https` page, and with `MP_MATOMO_TOKEN_AUTH` set the application refuses to boot with an `http` URL, except on this host (`localhost`, `127.0.0.1`, `::1`) for local development | - | When enabled |
+| `MP_MATOMO_SITE_ID` | ID of the Matomo site of this Node, a positive whole number. There is no default, so the traffic of a Node never lands in another Node's site | - | When enabled |
+| `MP_MATOMO_TOKEN_AUTH` | View-only token of the Node's reporting user. Only the view sync uses it: the server sends it to Matomo to read Views back, never to the browser. The tracking works without it | - | No |
 | `MP_MATOMO_SYNC_CRON` | Cron schedule of the view sync; set it after the daily archiving of the Matomo server | `15 2 * * *` | No |
 
 When `MP_MATOMO_ENABLED` is `true` and `MP_MATOMO_URL` or
@@ -445,8 +445,8 @@ numbers.
   `MP_MATOMO_TOKEN_AUTH` it logs a warning and does nothing; the tracking
   works without the token.
 - Create the token for a Matomo user with the *View* role on the Node's site
-  only: the sync only reads reports, and the token never leaves the server.
-  It's sent in the body of a POST request, never in a URL.
+  only: the sync only reads reports. The server sends the token to Matomo in
+  the body of a POST request, never in a URL, and never to the browser.
 - The sync reads the standard Events report (`Events.getName`) without a
   segment, so the Matomo site needs no pre-processed segments. Run Matomo's
   archiving (`core:archive`) from cron, and set `MP_MATOMO_SYNC_CRON` to run
