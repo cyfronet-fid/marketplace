@@ -55,7 +55,10 @@ RSpec.describe Matomo::SyncViewsJob, type: :job do
   it "gives the same rows and totals on a second run" do
     described_class.perform_now
 
-    expect { described_class.perform_now }.not_to change { [statistics, service.reload.usage_counts_views] }
+    # A fresh query on each side: the statistics helper is memoized.
+    expect { described_class.perform_now }.not_to change {
+      [ViewStatistic.order(:date).pluck(:viewable_id, :date, :views, :visits), service.reload.usage_counts_views]
+    }
   end
 
   context "with a datasource" do
