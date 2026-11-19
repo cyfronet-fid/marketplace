@@ -20,4 +20,29 @@ RSpec.describe ServiceOpinion::UpdateService, backend: true do
     expect(service.rating).to eq(3)
     expect(service.service_opinion_count).to eq(1)
   end
+
+  context "with a Service whose counters have drifted" do
+    let(:service) { create(:service, service_opinion_count: 7, rating: 1.0) }
+
+    before do
+      offer = create(:offer, service:)
+      create(:service_opinion, project_item: create(:project_item, offer:), service_rating: 4)
+      create(:service_opinion, project_item: create(:project_item, offer:), service_rating: 5)
+    end
+
+    it "counts and averages its Opinions from the rows" do
+      expect([service.reload.service_opinion_count, service.rating]).to eq([2, 4.5])
+    end
+  end
+
+  context "with an Opinion on a bundled Project item" do
+    let(:service) { create(:service) }
+    let(:bundle) { create(:bundle, offers: [create(:offer, service:)]) }
+
+    before { create(:service_opinion, project_item: create(:project_item, offer: bundle.offers.first, bundle:)) }
+
+    it "counts it toward the Service of the Project item's own Offer, not the Bundle's" do
+      expect([service.reload.service_opinion_count, bundle.service.reload.service_opinion_count]).to eq([1, 0])
+    end
+  end
 end
