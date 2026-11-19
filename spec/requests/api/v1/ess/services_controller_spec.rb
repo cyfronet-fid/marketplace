@@ -37,6 +37,28 @@ RSpec.describe Api::V1::Ess::ServicesController, swagger_doc: "v1/ess_swagger.js
         end
       end
 
+      response 200, "services found, with their Orders as usage_counts_downloads", document: false do
+        schema "$ref" => "ess/service/service_index.json"
+
+        let!(:manager) { create(:user, roles: [:coordinator]) }
+        # Two Orders and one open access Project item, which is no Order.
+        let!(:service) do
+          create(:service).tap do |service|
+            create_list(:project_item, 2, offer: create(:offer, service: service))
+            create(:project_item, offer: create(:open_access_offer, service: service))
+          end
+        end
+
+        let(:"X-User-Token") { manager.authentication_token }
+
+        # ESS sends no project_items_count of its own; the stored counter keeps all 3.
+        run_test! do |response|
+          downloads = JSON.parse(response.body).pluck("usage_counts_downloads")
+
+          expect([downloads, service.reload.project_items_count]).to eq([[2], 3])
+        end
+      end
+
       response 403, "user doesn't have manager role", document: false do
         schema "$ref" => "error.json"
         let(:regular_user) { create(:user) }
@@ -84,6 +106,28 @@ RSpec.describe Api::V1::Ess::ServicesController, swagger_doc: "v1/ess_swagger.js
             data = JSON.parse(response.body)
             expect(data).to eq(Ess::ServiceSerializer.new(service).as_json.deep_stringify_keys)
           end
+        end
+      end
+
+      response 200, "service found, with its Orders as usage_counts_downloads", document: false do
+        schema "$ref" => "ess/service/service_read.json"
+        let!(:manager) { create(:user, roles: [:coordinator]) }
+        # Two Orders and one open access Project item, which is no Order.
+        let!(:service) do
+          create(:service).tap do |service|
+            create_list(:project_item, 2, offer: create(:offer, service: service))
+            create(:project_item, offer: create(:open_access_offer, service: service))
+          end
+        end
+
+        let(:service_id) { service.id }
+        let(:"X-User-Token") { manager.authentication_token }
+
+        # ESS sends no project_items_count of its own; the stored counter keeps all 3.
+        run_test! do |response|
+          downloads = JSON.parse(response.body)["usage_counts_downloads"]
+
+          expect([downloads, service.reload.project_items_count]).to eq([2, 3])
         end
       end
 
