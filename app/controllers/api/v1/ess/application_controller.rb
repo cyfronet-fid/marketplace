@@ -72,8 +72,17 @@ class Api::V1::Ess::ApplicationController < ActionController::API
       Rails
         .cache
         .fetch("ess_#{collection}", expires_in: Mp::Application.config.resource_cache_ttl) do
-          instance_variable_get("@#{collection}")&.map { |o| serializer.new(o).as_json }
+          records = instance_variable_get("@#{collection}")
+          options = records ? collection_serializer_options(records) : {}
+          records&.map { |o| serializer.new(o, options).as_json }
         end
     end
+  end
+
+  private
+
+  # Serializer options computed once for all the records of a collection.
+  def collection_serializer_options(_records)
+    {}
   end
 end
