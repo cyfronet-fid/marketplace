@@ -757,6 +757,19 @@ To recount `project_items_count` on services, offers and bundles, run
 rake project_items:repair_counts
 ```
 
+## Service opinion counters repair
+
+`service_opinion_count` and `rating` of a service are counted from its
+opinions each time one is saved. To recount them on every service and
+datasource, for example once after upgrading from a version that added 1 to
+the stored count instead, run
+
+```shell
+rake service_opinions:repair_counts
+```
+
+It logs each service's old and new values.
+
 ## OpenAPI docs
 
 Marketplace is using OpenAPI documentation
