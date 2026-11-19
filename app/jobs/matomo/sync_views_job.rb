@@ -7,7 +7,10 @@ module Matomo
   class SyncViewsJob < ApplicationJob
     queue_as :default
 
-    def perform
+    # enqueued_at is the time sidekiq-cron enqueued the run (date_as_argument
+    # in config/schedule.yml). A retry keeps it, so a retry on a later day
+    # still reads the days of its run. A run without it reads up to today.
+    def perform(enqueued_at = Time.current.to_f)
       # The cron entry is disabled while Matomo is off, but a retry from before
       # or a manual run can still start the job.
       return unless Mp::Application.config.matomo.enabled?
@@ -19,7 +22,9 @@ module Matomo
         return
       end
 
-      Statistics::SyncViews.call
+      # The day of the run and the two before.
+      last_day = Time.zone.at(enqueued_at).to_date
+      Statistics::SyncViews.call(dates: (last_day - 2)..last_day)
     end
   end
 end

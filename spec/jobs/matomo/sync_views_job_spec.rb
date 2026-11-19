@@ -168,6 +168,22 @@ RSpec.describe Matomo::SyncViewsJob, type: :job do
     end
   end
 
+  # sidekiq-cron passes the time it enqueued the run, and a retry keeps it.
+  describe "a retry" do
+    it "asks for the days of its run, also on a later day" do
+      described_class.perform_now(Time.zone.local(2026, 11, 8, 2, 15).to_f)
+
+      expect(a_request(:post, "https://matomo.example.org/index.php")
+        .with(body: hash_including("date" => "2026-11-06,2026-11-08"))).to have_been_made
+    end
+
+    it "gets the time of the run from the cron entry" do
+      entry = YAML.safe_load(ERB.new(Rails.root.join("config/schedule.yml").read).result)["matomo_sync_views"]
+
+      expect(Sidekiq::Cron::Job.new(entry.merge("name" => "matomo_sync_views"))).to be_date_as_argument
+    end
+  end
+
   context "with View events of no known record" do
     let(:report) { { "2026-11-09" => ["label" => "21.T15999/gone - View", "nb_events" => 2, "nb_visits" => 1] } }
 

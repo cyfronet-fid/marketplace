@@ -14,3 +14,5 @@ matomo_sync_views:
   status: "<%= Mp::Application.config.matomo.enabled? ? 'enabled' : 'disabled' %>"
   class: "Matomo::SyncViewsJob"
   queue: default
+  # Passes the time of the run, which retries keep, so they read the same days.
+  date_as_argument: true

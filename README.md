@@ -457,9 +457,9 @@ numbers.
   in Matomo's `config.ini.php`.
 - The sync logs and skips event names that match no record, such as the PID
   of a service removed from this Node.
-- When a sync fails, Sidekiq retries it. To fill in older days, for example
-  after a longer Matomo outage, run the same sync over an explicit date
-  range:
+- When a sync fails, Sidekiq retries it over the same days, also on a later
+  day. To fill in older days, for example after a Matomo outage longer than
+  Sidekiq's retries, run the same sync over an explicit date range:
 
   ```shell
   bin/rails "matomo:sync_views[2026-01-01,2026-01-31]"

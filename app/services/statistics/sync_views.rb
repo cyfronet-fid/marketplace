@@ -32,7 +32,7 @@ module Statistics
 
     VIEWABLES = [NamedByPid.new(Service), NamedByPid.new(Provider), NamedByServicePidAndIid.new(Bundle)].freeze
 
-    def initialize(dates: (Date.current - 2)..Date.current, client: Matomo::ReportingClient.new)
+    def initialize(dates:, client: Matomo::ReportingClient.new)
       super()
       @dates = dates
       @client = client
