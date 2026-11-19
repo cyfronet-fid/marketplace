@@ -11,8 +11,8 @@ module Matomo
     # in config/schedule.yml). A retry keeps it, so a retry on a later day
     # still reads the days of its run. A run without it reads up to today.
     def perform(enqueued_at = Time.current.to_f)
-      # The cron entry is disabled while Matomo is off, but a retry from before
-      # or a manual run can still start the job.
+      # There is no cron entry while Matomo is off, but a retry from before or
+      # a manual run can still start the job.
       return unless Mp::Application.config.matomo.enabled?
 
       # Tracking works without the token, so a Node can collect Views before

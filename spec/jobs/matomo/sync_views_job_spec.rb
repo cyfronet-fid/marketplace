@@ -277,11 +277,16 @@ RSpec.describe Matomo::SyncViewsJob, type: :job do
     end
   end
 
-  # The cron entry is disabled then, but a retry or a manual run still starts the job.
+  # There is no cron entry then, but a retry or a manual run still starts the job.
   context "with Matomo off" do
     let(:unviewed) { create(:service, usage_counts_views: 42) }
 
     before { allow(Mp::Application.config.matomo).to receive(:enabled?).and_return(false) }
+
+    it "has no cron entry, so sidekiq-cron deletes the one of a previous boot" do
+      expect(YAML.safe_load(ERB.new(Rails.root.join("config/schedule.yml").read).result))
+        .not_to have_key("matomo_sync_views")
+    end
 
     it "doesn't call Matomo" do
       described_class.perform_now
