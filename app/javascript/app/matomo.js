@@ -45,21 +45,6 @@ function eventFrom(element) {
   return event;
 }
 
-// Matomo records outlinks with one click listener on document.body and
-// enables it only once, but Turbo replaces the body on every visit. Matomo
-// runs a queued function with the tracker as `this` when it executes the
-// command, so the body is compared then: each body gets exactly one
-// listener, also when visits happen before matomo.js has loaded.
-let linkTrackedBody = null;
-function trackLinksOfCurrentBody() {
-  if (document.body === linkTrackedBody) {
-    return;
-  }
-  linkTrackedBody = document.body;
-  this.disableLinkTracking();
-  this.enableLinkTracking();
-}
-
 const url = meta("matomo-url");
 const siteId = meta("matomo-site-id");
 
@@ -68,6 +53,10 @@ if (url && siteId) {
   track(["disableCookies"]);
   track(["setTrackerUrl", `${url}matomo.php`]);
   track(["setSiteId", siteId]);
+  // Outlinks. enableLinkTracking listens on document.body, once, and Turbo
+  // replaces the body on every visit; a listener on document, which Turbo
+  // keeps, sees the link clicks of every body.
+  track(["addListener", document]);
 
   // Without the tracker nothing sends the queue, so a failed load drops it
   // and later visits queue nothing until the next full page load. No retry:
@@ -93,7 +82,6 @@ if (url && siteId) {
     track(["setDocumentTitle", document.title]);
     track(["trackPageView"]);
     document.querySelectorAll("[data-matomo-event]").forEach((element) => track(eventFrom(element)));
-    track([trackLinksOfCurrentBody]);
     previousUrl = window.location.href;
   });
 }
