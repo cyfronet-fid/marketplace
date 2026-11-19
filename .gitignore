@@ -43,6 +43,7 @@ yarn-debug.log*
 
 # Ignore IDE configuration
 /.idea
+/.vscode
 /.env
 /.run/*
 /app/assets/builds/*
