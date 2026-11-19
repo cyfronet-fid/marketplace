@@ -442,8 +442,9 @@ Each run upserts the same days again, so retries and re-runs give the same
 numbers.
 
 - The job runs only with `MP_MATOMO_ENABLED=true`. Without
-  `MP_MATOMO_TOKEN_AUTH` it logs a warning and does nothing; the tracking
-  works without the token.
+  `MP_MATOMO_TOKEN_AUTH` it logs a warning and does nothing, and the
+  backfill task below stops with a message; the tracking works without the
+  token.
 - Create the token for a Matomo user with the *View* role on the Node's site
   only: the sync only reads reports. The server sends the token to Matomo in
   the body of a POST request, never in a URL, and never to the browser.

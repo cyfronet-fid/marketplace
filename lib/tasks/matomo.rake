@@ -8,6 +8,14 @@ namespace :matomo do
       raise ArgumentError, 'Usage: bin/rails "matomo:sync_views[YYYY-MM-DD,YYYY-MM-DD]" (first and last day)'
     end
 
-    Statistics::SyncViews.call(dates: Date.iso8601(args[:from])..Date.iso8601(args[:to]))
+    dates = Date.iso8601(args[:from])..Date.iso8601(args[:to])
+    # Matomo would answer a reversed range with the report of its last day.
+    raise ArgumentError, "The first day, #{dates.begin}, is after the last day, #{dates.end}" if dates.begin > dates.end
+
+    matomo = Mp::Application.config.matomo
+    abort "Matomo view sync skipped: MP_MATOMO_ENABLED is not true" unless matomo.enabled?
+    abort "Matomo view sync skipped: MP_MATOMO_TOKEN_AUTH is not set" if matomo.token_auth.blank?
+
+    Statistics::SyncViews.call(dates:)
   end
 end
