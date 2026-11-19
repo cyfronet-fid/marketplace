@@ -23,10 +23,10 @@ class Projects::Services::OpinionsController < ApplicationController
           value: @service_opinion.service_rating
         )
         format.html do
-          redirect_to project_service_path(@project, @project_item), notice: "Rating submitted successfully"
+          redirect_to project_service_path(@project, @project_item), notice: _("Rating submitted successfully")
         end
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { render :new, status: :unprocessable_content }
       end
     end
   end
