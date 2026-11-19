@@ -168,6 +168,27 @@ RSpec.describe Matomo::SyncViewsJob, type: :job do
     end
   end
 
+  # Nightly runs and backfills take the same lock, so two syncs never interleave.
+  describe "the sync lock" do
+    let(:advisory_locks_during_request) { [] }
+
+    before do
+      stub_request(:post, "https://matomo.example.org/index.php").to_return do
+        advisory_locks_during_request.concat(
+          ViewStatistic.connection.select_values(
+            "SELECT objid::bigint FROM pg_locks WHERE locktype = 'advisory' AND pid = pg_backend_pid()"
+          )
+        )
+        { status: 200, body: report.to_json, headers: { "Content-Type" => "application/json" } }
+      end
+      described_class.perform_now
+    end
+
+    it "is held while the sync asks Matomo for the report" do
+      expect(advisory_locks_during_request).to include(Statistics::SyncViews::LOCK_KEY)
+    end
+  end
+
   # sidekiq-cron passes the time it enqueued the run, and a retry keeps it.
   describe "a retry" do
     it "asks for the days of its run, also on a later day" do

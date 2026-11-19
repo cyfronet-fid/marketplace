@@ -439,7 +439,8 @@ and copies each service's total onto its offers. Last, it recomputes the
 `popularity_ratio` that orders the home page's popular services: 1000 × (the
 service's share of all service Views + its share of all project items).
 Each run upserts the same days again, so retries and re-runs give the same
-numbers.
+numbers. Runs, nightly or backfill, wait for each other, so they never
+interleave.
 
 - The job runs only with `MP_MATOMO_ENABLED=true`; without it there is no
   cron entry. Without `MP_MATOMO_TOKEN_AUTH` it logs a warning and does

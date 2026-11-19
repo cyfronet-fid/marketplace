@@ -32,16 +32,25 @@ module Statistics
 
     VIEWABLES = [NamedByPid.new(Service), NamedByPid.new(Provider), NamedByServicePidAndIid.new(Bundle)].freeze
 
+    # The PostgreSQL advisory lock that every sync, nightly or backfill, holds
+    # from its Matomo request to its commit.
+    LOCK_KEY = Zlib.crc32(name)
+
     def initialize(dates:, client: Matomo::ReportingClient.new)
       super()
       @dates = dates
       @client = client
     end
 
+    # One sync at a time, so an older report never overwrites a newer one, and
+    # each recount sees the rows of every sync committed before it. The lock
+    # is a transaction lock, released on commit or rollback, so the transaction
+    # also spans the Matomo request.
     def call
-      rows = statistic_rows(@client.views(@dates))
-
       ViewStatistic.transaction do
+        ViewStatistic.connection.execute("SELECT pg_advisory_xact_lock(#{LOCK_KEY})")
+        rows = statistic_rows(@client.views(@dates))
+
         # Plain counts read from Matomo; ViewStatistic has no validations to skip.
         ViewStatistic.upsert_all(rows, unique_by: :index_view_statistics_on_viewable_and_date) if rows.any? # rubocop:disable Rails/SkipsModelValidations
         VIEWABLES.each { |viewable| recount(viewable.model) }
