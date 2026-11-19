@@ -9,7 +9,8 @@ RSpec.describe "Matomo browser tracking" do
 
     response.parsed_body
   end
-  let(:meta_tags) { page.css("meta[name^='matomo-']").to_h { |tag| [tag["name"], tag["content"]] } }
+  # Pairs, not a Hash, so a duplicate tag is not hidden: the browser reads the first.
+  let(:meta_tags) { page.css("meta[name^='matomo-']").map { |tag| [tag["name"], tag["content"]] } }
   let(:events) do
     page.css("[data-matomo-event]").map do |element|
       %w[category action name value].index_with { |key| element["data-matomo-#{key}"] }.compact
@@ -29,9 +30,6 @@ RSpec.describe "Matomo browser tracking" do
     let(:project) { create(:project) }
 
     before do
-      allow(Checkin::CheckVoMembership).to receive(:call).and_return(
-        Checkin::CheckVoMembership::CheckResult.new(status: :member)
-      )
       sign_in(project.user)
       put service_choose_offer_path(offer.service), params: { customizable_project_item: { offer_id: offer.iid } }
       post service_summary_path(offer.service), params: { customizable_project_item: { project_id: project.id } }
@@ -62,7 +60,10 @@ RSpec.describe "Matomo browser tracking" do
     it "gives pages the Matomo URL and site ID" do
       get providers_path
 
-      expect(meta_tags).to eq("matomo-url" => "https://matomo.example.org/", "matomo-site-id" => "12")
+      expect(meta_tags).to contain_exactly(
+        ["matomo-url", "https://matomo.example.org/"],
+        %w[matomo-site-id 12]
+      )
     end
 
     context "with a service page" do
@@ -171,9 +172,13 @@ RSpec.describe "Matomo browser tracking" do
         end
       end
 
-      before { follow_redirect! }
+      it "redirects to the rated project item" do
+        expect(response).to redirect_to(project_service_path(project_item.project, project_item))
+      end
 
-      it "carries no event, as there is no PID to name it by" do
+      it "carries no event on the page after the redirect, as there is no PID to name it by" do
+        follow_redirect!
+
         expect(events).to be_empty
       end
     end
