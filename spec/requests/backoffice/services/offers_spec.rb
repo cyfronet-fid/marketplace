@@ -29,7 +29,7 @@ RSpec.describe "Backoffice: edit an offer", :backend do
   end
 
   context "when the offer is saved as a draft" do
-    let(:params) { { offer: { name: "Ignored" }, name: "Draft name", commit: "Save as draft" } }
+    let(:params) { { offer: { name: "Ignored" }, name: "Draft name", save_as_draft: "Save as draft" } }
 
     it "redirects to the offers of the service" do
       expect(response).to redirect_to(backoffice_service_offers_path(service))

@@ -87,8 +87,9 @@ class Backoffice::Providers::StepsController < Backoffice::ProvidersController
     redirect_to backoffice_providers_path(format: :html), notice: "Provider saved successfully as a draft"
   end
 
+  # The submit button of the exit modal has the name save_as_draft.
   def save_as_draft_requested?
-    params[:commit] == save_as_draft_title
+    params.key?(:save_as_draft)
   end
 
   def target_step(commit)

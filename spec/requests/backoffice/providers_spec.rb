@@ -157,7 +157,7 @@ RSpec.describe "Backoffice: manage providers", :backend do
       get edit_backoffice_provider_path(provider)
 
       put backoffice_provider_wizard_path(provider),
-          params: { provider: { name: provider.name }, commit: "Save as draft" }
+          params: { provider: { name: provider.name }, save_as_draft: "Save as draft" }
 
       expect(response).to redirect_to(backoffice_providers_path(format: :html))
       expect(provider.reload.status).to eq("draft")
@@ -170,7 +170,7 @@ RSpec.describe "Backoffice: manage providers", :backend do
       get edit_backoffice_provider_path(provider)
 
       put backoffice_provider_wizard_path(provider),
-          params: { provider: { name: provider.name }, commit: "Save as draft" }
+          params: { provider: { name: provider.name }, save_as_draft: "Save as draft" }
 
       expect(response).to have_http_status(:unprocessable_content)
       expect(provider.reload.status).to eq("unpublished")
