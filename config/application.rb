@@ -4,6 +4,7 @@ require_relative "boot"
 
 require "rails/all"
 require "humanize"
+require_relative "../lib/matomo/configuration"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -35,7 +36,8 @@ module Mp
     config.active_support.cache_format_version = 7.1
     config.active_support.disable_to_s_conversion = true
 
-    config.autoload_lib(ignore: %w[assets tasks versions])
+    # lib/matomo is required above: config.matomo is built before autoloading.
+    config.autoload_lib(ignore: %w[assets matomo tasks versions])
 
     default_redis_url = Rails.env.test? ? "redis://localhost:6379/1" : "redis://localhost:6379/0"
 
@@ -115,6 +117,9 @@ module Mp
     config.bos_base_url = ENV.fetch("BOS_API_URL", "http://localhost:8000")
     config.bos_api_key = ENV.fetch("BOS_API_KEY", "")
     config.bos_enabled = ActiveModel::Type::Boolean.new.cast(ENV.fetch("BOS_ENABLED", false))
+
+    # Raises Matomo::Configuration::Error when MP_MATOMO_ENABLED is true without a valid URL and site ID.
+    config.matomo = Matomo::Configuration.new(ENV)
 
     config.federation_api_base_url = ENV.fetch("FEDERATION_API_BASE_URL", "http://federatedsearch.service.eosc-beyond.eu/federation/services")
     config.aggregator_type = ENV.fetch("AGGREGATOR_TYPE", "pc")

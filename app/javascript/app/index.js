@@ -5,6 +5,7 @@ import initChoices from "./choices";
 import initCookiesPolicy from "./cookies_policy";
 import "bootstrap/dist/js/bootstrap";
 import "./nav";
+import "./matomo";
 
 require("@rails/activestorage").start();
 require("shepherd.js");

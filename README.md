@@ -400,6 +400,129 @@ Logs view of the Sentry server; `SENTRY_LOGS=false` turns them off and
 `SENTRY_LOGS_QUERIES=true` adds the SQL queries. `SENTRY_TRACES_SAMPLE_RATE`
 (default `0.01`) is the share of the requests stored as transactions.
 
+## Matomo
+
+Every variant can send statistics to a Matomo site of its own. Matomo is off
+by default in every Rails environment, test and e2e included; with it off the
+pages contain nothing of Matomo. With `MP_MATOMO_ENABLED=true` the browser
+(`app/javascript/app/matomo.js`) sends, without cookies:
+
+- one page view per Turbo navigation, with its URL, title and referrer;
+- one View event on each Service (including Datasource), Provider and Bundle
+  detail page: `Service/View/<PID>`, `Provider/View/<PID>` and
+  `Bundle/View/<service PID>:<bundle iid>`. Sub-pages, such as a service's
+  offers list, and deployable service pages send none;
+- clicks on links to other sites, as outlinks.
+
+| Variable | Description | Default | Required |
+| --- | --- | --- | --- |
+| `MP_MATOMO_ENABLED` | Set to `true` to turn the tracking on | `false` | No |
+| `MP_MATOMO_URL` | Absolute URL of the Matomo server, without a query or fragment, for example `https://matomo.example.org/`. A protocol-relative URL (`//host/`) is rejected. Use `https`: browsers block an `http` tracker on an `https` page, and with `MP_MATOMO_TOKEN_AUTH` set the application refuses to boot with an `http` URL, except on this host (`localhost`, `127.0.0.1`, `::1`) for local development | - | When enabled |
+| `MP_MATOMO_SITE_ID` | ID of the Matomo site of this Node, a positive whole number. There is no default, so the traffic of a Node never lands in another Node's site | - | When enabled |
+| `MP_MATOMO_TOKEN_AUTH` | View-only token of the Node's reporting user. Only the view sync uses it: the server sends it to Matomo to read Views back, never to the browser. The tracking works without it | - | No |
+| `MP_MATOMO_SYNC_CRON` | Cron schedule of the view sync; set it after the daily archiving of the Matomo server | `15 2 * * *` | No |
+
+When `MP_MATOMO_ENABLED` is `true` and `MP_MATOMO_URL` or
+`MP_MATOMO_SITE_ID` is missing or invalid, the application refuses to boot
+and names the variable. Only `Matomo::Configuration`
+(`lib/matomo/configuration.rb`) reads these variables.
+
+### View sync
+
+The `usage_counts_views` that ESS returns for services, offers, providers
+and bundles come from Matomo. Every night, at `MP_MATOMO_SYNC_CRON`, the
+`Matomo::SyncViewsJob` cron job reads the View events of the last three
+days from Matomo into the `view_statistics` table, with one row per service,
+provider or bundle and day. It then sets the `usage_counts_views` of each
+service, provider and bundle to the sum of its Views, or `0` without any,
+and copies each service's total onto its offers. Last, it recomputes the
+`popularity_ratio` that orders the home page's popular services: 1000 × (the
+service's share of all service Views + its share of all project items).
+Each run upserts the same days again, so retries and re-runs give the same
+numbers. Runs, nightly or backfill, wait for each other, so they never
+interleave.
+
+- The job runs only with `MP_MATOMO_ENABLED=true`; without it there is no
+  cron entry. Without `MP_MATOMO_TOKEN_AUTH` it logs a warning and does
+  nothing, and the backfill task below stops with a message; the tracking
+  works without the token.
+- Create the token for a Matomo user with the *View* role on the Node's site
+  only: the sync only reads reports. The server sends the token to Matomo in
+  the body of a POST request, never in a URL, and never to the browser.
+- The sync reads the standard Events report (`Events.getName`) without a
+  segment, so the Matomo site needs no pre-processed segments. Run Matomo's
+  archiving (`core:archive`) from cron, and set `MP_MATOMO_SYNC_CRON` to run
+  after it.
+- Matomo keeps 500 event names a day per report by default, counting the
+  names of every event, not only of Views, and groups the others under
+  "Others", whose Views the sync can't count. A Node with more event names a
+  day should raise `datatable_archiving_maximum_rows_events` in Matomo's
+  `config.ini.php`. That doesn't change the reports Matomo has already
+  archived. To recover the Views of those days, check that Matomo still has
+  their raw data (unless it's set to delete old raw data, it does),
+  invalidate and rebuild their reports, then run the backfill below over the
+  same days:
+
+  ```shell
+  ./console core:invalidate-report-data \
+    --dates=2026-01-01,2026-01-31 --sites=<site ID>
+  ./console core:archive
+  ```
+
+- The sync logs and skips event names that match no record, such as the PID
+  of a service removed from this Node.
+- When a sync fails, Sidekiq retries it over the same days, also on a later
+  day. To fill in older days, for example after a Matomo outage longer than
+  Sidekiq's retries, run the same sync over an explicit date range:
+
+  ```shell
+  bin/rails "matomo:sync_views[2026-01-01,2026-01-31]"
+  ```
+
+  The sync adds and updates rows but never deletes them, so a service,
+  provider or bundle that drops out of a day's report, for example after its
+  data was deleted in Matomo, keeps its old Views. Before a backfill over
+  such days, delete their rows in `bin/rails console`:
+
+  ```ruby
+  ViewStatistic.where(date: "2026-01-01".."2026-01-31").delete_all
+  ```
+
+### Local Matomo
+
+`docker-compose-matomo.yml` runs a Matomo (5.14.2) with its database on
+[http://localhost:8080](http://localhost:8080):
+
+```shell
+docker compose -f docker-compose-matomo.yml up -d
+```
+
+1. Open [http://localhost:8080](http://localhost:8080) and follow the install
+   wizard. The database server is `db`, the login `matomo`, the password
+   `password` and the database `matomo`.
+1. Add the first website with the URL `http://localhost:5000` (the
+   application's `PORT`). Note its site ID (the wizard's first site is `1`).
+1. Add to `.env` and restart the application:
+
+   ```shell
+   MP_MATOMO_ENABLED=true
+   MP_MATOMO_URL=http://localhost:8080/
+   MP_MATOMO_SITE_ID=1
+   ```
+
+1. For the view sync, create a token with view access only: in
+   Administration → System → Users invite a user with the *View* role on the
+   site (copy the invite link, the local Matomo sends no mail), accept the
+   invitation, and as that user create a token in Administration → Personal →
+   Security → Auth tokens. Set it as `MP_MATOMO_TOKEN_AUTH` in `.env`.
+
+Open a service, a provider and a bundle page, then check Visitors → Visits
+Log (one visit with its page views and View events) and Behaviour → Events.
+The `cron` service archives the reports every 5 minutes. The browser keeps
+no Matomo cookies. To read the Views back without waiting for the night, run
+`bin/rails runner "Matomo::SyncViewsJob.perform_now"`. Tests never need this Matomo: `.env.test` sets
+`MP_MATOMO_ENABLED=false`, also over a `.env` that turns it on.
+
 ## Environmental variables
 
 This project can be customized via numerous environmental variables.
@@ -428,6 +551,8 @@ We are currently using the following ENV variables:
   [Checkin section](#checkin)
 - ENV variables connected to the ADM integration are described in the
   [ADM deployments section](#adm-deployments)
+- ENV variables connected to the Matomo integration are described in the
+  [Matomo section](#matomo)
 - `ROOT_URL` (Optional) - root application URL (default
   `http://localhost:#{ENV["PORT"] || 3000}` (when foreman is used to start
   application 5000 ENV variable is set)

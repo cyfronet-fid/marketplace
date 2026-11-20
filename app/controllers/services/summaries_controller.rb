@@ -39,6 +39,7 @@ class Services::SummariesController < Services::ApplicationController
       session.delete(session_key)
       session.delete(:selected_project)
       send_user_action
+      Matomo::PendingEvents.new(flash).add(category: "Service", action: "AddToProject", name: project_item.service.pid)
       notice = project_item.orderable? ? "Offer ordered successfully" : "Offer pinned successfully"
       flash[:notice] = notice
       redirect_to project_service_path(project_item.project, project_item)
