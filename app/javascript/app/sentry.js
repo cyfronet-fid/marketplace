@@ -1,4 +1,4 @@
-// Browser error tracking (Sentry SDK, GlitchTip server). Active only when
+// Browser error tracking (Sentry SDK). Active only when
 // the page has the sentry-* meta tags (SentryHelper, layouts/_head).
 // The SDK reports unhandled JS errors and promise rejections by default.
 // The Turbo listeners below add the failures that the server cannot see:
@@ -17,6 +17,12 @@ if (dsn) {
     dsn,
     environment: meta("sentry-environment"),
     release: meta("sentry-release"),
+  });
+
+  // One Sentry project holds all variants and all instances.
+  Sentry.setTags({
+    variant: meta("sentry-variant"),
+    instance: meta("sentry-instance"),
   });
 
   const userId = meta("sentry-user-id");

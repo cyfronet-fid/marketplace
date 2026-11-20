@@ -134,7 +134,7 @@ end
 
 gem "tzinfo-data", platforms: %i[windows jruby]
 
-# Error tracking and logs; active in every environment that sets SENTRY_DSN
+# Error tracking; active in every environment that sets SENTRY_DSN
 # (config/initializers/sentry.rb).
 gem "sentry-ruby", "~> 5.28"
 gem "sentry-rails", "~> 5.28"
