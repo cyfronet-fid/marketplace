@@ -1,5 +1,5 @@
 # Stage 0: Build arguments
-ARG RUBY_VERSION=3.3.11
+ARG RUBY_VERSION=3.3.14
 # One image per deployment. The variant (config/variants.yml) and the directory
 # of its frontend (docs/customization.md) are fixed at build time, because
 # assets:precompile reads them. MARKETPLACE_VARIANT has no default:
