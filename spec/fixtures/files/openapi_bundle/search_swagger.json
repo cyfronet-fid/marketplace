@@ -1,0 +1,18 @@
+{
+  "openapi": "3.0.1",
+  "info": { "title": "Search API" },
+  "paths": {
+    "/search": {
+      "get": {
+        "responses": {
+          "200": { "schema": { "$ref": "#/components/schemas/SearchResponse" } }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SearchResponse": { "type": "object" }
+    }
+  }
+}
