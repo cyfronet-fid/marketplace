@@ -16,6 +16,11 @@ module SentryHelper
     # filter the browser events and the server events of one deploy together.
     release = ENV.fetch("MP_VERSION", "").split.last
     tags << tag.meta(name: "sentry-release", content: release) if release.present?
+    # The same two tags as the server events (config/initializers/sentry.rb):
+    # one Sentry project holds all variants and all instances.
+    tags << tag.meta(name: "sentry-variant", content: Mp::Variant.current)
+    instance = URI.parse(ENV.fetch("ROOT_URL", "")).host
+    tags << tag.meta(name: "sentry-instance", content: instance) if instance.present?
     if current_user
       tags << tag.meta(name: "sentry-user-id", content: current_user.id)
       tags << tag.meta(name: "sentry-user-uid", content: current_user.uid)

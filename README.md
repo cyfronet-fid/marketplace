@@ -392,13 +392,14 @@ not additional levels of access.
 
 The Sentry integration is on in every environment that sets the
 [env variable](#environmental-variables) `SENTRY_DSN` with details how to
-connect to the Sentry server (a GlitchTip server accepts the same DSN).
+connect to the Sentry server. A local run keeps `SENTRY_DSN` unset.
 Sentry environment can also be configured using `SENTRY_ENVIRONMENT`
 [env variable](#environmental-variables) (default: the Rails environment).
-The application also sends logs (one entry per request, job and mail) to the
-Logs view of the Sentry server; `SENTRY_LOGS=false` turns them off and
-`SENTRY_LOGS_QUERIES=true` adds the SQL queries. `SENTRY_TRACES_SAMPLE_RATE`
-(default `0.01`) is the share of the requests stored as transactions.
+`SENTRY_TRACES_SAMPLE_RATE` (default `0.01`) is the share of the requests
+stored as transactions. All variants and all instances report to one Sentry
+project. Each event has the tag `variant` (the value of
+`MARKETPLACE_VARIANT`) and the tag `instance` (the host of `ROOT_URL`). The
+application does not send logs to Sentry.
 
 ## Environmental variables
 

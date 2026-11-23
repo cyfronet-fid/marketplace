@@ -272,70 +272,64 @@ curl -s 'http://127.0.0.1:8916/solr/pl_all_collection/select?q=*:*&rows=0'
 
 ## Error tracking
 
-GlitchTip receives the exceptions of the instances through the Sentry gems.
-`docker-compose-glitchtip.yml` runs it on the staging host as the compose
-project `glitchtip`: the application in one container, Postgres 18 and
-Valkey, the UI on the localhost port 3020. The reverse proxy of the host
-serves the slot names only (`marketplace-N.DOMAIN` to the port `30N`), so
-GlitchTip takes the slot 20: `https://marketplace-20.DOMAIN`. Production
-instances send to the same server.
+The Sentry server of Cyfronet receives the exceptions of the instances
+through the Sentry gems. Another team operates the server. All variants and
+all instances report to one Sentry project, with one DSN. Four fields tell
+the events apart:
 
-Setup, once:
+| Field | Value | Source |
+|-------|-------|--------|
+| tag `variant` | `marketplace`, `pl` or `whitelabel` | `MARKETPLACE_VARIANT` |
+| tag `instance` | host of the instance, for example `marketplace-16.DOMAIN` | `ROOT_URL` |
+| environment | `production`, `staging` or `pr` | `SENTRY_ENVIRONMENT` |
+| release | commit of the deploy | `MP_VERSION` |
 
-1. Write `glitchtip.env` next to the compose file. The header of the compose
-   file lists the variables: the secret key, the database password, the
-   public URL of the slot, the SMTP URL and the sender address.
-2. Start the project. The migrations run at the start.
+`config/initializers/sentry.rb` starts Sentry only when `SENTRY_DSN` has a
+value. The environment of each type of instance:
 
-   ```sh
-   cd <ROOT>/marketplace
-   docker compose -p glitchtip -f docker-compose-glitchtip.yml up -d
-   ```
+| Instance | `SENTRY_DSN` | `SENTRY_ENVIRONMENT` |
+|----------|--------------|----------------------|
+| production instance | DSN of the project | `production` |
+| staging instance | DSN of the project | `staging` |
+| PR instance | DSN of the project | `pr` |
+| local deploy | not set | not set |
 
-3. Make sure that the slot answers. The health check needs the public host
-   name; a request to `127.0.0.1` gets a 400 from `ALLOWED_HOSTS`.
+A PR instance runs with `RAILS_ENV=production`. Without `SENTRY_ENVIRONMENT`
+the events of a PR instance show as `production` events. A local deploy does
+not report to Sentry: keep `SENTRY_DSN` out of the env file of a local deploy.
 
-   ```sh
-   curl -sI https://marketplace-20.DOMAIN/_health/
-   ```
+Setup of an instance:
 
-   Another host sets `MP_GLITCHTIP_PORT` and the two name variables of
-   `glitchtip.env` to a free slot of that host.
-4. Open the UI and register the first user. Then set
-   `ENABLE_USER_REGISTRATION=False` and `ENABLE_ORGANIZATION_INVITATION=True`
-   in `glitchtip.env` and run the `up -d` command again. Without the second
-   variable an invitation to a new email address gets the answer "Only
-   existing users may be invited".
-5. Create an organization and one project per variant. The settings of a
-   project show its DSN.
-6. Add two lines to `marketplace-<variant>.env` of each instance, then deploy
-   the variant. A production deployment sets the same two variables with
-   `SENTRY_ENVIRONMENT=production`.
+1. Get the DSN from the Sentry UI: the settings of the project, the page
+   "Client Keys".
+2. Add two lines to `marketplace-<variant>.env` of the instance, then deploy
+   the variant. The DSN is the same in each env file.
 
    ```
    SENTRY_DSN=<DSN of the project>
    SENTRY_ENVIRONMENT=staging
    ```
 
-`config/initializers/sentry.rb` activates in every environment that sets
-`SENTRY_DSN`, so a local run can report to a local GlitchTip too (set
-`SENTRY_ENVIRONMENT`, default: the Rails environment). `SENTRY_TRACES_SAMPLE_RATE` (default 0.01) is the share of the
-requests stored as transactions. The release of an event is the commit of
-`MP_VERSION`, so the UI can filter the events of one deploy. The instance
-also sends logs to the Logs view of the project: one entry per request, job
-and mail. `SENTRY_LOGS=false` turns the logs off; `SENTRY_LOGS_QUERIES=true`
-adds one entry per SQL query, which are many. Test from the web container of
-an instance:
+3. Send a test event from the web container of the instance:
 
-```sh
-docker exec mp-multitenancy-pl-web-1 bin/rails runner \
-  'Sentry.capture_message("test"); Sentry.logger.info("test log"); Sentry.get_current_client.flush'
-```
+   ```sh
+   docker exec mp-multitenancy-pl-web-1 bin/rails runner \
+     'Sentry.capture_message("test"); Sentry.get_current_client.flush'
+   ```
+
+4. Make sure that the event shows in the Sentry UI with the two tags, the
+   environment and the release.
+
+`SENTRY_TRACES_SAMPLE_RATE` (default 0.01) is the share of the requests
+stored as transactions. The UI can filter the events of one deploy by the
+release. The instances do not send logs to Sentry.
 
 The browser reports to the same project as the server. `SentryHelper`
-writes the DSN into meta tags when `SENTRY_DSN` is set, and
-`app/javascript/app/sentry.js` starts the Sentry browser SDK from the tags.
-The browser reports:
+writes the DSN, the environment, the release and the two tags into meta tags
+when `SENTRY_DSN` is set, and `app/javascript/app/sentry.js` starts the
+Sentry browser SDK from the meta tags. The browser of the user sends the
+events directly to the Sentry server, thus the server must accept requests
+from the public network. The browser reports:
 
 - unhandled JS errors and promise rejections,
 - a turbo-frame response without the requested frame (the page shows
@@ -348,10 +342,6 @@ renders the form again and is not an error. The `rescue_from` redirects of
 event. In a turbo-frame request such a redirect shows "Content missing",
 and then the browser reports the frame-missing event with the frame id and
 the URL.
-
-Upgrade with `docker compose -p glitchtip -f docker-compose-glitchtip.yml pull`,
-then the `up -d` command. The data lives in the volumes `glitchtip_pg-data`
-and `glitchtip_uploads`. The retention is 90 days (`GLITCHTIP_RETENTION_DAYS`).
 
 ## Mail of the instances
 
@@ -376,21 +366,6 @@ containers, which does. Test from the web container of an instance:
 ```sh
 docker exec mp-multitenancy-pl-web-1 bin/rails runner \
   'ApplicationMailer.new.mail(to: "test@example.com", subject: "test", body: "test").deliver'
-```
-
-GlitchTip sends the alert mails through the same server. Set the two
-variables in `glitchtip.env`, then run the `up -d` command of the error
-tracking section again. Percent-encode the `@` of the password as `%40`:
-
-```
-EMAIL_URL=smtp://marketplace:marketplace%40DOMAIN@DOMAIN:3025
-DEFAULT_FROM_EMAIL=glitchtip@DOMAIN
-```
-
-Test from the GlitchTip web container:
-
-```sh
-docker exec glitchtip-web-1 ./manage.py sendtestemail test@example.com
 ```
 
 ## Logs across deploys

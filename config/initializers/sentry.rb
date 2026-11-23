@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-# Error tracking and logs (Sentry or GlitchTip), in every environment that
-# sets SENTRY_DSN; the test environment leaves it unset.
-if ENV["SENTRY_DSN"]
+# Error tracking (Sentry), in every environment that sets SENTRY_DSN. The test
+# environment and a local deploy leave SENTRY_DSN unset.
+if ENV["SENTRY_DSN"].present?
   require "sentry-ruby"
 
   Sentry.init do |config|
@@ -17,20 +17,16 @@ if ENV["SENTRY_DSN"]
     # Errors reported with Rails.error.report go to Sentry too. Exceptions
     # Sentry has already captured are not sent again.
     config.rails.register_error_subscriber = true
-
-    # Logs for the Logs view: one entry per request, job and mail
-    # (SENTRY_LOGS=false turns them off). SQL queries only with
-    # SENTRY_LOGS_QUERIES=true, they are many. Sentry.logger.info("...") adds
-    # an entry of the application.
-    config.enable_logs = ActiveModel::Type::Boolean.new.cast(ENV.fetch("SENTRY_LOGS", true))
-    config.rails.structured_logging.subscribers = {
-      action_controller: Sentry::Rails::LogSubscribers::ActionControllerSubscriber,
-      active_job: Sentry::Rails::LogSubscribers::ActiveJobSubscriber,
-      action_mailer: Sentry::Rails::LogSubscribers::ActionMailerSubscriber
-    }
-    if ActiveModel::Type::Boolean.new.cast(ENV.fetch("SENTRY_LOGS_QUERIES", false))
-      config.rails.structured_logging.subscribers[:active_record] =
-        Sentry::Rails::LogSubscribers::ActiveRecordSubscriber
-    end
   end
+
+  # All variants and all instances report to one Sentry project. The two tags
+  # tell the events apart. config/initializers/variants.rb is not loaded yet
+  # here, thus the variant comes from config/variants.yml directly. The
+  # instance is the host of ROOT_URL.
+  Sentry.set_tags(
+    {
+      variant: Rails.application.config_for(:variants)[:current],
+      instance: URI.parse(ENV.fetch("ROOT_URL", "")).host
+    }.compact
+  )
 end
