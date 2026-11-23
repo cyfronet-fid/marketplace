@@ -40,7 +40,7 @@ RSpec.describe Statistics::OrderCounts do
       ProjectItem::STATUS_TYPES.each_value { |status| create(:project_item, offer:, status:, status_type: status) }
     end
 
-    it("counts them all") { is_expected.to eq(service.id => 8) }
+    it("counts them all") { is_expected.to eq(service.id => ProjectItem::STATUS_TYPES.size) }
   end
 
   # A Project item keeps the order type its Offer had when it was created.
