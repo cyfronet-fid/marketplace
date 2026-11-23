@@ -2,7 +2,7 @@
 
 module Statistics
   # The number of Orders of each Service, Datasources included (ADR-0008
-  # D15 onwards), which ESS sends as usage_counts_downloads. An Order is a
+  # D26, D30), which ESS sends as usage_counts_downloads. An Order is a
   # Project item whose order type was "order required" when it was created,
   # internal or external, whatever its status. A Project item keeps that
   # order type, so a later change to its Offer doesn't change past counts.

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# The Opinion counters of a Service, counted from the rows (ADR-0008 D15
-# onwards): service_opinion_count is the number of Opinions given for any
+# The Opinion counters of a Service, counted from the rows (ADR-0008
+# D31): service_opinion_count is the number of Opinions given for any
 # Project item of its Offers, and rating the average of their Service
 # ratings, or 0 without any. Both come from the same rows.
 class ServiceOpinion::Totals < ApplicationService
