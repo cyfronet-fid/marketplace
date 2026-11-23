@@ -35,6 +35,19 @@ RSpec.describe ServiceOpinion::UpdateService, backend: true do
     end
   end
 
+  context "with a Service that fails its validations" do
+    let(:service) { create(:service) }
+
+    before do
+      service.update_columns(webpage_url: "not a url") # rubocop:disable Rails/SkipsModelValidations
+      create(:service_opinion, project_item: create(:project_item, offer: create(:offer, service:)), service_rating: 4)
+    end
+
+    it "still updates its counters" do
+      expect([service.reload.service_opinion_count, service.rating]).to eq([1, 4])
+    end
+  end
+
   context "with an Opinion on a bundled Project item" do
     let(:service) { create(:service) }
     let(:bundle) { create(:bundle, offers: [create(:offer, service:)]) }
