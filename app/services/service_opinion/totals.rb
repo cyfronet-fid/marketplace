@@ -12,8 +12,8 @@ class ServiceOpinion::Totals < ApplicationService
 
   # The attributes to store on the Service.
   def call
-    count, average =
-      @service.service_opinions.pick(Arel.sql("COUNT(*)"), Arel.sql("AVG(service_opinions.service_rating)"))
+    ratings = ServiceOpinion.arel_table[:service_rating]
+    count, average = @service.service_opinions.pick(Arel.star.count, ratings.average)
 
     { service_opinion_count: count, rating: average || 0 }
   end
