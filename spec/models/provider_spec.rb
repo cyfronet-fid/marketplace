@@ -85,6 +85,7 @@ RSpec.describe Provider, :backend, type: :model do
     it { is_expected.to have_many(:categorizations) }
     it { is_expected.to have_many(:categories) }
     it { is_expected.to have_many(:provider_vocabularies).dependent(:destroy) }
+    it { is_expected.to have_many(:view_statistics).dependent(:delete_all) }
 
     context "when contacts step is validated" do
       subject { build(:provider, current_step: "contacts") }

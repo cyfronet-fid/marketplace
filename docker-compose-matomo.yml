@@ -1,0 +1,54 @@
+# Local Matomo for developing the Matomo integration (README, section
+# "Matomo"). Its own compose project, so its services never replace the ones
+# of docker-compose.yml:
+#   docker compose -f docker-compose-matomo.yml up -d
+# Matomo runs on http://localhost:8080. The cron service archives the reports
+# every 5 minutes; the view sync reads archived reports.
+name: mp-matomo
+
+services:
+  db:
+    image: mariadb:12.3.3
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: matomo
+      MYSQL_USER: matomo
+      MYSQL_PASSWORD: password
+    volumes:
+      - db-data:/var/lib/mysql
+
+  matomo:
+    image: matomo:5.14.2
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8080:80"
+    environment:
+      MATOMO_DATABASE_HOST: db
+      MATOMO_DATABASE_USERNAME: matomo
+      MATOMO_DATABASE_PASSWORD: password
+      MATOMO_DATABASE_DBNAME: matomo
+    volumes:
+      - app-data:/var/www/html
+    depends_on:
+      - db
+
+  cron:
+    image: matomo:5.14.2
+    restart: unless-stopped
+    # The owner of the Matomo files: a root archiver would leave files in
+    # tmp/ that the web server cannot write.
+    user: www-data
+    volumes:
+      - app-data:/var/www/html
+    entrypoint: >
+      /bin/sh -c "while true; do
+      php /var/www/html/console core:archive;
+      sleep 300;
+      done"
+    depends_on:
+      - db
+
+volumes:
+  db-data:
+  app-data:

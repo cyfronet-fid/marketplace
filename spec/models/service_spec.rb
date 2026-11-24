@@ -54,6 +54,7 @@ RSpec.describe Service, :backend do
   it { is_expected.to have_many(:providers) }
   it { is_expected.to have_many(:categorizations).dependent(:destroy) }
   it { is_expected.to have_many(:offers).dependent(:restrict_with_error) }
+  it { is_expected.to have_many(:view_statistics).dependent(:delete_all) }
   it { is_expected.to have_many(:categories) }
   it { is_expected.to have_many(:service_scientific_domains).dependent(:destroy) }
   it { is_expected.to have_many(:service_vocabularies).dependent(:destroy) }
