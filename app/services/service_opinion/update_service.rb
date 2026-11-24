@@ -6,25 +6,16 @@ class ServiceOpinion::UpdateService
     @service = project_item.offer&.service # Only Service, not DeployableService
   end
 
+  # Recounts the Service's Opinions from the rows, so a counter that drifted
+  # before heals with the next Opinion. The counters don't depend on the
+  # Service's other attributes, so a Service invalid for an unrelated reason
+  # (a malformed URL, say) still gets them; any other failure raises instead
+  # of leaving them stale without a trace.
   def call
     # Service opinions only apply to Service offers (not DeployableService)
     return unless @service.is_a?(Service)
 
-    @service.update(rating: sum.fdiv(count), service_opinion_count: count)
-  end
-
-  private
-
-  attr_reader :service, :project_item
-
-  def sum
-    ServiceOpinion
-      .joins(project_item: :offer)
-      .where(offers: { orderable_type: "Service", orderable_id: service.id })
-      .sum(:service_rating)
-  end
-
-  def count
-    service.service_opinion_count + 1
+    @service.assign_attributes(ServiceOpinion::Totals.call(@service))
+    @service.save!(validate: false)
   end
 end

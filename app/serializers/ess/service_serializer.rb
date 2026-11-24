@@ -36,7 +36,11 @@ class Ess::ServiceSerializer < ApplicationSerializer
              :created_at
 
   attribute :created_at, key: :publication_date
-  attribute :project_items_count, key: :usage_counts_downloads
+  # Orders (Statistics::OrderCounts). Ess::SerializeCollection passes the
+  # counts of all the services of a collection as order_counts.
+  attribute :usage_counts_downloads do
+    (instance_options[:order_counts] || Statistics::OrderCounts.call([object])).fetch(object.id)
+  end
   attribute :usage_counts_views
 
   attribute :offers_count, unless: :datasource?
