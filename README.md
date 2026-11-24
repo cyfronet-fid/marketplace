@@ -796,6 +796,59 @@ After a change in a schema file only, run `./bin/rails openapi:bundle` to write 
 You can also customize OpenAPI metadata (such as default port,
 authentication scheme etc.) in `spec/swagger_helper.rb`
 
+## Statistics API
+
+The Resource Catalogue (RC) reads the statistics of each Service of a Node,
+Datasources included, by PID:
+
+```text
+GET /api/v1/statistics/services/{pid}
+GET /api/v1/statistics/services?from_id=0&limit=100&pid[]=…&pid[]=…
+X-User-Token: <token>
+```
+
+It returns `offers_count`, `service_opinion_count`, `project_items_count`,
+`usage_counts_views` and `usage_counts_downloads`, all-time, with the
+figures ESS sends. `usage_counts_downloads` counts Orders.
+`usage_counts_views` is `null` while the Node doesn't sync Views from Matomo
+(`MP_MATOMO_ENABLED` or `MP_MATOMO_TOKEN_AUTH` not set, see [Matomo](#matomo)).
+The OpenAPI document is `/api_docs/swagger/v1/statistics_swagger.json`.
+
+The API works the same on every variant, with nothing to configure. Any
+valid user token reads it; no role is needed.
+
+### Give the Resource Catalogue access
+
+1. In `bin/rails console`, create a user for RC. Give it a `uid` that no
+   Check-in identity has. On `pl`, leave `uid` out:
+
+   ```ruby
+   user = User.create!(
+     first_name: "Resource",
+     last_name: "Catalogue",
+     email: "resource-catalogue@example.org",
+     uid: "resource-catalogue-#{SecureRandom.uuid}"
+   )
+   ```
+
+2. Print its token:
+
+   ```ruby
+   puts user.authentication_token
+   ```
+
+3. Hand the token to RC.
+
+Until now RC has read ESS, which needs the `coordinator` role. Once RC
+confirms it reads the Statistics API, remove the role from its user, so
+the token reads statistics and nothing else:
+
+```ruby
+user = User.find_by!(email: "resource-catalogue@example.org")
+user.roles = user.roles.to_a - [:coordinator]
+user.save!
+```
+
 ## Views, locales and scss customization
 
 Views, JS and SCSS can be customized by adding `CUSTOMIZATION_PATH` [env variable](#environmental-variables).
