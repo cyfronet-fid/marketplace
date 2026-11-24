@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "description": "A page of Service statistics, in the order of the Services' ids.",
+  "properties": {
+    "statistics": {
+      "type": "array",
+      "items": {
+        "$ref": "service_statistics_read.json"
+      }
+    },
+    "next_from_id": {
+      "type": "integer",
+      "nullable": true,
+      "description": "The from_id of the next page, or null on the last page.",
+      "example": 1234
+    }
+  },
+  "required": ["statistics", "next_from_id"],
+  "additionalProperties": false
+}

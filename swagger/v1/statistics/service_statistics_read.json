@@ -1,0 +1,46 @@
+{
+  "type": "object",
+  "description": "The all-time statistics of one Service or Datasource. The field names are the ones ESS uses, and a figure that ESS also sends is the same.",
+  "properties": {
+    "pid": {
+      "type": "string",
+      "description": "PID of the Service.",
+      "example": "21.T15999/abc"
+    },
+    "offers_count": {
+      "type": "integer",
+      "description": "Published Offers of the Service now.",
+      "example": 3
+    },
+    "service_opinion_count": {
+      "type": "integer",
+      "description": "Opinions: ratings that users gave the Service after using it.",
+      "example": 5
+    },
+    "project_items_count": {
+      "type": "integer",
+      "description": "Project items of the Service's Offers: Orders and open access Project items alike.",
+      "example": 42
+    },
+    "usage_counts_views": {
+      "type": "integer",
+      "nullable": true,
+      "description": "Views: displays of the Service's page, read from Matomo. null when this Node doesn't track Views (Matomo or its view sync is off), which differs from 0, no Views.",
+      "example": 1250
+    },
+    "usage_counts_downloads": {
+      "type": "integer",
+      "description": "Orders: Project items whose Offer required an order when they were created, internal or external, in any status. Open access Project items aren't Orders.",
+      "example": 17
+    }
+  },
+  "required": [
+    "pid",
+    "offers_count",
+    "service_opinion_count",
+    "project_items_count",
+    "usage_counts_views",
+    "usage_counts_downloads"
+  ],
+  "additionalProperties": false
+}

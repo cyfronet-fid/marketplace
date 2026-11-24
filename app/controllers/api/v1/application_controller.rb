@@ -8,12 +8,14 @@ class Api::V1::ApplicationController < ActionController::API
     render json: not_authorized, status: 403
   end
 
-  def policy_scope(scope)
-    super([:api, :v1, scope])
+  # Pundit hands a given policy_scope_class the scope as it is, so it gets
+  # the scope without the namespace.
+  def policy_scope(scope, policy_scope_class: nil)
+    policy_scope_class ? super : super([:api, :v1, scope])
   end
 
-  def authorize(record, query = nil)
-    super([:api, :v1, record], query)
+  def authorize(record, query = nil, policy_class: nil)
+    super([:api, :v1, record], query, policy_class:)
   end
 
   def permitted_attributes(record, action = action_name)

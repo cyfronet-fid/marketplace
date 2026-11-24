@@ -70,6 +70,26 @@ RSpec.configure do |config|
         }
       }
     },
+    "v1/statistics_swagger.json" => {
+      openapi: "3.0.1",
+      info: {
+        title: "EOSC Marketplace Statistics API",
+        version: "v1",
+        description:
+          "Service statistics of this Node for the Resource Catalogue, by PID. Any user token reads them; " \
+          "no role is needed. The figures are all-time and match the ones ESS sends."
+      },
+      paths: {},
+      components: {
+        securitySchemes: {
+          authentication_token: {
+            type: :apiKey,
+            name: "X-User-Token",
+            in: :header
+          }
+        }
+      }
+    },
     "v1/users_swagger.json" => {
       openapi: "3.0.1",
       info: {
