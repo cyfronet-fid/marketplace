@@ -213,6 +213,16 @@ fi
 DC=/usr/bin/docker
 failed=()
 
+# Removes the database and creates an empty one. The arguments are the compose
+# command of the variant. The connection goes to the database "postgres": a
+# database with the name of the user (mp) does not exist, and a database with
+# an open connection cannot be removed.
+recreate_database() {
+    echo "DROP DATABASE IF EXISTS ${DB_NAME}; CREATE DATABASE ${DB_NAME};" \
+        | "$@" exec -T -e PGOPTIONS='-c client_min_messages=warning' "$DB_SERVICE" \
+            psql -q -v ON_ERROR_STOP=1 -U "$DB_USER" -d postgres > /dev/null
+}
+
 deploy_variant() {
     local variant="$1"
     local compose_file="docker-compose-${variant}.yml"
@@ -261,12 +271,7 @@ deploy_variant() {
         fi
 
         # --- create the database again ---
-        # The connection goes to the database "postgres": a database with the
-        # name of the user (mp) does not exist, and a database with an open
-        # connection cannot be removed.
-        echo "DROP DATABASE IF EXISTS ${DB_NAME}; CREATE DATABASE ${DB_NAME};" \
-            | "${dc[@]}" exec -T -e PGOPTIONS='-c client_min_messages=warning' "$DB_SERVICE" \
-                psql -q -v ON_ERROR_STOP=1 -U "$DB_USER" -d postgres > /dev/null || return 1
+        recreate_database "${dc[@]}" || return 1
 
         if [ -f "$dump" ]; then
             # --- restore the dump in one transaction ---
@@ -286,8 +291,15 @@ deploy_variant() {
             echo "[${variant}] no $dump: loading db/schema.rb and running all seeds"
             "${dc[@]}" run --rm -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 "$APP_SERVICE" \
                 ./bin/rails db:schema:load || return 1
-            "${dc[@]}" run --rm "$APP_SERVICE" \
-                ./bin/rails db:seed rdt:add_internal_vocabularies || return 1
+            if ! "${dc[@]}" run --rm "$APP_SERVICE" \
+                    ./bin/rails db:seed rdt:add_internal_vocabularies; then
+                # A failed seed leaves the database empty, so the next deploy
+                # seeds again. If the schema_migrations table stays, the next
+                # deploy keeps a database with incomplete seeds.
+                recreate_database "${dc[@]}" \
+                    && echo "[${variant}] seed failed: the database is empty again"
+                return 1
+            fi
         fi
     fi
 

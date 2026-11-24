@@ -12,6 +12,11 @@
 # error if a dictionary table is not empty, and it changes nothing then. After
 # the load it sets each id sequence to the highest loaded id.
 #
+# The dump must hold the rows of each dictionary table as a COPY block, the
+# default format of pg_dump. The script stops with an error if a COPY block is
+# missing, for example in a dump made with pg_dump --inserts. The script also
+# stops if the output file is the dump file.
+#
 # Usage:
 #   move_dictionaries.sh <dump.sql> [output.sql]
 #
@@ -27,6 +32,20 @@ OUT=${2:-${TMPDIR:-/tmp}/dictionaries.sql}
 TABLES=(categories platforms scientific_domains target_users vocabularies)
 
 [ -f "$DUMP" ] || { echo "usage: move_dictionaries.sh <dump.sql> [output.sql]"; exit 1; }
+
+# The redirect to the output file empties the file before awk reads the dump.
+if [ "$DUMP" -ef "$OUT" ]; then
+  echo "error: the output file must not be the dump file: $OUT" >&2
+  exit 1
+fi
+
+# Without a COPY block the output file loads no rows into the table.
+for t in $TABLES; do
+  if ! grep -q "^COPY public\.$t " "$DUMP"; then
+    echo "error: no COPY block for the table $t in $DUMP" >&2
+    exit 1
+  fi
+done
 
 {
   echo "-- Backoffice dictionaries, extracted from a deployment dump by"
