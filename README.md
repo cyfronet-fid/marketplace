@@ -650,6 +650,11 @@ When you write/change api specs run:
 
 ...to generate and deploy new swagger docs (no server restart required).
 
+The same command writes `swagger/v1/spec.json`.
+This file has all the API documents in one OpenAPI document with no references to other files.
+The application serves the file at `/api_docs/swagger/v1/spec.json`.
+After a change in a schema file only, run `./bin/rails openapi:bundle` to write the file again.
+
 You can also customize OpenAPI metadata (such as default port,
 authentication scheme etc.) in `spec/swagger_helper.rb`
 

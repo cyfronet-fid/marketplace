@@ -1,0 +1,9 @@
+{
+  "offer": {
+    "type": "object",
+    "properties": {
+      "parameter": { "$ref": "#/parameter" }
+    }
+  },
+  "parameter": { "type": "string" }
+}
