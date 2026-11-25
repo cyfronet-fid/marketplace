@@ -2,6 +2,17 @@
 
 require "active_support/core_ext/integer/time"
 
+# lib/otel_logging is not autoloaded: the log formatter is built here.
+%w[
+  json_formatter
+  resource
+  trace_context
+  request_context
+  request_context_middleware
+  job_context
+  request_entry
+].each { |file| require_relative "../../lib/otel_logging/#{file}" }
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -55,9 +66,6 @@ Rails.application.configure do
   # information to avoid inadvertent exposure of personally identifiable information (PII).
   config.log_level = :info
 
-  # Prepend all log lines with the following tags.
-  config.log_tags = [:request_id]
-
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
 
@@ -84,17 +92,40 @@ Rails.application.configure do
   # Tell Active Support which deprecation messages to disallow.
   config.active_support.disallowed_deprecation_warnings = []
 
-  # Use default logging formatter so that PID and timestamp are not suppressed.
-  config.log_formatter = Logger::Formatter.new
+  # Each log entry is one JSON object with OpenTelemetry field names
+  # (lib/otel_logging). The contexts add the fields of the process, of the
+  # active span, of the request and of the Sidekiq job.
+  config.log_formatter =
+    OtelLogging::JsonFormatter.new(
+      contexts: [
+        OtelLogging::Resource.from_env(ENV, service_name: Sidekiq.server? ? "worker" : "web"),
+        OtelLogging::TraceContext.new,
+        OtelLogging::RequestContext,
+        OtelLogging::JobContext.new
+      ]
+    )
 
-  # Use a different logger for distributed setups.
-  # require "syslog/logger"
-  # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new "app-name")
+  # The logger has no ActiveSupport::TaggedLogging: a tag prefix is not a JSON
+  # field. The request id is a field of the entries.
+  log_destination = ENV["RAILS_LOG_TO_STDOUT"].present? ? $stdout : config.default_log_file
+  config.logger = ActiveSupport::Logger.new(log_destination).tap { |logger| logger.formatter = config.log_formatter }
+  config.middleware.insert_after ActionDispatch::RequestId, OtelLogging::RequestContextMiddleware
+  # The middleware is in each backtrace. Without the silencer, an exception
+  # from a gem shows the middleware as the only application line.
+  Rails.backtrace_cleaner.add_silencer { |line| line.include?("lib/otel_logging/") }
 
-  if ENV["RAILS_LOG_TO_STDOUT"].present?
-    logger           = ActiveSupport::Logger.new($stdout)
-    logger.formatter = config.log_formatter
-    config.logger    = ActiveSupport::TaggedLogging.new(logger)
+  # One entry for each HTTP request.
+  request_entry = OtelLogging::RequestEntry.new
+  config.lograge.enabled = true
+  config.lograge.formatter = request_entry
+  config.lograge.custom_options = request_entry.method(:event_fields)
+  config.lograge.custom_payload { |controller| request_entry.controller_fields(controller) }
+
+  # The Sidekiq server writes the same entries. The queue is a field of the
+  # job entries.
+  Sidekiq.configure_server do |sidekiq|
+    sidekiq.logger.formatter = config.log_formatter
+    sidekiq[:logged_job_attributes] += ["queue"]
   end
 
   # Do not dump schema after migrations.

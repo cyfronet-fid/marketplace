@@ -37,7 +37,9 @@ module Mp
     config.active_support.disable_to_s_conversion = true
 
     # lib/matomo is required above: config.matomo is built before autoloading.
-    config.autoload_lib(ignore: %w[assets matomo tasks versions])
+    # config/environments/production.rb and config/puma.rb require
+    # lib/otel_logging: the log formatter is built before autoloading.
+    config.autoload_lib(ignore: %w[assets matomo otel_logging tasks versions])
 
     default_redis_url = Rails.env.test? ? "redis://localhost:6379/1" : "redis://localhost:6379/0"
 
