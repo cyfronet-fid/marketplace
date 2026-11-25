@@ -27,6 +27,9 @@
 # coordinator of the marketplace instance, for /api/v1/ess), SECRET_KEY,
 # OIDC_CLIENT_ID and OIDC_CLIENT_SECRET (a client of the Keycloak realm below
 # with the redirect URI MP_HUB_URL/api/web/auth/checkin), LOG_LEVEL.
+# Optional: MATOMO_ENABLED, MATOMO_URL and MATOMO_SITE_ID. Matomo is off
+# unless MATOMO_ENABLED=true; then the backend of the hub refuses to start
+# without the URL and the site ID of this Discovery Hub.
 # The public URLs come from the environment of the compose call, without a
 # trailing slash (the deploy script exports the staging values from
 # lib/versions/staging-urls.sh; a local deploy sets them in the shell or in
