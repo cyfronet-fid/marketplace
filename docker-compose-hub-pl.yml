@@ -25,6 +25,9 @@
 # secret of the OIDC_CLIENT_ID client below, a client of the pl-node
 # Keycloak of access.eosc.pl, with the redirect URI
 # MP_HUB_URL/api/web/auth/checkin), LOG_LEVEL.
+# Optional: MATOMO_ENABLED, MATOMO_URL and MATOMO_SITE_ID. Matomo is off
+# unless MATOMO_ENABLED=true; then the backend of the hub refuses to start
+# without the URL and the site ID of this Discovery Hub.
 # The public URLs come from the environment of the compose call, without a
 # trailing slash (the deploy script exports the staging values from
 # lib/versions/staging-urls.sh; a local deploy sets them in the shell or in

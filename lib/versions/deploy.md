@@ -97,7 +97,9 @@ ROOT/hubs/.last-deployed-<variant>        state of the last complete hub deploy
    URI `<hub URL>/api/web/auth/checkin`. The compose file of the hub sets the
    OIDC endpoints; endpoint values in the env file have no effect. The pl
    compose file also sets `OIDC_CLIENT_ID`, thus the pl env file does not
-   need it.
+   need it. `MATOMO_ENABLED`, `MATOMO_URL` and `MATOMO_SITE_ID` are optional,
+   with the rules in the compose header. The site ID is the Discovery Hub
+   site, not the Marketplace site (`MP_MATOMO_SITE_ID`).
 
 ## Run
 
