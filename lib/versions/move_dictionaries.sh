@@ -10,7 +10,8 @@
 #
 # The generated file is safe to apply more than one time: it stops with an
 # error if a dictionary table is not empty, and it changes nothing then. After
-# the load it sets each id sequence to the highest loaded id.
+# the load it sets each id sequence to the highest loaded id. The sequence of a
+# table that got no rows starts at 1.
 #
 # The dump must hold the rows of each dictionary table as a COPY block, the
 # default format of pg_dump. The script stops with an error if a COPY block is
@@ -70,9 +71,10 @@ done
     ' "$DUMP"
   done
 
-  echo "-- Continue each id sequence after the highest loaded id."
+  echo "-- Continue each id sequence after the highest loaded id. The first id of an"
+  echo "-- empty table is 1."
   for t in $TABLES; do
-    echo "SELECT setval(pg_get_serial_sequence('public.$t', 'id'), (SELECT COALESCE(MAX(id), 1) FROM public.$t));"
+    echo "SELECT setval(pg_get_serial_sequence('public.$t', 'id'), COALESCE(MAX(id), 1), MAX(id) IS NOT NULL) FROM public.$t;"
   done
   echo "COMMIT;"
 } > "$OUT"
