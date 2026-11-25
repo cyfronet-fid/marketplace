@@ -4,23 +4,19 @@
 # by PID, for the Resource Catalogue. ::Statistics::ServiceStatistics builds
 # the figures; this controller handles paging, filters and errors.
 class Api::V1::Statistics::ServicesController < Api::V1::ApplicationController
-  DEFAULT_LIMIT = 100
-  MAX_LIMIT = 1000
-  MAX_PIDS = 100
-
   before_action :authorize_statistics
-  before_action :validate_from_id, :validate_page_limit, :validate_pids, only: :index
+  before_action :validate_page_params, only: :index
 
   def index
     # One Service past the page tells whether another page follows.
-    services = visible_services.where(id: (@from_id + 1)..)
-    services = services.where(pid: @pids) if @pids
-    services = services.order(:id).limit(@limit + 1).to_a
-    page = services.first(@limit)
+    services = visible_services.where(id: (@page_params.from_id + 1)..)
+    services = services.where(pid: @page_params.pids) if @page_params.pids
+    services = services.order(:id).limit(@page_params.limit + 1).to_a
+    page = services.first(@page_params.limit)
 
     render json: {
       statistics: ::Statistics::ServiceStatistics.call(page),
-      next_from_id: (page.last.id if services.size > @limit)
+      next_from_id: (page.last.id if services.size > @page_params.limit)
     }
   end
 
@@ -38,24 +34,11 @@ class Api::V1::Statistics::ServicesController < Api::V1::ApplicationController
     authorize Service, policy_class: Api::V1::StatisticsPolicy
   end
 
-  # validate_limit has another default and no maximum.
-  def validate_page_limit
-    @limit = params[:limit].present? ? params[:limit].to_i : DEFAULT_LIMIT
-    return if @limit.between?(1, MAX_LIMIT)
+  def validate_page_params
+    @page_params = ::Statistics::PageParams.from_query(params)
+    return if @page_params.valid?
 
-    render json: { error: "'limit' must be an integer from 1 to #{MAX_LIMIT}" }, status: :bad_request
-  end
-
-  # pid[]=…&pid[]=…, which narrows the page to those PIDs.
-  def validate_pids
-    @pids = params[:pid]
-    return if @pids.nil?
-
-    if !@pids.is_a?(Array) || !@pids.all?(String)
-      render json: { error: "'pid' must be a list of PIDs: pid[]=…&pid[]=…" }, status: :bad_request
-    elsif @pids.size > MAX_PIDS
-      render json: { error: "'pid' must hold at most #{MAX_PIDS} PIDs" }, status: :bad_request
-    end
+    render json: { error: @page_params.errors.map(&:message).join("; ") }, status: :bad_request
   end
 
   def visible_services

@@ -198,6 +198,23 @@ RSpec.describe Api::V1::Statistics::ServicesController, swagger_doc: "v1/statist
     end
   end
 
+  # rswag sends from_id and limit only as the integers it documents.
+  {
+    { from_id: "abc" } => "'from_id' must be a non-negative integer",
+    { from_id: ["1"] } => "'from_id' must be a non-negative integer",
+    { limit: "5abc" } => "'limit' must be an integer from 1 to 1000",
+    { limit: ["1"] } => "'limit' must be an integer from 1 to 1000",
+    { from_id: "-1", limit: "0" } =>
+      "'from_id' must be a non-negative integer; 'limit' must be an integer from 1 to 1000"
+  }.each do |query, error|
+    it "refuses #{CGI.unescape(query.to_query)} with a 400" do
+      token = create(:user).authentication_token
+      get "/api/v1/statistics/services", params: query, headers: { "X-User-Token" => token }
+
+      expect(response).to have_http_status(:bad_request).and have_attributes(parsed_body: { "error" => error })
+    end
+  end
+
   # Without Accept: application/json too, which rswag always sends.
   it "refuses a request without a token with a 401, not a redirect to the sign-in page" do
     get "/api/v1/statistics/services"
