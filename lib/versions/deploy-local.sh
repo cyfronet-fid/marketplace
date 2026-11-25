@@ -18,7 +18,9 @@
 # Layout under MP_LOCAL_DIR (default: tmp/local-deploy of this checkout):
 #   seed/<variant>/mp_db.sql     plain SQL dump, optional. Without a dump the
 #                                database gets the schema of db/schema.rb and
-#                                stays empty.
+#                                all seeds (db:seed and the internal
+#                                vocabularies), so the backoffice dictionaries
+#                                exist.
 #   seed/<variant>/media/        media files, optional
 #   hubs/<name>                  symlinks to the hub checkouts, with the names
 #                                that the hub compose file expects
@@ -491,6 +493,15 @@ seed_hub() {
     echo
 }
 
+# Removes the database of the instance and creates an empty one. The connection
+# goes to the database "postgres": a database with an open connection cannot be
+# removed.
+recreate_database() {
+    echo "DROP DATABASE IF EXISTS ${DB_NAME}; CREATE DATABASE ${DB_NAME};" \
+        | instance exec -T -e PGOPTIONS='-c client_min_messages=warning' "$DB_SERVICE" \
+            psql -q -v ON_ERROR_STOP=1 -U "$DB_USER" -d postgres > /dev/null
+}
+
 deploy_instance() {
     local compose_file="docker-compose-${VARIANT}.yml"
     local seed="$SEED_DIR/$VARIANT"
@@ -524,11 +535,7 @@ deploy_instance() {
             instance cp "$seed/media/." "${APP_SERVICE}:${MEDIA_PATH}/" || return 1
         fi
         if [ -f "$dump" ]; then
-            # The connection goes to the database "postgres": a database with
-            # an open connection cannot be removed.
-            echo "DROP DATABASE IF EXISTS ${DB_NAME}; CREATE DATABASE ${DB_NAME};" \
-                | instance exec -T -e PGOPTIONS='-c client_min_messages=warning' "$DB_SERVICE" \
-                    psql -q -v ON_ERROR_STOP=1 -U "$DB_USER" -d postgres > /dev/null || return 1
+            recreate_database || return 1
             instance exec -T -e PGOPTIONS='-c client_min_messages=warning' "$DB_SERVICE" \
                 psql -q -v ON_ERROR_STOP=1 --single-transaction -U "$DB_USER" -d "$DB_NAME" -f - \
                 < "$dump" > /dev/null || return 1
@@ -545,6 +552,21 @@ deploy_instance() {
             fi
             instance run --rm -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 -e SCHEMA=db/schema.rb \
                 "$APP_SERVICE" "${schema_command[@]}" || return 1
+            # The empty database gets all seeds: db:seed loads
+            # db/vocabulary.yml, the second task loads
+            # db/internal_vocabulary.yml with the offer categories. The schema
+            # command above completes the bundle volume of the development
+            # mode, thus the seed command needs no bundle install.
+            echo "[${VARIANT}] empty database: running all seeds"
+            if ! instance run --rm "$APP_SERVICE" \
+                    ./bin/rails db:seed rdt:add_internal_vocabularies; then
+                # A failed seed leaves the database empty, so the next deploy
+                # seeds again. If the schema_migrations table stays, the next
+                # deploy keeps a database with incomplete seeds.
+                recreate_database \
+                    && echo "[${VARIANT}] seed failed: the database is empty again"
+                return 1
+            fi
         fi
     fi
 

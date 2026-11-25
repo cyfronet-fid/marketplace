@@ -16,6 +16,23 @@ Ruby 3.3, Rails 7.2. RSpec (`rspec-rails`) for tests, not Minitest. Style is enf
 - **API responses**: `app/serializers/`, built on `active_model_serializers`, which is unmaintained. Don't suggest expanding usage of it — new serialization work should move toward a maintained alternative incrementally. Flag any change that deepens dependence on the old gem.
 - **Background work**: `app/jobs/`.
 
+## Deployment
+
+- `MARKETPLACE_VARIANT` selects the deployment variant at boot: `marketplace`, `pl` or `whitelabel`. `docs/deployment_variants.md` describes the variant architecture.
+- The deploy scripts are in `lib/versions/`. Each script carries the usage in the comment at the top. RuboCop does not cover `lib/versions/`.
+- On the staging host, run the scripts from the repository checkout, not from a copy.
+
+| Script | Purpose |
+| --- | --- |
+| `deploy-local.sh` | deploys one variant with docker compose on a developer machine; `--no-hub` deploys the instance only |
+| `deploy-multi.sh` | deploys the three variants on the staging host; run by hand |
+| `deploy-hubs.sh` | deploys the discovery hubs on the staging host |
+| `move_dictionaries.sh` | extracts the backoffice dictionary tables from a SQL dump into one SQL file |
+
+- A SQL dump (`seed/<variant>/mp_db.sql`) is optional. Without a dump, a deploy loads `db/schema.rb`, runs `db:seed` and loads the internal vocabularies. The backoffice dictionaries thus exist on a fresh instance.
+- Use `move_dictionaries.sh` for an instance that started with an empty database before the deploy scripts ran the seeds. Load the generated file on the database of the instance. The file stops with an error if a dictionary table is not empty.
+- `.env.example` lists the application variables with placeholder values and public defaults. Do not put real values in the file.
+
 ## When reviewing a diff
 
 - Diffs are Rails-app changes touching ActiveRecord models, Pundit policies, services, or RSpec specs most often — weight review effort there over views/assets.
