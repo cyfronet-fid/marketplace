@@ -38,6 +38,12 @@ module Matomo
       @enabled
     end
 
+    # Whether the view sync runs, so usage_counts_views holds the Views read
+    # from Matomo. Without it the Statistics API sends Views as null, not 0.
+    def views_synced?
+      enabled? && token_auth.present?
+    end
+
     # The token never leaves the server: not in a console, a log or an error report.
     def inspect
       "#<#{self.class.name} enabled=#{enabled?} url=#{url.inspect} site_id=#{site_id.inspect} " \

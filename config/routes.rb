@@ -234,6 +234,11 @@ Rails.application.routes.draw do
           resources :deployable_services, only: %i[index show], constraints: { id: pid_format_constraint }
         end
       end
+      # JSON by default, so a request without a valid token gets Devise's 401,
+      # not a redirect to the sign-in page, whatever its Accept header.
+      namespace :statistics, defaults: { format: :json } do
+        resources :services, only: %i[index show], constraints: { id: pid_format_constraint }
+      end
       resources :users, only: :show, constraints: { id: pid_format_constraint }
     end
   end

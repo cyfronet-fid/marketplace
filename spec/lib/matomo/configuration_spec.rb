@@ -25,6 +25,8 @@ RSpec.describe Matomo::Configuration do
     it { is_expected.to be_enabled }
     it { is_expected.to have_attributes(url: "https://matomo.example.org/", site_id: "12") }
     it { is_expected.to have_attributes(token_auth: nil, sync_cron: "15 2 * * *") }
+
+    it("doesn't sync Views without the token") { is_expected.not_to be_views_synced }
   end
 
   context "with the sync settings" do
@@ -37,10 +39,17 @@ RSpec.describe Matomo::Configuration do
     end
 
     it { is_expected.to have_attributes(token_auth: "secret", sync_cron: "0 4 * * *") }
+    it { is_expected.to be_views_synced }
 
     it "keeps the token out of logs and consoles" do
       expect(configuration.inspect).not_to include("secret")
     end
+  end
+
+  context "with MP_MATOMO_TOKEN_AUTH while Matomo is off" do
+    let(:env) { site.merge("MP_MATOMO_ENABLED" => "false", "MP_MATOMO_TOKEN_AUTH" => "secret") }
+
+    it { is_expected.not_to be_views_synced }
   end
 
   context "when enabled without MP_MATOMO_URL" do

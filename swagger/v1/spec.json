@@ -2543,6 +2543,140 @@
         }
       }
     },
+    "/api/v1/statistics/services": {
+      "get": {
+        "summary": "lists the statistics of Services, a page at a time",
+        "tags": [
+          "Service statistics"
+        ],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "from_id",
+            "in": "query",
+            "required": false,
+            "description": "List the Services with an id greater than from_id, 0 by default: next_from_id of the previous page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Services on a page, 100 by default and 1000 at most",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pid[]",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 100
+            },
+            "description": "Only the Services with these PIDs, 100 at most. A PID that the Node doesn't publish (no published or errored Service has it) is left out of the page, with no error."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "a page of statistics found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/statistics_service_statistics_index"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "from_id, limit or pid[] not valid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/statistics/services/{pid}": {
+      "parameters": [
+        {
+          "name": "pid",
+          "in": "path",
+          "description": "PID of the Service, which may contain one /",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "retrieves the statistics of a Service",
+        "tags": [
+          "Service statistics"
+        ],
+        "security": [
+          {
+            "authentication_token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "statistics found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/statistics_service_statistics_read"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "the Node publishes no Service with the PID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "user not recognized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/users/{user_id}": {
       "parameters": [
         {
@@ -5037,6 +5171,75 @@
           "type",
           "default"
         ]
+      },
+      "statistics_service_statistics_index": {
+        "type": "object",
+        "description": "A page of Service statistics, in the order of the Services' ids.",
+        "properties": {
+          "statistics": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/statistics_service_statistics_read"
+            }
+          },
+          "next_from_id": {
+            "type": "integer",
+            "nullable": true,
+            "description": "The from_id of the next page, or null on the last page.",
+            "example": 1234
+          }
+        },
+        "required": [
+          "statistics",
+          "next_from_id"
+        ],
+        "additionalProperties": false
+      },
+      "statistics_service_statistics_read": {
+        "type": "object",
+        "description": "The all-time statistics of one Service or Datasource. The field names are the ones ESS uses, and a figure that ESS also sends is the same.",
+        "properties": {
+          "pid": {
+            "type": "string",
+            "description": "PID of the Service.",
+            "example": "21.T15999/abc"
+          },
+          "offers_count": {
+            "type": "integer",
+            "description": "Published Offers of the Service now.",
+            "example": 3
+          },
+          "service_opinion_count": {
+            "type": "integer",
+            "description": "Opinions: ratings that users gave the Service after using it.",
+            "example": 5
+          },
+          "project_items_count": {
+            "type": "integer",
+            "description": "Project items of the Service's Offers: Orders and open access Project items alike.",
+            "example": 42
+          },
+          "usage_counts_views": {
+            "type": "integer",
+            "nullable": true,
+            "description": "Views: displays of the Service's page, read from Matomo. null when this Node doesn't track Views (Matomo or its view sync is off), which differs from 0, no Views.",
+            "example": 1250
+          },
+          "usage_counts_downloads": {
+            "type": "integer",
+            "description": "Orders: Project items whose Offer required an order when they were created, internal or external, in any status. Open access Project items aren't Orders.",
+            "example": 17
+          }
+        },
+        "required": [
+          "pid",
+          "offers_count",
+          "service_opinion_count",
+          "project_items_count",
+          "usage_counts_views",
+          "usage_counts_downloads"
+        ],
+        "additionalProperties": false
       },
       "user_user_read": {
         "type": "object",
