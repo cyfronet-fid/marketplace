@@ -4,14 +4,6 @@ require "swagger_helper"
 require "rails_helper"
 
 RSpec.describe Api::V1::Ess::CataloguesController, swagger_doc: "v1/ess_swagger.json" do
-  before(:all) do
-    Dir.chdir Rails.root.join("swagger", "v1") # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
-  end
-
-  after(:all) do
-    Dir.chdir Rails.root # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
-  end
-
   path "/api/v1/ess/catalogues" do
     get "lists catalogues" do
       tags "catalogues"
