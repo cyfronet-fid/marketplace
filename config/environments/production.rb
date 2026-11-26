@@ -106,8 +106,14 @@ Rails.application.configure do
     )
 
   # The logger has no ActiveSupport::TaggedLogging: a tag prefix is not a JSON
-  # field. The request id is a field of the entries.
-  log_destination = ENV["RAILS_LOG_TO_STDOUT"].present? ? $stdout : config.default_log_file
+  # field. The request id is a field of the entries. If the log file cannot
+  # open, the logger writes to stderr, as the default logger of Rails does.
+  log_destination =
+    begin
+      ENV["RAILS_LOG_TO_STDOUT"].present? ? $stdout : config.default_log_file
+    rescue SystemCallError
+      $stderr
+    end
   config.logger = ActiveSupport::Logger.new(log_destination).tap { |logger| logger.formatter = config.log_formatter }
   config.middleware.insert_after ActionDispatch::RequestId, OtelLogging::RequestContextMiddleware
   # The middleware is in each backtrace. Without the silencer, an exception
@@ -121,12 +127,11 @@ Rails.application.configure do
   config.lograge.custom_options = request_entry.method(:event_fields)
   config.lograge.custom_payload { |controller| request_entry.controller_fields(controller) }
 
-  # The Sidekiq server writes the same entries. The queue is a field of the
-  # job entries.
-  Sidekiq.configure_server do |sidekiq|
-    sidekiq.logger.formatter = config.log_formatter
-    sidekiq[:logged_job_attributes] += ["queue"]
-  end
+  # Sidekiq writes the same entries in the web process and in the worker. The
+  # web process uses the Sidekiq logger too, for example when it connects to
+  # Redis. The queue is a field of the job entries.
+  Sidekiq.logger.formatter = config.log_formatter
+  Sidekiq.configure_server { |sidekiq| sidekiq[:logged_job_attributes] += ["queue"] }
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false

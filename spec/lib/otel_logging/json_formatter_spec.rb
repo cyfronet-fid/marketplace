@@ -188,6 +188,18 @@ RSpec.describe OtelLogging::JsonFormatter do
     end
   end
 
+  context "with a hash that is nested too deep for JSON" do
+    let(:message) { { "data" => (1..101).reduce("leaf") { |value, _| [value] } } }
+
+    it "gives the inspected hash as the body" do
+      expect(entry["body"]).to include("data", "leaf")
+    end
+
+    it "keeps the severity fields" do
+      expect(entry).to include("severity_text" => "INFO", "severity_number" => 9)
+    end
+  end
+
   describe "#entry" do
     subject(:entry_text) { described_class.new(contexts: contexts).entry(severity, time, message) }
 

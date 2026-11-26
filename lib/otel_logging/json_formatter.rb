@@ -19,10 +19,11 @@ module OtelLogging
       "#{entry(severity, time, message)}\n"
     end
 
-    # The entry without the line end.
+    # The entry without the line end. A message that JSON cannot write gives
+    # its inspected text as the body: the formatter must not raise.
     def entry(severity, time, message)
       JSON.generate(fields(severity, time, message))
-    rescue JSON::GeneratorError
+    rescue JSON::GeneratorError, JSON::NestingError
       JSON.generate(fields(severity, time, message.inspect))
     end
 
