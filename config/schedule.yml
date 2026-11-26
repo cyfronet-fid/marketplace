@@ -8,7 +8,7 @@ infrastructure_state_polling:
   status: "<%= ENV.fetch('INFRASTRUCTURE_POLLING_ENABLED', 'false') == 'true' ? 'enabled' : 'disabled' %>"
   class: "Infrastructure::StatePollingJob"
   queue: default
-# Matomo view sync (ADR-0008 D8); Matomo::Configuration reads MP_MATOMO_ENABLED and MP_MATOMO_SYNC_CRON.
+# Matomo view sync (ADR-0007 D8); Matomo::Configuration reads MP_MATOMO_ENABLED and MP_MATOMO_SYNC_CRON.
 # While Matomo is off there is no entry, so sidekiq-cron deletes the one a
 # previous boot saved, and MP_MATOMO_SYNC_CRON is never parsed.
 <% if Mp::Application.config.matomo.enabled? %>

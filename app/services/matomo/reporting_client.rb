@@ -2,7 +2,7 @@
 
 module Matomo
   # Reads reports of this Node's Matomo site through the reporting API
-  # (ADR-0008 D8), with the view-only MP_MATOMO_TOKEN_AUTH.
+  # (ADR-0007 D8), with the view-only MP_MATOMO_TOKEN_AUTH.
   class ReportingClient
     # A failed request: an HTTP error, a timeout, or an error result of Matomo.
     class Error < StandardError

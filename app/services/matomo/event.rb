@@ -6,7 +6,7 @@ module Matomo
   # (MatomoHelper#matomo_event_tag).
   Event = Data.define(:category, :action, :name, :value) do
     # The View event of a Service (Datasource too), Provider or Bundle detail
-    # page (ADR-0008 D6). Names are PIDs, which are stable across slug
+    # page (ADR-0007 D6). Names are PIDs, which are stable across slug
     # changes; a bundle has none, so its name is "<service PID>:<bundle iid>".
     def self.view(record)
       case record

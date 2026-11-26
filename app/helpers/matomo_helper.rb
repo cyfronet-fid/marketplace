@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Matomo browser tracking (app/javascript/app/matomo.js, ADR-0008). With
+# Matomo browser tracking (app/javascript/app/matomo.js, ADR-0007). With
 # Matomo off (MP_MATOMO_ENABLED, Matomo::Configuration) the helpers render
 # nothing, and the tracker stays idle.
 module MatomoHelper

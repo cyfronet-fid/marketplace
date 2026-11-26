@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# The Statistics API (ADR-0008 D33–D42): the Service statistics of this Node,
+# The Statistics API (ADR-0007 D33–D42): the Service statistics of this Node,
 # by PID, for the Resource Catalogue. ::Statistics::ServiceStatistics builds
 # the figures; this controller handles paging, filters and errors.
 class Api::V1::Statistics::ServicesController < Api::V1::ApplicationController

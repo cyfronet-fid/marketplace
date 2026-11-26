@@ -4,7 +4,7 @@ require "ipaddr"
 
 module Matomo
   # Every Matomo setting of this Node, read from the MP_MATOMO_* env vars
-  # (ADR-0008 D2, D3). config/application.rb builds it once at boot as
+  # (ADR-0007 D2, D3). config/application.rb builds it once at boot as
   # config.matomo; no other code reads MP_MATOMO_*. Shared mode will only
   # change how the object is built (per tenant), not its callers.
   #

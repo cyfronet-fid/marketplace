@@ -1,4 +1,4 @@
-// Matomo browser tracking (ADR-0008). Active only when the page has the
+// Matomo browser tracking (ADR-0007). Active only when the page has the
 // matomo-* meta tags (MatomoHelper#matomo_tags, layouts/_head), that is when
 // MP_MATOMO_ENABLED is true. Always cookieless: disableCookies is queued
 // before any hit.
