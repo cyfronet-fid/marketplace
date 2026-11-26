@@ -3,15 +3,7 @@
 require "swagger_helper"
 require "rails_helper"
 
-RSpec.describe Api::V1::ResourcesController, swagger_doc: "v1/offering_swagger.json", backend: true do
-  before(:all) do
-    Dir.chdir Rails.root.join("swagger", "v1") # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
-  end
-
-  after(:all) do
-    Dir.chdir Rails.root # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
-  end
-
+RSpec.describe Api::V1::ResourcesController, :backend, swagger_doc: "v1/offering_swagger.json" do
   path "/api/v1/resources" do
     get "lists resources administered by user" do
       tags "Resources"

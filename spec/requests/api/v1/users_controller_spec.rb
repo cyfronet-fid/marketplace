@@ -4,14 +4,6 @@ require "swagger_helper"
 require "rails_helper"
 
 RSpec.describe Api::V1::UsersController, :backend, swagger_doc: "v1/users_swagger.json", type: :request do
-  around do |example|
-    original_dir = Dir.pwd
-    Dir.chdir Rails.root.join("swagger/v1")
-    example.run
-  ensure
-    Dir.chdir original_dir
-  end
-
   path "/api/v1/users/{user_id}" do
     parameter name: "user_id", in: :path, type: :string, required: true, description: "User unique identifier"
 
@@ -45,9 +37,7 @@ RSpec.describe Api::V1::UsersController, :backend, swagger_doc: "v1/users_swagge
       response(200, "successful through a checkin identity on pl", document: false) do
         schema "$ref" => "user/user_read.json"
 
-        # rubocop:disable RSpec/ScatteredSetup -- each rswag `response` block is its own example group
         before { allow(Mp::Variant).to receive(:pl?).and_return(true) }
-        # rubocop:enable RSpec/ScatteredSetup
 
         let(:user_id) { "test-user-uid" }
         let(:user) { create(:user, uid: nil, roles: %i[admin coordinator executive]) }
@@ -71,7 +61,6 @@ RSpec.describe Api::V1::UsersController, :backend, swagger_doc: "v1/users_swagge
       response(401, "unauthorized") do
         schema "$ref" => "error.json"
 
-        # rubocop:disable RSpec/EmptyExampleGroup -- `run_test!` defines the example; rubocop-rspec doesn't know rswag's DSL
         context "when no token provided" do
           let(:"X-User-Token") { "" }
           let(:user_id) { "test-uid" }
@@ -96,7 +85,6 @@ RSpec.describe Api::V1::UsersController, :backend, swagger_doc: "v1/users_swagge
 
           run_test!
         end
-        # rubocop:enable RSpec/EmptyExampleGroup
       end
     end
   end

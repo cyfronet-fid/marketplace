@@ -3,15 +3,7 @@
 require "swagger_helper"
 require "rails_helper"
 
-RSpec.describe Api::V1::OMSes::ProjectsController, swagger_doc: "v1/ordering_swagger.json", backend: true do
-  before(:all) do
-    Dir.chdir Rails.root.join("swagger", "v1") # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
-  end
-
-  after(:all) do
-    Dir.chdir Rails.root # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
-  end
-
+RSpec.describe Api::V1::OMSes::ProjectsController, :backend, swagger_doc: "v1/ordering_swagger.json" do
   path "/api/v1/oms/{oms_id}/projects" do
     parameter name: :oms_id, in: :path, type: :integer, description: "OMS id"
 
