@@ -3,20 +3,7 @@
 require "swagger_helper"
 require "rails_helper"
 
-# rubocop-rspec doesn't know rswag's DSL: path, get and response aren't example
-# groups to it, and run_test! isn't an example. It reads the lets and hooks of
-# every response block as one group's, and a context of response blocks as empty.
-# rubocop:disable RSpec/MultipleMemoizedHelpers, RSpec/ScatteredSetup, RSpec/EmptyExampleGroup
 RSpec.describe Api::V1::Statistics::ServicesController, swagger_doc: "v1/statistics_swagger.json" do
-  # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
-  around do |example|
-    original_dir = Dir.pwd
-    Dir.chdir Rails.root.join("swagger/v1")
-    example.run
-  ensure
-    Dir.chdir original_dir
-  end
-
   before { allow(Mp::Application.config).to receive(:matomo).and_return(matomo) }
 
   # A Node that syncs Views.
@@ -318,4 +305,3 @@ RSpec.describe Api::V1::Statistics::ServicesController, swagger_doc: "v1/statist
     end
   end
 end
-# rubocop:enable RSpec/MultipleMemoizedHelpers, RSpec/ScatteredSetup, RSpec/EmptyExampleGroup

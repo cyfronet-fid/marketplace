@@ -394,4 +394,8 @@ RSpec.configure do |config|
   # the key, this may want to be changed to avoid putting yaml in json files.
   # Defaults to json. Accepts ':json' and ':yaml'.
   config.openapi_format = :json
+
+  # rswag resolves the file $refs of a schema against the working directory:
+  # https://github.com/rswag/rswag/issues/393
+  config.around(:each, :swagger_doc) { |example| Dir.chdir(Rails.root.join("swagger/v1")) { example.run } }
 end
