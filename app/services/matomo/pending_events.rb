@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Matomo
-  # Matomo events of an action that ends in a redirect (ADR-0008 D7): the
+  # Matomo events of an action that ends in a redirect (ADR-0007 D7): the
   # controller adds them to the flash, and the page the redirect lands on
   # renders them as event elements (MatomoHelper#matomo_pending_event_tags), so
   # the browser sends them in the same visit as the page views before.

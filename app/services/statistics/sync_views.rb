@@ -4,7 +4,7 @@ module Statistics
   # Reads the daily Views of Services, Providers and Bundles back from Matomo
   # into view_statistics, then recounts usage_counts_views of every service,
   # provider and bundle, copies each service's onto its offers and recomputes
-  # popularity_ratio (ADR-0008 D8–D11). It only upserts the requested days, so
+  # popularity_ratio (ADR-0007 D8–D11). It only upserts the requested days, so
   # re-runs over the same days give the same numbers.
   class SyncViews < ApplicationService
     # A kind of record whose View events are named by its PID.

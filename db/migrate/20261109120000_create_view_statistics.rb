@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Daily Views of a Service, Provider or Bundle, read back from Matomo by
-# Statistics::SyncViews (ADR-0008 D9).
+# Statistics::SyncViews (ADR-0007 D9).
 class CreateViewStatistics < ActiveRecord::Migration[7.2]
   def change
     # A row is a day's numbers as Matomo reports them; it has no life of its own to time.

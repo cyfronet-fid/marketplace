@@ -2,7 +2,7 @@
 
 module Statistics
   # Recomputes popularity_ratio of every service, by which Service.popular
-  # orders the home page's popular services (ADR-0008 D11): 1000 × (the
+  # orders the home page's popular services (ADR-0007 D11): 1000 × (the
   # service's share of all service Views + its share of all project items).
   # A share is 0 while its total is 0. Deployable services keep their fixed
   # popularity_ratio of 0.0.
