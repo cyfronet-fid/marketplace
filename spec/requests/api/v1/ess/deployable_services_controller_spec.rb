@@ -5,6 +5,14 @@ require "rails_helper"
 
 # The ESS deployable_services API is routed only under marketplace.
 RSpec.describe Api::V1::Ess::DeployableServicesController, swagger_doc: "v1/ess_swagger.json", variant: :marketplace do
+  before(:all) do
+    Dir.chdir Rails.root.join("swagger/v1") # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
+  end
+
+  after(:all) do
+    Dir.chdir Rails.root # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
+  end
+
   path "/api/v1/ess/deployable_services" do
     get "lists deployable services" do
       tags "deployable_services"

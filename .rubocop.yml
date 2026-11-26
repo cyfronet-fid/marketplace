@@ -1,8 +1,3 @@
-# Teaches rubocop-rspec rswag's DSL: path, the HTTP verbs and response are
-# example groups, and run_test! is an example.
-inherit_gem:
-  rswag-specs: .rubocop_rspec_alias_config.yml
-
 plugins:
   - rubocop-rails
   - rubocop-rspec
@@ -188,20 +183,6 @@ RSpec/VariableName:
     - "spec/requests/**/*"
   AllowedPatterns:
     - '^X-.*-Token$'
-
-# rswag nests every operation as describe > path > verb > response; only the
-# response blocks and the contexts count as nesting.
-RSpec/NestedGroups:
-  AllowedGroups:
-    - path
-    - get
-    - post
-    - patch
-    - put
-    - delete
-    - head
-    - options
-    - trace
 
 # lib/versions holds standalone scripts run from a terminal, outside Rails.
 Rails/Output:

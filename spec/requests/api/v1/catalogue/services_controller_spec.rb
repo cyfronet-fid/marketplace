@@ -6,6 +6,13 @@ require "rails_helper"
 RSpec.describe Api::V1::Catalogue::ServicesController, swagger_doc: "v1/catalogue_swagger.json" do
   include RequestSpecHelper
 
+  before(:all) do
+    # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
+    Dir.chdir Rails.root.join("swagger/v1")
+  end
+
+  after(:all) { Dir.chdir Rails.root }
+
   # The catalogue API is routed only under the pl variant.
   before do
     allow(Mp::Variant).to receive(:pl?).and_return(true)
