@@ -2,6 +2,8 @@
 # and the image references written to the gitops repository (cyfronet-fid/gitops).
 #
 #   push to development -> :dev-<sha7>, :dev        -> gitops versions/stage.images (committed to main)
+#     (also called by automatic-release.yml for the master -> development merge, which GITHUB_TOKEN pushes
+#      without triggering workflows)
 #   release (from automatic-release.yml) -> :X.Y.Z, :X.Y, :X, :latest
 #                                                     -> gitops PR updating versions/prod.images
 #   manual run with a PR number -> :pr-<n>-<sha7>    -> gitops previews/marketplace-pr-<n>.images
@@ -9,8 +11,10 @@
 #
 # Images: ghcr.io/cyfronet-fid/marketplace, -pl, -whitelabel. The variant is fixed at build time
 # (assets:precompile reads it), so every variant is a separate image with the same tags.
-# Each variant is first pushed by digest only; tags are applied to all three in one job after all
-# builds succeed, so a version never exists for one variant and not for another.
+# Each variant is first pushed by digest only; tags are applied in one job only after all three builds
+# succeed, so a failed build never leaves a version for some variants. Tagging itself goes one variant at a
+# time: if it fails midway, rerun the publish job (it retags all three from the saved digests). gitops is
+# written only after all tags are in place, so a partial tagging never reaches a server.
 name: images
 
 on:
@@ -27,17 +31,18 @@ on:
   workflow_call:
     inputs:
       version:
-        description: "Release tag (vX.Y.Z)"
-        required: true
+        description: "Release tag (vX.Y.Z); empty = development build of `ref`"
+        required: false
         type: string
+        default: ""
       ref:
-        description: "Commit SHA of the release"
+        description: "Commit SHA to build"
         required: true
         type: string
 
 concurrency:
   # dev builds and PR checks: the newest commit wins; preview and release builds never cancel each other
-  group: images-${{ inputs.version || (inputs.pr && format('pr-{0}', inputs.pr)) || github.ref }}
+  group: images-${{ inputs.version || (inputs.pr && format('pr-{0}', inputs.pr)) || (inputs.ref && 'refs/heads/development') || github.ref }}
   cancel-in-progress: ${{ github.event_name == 'push' || github.event_name == 'pull_request' }}
 
 permissions:
@@ -75,6 +80,11 @@ jobs:
               IFS=. read -r major minor _ <<< "$version"
               tags="$version $major.$minor $major latest"
             fi
+          elif [ -n "$RELEASE_REF" ]; then
+            kind="dev"                              # called for the master -> development merge
+            sha="$RELEASE_REF"; checkout_ref="$sha"
+            version="dev+${sha:0:7}"
+            tags="dev-${sha:0:7} dev"
           elif [ "$EVENT" = pull_request ]; then
             kind="check"                            # build only: the PR merged into its base branch
             sha="$GITHUB_SHA"; checkout_ref="$sha"
@@ -85,7 +95,7 @@ jobs:
             state=$(gh pr view "$PR" -R "$GITHUB_REPOSITORY" --json state --jq .state)
             [ "$state" = OPEN ] || { echo "::error::PR #$PR is $state"; exit 1; }
             sha=$(gh pr view "$PR" -R "$GITHUB_REPOSITORY" --json headRefOid --jq .headRefOid)
-            checkout_ref="refs/pull/$PR/head"
+            checkout_ref="$sha"                     # the recorded head, even if the PR moves meanwhile
             version="pr-$PR+${sha:0:7}"
             tags="pr-$PR-${sha:0:7}"
           else
@@ -162,7 +172,7 @@ jobs:
         with:
           name: digest-${{ matrix.image }}
           path: digests/${{ matrix.image }}
-          retention-days: 1
+          retention-days: 7   # a rerun of the publish job needs them
 
   publish:
     needs: [meta, build]
@@ -192,8 +202,12 @@ jobs:
           set -euo pipefail
           primary="${TAGS%% *}"
           refs=""
-          for f in digests/*; do
-            image=$(basename "$f"); digest=$(cat "$f")
+          images="marketplace marketplace-pl marketplace-whitelabel"
+          for image in $images; do
+            [ -s "digests/$image" ] || { echo "::error::missing digest for $image"; exit 1; }
+          done
+          for image in $images; do
+            digest=$(cat "digests/$image")
             args=()
             for t in $TAGS; do args+=(-t "$REGISTRY/$image:$t"); done
             docker buildx imagetools create "${args[@]}" "$REGISTRY/$image@$digest"
@@ -212,9 +226,8 @@ jobs:
     needs: [meta, publish]
     if: vars.GITOPS_APP_ID != ''
     runs-on: ubuntu-latest
-    concurrency:
-      group: gitops-write
-      cancel-in-progress: false
+    # No concurrency group: a pending job would be replaced by the next one. Writers touch different files
+    # or lines (stage/prod/previews per PR) and push_main rebases and retries, so they can run in parallel.
     steps:
       - id: app
         uses: actions/create-github-app-token@v2
@@ -232,6 +245,7 @@ jobs:
         working-directory: gitops
         env:
           GH_TOKEN: ${{ steps.app.outputs.token }}
+          SOURCE_TOKEN: ${{ github.token }}
           APP_SLUG: ${{ steps.app.outputs.app-slug }}
           KIND: ${{ needs.meta.outputs.kind }}
           TAGS: ${{ needs.meta.outputs.tags }}
@@ -243,9 +257,9 @@ jobs:
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           set -euo pipefail
-          uid=$(gh api "/users/${APP_SLUG}%5Bbot%5D" --jq .id)
+          uid=$(gh api "/users/${APP_SLUG}%5Bbot%5D" --jq .id 2>/dev/null || true)
           git config user.name "${APP_SLUG}[bot]"
-          git config user.email "${uid}+${APP_SLUG}[bot]@users.noreply.github.com"
+          git config user.email "${uid:+$uid+}${APP_SLUG}[bot]@users.noreply.github.com"
 
           # set KEY=value in an env file (replace the line, or append it)
           set_refs() {
@@ -279,6 +293,8 @@ jobs:
               push_main
               ;;
             pr)
+              state=$(GH_TOKEN="$SOURCE_TOKEN" gh pr view "$PR" -R "$SOURCE" --json state --jq .state)
+              [ "$state" = OPEN ] || { echo "PR #$PR is $state, not writing the preview"; exit 0; }
               file="previews/marketplace-pr-$PR.images"
               {
                 echo "# Preview of $SOURCE PR #$PR ($SHA), built by $RUN_URL"

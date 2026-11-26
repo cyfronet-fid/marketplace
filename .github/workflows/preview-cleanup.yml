@@ -9,10 +9,6 @@ on:
 
 permissions: {}
 
-concurrency:
-  group: gitops-write
-  cancel-in-progress: false
-
 jobs:
   remove-preview:
     if: vars.GITOPS_APP_ID != ''
@@ -40,9 +36,9 @@ jobs:
           set -euo pipefail
           file="previews/marketplace-pr-$PR.images"
           [ -f "$file" ] || { echo "no preview for PR #$PR"; exit 0; }
-          uid=$(gh api "/users/${APP_SLUG}%5Bbot%5D" --jq .id)
+          uid=$(gh api "/users/${APP_SLUG}%5Bbot%5D" --jq .id 2>/dev/null || true)
           git config user.name "${APP_SLUG}[bot]"
-          git config user.email "${uid}+${APP_SLUG}[bot]@users.noreply.github.com"
+          git config user.email "${uid:+$uid+}${APP_SLUG}[bot]@users.noreply.github.com"
           git rm -q "$file"
           git commit -m "marketplace: remove preview PR #$PR (closed)"
           for i in 1 2 3 4 5; do
