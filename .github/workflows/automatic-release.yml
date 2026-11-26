@@ -7,24 +7,64 @@ name: automatic-release
 jobs:
   release-please:
     runs-on: ubuntu-latest
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
+      sha: ${{ steps.release.outputs.sha }}
     steps:
       - uses: google-github-actions/release-please-action@v4
         id: release
         with:
           release-type: simple
+
+  # Separate job: a failed merge must not block the release images (they depend only on release-please).
+  merge-to-development:
+    needs: release-please
+    if: ${{ needs.release-please.outputs.release_created == 'true' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      sha: ${{ steps.merge.outputs.sha }}
+    steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-        if: ${{ steps.release.outputs.release_created }}
       - name: Set Git bot config
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-        if: ${{ steps.release.outputs.release_created }}
       - name: Master to development auto merge
+        id: merge
         run: |
           git checkout development
           git pull
           git merge --no-ff origin/master -m "chore: auto-merge master to development"
           git push
-        if: ${{ steps.release.outputs.release_created }}
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+  # Release images of all variants (:X.Y.Z, :X.Y, :X, :latest) and a gitops PR for production.
+  # Called directly: a release created with GITHUB_TOKEN does not trigger other workflows.
+  images:
+    needs: release-please
+    if: ${{ needs.release-please.outputs.release_created == 'true' }}
+    uses: ./.github/workflows/images.yml
+    with:
+      version: ${{ needs.release-please.outputs.tag_name }}
+      ref: ${{ needs.release-please.outputs.sha }}
+    permissions:
+      contents: read
+      packages: write
+    secrets: inherit
+
+  # The merge is pushed with GITHUB_TOKEN, which does not trigger the push build of development:
+  # build the merged commit here so stage gets it too.
+  images-development:
+    needs: merge-to-development
+    uses: ./.github/workflows/images.yml
+    with:
+      ref: ${{ needs.merge-to-development.outputs.sha }}
+    permissions:
+      contents: read
+      packages: write
+    secrets: inherit

@@ -1,0 +1,48 @@
+# Removes the preview entry (previews/marketplace-pr-<n>.images) from the gitops repository when a PR is closed.
+# pull_request_target: runs in the context of the base repository (secrets available, also for PRs from forks).
+# Safe because no code from the PR is checked out or executed here.
+name: preview-cleanup
+
+on:
+  pull_request_target:
+    types: [closed]
+
+permissions: {}
+
+jobs:
+  remove-preview:
+    if: vars.GITOPS_APP_ID != ''
+    runs-on: ubuntu-latest
+    steps:
+      - id: app
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ vars.GITOPS_APP_ID }}
+          private-key: ${{ secrets.GITOPS_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: gitops
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository_owner }}/gitops
+          token: ${{ steps.app.outputs.token }}
+          path: gitops
+      - name: Remove the preview entry
+        working-directory: gitops
+        env:
+          GH_TOKEN: ${{ steps.app.outputs.token }}
+          APP_SLUG: ${{ steps.app.outputs.app-slug }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          set -euo pipefail
+          file="previews/marketplace-pr-$PR.images"
+          [ -f "$file" ] || { echo "no preview for PR #$PR"; exit 0; }
+          uid=$(gh api "/users/${APP_SLUG}%5Bbot%5D" --jq .id 2>/dev/null || true)
+          git config user.name "${APP_SLUG}[bot]"
+          git config user.email "${uid:+$uid+}${APP_SLUG}[bot]@users.noreply.github.com"
+          git rm -q "$file"
+          git commit -m "marketplace: remove preview PR #$PR (closed)"
+          for i in 1 2 3 4 5; do
+            git push origin HEAD:main && exit 0
+            sleep $((i * 3)); git pull --rebase origin main
+          done
+          echo "::error::could not push to gitops main"; exit 1

@@ -1,0 +1,334 @@
+# Container images of the three variants (marketplace, pl, whitelabel), pushed to ghcr.io,
+# and the image references written to the gitops repository (cyfronet-fid/gitops).
+#
+#   push to development -> :dev-<sha7>, :dev        -> gitops versions/stage.images (committed to main)
+#     (also called by automatic-release.yml for the master -> development merge, which GITHUB_TOKEN pushes
+#      without triggering workflows)
+#   release (from automatic-release.yml) -> :X.Y.Z, :X.Y, :X, :latest
+#                                                     -> gitops PR updating versions/prod.images
+#   manual run with a PR number -> :pr-<n>-<sha7>    -> gitops previews/marketplace-pr-<n>.images
+#   pull request -> build check of all variants only (nothing pushed, nothing written to gitops)
+#
+# Images: ghcr.io/cyfronet-fid/marketplace, -pl, -whitelabel. The variant is fixed at build time
+# (assets:precompile reads it), so every variant is a separate image with the same tags.
+# Each variant is first pushed by digest only; tags are applied in one job only after all three builds
+# succeed, so a failed build never leaves a version for some variants. Tagging itself goes one variant at a
+# time: if it fails midway, rerun the publish job (it retags all three from the saved digests). gitops is
+# written only after all tags are in place, so a partial tagging never reaches a server.
+name: images
+
+on:
+  push:
+    branches: [development]
+  pull_request:
+    branches: [development, master]
+  workflow_dispatch:
+    inputs:
+      pr:
+        description: "Pull request number to build as a preview image (pr-<n>-<sha>)"
+        required: true
+        type: number
+  workflow_call:
+    inputs:
+      version:
+        description: "Release tag (vX.Y.Z); empty = development build of `ref`"
+        required: false
+        type: string
+        default: ""
+      ref:
+        description: "Commit SHA to build"
+        required: true
+        type: string
+
+concurrency:
+  # dev builds and PR checks: the newest commit wins; preview and release builds never cancel each other
+  group: images-${{ inputs.version || (inputs.pr && format('pr-{0}', inputs.pr)) || (inputs.ref && 'refs/heads/development') || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'push' || github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+env:
+  REGISTRY: ghcr.io/${{ github.repository_owner }}
+
+jobs:
+  meta:
+    runs-on: ubuntu-latest
+    outputs:
+      kind: ${{ steps.meta.outputs.kind }}
+      checkout_ref: ${{ steps.meta.outputs.checkout_ref }}
+      sha: ${{ steps.meta.outputs.sha }}
+      tags: ${{ steps.meta.outputs.tags }}
+      version: ${{ steps.meta.outputs.version }}
+    steps:
+      - id: meta
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT: ${{ github.event_name }}
+          PR: ${{ inputs.pr }}
+          RELEASE: ${{ inputs.version }}
+          RELEASE_REF: ${{ inputs.ref }}
+        run: |
+          set -euo pipefail
+          if [ -n "$RELEASE" ]; then
+            kind="release"
+            sha="$RELEASE_REF"; checkout_ref="$sha"
+            version="${RELEASE#v}"
+            if [[ "$version" == *-* ]]; then
+              tags="$version"                       # prerelease: no moving tags
+            else
+              IFS=. read -r major minor _ <<< "$version"
+              tags="$version $major.$minor $major latest"
+            fi
+          elif [ -n "$RELEASE_REF" ]; then
+            kind="dev"                              # called for the master -> development merge
+            sha="$RELEASE_REF"; checkout_ref="$sha"
+            version="dev+${sha:0:7}"
+            tags="dev-${sha:0:7} dev"
+          elif [ "$EVENT" = pull_request ]; then
+            kind="check"                            # build only: the PR merged into its base branch
+            sha="$GITHUB_SHA"; checkout_ref="$sha"
+            version="check+${sha:0:7}"
+            tags="check"
+          elif [ "$EVENT" = workflow_dispatch ]; then
+            kind="pr"
+            state=$(gh pr view "$PR" -R "$GITHUB_REPOSITORY" --json state --jq .state)
+            [ "$state" = OPEN ] || { echo "::error::PR #$PR is $state"; exit 1; }
+            sha=$(gh pr view "$PR" -R "$GITHUB_REPOSITORY" --json headRefOid --jq .headRefOid)
+            checkout_ref="$sha"                     # the recorded head, even if the PR moves meanwhile
+            version="pr-$PR+${sha:0:7}"
+            tags="pr-$PR-${sha:0:7}"
+          else
+            kind="dev"
+            sha="$GITHUB_SHA"; checkout_ref="$sha"
+            version="dev+${sha:0:7}"
+            tags="dev-${sha:0:7} dev"
+          fi
+          {
+            echo "kind=$kind"; echo "sha=$sha"; echo "checkout_ref=$checkout_ref"
+            echo "tags=$tags"; echo "version=$version"
+          } | tee -a "$GITHUB_OUTPUT"
+
+  build:
+    needs: meta
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      # a PR check reports every broken variant; a real build stops at the first failure
+      fail-fast: ${{ needs.meta.outputs.kind != 'check' }}
+      matrix:
+        include:
+          - variant: marketplace
+            image: marketplace
+            customization_path: ""
+          - variant: pl
+            image: marketplace-pl
+            customization_path: /marketplace/customization/pl
+          - variant: whitelabel
+            image: marketplace-whitelabel
+            customization_path: /marketplace/customization/whitelabel
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.meta.outputs.checkout_ref }}
+          persist-credentials: false
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        if: needs.meta.outputs.kind != 'check'
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+      - id: build
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          platforms: linux/amd64
+          build-args: |
+            MARKETPLACE_VARIANT=${{ matrix.variant }}
+            CUSTOMIZATION_PATH=${{ matrix.customization_path }}
+          labels: |
+            org.opencontainers.image.title=${{ matrix.image }}
+            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
+            org.opencontainers.image.revision=${{ needs.meta.outputs.sha }}
+            org.opencontainers.image.version=${{ needs.meta.outputs.version }}
+            org.opencontainers.image.licenses=GPL-3.0
+          # PR check: build only (cacheonly = no image output, nothing pushed)
+          outputs: >-
+            ${{ needs.meta.outputs.kind == 'check' && 'type=cacheonly' ||
+            format('type=image,name={0}/{1},push-by-digest=true,name-canonical=true,push=true', env.REGISTRY, matrix.image) }}
+          cache-from: type=gha,scope=${{ matrix.variant }}
+          # PR checks only read the cache of development (keeps the 10 GB cache quota for real builds)
+          cache-to: ${{ needs.meta.outputs.kind != 'check' && format('type=gha,scope={0},mode=max', matrix.variant) || '' }}
+      - name: Save digest
+        if: needs.meta.outputs.kind != 'check'
+        run: |
+          mkdir -p digests
+          echo "${{ steps.build.outputs.digest }}" > "digests/${{ matrix.image }}"
+      - uses: actions/upload-artifact@v4
+        if: needs.meta.outputs.kind != 'check'
+        with:
+          name: digest-${{ matrix.image }}
+          path: digests/${{ matrix.image }}
+          retention-days: 30  # failed jobs can be rerun for 30 days; the publish rerun needs these
+
+  publish:
+    needs: [meta, build]
+    if: needs.meta.outputs.kind != 'check'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      refs: ${{ steps.tag.outputs.refs }}
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: digest-*
+          path: digests
+          merge-multiple: true
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+      - id: tag
+        env:
+          TAGS: ${{ needs.meta.outputs.tags }}
+        run: |
+          set -euo pipefail
+          primary="${TAGS%% *}"
+          refs=""
+          images="marketplace marketplace-pl marketplace-whitelabel"
+          for image in $images; do
+            [ -s "digests/$image" ] || { echo "::error::missing digest for $image"; exit 1; }
+          done
+          for image in $images; do
+            digest=$(cat "digests/$image")
+            args=()
+            for t in $TAGS; do args+=(-t "$REGISTRY/$image:$t"); done
+            docker buildx imagetools create "${args[@]}" "$REGISTRY/$image@$digest"
+            # KEY=registry/image:tag@digest, e.g. MARKETPLACE_PL_IMAGE=ghcr.io/cyfronet-fid/marketplace-pl:4.7.2@sha256:...
+            key=$(echo "$image" | tr 'a-z-' 'A-Z_')_IMAGE
+            refs+="$key=$REGISTRY/$image:$primary@$digest"$'\n'
+          done
+          {
+            echo "refs<<EOF"; printf '%s' "$refs"; echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+          {
+            echo "### Images ($TAGS)"; echo '```'; printf '%s' "$refs"; echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  gitops:
+    needs: [meta, publish]
+    if: vars.GITOPS_APP_ID != ''
+    runs-on: ubuntu-latest
+    # No concurrency group: a pending job would be replaced by the next one. Writers touch different files
+    # or lines (stage/prod/previews per PR) and push_main rebases and retries, so they can run in parallel.
+    steps:
+      - id: app
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ vars.GITOPS_APP_ID }}
+          private-key: ${{ secrets.GITOPS_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: gitops
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository_owner }}/gitops
+          token: ${{ steps.app.outputs.token }}
+          path: gitops
+      - name: Write image references
+        working-directory: gitops
+        env:
+          GH_TOKEN: ${{ steps.app.outputs.token }}
+          SOURCE_TOKEN: ${{ github.token }}
+          APP_SLUG: ${{ steps.app.outputs.app-slug }}
+          KIND: ${{ needs.meta.outputs.kind }}
+          TAGS: ${{ needs.meta.outputs.tags }}
+          SHA: ${{ needs.meta.outputs.sha }}
+          REFS: ${{ needs.publish.outputs.refs }}
+          PR: ${{ inputs.pr }}
+          RELEASE: ${{ inputs.version }}
+          SOURCE: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          uid=$(gh api "/users/${APP_SLUG}%5Bbot%5D" --jq .id 2>/dev/null || true)
+          git config user.name "${APP_SLUG}[bot]"
+          git config user.email "${uid:+$uid+}${APP_SLUG}[bot]@users.noreply.github.com"
+
+          # set KEY=value in an env file (replace the line, or append it)
+          set_refs() {
+            local file=$1; mkdir -p "$(dirname "$file")"; touch "$file"
+            while IFS= read -r line; do
+              [ -n "$line" ] || continue
+              key=${line%%=*}
+              if grep -q "^$key=" "$file"; then
+                sed -i "s|^$key=.*|$line|" "$file"
+              else
+                echo "$line" >> "$file"
+              fi
+            done <<< "$REFS"
+          }
+
+          push_main() {
+            for i in 1 2 3 4 5; do
+              git push origin HEAD:main && return 0
+              sleep $((i * 3)); git pull --rebase origin main
+            done
+            echo "::error::could not push to gitops main"; return 1
+          }
+
+          primary="${TAGS%% *}"
+          case "$KIND" in
+            dev)
+              set_refs versions/stage.images
+              git add versions/stage.images
+              git diff --cached --quiet && { echo "no change"; exit 0; }
+              git commit -m "marketplace: stage -> $primary" -m "From $SOURCE@$SHA ($RUN_URL)"
+              push_main
+              ;;
+            pr)
+              state=$(GH_TOKEN="$SOURCE_TOKEN" gh pr view "$PR" -R "$SOURCE" --json state --jq .state)
+              [ "$state" = OPEN ] || { echo "PR #$PR is $state, not writing the preview"; exit 0; }
+              file="previews/marketplace-pr-$PR.images"
+              {
+                echo "# Preview of $SOURCE PR #$PR ($SHA), built by $RUN_URL"
+                echo "# Removed automatically when the PR is closed."
+                printf '%s' "$REFS"
+              } > "$file"
+              git add "$file"
+              git diff --cached --quiet && { echo "no change"; exit 0; }
+              git commit -m "marketplace: preview PR #$PR -> $primary" -m "From $SOURCE@$SHA ($RUN_URL)"
+              push_main
+              # The PR may have closed between the check above and the push, with preview-cleanup finding no
+              # file yet. Check again now that the file is pushed: if it is closed, remove the entry here.
+              # If it closes later, preview-cleanup starts after the push and removes it.
+              state=$(GH_TOKEN="$SOURCE_TOKEN" gh pr view "$PR" -R "$SOURCE" --json state --jq .state)
+              if [ "$state" != OPEN ]; then
+                git rm -q "$file"
+                git commit -m "marketplace: remove preview PR #$PR ($state while building)"
+                push_main
+              fi
+              ;;
+            release)
+              branch="release/marketplace-$RELEASE"
+              git switch -c "$branch"
+              set_refs versions/prod.images
+              git add versions/prod.images
+              git diff --cached --quiet && { echo "no change"; exit 0; }
+              git commit -m "marketplace: prod -> $RELEASE" -m "From $SOURCE@$SHA ($RUN_URL)"
+              git push --force origin "$branch"
+              if [ -z "$(gh pr list -R "$GITHUB_REPOSITORY_OWNER/gitops" --head "$branch" --json number --jq '.[].number')" ]; then
+                # shellcheck disable=SC2016  # backticks are markdown, not command substitution
+                gh pr create -R "$GITHUB_REPOSITORY_OWNER/gitops" --base main --head "$branch" \
+                  --title "marketplace: prod -> $RELEASE" \
+                  --body "$(printf 'Release [%s](%s/%s/releases/tag/%s) of all marketplace variants.\n\nMerging this PR deploys it to production.\n\n```\n%s```\n\nBuilt by %s' \
+                    "$RELEASE" "$GITHUB_SERVER_URL" "$SOURCE" "$RELEASE" "$REFS" "$RUN_URL")"
+              fi
+              ;;
+          esac
