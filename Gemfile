@@ -140,6 +140,12 @@ gem "sentry-ruby", "~> 5.28"
 gem "sentry-rails", "~> 5.28"
 gem "sentry-sidekiq", "~> 5.28"
 
+# Structured logs in production (lib/otel_logging). lograge writes one
+# entry for each request. opentelemetry-api gives the trace context of an
+# entry; the tracing SDK is not installed.
+gem "lograge", "~> 0.16"
+gem "opentelemetry-api", "~> 1.11"
+
 gem "faraday", "~> 1.10"
 gem "faraday_middleware"
 gem "reverse_markdown"

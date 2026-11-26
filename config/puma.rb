@@ -44,6 +44,17 @@ pidfile ENV.fetch("PIDFILE", "tmp/pids/server.pid")
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
 
+# In production the Puma log has the same JSON entries as the Rails log
+# (config/environments/production.rb). Rails is not loaded here.
+if ENV["RAILS_ENV"] == "production"
+  require_relative "../lib/otel_logging/json_formatter"
+  require_relative "../lib/otel_logging/resource"
+
+  puma_log_formatter =
+    OtelLogging::JsonFormatter.new(contexts: [OtelLogging::Resource.from_env(ENV, service_name: "web")])
+  log_formatter { |message| puma_log_formatter.entry("INFO", Time.now.utc, message) }
+end
+
 require "sentry-ruby"
 
 before_fork do
@@ -60,12 +71,12 @@ before_fork do
     # Prevent killing all puma workers, kill only largest one a time
     config.rolling_restart_frequency = false
 
-    config.pre_term = -> (worker) {
+    config.pre_term = lambda { |worker|
       Sentry.capture_message(
-        "Puma worker #{worker.instance_variable_get("@index")} "\
-        "(pid: #{worker.instance_variable_get("@pid")}) "\
-        "#{worker.instance_variable_get("@stage")}, "\
-        "phase: #{worker.instance_variable_get("@phase")} "\
+        "Puma worker #{worker.instance_variable_get("@index")} " \
+        "(pid: #{worker.instance_variable_get("@pid")}) " \
+        "#{worker.instance_variable_get("@stage")}, " \
+        "phase: #{worker.instance_variable_get("@phase")} " \
         "will be terminated"
       )
     }
