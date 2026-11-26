@@ -172,7 +172,7 @@ jobs:
         with:
           name: digest-${{ matrix.image }}
           path: digests/${{ matrix.image }}
-          retention-days: 7   # a rerun of the publish job needs them
+          retention-days: 30  # failed jobs can be rerun for 30 days; the publish rerun needs these
 
   publish:
     needs: [meta, build]
@@ -305,6 +305,15 @@ jobs:
               git diff --cached --quiet && { echo "no change"; exit 0; }
               git commit -m "marketplace: preview PR #$PR -> $primary" -m "From $SOURCE@$SHA ($RUN_URL)"
               push_main
+              # The PR may have closed between the check above and the push, with preview-cleanup finding no
+              # file yet. Check again now that the file is pushed: if it is closed, remove the entry here.
+              # If it closes later, preview-cleanup starts after the push and removes it.
+              state=$(GH_TOKEN="$SOURCE_TOKEN" gh pr view "$PR" -R "$SOURCE" --json state --jq .state)
+              if [ "$state" != OPEN ]; then
+                git rm -q "$file"
+                git commit -m "marketplace: remove preview PR #$PR ($state while building)"
+                push_main
+              fi
               ;;
             release)
               branch="release/marketplace-$RELEASE"
