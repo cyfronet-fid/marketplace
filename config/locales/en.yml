@@ -126,3 +126,13 @@ en:
           attributes:
             project:
               repeated_in_project: "already pinned with this offer"
+        # The Statistics API sends these as they are, in its 400 responses.
+        statistics/page_params:
+          attributes:
+            from_id:
+              invalid: "'from_id' must be a non-negative integer"
+            limit:
+              invalid: "'limit' must be an integer from 1 to %{max}"
+            pids:
+              not_a_list: "'pid' must be a list of PIDs: pid[]=…&pid[]=…"
+              too_long: "'pid' must hold at most %{count} PIDs"

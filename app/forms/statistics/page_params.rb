@@ -19,25 +19,10 @@ module Statistics
     attribute :limit, :integer, default: DEFAULT_LIMIT
     attribute :pids
 
-    validates :from_id,
-              numericality: {
-                only_integer: true,
-                greater_than_or_equal_to: 0,
-                message: "'from_id' must be a non-negative integer"
-              }
-    validates :limit,
-              numericality: {
-                only_integer: true,
-                in: 1..MAX_LIMIT,
-                message: "'limit' must be an integer from 1 to #{MAX_LIMIT}"
-              }
+    validates :from_id, numericality: { only_integer: true, greater_than_or_equal_to: 0, message: :invalid }
+    validates :limit, numericality: { only_integer: true, in: 1..MAX_LIMIT, message: :invalid, max: MAX_LIMIT }
+    validates :pids, length: { maximum: MAX_PIDS }, if: :pids_listed?
     validate :pids_listed
-    validates :pids,
-              length: {
-                maximum: MAX_PIDS,
-                message: "'pid' must hold at most %{count} PIDs"
-              },
-              if: :pids_listed?
 
     # A blank from_id or limit takes its default; pid[] fills pids.
     def self.from_query(params)
@@ -58,7 +43,7 @@ module Statistics
     end
 
     def pids_listed
-      errors.add(:pids, "'pid' must be a list of PIDs: pid[]=…&pid[]=…") unless pids.nil? || pids_listed?
+      errors.add(:pids, :not_a_list) unless pids.nil? || pids_listed?
     end
   end
 end
