@@ -3,16 +3,9 @@
 require "swagger_helper"
 require "rails_helper"
 
-RSpec.describe Api::V1::Resources::OffersController, swagger_doc: "v1/offering_swagger.json", backend: true do
-  before(:all) do
-    Dir.chdir Rails.root.join("swagger", "v1") # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
-  end
+RSpec.describe Api::V1::Resources::OffersController, :backend, swagger_doc: "v1/offering_swagger.json" do
+  before { create(:default_oms) }
 
-  before(:each) { create(:default_oms) }
-
-  after(:all) do
-    Dir.chdir Rails.root # Workaround for rswag bug: https://github.com/rswag/rswag/issues/393
-  end
   context "predefined variables" do
     let(:service_category) { create(:service_category_other) }
 
