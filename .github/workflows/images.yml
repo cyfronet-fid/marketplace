@@ -5,6 +5,7 @@
 #   release (from automatic-release.yml) -> :X.Y.Z, :X.Y, :X, :latest
 #                                                     -> gitops PR updating versions/prod.images
 #   manual run with a PR number -> :pr-<n>-<sha7>    -> gitops previews/marketplace-pr-<n>.images
+#   pull request -> build check of all variants only (nothing pushed, nothing written to gitops)
 #
 # Images: ghcr.io/cyfronet-fid/marketplace, -pl, -whitelabel. The variant is fixed at build time
 # (assets:precompile reads it), so every variant is a separate image with the same tags.
@@ -15,6 +16,8 @@ name: images
 on:
   push:
     branches: [development]
+  pull_request:
+    branches: [development, master]
   workflow_dispatch:
     inputs:
       pr:
@@ -33,9 +36,9 @@ on:
         type: string
 
 concurrency:
-  # one dev build at a time (the newest wins); PR and release builds never cancel each other
+  # dev builds and PR checks: the newest commit wins; preview and release builds never cancel each other
   group: images-${{ inputs.version || (inputs.pr && format('pr-{0}', inputs.pr)) || github.ref }}
-  cancel-in-progress: ${{ github.event_name == 'push' }}
+  cancel-in-progress: ${{ github.event_name == 'push' || github.event_name == 'pull_request' }}
 
 permissions:
   contents: read
@@ -72,6 +75,11 @@ jobs:
               IFS=. read -r major minor _ <<< "$version"
               tags="$version $major.$minor $major latest"
             fi
+          elif [ "$EVENT" = pull_request ]; then
+            kind="check"                            # build only: the PR merged into its base branch
+            sha="$GITHUB_SHA"; checkout_ref="$sha"
+            version="check+${sha:0:7}"
+            tags="check"
           elif [ "$EVENT" = workflow_dispatch ]; then
             kind="pr"
             state=$(gh pr view "$PR" -R "$GITHUB_REPOSITORY" --json state --jq .state)
@@ -98,7 +106,8 @@ jobs:
       contents: read
       packages: write
     strategy:
-      fail-fast: true
+      # a PR check reports every broken variant; a real build stops at the first failure
+      fail-fast: ${{ needs.meta.outputs.kind != 'check' }}
       matrix:
         include:
           - variant: marketplace
@@ -117,6 +126,7 @@ jobs:
           persist-credentials: false
       - uses: docker/setup-buildx-action@v3
       - uses: docker/login-action@v3
+        if: needs.meta.outputs.kind != 'check'
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -135,14 +145,20 @@ jobs:
             org.opencontainers.image.revision=${{ needs.meta.outputs.sha }}
             org.opencontainers.image.version=${{ needs.meta.outputs.version }}
             org.opencontainers.image.licenses=GPL-3.0
-          outputs: type=image,name=${{ env.REGISTRY }}/${{ matrix.image }},push-by-digest=true,name-canonical=true,push=true
+          # PR check: build only (cacheonly = no image output, nothing pushed)
+          outputs: >-
+            ${{ needs.meta.outputs.kind == 'check' && 'type=cacheonly' ||
+            format('type=image,name={0}/{1},push-by-digest=true,name-canonical=true,push=true', env.REGISTRY, matrix.image) }}
           cache-from: type=gha,scope=${{ matrix.variant }}
-          cache-to: type=gha,scope=${{ matrix.variant }},mode=max
+          # PR checks only read the cache of development (keeps the 10 GB cache quota for real builds)
+          cache-to: ${{ needs.meta.outputs.kind != 'check' && format('type=gha,scope={0},mode=max', matrix.variant) || '' }}
       - name: Save digest
+        if: needs.meta.outputs.kind != 'check'
         run: |
           mkdir -p digests
           echo "${{ steps.build.outputs.digest }}" > "digests/${{ matrix.image }}"
       - uses: actions/upload-artifact@v4
+        if: needs.meta.outputs.kind != 'check'
         with:
           name: digest-${{ matrix.image }}
           path: digests/${{ matrix.image }}
@@ -150,6 +166,7 @@ jobs:
 
   publish:
     needs: [meta, build]
+    if: needs.meta.outputs.kind != 'check'
     runs-on: ubuntu-latest
     permissions:
       contents: read
