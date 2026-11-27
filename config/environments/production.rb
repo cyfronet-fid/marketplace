@@ -133,6 +133,11 @@ Rails.application.configure do
   Sidekiq.logger.formatter = config.log_formatter
   Sidekiq.configure_server { |sidekiq| sidekiq[:logged_job_attributes] += ["queue"] }
 
+  # The default logger of OmniAuth writes text lines to stdout at the DEBUG
+  # level. With the logger of the application, OmniAuth writes JSON entries
+  # and obeys config.log_level.
+  OmniAuth.config.logger = config.logger
+
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
